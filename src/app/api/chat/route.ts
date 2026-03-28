@@ -21,7 +21,7 @@ BERIKUT ADALAH INFORMASI TENTANG Pesantren Al-Andalus Al-Imam:
 - Lokasi: Jl. Pelabuhan Ratu II KM 18, Kp. Pupunjul, Cikembar, Sukabumi, Jawa Barat 43157.
 - Dikelola oleh Al-Andalus International Islamic Boarding School (IIBS) sejak Januari 2026.
 - Santri wajib asrama (boarding school).
-- Nomor WhatsApp CS: +62 851-1152-4441
+- Nomor WhatsApp CS: +62 888-0993-4970
 
 6 KEUNGGULAN PENGASUHAN:
 1. Berupaya maksimal menghidupkan fitrah santri, diiringi adab Islami dalam setiap interaksi.

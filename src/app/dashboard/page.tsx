@@ -535,7 +535,7 @@ export default function DashboardPage() {
 
                 <div className="space-y-4">
                   <a
-                    href="https://wa.me/6285111524441"
+                    href="https://wa.me/6288809934970"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-4 p-5 rounded-[1.5rem] bg-teal-50 border border-teal-100 hover:bg-teal-600 hover:text-white transition-all group/btn shadow-premium-xs"
@@ -545,7 +545,7 @@ export default function DashboardPage() {
                     </div>
                     <div className="text-left">
                       <p className="text-[10px] font-black uppercase tracking-widest text-teal-600 group-hover/btn:text-white/80 leading-none mb-1">WhatsApp CS</p>
-                      <p className="font-bold text-base text-teal-900 group-hover/btn:text-white transition-colors">0851-1152-4441</p>
+                      <p className="font-bold text-base text-teal-900 group-hover/btn:text-white transition-colors">0888-0993-4970</p>
                     </div>
                   </a>
                 </div>

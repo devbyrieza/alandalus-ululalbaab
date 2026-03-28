@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { HelpCircle, ChevronDown } from "lucide-react";
@@ -140,7 +140,7 @@ export default function FaqSection() {
                         <div className="absolute inset-0 bg-gradient-to-r from-cream-100/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                         <p className="text-ink-600 font-bold mb-5 relative z-10 text-sm tracking-wide uppercase">Punya pertanyaan lain?</p>
                         <a
-                            href="https://wa.me/6285111524441"
+                            href="https://wa.me/6288809934970"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="btn-primary w-full relative z-10 justify-center shadow-md bg-[#25D366] hover:bg-[#20BE5A] hover:shadow-lg"

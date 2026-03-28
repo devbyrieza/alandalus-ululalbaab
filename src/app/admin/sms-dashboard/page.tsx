@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import { RefreshCw, Check, Smartphone, User, Key } from "lucide-react";
@@ -161,7 +161,7 @@ Kode OTP: ${item.otp}
 Untuk: ${item.nama}
 
 Jangan bagikan kode ini.
-Hubungi 0851-1152-4441 jika ada masalah.`}
+Hubungi 0888-0993-4970 jika ada masalah.`}
                     </pre>
                   </div>
 

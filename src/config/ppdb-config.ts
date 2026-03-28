@@ -8,10 +8,10 @@ export const PPDB_CONFIG = {
   pesantren: {
     nama: "Pesantren Al-Andalus Ulul Albaab",
     singkatan: "Al-Andalus Ulul Albaab",
-    alamat: "[Alamat Ulul Albaab — Sesuaikan!]",
-    telepon: "[Nomor Telepon — Sesuaikan!]",
-    email: "[Email Pesantren — Sesuaikan!]",
-    emailPpdb: "[Email PPDB — Sesuaikan!]",
+    alamat: "Jl. KH Mama Oyon, Cihaur, Kec. Cicantayan, Kabupaten Sukabumi, Jawa Barat 43155",
+    telepon: "+62 888-0993-4970",
+    email: "alandalus.ululalbaab@gmail.com",
+    emailPpdb: "alandalus.ululalbaab@gmail.com",
     website: "https://www.pesantren-ululalbaab.com",
   },
 
@@ -102,7 +102,7 @@ export const PPDB_CONFIG = {
 
   // 🔗 KONTAK & SOSMED (GANTI SESUAI!)
   contact: {
-    whatsapp: "[Nomor WhatsApp — Sesuaikan!]",
+    whatsapp: "+6288809934970",
     instagram: "@pesantrenululalbaab",
     facebook: "Pesantren Al-Andalus Ulul Albaab (Official Fanpage)",
     youtube: "Al-Andalus Ulul Albaab"

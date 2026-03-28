@@ -460,7 +460,7 @@ export async function notifyRegistrationSuccess(data: {
             nomor_pendaftaran: data.nomor_pendaftaran,
             jenjang: data.jenjang === 'MTs' ? 'Madrasah Tsanawiyah (MTs)' : "I'dad Lughowi (Setara SMA)",
             dashboard_url: `${process.env.NEXT_PUBLIC_APP_URL || 'https://pesantren-ululalbaab.com'}/dashboard/pendaftar`,
-            kontak: '0851-1152-4441',
+            kontak: '0888-0993-4970',
         },
     });
 }
@@ -485,7 +485,7 @@ export async function notifyDocumentVerified(data: {
             dokumen_list: data.dokumen_list,
             catatan: data.catatan || '',
             dashboard_url: `${process.env.NEXT_PUBLIC_APP_URL || 'https://pesantren-ululalbaab.com'}/dashboard/pendaftar/${data.status === 'verified' ? 'undangan-seleksi' : 'upload-berkas'}`,
-            kontak: '0851-1152-4441',
+            kontak: '0888-0993-4970',
         },
     });
 }
@@ -514,7 +514,7 @@ export async function notifyPaymentVerified(data: {
             tanggal: data.tanggal,
             catatan: data.catatan || '',
             dashboard_url: `${process.env.NEXT_PUBLIC_APP_URL || 'https://pesantren-ululalbaab.com'}/dashboard/pendaftar/${data.status === 'verified' ? 'kelengkapan-berkas' : 'pembayaran-pendaftaran'}`,
-            kontak: '0851-1152-4441',
+            kontak: '0888-0993-4970',
         },
     });
 }

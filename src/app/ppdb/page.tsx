@@ -496,7 +496,7 @@ function PPDBContent() {
                     Daftar Sekarang
                   </span>
                 </Link>
-                <a href="https://wa.me/6285111524441" className="w-full sm:w-auto inline-flex items-center justify-center gap-2 sm:gap-3 px-6 sm:px-8 py-3.5 sm:py-4 md:py-5 rounded-pill bg-white/10 text-white font-bold border border-white/20 hover:bg-white/20 transition-all text-sm sm:text-base md:text-lg min-h-[48px] sm:min-h-[52px]">
+                <a href="https://wa.me/6288809934970" className="w-full sm:w-auto inline-flex items-center justify-center gap-2 sm:gap-3 px-6 sm:px-8 py-3.5 sm:py-4 md:py-5 rounded-pill bg-white/10 text-white font-bold border border-white/20 hover:bg-white/20 transition-all text-sm sm:text-base md:text-lg min-h-[48px] sm:min-h-[52px]">
                   <Phone className="w-4 h-4 sm:w-5 sm:h-5" />
                   Hubungi Admin PPDB
                 </a>

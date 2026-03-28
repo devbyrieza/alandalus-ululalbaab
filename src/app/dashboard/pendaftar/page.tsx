@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
 import {
@@ -268,7 +268,7 @@ export default function DashboardPendaftarPage() {
             <p className="text-ink-600 text-xs md:text-sm font-medium">Panitia siap membantu Anda via WhatsApp setiap jam kerja.</p>
           </div>
         </div>
-        <a href="https://wa.me/6285111524441" target="_blank" className="w-full md:w-auto px-6 md:px-8 py-3.5 md:py-4 bg-maroon-900 text-white font-black text-sm uppercase tracking-widest rounded-pill hover:bg-cream-100 hover:text-maroon-900 transition-colors shadow-md text-center border border-transparent hover:border-maroon-900 active:scale-95 whitespace-nowrap z-10">
+        <a href="https://wa.me/6288809934970" target="_blank" className="w-full md:w-auto px-6 md:px-8 py-3.5 md:py-4 bg-maroon-900 text-white font-black text-sm uppercase tracking-widest rounded-pill hover:bg-cream-100 hover:text-maroon-900 transition-colors shadow-md text-center border border-transparent hover:border-maroon-900 active:scale-95 whitespace-nowrap z-10">
           Chat Panitia
         </a>
       </div>

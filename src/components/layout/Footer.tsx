@@ -29,10 +29,10 @@ export default function Footer() {
           <div className="lg:col-span-1 space-y-8">
             <Link href="/" className="flex items-center gap-4">
               <div className="w-12 h-12 rounded-2xl flex items-center justify-center bg-cream-50 text-maroon-900 shadow-md overflow-hidden">
-                <img src="/images/logo.webp" alt="Logo Al-Andalus Al-Imam" className="w-full h-full object-cover" />
+                <img src="/images/logo.webp" alt="Logo Al-Andalus Ulul Albaab" className="w-full h-full object-cover" />
               </div>
               <div>
-                <h3 className="text-xl font-black text-white tracking-tight leading-none">Al-Andalus Al-Imam</h3>
+                <h3 className="text-xl font-black text-white tracking-tight leading-none">Al-Andalus Ulul Albaab</h3>
                 <p className="text-[10px] font-bold text-cream-200/80 uppercase tracking-widest mt-2">Boarding School</p>
               </div>
             </Link>
@@ -84,7 +84,7 @@ export default function Footer() {
                   <MapPin className="w-5 h-5" />
                 </div>
                 <div className="text-sm font-medium text-cream-50/80 text-left pt-1">
-                  Jl. Cikembar No. 12, Sukabumi,<br />Jawa Barat 43157
+                  Jl. KH Mama Oyon, Cihaur,<br />Kec. Cicantayan, Kab. Sukabumi 43155
                 </div>
               </div>
               <div className="flex gap-4">
@@ -92,7 +92,7 @@ export default function Footer() {
                   <Phone className="w-5 h-5" />
                 </div>
                 <div className="text-sm font-bold text-white text-left pt-1">
-                  +62 851-1152-4441
+                  +62 888-0993-4970
                   <p className="text-[10px] text-cream-400/80 font-medium tracking-wide mt-0.5">Layanan Pelanggan</p>
                 </div>
               </div>
@@ -101,7 +101,7 @@ export default function Footer() {
                   <Mail className="w-5 h-5" />
                 </div>
                 <div className="text-sm font-bold text-white text-left pt-2.5 break-all">
-                  pesantrenalimamsukabumi@gmail.com
+                  alandalus.ululalbaab@gmail.com
                 </div>
               </div>
             </div>
@@ -112,7 +112,7 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-maroon-900 flex flex-col md:flex-row justify-between items-center gap-6">
           <p className="text-sm font-medium text-cream-50/50 order-2 md:order-1 text-center md:text-left">
-            &copy; {currentYear} Pesantren Al-Andalus Al-Imam. Hak cipta dilindungi undang-undang.
+            &copy; {currentYear} Pesantren Al-Andalus Ulul Albaab. Hak cipta dilindungi undang-undang.
           </p>
           <div className="flex flex-wrap justify-center items-center gap-6 text-sm font-bold text-cream-50/60 order-1 md:order-2">
             <Link href="#" className="hover:text-white transition-colors">Kebijakan Privasi</Link>

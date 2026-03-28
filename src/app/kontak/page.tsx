@@ -205,16 +205,16 @@ export default function ContactPage() {
                         <ContactInfoCard
                             icon={MessageCircle}
                             title="Nomor WhatsApp CS"
-                            content="+62 851-1152-4441"
-                            href="https://wa.me/6285111524441"
+                            content="+62 888-0993-4970"
+                            href="https://wa.me/6288809934970"
                             subContent="Layanan Informasi (Bpk. Admin)"
                             delay={0.2}
                         />
                         <ContactInfoCard
                             icon={Mail}
                             title="Email Resmi"
-                            content="pesantrenalimamsukabumi@gmail.com"
-                            href="mailto:pesantrenalimamsukabumi@gmail.com"
+                            content="alandalus.ululalbaab@gmail.com"
+                            href="mailto:alandalus.ululalbaab@gmail.com"
                             subContent="Surat Menyurat & Kerjasama"
                             delay={0.3}
                         />
@@ -403,7 +403,7 @@ export default function ContactPage() {
                                         Daftar PPDB Baru
                                     </button>
                                 </Link>
-                                <a href="https://wa.me/6285111524441" className="w-full sm:w-auto">
+                                <a href="https://wa.me/6288809934970" className="w-full sm:w-auto">
                                     <button className="w-full flex items-center justify-center gap-2 sm:gap-3 px-6 sm:px-10 py-3.5 sm:py-4 md:py-5 rounded-pill bg-white/10 text-white font-bold border border-white/20 hover:bg-white/20 transition-all text-sm sm:text-base md:text-lg min-h-[48px] sm:min-h-[52px]">
                                         Chat via WhatsApp
                                         <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5" />
