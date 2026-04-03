@@ -29,7 +29,7 @@ services:
     container_name: pp-ululalbaab-app
     restart: always
     ports:
-      - "3000:3000" # Port default produksi
+      - "3001:3000" # Port diubah supaya tidak bentrok dengan Al-Imam
     environment:
       DATABASE_URL: postgresql://${POSTGRES_USER:-admin_ulul}:${POSTGRES_PASSWORD:-password123}@postgres-ulul:5432/${POSTGRES_DB:-db_ululalbaab_prod}
       NEXTAUTH_URL: ${NEXTAUTH_URL:-https://ppdb.alandalus-ululalbaab.com}
