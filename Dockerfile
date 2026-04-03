@@ -19,6 +19,18 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
+# Tambahkan ARG untuk build-time (Coolify akan menyuntikkan ini)
+ARG DATABASE_URL
+ARG NEXT_PUBLIC_API_URL
+ARG NEXTAUTH_URL
+ARG NEXTAUTH_SECRET
+
+# Set ENV agar bisa dibaca oleh Next.js build
+ENV DATABASE_URL=$DATABASE_URL
+ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
+ENV NEXTAUTH_URL=$NEXTAUTH_URL
+ENV NEXTAUTH_SECRET=$NEXTAUTH_SECRET
+
 # Generate Prisma Client
 RUN npx prisma generate
 RUN npm run build

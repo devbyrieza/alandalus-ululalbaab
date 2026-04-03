@@ -21,6 +21,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        DATABASE_URL: postgresql://${POSTGRES_USER:-admin_ulul}:${POSTGRES_PASSWORD:-password123}@postgres-ulul:5432/${POSTGRES_DB:-db_ululalbaab_prod}
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-https://ppdb.alandalus-ululalbaab.com}
+        NEXTAUTH_URL: ${NEXTAUTH_URL:-https://ppdb.alandalus-ululalbaab.com}
+        NEXTAUTH_SECRET: ${NEXTAUTH_SECRET:-supersecretkeyulul123}
     container_name: pp-ululalbaab-app
     restart: always
     ports:
