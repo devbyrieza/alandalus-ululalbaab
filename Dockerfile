@@ -2,8 +2,8 @@
 # DOCKERFILE PRODUCTION - ULUL ALBAAB
 # ========================================
 
-FROM node:20-alpine AS base
-RUN apk add --no-cache libc6-compat openssl1.1-compat
+FROM node:20-slim AS base
+RUN apt-get update && apt-get install -y openssl libssl-dev ca-certificates && rm -rf /var/lib/apt/lists/*
 
 # 1. Install dependencies only when needed
 FROM base AS deps
