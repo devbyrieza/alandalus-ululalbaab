@@ -233,7 +233,7 @@ export default function DaftarPage() {
     <main className="min-h-screen bg-white py-12 md:py-24 relative overflow-hidden">
       {/* Background Decor */}
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-cream-50/50 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-cream-100/30 rounded-full blur-[120px] translate-y-1/2 -translate-x-1/2 pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-brand-yellow-100/30 rounded-full blur-[120px] translate-y-1/2 -translate-x-1/2 pointer-events-none" />
       <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-[0.02] pointer-events-none" />
 
       <Container className="relative z-10">
@@ -244,7 +244,7 @@ export default function DaftarPage() {
           className="text-center mb-16"
         >
           <div className="inline-flex items-center justify-center w-16 h-16 bg-white rounded-2xl shadow-sm border border-cream-200 mb-6 group hover:scale-110 transition-transform app-card">
-            <School className="w-8 h-8 text-maroon-600" />
+            <School className="w-8 h-8 text-brand-blue-600" />
           </div>
           <motion.h1
             initial={{ opacity: 0, y: 10 }}
@@ -327,7 +327,7 @@ export default function DaftarPage() {
                 transition={{ delay: 0.4 }}
               >
                 <div className="flex items-center gap-3 mb-8">
-                  <div className="w-10 h-10 rounded-xl bg-cream-50 flex items-center justify-center text-maroon-600 shadow-sm border border-cream-200">
+                  <div className="w-10 h-10 rounded-xl bg-cream-50 flex items-center justify-center text-brand-blue-600 shadow-sm border border-cream-200">
                     <GraduationCap className="w-6 h-6" />
                   </div>
                   <h3 className="text-2xl font-display font-black text-ink-950">Pilih Jenjang</h3>
@@ -344,14 +344,14 @@ export default function DaftarPage() {
                       whileTap={{ scale: 0.98 }}
                       onClick={() => setFormData((prev) => ({ ...prev, jenjang: option.value as any }))}
                       className={`cursor-pointer rounded-[2rem] p-6 border-2 transition-all duration-300 app-card ${formData.jenjang === option.value
-                        ? "border-maroon-600 bg-cream-50 shadow-md"
+                        ? "border-brand-blue-600 bg-cream-50 shadow-md"
                         : "border-cream-200 bg-white hover:border-maroon-200 hover:shadow-sm"
                         }`}
                     >
                       <div className="flex items-center gap-4">
-                        <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-colors ${formData.jenjang === option.value ? "border-maroon-600" : "border-cream-200"
+                        <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-colors ${formData.jenjang === option.value ? "border-brand-blue-600" : "border-cream-200"
                           }`}>
-                          {formData.jenjang === option.value && <motion.div layoutId="jk-dot-jenjang" className="w-3 h-3 rounded-full bg-maroon-600" />}
+                          {formData.jenjang === option.value && <motion.div layoutId="jk-dot-jenjang" className="w-3 h-3 rounded-full bg-brand-blue-600" />}
                         </div>
                         <div>
                           <p className="font-display font-black text-xl text-ink-950 leading-none mb-1">{option.title}</p>
@@ -376,7 +376,7 @@ export default function DaftarPage() {
                 className="space-y-8"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-cream-50 flex items-center justify-center text-maroon-600 shadow-sm border border-cream-200">
+                  <div className="w-10 h-10 rounded-xl bg-cream-50 flex items-center justify-center text-brand-blue-600 shadow-sm border border-cream-200">
                     <User className="w-6 h-6" />
                   </div>
                   <h3 className="text-2xl font-display font-black text-ink-950">Data Calon Santri</h3>
@@ -424,7 +424,7 @@ export default function DaftarPage() {
                             key={jk.val}
                             whileTap={{ scale: 0.98 }}
                             className={`flex-1 flex items-center justify-center px-4 md:px-6 py-3 md:py-4 rounded-[1.5rem] md:rounded-[2rem] border-2 cursor-pointer transition-all duration-300 text-sm md:text-base ${formData.jenis_kelamin === jk.val
-                              ? "bg-maroon-900 border-maroon-900 text-white font-black shadow-md"
+                              ? "bg-brand-blue-900 border-brand-blue-900 text-white font-black shadow-md"
                               : "bg-cream-50 border-transparent text-ink-600 hover:border-maroon-200 hover:bg-white"
                               }`}>
                             <input
@@ -452,7 +452,7 @@ export default function DaftarPage() {
                 className="space-y-8"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-cream-50 flex items-center justify-center text-maroon-600 shadow-sm border border-cream-200">
+                  <div className="w-10 h-10 rounded-xl bg-cream-50 flex items-center justify-center text-brand-blue-600 shadow-sm border border-cream-200">
                     <Phone className="w-6 h-6" />
                   </div>
                   <h3 className="text-2xl font-display font-black text-ink-950">Kontak Verifikasi</h3>
@@ -503,7 +503,7 @@ export default function DaftarPage() {
                   whileTap={{ scale: 0.98 }}
                   type="submit"
                   disabled={isLoading}
-                  className="w-full py-4 md:py-6 rounded-pill bg-maroon-900 text-white font-black text-lg md:text-xl hover:bg-cream-100 hover:text-maroon-900 shadow-md border border-maroon-900 transition-all flex items-center justify-center gap-3 disabled:opacity-50"
+                  className="w-full py-4 md:py-6 rounded-pill bg-brand-blue-900 text-white font-black text-lg md:text-xl hover:bg-brand-yellow-100 hover:text-brand-blue-900 shadow-md border border-brand-blue-900 transition-all flex items-center justify-center gap-3 disabled:opacity-50"
                 >
                   {isLoading ? (
                     <>
@@ -516,7 +516,7 @@ export default function DaftarPage() {
                 </motion.button>
 
                 <p className="text-center text-sm text-ink-600 font-bold uppercase tracking-widest mt-8">
-                  Punya Akun? <Link href="/login" className="text-maroon-700 hover:text-cream-100 hover:bg-maroon-900 px-3 py-1 rounded-full transition-colors">Masuk di sini</Link>
+                  Punya Akun? <Link href="/login" className="text-brand-blue-700 hover:text-brand-yellow-100 hover:bg-brand-blue-900 px-3 py-1 rounded-full transition-colors">Masuk di sini</Link>
                 </p>
               </motion.div>
 
@@ -531,7 +531,7 @@ export default function DaftarPage() {
           transition={{ delay: 0.8 }}
           className="mt-12 text-center"
         >
-          <Link href="/" className="inline-flex items-center gap-2 text-ink-600 hover:text-maroon-700 text-xs font-black uppercase tracking-widest transition-colors">
+          <Link href="/" className="inline-flex items-center gap-2 text-ink-600 hover:text-brand-blue-700 text-xs font-black uppercase tracking-widest transition-colors">
             <RefreshCw className="w-3.5 h-3.5" /> Kembali Ke Beranda
           </Link>
         </motion.div>
