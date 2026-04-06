@@ -98,6 +98,7 @@ function PPDBContent() {
   const stats = [
     { label: "Kuota MTs", value: "25 Santri", icon: Users },
     { label: "Kuota I'dad", value: "25 Santri", icon: Users },
+    { label: "Kuota SMA", value: "25 Santri", icon: Users },
     { label: "Asatidz", value: "Lulusan Terbaik", icon: GraduationCap },
     { label: "Target", value: "TimTeng & PTN Favorit", icon: Target },
   ];

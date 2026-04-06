@@ -8,6 +8,14 @@ const prisma = new PrismaClient();
 async function main() {
     console.log('Start seeding...');
 
+    // Ambil Nama Sekolah langsung dari Env (Menghindari bug hoisting)
+    const schoolName = process.env.NEXT_PUBLIC_SCHOOL_NAME || 'Al-Andalus PPDB';
+
+    // Tentukan Suffix Email berdasarkan Branding
+    const emailSuffix = schoolName.toLowerCase().includes('al-imam') 
+        ? 'alimam.com' 
+        : 'ululalbaab.com';
+
     // 1. Seed Tahun Ajaran
     let tahunAjaran = await prisma.tahunAjaran.findFirst({
         where: { is_active: true }
@@ -19,9 +27,9 @@ async function main() {
             tahunAjaran = await prisma.tahunAjaran.update({
                 where: { id: tahunAjaran.id },
                 data: {
-                    nama: '2025/2026',
-                    tahun_mulai: 2025,
-                    tahun_selesai: 2026,
+                    nama: '2026/2027',
+                    tahun_mulai: 2026,
+                    tahun_selesai: 2027,
                 }
             });
         } catch (e) {
@@ -35,12 +43,12 @@ async function main() {
                 update: { is_active: true },
                 create: {
                     id: '11111111-1111-1111-1111-111111111111',
-                    tahun_mulai: 2025,
-                    tahun_selesai: 2026,
-                    nama: '2025/2026',
+                    tahun_mulai: 2026,
+                    tahun_selesai: 2027,
+                    nama: '2026/2027',
                     is_active: true,
-                    tanggal_buka_pendaftaran: new Date('2025-01-01'),
-                    tanggal_tutup_pendaftaran: new Date('2025-12-31'),
+                    tanggal_buka_pendaftaran: new Date('2026-01-01'),
+                    tanggal_tutup_pendaftaran: new Date('2026-12-31'),
                     biaya_pendaftaran: 250000,
                 },
             });
@@ -52,26 +60,32 @@ async function main() {
 
     console.log('Using Tahun Ajaran:', tahunAjaran.nama);
 
-    // 2. Create Users (Profiles) DIRECTLY in Database (No Supabase Auth)
-    const usersToCreate = [
-        { email: 'admin@ululalbaab.com', password: 'password123', role: 'admin_super', name: 'Super Admin', phone: '081234567890', label: 'ADMIN_SUPER' },
-
-        // Specific Role Admins
-        { email: 'admin.berkas@ululalbaab.com', password: 'password123', role: 'admin_berkas', name: 'Admin Berkas', phone: '081234567801', label: 'ADMIN_BERKAS' },
-        { email: 'admin.keuangan@ululalbaab.com', password: 'password123', role: 'admin_keuangan', name: 'Admin Keuangan', phone: '081234567802', label: 'ADMIN_KEUANGAN' },
-        { email: 'penguji@ululalbaab.com', password: 'password123', role: 'penguji', name: 'Ustadz Penguji', phone: '081234567803', label: 'PENGUJI' },
-
-        // Pendaftar Test Accounts
-        { email: 'user.draft@example.com', password: 'password123', role: 'pendaftar', name: 'Ahmad Draft', phone: '081234567891', label: 'DRAFT' },
-        { email: 'user.pending@example.com', password: 'password123', role: 'pendaftar', name: 'Budi Pending', phone: '081234567892', label: 'PENDING' },
-        { email: 'user.verified@example.com', password: 'password123', role: 'pendaftar', name: 'Citra Verified', phone: '081234567893', label: 'VERIFIED' },
-        { email: 'user.completed@example.com', password: 'password123', role: 'pendaftar', name: 'Dewi Completed', phone: '081234567894', label: 'COMPLETED' },
+    // 2. Create Users (Profiles) DIRECTLY in Database
+    const staffToCreate = [
+        { prefix: 'admin', name: 'Super Admin', role: 'admin_super', phone: '081234567890', label: 'ADMIN_SUPER' },
+        { prefix: 'admin.berkas', name: 'Admin Berkas', role: 'admin_berkas', phone: '081234567801', label: 'ADMIN_BERKAS' },
+        { prefix: 'admin.keuangan', name: 'Admin Keuangan', role: 'admin_keuangan', phone: '081234567802', label: 'ADMIN_KEUANGAN' },
+        { prefix: 'penguji', name: 'Ustadz Penguji', role: 'penguji', phone: '081234567803', label: 'PENGUJI' },
+        { prefix: 'headit', name: 'Head of IT', role: 'head_of_it', phone: '085111524441', label: 'HEADIT' }
     ];
+
+    const usersToCreate = staffToCreate.map(s => {
+        const firstName = s.name.split(' ')[0];
+        const capitalFirstName = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
+        return {
+            email: `${s.prefix}@${emailSuffix}`,
+            password: `${capitalFirstName}26!`,
+            role: s.role,
+            name: s.name,
+            phone: s.phone,
+            label: s.label
+        };
+    });
 
     const createdUsers: Record<string, string> = {};
 
     for (const u of usersToCreate) {
-        console.log(`Processing user: ${u.email}...`);
+        console.log(`Processing user: ${u.email} (Password: ${u.password})...`);
 
         // Check if profile exists by email
         const existingProfile = await prisma.profile.findFirst({
@@ -98,7 +112,7 @@ async function main() {
             });
             console.log(`Created new user: ${u.email}`);
         } else {
-            // Update existing profile (optional, to ensure password matches)
+            // Update existing profile (ensure password matches our new rules)
             const hashedPassword = await bcrypt.hash(u.password, 10);
             await prisma.profile.update({
                 where: { id: userId },
@@ -150,7 +164,7 @@ async function main() {
             nik: '3201000000000002',
             nama_lengkap: 'Budi Pending',
             jenis_kelamin: 'L',
-            jenjang: 'MA',
+            jenjang: 'SMA',
             tempat_lahir: 'Jakarta',
             tanggal_lahir: new Date('2010-01-01'),
             alamat: 'Jl. Merdeka No. 1',
@@ -235,7 +249,7 @@ async function main() {
             nik: '3201000000000004',
             nama_lengkap: 'Dewi Completed',
             jenis_kelamin: 'P',
-            jenjang: 'MA',
+            jenjang: 'SMA',
             status_pendaftaran: 'accepted',
             verifikasi_status: 'verified',
         },

@@ -13,6 +13,7 @@ import {
   ArrowUpRight
 } from "lucide-react";
 import { Container } from "@/components/layout/Container";
+import { BRANDING } from "@/config/branding";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -29,11 +30,11 @@ export default function Footer() {
           <div className="lg:col-span-1 space-y-8">
             <Link href="/" className="flex items-center gap-4">
               <div className="w-12 h-12 rounded-2xl flex items-center justify-center bg-brand-yellow-50 text-brand-blue-950 shadow-md overflow-hidden">
-                <img src="/images/logo.webp" alt="Logo Al-Andalus Ulul Albaab" className="w-full h-full object-cover" />
+                <img src={BRANDING.logoPath} alt={`Logo ${BRANDING.schoolName}`} className="w-full h-full object-cover" />
               </div>
               <div>
-                <h3 className="text-xl font-black text-white tracking-tight leading-none">Al-Andalus Ulul Albaab</h3>
-                <p className="text-[10px] font-bold text-brand-yellow-100/80 uppercase tracking-widest mt-2">Boarding School</p>
+                <h3 className="text-xl font-black text-white tracking-tight leading-none">{BRANDING.schoolName}</h3>
+                <p className="text-[10px] font-bold text-brand-yellow-100/80 uppercase tracking-widest mt-2">{BRANDING.schoolName.includes("Al-Andalus") ? "Islamic Boarding School" : "Academic Center"}</p>
               </div>
             </Link>
             <p className="text-brand-yellow-100/80 font-medium leading-relaxed max-w-xs text-justify">
@@ -112,7 +113,7 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-brand-blue-900 flex flex-col md:flex-row justify-between items-center gap-6">
           <p className="text-sm font-medium text-brand-yellow-100/50 order-2 md:order-1 text-center md:text-left">
-            &copy; {currentYear} Pesantren Al-Andalus Ulul Albaab. Hak cipta dilindungi undang-undang.
+            &copy; {currentYear} {BRANDING.schoolName}. Hak cipta dilindungi undang-undang.
           </p>
           <div className="flex flex-wrap justify-center items-center gap-6 text-sm font-bold text-brand-yellow-100/60 order-1 md:order-2">
             <Link href="#" className="hover:text-white transition-colors">Kebijakan Privasi</Link>

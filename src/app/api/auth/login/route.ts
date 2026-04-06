@@ -113,9 +113,8 @@ export async function POST(request: NextRequest) {
         );
       }
 
-      const isDevBypass = email === 'admin@ululalbaab.com' && password === 'password123';
       const isValid = await comparePassword(password, profile.password_hash);
-      if (!isValid && !isDevBypass) {
+      if (!isValid) {
         return NextResponse.json(
           { error: "Email atau Password salah" },
           { status: 401 },

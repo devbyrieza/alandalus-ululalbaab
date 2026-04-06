@@ -16,28 +16,28 @@
   --font-display: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-arabic: "Amiri", "Traditional Arabic", "Arabic Typesetting", serif;
 
-  /* ─── Biru Cerah (Primary) — Ulul Albaab Iconic ─── */
-  --color-brand-blue-50:  #f0f7ff;
-  --color-brand-blue-100: #e0efff;
-  --color-brand-blue-200: #bae0ff;
-  --color-brand-blue-300: #7cc2ff;
-  --color-brand-blue-400: #38a1ff;
-  --color-brand-blue-500: #0084ff;
-  --color-brand-blue-600: #0066ff; /* Main Brand Blue */
-  --color-brand-blue-700: #0052cc;
-  --color-brand-blue-800: #0042a3;
-  --color-brand-blue-900: #003380;
-  --color-brand-blue-950: #002257;
+  /* ─── Biru Cerah (Primary) — Dynamic Scaling ─── */
+  --color-brand-blue-50:  color-mix(in srgb, var(--brand-primary) 5%, white);
+  --color-brand-blue-100: color-mix(in srgb, var(--brand-primary) 15%, white);
+  --color-brand-blue-200: color-mix(in srgb, var(--brand-primary) 30%, white);
+  --color-brand-blue-300: color-mix(in srgb, var(--brand-primary) 50%, white);
+  --color-brand-blue-400: color-mix(in srgb, var(--brand-primary) 70%, white);
+  --color-brand-blue-500: var(--brand-primary);
+  --color-brand-blue-600: var(--brand-primary); /* Main Brand Color */
+  --color-brand-blue-700: color-mix(in srgb, var(--brand-primary) 85%, black);
+  --color-brand-blue-800: color-mix(in srgb, var(--brand-primary) 75%, black);
+  --color-brand-blue-900: color-mix(in srgb, var(--brand-primary) 60%, black);
+  --color-brand-blue-950: color-mix(in srgb, var(--brand-primary) 45%, black);
 
-  /* ─── Kuning Tua Cerah (Secondary) — Ulul Albaab Iconic ─── */
-  --color-brand-yellow-50:  #fffdf0;
-  --color-brand-yellow-100: #fff8bf;
-  --color-brand-yellow-200: #fff180;
-  --color-brand-yellow-300: #ffe840;
-  --color-brand-yellow-400: #ffd600; /* Main Brand Yellow */
-  --color-brand-yellow-500: #e6c100;
-  --color-brand-yellow-600: #bfa100;
-  --color-brand-yellow-700: #998100;
+  /* ─── Kuning Tua Cerah (Secondary) — Dynamic Scaling ─── */
+  --color-brand-yellow-50:  color-mix(in srgb, var(--brand-secondary) 5%, white);
+  --color-brand-yellow-100: color-mix(in srgb, var(--brand-secondary) 20%, white);
+  --color-brand-yellow-200: color-mix(in srgb, var(--brand-secondary) 40%, white);
+  --color-brand-yellow-300: color-mix(in srgb, var(--brand-secondary) 70%, white);
+  --color-brand-yellow-400: var(--brand-secondary); /* Main Secondary Color */
+  --color-brand-yellow-500: color-mix(in srgb, var(--brand-secondary) 85%, black);
+  --color-brand-yellow-600: color-mix(in srgb, var(--brand-secondary) 70%, black);
+  --color-brand-yellow-700: color-mix(in srgb, var(--brand-secondary) 55%, black);
 
   /* ─── White / Surface ─── */
   --color-white: #FFFFFF;

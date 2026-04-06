@@ -26,7 +26,7 @@ interface FormData {
   tanggal_lahir: string;
   no_hp: string;
   jenis_kelamin: "L" | "P" | "";
-  jenjang: "MTs" | "IL" | "";
+  jenjang: "MTs" | "IL" | "SMA" | "";
 }
 
 // ========================================
@@ -63,12 +63,12 @@ const InputField = ({
 
 export default function DaftarPage() {
   const router = useRouter();
-  const [jenjangFromUrl, setJenjangFromUrl] = useState<"MTs" | "IL" | "">("");
+  const [jenjangFromUrl, setJenjangFromUrl] = useState<"MTs" | "IL" | "SMA" | "">("");
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search);
-      const jenjang = params.get('jenjang') as "MTs" | "IL" | null;
+      const jenjang = params.get('jenjang') as "MTs" | "IL" | "SMA" | null;
       if (jenjang) {
         setJenjangFromUrl(jenjang);
       }
@@ -337,29 +337,61 @@ export default function DaftarPage() {
                   {[
                     { value: "MTs", title: "Madrasah Tsanawiyah", subtitle: "Lulusan SD/Sederajat" },
                     { value: "IL", title: "I'dad Lughowi", subtitle: "Lulusan SMP/Sederajat" },
-                  ].map((option) => (
-                    <motion.div
-                      key={option.value}
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      onClick={() => setFormData((prev) => ({ ...prev, jenjang: option.value as any }))}
-                      className={`cursor-pointer rounded-[2rem] p-6 border-2 transition-all duration-300 app-card ${formData.jenjang === option.value
-                        ? "border-brand-blue-600 bg-cream-50 shadow-md"
-                        : "border-cream-200 bg-white hover:border-maroon-200 hover:shadow-sm"
+                    { value: "SMA", title: "Madrasah Aliyah (SMA)", subtitle: "Lulusan SMP/Sederajat" },
+                  ].map((option) => {
+                    const isPutra = formData.jenis_kelamin === "L";
+                    const isClosedForPutra = isPutra && (option.value === "MTs" || option.value === "IL");
+                    
+                    return (
+                      <motion.div
+                        key={option.value}
+                        whileHover={isClosedForPutra ? {} : { scale: 1.02 }}
+                        whileTap={isClosedForPutra ? {} : { scale: 0.98 }}
+                        onClick={() => {
+                          if (isClosedForPutra) return;
+                          setFormData((prev) => ({ ...prev, jenjang: option.value as any }));
+                        }}
+                        className={`relative cursor-pointer rounded-[2rem] p-6 border-2 transition-all duration-300 app-card ${
+                          isClosedForPutra 
+                            ? "opacity-50 grayscale cursor-not-allowed border-cream-200 bg-stone-50"
+                            : formData.jenjang === option.value
+                              ? "border-brand-blue-600 bg-cream-50 shadow-md"
+                              : "border-cream-200 bg-white hover:border-maroon-200 hover:shadow-sm"
                         }`}
-                    >
-                      <div className="flex items-center gap-4">
-                        <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-colors ${formData.jenjang === option.value ? "border-brand-blue-600" : "border-cream-200"
+                      >
+                        {isClosedForPutra && (
+                          <div className="absolute top-4 right-4 bg-red-600 text-white text-[10px] font-black px-2 py-1 rounded-full uppercase tracking-tighter">
+                            Kuota Penuh / Tutup
+                          </div>
+                        )}
+                        
+                        <div className="flex items-center gap-4">
+                          <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-colors ${
+                            formData.jenjang === option.value ? "border-brand-blue-600" : "border-cream-200"
                           }`}>
-                          {formData.jenjang === option.value && <motion.div layoutId="jk-dot-jenjang" className="w-3 h-3 rounded-full bg-brand-blue-600" />}
+                            {formData.jenjang === option.value && <motion.div layoutId="jk-dot-jenjang" className="w-3 h-3 rounded-full bg-brand-blue-600" />}
+                          </div>
+                          <div>
+                            <p className="font-display font-black text-xl text-ink-950 leading-none mb-1">{option.title}</p>
+                            <p className="text-xs text-ink-600 font-black uppercase tracking-widest">{option.subtitle}</p>
+                          </div>
                         </div>
-                        <div>
-                          <p className="font-display font-black text-xl text-ink-950 leading-none mb-1">{option.title}</p>
-                          <p className="text-xs text-ink-600 font-black uppercase tracking-widest">{option.subtitle}</p>
-                        </div>
-                      </div>
-                    </motion.div>
-                  ))}
+
+                        {/* Special Note for SMA Putri */}
+                        {option.value === "SMA" && formData.jenis_kelamin === "P" && (
+                          <motion.div 
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: "auto" }}
+                            className="mt-4 p-3 bg-brand-yellow-100/30 rounded-xl border border-brand-yellow-200/50"
+                          >
+                            <p className="text-[10px] leading-relaxed text-brand-blue-900 font-bold italic">
+                              * Khusus pendaftar SMA Putri langsung (tanpa I'dad): Wajib memiliki hafalan 5 Juz Mutqin & lancar berbahasa Arab.
+                            </p>
+                          </motion.div>
+                        )}
+                      </motion.div>
+                    );
+                  })}
                 </div>
                 {fieldErrors.jenjang && (
                   <p className="text-xs text-red-600 mt-4 font-bold flex items-center gap-1 ml-1">

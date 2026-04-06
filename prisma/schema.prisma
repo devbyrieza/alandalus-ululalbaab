@@ -13,7 +13,7 @@ model Profile {
   role                  String                @default("pendaftar")
   secondary_roles       String[]              @default([])
   full_name             String
-  email                 String?
+  email                 String?               @unique
   phone                 String
   created_at            DateTime              @default(now()) @db.Timestamptz(6)
   updated_at            DateTime              @default(now()) @db.Timestamptz(6)

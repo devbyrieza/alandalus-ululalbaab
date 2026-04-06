@@ -121,8 +121,8 @@ export default function LoginPage() {
       return;
     }
 
-    if (!/^(MTI|MTA|ILI|ILA|MAI|MAA)\d{6,8}$/.test(nomorPendaftaran)) {
-      setError("Format nomor pendaftaran tidak valid (contoh: MTI2600001)");
+    if (!/^[A-Z0-9]{5,15}$/i.test(nomorPendaftaran)) {
+      setError("Format nomor pendaftaran tidak valid (pastikan hanya berisi huruf dan angka tanpa spasi)");
       setIsLoading(false);
       return;
     }

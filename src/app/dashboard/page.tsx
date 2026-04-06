@@ -41,6 +41,10 @@ interface PendaftarData {
   jenjang: string;
   status_pendaftaran: StatusProses;
   created_at: string;
+  kelurahan?: string | null;
+  kecamatan?: string | null;
+  kabupaten?: string | null;
+  asal_sekolah?: string | null;
 }
 
 const STATUS_LABELS: Record<
@@ -298,10 +302,10 @@ export default function DashboardPage() {
     bg: "bg-brand-blue-50",
     border: "border-brand-blue-200",
     text: "text-brand-blue-700",
-    icon: Clock,
-    message: "Status pendaftaran Anda sedang diproses.",
   };
   const StatusIcon = statusInfo.icon;
+
+  const isDataIncomplete = !pendaftar.kelurahan || !pendaftar.kecamatan || !pendaftar.kabupaten || !pendaftar.asal_sekolah;
 
   return (
     <main className="min-h-screen bg-white relative overflow-hidden pb-24">
@@ -366,6 +370,34 @@ export default function DashboardPage() {
           </div>
         </Container>
       </section>
+
+      {/* MISSING DATA BANNER */}
+      {isDataIncomplete && (
+        <section className="bg-brand-yellow-400 border-y border-brand-yellow-500 relative z-20">
+          <Container>
+            <div className="py-4 md:py-5 flex flex-col md:flex-row items-center gap-4 justify-between">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-brand-yellow-600 shadow-sm shrink-0">
+                  <AlertCircle className="w-6 h-6 animate-pulse" />
+                </div>
+                <div>
+                  <h3 className="text-brand-blue-950 font-black text-lg md:text-xl leading-none mb-1 tracking-tight">Tindakan Diperlukan!</h3>
+                  <p className="text-brand-blue-900/80 font-bold text-sm md:text-base leading-snug">
+                    Data Wilayah (Kelurahan, Kecamatan, Kabupaten) atau Asal Sekolah Anda belum lengkap.<br className="hidden md:block" /> 
+                    Mohon lengkapi sekarang juga agar proses pendaftaran berjalan lancar.
+                  </p>
+                </div>
+              </div>
+              <Link 
+                href="/dashboard/pendaftar" 
+                className="shrink-0 bg-brand-blue-950 text-white px-6 py-3 rounded-full font-black text-sm uppercase tracking-widest hover:bg-brand-blue-800 transition-colors shadow-lg active:scale-95"
+              >
+                Lengkapi Data
+              </Link>
+            </div>
+          </Container>
+        </section>
+      )}
 
       {/* MAIN CONTENT */}
       <Container className="pt-16 md:pt-24 relative z-10">

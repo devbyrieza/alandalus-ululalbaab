@@ -41,6 +41,8 @@ const ICON_MAP: Record<string, any> = {
     UserCog
 };
 
+import { BRANDING } from "@/config/branding";
+
 interface AdminSidebarProps {
     children: React.ReactNode;
     userRole: UserRole | null;
@@ -119,7 +121,7 @@ export default function AdminSidebar({ children, userRole, adminName, userId, av
                     <Menu className="w-6 h-6" />
                 </button>
 
-                <span className="font-bold text-ink-900">Panel Admin</span>
+                <span className="font-bold text-ink-900">{BRANDING.dashboardTitle}</span>
 
                 <div className="w-8 h-8 rounded-full bg-linear-to-br from-brand-blue-700 to-brand-blue-900 flex items-center justify-center text-white text-xs font-black shadow-md border border-brand-yellow-100">
                     {adminName.charAt(0)}
@@ -138,7 +140,7 @@ export default function AdminSidebar({ children, userRole, adminName, userId, av
                                 </div>
                                 <div>
                                     <h1 className="font-black text-lg text-brand-blue-950 leading-tight">Panel <span className="text-brand-blue-700">Admin</span></h1>
-                                    <p className="text-[10px] text-ink-400 font-bold tracking-widest uppercase mt-0.5">Ulul Albaab PPDB</p>
+                                    <p className="text-[10px] text-ink-400 font-bold tracking-widest uppercase mt-0.5">{BRANDING.schoolShortName} PPDB</p>
                                 </div>
                             </div>
 

@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Wablas WhatsApp API Service
  * 
  * This service handles all WhatsApp notifications via Wablas API
@@ -459,7 +459,7 @@ export async function notifyRegistrationSuccess(data: {
             nama: data.nama,
             nomor_pendaftaran: data.nomor_pendaftaran,
             jenjang: data.jenjang === 'MTs' ? 'Madrasah Tsanawiyah (MTs)' : "I'dad Lughowi (Setara SMA)",
-            dashboard_url: `${process.env.NEXT_PUBLIC_APP_URL || 'https://pesantren-ululalbaab.com'}/dashboard/pendaftar`,
+            dashboard_url: `${process.env.NEXT_PUBLIC_APP_URL || 'https://ppdb.alandalus-ululalbaab.com'}/dashboard/pendaftar`,
             kontak: '0888-0993-4970',
         },
     });
@@ -484,7 +484,7 @@ export async function notifyDocumentVerified(data: {
             nama: data.nama,
             dokumen_list: data.dokumen_list,
             catatan: data.catatan || '',
-            dashboard_url: `${process.env.NEXT_PUBLIC_APP_URL || 'https://pesantren-ululalbaab.com'}/dashboard/pendaftar/${data.status === 'verified' ? 'undangan-seleksi' : 'upload-berkas'}`,
+            dashboard_url: `${process.env.NEXT_PUBLIC_APP_URL || 'https://ppdb.alandalus-ululalbaab.com'}/dashboard/pendaftar/${data.status === 'verified' ? 'undangan-seleksi' : 'upload-berkas'}`,
             kontak: '0888-0993-4970',
         },
     });
@@ -513,7 +513,7 @@ export async function notifyPaymentVerified(data: {
             metode: data.metode,
             tanggal: data.tanggal,
             catatan: data.catatan || '',
-            dashboard_url: `${process.env.NEXT_PUBLIC_APP_URL || 'https://pesantren-ululalbaab.com'}/dashboard/pendaftar/${data.status === 'verified' ? 'kelengkapan-berkas' : 'pembayaran-pendaftaran'}`,
+            dashboard_url: `${process.env.NEXT_PUBLIC_APP_URL || 'https://ppdb.alandalus-ululalbaab.com'}/dashboard/pendaftar/${data.status === 'verified' ? 'kelengkapan-berkas' : 'pembayaran-pendaftaran'}`,
             kontak: '0888-0993-4970',
         },
     });
@@ -556,7 +556,7 @@ export async function notifyTestSchedule(data: {
         tanggal: data.tanggal,
         waktu: data.waktu,
         tempat: data.tempat,
-        dashboard_url: `${process.env.NEXT_PUBLIC_APP_URL || 'https://pesantren-ululalbaab.com'}/dashboard/pendaftar/undangan-seleksi`,
+        dashboard_url: `${process.env.NEXT_PUBLIC_APP_URL || 'https://ppdb.alandalus-ululalbaab.com'}/dashboard/pendaftar/undangan-seleksi`,
     };
 
     Object.entries(variables).forEach(([key, value]) => {
@@ -608,7 +608,7 @@ export async function notifyStatusChange(data: {
             nama: data.nama,
             jenjang: data.jenjang || '-',
             tahun_ajaran: data.tahun_ajaran || '2025/2026',
-            dashboard_url: `${process.env.NEXT_PUBLIC_APP_URL || 'https://pesantren-ululalbaab.com'}/dashboard/pendaftar/${data.status === 'accepted' ? 'daftar-ulang' : 'pengumuman'}`,
+            dashboard_url: `${process.env.NEXT_PUBLIC_APP_URL || 'https://ppdb.alandalus-ululalbaab.com'}/dashboard/pendaftar/${data.status === 'accepted' ? 'daftar-ulang' : 'pengumuman'}`,
         },
     });
 }

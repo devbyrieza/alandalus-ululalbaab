@@ -7,6 +7,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ArrowRight } from "lucide-react";
 import { scrollToSection, scrollToTop, navigateToDetail } from "@/lib/navigation-scroll";
 
+import { BRANDING } from "@/config/branding";
+
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -93,16 +95,16 @@ export default function Navbar() {
             <Link href="/" onClick={handleBerandaClick} className="flex items-center gap-3 group min-h-[44px]">
               <div className="relative">
                 <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-[14px] flex items-center justify-center bg-brand-blue-700 shadow-brand-blue-900/20 shadow-lg transition-transform duration-500 group-hover:scale-105 group-hover:-rotate-3 overflow-hidden">
-                  <img src="/images/logo.webp" alt="Logo Ulul Albaab" className="w-full h-full object-cover" />
+                  <img src={BRANDING.logoPath} alt={`Logo ${BRANDING.schoolName}`} className="w-full h-full object-cover" />
                 </div>
                 <div className="absolute -bottom-1 -right-1 w-3.5 h-3.5 bg-emerald-500 border-2 border-white rounded-full z-10" />
               </div>
               <div className="block">
                 <h1 className="text-base sm:text-lg font-black text-brand-blue-900 leading-none tracking-tight">
-                  Ulul Albaab
+                  {BRANDING.schoolShortName}
                 </h1>
                 <p className="text-[9px] sm:text-[10px] font-bold text-brand-blue-600/70 uppercase tracking-widest mt-0.5 leading-tight">
-                  Managed by Al-Andalus
+                  {BRANDING.schoolName.includes("Al-Andalus") ? "Islamic Boarding School" : "Managed by Al-Andalus"}
                 </p>
               </div>
             </Link>
