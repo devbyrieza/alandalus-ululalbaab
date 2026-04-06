@@ -750,9 +750,11 @@ export default function DataLengkapForm({ onSuccess }: { onSuccess?: () => void 
     ))
   ));
 
-  const isLocked = !['draft', 'awaiting_payment', 'verified', 'rejected'].includes(statusPendaftaran);
+  // Ulul Albaab: Buka kunci pengisian data untuk semua status 
+  // agar pendaftar lama bisa melengkapi data kapan pun, sesuai arahan panitia.
+  const isLocked = false;
   const isEditMode = requestStatus?.status === 'approved_to_edit';
-  const canEdit = !isLocked || isEditMode;
+  const canEdit = true;
 
   if (loading) {
     return (
