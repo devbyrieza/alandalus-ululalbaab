@@ -384,15 +384,15 @@ export default function DaftarPage() {
                           </div>
                         </div>
 
-                        {/* Special Note for SMA Putri */}
-                        {option.value === "SMA" && formData.jenis_kelamin === "P" && (
+                        {/* Special Note for SMA */}
+                        {option.value === "SMA" && (
                           <motion.div 
                             initial={{ opacity: 0, height: 0 }}
                             animate={{ opacity: 1, height: "auto" }}
-                            className="mt-4 p-3 bg-brand-yellow-100/30 rounded-xl border border-brand-yellow-200/50"
+                            className="mt-4 p-3 bg-brand-yellow-100/30 rounded-xl border border-brand-yellow-200/50 relative z-0"
                           >
                             <p className="text-[10px] leading-relaxed text-brand-blue-900 font-bold italic">
-                              * Khusus pendaftar SMA Putri langsung (tanpa I'dad): Wajib memiliki hafalan 5 Juz Mutqin & lancar berbahasa Arab.
+                              * Syarat pendaftar SMA langsung (tanpa I'dad): Wajib memiliki hafalan minimal 5 Juz Mutqin & lancar berbahasa Arab.
                             </p>
                           </motion.div>
                         )}
