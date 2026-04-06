@@ -71,13 +71,13 @@ export default function AboutSection() {
 
                 <div className="badge badge-maroon mb-4">Visi Utama</div>
 
-                <h3 className="text-2xl md:text-3xl font-display font-bold text-ink-950 mb-6 tracking-tight">Visi Kami</h3>
+                <h3 className="text-2xl md:text-3xl font-display font-bold text-ink-950 mb-6 tracking-tight">Kaderisasi Ummat</h3>
 
                 <blockquote className="relative max-w-3xl mx-auto">
-                  <p className="text-maroon-900 leading-snug font-black text-2xl md:text-4xl italic">
-                    "Mencetak Generasi yang Memiliki Pribadi Hanif, Kontributif, dan Adaptif."
+                  <p className="text-brand-blue-900 leading-snug font-black text-2xl md:text-4xl italic">
+                    "Rabbani, Cendekia, Mandiri"
                   </p>
-                  <div className="mt-8 w-12 h-1.5 bg-cream-300 rounded-full mx-auto" />
+                  <div className="mt-8 w-12 h-1.5 bg-brand-yellow-400 rounded-full mx-auto shadow-sm" />
                 </blockquote>
               </div>
             </motion.div>
@@ -96,24 +96,23 @@ export default function AboutSection() {
                       <Rocket className="w-8 h-8 text-maroon-600" />
                     </div>
                     <div>
-                      <h3 className="text-2xl md:text-3xl font-display font-bold text-ink-950 tracking-tight mb-2">Misi Kami</h3>
-                      <div className="badge badge-cream">Langkah Strategis</div>
+                <div className="badge badge-warning">Langkah Strategis</div>
                     </div>
                   </div>
                 </div>
 
                 <ul className="grid md:grid-cols-2 gap-x-12 gap-y-8">
                   {[
-                    "Membentuk pribadi Hanif: lurus akidahnya, benar ibadahnya, dan baik akhlaqnya.",
-                    "Membentuk pribadi Kontributif: memiliki karya, gagasan, dan peran nyata bagi lingkungannya.",
-                    "Membentuk pribadi Adaptif: terbuka terhadap kritik, cerdas membaca realitas, kuat menjaga prinsip.",
-                    "Menanamkan jiwa dakwah melalui Bimbingan & Pengawasan Melekat tanpa kekerasan dan luka pengasuhan."
+                    "Menyelenggarakan pendidikan Berbasis TICE (Tahfidz, Islamic Curriculum, dan Entrepreneurship).",
+                    "Mencetak Hamalatul Quran dengan bekal ilmu syar'i yang mumpuni.",
+                    "Menanamkan Jiwa Entrepreneur Muslim yang berwawasan Global.",
+                    "Pembiasaan Ibadah Diniyah & Penanaman Karakter Islami yang berbasis Kesadaran."
                   ].map((misi, i) => (
-                    <li key={i} className="flex gap-4 items-start p-4 rounded-xl bg-cream-50/50 border border-cream-100">
-                      <div className="mt-0.5 w-6 h-6 rounded-full bg-cream-200 flex items-center justify-center shrink-0 text-maroon-700">
+                    <li key={i} className="flex gap-4 items-start p-4 rounded-xl bg-gradient-to-br from-brand-blue-50 to-white border border-brand-blue-100 shadow-sm">
+                      <div className="mt-0.5 w-6 h-6 rounded-full bg-brand-yellow-400 flex items-center justify-center shrink-0 text-white shadow-sm">
                         <CheckCircle className="w-3.5 h-3.5" />
                       </div>
-                      <p className="text-[15px] font-medium text-ink-700 leading-relaxed">
+                      <p className="text-[15px] font-medium text-brand-blue-900 leading-relaxed">
                         {misi}
                       </p>
                     </li>

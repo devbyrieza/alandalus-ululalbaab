@@ -131,10 +131,10 @@ export default function TentangPage() {
                                         <Award className="w-6 h-6 md:w-8 md:h-8" />
                                     </div>
                                     <div>
-                                        <p className="text-2xl sm:text-3xl md:text-4xl font-black text-ink-950 tracking-tight leading-none mb-1">1995</p>
-                                        <p className="text-brand-blue-700 font-bold text-[9px] md:text-[10px] uppercase tracking-widest mb-1.5 md:mb-2">Tahun Berdiri</p>
+                                        <p className="text-2xl sm:text-3xl md:text-4xl font-black text-ink-950 tracking-tight leading-none mb-1">2023</p>
+                                        <p className="text-brand-blue-700 font-bold text-[9px] md:text-[10px] uppercase tracking-widest mb-1.5 md:mb-2">Transformasi Baru</p>
                                         <div className="text-[9px] md:text-[10px] font-bold text-brand-blue-900 bg-brand-blue-50 px-2.5 py-1.5 rounded-lg border border-brand-blue-100 leading-tight">
-                                            Mulai Januari 2026 dikelola <br className="block sm:hidden" /> sepenuhnya oleh Al-Andalus
+                                            Mulai Pertengahan 2023 dikelola <br className="block sm:hidden" /> sepenuhnya oleh Al-Andalus
                                         </div>
                                     </div>
                                 </div>
@@ -166,16 +166,16 @@ export default function TentangPage() {
                                 className="space-y-4 md:space-y-6 text-base md:text-[17px] text-ink-700 font-medium leading-[1.8] text-justify"
                             >
                                 <p>
-                                    <span className="text-ink-950 font-black">Pesantren Al-Andalus Ulul Albaab</span> berlokasi di Cicantayan, Kabupaten Sukabumi. Sebagai cabang resmi dari <span className="text-brand-blue-700 italic font-bold">Pesantren Islam Internasional Al-Andalus</span>, kami hadir dengan visi mencetak kader ulama rabbani yang beraqidah lurus dan berwawasan luas.
+                                    <span className="text-ink-950 font-black">Pesantren Ulul Albaab Sukabumi</span> berlokasi di Cicantayan, Kabupaten Sukabumi, memiliki komitmen penuh untuk berkhidmah kepada umat melalui jalur pendidikan dan dakwah yang berbasis pesantren bermanhaj Salaf.
                                 </p>
                                 <p>
-                                    Kami berkomitmen penuh untuk berkhidmah kepada umat melalui jalur pendidikan dan dakwah, dengan menjaga biaya pendidikan tetap terjangkau tanpa mengurangi kualitas layanan dan fasilitas.
+                                    Memasuki pertengahan tahun 2023 (sekitar bulan Juni-Agustus), Pesantren Ulul Albaab mamasuki tonggak sejarah baru ketika pengelolaannya secara resmi <strong>diambil alih dan dibina langsung oleh manajemen Pesantren Islam Internasional Al-Andalus</strong>.
                                 </p>
                                 <p>
-                                    Sejak Januari 2026, Ulul Albaab dikelola sepenuhnya oleh Al Andalus International Boarding School, mencakup seluruh aspek kelembagaan secara terintegrasi. Pengelolaan ini meliputi hirarki kepengurusan di tingkat yayasan, pengelolaan sumber daya manusia, sistem pendidikan dan kurikulum, sistem pelayanan beserta sarana dan prasarana.
+                                    Di bawah naungan manajemen Al-Andalus, Ulul Albaab bertransformasi mencakup seluruh aspek kelembagaan secara terintegrasi; mulai dari hierarki yayasan, standarisasi SDM pengajar, peningkatan fasilitas, hingga penyelarasan sistem kurikulum pendidikan yang lebih modern dan unggul.
                                 </p>
                                 <p className="font-bold text-brand-blue-800 bg-brand-blue-50/50 p-4 rounded-xl border border-brand-blue-100 italic text-center text-lg mt-6">
-                                    "Warisan 30 tahun, diperkuat sistem Al-Andalus"
+                                    "Mondok disini ngerasa kaya keluarga sendiri"
                                 </p>
                             </motion.div>
 
@@ -245,66 +245,70 @@ export default function TentangPage() {
                             initial={{ opacity: 0, y: 30 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
-                            className="app-card bg-white p-8 md:p-10 flex flex-col group h-full hover:-translate-y-1 transition-transform duration-500"
+                            className="app-card bg-white p-8 md:p-10 flex flex-col group h-full hover:-translate-y-1 transition-transform duration-500 border border-brand-blue-100 shadow-sm"
                         >
-                            <div className="w-14 h-14 bg-brand-blue-50 rounded-2xl flex items-center justify-center mb-6 text-brand-blue-600 group-hover:scale-110 transition-transform duration-500 shadow-sm">
+                            <div className="w-14 h-14 bg-brand-yellow-50 rounded-2xl flex items-center justify-center mb-6 text-brand-yellow-600 shadow-sm">
                                 <Target className="w-7 h-7" />
                             </div>
-                            <h3 className="text-xl md:text-2xl font-black text-ink-950 mb-5">Visi</h3>
-                            <p className="text-lg md:text-xl font-black text-brand-blue-800 italic leading-[1.5] md:leading-[1.4] flex-1">
-                                "Mencetak Generasi yang Memiliki Pribadi Hanif, Kontributif, dan Adaptif."
+                            <h3 className="text-xl md:text-2xl font-black text-ink-950 mb-5">Visi Kami</h3>
+                            <p className="text-lg md:text-xl font-black text-brand-blue-900 italic leading-[1.5] md:leading-[1.4] flex-1">
+                                "Kaderisasi Ummat yang Rabbani, Cendekia, Mandiri"
                             </p>
                         </motion.div>
 
-                        {/* Tujuan - Moved to occupy 2nd slot */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: 0.2 }}
-                            className="app-card bg-linear-to-br from-brand-yellow-50 to-white p-8 md:p-10 flex flex-col group h-full hover:-translate-y-1 transition-transform duration-500"
-                        >
-                            <div className="w-14 h-14 bg-yellow-50 rounded-2xl flex items-center justify-center mb-6 text-yellow-600 group-hover:scale-110 transition-transform duration-500 shadow-sm">
-                                <Compass className="w-7 h-7" />
-                            </div>
-                            <h3 className="text-xl md:text-2xl font-black text-ink-950 mb-6">Tujuan</h3>
-                            <ul className="space-y-4 md:space-y-6 flex-1">
-                                {[
-                                    "Membentuk pribadi Hanif: lurus akidah, benar ibadah, baik akhlaq.",
-                                    "Membentuk pribadi Kontributif: berkarya, berinovasi, dan berperan nyata.",
-                                    "Membentuk pribadi Adaptif: terbuka kritik, cerdas membaca realitas, teguh prinsip."
-                                ].map((item, idx) => (
-                                    <li key={idx} className="flex gap-4 items-center group/item">
-                                        <div className="w-6 h-6 rounded-full bg-yellow-500 text-white flex items-center justify-center text-[10px] font-bold shrink-0 shadow-sm">
-                                            <CheckCircle2 className="w-3.5 h-3.5" />
-                                        </div>
-                                        <span className="text-ink-800 font-bold text-[13px] md:text-sm tracking-tight group-hover/item:text-yellow-700 transition-colors uppercase pt-0.5">{item}</span>
-                                    </li>
-                                ))}
-                            </ul>
-                        </motion.div>
-
-                        {/* Misi - Moved to Bottom, Full Width */}
+                        {/* Misi */}
                         <motion.div
                             initial={{ opacity: 0, y: 30 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: 0.1 }}
-                            className="md:col-span-2 app-card bg-brand-yellow-100/50 p-8 md:p-10 lg:p-12 hover:-translate-y-1 transition-transform duration-500 group"
+                            className="md:col-span-2 lg:col-span-1 app-card bg-linear-to-br from-brand-blue-50 to-white p-8 md:p-10 flex flex-col group h-full hover:-translate-y-1 transition-transform duration-500 border border-brand-blue-100 shadow-sm"
+                        >
+                            <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center mb-6 text-brand-blue-600 shadow-sm border border-brand-blue-100">
+                                <Compass className="w-7 h-7" />
+                            </div>
+                            <h3 className="text-xl md:text-2xl font-black text-ink-950 mb-6">Misi Utama</h3>
+                            <ul className="space-y-4 flex-1">
+                                {[
+                                    "Menyelenggarakan pendidikan Berbasis TICE (Tahfidz, Islamic Curriculum, dan Entrepreneurship)",
+                                    "Mencetak Hamalatul Quran dengan bekal ilmu syar'i yang mumpuni",
+                                    "Menanamkan Jiwa Entrepreneur Muslim yang berwawasan Global"
+                                ].map((item, idx) => (
+                                    <li key={idx} className="flex gap-4 items-start group/item">
+                                        <div className="w-6 h-6 rounded-full bg-brand-yellow-400 text-white flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5 shadow-sm">
+                                            <CheckCircle2 className="w-3.5 h-3.5" />
+                                        </div>
+                                        <span className="text-brand-blue-950 font-bold text-[13px] md:text-sm tracking-tight leading-snug group-hover/item:text-brand-blue-700 transition-colors pt-0.5">{item}</span>
+                                    </li>
+                                ))}
+                            </ul>
+                        </motion.div>
+                        
+                        {/* Kenapa Harus Puas */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.2 }}
+                            className="md:col-span-2 lg:col-span-2 app-card bg-brand-yellow-100/30 p-8 md:p-10 lg:p-12 mt-4 hover:-translate-y-1 transition-transform duration-500 group border border-brand-yellow-200/50 shadow-sm"
                         >
                             <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 mb-8">
-                                <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-brand-blue-700 group-hover:scale-110 transition-transform duration-500 border border-brand-blue-100 shadow-sm shrink-0">
-                                    <BookOpen className="w-7 h-7" />
+                                <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-brand-yellow-600 shadow-sm border border-brand-yellow-100 shrink-0">
+                                    <Sparkles className="w-7 h-7" />
                                 </div>
-                                <h3 className="text-xl md:text-2xl font-black text-ink-950">Misi Utama</h3>
+                                <div>
+                                    <h3 className="text-xl md:text-2xl font-black text-ink-950 leading-tight">Kenapa Harus PUAS?</h3>
+                                    <p className="text-brand-blue-600 font-bold text-sm tracking-widest uppercase mt-1">Keunggulan Ulul Albaab</p>
+                                </div>
                             </div>
 
                             <ul className="grid md:grid-cols-2 gap-x-8 lg:gap-x-12 gap-y-6">
                                 {[
-                                    "Menguatkan akidah shahihah dan membiasakan beribadah sesuai sunnah dalam kehidupan sehari-hari melalui pembelajaran bahasa arab, ulumu syar'i, halaqoh tahfizh, dan adab islami.",
-                                    "Membimbing pembentukan karakter melalui sistem pengasuhan berbasis fitrah dengan pendekatan penyadaran dan pendewasaan — bukan sekadar hukuman.",
-                                    "Membekali Hard Skill melalui pembelajaran kewirausahaan dan ekstrakurikuler sebagai bekal hidup mandiri dan kontributif.",
-                                    "Menanamkan jiwa dakwah santri melalui metode hikmah dan mauidzoh hasanah, serta pengawasan penuh di setiap aktivitas santri."
+                                    "Pendidikan Islam berbasis Kitab Turots dengan Bahasa Pengantar Bahasa Arab",
+                                    "Pembelajaran yang Aktif, Inovatif, Kreatif, dan Menyenangkan",
+                                    "Guru yang Kompeten dan Ahli di Bidangnya",
+                                    "Pembiasaan Ibadah Diniyah secara Sadar dan Ikhlas",
+                                    "Fasilitas yang Lengkap & Memadai untuk menunjang kegiatan santri"
                                 ].map((item, idx) => (
                                 <li key={idx} className="flex gap-4 items-start group/item bg-white p-5 rounded-2xl border border-brand-blue-50 shadow-sm">
                                     <div className="w-6 h-6 rounded-full bg-brand-blue-600 text-white flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5 shadow-sm">
@@ -318,6 +322,33 @@ export default function TentangPage() {
                             </ul>
                         </motion.div>
                     </div>
+
+                    {/* Dewan Pembina Section */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="mt-20 md:mt-24 max-w-4xl mx-auto"
+                    >
+                        <div className="text-center mb-10">
+                            <h2 className="section-title text-3xl mb-4">Dewan Pembina</h2>
+                            <p className="text-ink-600 font-medium">Pengawasan kurikulum dan keilmuan langsung dibimbing oleh asatidzah yang kompeten.</p>
+                        </div>
+                        <div className="flex flex-wrap justify-center gap-3 md:gap-4 lg:gap-5">
+                            {[
+                                "Ustadz Nurdin Apud Sabrini, Lc., M.Pd.",
+                                "Ustadz Dr. Muhammad Arifin Badri, Lc., M.A.",
+                                "Ustadz Wahab Rajasam, M.Pd.",
+                                "K.H. Dudun Abdul Gofar",
+                                "Bpk. Tarmen Tascha, S.E.",
+                                "Ustadz Dwi Wahyu Iskandar, M.Pd."
+                            ].map((nama, i) => (
+                                <div key={i} className="bg-brand-blue-50 border border-brand-blue-100 px-5 py-3 rounded-full text-brand-blue-900 font-bold text-sm md:text-base hover:bg-brand-blue-600 hover:text-white transition-colors cursor-default shadow-sm text-center">
+                                    {nama}
+                                </div>
+                            ))}
+                        </div>
+                    </motion.div>
                 </Container>
             </section>
 

@@ -50,19 +50,19 @@ export default function HeroSection() {
                 <span>Terakreditasi BAN-PDM • {BRANDING.schoolName.includes("Al-Andalus") ? "Islamic Boarding School" : "Managed by Al-Andalus"}</span>
               </motion.div>
 
-              <h1 className="leading-[1.15] tracking-tight mx-auto lg:mx-0 max-w-2xl lg:max-w-none text-maroon-900">
+              <h1 className="leading-[1.15] tracking-tight mx-auto lg:mx-0 max-w-2xl lg:max-w-none text-brand-blue-950 font-black">
                 <span className="block">Mencetak Generasi</span>
-                <span className="block text-gradient-maroon">Hanif, Kontributif,</span>
-                <span className="block text-gradient-maroon">dan Adaptif</span>
+                <span className="block text-brand-yellow-500 drop-shadow-sm">Rabbani, Cendekia,</span>
+                <span className="block text-brand-yellow-500 drop-shadow-sm">dan Mandiri</span>
               </h1>
 
               <p className="text-base lg:text-lg leading-relaxed max-w-2xl mx-auto lg:mx-0 font-medium font-sans text-ink-600 text-center lg:text-left">
-                Bukan sekadar tempat belajar agama — sistem pembentukan karakter berbasis <span className="font-bold text-maroon-800">Lingkungan, Kebiasaan, Komunitas, dan Spiritualitas</span> tanpa kekerasan dan luka pengasuhan.
+                Pendidikan Islam berbasis <span className="font-bold text-brand-blue-800">Kitab Turots, Tahfidz Al-Quran, dan Entrepreneurship</span> di lingkungan asri Sukabumi.
               </p>
               
               <div className="mt-4 pt-4 border-t border-cream-200/50">
-                <p className="text-sm lg:text-base font-bold text-maroon-800 text-center lg:text-left italic">
-                  "Pendidikan Berkualitas, Diperkuat Sistem {BRANDING.schoolName.includes("Al-Andalus") ? "Al-Andalus" : BRANDING.schoolShortName}"
+                <p className="text-sm lg:text-base font-bold text-brand-blue-800 text-center lg:text-left italic">
+                  "Berkualitas Bersama Manajemen Pesantren Al-Andalus"
                 </p>
               </div>
             </div>
@@ -125,12 +125,12 @@ export default function HeroSection() {
               transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
               className="absolute -top-4 lg:-top-6 -right-2 lg:-right-8 z-20 flex items-center gap-3 bg-white/90 backdrop-blur-md p-3 px-4 lg:p-4 rounded-2xl shadow-lg border border-white/50"
             >
-              <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-xl bg-brand-yellow-100 flex items-center justify-center text-cream-600">
+              <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-xl bg-brand-yellow-100 flex items-center justify-center text-brand-yellow-600 shadow-sm border border-brand-yellow-200">
                 <GraduationCap className="w-5 h-5 lg:w-6 lg:h-6" />
               </div>
               <div>
                 <p className="text-[10px] lg:text-xs font-bold text-ink-400 uppercase tracking-widest">Tersedia</p>
-                <p className="text-xs lg:text-sm font-black text-maroon-900">Beasiswa Tahfidz</p>
+                <p className="text-xs lg:text-sm font-black text-brand-blue-900">I'dad Lughowi</p>
               </div>
             </motion.div>
 
@@ -139,12 +139,12 @@ export default function HeroSection() {
               transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
               className="absolute -bottom-6 lg:-bottom-10 -left-2 lg:-left-8 z-20 flex items-center gap-3 bg-white/90 backdrop-blur-md p-3 px-4 lg:p-4 rounded-2xl shadow-lg border border-white/50"
             >
-              <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-xl bg-brand-blue-50 flex items-center justify-center text-brand-blue-600">
+              <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-xl bg-brand-blue-50 flex items-center justify-center text-brand-blue-600 shadow-sm border border-brand-blue-100">
                 <Globe className="w-5 h-5 lg:w-6 lg:h-6" />
               </div>
               <div>
-                <p className="text-xs lg:text-sm font-black text-maroon-900">Jaringan Global</p>
-                <p className="text-[10px] lg:text-xs font-semibold text-ink-500">Timur Tengah</p>
+                <p className="text-xs lg:text-sm font-black text-brand-blue-900">Jaringan Global</p>
+                <p className="text-[10px] lg:text-xs font-semibold text-ink-500">Alumnus Timteng</p>
               </div>
             </motion.div>
 

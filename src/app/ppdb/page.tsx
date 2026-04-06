@@ -96,17 +96,16 @@ function PPDBContent() {
   const jenjang = searchParams.get('jenjang');
 
   const stats = [
-    { label: "Kuota MTs", value: "25 Santri", icon: Users },
-    { label: "Kuota I'dad", value: "25 Santri", icon: Users },
-    { label: "Kuota SMA", value: "25 Santri", icon: Users },
-    { label: "Asatidz", value: "Lulusan Terbaik", icon: GraduationCap },
-    { label: "Target", value: "TimTeng & PTN Favorit", icon: Target },
+    { label: "Kuota MTs Putra", value: "TUTUP", icon: Users },
+    { label: "Kuota MTs Putri", value: "30 Santri", icon: Users },
+    { label: "Kuota IL Putra", value: "TUTUP", icon: Users },
+    { label: "Kuota IL Putri", value: "30 Santri", icon: Users },
   ];
 
   const timeline = [
     {
       phase: "Registrasi Online",
-      date: "10 Feb - 30 Mei 2026",
+      date: "31 Agustus - 30 Oktober 2025",
       desc: "Buat akun pendaftar dan isi formulir awal melalui website resmi.",
       status: "active",
     },
@@ -167,9 +166,9 @@ function PPDBContent() {
   ];
 
   const biaya = [
-    { label: "Biaya Pendaftaran", value: "Rp 200rb", icon: CreditCard },
-    { label: "Uang Pangkal", value: "Rp 7.5Jt", icon: Shield },
-    { label: "Taawun (SPP)", value: "Rp 1Jt", icon: Star },
+    { label: "Biaya Pendaftaran", value: "Rp 250rb", icon: CreditCard },
+    { label: "Uang Pangkal", value: "Rp 9.8Jt", icon: Shield },
+    { label: "Taawun (SPP)", value: "Rp 13.2Jt", icon: Star },
   ];
 
   return (
