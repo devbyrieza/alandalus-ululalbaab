@@ -1262,7 +1262,7 @@ export default function DataLengkapForm({ onSuccess }: { onSuccess?: () => void 
           <button
             type="submit"
             disabled={saving}
-            className="flex items-center gap-2 px-8 py-4 rounded-xl bg-gradient-to-r from-maroon-600 to-maroon-700 text-white font-bold text-lg shadow-lg shadow-maroon-600/30 hover:shadow-maroon-600/40 hover:-translate-y-1 transition-all disabled:opacity-50 disabled:transform-none"
+            className="flex items-center gap-2 px-8 py-4 rounded-xl bg-gradient-to-r from-brand-blue-600 to-brand-blue-800 text-white font-bold text-lg shadow-lg shadow-brand-blue-600/30 hover:shadow-brand-blue-600/40 hover:-translate-y-1 transition-all disabled:opacity-50 disabled:transform-none"
           >
             {saving ? <Loader2 className="w-6 h-6 animate-spin" /> : isEditMode ? <Send className="w-6 h-6" /> : <Save className="w-6 h-6" />}
             <span>{saving ? "Menyimpan..." : isEditMode ? "Simpan & Ajukan Verifikasi" : "Simpan Data"}</span>
