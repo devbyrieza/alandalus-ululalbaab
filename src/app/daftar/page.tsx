@@ -158,10 +158,16 @@ export default function DaftarPage() {
 
     if (!formData.jenis_kelamin) {
       errors.jenis_kelamin = "Pilih jenis kelamin santri";
+    } else if (formData.jenis_kelamin === "L") {
+      errors.jenis_kelamin = "Mohon maaf, kuota Santri Putra seluruh jenjang sudah penuh/ditutup.";
     }
 
     if (!formData.jenjang) {
       errors.jenjang = "Pilih jenjang pendidikan";
+    } else if (formData.jenjang === "SMA") {
+      errors.jenjang = "Mohon maaf, pendaftaran SMA (Reguler) telah ditutup.";
+    } else if (formData.jenis_kelamin === "L" && (formData.jenjang === "MTs" || formData.jenjang === "IL")) {
+       errors.jenjang = "Pendaftaran jenjang ini untuk Santri Putra sudah ditutup.";
     }
 
     setFieldErrors(errors);
@@ -340,26 +346,27 @@ export default function DaftarPage() {
                     { value: "SMA", title: "Madrasah Aliyah (SMA)", subtitle: "Lulusan SMP/Sederajat" },
                   ].map((option) => {
                     const isPutra = formData.jenis_kelamin === "L";
-                    const isClosedForPutra = isPutra && (option.value === "MTs" || option.value === "IL");
+                    // Ulul Albaab: Hanya MTs Putri dan IL Putri yang masih buka
+                    const isClosed = isPutra || option.value === "SMA";
                     
                     return (
                       <motion.div
                         key={option.value}
-                        whileHover={isClosedForPutra ? {} : { scale: 1.02 }}
-                        whileTap={isClosedForPutra ? {} : { scale: 0.98 }}
+                        whileHover={isClosed ? {} : { scale: 1.02 }}
+                        whileTap={isClosed ? {} : { scale: 0.98 }}
                         onClick={() => {
-                          if (isClosedForPutra) return;
+                          if (isClosed) return;
                           setFormData((prev) => ({ ...prev, jenjang: option.value as any }));
                         }}
                         className={`relative cursor-pointer rounded-[2rem] p-6 border-2 transition-all duration-300 app-card ${
-                          isClosedForPutra 
+                          isClosed 
                             ? "opacity-50 grayscale cursor-not-allowed border-cream-200 bg-stone-50"
                             : formData.jenjang === option.value
                               ? "border-brand-blue-600 bg-cream-50 shadow-md"
                               : "border-cream-200 bg-white hover:border-maroon-200 hover:shadow-sm"
                         }`}
                       >
-                        {isClosedForPutra && (
+                        {isClosed && (
                           <div className="absolute top-4 right-4 bg-red-600 text-white text-[10px] font-black px-2 py-1 rounded-full uppercase tracking-tighter">
                             Kuota Penuh / Tutup
                           </div>
