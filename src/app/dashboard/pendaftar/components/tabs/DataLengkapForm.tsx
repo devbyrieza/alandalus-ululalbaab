@@ -750,11 +750,15 @@ export default function DataLengkapForm({ onSuccess }: { onSuccess?: () => void 
     ))
   ));
 
-  // Ulul Albaab: Buka kunci pengisian data untuk semua status 
-  // agar pendaftar lama bisa melengkapi data kapan pun, sesuai arahan panitia.
-  const isLocked = false;
+  const isDataIncomplete = !isSantriComplete || !isAyahComplete || !isIbuComplete || !isWaliComplete;
+  const isNormalLocked = !['draft', 'awaiting_payment', 'verified', 'rejected'].includes(statusPendaftaran);
+
+  // Ulul Albaab: Smart Lock
+  // Jika data belum lengkap (pendaftar lama), form SELALU TERBUKA otomatis.
+  // Jika data sudah lengkap (pendaftar baru), ikuti aturan kunci normal Al-Imam.
+  const isLocked = isDataIncomplete ? false : isNormalLocked;
   const isEditMode = requestStatus?.status === 'approved_to_edit';
-  const canEdit = true;
+  const canEdit = !isLocked || isEditMode;
 
   if (loading) {
     return (
