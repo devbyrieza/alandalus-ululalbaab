@@ -30,7 +30,7 @@ export default function AboutSection() {
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-pill bg-white border border-cream-200 text-maroon-700 text-xs font-bold uppercase tracking-widest mb-6 shadow-sm"
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-pill bg-white border border-brand-blue-100 text-brand-blue-700 text-xs font-bold uppercase tracking-widest mb-6 shadow-sm"
             >
               <CheckCircle className="w-3.5 h-3.5" />
               <span>Profil Pesantren</span>
@@ -43,7 +43,7 @@ export default function AboutSection() {
               transition={{ delay: 0.1 }}
               className="section-title mb-6"
             >
-              Mengedepankan <br /><span className="text-gradient-maroon">Bimbingan & Pengawasan Melekat</span>
+              Mondok di sini berasa seperti <br /><span className="text-gradient-blue">Keluarga Sendiri</span>
             </motion.h2>
 
             <motion.p
@@ -53,7 +53,7 @@ export default function AboutSection() {
               transition={{ delay: 0.2 }}
               className="section-subtitle text-justify md:text-center"
             >
-              <span className="font-bold text-maroon-900">Bukan sekadar tempat belajar agama.</span> Sistem pembentukan karakter berbasis Lingkungan, Kebiasaan, Komunitas, dan Spiritualitas — untuk mencetak generasi yang memiliki pribadi Hanif, Kontributif, dan Adaptif.
+              <span className="font-bold text-brand-blue-900">Bukan sekadar tempat belajar agama.</span> Sistem pembentukan karakter berbasis Lingkungan, Kebiasaan, Komunitas, dan Spiritualitas — untuk mencetak Kaderisasi Ummat yang Rabbani, Cendekia, Mandiri.
             </motion.p>
           </div>
 
@@ -66,10 +66,10 @@ export default function AboutSection() {
             >
               <div className="app-card bg-white p-8 md:p-12 relative z-10 flex flex-col items-center text-center">
                 <div className="w-16 h-16 rounded-2xl bg-cream-100/50 flex items-center justify-center mb-6 shadow-sm">
-                  <Target className="w-8 h-8 text-maroon-700" />
+                  <Target className="w-8 h-8 text-brand-blue-700" />
                 </div>
 
-                <div className="badge badge-maroon mb-4">Visi Utama</div>
+                <div className="badge badge-brand-blue mb-4">Visi Utama</div>
 
                 <h3 className="text-2xl md:text-3xl font-display font-bold text-ink-950 mb-6 tracking-tight">Kaderisasi Ummat</h3>
 
@@ -92,8 +92,8 @@ export default function AboutSection() {
               <div className="app-card bg-white p-8 md:p-12 relative z-10 flex flex-col">
                 <div className="flex flex-col md:flex-row gap-6 md:items-center md:justify-between mb-10">
                   <div className="flex items-center gap-5">
-                    <div className="w-16 h-16 rounded-2xl bg-maroon-50 flex items-center justify-center shadow-sm shrink-0">
-                      <Rocket className="w-8 h-8 text-maroon-600" />
+                    <div className="w-16 h-16 rounded-2xl bg-brand-blue-50 flex items-center justify-center shadow-sm shrink-0">
+                      <Rocket className="w-8 h-8 text-brand-blue-600" />
                     </div>
                     <div>
                 <div className="badge badge-warning">Langkah Strategis</div>

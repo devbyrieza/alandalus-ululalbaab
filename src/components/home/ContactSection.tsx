@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Link from "next/link";
 import { Container } from "@/components/layout/Container";
@@ -19,7 +19,7 @@ const CONTACT_INFO = [
     title: "Lokasi Pesantren",
     content: "Jl. Pelabuhan Ratu II KM 18",
     detail: "Cikembar, Sukabumi",
-    color: "maroon",
+    color: "brand-blue",
   },
   {
     icon: Phone,
@@ -54,13 +54,13 @@ export default function ContactSection() {
 
             {/* Text Content */}
             <div className="lg:w-1/2 text-center lg:text-left">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-pill bg-white border border-cream-200 text-maroon-700 text-xs font-bold uppercase tracking-widest mb-6 shadow-sm">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-pill bg-white border border-brand-blue-100 text-brand-blue-700 text-xs font-bold uppercase tracking-widest mb-6 shadow-sm">
                 <MessageCircle className="w-3.5 h-3.5" />
                 <span>Pusat Bantuan</span>
               </div>
               <h2 className="section-title mb-6">
                 Ada Pertanyaan? <br />
-                <span className="text-gradient-maroon">Kami Siap Membantu</span>
+                <span className="text-gradient-blue">Kami Siap Membantu</span>
               </h2>
               <p className="section-subtitle lg:ml-0 text-center lg:text-left mb-8 md:mb-10 max-w-lg mx-auto lg:mx-0">
                 Jangan ragu untuk menghubungi kami. Tim administrasi kami siap melayani pertanyaan seputar pendaftaran, kurikulum, dan informasi pesantren.
@@ -79,7 +79,7 @@ export default function ContactSection() {
               {CONTACT_INFO.map((item, idx) => (
                 <div key={idx} className={`app-card p-6 md:p-8 flex flex-col items-start group ${idx === 0 ? 'sm:col-span-2' : ''}`}>
                   <div className={`w-12 h-12 md:w-14 md:h-14 rounded-2xl flex items-center justify-center mb-5 md:mb-6 transition-colors shadow-sm group-hover:scale-110 duration-500 shrink-0 ${
-                      item.color === 'maroon' ? 'bg-maroon-50 text-maroon-600' :
+                      item.color === 'brand-blue' ? 'bg-brand-blue-50 text-brand-blue-600' :
                       item.color === 'teal' ? 'bg-teal-50 text-teal-600' :
                       'bg-yellow-50 text-yellow-600'
                     }`}>

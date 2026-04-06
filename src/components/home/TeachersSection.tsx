@@ -69,7 +69,7 @@ export default function TeachersSection() {
                         </div>
 
                         <h2 className="section-title mb-8">
-                            Dibimbing Oleh <span className="text-gradient-maroon">Asatidz Kompeten</span>
+                            Dibimbing Oleh <span className="text-gradient-blue">Asatidz Kompeten</span>
                         </h2>
 
                         <p className="section-subtitle lg:ml-0 text-justify lg:text-left mb-10">
@@ -85,8 +85,8 @@ export default function TeachersSection() {
                             ].map((feature, i) => (
                                 <div key={i} className="app-card p-4 flex items-center gap-5">
                                     <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 shadow-sm ${
-                                        feature.color === 'brand-blue' ? 'bg-brand-blue-500 text-brand-blue-600' :
-                                        feature.color === 'brand-yellow' ? 'bg-brand-yellow-100 text-maroon-800' :
+                                        feature.color === 'brand-blue' ? 'bg-brand-blue-100 text-brand-blue-600' :
+                                        feature.color === 'brand-yellow' ? 'bg-brand-yellow-100 text-brand-yellow-700' :
                                         'bg-yellow-50 text-yellow-600'
                                         }`}>
                                         <feature.icon className="w-6 h-6" />
@@ -115,7 +115,7 @@ export default function TeachersSection() {
                                     <CheckCircle className="w-3.5 h-3.5 text-brand-blue-700" />
                                 </div>
                                 <div className="space-y-1.5 mt-0.5">
-                                    <h4 className="font-bold text-ink-900 text-[15px] leading-snug group-hover:text-maroon-800 transition-colors">{item.institution}</h4>
+                                    <h4 className="font-bold text-ink-900 text-[15px] leading-snug group-hover:text-brand-blue-700 transition-colors">{item.institution}</h4>
                                     <p className="text-[10px] font-bold text-ink-500 uppercase tracking-widest leading-tight">{item.location}</p>
                                 </div>
                             </motion.div>

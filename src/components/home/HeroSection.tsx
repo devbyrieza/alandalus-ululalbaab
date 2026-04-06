@@ -24,7 +24,7 @@ export default function HeroSection() {
     <section className="relative min-h-[95vh] flex items-center pt-20 pb-16 md:pt-24 lg:pt-28 lg:pb-24 overflow-hidden bg-cream-gradient">
       {/* Sophisticated Background Elements */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute -top-[10%] -left-[10%] w-[50%] h-[50%] bg-maroon-100/40 blur-[120px] rounded-full" />
+        <div className="absolute -top-[10%] -left-[10%] w-[50%] h-[50%] bg-brand-blue-100/40 blur-[120px] rounded-full" />
         <div className="absolute top-[20%] -right-[10%] w-[40%] h-[50%] bg-cream-300/30 blur-[100px] rounded-full" />
         <div className="absolute bottom-[0%] left-[20%] w-[40%] h-[40%] bg-brand-blue-50/60 blur-[100px] rounded-full" />
       </div>
@@ -71,7 +71,7 @@ export default function HeroSection() {
             <div className="flex flex-col gap-4 lg:gap-5 justify-center lg:justify-start w-full mt-2">
               <div className="flex flex-col sm:flex-row gap-3 lg:gap-4 justify-center lg:justify-start w-full sm:w-auto">
                 <Link href="/ppdb" className="w-full sm:w-auto">
-                  <button className="btn-primary w-full px-8 lg:px-10 py-4 lg:py-5 min-h-[56px] text-base shadow-lg shadow-maroon-800/20">
+                  <button className="btn-primary w-full px-8 lg:px-10 py-4 lg:py-5 min-h-[56px] text-base shadow-lg shadow-brand-blue-800/20">
                     Daftar PPDB Sekarang
                     <ArrowRight className="w-5 h-5 ml-1" />
                   </button>
@@ -88,7 +88,7 @@ export default function HeroSection() {
                 <div className="flex -space-x-2">
                   {[1, 2, 3, 4].map((i) => (
                     <div key={i} className="w-7 h-7 rounded-full bg-cream-200 border-2 border-white flex items-center justify-center overflow-hidden">
-                      <div className="w-full h-full bg-maroon-100" />
+                      <div className="w-full h-full bg-brand-blue-100" />
                     </div>
                   ))}
                 </div>
@@ -116,7 +116,7 @@ export default function HeroSection() {
                 className="w-full h-auto object-cover aspect-[4/3] hover:scale-105 transition-transform duration-700"
                 priority
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-maroon-900/40 via-transparent to-transparent opacity-60" />
+              <div className="absolute inset-0 bg-gradient-to-t from-brand-blue-900/40 via-transparent to-transparent opacity-60" />
             </div>
 
             {/* Floating Info Cards - Fintech Style */}
@@ -130,7 +130,7 @@ export default function HeroSection() {
               </div>
               <div>
                 <p className="text-[10px] lg:text-xs font-bold text-ink-400 uppercase tracking-widest">Tersedia</p>
-                <p className="text-xs lg:text-sm font-black text-brand-blue-900">I'dad Lughowi</p>
+                <p className="text-xs lg:text-sm font-black text-brand-blue-900">MTs, IL &amp; SMA</p>
               </div>
             </motion.div>
 
@@ -144,12 +144,12 @@ export default function HeroSection() {
               </div>
               <div>
                 <p className="text-xs lg:text-sm font-black text-brand-blue-900">Jaringan Global</p>
-                <p className="text-[10px] lg:text-xs font-semibold text-ink-500">Alumnus Timteng</p>
+                <p className="text-[10px] lg:text-xs font-semibold text-ink-500">Timur Tengah</p>
               </div>
             </motion.div>
 
             {/* Aesthetic Blobs */}
-            <div className="absolute -z-10 -bottom-12 -right-12 w-48 h-48 sm:w-64 sm:h-64 bg-maroon-300/20 blur-3xl rounded-full" />
+            <div className="absolute -z-10 -bottom-12 -right-12 w-48 h-48 sm:w-64 sm:h-64 bg-brand-blue-300/20 blur-3xl rounded-full" />
             <div className="absolute -z-10 -top-12 -left-12 w-36 h-36 sm:w-48 sm:h-48 bg-brand-yellow-400/20 blur-2xl rounded-full" />
           </motion.div>
         </div>

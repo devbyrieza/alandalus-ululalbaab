@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 interface ExtraItem {
     name: string;
     icon: any;
-    color: 'brand-blue' | 'brand-yellow' | 'gold' | 'maroon' | 'cream';
+    color: 'brand-blue' | 'brand-yellow' | 'gold' | 'cream';
 }
 
 const EXTRA_ACTIVITIES: ExtraItem[] = [
@@ -59,7 +59,7 @@ export default function ExtraSection() {
                         transition={{ delay: 0.1 }}
                         className="section-title mb-6"
                     >
-                        Ekstrakurikuler <span className="text-gradient-maroon">Terpadu</span>
+                         Ekstrakurikuler <span className="text-gradient-blue">Terpadu</span>
                     </motion.h2>
 
                     <motion.p
@@ -84,13 +84,13 @@ export default function ExtraSection() {
                             className="bg-white p-5 md:p-6 rounded-[1.5rem] border border-cream-200 flex flex-col items-center justify-center text-center group hover:bg-cream-50 hover:border-brand-blue-500 hover:shadow-md transition-all duration-500 cursor-default"
                         >
                             <div className={`w-12 h-12 md:w-14 md:h-14 rounded-2xl flex items-center justify-center mb-3 md:mb-4 shadow-sm group-hover:scale-110 transition-transform duration-500 ${
-                                item.color === 'brand-blue' ? 'bg-maroon-50 text-brand-blue-600' :
+                                item.color === 'brand-blue' ? 'bg-brand-blue-100 text-brand-blue-600' :
                                 item.color === 'brand-yellow' ? 'bg-brand-yellow-100 text-brand-blue-700' :
                                 'bg-yellow-50 text-yellow-600'
                                 }`}>
                                 <item.icon className="w-6 h-6 md:w-7 md:h-7" />
                             </div>
-                            <p className="text-[9px] md:text-[10px] font-bold tracking-[0.1em] text-ink-950 uppercase group-hover:text-maroon-800 transition-colors leading-tight">
+                             <p className="text-[9px] md:text-[10px] font-bold tracking-widest text-ink-950 uppercase group-hover:text-brand-blue-700 transition-colors leading-tight">
                                 {item.name}
                             </p>
                         </motion.div>

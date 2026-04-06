@@ -53,13 +53,13 @@ export default function FeaturesSection() {
               className="space-y-8"
             >
               <div>
-                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-pill bg-cream-50 border border-cream-200 text-brand-blue-700 text-xs font-bold uppercase tracking-widest mb-6 shadow-sm">
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-pill bg-brand-blue-50 border border-brand-blue-100 text-brand-blue-700 text-xs font-bold uppercase tracking-widest mb-6 shadow-sm">
                   <Award className="w-3.5 h-3.5" />
                   <span>Keunggulan Utama</span>
                 </div>
                 <h2 className="section-title mb-3">
                   Kenapa Harus <br />
-                  Mengapa <span className="text-gradient-maroon">Ulul Albaab Sukabumi?</span>
+                  <span className="text-gradient-blue">Ulul Albaab Sukabumi?</span>
                 </h2>
                 <p className="text-xs font-bold text-brand-blue-600 uppercase tracking-widest mb-6">
                   Managed by Al-Andalus International Islamic Boarding School
@@ -104,7 +104,7 @@ export default function FeaturesSection() {
             >
               <div className="space-y-4 lg:space-y-6 mt-12">
                 <div className="app-card p-6 sm:p-8 min-h-[14rem] md:h-64 flex flex-col justify-end items-start group">
-                  <p className="text-5xl lg:text-6xl font-black text-maroon-900 mb-2 tracking-tighter">30<span className="text-brand-blue-600">+</span></p>
+                  <p className="text-5xl lg:text-6xl font-black text-brand-blue-900 mb-2 tracking-tighter">30<span className="text-brand-blue-600">+</span></p>
                   <div className="space-y-1">
                     <p className="text-sm font-bold text-ink-700">Tahun Mengabdi</p>
                     <p className="text-xs leading-tight text-ink-500 font-medium">
@@ -114,10 +114,10 @@ export default function FeaturesSection() {
                   </div>
                 </div>
                 
-                <div className="bg-maroon-900 bg-linear-to-br from-brand-blue-700 to-maroon-950 border border-brand-blue-600 p-6 sm:p-8 rounded-[2rem] shadow-lg min-h-[16rem] md:h-72 flex flex-col justify-center items-center text-center relative overflow-hidden group hover:shadow-xl transition-all duration-300">
+                <div className="bg-brand-blue-900 bg-linear-to-br from-brand-blue-700 to-brand-blue-950 border border-brand-blue-600 p-6 sm:p-8 rounded-[2rem] shadow-lg min-h-[16rem] md:h-72 flex flex-col justify-center items-center text-center relative overflow-hidden group hover:shadow-xl transition-all duration-300">
                   <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-10 mix-blend-overlay" />
                   <div className="w-20 h-20 rounded-full bg-white/10 flex items-center justify-center mb-6 backdrop-blur-sm group-hover:scale-110 transition-transform duration-500">
-                    <BookOpenCheck className="w-10 h-10 text-cream-200" />
+                    <BookOpenCheck className="w-10 h-10 text-brand-yellow-400" />
                   </div>
                   <p className="font-black text-2xl text-white">Tahfidz<br />Intensif</p>
                 </div>
@@ -128,11 +128,11 @@ export default function FeaturesSection() {
                   <div className="w-20 h-20 bg-brand-yellow-100 rounded-[1.25rem] flex items-center justify-center mb-6 shadow-sm group-hover:scale-110 transition-transform duration-500">
                     <ShieldCheck className="w-10 h-10 text-brand-blue-600" />
                   </div>
-                  <p className="font-black text-2xl text-maroon-900">Lingkungan<br />Islami</p>
+                  <p className="font-black text-2xl text-brand-blue-900">Lingkungan<br />Islami</p>
                 </div>
 
-                <div className="bg-cream-50/80 backdrop-blur-lg border border-cream-200 p-6 sm:p-8 rounded-[2rem] shadow-sm min-h-[14rem] md:h-64 flex flex-col justify-end items-start hover:shadow-md transition-all duration-300">
-                  <p className="text-4xl font-black mb-1 text-maroon-800 tracking-tighter">RESMI</p>
+                <div className="bg-brand-blue-50/80 backdrop-blur-lg border border-brand-blue-100 p-6 sm:p-8 rounded-[2rem] shadow-sm min-h-[14rem] md:h-64 flex flex-col justify-end items-start hover:shadow-md transition-all duration-300">
+                  <p className="text-4xl font-black mb-1 text-brand-blue-800 tracking-tighter">RESMI</p>
                   <div className="space-y-1 mt-2">
                     <p className="text-sm font-bold text-ink-800">Ijazah Diakui Negara</p>
                     <p className="text-xs text-ink-500 font-medium leading-tight">

@@ -9,7 +9,7 @@ const STEPS = [
         icon: UserPlus,
         title: "Buat Akun",
         description: "Daftarkan data diri awal dan buat akun pendaftaran santri baru.",
-        color: "maroon",
+        color: "brand-blue",
     },
     {
         icon: CreditCard,
@@ -33,7 +33,7 @@ const STEPS = [
         icon: BellRing,
         title: "Pengumuman",
         description: "Lihat hasil kelulusan seleksi melalui dashboard pendaftar & WhatsApp.",
-        color: "maroon",
+        color: "brand-blue",
     },
     {
         icon: GraduationCap,
@@ -67,7 +67,7 @@ export default function ProcessSection() {
                         viewport={{ once: true }}
                         className="section-title mb-6"
                     >
-                        Alur <span className="text-gradient-maroon">Pendaftaran</span>
+                        Alur <span className="text-gradient-blue">Pendaftaran</span>
                     </motion.h2>
 
                     <motion.p

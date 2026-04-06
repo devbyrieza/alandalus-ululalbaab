@@ -52,7 +52,7 @@ export default function StatsSection() {
   return (
     <section className="py-16 md:py-24 bg-white relative overflow-hidden border-b border-cream-200">
       {/* Sophisticated Background Element */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-maroon-50/50 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2" />
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-blue-50/50 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2" />
       <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-brand-yellow-100/40 rounded-full blur-[120px] translate-y-1/2 -translate-x-1/2" />
 
       <Container className="relative z-10">
@@ -90,7 +90,7 @@ export default function StatsSection() {
                 </p>
 
                 {/* Subtle underline decoration */}
-                <div className="mt-4 w-6 h-1 bg-cream-200 rounded-full group-hover:w-12 group-hover:bg-maroon-400 transition-all duration-500" />
+                <div className="mt-4 w-6 h-1 bg-brand-blue-100 rounded-full group-hover:w-12 group-hover:bg-brand-blue-400 transition-all duration-500" />
               </motion.div>
             ))}
           </div>
