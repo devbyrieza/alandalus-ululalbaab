@@ -429,7 +429,7 @@ export default function DaftarPage() {
                         value={formData.nama_lengkap}
                         onChange={(e) => setFormData((prev) => ({ ...prev, nama_lengkap: e.target.value }))}
                         placeholder="Sesuai Akta Kelahiran santri"
-                        className="w-full px-5 py-3 md:px-8 md:py-5 rounded-xl md:rounded-2xl bg-cream-50 border border-transparent focus:bg-white focus:border-maroon-200 focus:ring-4 focus:ring-cream-50 transition-all font-bold text-ink-900 placeholder:text-ink-500 text-sm md:text-base"
+                        className="w-full px-5 py-3 md:px-8 md:py-5 rounded-xl md:rounded-2xl bg-cream-50 border border-transparent focus:bg-white focus:border-maroon-200 focus:ring-4 focus:ring-cream-50 transition-all font-bold text-ink-900 placeholder:text-ink-500 text-sm md:text-base text-ink-950"
                       />
                     </InputField>
                   </div>
@@ -442,7 +442,7 @@ export default function DaftarPage() {
                       value={formData.nik}
                       onChange={(e) => setFormData((prev) => ({ ...prev, nik: e.target.value.replace(/\D/g, "") }))}
                       placeholder="16 Digit NIK"
-                      className="w-full px-5 py-3 md:px-8 md:py-5 rounded-xl md:rounded-2xl bg-cream-50 border border-transparent focus:bg-white focus:border-maroon-200 focus:ring-4 focus:ring-cream-50 transition-all font-bold text-ink-900 placeholder:text-ink-500 text-sm md:text-base"
+                      className="w-full px-5 py-3 md:px-8 md:py-5 rounded-xl md:rounded-2xl bg-cream-50 border border-transparent focus:bg-white focus:border-maroon-200 focus:ring-4 focus:ring-cream-50 transition-all font-bold text-ink-900 placeholder:text-ink-500 text-sm md:text-base text-ink-950"
                     />
                   </InputField>
 
@@ -451,7 +451,7 @@ export default function DaftarPage() {
                       type="date"
                       value={formData.tanggal_lahir}
                       onChange={(e) => setFormData((prev) => ({ ...prev, tanggal_lahir: e.target.value }))}
-                      className="w-full px-5 py-3 md:px-8 md:py-5 rounded-xl md:rounded-2xl bg-cream-50 border border-transparent focus:bg-white focus:border-maroon-200 focus:ring-4 focus:ring-cream-50 transition-all font-bold text-ink-900 text-sm md:text-base"
+                      className="w-full px-5 py-3 md:px-8 md:py-5 rounded-xl md:rounded-2xl bg-cream-50 border border-transparent focus:bg-white focus:border-maroon-200 focus:ring-4 focus:ring-cream-50 transition-all font-bold text-ink-900 text-sm md:text-base text-ink-950"
                     />
                   </InputField>
 
@@ -522,7 +522,7 @@ export default function DaftarPage() {
                         setFormData((prev) => ({ ...prev, no_hp: val }))
                       }}
                       placeholder={countryCode === "+62" ? "812 3456 7890" : "Nomor Telepon"}
-                      className="flex-1 px-4 py-3 md:px-8 md:py-5 bg-transparent border-none focus:outline-none focus:ring-0 font-bold text-ink-950 placeholder:text-ink-500 min-w-0 text-sm md:text-base"
+                      className="flex-1 px-4 py-3 md:px-8 md:py-5 bg-transparent border-none focus:outline-none focus:ring-0 font-bold text-ink-950 placeholder:text-ink-400 min-w-0 text-sm md:text-base"
                     />
                   </div>
                   <p className="text-xs text-ink-600 font-bold uppercase tracking-widest mt-3 ml-1">
