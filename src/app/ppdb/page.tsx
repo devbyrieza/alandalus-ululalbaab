@@ -166,9 +166,9 @@ function PPDBContent() {
   ];
 
   const biaya = [
-    { label: "Biaya Pendaftaran", value: "Rp 250rb", icon: CreditCard },
-    { label: "Uang Pangkal", value: "Rp 9.8Jt", icon: Shield },
-    { label: "Taawun (SPP)", value: "Rp 13.2Jt", icon: Star },
+    { label: "Biaya Pendaftaran", value: "Rp 250 rb", icon: CreditCard },
+    { label: "Uang Pangkal", value: "Rp 9.8 Jt", icon: Shield },
+    { label: "Taawun (SPP)", value: "Rp 1.1 Jt/bln", icon: Star },
   ];
 
   return (
@@ -341,8 +341,11 @@ function PPDBContent() {
               <HelpCircle className="w-8 h-8" />
             </div>
             <div>
-              <p className="text-lg text-brand-blue-900 font-bold leading-relaxed">
-                Catatan Penting: Biaya pendaftaran dan uang pangkal bersifat non-refundable (tidak dapat dikembalikan). Silakan hubungi admin untuk skema cicilan resmi.
+              <p className="text-lg text-brand-blue-900 font-bold leading-relaxed mb-2">
+                Biaya SPP dapat dibayarkan Rp 13.200.000 / Tahun atau Rp 1.100.000 / Bulan. 
+              </p>
+              <p className="text-md text-brand-blue-800 font-medium leading-relaxed">
+                Biaya pendaftaran dan uang pangkal bersifat non-refundable. Uang pangkal (daftar ulang) dapat dicicil maksimal 3x pembayaran, dengan <strong>syarat pembayaran pertama minimal 50%</strong>, dan wajib dilunasi sebelum Juli 2026.
               </p>
             </div>
           </motion.div>
