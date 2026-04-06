@@ -16,10 +16,10 @@ async function main() {
     where: {
       tempat_lahir: { not: null },
       tanggal_lahir: { not: null },
-      OrangTua: { isNot: null }
+      orang_tua: { isNot: null }
     },
     include: {
-      OrangTua: true
+      orang_tua: true
     }
   });
 
@@ -33,10 +33,10 @@ async function main() {
     console.log(`Provinsi       : ${sample.provinsi}`);
     
     console.log("\n=== DATA ORANG TUA ===");
-    console.log(`Nama Ayah      : ${sample.OrangTua?.nama_ayah || '-'}`);
-    console.log(`Pekerjaan Ayah : ${sample.OrangTua?.pekerjaan_ayah || '-'}`);
-    console.log(`Nama Ibu       : ${sample.OrangTua?.nama_ibu || '-'}`);
-    console.log(`No HP Ayah     : ${sample.OrangTua?.no_hp_ayah || '-'}`);
+    console.log(`Nama Ayah      : ${sample.orang_tua?.nama_ayah || '-'}`);
+    console.log(`Pekerjaan Ayah : ${sample.orang_tua?.pekerjaan_ayah || '-'}`);
+    console.log(`Nama Ibu       : ${sample.orang_tua?.nama_ibu || '-'}`);
+    console.log(`No HP Ayah     : ${sample.orang_tua?.no_hp_ayah || '-'}`);
   } else {
     console.log("Tidak ada data lengkap ditemukan.");
   }
