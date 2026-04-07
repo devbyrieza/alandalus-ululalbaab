@@ -755,7 +755,7 @@ export default function DataLengkapForm({ onSuccess }: { onSuccess?: () => void 
 
   // Ulul Albaab: Smart Lock
   // Jika data belum lengkap (pendaftar lama), form SELALU TERBUKA otomatis.
-  // Jika data sudah lengkap (pendaftar baru), ikuti aturan kunci normal Al-Imam.
+  // Jika data sudah lengkap (pendaftar baru), ikuti aturan kunci normal Ulul Albaab.
   const isLocked = isDataIncomplete ? false : isNormalLocked;
   const isEditMode = requestStatus?.status === 'approved_to_edit';
   const canEdit = !isLocked || isEditMode;

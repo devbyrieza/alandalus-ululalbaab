@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
         const token = generateMagicToken(user.id, user.role, user.full_name, 24);
 
         // Create full URL wrapper
-        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://pesantren-alimam.com";
+        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://pesantren-ululalbaab.com";
         const magicLinkUrl = `${baseUrl}/api/auth/magic?token=${token}`;
 
         return NextResponse.json({ success: true, link: magicLinkUrl });
