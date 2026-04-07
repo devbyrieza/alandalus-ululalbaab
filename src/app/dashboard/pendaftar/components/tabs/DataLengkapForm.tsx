@@ -894,7 +894,14 @@ export default function DataLengkapForm({ onSuccess }: { onSuccess?: () => void 
                     required
                   />
                   <InputField label="Tanggal Lahir" name="tanggal_lahir" value={formData.santri.tanggal_lahir} onChange={(v) => updateSantri("tanggal_lahir", v)} type="date" required />
-                  <InputField label="Jenis Kelamin" name="jenis_kelamin" value={formData.santri.jenis_kelamin} onChange={(v) => updateSantri("jenis_kelamin", v)} options={["Laki-laki", "Perempuan"]} required />
+                  <InputField 
+                    label="Jenis Kelamin" 
+                    name="jenis_kelamin" 
+                    value={["L", "Laki-laki"].includes(formData.santri.jenis_kelamin) ? "Laki-laki" : (["P", "Perempuan"].includes(formData.santri.jenis_kelamin) ? "Perempuan" : "")} 
+                    onChange={(v) => updateSantri("jenis_kelamin", v === "Laki-laki" ? "L" : "P")} 
+                    options={["Laki-laki", "Perempuan"]} 
+                    required 
+                  />
                   <InputField
                     label="Kewarganegaraan"
                     name="kewarganegaraan"

@@ -142,9 +142,19 @@ export async function getStudentsByFilter(
 
     // ── Jenis Kelamin ─────────────────────────────────────────────
     if (criteria.jenis_kelamin) {
-        andConditions.push({ jenis_kelamin: criteria.jenis_kelamin });
+        const isMale = criteria.jenis_kelamin === "L" || criteria.jenis_kelamin === "Laki-laki";
+        const isFemale = criteria.jenis_kelamin === "P" || criteria.jenis_kelamin === "Perempuan";
+        
+        if (isMale) {
+            andConditions.push({ jenis_kelamin: { in: ["L", "Laki-laki"] } });
+        } else if (isFemale) {
+            andConditions.push({ jenis_kelamin: { in: ["P", "Perempuan"] } });
+        } else {
+            andConditions.push({ jenis_kelamin: criteria.jenis_kelamin });
+        }
+        
         appliedFilters.push(
-            `Jenis Kelamin: ${criteria.jenis_kelamin === "L" ? "Laki-laki" : "Perempuan"}`
+            `Jenis Kelamin: ${isMale ? "Laki-laki" : "Perempuan"}`
         );
     }
 
