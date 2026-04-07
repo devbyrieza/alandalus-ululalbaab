@@ -90,11 +90,11 @@ export default function ActivitiesSection() {
                                     className="object-cover transition-transform duration-700 group-hover:scale-110 bg-cream-100 animate-pulse"
                                     onLoad={(e) => e.currentTarget.classList.remove('animate-pulse')}
                                 />
-                                <div className="absolute inset-0 bg-linear-to-t from-brand-blue-900/60 to-transparent opacity-80" />
+                                <div className="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-transparent" />
                             </div>
-                            <div className="p-6 md:p-8 flex-grow flex flex-col">
+                            <div className="p-6 md:p-8 grow flex flex-col">
                                 <h3 className="text-xl font-bold text-ink-950 mb-3 tracking-tight group-hover:text-brand-blue-700 transition-colors">{activity.name}</h3>
-                                <p className="text-ink-500 font-medium text-[15px] leading-relaxed mb-6 flex-grow">
+                                <p className="text-ink-500 font-medium text-[15px] leading-relaxed mb-6 grow">
                                     {activity.description}
                                 </p>
                             </div>
