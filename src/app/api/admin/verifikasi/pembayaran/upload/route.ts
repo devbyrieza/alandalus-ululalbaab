@@ -62,10 +62,7 @@ export async function POST(request: NextRequest) {
                             nama_lengkap: true,
                             no_hp: true
                         } 
-                    },
-                    jumlah: true,
-                    metode_pembayaran: true,
-                    created_at: true,
+                    }
                 },
             });
         } catch (dbError: any) {
