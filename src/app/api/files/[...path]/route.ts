@@ -13,12 +13,11 @@ export async function GET(request: NextRequest, props: { params: Promise<{ path:
         const params = await props.params;
         const { path: pathSegments } = params; // Rename for clarity
 
-        if (!pathSegments || pathSegments.length < 3) {
+        if (!pathSegments || pathSegments.length < 2) {
             return NextResponse.json({ error: "Invalid path" }, { status: 400 });
         }
 
-        // Validate structure: category/ownerId/filename
-        const [category, ownerId] = pathSegments;
+        // Validate structure: category/ownerId/filename OR category/filename
         const relativePath = pathSegments.join("/");
 
         // 1. Auth Check
@@ -39,8 +38,30 @@ export async function GET(request: NextRequest, props: { params: Promise<{ path:
         // 2. Authorization
         // Admin can access everything
         // Pendaftar can only access their own files (ownerId must match session.id)
-        const isAdmin = ["admin", "admin_super", "admin_berkas", "admin_keuangan", "penguji"].includes(session.role);
-        const isOwner = session.role === "pendaftar" && session.id === ownerId;
+        const staffRoles = [
+            "admin",
+            "admin_super",
+            "admin_berkas",
+            "admin_keuangan",
+            "penguji",
+            "penguji_calsan",
+            "pewawancara_cawalsan",
+            "pewawancara_calsan",
+            "head_of_it",
+            "tim_it"
+        ];
+        const isAdmin = staffRoles.includes(session.role);
+        
+        // If it's a 3-segment path like category/ownerId/filename, we can check ownership
+        let isOwner = false;
+        if (pathSegments.length >= 3) {
+            const ownerId = pathSegments[1];
+            isOwner = session.role === "pendaftar" && session.id === ownerId;
+        } else if (session.role === "pendaftar") {
+            // For 2-segment paths, pendaftar might still need access if it's their own, 
+            // but we lack the ID in the path. For now, let's assume they only use 3-segment paths.
+            // This is a tradeoff for legacy 2-segment paths.
+        }
 
         if (!isAdmin && !isOwner) {
             return NextResponse.json({ error: "Forbidden" }, { status: 403 });
