@@ -168,15 +168,16 @@ export default function VerifikasiPembayaranPage() {
       const data = await response.json();
 
       if (data.success) {
-        alert("Bukti pembayaran berhasil diganti dan otomatis diverifikasi");
+        alert("[SUCCESS-V2] Bukti pembayaran berhasil diganti dan otomatis diverifikasi");
         fetchPembayaran(); // Refresh the list
         setShowModal(false); // Close modal
       } else {
-        alert(data.error || "Gagal mengunggah bukti pembayaran");
+        console.error("Upload failed server-side:", data.error);
+        alert(`[FIX-STORAGE-V2] Gagal: ${data.error || "Pesan error tidak diketahui"}`);
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error replacing payment proof:", error);
-      alert("Terjadi kesalahan saat mengunggah");
+      alert(`[FIX-STORAGE-V2] Terjadi kesalahan sistem: ${error.message || "Gagal mengunggah"}`);
     } finally {
       setUploadingProof(null);
       if (fileInputRef.current) fileInputRef.current.value = ""; // Reset input

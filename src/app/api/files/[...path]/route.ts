@@ -8,62 +8,46 @@ import { getFileLocal } from "@/lib/storage/local";
  * URL format: /api/files/category/owner_id/filename
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export async function GET(request: NextRequest, props: { params: Promise<{ path: string[] }> }) {
+export async function GET(
+    request: NextRequest,
+    props: { params: Promise<{ path: string[] }> }
+) {
     try {
-        const params = await props.params;
-        const { path: pathSegments } = params; // Rename for clarity
+        const { path: pathSegments } = await props.params;
 
         if (!pathSegments || pathSegments.length < 2) {
+            console.error("[File-API] ❌ Invalid path segments:", pathSegments);
             return NextResponse.json({ error: "Invalid path" }, { status: 400 });
         }
 
-        // Validate structure: category/ownerId/filename OR category/filename
         const relativePath = pathSegments.join("/");
+        console.log(`\n[File-API] 🔍 Requesting file: ${relativePath}`);
 
-        // 1. Auth Check
+        // 1. Auth Check - Files in storage are protected
         const cookieStore = await cookies();
         const sessionCookie = cookieStore.get("app_session");
 
         if (!sessionCookie) {
+            console.error("[File-API] ❌ Unauthorized: No session cookie");
             return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
         }
 
-        let session;
+        let session: any;
         try {
             session = JSON.parse(sessionCookie.value);
-        } catch {
+        } catch (e) {
+            console.error("[File-API] ❌ Error parsing session cookie:", e);
             return NextResponse.json({ error: "Invalid session" }, { status: 401 });
         }
+        const userRole = session.role;
+        const userId = session.id;
 
-        // 2. Authorization
-        // Admin can access everything
-        // Pendaftar can only access their own files (ownerId must match session.id)
-        const staffRoles = [
-            "admin",
-            "admin_super",
-            "admin_berkas",
-            "admin_keuangan",
-            "penguji",
-            "penguji_calsan",
-            "pewawancara_cawalsan",
-            "pewawancara_calsan",
-            "head_of_it",
-            "tim_it"
-        ];
-        const isAdmin = staffRoles.includes(session.role);
-        
-        // If it's a 3-segment path like category/ownerId/filename, we can check ownership
-        let isOwner = false;
-        if (pathSegments.length >= 3) {
-            const ownerId = pathSegments[1];
-            isOwner = session.role === "pendaftar" && session.id === ownerId;
-        } else if (session.role === "pendaftar") {
-            // For 2-segment paths, pendaftar might still need access if it's their own, 
-            // but we lack the ID in the path. For now, let's assume they only use 3-segment paths.
-            // This is a tradeoff for legacy 2-segment paths.
-        }
+        // 2. Permission Check
+        const isAdmin = ["admin_berkas", "admin_keuangan", "admin_super", "admin", "head_of_it", "tim_it"].includes(userRole);
+        const isOwner = relativePath.includes(userId);
 
         if (!isAdmin && !isOwner) {
+            console.error(`[File-API] ❌ Forbidden: User ${userId} (${userRole}) is not authorized for ${relativePath}`);
             return NextResponse.json({ error: "Forbidden" }, { status: 403 });
         }
 

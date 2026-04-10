@@ -6,8 +6,8 @@ import { logAdminAction } from "@/lib/audit";
 
 export async function POST(request: NextRequest) {
     try {
-        // 1. Auth Check
-        const session = await getServerSession();
+        // 1. Auth Check - Explicitly cast to any or check properties to avoid lint errors
+        const session = await getServerSession() as any;
         if (!session) {
             return NextResponse.json({ success: false, error: "Sesi telah berakhir, silakan login kembali" }, { status: 401 });
         }
@@ -49,99 +49,119 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ success: false, error: "ID Pembayaran tidak ditemukan" }, { status: 400 });
         }
 
-        // 3. Find Payment & Validate
-        const pembayaran = await prisma.pembayaran.findUnique({
-            where: { id: pembayaranId },
-            include: { 
-                pendaftar: { 
-                    select: { 
-                        nomor_pendaftaran: true, 
-                        id: true,
-                        nama_lengkap: true
-                    } 
-                } 
-            },
-        });
-
-        if (!pembayaran) {
-            return NextResponse.json({ success: false, error: "Data pembayaran tidak ditemukan di database" }, { status: 404 });
-        }
-
-        // 4. Save File
-        let filePath;
+        // 4. Find Pembayaran record
+        let pembayaran;
         try {
-            const timestamp = Date.now();
-            const originalName = file.name || "bukti_transfer";
-            const fileExtension = originalName.split('.').pop() || 'jpg';
-            const fileName = `admin-upload-${pembayaran.pendaftar.nomor_pendaftaran}-${timestamp}.${fileExtension}`;
-            
-            filePath = await saveFileLocal(file, 'bukti-pembayaran', pembayaran.pendaftar.id, fileName);
-            
-            if (!filePath) {
-                throw new Error("saveFileLocal returned null");
-            }
-        } catch (e: any) {
-            console.error("Error saving file local:", e);
-            return NextResponse.json({ 
-                success: false, 
-                error: `Gagal menyimpan file ke server: ${e.message || 'Check storage permissions'}` 
-            }, { status: 500 });
-        }
-
-        // 5. Update Database
-        try {
-            await prisma.pembayaran.update({
+            pembayaran = await prisma.pembayaran.findUnique({
                 where: { id: pembayaranId },
-                data: {
-                    bukti_transfer_path: filePath,
-                    bukti_transfer_filename: file.name,
-                    status_pembayaran: "verified",
-                    verified_by: session.id,
-                    verified_at: new Date(),
-                    catatan_verifikasi: "Diunggah dan diverifikasi otomatis oleh Admin",
-                    updated_at: new Date(),
+                include: { 
+                    pendaftar: { 
+                        select: { 
+                            nomor_pendaftaran: true, 
+                            id: true,
+                            nama_lengkap: true
+                        } 
+                    } 
                 },
             });
+        } catch (dbError: any) {
+            console.error("Database error while finding pembayaran:", dbError);
+            return NextResponse.json({ success: false, error: "Gagal mengakses database untuk data pembayaran" }, { status: 500 });
+        }
 
-            // Also update pendaftar status
-            await prisma.pendaftar.update({
-                where: { id: pembayaran.pendaftar_id },
-                data: {
-                    status_pendaftaran: "verified",
-                    updated_at: new Date()
-                }
-            });
-        } catch (e: any) {
-            console.error("Error updating database:", e);
+        if (!pembayaran) {
+            return NextResponse.json({ success: false, error: "Data pembayaran tidak ditemukan" }, { status: 404 });
+        }
+
+        if (!pembayaran.pendaftar) {
+            console.error(`Pendaftar linked to pembayaran ${pembayaranId} is missing or has incomplete data`);
+            return NextResponse.json({ success: false, error: "Data pendaftar terkait tidak ditemukan" }, { status: 400 });
+        }
+
+        // 5. Save file
+        let filePath = "";
+        try {
+            const now = new Date();
+            const timestamp = now.toISOString().replace(/[:\-]|\.\d{3}/g, '').replace('T', '_');
+            const originalName = file.name || "bukti_transfer";
+            const fileExtension = originalName.includes('.') ? originalName.split('.').pop() : 'jpg';
+            const fileName = `admin-upload-${pembayaran.pendaftar.nomor_pendaftaran}-${timestamp}.${fileExtension}`;
+
+            console.log(`[Upload-API] Attempting to save file for ${pembayaran.pendaftar.nomor_pendaftaran}`);
+            filePath = await saveFileLocal(file, 'bukti-pembayaran', pembayaran.pendaftar.id, fileName);
+            console.log(`[Upload-API] File saved successfully at: ${filePath}`);
+        } catch (storageError: any) {
+            console.error("Storage error during upload:", storageError);
             return NextResponse.json({ 
                 success: false, 
-                error: `Gambar berhasil diupload, namun gagal memperbarui status di database: ${e.message}` 
+                error: `Gagal menyimpan file: ${storageError.message || "Izin tulis ditolak atau folder tidak tersedia"}` 
             }, { status: 500 });
         }
 
-        // 6. Logging
-        logAdminAction({
-            action: 'UPLOAD_PAYMENT_PROOF',
-            adminId: session.id || 'system',
-            adminName: session.full_name || 'Admin',
-            targetId: pembayaran.pendaftar.id,
-            targetName: pembayaran.pendaftar.nama_lengkap,
-            details: { 
-                pembayaran_id: pembayaranId,
-                file_path: filePath
-            }
-        });
+        // 6. Update Database
+        try {
+            await prisma.$transaction([
+                prisma.pembayaran.update({
+                    where: { id: pembayaranId },
+                    data: {
+                        bukti_transfer_path: filePath,
+                        bukti_transfer_filename: file.name,
+                        status_pembayaran: "verified",
+                        verified_by: session.id,
+                        verified_at: new Date(),
+                        catatan_verifikasi: "Diunggah dan diverifikasi otomatis oleh Admin",
+                        updated_at: new Date(),
+                    },
+                }),
+
+                prisma.pendaftar.update({
+                    where: { id: pembayaran.pendaftar_id },
+                    data: {
+                        status_pendaftaran: "verified",
+                        updated_at: new Date()
+                    }
+                })
+            ]);
+            console.log(`[Upload-API] Successfully updated database for payment ${pembayaranId}`);
+        } catch (updateError: any) {
+            console.error("Database update error:", updateError);
+            return NextResponse.json({ 
+                success: false, 
+                error: `Gagal memperbarui status di database: ${updateError.message}` 
+            }, { status: 500 });
+        }
+
+        // 7. Log Action
+        try {
+            logAdminAction({
+                action: 'UPLOAD_PAYMENT_PROOF',
+                adminId: session?.id || 'system',
+                adminName: session?.full_name || 'Admin',
+                targetId: pembayaran.pendaftar.id,
+                targetName: pembayaran.pendaftar.nama_lengkap,
+                details: { 
+                    pembayaran_id: pembayaranId,
+                    file_path: filePath
+                }
+            });
+        } catch (logError) {
+            console.error("[Upload-API] Warning: Failed to log admin action:", logError);
+            // Non-critical, continue
+        }
 
         return NextResponse.json({ 
             success: true, 
-            message: "Bukti pembayaran berhasil diunggah dan diverifikasi" 
+            message: "[SUCCESS-V2] Bukti pembayaran berhasil diunggah dan diverifikasi",
+            path: filePath
         });
 
     } catch (error: any) {
-        console.error("Critical error in admin upload:", error);
-        return NextResponse.json(
-            { success: false, error: `Kesalahan sistem kritis: ${error.message || 'Unknown error'}` },
-            { status: 500 }
-        );
+        console.error("[Upload-API] ❌ Critical error in admin upload:", error);
+        
+        // Ensure we always return JSON even on critical failure
+        return NextResponse.json({ 
+            success: false, 
+            error: `[FIX-STORAGE-V2] Kesalahan sistem: ${error.message || 'Unknown error'}` 
+        }, { status: 500 });
     }
 }
