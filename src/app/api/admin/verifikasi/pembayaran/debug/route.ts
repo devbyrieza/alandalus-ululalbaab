@@ -29,7 +29,18 @@ export async function GET(request: NextRequest) {
         for (const cat of categories) {
             const catPath = path.join(STORAGE_DIR, cat);
             if (fs.statSync(catPath).isDirectory()) {
-                subContents[cat] = fs.readdirSync(catPath);
+                const subfolders = fs.readdirSync(catPath);
+                subContents[cat] = {};
+                for (const sub of subfolders) {
+                    const subPath = path.join(catPath, sub);
+                    if (fs.statSync(subPath).isDirectory()) {
+                        subContents[cat][sub] = fs.readdirSync(subPath);
+                    } else {
+                        // It's a file directly in the category (old system)
+                        if (!subContents[cat]._files) subContents[cat]._files = [];
+                        subContents[cat]._files.push(sub);
+                    }
+                }
             }
         }
 
