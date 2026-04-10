@@ -240,7 +240,7 @@ export default function LoginPage() {
         >
           <Link href="/">
             <div className="app-card inline-flex items-center justify-center w-20 h-20 bg-white rounded-3xl shadow-sm border border-brand-blue-100 mb-8 hover:scale-110 transition-transform group overflow-hidden">
-              <img src="/images/logo.webp" alt="Logo Ulul Albaab" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+              <img src="/images/logo-andalus.webp" alt="Logo Ulul Albaab" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
             </div>
           </Link>
           <h1 className="text-4xl md:text-5xl font-display font-black text-ink-950 mb-3 tracking-tight">
