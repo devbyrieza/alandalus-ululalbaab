@@ -59,9 +59,13 @@ export async function POST(request: NextRequest) {
                         select: { 
                             nomor_pendaftaran: true, 
                             id: true,
-                            nama_lengkap: true
+                            nama_lengkap: true,
+                            no_hp: true
                         } 
-                    } 
+                    },
+                    jumlah: true,
+                    metode_pembayaran: true,
+                    created_at: true,
                 },
             });
         } catch (dbError: any) {
@@ -146,6 +150,27 @@ export async function POST(request: NextRequest) {
             });
         } catch (logError) {
             console.error("[Upload-API] Warning: Failed to log admin action:", logError);
+            // Non-critical, continue
+        }
+
+        // 8. Send WhatsApp notification
+        try {
+            const { pendaftar } = pembayaran;
+            if (pendaftar?.no_hp) {
+                const { notifyPaymentVerified } = await import("@/lib/wablas");
+                await notifyPaymentVerified({
+                    phone: pendaftar.no_hp,
+                    nama: pendaftar.nama_lengkap,
+                    jumlah: `Rp ${parseInt(pembayaran.jumlah.toString()).toLocaleString('id-ID')}`,
+                    metode: pembayaran.metode_pembayaran,
+                    tanggal: new Date(pembayaran.created_at).toLocaleDateString('id-ID'),
+                    status: "verified",
+                    catatan: "Diunggah dan diverifikasi otomatis oleh Admin",
+                });
+                console.log(`[Upload-API] WhatsApp notification sent to ${pendaftar.no_hp}`);
+            }
+        } catch (waError) {
+            console.error("[Upload-API] Warning: Failed to send WhatsApp notification:", waError);
             // Non-critical, continue
         }
 
