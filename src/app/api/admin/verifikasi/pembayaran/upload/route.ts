@@ -80,11 +80,11 @@ export async function POST(request: NextRequest) {
             if (!filePath) {
                 throw new Error("saveFileLocal returned null");
             }
-        } catch (e) {
+        } catch (e: any) {
             console.error("Error saving file local:", e);
             return NextResponse.json({ 
                 success: false, 
-                error: "Gagal menyimpan file ke server. Pastikan folder penyimpanan tersedia dan memiliki izin tulis." 
+                error: `Gagal menyimpan file ke server: ${e.message || 'Check storage permissions'}` 
             }, { status: 500 });
         }
 
@@ -111,11 +111,11 @@ export async function POST(request: NextRequest) {
                     updated_at: new Date()
                 }
             });
-        } catch (e) {
+        } catch (e: any) {
             console.error("Error updating database:", e);
             return NextResponse.json({ 
                 success: false, 
-                error: "Gambar berhasil diupload, namun gagal memperbarui status di database." 
+                error: `Gambar berhasil diupload, namun gagal memperbarui status di database: ${e.message}` 
             }, { status: 500 });
         }
 
