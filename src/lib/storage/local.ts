@@ -60,6 +60,8 @@ export function getFileLocal(relativePath: string): { buffer: Buffer; mimeType: 
         const sanitizedPath = relativePath.startsWith('/') ? relativePath.substring(1) : relativePath;
         const fullPath = path.join(STORAGE_DIR, sanitizedPath);
 
+        console.log(`[Storage] 📂 Checking file: ${fullPath} (CWD: ${process.cwd()})`);
+
         // Basic security check to prevent directory traversal
         if (!fullPath.startsWith(STORAGE_DIR)) {
             console.error(`[Storage] ❌ Security violation: Path traversal attempt - ${fullPath}`);

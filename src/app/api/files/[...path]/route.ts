@@ -34,9 +34,11 @@ export async function GET(
 
         let session: any;
         try {
-            session = JSON.parse(sessionCookie.value);
+            const decodedValue = decodeURIComponent(sessionCookie.value);
+            session = JSON.parse(decodedValue);
         } catch (e) {
             console.error("[File-API] ❌ Error parsing session cookie:", e);
+            console.log("[File-API] Raw cookie value:", sessionCookie.value);
             return NextResponse.json({ error: "Invalid session" }, { status: 401 });
         }
         const userRole = session.role;
