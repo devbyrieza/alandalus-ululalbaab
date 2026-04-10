@@ -7,11 +7,11 @@ import { getFileLocal } from "@/lib/storage/local";
  * Serves files from local storage with authentication check.
  * URL format: /api/files/category/owner_id/filename
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function GET(
     request: NextRequest,
     props: { params: Promise<{ path: string[] }> }
 ) {
+    console.log(`\n[File-API] >>> INCOMING REQUEST: ${request.nextUrl.pathname}`);
     try {
         const { path: pathSegments } = await props.params;
 

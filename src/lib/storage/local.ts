@@ -7,10 +7,8 @@ const STORAGE_DIR = process.env.STORAGE_PATH
     ? path.resolve(process.env.STORAGE_PATH) 
     : path.resolve(process.cwd(), 'storage_data');
 
-console.log(`[Storage] Initialized with directory: ${STORAGE_DIR}`);
-
 /**
- * Save a file to the local filesystem
+  * Save a file to the local filesystem
  * @param file The file object from FormData
  * @param category The category folder (e.g., 'dokumen-pendaftaran', 'bukti-pembayaran')
  * @param subfolder The subfolder (usually user ID or registration number)
