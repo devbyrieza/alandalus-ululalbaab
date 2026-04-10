@@ -30,7 +30,18 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ success: false, error: "Sesi tidak valid" }, { status: 401 });
         }
 
-        const allowedRoles = ["admin_keuangan", "admin", "admin_super"];
+        const allowedRoles = [
+            "admin",
+            "admin_super",
+            "admin_berkas",
+            "admin_keuangan",
+            "penguji",
+            "penguji_calsan",
+            "pewawancara_cawalsan",
+            "pewawancara_calsan",
+            "head_of_it",
+            "tim_it"
+        ];
         if (!allowedRoles.includes(session.role)) {
             return NextResponse.json({ success: false, error: "Akses ditolak" }, { status: 403 });
         }
