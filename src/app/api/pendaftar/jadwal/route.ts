@@ -1,7 +1,27 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { prisma } from "@/lib/prisma";
-import { enqueueWhatsapp, buildMessageKonfirmasiJadwal } from "@/lib/whatsapp-queue";
+import { 
+    enqueueWhatsapp, 
+    buildMessageKonfirmasiJadwal, 
+    buildMessageKonfirmasiJadwalInterviewer, 
+    buildMessageReminderH1Santri, 
+    buildMessageReminderH1Penguji 
+} from "@/lib/whatsapp-queue";
+import { generateMagicToken } from "@/lib/utils/magic-link";
+
+function getExamCategory(title: string): string {
+    const t = (title || "").toLowerCase();
+    if (t.includes('quran') || t.includes('qur\'an')) return 'QURAN';
+    if (t.includes('calsan') || t.includes('santri')) return 'W_SANTRI';
+    if (t.includes('cawalsan') || t.includes('ortu') || t.includes('orang tua')) return 'W_ORTU';
+    return 'OTHER';
+}
+
+function sanitizeTitle(title: string): string {
+    // Remove anything in parentheses (e.g. examiner names)
+    return (title || "").replace(/\s*\(.*?\)\s*/g, '').trim();
+}
 
 async function getSession() {
     const cookieStore = await cookies();
@@ -33,7 +53,8 @@ export async function GET() {
         // Transform to match front-end expectation
         const data = jadwal.map(item => ({
             id: item.id,
-            jenis_ujian: "Seleksi Santri Baru", // Static label or derive
+            jenis_ujian: sanitizeTitle(item.exam_session?.title || "Seleksi Santri Baru"),
+            category: getExamCategory(item.exam_session?.title || ""),
             tanggal_ujian: item.tanggal_ujian,
             waktu_mulai: item.exam_session?.start_time || item.waktu_mulai_santri,
             waktu_selesai: item.exam_session?.end_time || item.waktu_selesai_santri,
@@ -76,37 +97,33 @@ export async function POST(request: Request) {
             return NextResponse.json({ error: "Kuota penuh" }, { status: 400 });
         }
 
-        // 2. Check for reduced duplication (Same Exam Type)
+        // 2. Check for categorical duplication (Quran, Santri, Ortu)
         const existingBookings = await prisma.jadwalUjian.findMany({
             where: { pendaftar_id: session.id },
             include: { exam_session: true }
         });
+        
+        const currentCategory = getExamCategory(examSession.title || "");
 
-        // Check if any existing booking has the same title/type
-        const duplicateType = existingBookings.find(booking => {
-            // If booking has a session, compare titles
-            if (booking.exam_session?.title && examSession.title) {
-                return booking.exam_session.title === examSession.title;
-            }
-            // If legacy booking (no session) or untitled, maybe block to be safe? 
-            // Or assume manual schedule covers everything?
-            // For now, let's assume if titles match, it's a duplicate.
-            return false;
+        // Check if any existing booking has the same category
+        const duplicateCategory = existingBookings.find(booking => {
+            const bookedTitle = booking.exam_session?.title || "";
+            return getExamCategory(bookedTitle) === currentCategory;
         });
 
-        if (duplicateType) {
+        if (duplicateCategory) {
+            const categoryLabel = 
+                currentCategory === 'QURAN' ? 'Ujian Al-Quran' :
+                currentCategory === 'W_SANTRI' ? 'Wawancara Calon Santri' :
+                currentCategory === 'W_ORTU' ? 'Wawancara Orang Tua' : 
+                'Ujian ini';
+            
             return NextResponse.json({
-                error: `Anda sudah memiliki jadwal untuk ${examSession.title || 'Ujian ini'}.`
+                error: `Anda sudah memiliki jadwal untuk ${categoryLabel}.`
             }, { status: 400 });
         }
 
-        // Transaction to book
-        // 1. Create Jadwal
-        // 2. No need to increment counter manually if using _count, but if we have booked_count field we should update it.
-        // My schema has `booked_count` int field. I should update it.
-
         const result = await prisma.$transaction(async (tx) => {
-            // Increment count first to lock? Prisma doesn't lock automatically like that easily, but atomic increment works.
             const updatedSession = await tx.examSession.update({
                 where: { id: exam_session_id },
                 data: { booked_count: { increment: 1 } }
@@ -116,21 +133,32 @@ export async function POST(request: Request) {
                 throw new Error("Kuota penuh (race condition)");
             }
 
-            // Create Jadwal
-            // Need `tahun_ajaran_id`. How to get? 
-            // Usually Pendaftar is linked to TahunAjaran. I should fetch Pendaftar first.
             const pendaftar = await tx.pendaftar.findUnique({ where: { id: session.id } });
             if (!pendaftar) throw new Error("Data pendaftar tidak ditemukan");
 
-            let pengujiFields: Record<string, string> = {};
+            let pengujiFields: Record<string, string | null> = {};
             const sessionTitle = (examSession.title || "").toLowerCase();
             if (examSession.created_by) {
+                const interviewer = await tx.profile.findUnique({
+                    where: { id: examSession.created_by },
+                    select: { google_meet_link: true, full_name: true, phone: true }
+                });
+
                 if (sessionTitle.includes("qur") || sessionTitle.includes("quran")) {
-                    pengujiFields = { penguji_quran_id: examSession.created_by };
+                    pengujiFields = {
+                        penguji_quran_id: examSession.created_by,
+                        google_meet_link: interviewer?.google_meet_link || null
+                    };
                 } else if (sessionTitle.includes("calsan") || sessionTitle.includes("santri")) {
-                    pengujiFields = { penguji_santri_id: examSession.created_by };
+                    pengujiFields = {
+                        penguji_santri_id: examSession.created_by,
+                        google_meet_link: interviewer?.google_meet_link || null
+                    };
                 } else if (sessionTitle.includes("cawalsan") || sessionTitle.includes("ortu") || sessionTitle.includes("orang")) {
-                    pengujiFields = { penguji_ortu_id: examSession.created_by };
+                    pengujiFields = {
+                        penguji_ortu_id: examSession.created_by,
+                        google_meet_link: interviewer?.google_meet_link || null
+                    };
                 }
             }
 
@@ -139,8 +167,8 @@ export async function POST(request: Request) {
                     tahun_ajaran_id: pendaftar.tahun_ajaran_id,
                     pendaftar_id: session.id,
                     exam_session_id: exam_session_id,
-                    tanggal_ujian: examSession.start_time, // Date part
-                    waktu_mulai_santri: examSession.start_time, // Temporarily copy session time to specific fields for compat
+                    tanggal_ujian: examSession.start_time,
+                    waktu_mulai_santri: examSession.start_time,
                     waktu_selesai_santri: examSession.end_time,
                     tempat_santri: examSession.location || "Pesantren",
                     waktu_mulai_ortu: examSession.start_time,
@@ -154,13 +182,11 @@ export async function POST(request: Request) {
                 }
             });
 
-            // 1.5. Update pendaftar status to 'scheduled'
             await tx.pendaftar.update({
                 where: { id: session.id },
                 data: { status_pendaftaran: 'scheduled' }
             });
 
-            // 2. Initialize NilaiUjian
             await tx.nilaiUjian.create({
                 data: {
                     pendaftar_id: session.id,
@@ -171,7 +197,7 @@ export async function POST(request: Request) {
             return jadwal;
         });
 
-        // Send WhatsApp via Queue (Layer 2: Non-blocking, through queue)
+        // Send WhatsApp via Queue
         const pendaftarInfo = await prisma.pendaftar.findUnique({
             where: { id: session.id },
             select: { nama_lengkap: true, no_hp: true }
@@ -179,10 +205,10 @@ export async function POST(request: Request) {
 
         if (pendaftarInfo && pendaftarInfo.no_hp) {
             const startTime = new Date(examSession.start_time);
-            const dateStr = startTime.toLocaleDateString("id-ID", { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
-            const timeStr = startTime.toLocaleTimeString("id-ID", { hour: '2-digit', minute: '2-digit' }) + ' WIB';
+            const dateStr = startTime.toLocaleDateString("id-ID", { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Asia/Jakarta' });
+            const timeStr = startTime.toLocaleTimeString("id-ID", { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Jakarta' }) + ' WIB';
             const lokasi = examSession.location || "Pesantren Al-Andalus Ulul Albaab";
-            const jenisUjian = examSession.title || "Seleksi Santri Baru";
+            const jenisUjian = sanitizeTitle(examSession.title || "Seleksi Santri Baru");
 
             const message = buildMessageKonfirmasiJadwal(
                 pendaftarInfo.nama_lengkap,
@@ -192,13 +218,139 @@ export async function POST(request: Request) {
                 jenisUjian
             );
 
-            // Enqueue via WhatsApp queue (all 6 layers applied)
             enqueueWhatsapp({
                 pendaftarId: session.id,
                 phone: pendaftarInfo.no_hp,
                 jenisNotif: "konfirmasi_jadwal",
                 messageContent: message,
             }).catch((err: any) => console.error("Failed to enqueue jadwal confirmation:", err));
+
+            // Notify Interviewer
+            if (examSession.created_by) {
+                const interviewer = await prisma.profile.findUnique({
+                    where: { id: examSession.created_by },
+                    select: { full_name: true, phone: true, google_meet_link: true }
+                });
+
+                if (interviewer && interviewer.phone) {
+                    const redirectPathPath = `/dashboard/penguji/input-nilai?search=${encodeURIComponent(pendaftarInfo.nama_lengkap)}`;
+                    const token = generateMagicToken(
+                        examSession.created_by,
+                        "penguji", 
+                        interviewer.full_name,
+                        72,
+                        redirectPathPath
+                    );
+                    const magicLink = `${process.env.NEXT_PUBLIC_APP_URL || 'https://ppdb.alandalus-ululalbaab.com'}/api/auth/magic?token=${token}`;
+
+                    const intMessage = buildMessageKonfirmasiJadwalInterviewer(
+                        interviewer.full_name,
+                        pendaftarInfo.nama_lengkap,
+                        dateStr,
+                        timeStr,
+                        interviewer.google_meet_link || lokasi,
+                        jenisUjian,
+                        magicLink
+                    );
+
+                    const scheduledAt = new Date();
+                    scheduledAt.setMinutes(scheduledAt.getMinutes() + 1);
+
+                    enqueueWhatsapp({
+                        pendaftarId: session.id,
+                        phone: interviewer.phone,
+                        jenisNotif: "konfirmasi_jadwal_interviewer",
+                        messageContent: intMessage,
+                        scheduledAt: scheduledAt,
+                    }).catch((err: any) => console.error("Failed to enqueue interviewer notification:", err));
+                }
+            }
+
+            // SCHEDULE 4-HOUR REMINDERS
+            try {
+                const examStartTime = new Date(examSession.start_time);
+                const reminderTime = new Date(examStartTime.getTime() - 4 * 60 * 60 * 1000);
+                const now = new Date();
+                const finalScheduledAt = reminderTime < now ? now : reminderTime;
+
+                const remSantriMsg = buildMessageReminderH1Santri(
+                    pendaftarInfo.nama_lengkap,
+                    dateStr.split(',')[0] || "",
+                    dateStr,
+                    timeStr,
+                    lokasi,
+                    jenisUjian
+                );
+
+                enqueueWhatsapp({
+                    pendaftarId: session.id,
+                    phone: pendaftarInfo.no_hp,
+                    jenisNotif: "reminder_h1",
+                    messageContent: remSantriMsg,
+                    scheduledAt: finalScheduledAt,
+                }).then(async () => {
+                    try {
+                        await prisma.jadwalUjian.update({
+                            where: { id: result.id },
+                            data: { notif_h1_pendaftar_terkirim: true }
+                        });
+                    } catch (e) {}
+                }).catch(err => console.error("Failed to enqueue H1 santri reminder:", err));
+
+                if (examSession.created_by) {
+                    const interviewer = await prisma.profile.findUnique({
+                        where: { id: examSession.created_by },
+                        select: { full_name: true, phone: true, google_meet_link: true }
+                    });
+
+                    if (interviewer && interviewer.phone) {
+                        const redirectPathH1 = `/dashboard/penguji/input-nilai?search=${encodeURIComponent(pendaftarInfo.nama_lengkap)}`;
+                        const tokenH1 = generateMagicToken(
+                            examSession.created_by,
+                            "penguji",
+                            interviewer.full_name,
+                            48,
+                            redirectPathH1
+                        );
+                        const magicLinkRem4h = `${process.env.NEXT_PUBLIC_APP_URL || 'https://ppdb.alandalus-ululalbaab.com'}/api/auth/magic?token=${tokenH1}`;
+
+                        const { getManualTinyUrl, generateTinyUrl } = await import("@/lib/utils/magic-link");
+                        const manualTinyUrl = getManualTinyUrl(interviewer.full_name);
+                        const shortUrlRem4h = manualTinyUrl || await generateTinyUrl(magicLinkRem4h);
+
+                        const remIntMessage = buildMessageReminderH1Penguji(
+                            interviewer.full_name,
+                            pendaftarInfo.nama_lengkap,
+                            dateStr.split(',')[0] || "",
+                            dateStr,
+                            timeStr,
+                            interviewer.google_meet_link || lokasi,
+                            jenisUjian,
+                            shortUrlRem4h
+                        );
+
+                        const finalScheduledAtInt = new Date(finalScheduledAt);
+                        finalScheduledAtInt.setMinutes(finalScheduledAtInt.getMinutes() + 5);
+
+                        enqueueWhatsapp({
+                            pendaftarId: session.id,
+                            phone: interviewer.phone,
+                            jenisNotif: "reminder_h1",
+                            messageContent: remIntMessage,
+                            scheduledAt: finalScheduledAtInt,
+                        }).then(async () => {
+                            try {
+                                await prisma.jadwalUjian.update({
+                                    where: { id: result.id },
+                                    data: { notif_h1_penguji_terkirim: true }
+                                });
+                            } catch (e) {}
+                        }).catch(err => console.error("Failed to enqueue 4h penguji reminder:", err));
+                    }
+                }
+            } catch (error) {
+                console.error("Error scheduling H1 reminders:", error);
+            }
         }
 
         return NextResponse.json({ success: true, data: result });

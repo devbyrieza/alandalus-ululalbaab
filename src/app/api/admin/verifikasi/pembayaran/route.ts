@@ -11,18 +11,7 @@ export async function GET(request: NextRequest) {
     if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     // Check custom role
-    const allowedRoles = [
-      "admin",
-      "admin_super",
-      "admin_berkas",
-      "admin_keuangan",
-      "penguji",
-      "penguji_calsan",
-      "pewawancara_cawalsan",
-      "pewawancara_calsan",
-      "head_of_it",
-      "tim_it"
-    ];
+    const allowedRoles = ["admin", "admin_super", "admin_berkas", "admin_keuangan", "penguji"];
     if (!allowedRoles.includes(session.role)) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
@@ -114,18 +103,7 @@ export async function PATCH(request: NextRequest) {
     if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     // Check custom role
-    const allowedRoles = [
-      "admin",
-      "admin_super",
-      "admin_berkas",
-      "admin_keuangan",
-      "penguji",
-      "penguji_calsan",
-      "pewawancara_cawalsan",
-      "pewawancara_calsan",
-      "head_of_it",
-      "tim_it"
-    ];
+    const allowedRoles = ["admin", "admin_super", "admin_berkas", "admin_keuangan", "penguji"];
     if (!allowedRoles.includes(session.role)) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }

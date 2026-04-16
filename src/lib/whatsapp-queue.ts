@@ -1,4 +1,4 @@
-﻿/**
+/**
  * WhatsApp Queue Service — 6-Layer Anti-BAN Protection
  *
  * Layer 1: Database flag check (anti-duplicate)
@@ -8,7 +8,8 @@
  * Layer 5: Log & audit every attempt
  * Layer 6: Natural message templates with personalization
  *
- * Queue is processed by external cron calling GET /api/cron/whatsapp every 1 minute.
+ * Queue is processed by internal cron calling GET /api/cron/whatsapp every 1 minute.
+ * Ported from Al-Imam reference.
  */
 
 import { prisma } from "@/lib/prisma";
@@ -23,9 +24,18 @@ export type NotifType =
     | "jadwal_tersedia"
     | "jadwal_langsung_tersedia"
     | "konfirmasi_jadwal"
+    | "konfirmasi_jadwal_interviewer"
     | "reminder_h1"
+    | "reminder_h1_penguji"
     | "reminder_h0"
-    | "hasil_tes";
+    | "hasil_tes"
+    | "registration_success"
+    | "document_verified"
+    | "document_rejected"
+    | "payment_verified"
+    | "payment_rejected"
+    | "broadcast"
+    | "pembatalan_jadwal";
 
 export interface EnqueueParams {
     pendaftarId: string;
@@ -39,13 +49,15 @@ export interface EnqueueParams {
 // CONSTANTS
 // ============================================================================
 
-const MAX_MESSAGES_PER_HOUR = 20;
-const MAX_MESSAGES_PER_10MIN = 10;
-const COOLDOWN_MINUTES = 15;
-const MIN_DELAY_MS = 5000;
-const MAX_DELAY_MS = 10000;
+const MAX_MESSAGES_PER_HOUR = 120; // Increased from 20 for faster queue clearing
+const MAX_MESSAGES_PER_10MIN = 30;  // Increased from 10
+const COOLDOWN_MINUTES = 5;         // Reduced from 15 to recover faster
+const MIN_DELAY_MS = 3000;          // Reduced from 5000
+const MAX_DELAY_MS = 7000;          // Reduced from 10000
 const MAX_RETRY_ATTEMPTS = 3;
 const RETRY_DELAY_MINUTES = 5;
+
+const DEFAULT_APP_URL = 'https://pesantren-ululalbaab.com';
 
 // ============================================================================
 // LAYER 1: Anti-Duplicate — Check flag before enqueue
@@ -57,12 +69,14 @@ const RETRY_DELAY_MINUTES = 5;
  */
 async function isDuplicate(
     pendaftarId: string,
-    jenisNotif: NotifType
+    jenisNotif: NotifType,
+    phone: string
 ): Promise<boolean> {
     // Check Pendaftar flag columns for persistent flags
     const flagMap: Partial<Record<NotifType, string>> = {
         jadwal_belum: "notif_belum_jadwal_terkirim",
         jadwal_tersedia: "notif_jadwal_tersedia_terkirim",
+        jadwal_langsung_tersedia: "notif_jadwal_tersedia_terkirim",
         hasil_tes: "notif_hasil_tes_terkirim",
     };
 
@@ -90,11 +104,16 @@ async function isDuplicate(
     }
 
     // For non-flag types (konfirmasi_jadwal, reminder_h1), check WhatsappLog
+    // Added phone check & 48h limit to allow multiple examiners per student and re-tests
+    const recentWindow = new Date(Date.now() - 48 * 60 * 60 * 1000); 
+
     const existingLog = await prisma.whatsappLog.findFirst({
         where: {
             pendaftar_id: pendaftarId,
+            phone: phone, // Check phone too!
             jenis_notif: jenisNotif,
             status: { in: ["pending", "processing", "sent"] },
+            created_at: { gte: recentWindow }
         },
     });
 
@@ -274,10 +293,12 @@ export async function enqueueWhatsapp(
     const { pendaftarId, phone, jenisNotif, messageContent, scheduledAt } =
         params;
 
-    // Layer 1: Duplicate check
-    const duplicate = await isDuplicate(pendaftarId, jenisNotif);
-    if (duplicate) {
-        return { queued: false, reason: "Notifikasi sudah pernah dikirim/diantri" };
+    // Layer 1: Duplicate check (Skip for broadcasts)
+    if (jenisNotif !== "broadcast") {
+        const duplicate = await isDuplicate(pendaftarId, jenisNotif, phone);
+        if (duplicate) {
+            return { queued: false, reason: "Notifikasi serupa sudah pernah dikirim/diantri" };
+        }
     }
 
     // Layer 5: Check if number is blocked
@@ -508,7 +529,6 @@ async function updateNotifFlag(
     pendaftarId: string,
     jenisNotif: NotifType
 ): Promise<void> {
-    // Map Both types to the same DB column to prevent duplicate sending (if they got one, don't send the other)
     const flagMap: Partial<Record<NotifType, string>> = {
         jadwal_belum: "notif_belum_jadwal_terkirim",
         jadwal_tersedia: "notif_jadwal_tersedia_terkirim",
@@ -517,16 +537,14 @@ async function updateNotifFlag(
     };
 
     const flagColumn = flagMap[jenisNotif];
-    if (!flagColumn) return; // konfirmasi_jadwal and reminder_h1 don't have persistent flags
+    if (!flagColumn) return; 
 
     try {
         await prisma.pendaftar.update({
             where: { id: pendaftarId },
             data: { [flagColumn]: true },
         });
-        console.log(
-            `🏷️ [Flag] Set ${flagColumn} = true for ${pendaftarId}`
-        );
+        console.log(`🏷️ [Flag] Set ${flagColumn} = true for ${pendaftarId}`);
     } catch (e) {
         console.error(`Failed to update flag ${flagColumn}:`, e);
     }
@@ -537,13 +555,129 @@ async function updateNotifFlag(
 // ============================================================================
 
 const OPENINGS = [
-    "Assalamu'alaikum",
-    "Assalamu'alaikum warahmatullahi wabarakatuh",
-    "Assalamu'alaikum wr. wb.",
+    "Assalamu'alaikum Warahmatullahi Wabarakatuh",
 ];
 
 function pickOpening(): string {
     return OPENINGS[Math.floor(Math.random() * OPENINGS.length)];
+}
+
+export function buildMessageRegistrationSuccess(
+    nama: string,
+    nomor_pendaftaran: string,
+    jenjang: string
+): string {
+    const jenjangStr = jenjang === 'MTs' ? 'Madrasah Tsanawiyah (MTs)' : "I'dad Lughowi (Setara SMA)";
+    return `🎉 *Pendaftaran Berhasil!*
+
+Assalamu'alaikum ${nama},
+
+Alhamdulillah, pendaftaran Anda di Pesantren Al-Andalus Ulul Albaab telah berhasil!
+
+📋 *Detail Pendaftaran:*
+• Nomor Pendaftaran: ${nomor_pendaftaran}
+• Jenjang: ${jenjangStr}
+• Nama: ${nama}
+
+📝 *Langkah Selanjutnya:*
+1. Login ke dashboard: ${process.env.NEXT_PUBLIC_APP_URL || DEFAULT_APP_URL}/dashboard/pendaftar
+   *(Gunakan Nomor Pendaftaran & NIK untuk Login)*
+2. Lakukan Pembayaran Pendaftaran (Transfer)
+3. Lengkapi biodata & upload dokumen (setelah pembayaran diverifikasi)
+
+💡 *Butuh Bantuan?*
+Hubungi kami di 0851-1152-4441
+
+Jazakumullahu khairan,
+Panitia PPDB Al-Andalus Ulul Albaab`;
+}
+
+export function buildMessageDocumentVerified(nama: string, dokumenList: string): string {
+    return `✅ *Dokumen Diverifikasi*
+
+Assalamu'alaikum ${nama},
+
+Alhamdulillah, dokumen Anda telah diverifikasi dan *DITERIMA*.
+
+📄 *Dokumen yang Diverifikasi:*
+${dokumenList}
+
+📝 *Langkah Selanjutnya:*
+Silakan pilih jadwal tes masuk melalui dashboard Anda (Menu Jadwal Ujian).
+
+Dashboard: ${process.env.NEXT_PUBLIC_APP_URL || DEFAULT_APP_URL}/dashboard/pendaftar/undangan-seleksi
+
+Jazakumullahu khairan,
+Panitia PPDB Al-Andalus Ulul Albaab`;
+}
+
+export function buildMessageDocumentRejected(nama: string, dokumenList: string, catatan: string): string {
+    return `❌ *Dokumen Perlu Diperbaiki*
+
+Assalamu'alaikum ${nama},
+
+Mohon maaf, dokumen Anda perlu diperbaiki.
+
+📄 *Dokumen yang Ditolak:*
+${dokumenList}
+
+📝 *Catatan:*
+${catatan}
+
+🔄 *Langkah Selanjutnya:*
+1. Login ke dashboard: ${process.env.NEXT_PUBLIC_APP_URL || DEFAULT_APP_URL}/dashboard/pendaftar/upload-berkas
+2. Upload ulang dokumen yang ditolak
+3. Pastikan dokumen jelas dan sesuai ketentuan
+
+💡 *Butuh Bantuan?*
+Hubungi kami di 0851-1152-4441
+
+Jazakumullahu khairan,
+Panitia PPDB Al-Andalus Ulul Albaab`;
+}
+
+export function buildMessagePaymentVerified(nama: string, jumlah: string, metode: string, tanggal: string): string {
+    return `✅ *Pembayaran Diterima*
+
+Assalamu'alaikum ${nama},
+
+Alhamdulillah, pembayaran Anda telah kami terima dan verifikasi.
+
+💰 *Detail Pembayaran:*
+* Jumlah: ${jumlah}
+* Metode: ${metode}
+* Tanggal: ${tanggal}
+
+📝 *Langkah Selanjutnya:*
+Silakan login ke dashboard untuk melengkapi Data Santri & Upload Berkas.
+Setelah data lengkap, Anda bisa memilih jadwal tes.
+
+Dashboard: ${process.env.NEXT_PUBLIC_APP_URL || DEFAULT_APP_URL}/dashboard/pendaftar/kelengkapan-berkas
+
+Jazakumullahu khairan,
+Panitia PPDB Al-Andalus Ulul Albaab`;
+}
+
+export function buildMessagePaymentRejected(nama: string, catatan: string): string {
+    return `❌ *Pembayaran Perlu Diperbaiki*
+
+Assalamu'alaikum ${nama},
+
+Mohon maaf, bukti pembayaran Anda perlu diperbaiki.
+
+📝 *Catatan:*
+${catatan}
+
+🔄 *Langkah Selanjutnya:*
+1. Login ke dashboard: ${process.env.NEXT_PUBLIC_APP_URL || DEFAULT_APP_URL}/dashboard/pendaftar/pembayaran-pendaftaran
+2. Upload ulang bukti pembayaran yang jelas
+3. Pastikan nominal dan rekening tujuan sesuai
+
+💡 *Butuh Bantuan?*
+Hubungi kami di 0851-1152-4441
+
+Jazakumullahu khairan,
+Panitia PPDB Al-Andalus Ulul Albaab`;
 }
 
 export function buildMessageJadwalBelum(nama: string): string {
@@ -558,10 +692,10 @@ Untuk sementara, Anda sudah bisa mengerjakan tes online yang tersedia di dashboa
 - Identifikasi Kepribadian
 - Tes Kesiapan
 
-Dashboard: ${process.env.NEXT_PUBLIC_APP_URL || 'https://pesantren-ululalbaab.com'}/dashboard/pendaftar/undangan-seleksi
+Dashboard: ${process.env.NEXT_PUBLIC_APP_URL || DEFAULT_APP_URL}/dashboard/pendaftar/undangan-seleksi
 
 Jazakumullahu khairan,
-Panitia PPDB Ulul Albaab`;
+Panitia PPDB Al-Andalus Ulul Albaab`;
 }
 
 export function buildMessageJadwalTersedia(nama: string): string {
@@ -576,10 +710,10 @@ Silakan login ke dashboard dan pilih jadwal yang sesuai untuk:
 
 Segera pilih jadwal sebelum kuota penuh.
 
-Dashboard: ${process.env.NEXT_PUBLIC_APP_URL || 'https://pesantren-ululalbaab.com'}/dashboard/pendaftar/undangan-seleksi
+Dashboard: ${process.env.NEXT_PUBLIC_APP_URL || DEFAULT_APP_URL}/dashboard/pendaftar/undangan-seleksi
 
 Jazakumullahu khairan,
-Panitia PPDB Ulul Albaab`;
+Panitia PPDB Al-Andalus Ulul Albaab`;
 }
 
 export function buildMessageJadwalLangsungTersedia(nama: string): string {
@@ -596,10 +730,10 @@ Silakan login ke dashboard dan pilih sesi jadwal untuk:
 
 Harap segera memilih jadwal sebelum rentang waktu habis atau kuota penuh. Jangan lupa juga untuk menyelesaikan Tes Online (Akademik & Kepribadian).
 
-Dashboard: ${process.env.NEXT_PUBLIC_APP_URL || 'https://pesantren-ululalbaab.com'}/dashboard/pendaftar/undangan-seleksi
+Dashboard: ${process.env.NEXT_PUBLIC_APP_URL || DEFAULT_APP_URL}/dashboard/pendaftar/undangan-seleksi
 
 Jazakumullahu khairan,
-Panitia PPDB Ulul Albaab`;
+Panitia PPDB Al-Andalus Ulul Albaab`;
 }
 
 export function buildMessageKonfirmasiJadwal(
@@ -622,10 +756,10 @@ Persiapan:
 - Berpakaian sopan dan rapi
 - Bawa alat tulis
 
-Dashboard: ${process.env.NEXT_PUBLIC_APP_URL || 'https://pesantren-ululalbaab.com'}/dashboard/pendaftar/undangan-seleksi
+Dashboard: ${process.env.NEXT_PUBLIC_APP_URL || DEFAULT_APP_URL}/dashboard/pendaftar/undangan-seleksi
 
 Jazakumullahu khairan,
-Panitia PPDB Ulul Albaab`;
+Panitia PPDB Al-Andalus Ulul Albaab`;
 }
 
 export function buildMessageReminderH1(
@@ -637,7 +771,7 @@ export function buildMessageReminderH1(
 ): string {
     return `${pickOpening()} ${nama},
 
-Pengingat: ${jenisUjian} Anda dijadwalkan besok.
+Pengingat jadwal ${jenisUjian} Anda:
 
 📋 *${jenisUjian}*
 📅 Tanggal: ${tanggal}
@@ -646,10 +780,10 @@ Pengingat: ${jenisUjian} Anda dijadwalkan besok.
 
 Mohon hadir tepat waktu dan persiapkan diri dengan baik. Semoga dimudahkan dan diberkahi.
 
-Dashboard: ${process.env.NEXT_PUBLIC_APP_URL || 'https://pesantren-ululalbaab.com'}/dashboard/pendaftar/undangan-seleksi
+Dashboard: ${process.env.NEXT_PUBLIC_APP_URL || DEFAULT_APP_URL}/dashboard/pendaftar/undangan-seleksi
 
 Jazakumullahu khairan,
-Panitia PPDB Ulul Albaab`;
+Panitia PPDB Al-Andalus Ulul Albaab`;
 }
 
 export function buildMessageReminderH0(
@@ -670,25 +804,51 @@ Mohon segera bersiap. Pastikan koneksi internet stabil jika ujian dilakukan seca
 Semoga dimudahkan dan diberkahi.
 
 Jazakumullahu khairan,
-Panitia PPDB Ulul Albaab`;
+Panitia PPDB Al-Andalus Ulul Albaab`;
 }
 
 export function buildMessageHasilTes(nama: string): string {
     return `${pickOpening()} ${nama},
-
-Alhamdulillah, hasil tes seleksi Anda sudah tersedia.
-
-Silakan login ke dashboard untuk melihat hasil lengkap Anda.
-
-Dashboard: ${process.env.NEXT_PUBLIC_APP_URL || 'https://pesantren-ululalbaab.com'}/dashboard/pendaftar/pengumuman
-
-Jazakumullahu khairan,
-Panitia PPDB Ulul Albaab`;
+ 
+ Alhamdulillah, hasil tes seleksi Anda sudah tersedia.
+ 
+ Silakan login ke dashboard untuk melihat hasil lengkap Anda.
+ 
+ Dashboard: ${process.env.NEXT_PUBLIC_APP_URL || DEFAULT_APP_URL}/dashboard/pendaftar/pengumuman
+ 
+ Jazakumullahu khairan,
+ Panitia PPDB Al-Andalus Ulul Albaab`;
 }
 
-// ============================================================================
-// UTILITY: Get queue stats
-// ============================================================================
+export function buildMessageKonfirmasiJadwalInterviewer(
+    namaInterviewer: string,
+    namaSantri: string,
+    tanggal: string,
+    waktu: string,
+    lokasi: string,
+    jenisUjian: string,
+    inputNilaiLink?: string
+): string {
+    const title = (namaInterviewer || "").toLowerCase().includes("ustadzah") ? "Ustadzah" : "Ustadz";
+    const opening = pickOpening();
+    let msg = `${opening} ${title} ${namaInterviewer},
+ 
+ Informasikan jadwal ${jenisUjian} baru untuk santri berikut:
+ 
+ Nama Santri: ${namaSantri}
+ Tanggal: ${tanggal}
+ Waktu: ${waktu} WIB
+ Tempat: ${lokasi}`;
+
+    if (inputNilaiLink) {
+        msg += `\n\n🔗 *Input Hasil:* ${inputNilaiLink}\n(PIN: 4 digit terakhir No. HP Anda)`;
+    }
+
+    msg += `\n\nMohon untuk bersiap di ruangan virtual/fisik tepat waktu. Syukran.
+ 
+ Panitia PPDB Al-Andalus Ulul Albaab`;
+    return msg;
+}
 
 export async function getQueueStats() {
     const [pending, processing, sent, failed, blocked] = await Promise.all([
@@ -714,4 +874,94 @@ export async function getQueueStats() {
             }
             : null,
     };
+}
+
+export function buildMessageReminderH1Santri(
+    nama: string,
+    hari: string,
+    tanggal: string,
+    jam: string,
+    lokasi: string,
+    jenisUjian: string
+): string {
+    const finalJam = jam.toLowerCase().includes("wib") ? jam : `${jam} WIB`;
+
+    return `*PENGINGAT UJIAN SELEKSI*
+
+Assalamu'alaikum *${nama}*,
+
+Ini adalah pengingat bahwa Anda dijadwalkan mengikuti *${jenisUjian}* pada:
+
+📅 *Hari/Tanggal:* ${hari}, ${tanggal}
+⏰ *Waktu:* ${finalJam}
+📍 *Lokasi/Link:* ${lokasi}
+
+Mohon persiapkan diri dengan baik dan pastikan koneksi internet stabil jika ujian online. Sampai jumpa!
+
+---
+*Panitia PPDB Al-Andalus Ulul Albaab*`;
+}
+
+export function buildMessageReminderH1Penguji(
+    namaPenguji: string,
+    namaSantri: string,
+    hari: string,
+    tanggal: string,
+    jam: string,
+    lokasi: string,
+    jenisUjian: string,
+    inputNilaiLink?: string
+): string {
+    const title = (namaPenguji || "").toLowerCase().includes("ustadzah") ? "Ustadzah" : "Ustadz";
+    const isWawancara = jenisUjian.toLowerCase().includes("wawancara");
+    
+    const finalJam = jam.toLowerCase().includes("wib") ? jam : `${jam} WIB`;
+
+    const templateTitle = isWawancara ? "*REMINDER JADWAL WAWANCARA*" : "*REMINDER JADWAL MENGUJI*";
+    const agendaText = isWawancara ? "Wawancara Calon Santri / Ortu" : jenisUjian;
+
+    return `${templateTitle}
+
+Assalamu'alaikum ${title} *${namaPenguji}*,
+
+Mengingatkan jadwal ${isWawancara ? "wawancara" : "menguji"} Anda:
+
+📝 *Agenda:* ${agendaText}
+👤 *Nama Santri:* ${namaSantri}
+📅 *Hari/Tanggal:* ${hari}, ${tanggal}
+⏰ *Waktu:* ${finalJam}
+📍 *Link Meet:* ${lokasi}
+🔗 *Input Hasil:* ${inputNilaiLink || "-"}
+
+Mohon kehadirannya tepat waktu. Syukron.
+
+---
+*Sistem PPDB Al-Andalus Ulul Albaab*`;
+}
+
+export function buildMessagePembatalanJadwal(
+    namaSantri: string,
+    jenisUjian: string,
+    tanggal: string,
+    jam: string,
+    alasan: string = "Ustadz Berhalangan Hadir"
+): string {
+    return `*PEMBATALAN JADWAL UJIAN*
+
+Assalamu'alaikum Warahmatullahi Wabarakatuh.
+Halo Ananda *${namaSantri}*,
+
+Kami menginformasikan bahwa jadwal *${jenisUjian}* Anda pada:
+
+📅 *Tanggal:* ${tanggal}
+⏰ *Waktu:* ${jam} WIB
+
+Telah *DIBATALKAN* oleh Penguji karena alasan: *${alasan}*.
+
+Mohon segera login ke Dashboard PPDB untuk memilih kembali jadwal pengganti yang tersedia di menu Undangan Seleksi.
+
+Dashboard: ${process.env.NEXT_PUBLIC_APP_URL || DEFAULT_APP_URL}/dashboard/pendaftar/undangan-seleksi
+
+---
+*Panitia PPDB Al-Andalus Ulul Albaab*`;
 }

@@ -1,15 +1,17 @@
 /**
- * Cron endpoint for H-1 reminders.
- * Called daily at 08:00 WIB by external cron.
- * Finds all jadwal with tes tomorrow and enqueues reminder if not already sent.
+ * Cron endpoint for 4-hour reminders.
+ * Called every 15 minutes by external cron.
+ * Finds all jadwal with exams starting in exactly 4 hours and sends reminders immediately.
  */
 
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import {
     enqueueWhatsapp,
-    buildMessageReminderH1,
+    buildMessageReminderH1Santri,
+    buildMessageReminderH1Penguji,
 } from "@/lib/whatsapp-queue";
+import { generateMagicToken, generateTinyUrl, getManualTinyUrl } from "@/lib/utils/magic-link";
 
 const CRON_SECRET = process.env.CRON_SECRET || "ppdb-ululalbaab-cron-2026";
 
@@ -24,135 +26,147 @@ export async function GET(request: Request) {
     }
 
     try {
-        // Calculate tomorrow's date range (in WIB = UTC+7)
+        // Calculate 4-hour window from now
         const now = new Date();
-        // Tomorrow at 00:00 WIB
-        const tomorrowStart = new Date(now);
-        tomorrowStart.setDate(tomorrowStart.getDate() + 1);
-        tomorrowStart.setHours(0, 0, 0, 0);
+        const fourHoursFromNow = new Date(now.getTime() + 4 * 60 * 60 * 1000);
+        const fourHoursPlus15Min = new Date(now.getTime() + 4 * 60 * 60 * 1000 + 15 * 60 * 1000); // 15 min buffer
 
-        // Tomorrow at 23:59 WIB
-        const tomorrowEnd = new Date(tomorrowStart);
-        tomorrowEnd.setHours(23, 59, 59, 999);
-
-        // Find all jadwal_ujian scheduled for tomorrow
-        const jadwalTomorrow = await prisma.jadwalUjian.findMany({
+        // Find all jadwal_ujian with exams starting in the 4-hour window
+        const jadwalIn4Hours = await prisma.jadwalUjian.findMany({
             where: {
-                tanggal_ujian: {
-                    gte: tomorrowStart,
-                    lte: tomorrowEnd,
+                exam_session: {
+                    start_time: {
+                        gte: fourHoursFromNow,
+                        lte: fourHoursPlus15Min,
+                    },
                 },
             },
             include: {
-                pendaftar: {
-                    select: {
-                        id: true,
-                        nama_lengkap: true,
-                        no_hp: true,
-                    },
-                },
-                exam_session: {
-                    select: {
-                        title: true,
-                        start_time: true,
-                        end_time: true,
-                        location: true,
-                    },
-                },
+                pendaftar: true,
+                exam_session: true,
+                penguji_santri: true,
+                penguji_quran: true,
+                penguji_ortu: true,
                 notif_reminders: true,
             },
         });
 
-        let enqueued = 0;
-        let skipped = 0;
-        const errors: string[] = [];
+        let enqueuedSantri = 0;
+        let enqueuedPenguji = 0;
 
-        for (const jadwal of jadwalTomorrow) {
-            // Check if reminder already sent for this jadwal+pendaftar
-            const existingReminder = jadwal.notif_reminders.find(
-                (r) => r.pendaftar_id === jadwal.pendaftar_id
-            );
+        for (const jadwal of jadwalIn4Hours) {
+            // Format details
+            const dateObj = new Date(jadwal.tanggal_ujian);
+            const hari = dateObj.toLocaleDateString("id-ID", { weekday: "long" }).replace("Minggu", "Ahad");
+            
+            // Explicitly format to avoid machine-specific weekday prefix in some environments
+            const tanggalStr = dateObj.toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" });
+            
+            const timeObj = jadwal.exam_session ? new Date(jadwal.exam_session.start_time) : new Date(jadwal.waktu_mulai_santri);
+            const jam = timeObj.toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit", timeZone: "Asia/Jakarta" });
 
-            if (existingReminder?.reminder_sent) {
-                skipped++;
-                continue;
-            }
-
-            if (!jadwal.pendaftar.no_hp) {
-                errors.push(`${jadwal.pendaftar.nama_lengkap}: no phone number`);
-                continue;
-            }
-
-            // Build reminder message
-            const tanggal = new Date(jadwal.tanggal_ujian).toLocaleDateString(
-                "id-ID",
-                {
-                    weekday: "long",
-                    day: "numeric",
-                    month: "long",
-                    year: "numeric",
-                }
-            );
-
-            const waktu = jadwal.exam_session
-                ? new Date(jadwal.exam_session.start_time).toLocaleTimeString(
-                    "id-ID",
-                    { hour: "2-digit", minute: "2-digit" }
-                )
-                : new Date(jadwal.waktu_mulai_santri).toLocaleTimeString("id-ID", {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                });
-
-            const lokasi =
-                jadwal.exam_session?.location || jadwal.tempat_santri || "Pesantren Al-Andalus Ulul Albaab";
             const jenisUjian = jadwal.exam_session?.title || "Seleksi Santri Baru";
 
-            const message = buildMessageReminderH1(
-                jadwal.pendaftar.nama_lengkap,
-                tanggal,
-                waktu,
-                lokasi,
-                jenisUjian
-            );
+            // Calculate Start Time accurately
+            const startTime = jadwal.exam_session 
+                ? new Date(jadwal.exam_session.start_time) 
+                : (() => {
+                    const d = new Date(jadwal.tanggal_ujian);
+                    const t = new Date(jadwal.waktu_mulai_santri);
+                    d.setHours(t.getHours(), t.getMinutes(), t.getSeconds(), t.getMilliseconds());
+                    return d;
+                })();
 
-            // Enqueue via queue system
-            const result = await enqueueWhatsapp({
-                pendaftarId: jadwal.pendaftar_id,
-                phone: jadwal.pendaftar.no_hp,
-                jenisNotif: "reminder_h1",
-                messageContent: message,
-            });
+            // Send immediately since we're already at the 4-hour mark
+            const finalScheduledAt = now;
 
-            if (result.queued) {
-                // Create/update reminder record
-                await prisma.jadwalNotifReminder.upsert({
-                    where: {
-                        jadwal_ujian_id_pendaftar_id: {
-                            jadwal_ujian_id: jadwal.id,
-                            pendaftar_id: jadwal.pendaftar_id,
-                        },
-                    },
-                    update: {},
-                    create: {
-                        jadwal_ujian_id: jadwal.id,
-                        pendaftar_id: jadwal.pendaftar_id,
-                        reminder_sent: false, // Will be set true after actually sent by queue
-                    },
+            const googleMeetLink = 
+                jadwal.penguji_santri?.google_meet_link || 
+                jadwal.penguji_quran?.google_meet_link || 
+                jadwal.penguji_ortu?.google_meet_link || 
+                jadwal.google_meet_link;
+
+            const lokasi = googleMeetLink 
+                ? `${jadwal.exam_session?.location || "Online"} (Link: ${googleMeetLink})` 
+                : (jadwal.exam_session?.location || "Pesantren Al-Andalus Ulul Albaab");
+
+            // 1. Enqueue for Santri
+            if (jadwal.pendaftar.no_hp) {
+                const msgSantri = buildMessageReminderH1Santri(
+                    jadwal.pendaftar.nama_lengkap,
+                    hari,
+                    tanggalStr,
+                    jam,
+                    lokasi,
+                    jenisUjian
+                );
+
+                const result = await enqueueWhatsapp({
+                    pendaftarId: jadwal.pendaftar_id,
+                    phone: jadwal.pendaftar.no_hp,
+                    jenisNotif: "reminder_h1", // Mapping to existing H1 type in DB for now
+                    messageContent: msgSantri,
+                    scheduledAt: finalScheduledAt,
                 });
-                enqueued++;
-            } else {
-                skipped++;
+
+                if (result.queued) enqueuedSantri++;
+            }
+
+            // 2. Enqueue for Examiners (if assigned)
+            const examinersToNotify = [
+                { profile: jadwal.penguji_santri, type: "Wawancara Calon Santri (Calsan)" },
+                { profile: jadwal.penguji_quran, type: "Tes Al-Qur'an" },
+                { profile: jadwal.penguji_ortu, type: "Wawancara Calon Wali Santri (Cawalsan/Ortu)" },
+            ];
+
+            for (const { profile, type } of examinersToNotify) {
+                if (profile && profile.phone) {
+                    // Generate Magic Link for this examiner
+                    // Redirect to input-nilai page and pre-select this student via search param
+                    const redirectPath = `/dashboard/penguji/input-nilai?search=${encodeURIComponent(jadwal.pendaftar.nomor_pendaftaran)}`;
+                    const token = generateMagicToken(
+                        profile.id,
+                        profile.role || "penguji",
+                        profile.full_name,
+                        48, // 48 hours expiry
+                        redirectPath
+                    );
+                    const magicLink = `${process.env.NEXT_PUBLIC_APP_URL || 'https://ppdb.alandalus-ululalbaab.com'}/api/auth/magic?token=${token}`;
+
+                    // Use manual tinyurl if available for this user, otherwise generate automatic
+                    const manualTinyUrl = getManualTinyUrl(profile.full_name);
+                    const shortUrl = manualTinyUrl || await generateTinyUrl(magicLink);
+
+                    const msgPenguji = buildMessageReminderH1Penguji(
+                        profile.full_name,
+                        jadwal.pendaftar.nama_lengkap,
+                        hari,
+                        tanggalStr,
+                        jam,
+                        profile.google_meet_link || "Menyesuaikan",
+                        type,
+                        shortUrl
+                    );
+
+                    const result = await enqueueWhatsapp({
+                        pendaftarId: jadwal.pendaftar_id,
+                        phone: profile.phone,
+                        jenisNotif: "reminder_h1_penguji", // Mapping to existing H1 type in DB for now
+                        messageContent: msgPenguji,
+                        scheduledAt: finalScheduledAt,
+                    });
+
+                    if (result.queued) enqueuedPenguji++;
+                }
             }
         }
 
         return NextResponse.json({
             success: true,
-            totalJadwalTomorrow: jadwalTomorrow.length,
-            enqueued,
-            skipped,
-            errors,
-            timestamp: new Date().toISOString(),
+            totalJadwalIn4Hours: jadwalIn4Hours.length,
+            enqueuedSantri,
+            enqueuedPenguji,
+            timestamp: now.toISOString(),
         });
     } catch (error: any) {
         console.error("❌ Cron Reminder error:", error);

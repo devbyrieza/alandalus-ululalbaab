@@ -8,8 +8,11 @@ export async function GET() {
         const newPassword = "Admin26!";
         const hashedPassword = await bcrypt.hash(newPassword, 10);
 
+        const user = await prisma.profile.findFirst({ where: { email } });
+        if (!user) throw new Error("User not found");
+
         const updated = await prisma.profile.update({
-            where: { email },
+            where: { id: user.id },
             data: {
                 password_hash: hashedPassword
             }
