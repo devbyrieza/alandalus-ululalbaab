@@ -273,12 +273,27 @@ export async function POST(request: Request) {
                 const now = new Date();
                 const finalScheduledAt = reminderTime < now ? now : reminderTime;
 
+                // Get interviewer info early for Google Meet link
+                let interviewerGoogleMeetLink = null;
+                if (examSession.created_by) {
+                    const interviewer = await prisma.profile.findUnique({
+                        where: { id: examSession.created_by },
+                        select: { google_meet_link: true }
+                    });
+                    interviewerGoogleMeetLink = interviewer?.google_meet_link;
+                }
+
+                // Build location with Google Meet link if available
+                const lokasiWithMeet = interviewerGoogleMeetLink
+                    ? (interviewerGoogleMeetLink.startsWith("http") ? interviewerGoogleMeetLink : `Online (${interviewerGoogleMeetLink})`)
+                    : lokasi;
+
                 const remSantriMsg = buildMessageReminderH1Santri(
                     pendaftarInfo.nama_lengkap,
                     dateStr.split(',')[0] || "",
                     dateStr,
                     timeStr,
-                    lokasi,
+                    lokasiWithMeet,
                     jenisUjian
                 );
 
