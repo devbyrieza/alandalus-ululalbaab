@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import Image from "next/image";
@@ -446,7 +446,7 @@ export default function FasilitasPage() {
                   <div className="relative w-full h-full rounded-[2.5rem] sm:rounded-[3.2rem] overflow-hidden">
                     <Image
                       src="/images/kantor-ppdb-tamu.webp"
-                      alt="Kantor PPDB & Tamu"
+                      alt="Kantor PPDB Ulul Albaab"
                       fill
                       className="object-cover transition-transform duration-700 hover:scale-110"
                     />

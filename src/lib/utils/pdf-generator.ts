@@ -30,7 +30,7 @@ const drawHeader = (doc: jsPDF) => {
     const pageWidth = doc.internal.pageSize.getWidth();
 
     // Header Box Decor
-    doc.setFillColor(22, 163, 74); // Green-600
+    doc.setFillColor(126, 27, 34); // Maroon-700 (#7E1B22)
     doc.rect(0, 0, pageWidth, 40, "F");
 
     // Text

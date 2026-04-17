@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -158,16 +158,14 @@ export default function DaftarPage() {
 
     if (!formData.jenis_kelamin) {
       errors.jenis_kelamin = "Pilih jenis kelamin santri";
-    } else if (formData.jenis_kelamin === "L") {
-      errors.jenis_kelamin = "Mohon maaf, kuota Santri Putra seluruh jenjang sudah penuh/ditutup.";
+    } else if (formData.jenis_kelamin === "P") {
+      errors.jenis_kelamin = "Mohon maaf, kuota Santri Putri seluruh jenjang sudah ditutup untuk pesantren Ulul Albaab.";
     }
 
     if (!formData.jenjang) {
       errors.jenjang = "Pilih jenjang pendidikan";
-    } else if (formData.jenjang === "SMA") {
-      errors.jenjang = "Mohon maaf, pendaftaran SMA (Reguler) telah ditutup.";
-    } else if (formData.jenis_kelamin === "L" && (formData.jenjang === "MTs" || formData.jenjang === "IL")) {
-       errors.jenjang = "Pendaftaran jenjang ini untuk Santri Putra sudah ditutup.";
+    } else if (formData.jenis_kelamin === "L" && formData.jenjang === "SMA") {
+      errors.jenjang = "Mohon maaf, pendaftaran SMA Reguler Putra telah ditutup.";
     }
 
     setFieldErrors(errors);
@@ -346,33 +344,35 @@ export default function DaftarPage() {
                     { value: "SMA", title: "Madrasah Aliyah (SMA)", subtitle: "Lulusan SMP/Sederajat" },
                   ].map((option) => {
                     const isPutra = formData.jenis_kelamin === "L";
-                    // Ulul Albaab: Hanya MTs Putri dan IL Putri yang masih buka
-                    const isClosed = isPutra || option.value === "SMA";
+                    const isPutri = formData.jenis_kelamin === "P";
+                    // Di Ulul Albaab, yang buka HANYA MTs Putra dan IL Putra.
+                    // Maka Putri (semua jenjang) otomatis tutup, dan SMA Putra otomatis tutup.
+                    const isClosedForPutra = isPutri || (isPutra && option.value === "SMA");
                     
                     return (
                       <motion.div
                         key={option.value}
-                        whileHover={isClosed ? {} : { scale: 1.02 }}
-                        whileTap={isClosed ? {} : { scale: 0.98 }}
+                        whileHover={isClosedForPutra ? {} : { scale: 1.02 }}
+                        whileTap={isClosedForPutra ? {} : { scale: 0.98 }}
                         onClick={() => {
-                          if (isClosed) return;
+                          if (isClosedForPutra) return;
                           setFormData((prev) => ({ ...prev, jenjang: option.value as any }));
                         }}
                         className={`relative cursor-pointer rounded-[2rem] p-6 border-2 transition-all duration-300 app-card ${
-                          isClosed 
+                          isClosedForPutra 
                             ? "opacity-50 grayscale cursor-not-allowed border-cream-200 bg-stone-50"
                             : formData.jenjang === option.value
                               ? "border-brand-blue-600 bg-cream-50 shadow-md"
                               : "border-cream-200 bg-white hover:border-maroon-200 hover:shadow-sm"
                         }`}
                       >
-                        {isClosed && (
-                          <div className="absolute top-4 right-4 bg-red-600 text-white text-[10px] font-black px-2 py-1 rounded-full uppercase tracking-tighter">
+                        {isClosedForPutra && (
+                          <div className="absolute top-4 right-4 bg-red-600 text-white text-[10px] font-black px-2 py-1 rounded-full uppercase tracking-tighter shadow-sm z-10">
                             Kuota Penuh / Tutup
                           </div>
                         )}
                         
-                        <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-4 relative z-0">
                           <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-colors ${
                             formData.jenjang === option.value ? "border-brand-blue-600" : "border-cream-200"
                           }`}>
@@ -392,7 +392,7 @@ export default function DaftarPage() {
                             className="mt-4 p-3 bg-brand-yellow-100/30 rounded-xl border border-brand-yellow-200/50 relative z-0"
                           >
                             <p className="text-[10px] leading-relaxed text-brand-blue-900 font-bold italic">
-                              * Syarat pendaftar SMA langsung (tanpa I'dad): Wajib memiliki hafalan minimal 5 Juz Mutqin & lancar berbahasa Arab.
+                              * Syarat pendaftar SMA langsung (tanpa I'dad): Wajib memiliki hafalan 5 Juz Mutqin & lancar berbahasa Arab.
                             </p>
                           </motion.div>
                         )}
@@ -429,7 +429,7 @@ export default function DaftarPage() {
                         value={formData.nama_lengkap}
                         onChange={(e) => setFormData((prev) => ({ ...prev, nama_lengkap: e.target.value }))}
                         placeholder="Sesuai Akta Kelahiran santri"
-                        className="w-full px-5 py-3 md:px-8 md:py-5 rounded-xl md:rounded-2xl bg-cream-50 border border-transparent focus:bg-white focus:border-maroon-200 focus:ring-4 focus:ring-cream-50 transition-all font-bold text-ink-900 placeholder:text-ink-500 text-sm md:text-base text-ink-950"
+                        className="w-full px-5 py-3 md:px-8 md:py-5 rounded-xl md:rounded-2xl bg-cream-50 border border-transparent focus:bg-white focus:border-maroon-200 focus:ring-4 focus:ring-cream-50 transition-all font-bold  placeholder:text-ink-500 text-sm md:text-base text-ink-950"
                       />
                     </InputField>
                   </div>
@@ -442,7 +442,7 @@ export default function DaftarPage() {
                       value={formData.nik}
                       onChange={(e) => setFormData((prev) => ({ ...prev, nik: e.target.value.replace(/\D/g, "") }))}
                       placeholder="16 Digit NIK"
-                      className="w-full px-5 py-3 md:px-8 md:py-5 rounded-xl md:rounded-2xl bg-cream-50 border border-transparent focus:bg-white focus:border-maroon-200 focus:ring-4 focus:ring-cream-50 transition-all font-bold text-ink-900 placeholder:text-ink-500 text-sm md:text-base text-ink-950"
+                      className="w-full px-5 py-3 md:px-8 md:py-5 rounded-xl md:rounded-2xl bg-cream-50 border border-transparent focus:bg-white focus:border-maroon-200 focus:ring-4 focus:ring-cream-50 transition-all font-bold  placeholder:text-ink-500 text-sm md:text-base text-ink-950"
                     />
                   </InputField>
 
@@ -451,7 +451,7 @@ export default function DaftarPage() {
                       type="date"
                       value={formData.tanggal_lahir}
                       onChange={(e) => setFormData((prev) => ({ ...prev, tanggal_lahir: e.target.value }))}
-                      className="w-full px-5 py-3 md:px-8 md:py-5 rounded-xl md:rounded-2xl bg-cream-50 border border-transparent focus:bg-white focus:border-maroon-200 focus:ring-4 focus:ring-cream-50 transition-all font-bold text-ink-900 text-sm md:text-base text-ink-950"
+                      className="w-full px-5 py-3 md:px-8 md:py-5 rounded-xl md:rounded-2xl bg-cream-50 border border-transparent focus:bg-white focus:border-maroon-200 focus:ring-4 focus:ring-cream-50 transition-all font-bold  text-sm md:text-base text-ink-950"
                     />
                   </InputField>
 
@@ -463,8 +463,8 @@ export default function DaftarPage() {
                             key={jk.val}
                             whileTap={{ scale: 0.98 }}
                             className={`flex-1 flex items-center justify-center px-4 md:px-6 py-3 md:py-4 rounded-[1.5rem] md:rounded-[2rem] border-2 cursor-pointer transition-all duration-300 text-sm md:text-base ${formData.jenis_kelamin === jk.val
-                              ? "bg-brand-blue-900 border-brand-blue-900 text-white font-black shadow-md"
-                              : "bg-cream-50 border-transparent text-ink-600 hover:border-maroon-200 hover:bg-white"
+                              ? "bg-maroon-700 border-maroon-700 text-white font-black shadow-md"
+                              : "bg-cream-50 border-cream-200 text-ink-800 hover:border-maroon-200 hover:bg-white font-bold"
                               }`}>
                             <input
                               type="radio"
@@ -542,7 +542,7 @@ export default function DaftarPage() {
                   whileTap={{ scale: 0.98 }}
                   type="submit"
                   disabled={isLoading}
-                  className="w-full py-4 md:py-6 rounded-pill bg-brand-blue-900 text-white font-black text-lg md:text-xl hover:bg-brand-yellow-100 hover:text-brand-blue-900 shadow-md border border-brand-blue-900 transition-all flex items-center justify-center gap-3 disabled:opacity-50"
+                  className="w-full py-4 md:py-6 rounded-pill bg-maroon-700 text-white font-black text-lg md:text-xl hover:bg-maroon-800 shadow-md transition-all flex items-center justify-center gap-3 disabled:opacity-50"
                 >
                   {isLoading ? (
                     <>
@@ -555,7 +555,7 @@ export default function DaftarPage() {
                 </motion.button>
 
                 <p className="text-center text-sm text-ink-600 font-bold uppercase tracking-widest mt-8">
-                  Punya Akun? <Link href="/login" className="text-brand-blue-700 hover:text-brand-yellow-100 hover:bg-brand-blue-900 px-3 py-1 rounded-full transition-colors">Masuk di sini</Link>
+                  Punya Akun? <Link href="/login" className="text-maroon-700 hover:text-maroon-800 hover:bg-cream-50 px-3 py-1 rounded-full transition-colors ml-1 border border-transparent hover:border-cream-200">Masuk di sini</Link>
                 </p>
               </motion.div>
 

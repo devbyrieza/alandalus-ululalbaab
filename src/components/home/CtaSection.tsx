@@ -17,7 +17,7 @@ export default function CtaSection() {
                 >
                     <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-[0.05] mix-blend-overlay" />
                     <div className="hidden sm:block absolute -top-32 -right-32 w-64 h-64 sm:w-80 sm:h-80 md:w-[400px] md:h-[400px] bg-brand-yellow-100/10 rounded-full blur-[80px] md:blur-[100px]" />
-                    <div className="hidden sm:block absolute -bottom-32 -left-32 w-64 h-64 sm:w-80 sm:h-80 md:w-[400px] md:h-[400px] bg-brand-blue-500/20 rounded-full blur-[80px] md:blur-[100px]" />
+                    <div className="hidden sm:block absolute -bottom-32 -left-32 w-64 h-64 sm:w-80 sm:h-80 md:w-[400px] md:h-[400px] bg-maroon-500/20 rounded-full blur-[80px] md:blur-[100px]" />
 
                     <div className="relative z-10 max-w-3xl mx-auto">
                         <h3 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-6 md:mb-8 tracking-tight leading-[1.1]">
@@ -29,7 +29,7 @@ export default function CtaSection() {
                         
                         <div className="flex flex-col sm:flex-row gap-4 justify-center px-4 max-w-xl mx-auto">
                             <Link href="/ppdb" className="w-full sm:w-auto flex-1">
-                                <button className="w-full px-8 py-4 rounded-pill bg-white text-brand-blue-900 font-bold hover:bg-brand-blue-50 transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-1 text-base md:text-lg flex items-center justify-center gap-2">
+                                <button className="w-full px-8 py-4 rounded-pill bg-white text-maroon-900 font-bold hover:bg-cream-50 transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-1 text-base md:text-lg flex items-center justify-center gap-2">
                                     Daftar Sekarang
                                 </button>
                             </Link>

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Cron endpoint for H-0 reminders (1 hour before exam).
  * Called every 15 minutes by external cron.
  * Finds all jadwal with exams starting within the next 60-75 minutes
@@ -12,7 +12,7 @@ import {
     buildMessageReminderH0,
 } from "@/lib/whatsapp-queue";
 
-const CRON_SECRET = process.env.CRON_SECRET || "ppdb-ululalbaab-cron-2026";
+const CRON_SECRET = process.env.CRON_SECRET || "ppdb-alimam-cron-2026";
 
 export async function GET(request: Request) {
     // Verify cron secret

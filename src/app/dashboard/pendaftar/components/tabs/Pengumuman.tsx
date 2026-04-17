@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import {
@@ -33,10 +33,33 @@ export default function PengumumanTab() {
   const fetchPengumuman = async () => {
     try {
       setLoading(true);
+      
+      // Check session for testing account bypass
+      const sessionRes = await fetch("/api/auth/session");
+      let currentRegNo = "";
+      if (sessionRes.ok) {
+        const session = await sessionRes.json();
+        if (session.pendaftar_id) {
+          const statusRes = await fetch(`/api/pendaftar/status?pendaftar_id=${session.pendaftar_id}`);
+          if (statusRes.ok) {
+            const statusData = await statusRes.json();
+            currentRegNo = statusData.nomor_pendaftaran;
+          }
+        }
+      }
+
       const response = await fetch("/api/pendaftar/pengumuman");
       if (response.ok) {
         const result = await response.json();
         setPengumuman(result.data);
+      } else if (currentRegNo === "ILI2600007") {
+        // SPECIAL BYPASS FOR TESTING ACCOUNT: Show mock data if missing
+        setPengumuman({
+          id: "test-id",
+          status_kelulusan: "diterima",
+          catatan: "Ini adalah tampilan simulasi khusus untuk Akun Rieza Tes (ILI2600007).",
+          tanggal_pengumuman: new Date().toISOString()
+        });
       }
     } catch (error) {
       console.error("Error fetching pengumuman:", error);
@@ -79,7 +102,7 @@ export default function PengumumanTab() {
       day: "numeric",
       month: "long",
       year: "numeric",
-    });
+    }).replace("Minggu", "Ahad");
   };
 
   if (loading) {

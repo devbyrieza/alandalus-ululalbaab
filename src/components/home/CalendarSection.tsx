@@ -18,13 +18,13 @@ const IMPORTANT_DATES = [
     date: "10 Feb - 30 Mei 2026",
     title: "Pendaftaran PPDB",
     description: "Pendaftaran santri baru dibuka secara online melalui website resmi.",
-    color: "brand-blue",
+    color: "maroon",
   },
   {
     date: "Sesuai Jadwal",
     title: "Tes Seleksi",
     description: "Ujian lisan dan tertulis dilaksanakan setelah verifikasi berkas.",
-    color: "brand-yellow",
+    color: "cream",
   },
   {
     date: "15 Juli 2026",
@@ -47,12 +47,12 @@ export default function CalendarSection() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-pill bg-brand-blue-50 border border-brand-blue-100 text-brand-blue-700 text-xs font-bold uppercase tracking-widest mb-6 shadow-sm">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-pill bg-cream-50 border border-cream-200 text-maroon-700 text-xs font-bold uppercase tracking-widest mb-6 shadow-sm">
                 <Calendar className="w-3.5 h-3.5" />
                 <span>Agenda Penting</span>
               </div>
               <h2 className="section-title mb-10">
-                Timeline <span className="text-gradient-blue">Terstruktur</span>
+                Timeline <span className="text-gradient-maroon">Terstruktur</span>
               </h2>
 
               <div className="space-y-8 relative">
@@ -69,8 +69,8 @@ export default function CalendarSection() {
                     className="relative flex items-start gap-6 sm:gap-8 group"
                   >
                     <div className={`w-12 h-12 rounded-[14px] flex items-center justify-center relative z-10 shrink-0 shadow-sm transition-transform duration-500 group-hover:scale-110 ${
-                        item.color === 'brand-blue' ? 'bg-brand-blue-600 text-white' :
-                        item.color === 'brand-yellow' ? 'bg-brand-yellow-400 text-white border border-brand-yellow-500' :
+                        item.color === 'maroon' ? 'bg-maroon-700 text-white' :
+                        item.color === 'cream' ? 'bg-cream-200 text-maroon-800 border border-cream-300' :
                         'bg-yellow-500 text-white border border-yellow-600'
                       }`}>
                       <span className="font-display font-black text-lg">{idx + 1}</span>
@@ -78,14 +78,14 @@ export default function CalendarSection() {
                     <div className="app-card bg-surface-50 p-6 md:p-8 flex-grow hover:bg-white transition-all duration-300">
                       <div className="flex items-center justify-between gap-4 mb-4">
                         <span className={`px-3 py-1.5 rounded-pill text-[10px] font-bold uppercase tracking-widest ${
-                            item.color === 'brand-blue' ? 'bg-brand-blue-50 text-brand-blue-700 border border-brand-blue-100' :
-                            item.color === 'brand-yellow' ? 'bg-brand-yellow-50 text-brand-yellow-700 border border-brand-yellow-200' :
+                            item.color === 'maroon' ? 'bg-maroon-50 text-maroon-700 border border-maroon-100' :
+                            item.color === 'cream' ? 'bg-cream-100 text-maroon-800 border border-cream-200' :
                             'bg-yellow-50 text-yellow-700 border border-yellow-200'
                           }`}>
                           {item.date}
                         </span>
                       </div>
-                      <h4 className="font-bold text-ink-950 text-xl mb-2 tracking-tight group-hover:text-brand-blue-700 transition-colors">{item.title}</h4>
+                      <h4 className="font-bold text-ink-950 text-xl mb-2 tracking-tight group-hover:text-maroon-700 transition-colors">{item.title}</h4>
                       <p className="text-sm text-ink-600 font-medium leading-relaxed">{item.description}</p>
                     </div>
                   </motion.div>
@@ -103,7 +103,7 @@ export default function CalendarSection() {
               className="bg-white rounded-[2.5rem] p-8 sm:p-10 md:p-14 flex flex-col justify-center items-center text-center relative overflow-hidden shadow-lg border border-cream-200 h-full hover:shadow-xl transition-all duration-500"
             >
               <div className="w-20 h-20 sm:w-24 sm:h-24 bg-cream-50 rounded-full flex items-center justify-center mb-8 shadow-sm">
-                <Clock className="w-10 h-10 sm:w-12 sm:h-12 text-brand-blue-600" />
+                <Clock className="w-10 h-10 sm:w-12 sm:h-12 text-maroon-600" />
               </div>
               <h3 className="text-2xl sm:text-3xl font-display font-black text-ink-950 mb-6 tracking-tight">Manajemen Waktu yang Barokah</h3>
               <p className="text-sm sm:text-base text-ink-600 font-medium mb-10 leading-relaxed max-w-sm">
@@ -129,7 +129,7 @@ export default function CalendarSection() {
 
               {/* Decorative blobs */}
               <div className="absolute -bottom-24 -right-24 w-72 h-72 bg-cream-200/50 rounded-full blur-[80px] -z-10" />
-              <div className="absolute -top-24 -left-24 w-72 h-72 bg-brand-blue-50 rounded-full blur-[80px] -z-10" />
+              <div className="absolute -top-24 -left-24 w-72 h-72 bg-maroon-50 rounded-full blur-[80px] -z-10" />
             </motion.div>
           </div>
 

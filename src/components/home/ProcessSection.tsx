@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { UserPlus, FileText, CreditCard, ClipboardCheck, GraduationCap, CheckCircle, BellRing } from "lucide-react";
 import { Container } from "@/components/layout/Container";
@@ -9,7 +9,7 @@ const STEPS = [
         icon: UserPlus,
         title: "Buat Akun",
         description: "Daftarkan data diri awal dan buat akun pendaftaran santri baru.",
-        color: "brand-blue",
+        color: "maroon",
     },
     {
         icon: CreditCard,
@@ -33,7 +33,7 @@ const STEPS = [
         icon: BellRing,
         title: "Pengumuman",
         description: "Lihat hasil kelulusan seleksi melalui dashboard pendaftar & WhatsApp.",
-        color: "brand-blue",
+        color: "maroon",
     },
     {
         icon: GraduationCap,
@@ -67,7 +67,7 @@ export default function ProcessSection() {
                         viewport={{ once: true }}
                         className="section-title mb-6"
                     >
-                        Alur <span className="text-gradient-blue">Pendaftaran</span>
+                        Alur <span className="text-gradient-maroon">Pendaftaran</span>
                     </motion.h2>
 
                     <motion.p

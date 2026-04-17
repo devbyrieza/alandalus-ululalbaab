@@ -109,7 +109,9 @@ export default function DaftarUlangTab() {
 
   // Cek Status Kelulusan
   const statusKelulusan = dataUser?.hasil_kelulusan?.status;
-  if (statusKelulusan !== "LULUS") {
+  const isTestingAccount = dataUser?.nomor_pendaftaran === "ILI2600007";
+
+  if (statusKelulusan !== "LULUS" && !isTestingAccount) {
     return (
       <div className="max-w-xl mx-auto text-center py-12 px-4">
         <div className="bg-slate-100 rounded-full p-4 w-20 h-20 mx-auto mb-6 flex items-center justify-center">
@@ -153,8 +155,8 @@ export default function DaftarUlangTab() {
             <AlertCircle className="w-4 h-4" /> Info Pembayaran
           </h3>
           <ul className="text-sm text-brand-blue-700 space-y-1 list-disc list-inside font-medium">
-            <li>Transfer ke Rekening <strong>BSI 7171717171</strong></li>
-            <li>a.n <strong>PP Al-Andalus Ulul Albaab</strong></li>
+            <li>Transfer ke Rekening <strong>BSI 7253701263</strong></li>
+            <li>a.n <strong>Al Andalus Ulul Albaab 1</strong></li>
             <li>Wajib bayar cicilan pertama min. <strong>Rp 4.900.000 (50%)</strong></li>
             <li>Pelunasan maksimal bulan <strong>Juli 2026</strong> (3x Cicilan)</li>
           </ul>

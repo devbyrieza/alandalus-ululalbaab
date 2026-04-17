@@ -34,7 +34,7 @@ export async function markExamComponentAsComplete({
     const updates: any = {};
     let updatedField = "";
 
-    // If componentType is provided, prioritize it
+    // If componentType is provided, prioritize it (useful for backend automation where we know what's being saved)
     if (componentType) {
         if (componentType === 'santri') {
             updates.status_santri = "completed";
@@ -47,7 +47,7 @@ export async function markExamComponentAsComplete({
             updatedField = "Wawancara Cawalsan";
         }
     } else {
-        // Fallback to manual check
+        // Fallback to manual check (logic from original /complete endpoint)
         if (jadwal.penguji_santri_id === userId) {
             updates.status_santri = "completed";
             updatedField = "Wawancara Calsan";

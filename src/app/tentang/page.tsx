@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -33,7 +33,7 @@ export default function TentangPage() {
                         className="inline-flex items-center gap-2 px-4 py-1.5 rounded-pill bg-brand-blue-50 border border-brand-blue-100 text-brand-blue-700 text-xs font-bold uppercase tracking-widest mb-8 shadow-sm"
                     >
                         <Sparkles className="w-3.5 h-3.5" />
-                        <span>Mengenal Ulul Albaab</span>
+                        <span>Mengenal Ulul Albaab • Managed by Al-Andalus IIBS</span>
                     </motion.div>
 
                     <motion.h1
@@ -42,8 +42,8 @@ export default function TentangPage() {
                         transition={{ delay: 0.1 }}
                         className="text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-black mb-6 md:mb-10 tracking-tight leading-[0.95] md:leading-[0.9] text-ink-950"
                     >
-                        Bimbingan & <br />
-                        <span className="text-gradient-blue pb-2 block sm:inline">Pengawasan Melekat</span>
+                        Babak Baru <br />
+                        <span className="text-gradient-blue pb-2 block sm:inline">Pendidikan Qur'ani</span>
                     </motion.h1>
 
                     <motion.p
@@ -52,7 +52,7 @@ export default function TentangPage() {
                         transition={{ delay: 0.2 }}
                         className="text-base sm:text-lg md:text-xl text-ink-600 max-w-3xl mx-auto leading-relaxed font-medium mb-12 px-4"
                     >
-                        Bukan sekadar tempat belajar agama, tetapi sistem pembentukan karakter berbasis Lingkungan, Kebiasaan, Komunitas, dan Spiritualitas — untuk mencetak Kaderisasi Ummat yang Rabbani, Cendekia, Mandiri.
+                        Menghadirkan standar keunggulan Al-Andalus International di Sukabumi — sistem pembentukan karakter Angkatan Pertama yang mencetak generasi Hanif, Kontributif, dan Adaptif.
                     </motion.p>
                 </Container>
             </section>
@@ -131,10 +131,10 @@ export default function TentangPage() {
                                         <Award className="w-6 h-6 md:w-8 md:h-8" />
                                     </div>
                                     <div>
-                                        <p className="text-2xl sm:text-3xl md:text-4xl font-black text-ink-950 tracking-tight leading-none mb-1">2023</p>
-                                        <p className="text-brand-blue-700 font-bold text-[9px] md:text-[10px] uppercase tracking-widest mb-1.5 md:mb-2">Transformasi Baru</p>
+                                        <p className="text-2xl sm:text-3xl md:text-4xl font-black text-ink-950 tracking-tight leading-none mb-1">2026</p>
+                                        <p className="text-brand-blue-700 font-bold text-[9px] md:text-[10px] uppercase tracking-widest mb-1.5 md:mb-2">Era Baru</p>
                                         <div className="text-[9px] md:text-[10px] font-bold text-brand-blue-900 bg-brand-blue-50 px-2.5 py-1.5 rounded-lg border border-brand-blue-100 leading-tight">
-                                            Mulai Pertengahan 2023 dikelola <br className="block sm:hidden" /> sepenuhnya oleh Al-Andalus
+                                            Managed by Al-Andalus IIBS
                                         </div>
                                     </div>
                                 </div>
@@ -166,16 +166,16 @@ export default function TentangPage() {
                                 className="space-y-4 md:space-y-6 text-base md:text-[17px] text-ink-700 font-medium leading-[1.8] text-justify"
                             >
                                 <p>
-                                    <span className="text-ink-950 font-black">Pesantren Ulul Albaab Sukabumi</span> berlokasi di Cicantayan, Kabupaten Sukabumi, memiliki komitmen penuh untuk berkhidmah kepada umat melalui jalur pendidikan dan dakwah yang berbasis pesantren bermanhaj Salaf.
+                                    <span className="text-ink-950 font-black">Pesantren Al-Andalus Ulul Albaab</span> hadir sebagai babak baru dalam dunia pendidikan Islam di Sukabumi. Sebagai cabang resmi dari <span className="text-brand-blue-700 italic font-bold">Managed by Al-Andalus International Islamic Boarding School</span>, kami menerapkan standar operasional, kurikulum, dan pengasuhan yang identik dengan kampus pusat.
                                 </p>
                                 <p>
-                                    Memasuki pertengahan tahun 2023 (sekitar bulan Juni-Agustus), Pesantren Ulul Albaab mamasuki tonggak sejarah baru ketika pengelolaannya secara resmi <strong>diambil alih dan dibina langsung oleh manajemen Pesantren Islam Internasional Al-Andalus</strong>.
+                                    Kami berkomitmen mencetak kader ulama rabbani yang beraqidah lurus dan berwawasan luas dengan dukungan fasilitas modern serta barisan asatidzah yang kompeten di bidangnya.
                                 </p>
                                 <p>
-                                    Di bawah naungan manajemen Al-Andalus, Ulul Albaab bertransformasi mencakup seluruh aspek kelembagaan secara terintegrasi; mulai dari hierarki yayasan, standarisasi SDM pengajar, peningkatan fasilitas, hingga penyelarasan sistem kurikulum pendidikan yang lebih modern dan unggul.
+                                    Mulai tahun 2026, Ulul Albaab bertransformasi total untuk memberikan layanan pendidikan terbaik, mencakup hirarki kepengurusan yang profesional, sistem pendidikan tahfidz intensif, dan pengasuhan berbasis adab.
                                 </p>
                                 <p className="font-bold text-brand-blue-800 bg-brand-blue-50/50 p-4 rounded-xl border border-brand-blue-100 italic text-center text-lg mt-6">
-                                    "Mondok disini ngerasa kaya keluarga sendiri"
+                                    "Standar Internasional, Kini Hadir di Sukabumi"
                                 </p>
                             </motion.div>
 
@@ -188,17 +188,17 @@ export default function TentangPage() {
                             >
                                 <div className="app-card bg-white p-5 md:p-6 flex flex-col items-start group">
                                     <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-orange-50 flex items-center justify-center mb-4 text-orange-600 group-hover:scale-110 transition-transform shadow-sm">
-                                        <Users className="w-5 h-5 md:w-6 md:h-6" />
+                                        <Sparkles className="w-5 h-5 md:w-6 md:h-6" />
                                     </div>
-                                    <h4 className="font-black text-ink-950 text-xl md:text-2xl mb-1">150+</h4>
-                                    <p className="text-[9px] md:text-[10px] font-bold text-ink-500 uppercase tracking-widest">Santri Aktif</p>
+                                    <h4 className="font-black text-ink-950 text-xl md:text-2xl mb-1">PREMIUM</h4>
+                                    <p className="text-[9px] md:text-[10px] font-bold text-ink-500 uppercase tracking-widest">Fasilitas Modern</p>
                                 </div>
                                 <div className="app-card bg-white p-5 md:p-6 flex flex-col items-start group">
                                     <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-teal-50 flex items-center justify-center mb-4 text-teal-600 group-hover:scale-110 transition-transform shadow-sm">
-                                        <Award className="w-5 h-5 md:w-6 md:h-6" />
+                                        <ShieldCheck className="w-5 h-5 md:w-6 md:h-6" />
                                     </div>
-                                    <h4 className="font-black text-ink-950 text-lg md:text-xl tracking-tighter mb-1">RESMI</h4>
-                                    <p className="text-[9px] md:text-[10px] font-bold text-ink-500 uppercase tracking-widest">Akreditasi BAN-PDM</p>
+                                    <h4 className="font-black text-ink-950 text-lg md:text-xl tracking-tighter mb-1">STABIL</h4>
+                                    <p className="text-[9px] md:text-[10px] font-bold text-ink-500 uppercase tracking-widest">Jaringan Al-Andalus</p>
                                 </div>
                             </motion.div>
                         </div>
@@ -245,70 +245,66 @@ export default function TentangPage() {
                             initial={{ opacity: 0, y: 30 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
-                            className="app-card bg-white p-8 md:p-10 flex flex-col group h-full hover:-translate-y-1 transition-transform duration-500 border border-brand-blue-100 shadow-sm"
+                            className="app-card bg-white p-8 md:p-10 flex flex-col group h-full hover:-translate-y-1 transition-transform duration-500"
                         >
-                            <div className="w-14 h-14 bg-brand-yellow-50 rounded-2xl flex items-center justify-center mb-6 text-brand-yellow-600 shadow-sm">
+                            <div className="w-14 h-14 bg-brand-blue-50 rounded-2xl flex items-center justify-center mb-6 text-brand-blue-600 group-hover:scale-110 transition-transform duration-500 shadow-sm">
                                 <Target className="w-7 h-7" />
                             </div>
-                            <h3 className="text-xl md:text-2xl font-black text-ink-950 mb-5">Visi Kami</h3>
-                            <p className="text-lg md:text-xl font-black text-brand-blue-900 italic leading-[1.5] md:leading-[1.4] flex-1">
-                                "Kaderisasi Ummat yang Rabbani, Cendekia, Mandiri"
+                            <h3 className="text-xl md:text-2xl font-black text-ink-950 mb-5">Visi</h3>
+                            <p className="text-lg md:text-xl font-black text-brand-blue-800 italic leading-[1.5] md:leading-[1.4] flex-1">
+                                "Mencetak Generasi yang Memiliki Pribadi Hanif, Kontributif, dan Adaptif."
                             </p>
                         </motion.div>
 
-                        {/* Misi */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: 0.1 }}
-                            className="md:col-span-2 lg:col-span-1 app-card bg-linear-to-br from-brand-blue-50 to-white p-8 md:p-10 flex flex-col group h-full hover:-translate-y-1 transition-transform duration-500 border border-brand-blue-100 shadow-sm"
-                        >
-                            <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center mb-6 text-brand-blue-600 shadow-sm border border-brand-blue-100">
-                                <Compass className="w-7 h-7" />
-                            </div>
-                            <h3 className="text-xl md:text-2xl font-black text-ink-950 mb-6">Misi Utama</h3>
-                            <ul className="space-y-4 flex-1">
-                                {[
-                                    "Menyelenggarakan pendidikan Berbasis TICE (Tahfidz, Islamic Curriculum, dan Entrepreneurship)",
-                                    "Mencetak Hamalatul Quran dengan bekal ilmu syar'i yang mumpuni",
-                                    "Menanamkan Jiwa Entrepreneur Muslim yang berwawasan Global"
-                                ].map((item, idx) => (
-                                    <li key={idx} className="flex gap-4 items-start group/item">
-                                        <div className="w-6 h-6 rounded-full bg-brand-yellow-400 text-white flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5 shadow-sm">
-                                            <CheckCircle2 className="w-3.5 h-3.5" />
-                                        </div>
-                                        <span className="text-brand-blue-950 font-bold text-[13px] md:text-sm tracking-tight leading-snug group-hover/item:text-brand-blue-700 transition-colors pt-0.5">{item}</span>
-                                    </li>
-                                ))}
-                            </ul>
-                        </motion.div>
-                        
-                        {/* Kenapa Harus Puas */}
+                        {/* Tujuan - Moved to occupy 2nd slot */}
                         <motion.div
                             initial={{ opacity: 0, y: 30 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: 0.2 }}
-                            className="md:col-span-2 lg:col-span-2 app-card bg-brand-yellow-100/30 p-8 md:p-10 lg:p-12 mt-4 hover:-translate-y-1 transition-transform duration-500 group border border-brand-yellow-200/50 shadow-sm"
+                            className="app-card bg-linear-to-br from-brand-yellow-50 to-white p-8 md:p-10 flex flex-col group h-full hover:-translate-y-1 transition-transform duration-500"
+                        >
+                            <div className="w-14 h-14 bg-yellow-50 rounded-2xl flex items-center justify-center mb-6 text-yellow-600 group-hover:scale-110 transition-transform duration-500 shadow-sm">
+                                <Compass className="w-7 h-7" />
+                            </div>
+                            <h3 className="text-xl md:text-2xl font-black text-ink-950 mb-6">Tujuan</h3>
+                            <ul className="space-y-4 md:space-y-6 flex-1">
+                                {[
+                                    "Membentuk pribadi Hanif: lurus akidah, benar ibadah, baik akhlaq.",
+                                    "Membentuk pribadi Kontributif: berkarya, berinovasi, dan berperan nyata.",
+                                    "Membentuk pribadi Adaptif: terbuka kritik, cerdas membaca realitas, teguh prinsip."
+                                ].map((item, idx) => (
+                                    <li key={idx} className="flex gap-4 items-center group/item">
+                                        <div className="w-6 h-6 rounded-full bg-yellow-500 text-white flex items-center justify-center text-[10px] font-bold shrink-0 shadow-sm">
+                                            <CheckCircle2 className="w-3.5 h-3.5" />
+                                        </div>
+                                        <span className="text-ink-800 font-bold text-[13px] md:text-sm tracking-tight group-hover/item:text-yellow-700 transition-colors pt-0.5">{item}</span>
+                                    </li>
+                                ))}
+                            </ul>
+                        </motion.div>
+
+                        {/* Misi - Moved to Bottom, Full Width */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.1 }}
+                            className="md:col-span-2 app-card bg-brand-yellow-100/50 p-8 md:p-10 lg:p-12 hover:-translate-y-1 transition-transform duration-500 group"
                         >
                             <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 mb-8">
-                                <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-brand-yellow-600 shadow-sm border border-brand-yellow-100 shrink-0">
-                                    <Sparkles className="w-7 h-7" />
+                                <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-brand-blue-700 group-hover:scale-110 transition-transform duration-500 border border-brand-blue-100 shadow-sm shrink-0">
+                                    <BookOpen className="w-7 h-7" />
                                 </div>
-                                <div>
-                                    <h3 className="text-xl md:text-2xl font-black text-ink-950 leading-tight">Kenapa Harus PUAS?</h3>
-                                    <p className="text-brand-blue-600 font-bold text-sm tracking-widest uppercase mt-1">Keunggulan Ulul Albaab</p>
-                                </div>
+                                <h3 className="text-xl md:text-2xl font-black text-ink-950">Misi Utama</h3>
                             </div>
 
                             <ul className="grid md:grid-cols-2 gap-x-8 lg:gap-x-12 gap-y-6">
                                 {[
-                                    "Pendidikan Islam berbasis Kitab Turots dengan Bahasa Pengantar Bahasa Arab",
-                                    "Pembelajaran yang Aktif, Inovatif, Kreatif, dan Menyenangkan",
-                                    "Guru yang Kompeten dan Ahli di Bidangnya",
-                                    "Pembiasaan Ibadah Diniyah secara Sadar dan Ikhlas",
-                                    "Fasilitas yang Lengkap & Memadai untuk menunjang kegiatan santri"
+                                    "Menguatkan akidah shahihah dan membiasakan beribadah sesuai sunnah dalam kehidupan sehari-hari melalui pembelajaran bahasa arab, ulumu syar'i, halaqoh tahfizh, dan adab islami.",
+                                    "Membimbing pembentukan karakter melalui sistem pengasuhan berbasis fitrah dengan pendekatan penyadaran dan pendewasaan — bukan sekadar hukuman.",
+                                    "Membekali Hard Skill melalui pembelajaran kewirausahaan dan ekstrakurikuler sebagai bekal hidup mandiri dan kontributif.",
+                                    "Menanamkan jiwa dakwah santri melalui metode hikmah dan mauidzoh hasanah, serta pengawasan penuh di setiap aktivitas santri."
                                 ].map((item, idx) => (
                                 <li key={idx} className="flex gap-4 items-start group/item bg-white p-5 rounded-2xl border border-brand-blue-50 shadow-sm">
                                     <div className="w-6 h-6 rounded-full bg-brand-blue-600 text-white flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5 shadow-sm">
@@ -322,33 +318,6 @@ export default function TentangPage() {
                             </ul>
                         </motion.div>
                     </div>
-
-                    {/* Dewan Pembina Section */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        className="mt-20 md:mt-24 max-w-4xl mx-auto"
-                    >
-                        <div className="text-center mb-10">
-                            <h2 className="section-title text-3xl mb-4">Dewan Pembina</h2>
-                            <p className="text-ink-600 font-medium">Pengawasan kurikulum dan keilmuan langsung dibimbing oleh asatidzah yang kompeten.</p>
-                        </div>
-                        <div className="flex flex-wrap justify-center gap-3 md:gap-4 lg:gap-5">
-                            {[
-                                "Ustadz Nurdin Apud Sabrini, Lc., M.Pd.",
-                                "Ustadz Dr. Muhammad Arifin Badri, Lc., M.A.",
-                                "Ustadz Wahab Rajasam, M.Pd.",
-                                "K.H. Dudun Abdul Gofar",
-                                "Bpk. Tarmen Tascha, S.E.",
-                                "Ustadz Dwi Wahyu Iskandar, M.Pd."
-                            ].map((nama, i) => (
-                                <div key={i} className="bg-brand-blue-50 border border-brand-blue-100 px-5 py-3 rounded-full text-brand-blue-900 font-bold text-sm md:text-base hover:bg-brand-blue-600 hover:text-white transition-colors cursor-default shadow-sm text-center">
-                                    {nama}
-                                </div>
-                            ))}
-                        </div>
-                    </motion.div>
                 </Container>
             </section>
 
@@ -402,7 +371,7 @@ export default function TentangPage() {
                                 </div>
                                 <div className="flex items-center gap-2 text-brand-yellow-100/70">
                                     <BookOpen className="w-4 h-4 text-yellow-400" />
-                                    <span className="text-[10px] font-bold uppercase tracking-widest">Sejak 1995</span>
+                                    <span className="text-[10px] font-bold uppercase tracking-widest">Kurikulum Al-Andalus</span>
                                 </div>
                                 <div className="flex items-center gap-2 text-brand-yellow-100/70">
                                     <Award className="w-4 h-4 text-blue-400" />

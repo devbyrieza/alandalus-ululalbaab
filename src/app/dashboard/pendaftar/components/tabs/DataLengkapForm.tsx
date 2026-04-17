@@ -343,7 +343,7 @@ interface InputFieldProps {
   placeholder?: string;
   required?: boolean;
   disabled?: boolean;
-  options?: string[];
+  options?: (string | { label: string; value: string })[];
   maxLength?: number;
   inputFilter?: 'letters' | 'numbers';
 }
@@ -397,11 +397,15 @@ function InputField({
             className={`${baseInputClass} appearance-none cursor-pointer`}
           >
             <option value="" disabled={value !== ""}>Pilih {label}</option>
-            {options.map((opt) => (
-              <option key={opt} value={opt}>
-                {opt}
-              </option>
-            ))}
+            {options.map((opt) => {
+              const label = typeof opt === "string" ? opt : opt.label;
+              const val = typeof opt === "string" ? opt : opt.value;
+              return (
+                <option key={val} value={val}>
+                  {label}
+                </option>
+              );
+            })}
           </select>
           <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-ink-400 pointer-events-none" />
         </div>
@@ -750,13 +754,7 @@ export default function DataLengkapForm({ onSuccess }: { onSuccess?: () => void 
     ))
   ));
 
-  const isDataIncomplete = !isSantriComplete || !isAyahComplete || !isIbuComplete || !isWaliComplete;
-  const isNormalLocked = !['draft', 'awaiting_payment', 'verified', 'rejected'].includes(statusPendaftaran);
-
-  // Ulul Albaab: Smart Lock
-  // Jika data belum lengkap (pendaftar lama), form SELALU TERBUKA otomatis.
-  // Jika data sudah lengkap (pendaftar baru), ikuti aturan kunci normal Ulul Albaab.
-  const isLocked = isDataIncomplete ? false : isNormalLocked;
+  const isLocked = !['draft', 'awaiting_payment', 'verified', 'rejected'].includes(statusPendaftaran);
   const isEditMode = requestStatus?.status === 'approved_to_edit';
   const canEdit = !isLocked || isEditMode;
 
@@ -894,14 +892,7 @@ export default function DataLengkapForm({ onSuccess }: { onSuccess?: () => void 
                     required
                   />
                   <InputField label="Tanggal Lahir" name="tanggal_lahir" value={formData.santri.tanggal_lahir} onChange={(v) => updateSantri("tanggal_lahir", v)} type="date" required />
-                  <InputField 
-                    label="Jenis Kelamin" 
-                    name="jenis_kelamin" 
-                    value={["L", "Laki-laki"].includes(formData.santri.jenis_kelamin) ? "Laki-laki" : (["P", "Perempuan"].includes(formData.santri.jenis_kelamin) ? "Perempuan" : "")} 
-                    onChange={(v) => updateSantri("jenis_kelamin", v === "Laki-laki" ? "L" : "P")} 
-                    options={["Laki-laki", "Perempuan"]} 
-                    required 
-                  />
+                  <InputField label="Jenis Kelamin" name="jenis_kelamin" value={formData.santri.jenis_kelamin} onChange={(v) => updateSantri("jenis_kelamin", v)} options={[{ label: "Laki-laki", value: "L" }, { label: "Perempuan", value: "P" }]} required />
                   <InputField
                     label="Kewarganegaraan"
                     name="kewarganegaraan"
@@ -1269,7 +1260,7 @@ export default function DataLengkapForm({ onSuccess }: { onSuccess?: () => void 
           <button
             type="submit"
             disabled={saving}
-            className="flex items-center gap-2 px-8 py-4 rounded-xl bg-gradient-to-r from-brand-blue-600 to-brand-blue-800 text-white font-bold text-lg shadow-lg shadow-brand-blue-600/30 hover:shadow-brand-blue-600/40 hover:-translate-y-1 transition-all disabled:opacity-50 disabled:transform-none"
+            className="flex items-center gap-2 px-8 py-4 rounded-xl bg-gradient-to-r from-maroon-600 to-maroon-700 text-white font-bold text-lg shadow-lg shadow-maroon-600/30 hover:shadow-maroon-600/40 hover:-translate-y-1 transition-all disabled:opacity-50 disabled:transform-none"
           >
             {saving ? <Loader2 className="w-6 h-6 animate-spin" /> : isEditMode ? <Send className="w-6 h-6" /> : <Save className="w-6 h-6" />}
             <span>{saving ? "Menyimpan..." : isEditMode ? "Simpan & Ajukan Verifikasi" : "Simpan Data"}</span>

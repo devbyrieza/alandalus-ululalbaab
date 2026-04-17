@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { MessageCircle, Star, Quote } from "lucide-react";
 import { Container } from "@/components/layout/Container";
@@ -8,45 +8,45 @@ const TESTIMONIALS = [
   {
     no: "001",
     name: "Bpk. Surwanto",
-    role: "Wali Santri",
+    role: "Wali Santri Al-Andalus Pusat",
     city: "Sukoharjo, Jawa Tengah",
     initial: "S",
     date: "Oktober 2024",
     quote:
-      "Tujuan kami menyekolahkan anak ke pesantren adalah agar mereka benar-benar paham agama, bukan sekadar hafal pelajaran. Alhamdulillah, sistem Al-Andalus telah memberikan perubahan nyata pada anak kami — cara bicara, cara bersikap kepada orang tua, dan keseriusannya dalam ibadah.",
-    color: "brand-blue"
+      "Tujuan kami menyekolahkan anak ke Al-Andalus Pusat adalah agar mereka benar-benar paham agama. Alhamdulillah, sistem Al-Andalus memberikan perubahan nyata pada anak kami — cara bicara, sikap, dan keseriusannya dalam ibadah.",
+    color: "maroon"
   },
   {
     no: "002",
     name: "Ibu Endah Wulandari",
-    role: "Wali Santri",
+    role: "Wali Santri Al-Andalus Pusat",
     city: "Kebumen, Jawa Tengah",
     initial: "E",
     date: "Januari 2025",
     quote:
-      "Awalnya saya khawatir dengan sistem boarding, takut anak susah adaptasi. Ternyata kurikulum tahfidznya sangat sistematis — sangat ditekankan pada makhraj dan tajwid yang benar. Dalam 6 bulan, anak saya sudah mampu memimpin shalat berjamaah di rumah.",
+      "Awalnya saya khawatir dengan sistem boarding, namun kurikulum tahfidz di Al-Andalus Jonggol sangat sistematis. Dalam 6 bulan, anak saya sudah mampu memimpin shalat berjamaah di rumah dengan makhraj yang benar.",
     color: "cream"
   },
   {
     no: "003",
     name: "Muhammad Razan",
-    role: "Alumni Al-Andalus",
+    role: "Alumni Al-Andalus Jonggol",
     city: "Purwokerto, Jawa Tengah",
     initial: "R",
     date: "Maret 2025",
     quote:
-      "Disiplin bahasa Arab dan hafalan Al-Qur'an sangat membantu saat saya melanjutkan pendidikan ke jenjang lebih tinggi. Saat teman-teman lain masih belajar dasar-dasar nahwu, saya sudah bisa langsung membaca kitab.",
+      "Disiplin bahasa Arab dan hafalan Al-Qur'an di Al-Andalus sangat membantu saat saya melanjutkan pendidikan tinggi. Saat teman-teman lain masih belajar dasar nahwu, saya sudah bisa langsung membaca kitab.",
     color: "gold"
   },
   {
     no: "004",
     name: "Faisal Ahmad",
-    role: "Alumni Al-Andalus",
+    role: "Alumni Al-Andalus Jonggol",
     city: "Cilacap, Jawa Tengah",
     initial: "A",
     date: "Agustus 2024",
     quote:
-      "Berkat bimbingan intensif para asatidz di Pesantren Al-Andalus, saya berhasil lulus seleksi masuk universitas di Timur Tengah. Fondasi bahasa Arab aktif yang ditanamkan sejak awal benar-benar menjadi kunci.",
+      "Berkat bimbingan intensif para asatidz di Pesantren Al-Andalus Pusat, saya berhasil lulus seleksi masuk universitas di Timur Tengah. Fondasi bahasa Arab aktif yang ditanamkan benar-benar menjadi kunci.",
     color: "teal"
   },
 ] as const;
@@ -72,7 +72,7 @@ function TestimonialCard({
     >
       {/* Number badge */}
       <div className="absolute top-8 left-8 w-10 h-10 rounded-[12px] bg-cream-50 border border-cream-200 flex items-center justify-center shadow-sm">
-        <span className="text-xs font-black text-brand-blue-700 tracking-wider">#{no}</span>
+        <span className="text-xs font-black text-maroon-700 tracking-wider">#{no}</span>
       </div>
 
       <Quote className="absolute top-8 right-8 w-10 h-10 text-cream-100 group-hover:text-cream-200 transition-colors" />
@@ -84,18 +84,18 @@ function TestimonialCard({
         ))}
       </div>
 
-      <p className="text-ink-700 leading-relaxed mb-8 flex-grow font-medium relative z-10 text-[15px]">
+      <p className="text-ink-700 leading-relaxed mb-8 grow font-medium relative z-10 text-[15px]">
         "{quote}"
       </p>
 
       <div className="flex items-center justify-between mt-auto pt-6 border-t border-cream-200/60">
         <div className="flex items-center gap-4">
-          <div className="w-11 h-11 rounded-2xl bg-linear-to-br from-brand-blue-600 to-brand-blue-900 flex items-center justify-center text-white font-display font-black shadow-sm group-hover:scale-110 transition-transform duration-500">
+          <div className="w-11 h-11 rounded-2xl bg-linear-to-br from-maroon-600 to-maroon-900 flex items-center justify-center text-white font-display font-black shadow-sm group-hover:scale-110 transition-transform duration-500">
             {initial}
           </div>
           <div>
             <p className="text-[15px] font-bold text-ink-950 leading-tight mb-1">{name}</p>
-            <p className="text-[10px] text-brand-blue-700 font-bold uppercase tracking-widest">{role} · {city}</p>
+            <p className="text-[10px] text-maroon-700 font-bold uppercase tracking-widest">{role} · {city}</p>
           </div>
         </div>
         <span className="text-[10px] text-ink-400 font-bold shrink-0 bg-surface-50 px-2 py-1 rounded-md">{date}</span>
@@ -117,10 +117,10 @@ export default function TestimonialsSection() {
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-pill bg-white border border-brand-blue-100 text-brand-blue-700 text-xs font-bold uppercase tracking-widest mb-6 shadow-sm"
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-pill bg-white border border-cream-200 text-maroon-700 text-xs font-bold uppercase tracking-widest mb-6 shadow-sm"
           >
             <MessageCircle className="w-3.5 h-3.5" />
-            <span>Cerita Nyata Wali Santri & Alumni</span>
+            <span>Reputasi Al-Andalus Pusat (Jonggol)</span>
           </motion.div>
 
           <motion.h2
@@ -130,7 +130,7 @@ export default function TestimonialsSection() {
             transition={{ delay: 0.1 }}
             className="section-title mb-6"
           >
-            Apa Kata <span className="text-gradient-blue">Mereka?</span>
+            Cerita Keberhasilan <span className="text-gradient-maroon">Keluarga Al-Andalus</span>
           </motion.h2>
 
           <motion.p
@@ -140,7 +140,7 @@ export default function TestimonialsSection() {
             transition={{ delay: 0.2 }}
             className="section-subtitle mb-6"
           >
-            Kepercayaan wali santri dan alumni adalah amanah bagi kami untuk terus memberikan yang terbaik.
+            Ulul Albaab menerapkan standar keunggulan dan sistem yang sama dengan Pesantren Al-Andalus Pusat (Jonggol) International Islamic Boarding School.
           </motion.p>
 
           <motion.div
@@ -148,9 +148,9 @@ export default function TestimonialsSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.3 }}
-            className="inline-flex items-center gap-2 bg-brand-blue-50 text-brand-blue-800 px-4 py-2 rounded-xl border border-brand-blue-100 font-bold text-sm shadow-sm"
+            className="inline-flex items-center gap-2 bg-maroon-50 text-maroon-800 px-4 py-2 rounded-xl border border-maroon-100 font-bold text-sm shadow-sm"
           >
-            <span className="text-brand-yellow-500">✦</span> Dari Keluarga Besar Al-Andalus
+            <span className="text-maroon-600">✦</span> Reputasi Global yang Teruji
           </motion.div>
         </div>
 

@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+﻿import { NextResponse } from 'next/server';
 import { sendMessage } from '@/lib/wablas';
 
 /**
@@ -19,13 +19,13 @@ export async function GET(request: Request) {
     try {
         const result = await sendMessage({
             phone,
-            message: `Halo! Ini adalah pesan tes koneksi WABLAS. Jika Anda menerima ini, berarti sistem PPDB Al-Andalus Ulul Albaab sudah terhubung dengan benar.\n\n_Pesanan ini dikirim secara otomatis oleh sistem PPDB Al-Andalus Ulul Albaab._\n\nTerima kasih,\nTim IT Al-Andalus Ulul Albaab.`,
+            message: `Halo! Ini adalah pesan tes koneksi WABLAS. Jika Anda menerima ini, berarti sistem PPDB Ulul Albaab sudah terhubung dengan benar.\n\n_Pesanan ini dikirim secara otomatis oleh sistem PPDB Ulul Albaab._\n\nTerima kasih,\nTim IT Ulul Albaab.`,
         });
 
         return NextResponse.json({
             success: true,
             message: 'Test message sent successfully',
-            lokasi: "Pesantren Al-Andalus Ulul Albaab",
+            lokasi: "Ponpes Ulul Albaab",
         });
     } catch (error) {
         console.error('Error testing Wablas:', error);

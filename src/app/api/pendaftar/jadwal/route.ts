@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+﻿import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { prisma } from "@/lib/prisma";
 import { 
@@ -123,7 +123,13 @@ export async function POST(request: Request) {
             }, { status: 400 });
         }
 
+        // Transaction to book
+        // 1. Create Jadwal
+        // 2. No need to increment counter manually if using _count, but if we have booked_count field we should update it.
+        // My schema has `booked_count` int field. I should update it.
+
         const result = await prisma.$transaction(async (tx) => {
+            // Increment count first to lock? Prisma doesn't lock automatically like that easily, but atomic increment works.
             const updatedSession = await tx.examSession.update({
                 where: { id: exam_session_id },
                 data: { booked_count: { increment: 1 } }
@@ -133,6 +139,9 @@ export async function POST(request: Request) {
                 throw new Error("Kuota penuh (race condition)");
             }
 
+            // Create Jadwal
+            // Need `tahun_ajaran_id`. How to get? 
+            // Usually Pendaftar is linked to TahunAjaran. I should fetch Pendaftar first.
             const pendaftar = await tx.pendaftar.findUnique({ where: { id: session.id } });
             if (!pendaftar) throw new Error("Data pendaftar tidak ditemukan");
 
@@ -167,8 +176,8 @@ export async function POST(request: Request) {
                     tahun_ajaran_id: pendaftar.tahun_ajaran_id,
                     pendaftar_id: session.id,
                     exam_session_id: exam_session_id,
-                    tanggal_ujian: examSession.start_time,
-                    waktu_mulai_santri: examSession.start_time,
+                    tanggal_ujian: examSession.start_time, // Date part
+                    waktu_mulai_santri: examSession.start_time, // Temporarily copy session time to specific fields for compat
                     waktu_selesai_santri: examSession.end_time,
                     tempat_santri: examSession.location || "Pesantren",
                     waktu_mulai_ortu: examSession.start_time,
@@ -182,11 +191,13 @@ export async function POST(request: Request) {
                 }
             });
 
+            // 1.5. Update pendaftar status to 'scheduled'
             await tx.pendaftar.update({
                 where: { id: session.id },
                 data: { status_pendaftaran: 'scheduled' }
             });
 
+            // 2. Initialize NilaiUjian
             await tx.nilaiUjian.create({
                 data: {
                     pendaftar_id: session.id,
@@ -197,7 +208,7 @@ export async function POST(request: Request) {
             return jadwal;
         });
 
-        // Send WhatsApp via Queue
+        // Send WhatsApp via Queue (Layer 2: Non-blocking, through queue)
         const pendaftarInfo = await prisma.pendaftar.findUnique({
             where: { id: session.id },
             select: { nama_lengkap: true, no_hp: true }
@@ -207,7 +218,7 @@ export async function POST(request: Request) {
             const startTime = new Date(examSession.start_time);
             const dateStr = startTime.toLocaleDateString("id-ID", { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Asia/Jakarta' });
             const timeStr = startTime.toLocaleTimeString("id-ID", { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Jakarta' }) + ' WIB';
-            const lokasi = examSession.location || "Pesantren Al-Andalus Ulul Albaab";
+            const lokasi = examSession.location || "Pesantren Ulul Albaab";
             const jenisUjian = sanitizeTitle(examSession.title || "Seleksi Santri Baru");
 
             const message = buildMessageKonfirmasiJadwal(
@@ -218,6 +229,7 @@ export async function POST(request: Request) {
                 jenisUjian
             );
 
+            // Enqueue via WhatsApp queue (all 6 layers applied)
             enqueueWhatsapp({
                 pendaftarId: session.id,
                 phone: pendaftarInfo.no_hp,
@@ -225,7 +237,7 @@ export async function POST(request: Request) {
                 messageContent: message,
             }).catch((err: any) => console.error("Failed to enqueue jadwal confirmation:", err));
 
-            // Notify Interviewer
+            // 2. Notify Interviewer (Layer 2.1: Delayed notification for staff)
             if (examSession.created_by) {
                 const interviewer = await prisma.profile.findUnique({
                     where: { id: examSession.created_by },
@@ -233,15 +245,16 @@ export async function POST(request: Request) {
                 });
 
                 if (interviewer && interviewer.phone) {
-                    const redirectPathPath = `/dashboard/penguji/input-nilai?search=${encodeURIComponent(pendaftarInfo.nama_lengkap)}`;
+                    // Generate Magic Link for this interviewer
+                    const redirectPathPath = `/dashboard/penguji/input-nilai?search=${encodeURIComponent(pendaftarInfo.nama_lengkap)}`; // Fallback search by name if nomor_pendaftaran is not easily accessible here
                     const token = generateMagicToken(
                         examSession.created_by,
                         "penguji", 
                         interviewer.full_name,
-                        72,
+                        72, // 3 days expiry for confirmation
                         redirectPathPath
                     );
-                    const magicLink = `${process.env.NEXT_PUBLIC_APP_URL || 'https://ppdb.alandalus-ululalbaab.com'}/api/auth/magic?token=${token}`;
+                    const magicLink = `${process.env.NEXT_PUBLIC_APP_URL || 'https://pesantren-ululalbaab.com'}/api/auth/magic?token=${token}`;
 
                     const intMessage = buildMessageKonfirmasiJadwalInterviewer(
                         interviewer.full_name,
@@ -253,6 +266,7 @@ export async function POST(request: Request) {
                         magicLink
                     );
 
+                    // Stall interviewer notification by 1 minute to avoid consecutive message bursts (Anti-BAN)
                     const scheduledAt = new Date();
                     scheduledAt.setMinutes(scheduledAt.getMinutes() + 1);
 
@@ -266,10 +280,13 @@ export async function POST(request: Request) {
                 }
             }
 
-            // SCHEDULE 4-HOUR REMINDERS
+            // 3. SCHEDULE 4-HOUR REMINDERS (Sent 4 hours before exam)
             try {
                 const examStartTime = new Date(examSession.start_time);
+                // Calculate individualized scheduled time (StartTime - 4 hours)
                 const reminderTime = new Date(examStartTime.getTime() - 4 * 60 * 60 * 1000);
+
+                // Schedule if in the future, or send now if already within 16h window
                 const now = new Date();
                 const finalScheduledAt = reminderTime < now ? now : reminderTime;
 
@@ -288,9 +305,10 @@ export async function POST(request: Request) {
                     ? (interviewerGoogleMeetLink.startsWith("http") ? interviewerGoogleMeetLink : `Online (${interviewerGoogleMeetLink})`)
                     : lokasi;
 
+                // 3.1. Reminder for Santri
                 const remSantriMsg = buildMessageReminderH1Santri(
                     pendaftarInfo.nama_lengkap,
-                    dateStr.split(',')[0] || "",
+                    dateStr.split(',')[0] || "", // Removed "Besok"
                     dateStr,
                     timeStr,
                     lokasiWithMeet,
@@ -304,65 +322,74 @@ export async function POST(request: Request) {
                     messageContent: remSantriMsg,
                     scheduledAt: finalScheduledAt,
                 }).then(async () => {
-                    try {
+                     // Update flag safely - using try catch to avoid crash if DB not pushed yet
+                     try {
                         await prisma.jadwalUjian.update({
                             where: { id: result.id },
                             data: { notif_h1_pendaftar_terkirim: true }
                         });
-                    } catch (e) {}
+                     } catch (e) {
+                        console.warn("Could not update H1 santri flag (DB sync might be pending)");
+                     }
                 }).catch(err => console.error("Failed to enqueue H1 santri reminder:", err));
 
+                // 3.2. Reminder for Interviewer
                 if (examSession.created_by) {
                     const interviewer = await prisma.profile.findUnique({
                         where: { id: examSession.created_by },
                         select: { full_name: true, phone: true, google_meet_link: true }
-                    });
+                        });
 
-                    if (interviewer && interviewer.phone) {
-                        const redirectPathH1 = `/dashboard/penguji/input-nilai?search=${encodeURIComponent(pendaftarInfo.nama_lengkap)}`;
-                        const tokenH1 = generateMagicToken(
-                            examSession.created_by,
-                            "penguji",
-                            interviewer.full_name,
-                            48,
-                            redirectPathH1
-                        );
-                        const magicLinkRem4h = `${process.env.NEXT_PUBLIC_APP_URL || 'https://ppdb.alandalus-ululalbaab.com'}/api/auth/magic?token=${tokenH1}`;
+                        if (interviewer && interviewer.phone) {
+                            // Generate Magic Link for 4-hour reminder
+                            const redirectPathH1 = `/dashboard/penguji/input-nilai?search=${encodeURIComponent(pendaftarInfo.nama_lengkap)}`;
+                            const tokenH1 = generateMagicToken(
+                                examSession.created_by,
+                                "penguji",
+                                interviewer.full_name,
+                                48, // 2 days
+                                redirectPathH1
+                            );
+                            const magicLinkRem4h = `${process.env.NEXT_PUBLIC_APP_URL || 'https://pesantren-ululalbaab.com'}/api/auth/magic?token=${tokenH1}`;
 
-                        const { getManualTinyUrl, generateTinyUrl } = await import("@/lib/utils/magic-link");
-                        const manualTinyUrl = getManualTinyUrl(interviewer.full_name);
-                        const shortUrlRem4h = manualTinyUrl || await generateTinyUrl(magicLinkRem4h);
+                            // Use manual tinyurl if available for this user, otherwise generate automatic
+                            const { getManualTinyUrl, generateTinyUrl } = await import("@/lib/utils/magic-link");
+                            const manualTinyUrl = getManualTinyUrl(interviewer.full_name);
+                            const shortUrlRem4h = manualTinyUrl || await generateTinyUrl(magicLinkRem4h);
 
-                        const remIntMessage = buildMessageReminderH1Penguji(
-                            interviewer.full_name,
-                            pendaftarInfo.nama_lengkap,
-                            dateStr.split(',')[0] || "",
-                            dateStr,
-                            timeStr,
-                            interviewer.google_meet_link || lokasi,
-                            jenisUjian,
-                            shortUrlRem4h
-                        );
+                            const remIntMessage = buildMessageReminderH1Penguji(
+                                interviewer.full_name,
+                                pendaftarInfo.nama_lengkap,
+                                dateStr.split(',')[0] || "",
+                                dateStr,
+                                timeStr,
+                                interviewer.google_meet_link || lokasi,
+                                jenisUjian,
+                                shortUrlRem4h
+                            );
 
-                        const finalScheduledAtInt = new Date(finalScheduledAt);
-                        finalScheduledAtInt.setMinutes(finalScheduledAtInt.getMinutes() + 5);
+                            const finalScheduledAtInt = new Date(finalScheduledAt);
+                            finalScheduledAtInt.setMinutes(finalScheduledAtInt.getMinutes() + 5);
 
-                        enqueueWhatsapp({
-                            pendaftarId: session.id,
-                            phone: interviewer.phone,
-                            jenisNotif: "reminder_h1",
-                            messageContent: remIntMessage,
-                            scheduledAt: finalScheduledAtInt,
-                        }).then(async () => {
-                            try {
-                                await prisma.jadwalUjian.update({
-                                    where: { id: result.id },
-                                    data: { notif_h1_penguji_terkirim: true }
-                                });
-                            } catch (e) {}
-                        }).catch(err => console.error("Failed to enqueue 4h penguji reminder:", err));
+                            enqueueWhatsapp({
+                                pendaftarId: session.id,
+                                phone: interviewer.phone,
+                                jenisNotif: "reminder_h1", // Keep same key for DB compatibility or use a new one
+                                messageContent: remIntMessage,
+                                scheduledAt: finalScheduledAtInt,
+                            }).then(async () => {
+                                 // Update flag safely
+                                 try {
+                                    await prisma.jadwalUjian.update({
+                                        where: { id: result.id },
+                                        data: { notif_h1_penguji_terkirim: true }
+                                    });
+                                 } catch (e) {
+                                    console.warn("Could not update H1 interviewer flag (DB sync might be pending)");
+                                 }
+                            }).catch(err => console.error("Failed to enqueue 4h penguji reminder:", err));
+                        }
                     }
-                }
             } catch (error) {
                 console.error("Error scheduling H1 reminders:", error);
             }

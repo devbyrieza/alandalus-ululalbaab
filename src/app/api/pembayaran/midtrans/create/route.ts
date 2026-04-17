@@ -106,7 +106,7 @@ export async function POST(request: NextRequest) {
       ],
       customer_details: {
         first_name: pendaftar.nama_lengkap,
-        email: pendaftar.email || "noemail@ponpesululalbaab.sch.id",
+        email: pendaftar.email || "noemail@ponpesalimam.sch.id",
         phone: pendaftar.no_hp || "",
       },
       callbacks: {

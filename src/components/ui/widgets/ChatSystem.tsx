@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useRef, useEffect } from "react";
 import { MessageCircle, X, Bot, Headphones, MessageSquare } from "lucide-react";
@@ -140,6 +140,7 @@ export default function ChatSystem() {
                                     </div>
                                 </button>
 
+{/* 
                                 <button
                                     onClick={openTawkTo}
                                     className="w-full flex items-center gap-3 p-3 hover:bg-teal-50 rounded-xl transition-colors group text-left"
@@ -152,6 +153,7 @@ export default function ChatSystem() {
                                         <p className="text-[11px] text-ink-500 font-medium">Chat langsung dengan panitia</p>
                                     </div>
                                 </button>
+*/}
 
                                 <button
                                     onClick={openWhatsApp}

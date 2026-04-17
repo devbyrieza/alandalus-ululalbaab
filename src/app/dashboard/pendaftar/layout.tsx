@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
@@ -175,6 +175,9 @@ export default function DashboardLayout({
 
   // Function untuk cek apakah tab bisa diakses
   const isTabAccessible = (tabName: TabName) => {
+    // SPECIAL BYPASS FOR TESTING ACCOUNT: RIEZA TES
+    if (nomorPendaftaran === "ILI2600007") return true;
+    
     return canAccessTab(tabName, statusProses);
   };
 
@@ -405,7 +408,7 @@ export default function DashboardLayout({
             </header>
 
             {/* Content Wrapper */}
-            <div className="flex-1 pt-6 lg:pt-0 p-4 md:p-6 lg:p-8 max-w-6xl w-full mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500 z-10">
+            <div className="flex-1 pt-14 lg:pt-12 p-4 md:p-6 lg:p-8 max-w-6xl w-full mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500 z-10">
               {children}
             </div>
             

@@ -4,7 +4,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient({
     datasources: {
         db: {
-            url: "postgresql://postgres:kbzoN2OhN@127.0.0.1:5433/ppdb_ululalbaab?schema=public",
+            url: "postgresql://postgres:kbzoN2OhN@127.0.0.1:5433/ppdb_alimam?schema=public",
         },
     },
 });

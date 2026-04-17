@@ -59,10 +59,10 @@ const PROGRAMS = [
         ],
         curriculum: [
             "Tahun I'dad: Intensif Bahasa Arab & Syariah",
-            "Target Hafalan Al-Quran Lanjutan",
+            "Target Hafalan 16 Juz",
             "Kurikulum Pesantren Terpadu",
             "Kajian Kitab Turots Mendalam",
-            "Pembinaan Kewirausahaan & Mentality"
+            "Pembinaan Dakwah & Organisasi"
         ],
         image: "/images/il.webp",
         theme: "yellow",
@@ -181,7 +181,7 @@ export default function ProgramPage() {
                                                 className="object-cover transition-transform duration-700 hover:scale-110 bg-surface-200 animate-pulse"
                                                 onLoad={(e) => e.currentTarget.classList.remove('animate-pulse')}
                                             />
-                                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                                            <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent" />
 
                                             <div className="absolute bottom-10 left-10 right-10 z-20">
                                                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-white/20 backdrop-blur-md border border-white/30 text-white text-[10px] font-black uppercase tracking-widest mb-3">
@@ -288,83 +288,7 @@ export default function ProgramPage() {
                 ))}
             </div>
 
-            {/* 4. Ekstrakurikuler Section */}
-            <section className="py-20 md:py-24 bg-brand-blue-50/30 border-y border-brand-blue-100">
-                <Container>
-                    <div className="text-center mb-16">
-                        <motion.h2
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            className="section-title mb-4"
-                        >
-                            Ekstrakurikuler <span className="text-gradient-blue">Kemenarikkan</span>
-                        </motion.h2>
-                        <p className="text-ink-600 font-medium">Bakat dan potensi santri selalu diasah melalui berbagai kegiatan luar kelas berskala nasional & profesional.</p>
-                    </div>
-
-                    <div className="grid md:grid-cols-2 gap-10 lg:gap-16">
-                        {/* Putra */}
-                        <motion.div
-                            initial={{ opacity: 0, x: -30 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            className="bg-white rounded-[2.5rem] p-8 lg:p-10 border border-brand-blue-100 shadow-sm"
-                        >
-                            <div className="flex items-center gap-4 mb-8 border-b border-surface-100 pb-6">
-                                <div className="w-14 h-14 bg-brand-blue-600 text-white flex items-center justify-center rounded-2xl shadow-sm">
-                                    <Users className="w-7 h-7" />
-                                </div>
-                                <div>
-                                    <h3 className="text-2xl font-black text-ink-950">Santri Putra</h3>
-                                    <p className="text-sm font-bold tracking-widest uppercase text-brand-blue-700">14 Ekstrakurikuler</p>
-                                </div>
-                            </div>
-                            <div className="flex flex-wrap gap-2">
-                                {[
-                                    "Karate", "Pramuka", "Komputer", "Volly", "Panahan", 
-                                    "Konten Kreator", "Pertanian", "Perikanan", "Jurnalistik", 
-                                    "Kaligrafi", "Futsal", "Bulutangkis", "Basket", "Design Grafis"
-                                ].map((item, i) => (
-                                    <div key={i} className="px-4 py-2 rounded-full border border-surface-200 text-sm font-bold text-ink-700 hover:bg-brand-blue-50 hover:text-brand-blue-800 transition-colors cursor-default shadow-sm">
-                                        {item}
-                                    </div>
-                                ))}
-                            </div>
-                        </motion.div>
-
-                        {/* Putri */}
-                        <motion.div
-                            initial={{ opacity: 0, x: 30 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            className="bg-gradient-to-br from-brand-yellow-50 to-white rounded-[2.5rem] p-8 lg:p-10 border border-brand-yellow-200 shadow-sm"
-                        >
-                            <div className="flex items-center gap-4 mb-8 border-b border-brand-yellow-200/50 pb-6">
-                                <div className="w-14 h-14 bg-brand-yellow-500 text-white flex items-center justify-center rounded-2xl shadow-sm">
-                                    <Users className="w-7 h-7" />
-                                </div>
-                                <div>
-                                    <h3 className="text-2xl font-black text-ink-950">Santri Putri</h3>
-                                    <p className="text-sm font-bold tracking-widest uppercase text-brand-yellow-700">8 Ekstrakurikuler Khusus</p>
-                                </div>
-                            </div>
-                            <div className="flex flex-wrap gap-2">
-                                {[
-                                    "Pramuka", "Komputer", "Karate", "Tataboga", 
-                                    "Kaligrafi", "Merajut", "Menjahit", "Keputrian"
-                                ].map((item, i) => (
-                                    <div key={i} className="px-4 py-2 rounded-full bg-white border border-brand-yellow-200 text-sm font-bold text-ink-800 hover:bg-brand-yellow-400 hover:text-ink-900 transition-colors cursor-default shadow-sm">
-                                        {item}
-                                    </div>
-                                ))}
-                            </div>
-                        </motion.div>
-                    </div>
-                </Container>
-            </section>
-
-            {/* 5. Bottom CTA - Impactful */}
+            {/* Bottom CTA - Impactful */}
             <section className="py-16 md:py-24 lg:py-32 bg-surface-50">
                 <Container>
                     <motion.div

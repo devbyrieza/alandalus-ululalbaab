@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { Suspense } from "react";
 import Link from "next/link";
@@ -96,16 +96,16 @@ function PPDBContent() {
   const jenjang = searchParams.get('jenjang');
 
   const stats = [
-    { label: "Kuota MTs Putra", value: "TUTUP", icon: Users },
-    { label: "Kuota MTs Putri", value: "30 Santri", icon: Users },
-    { label: "Kuota IL Putra", value: "TUTUP", icon: Users },
-    { label: "Kuota IL Putri", value: "30 Santri", icon: Users },
+    { label: "Kuota MTs", value: "25 Santri", icon: Users },
+    { label: "Kuota I'dad", value: "25 Santri", icon: Users },
+    { label: "Asatidz", value: "Lulusan Terbaik", icon: GraduationCap },
+    { label: "Target", value: "TimTeng & PTN Favorit", icon: Target },
   ];
 
   const timeline = [
     {
       phase: "Registrasi Online",
-      date: "31 Agustus - 30 Oktober 2025",
+      date: "10 Feb - 30 Mei 2026",
       desc: "Buat akun pendaftar dan isi formulir awal melalui website resmi.",
       status: "active",
     },
@@ -166,9 +166,9 @@ function PPDBContent() {
   ];
 
   const biaya = [
-    { label: "Biaya Pendaftaran", value: "Rp 250 rb", icon: CreditCard },
-    { label: "Uang Pangkal", value: "Rp 9.8 Jt", icon: Shield },
-    { label: "Taawun (SPP)", value: "Rp 1.1 Jt/bln", icon: Star },
+    { label: "Biaya Pendaftaran", value: "Rp 200rb", icon: CreditCard },
+    { label: "Uang Pangkal", value: "Rp 7.5Jt", icon: Shield },
+    { label: "Taawun (SPP)", value: "Rp 1Jt", icon: Star },
   ];
 
   return (
@@ -224,7 +224,7 @@ function PPDBContent() {
                   ✨ Kesempatan Emas: Angkatan Pertama Era Al-Andalus
                 </h3>
                 <p className="text-brand-blue-800 font-medium leading-relaxed">
-                  Menjadi bagian dari angkatan 2026/2027 adalah sebuah keistimewaan. Ananda akan menjadi <strong>pionir dan tonggak sejarah pertama</strong> yang merasakan secara penuh perpaduan mantap antara sistem unggulan Al-Andalus dengan kekayaan warisan 30 tahun Ulul Albaab.
+                  Menjadi bagian dari angkatan 2026/2027 adalah sebuah keistimewaan. Ananda akan menjadi <strong>pionir dan tonggak sejarah pertama</strong> yang merasakan secara penuh perpaduan mantap antara sistem unggulan Al-Andalus dengan kekayaan warisan Ulul Albaab.
                 </p>
               </div>
             </motion.div>
@@ -341,11 +341,8 @@ function PPDBContent() {
               <HelpCircle className="w-8 h-8" />
             </div>
             <div>
-              <p className="text-lg text-brand-blue-900 font-bold leading-relaxed mb-2">
-                Biaya SPP dapat dibayarkan Rp 13.200.000 / Tahun atau Rp 1.100.000 / Bulan. 
-              </p>
-              <p className="text-md text-brand-blue-800 font-medium leading-relaxed">
-                Biaya pendaftaran dan uang pangkal bersifat non-refundable. Uang pangkal (daftar ulang) dapat dicicil maksimal 3x pembayaran, dengan <strong>syarat pembayaran pertama minimal 50%</strong>, dan wajib dilunasi sebelum Juli 2026.
+              <p className="text-lg text-brand-blue-900 font-bold leading-relaxed">
+                Catatan Penting: Biaya pendaftaran dan uang pangkal bersifat non-refundable. Uang pangkal (daftar ulang) dapat dicicil maksimal 3x pembayaran, dengan <strong>syarat pembayaran pertama minimal 50%</strong>, dan wajib dilunasi sebelum Juli 2026.
               </p>
             </div>
           </motion.div>

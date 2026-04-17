@@ -11,6 +11,8 @@ import {
   CheckCircle,
   User,
   Hash,
+  FileSpreadsheet,
+  FileText,
   AlertCircle,
   BookOpen,
   MessageSquare,
@@ -152,7 +154,7 @@ const PEWAWANCARA_CAWALSAN_LIST_PUTRA = ["Abah", "Teguh", "Maulidin Bachtiar", "
 
 const PENGUJI_QURAN_LIST_PUTRI = ["Andi Fatimah Azzahra Rahman", "Testing"];
 const PEWAWANCARA_CALSAN_LIST_PUTRI = ["Halimah Fauziah", "Rima Maryani Putri Utami", "Testing"];
-const PEWAWANCARA_CAWALSAN_LIST_PUTRI = ["Abah", "Teguh", "Maulidin Bachtiar", "Muhammad Adib Achsan", "Testing"];
+const PEWAWANCARA_CAWALSAN_LIST_PUTRI = ["Abah", "Teguh", "Maulidin Bachtiar", "Muhammad Adib Achsan", "Testing"]; // Sama dengan Putra
 
 const JENJANG_OPTIONS = ["MTs Putra", "MTs Putri", "IL Putra", "IL Putri", "SMA Putra", "SMA Putri"];
 
@@ -164,11 +166,13 @@ const SUMBER_INFO_OPTIONS = ["Searching umum", "IG", "FB", "YouTube", "TikTok", 
 // MAIN COMPONENT
 // ============================================================================
 
+// Map session role to which form types are visible
 const ROLE_TO_FORM_TYPES: Record<string, string[]> = {
   penguji: ['quran'],
   penguji_calsan: ['quran'],
   pewawancara_calsan: ['wawancara'],
   pewawancara_cawalsan: ['ortu'],
+  // Admin roles see all forms
   admin: ['quran', 'wawancara', 'ortu'],
   admin_super: ['quran', 'wawancara', 'ortu'],
   head_of_it: ['quran', 'wawancara', 'ortu'],
@@ -199,10 +203,12 @@ function InputNilaiContent() {
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
   const [activeRole, setActiveRole] = useState<string>("");
 
+  // Form states for each type
   const [quranForm, setQuranForm] = useState<any>({});
   const [calsanForm, setCalsanForm] = useState<any>({});
   const [cawalsanForm, setCawalsanForm] = useState<any>({});
 
+  // Determine which form types are visible based on the active session role
   const visibleFormTypes = ROLE_TO_FORM_TYPES[activeRole] || ['quran', 'wawancara', 'ortu'];
 
   const toTitleCase = (str: string) => {
@@ -236,6 +242,7 @@ function InputNilaiContent() {
   };
 
   useEffect(() => {
+    // Fetch session to get active role
     fetch("/api/auth/session")
       .then((res) => res.json())
       .then((data) => {
@@ -250,6 +257,7 @@ function InputNilaiContent() {
   const fetchPeserta = async (showLoading = true) => {
     try {
       if (showLoading) setLoading(true);
+      // Use no-store and timestamp to prevent caching issues after saving
       const response = await fetch(`/api/penguji/peserta?t=${Date.now()}`, {
         cache: 'no-store'
       });
@@ -266,6 +274,7 @@ function InputNilaiContent() {
 
   const startEditing = (p: Peserta, type: "quran" | "wawancara" | "ortu") => {
     setEditingId(p.id + type);
+    // Pre-fill forms from existing data
     setQuranForm(p.detail_quran || {});
     setCalsanForm(p.detail_wawancara || {});
     setCawalsanForm(p.detail_cawalsan || {});
@@ -314,7 +323,9 @@ function InputNilaiContent() {
       }
 
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 30000);
+      const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 seconds timeout
+
+      console.log("[saveForm] Sending PATCH to /api/penguji/nilai/" + p.id, body);
 
       const res = await fetch(`/api/penguji/nilai/${p.id}`, {
         method: "PATCH",
@@ -325,18 +336,21 @@ function InputNilaiContent() {
 
       clearTimeout(timeoutId);
 
+      console.log("[saveForm] Response status:", res.status);
+
       if (res.ok) {
-        setSaving(null);
-        setEditingId(null);
+        setSaving(null); // Clear saving state BEFORE showing popup
+        setEditingId(null); // Clear all editing state
 
         await Swal.fire({
           icon: 'success',
           title: 'Berhasil!',
-          text: 'Penilaian berhasil disimpan.',
+          text: 'Data penilaian berhasil disimpan.',
           timer: 1500,
           showConfirmButton: false
         });
 
+        // Silently refresh data without showing full-page loading spinner
         try {
           await fetchPeserta(false);
         } catch (e) {
@@ -348,7 +362,9 @@ function InputNilaiContent() {
         try {
           const err = await res.json();
           errMsg = err.error || errMsg;
-        } catch (e) {}
+        } catch (e) {
+          console.error("[saveForm] Error parsing error response:", e);
+        }
         await Swal.fire({
           icon: 'error',
           title: 'Gagal Menyimpan',
@@ -381,6 +397,9 @@ function InputNilaiContent() {
       (p.nomor_pendaftaran || "").toLowerCase().includes(search.toLowerCase())
   );
 
+  // ============================================================================
+  // RENDER: Tes Al-Qur'an Form
+  // ============================================================================
   const renderQuranForm = (p: Peserta) => {
     const isSaved = !!(p.detail_quran?.rekomendasi || p.nilai_tes_quran != null || p.score_quran != null);
     const isEditing = editingId === p.id + "quran";
@@ -481,7 +500,7 @@ function InputNilaiContent() {
             ) : (
               <div className="flex items-center gap-3 text-emerald-700/50 py-2">
                 <AlertCircle className="w-4 h-4 sm:w-5 sm:h-5" />
-                <span className="text-[10px] sm:text-xs font-black uppercase tracking-widest italic">Belum dinilai</span>
+                <span className="text-[10px] sm:text-xs font-black uppercase tracking-widest italic">Peserta belum dinilai</span>
               </div>
             )}
             
@@ -581,7 +600,7 @@ function InputNilaiContent() {
                 <div className="flex items-center gap-3 sm:gap-4">
                   <CheckCircle className="w-6 h-6 sm:w-7 sm:h-7 text-brand-blue-600 shrink-0" />
                   <div>
-                    <p className="text-brand-blue-950 font-black text-sm leading-none">Wawancara santri sudah tersimpan.</p>
+                    <p className="text-brand-blue-950 font-black text-sm leading-none">Hasil wawancara santri sudah tersimpan.</p>
                     <p className="text-brand-blue-700/70 text-[10px] sm:text-xs font-black mt-2 uppercase tracking-widest">Rekomendasi: {p.detail_wawancara?.rekomendasi?.split('.')[0] || 'Tersimpan'}</p>
                   </div>
                 </div>
@@ -595,7 +614,7 @@ function InputNilaiContent() {
             ) : (
               <div className="flex items-center gap-3 text-brand-blue-700/50 py-2">
                 <AlertCircle className="w-4 h-4 sm:w-5 sm:h-5" />
-                <span className="text-[10px] sm:text-xs font-black uppercase tracking-widest italic">Belum dinilai</span>
+                <span className="text-[10px] sm:text-xs font-black uppercase tracking-widest italic">Belum ada data wawancara santri</span>
               </div>
             )}
 
@@ -614,6 +633,9 @@ function InputNilaiContent() {
     );
   };
 
+  // ============================================================================
+  // RENDER: Wawancara Cawalsan Form
+  // ============================================================================
   const renderCawalsanForm = (p: Peserta) => {
     const isSaved = !!(p.detail_cawalsan?.rekomendasi || p.nilai_wawancara_ortu != null);
     const isEditing = editingId === p.id + "ortu";
@@ -634,6 +656,7 @@ function InputNilaiContent() {
 
         {isEditing ? (
           <div className="space-y-5 sm:space-y-6">
+            {/* Dasar Informasi */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 bg-white rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-brand-yellow-100 shadow-xs">
               <div>
                 <label className="block text-[10px] sm:text-xs font-black text-ink-800 uppercase tracking-widest mb-2 sm:mb-3">Nama Audiens/Orangtua *</label>
@@ -645,6 +668,7 @@ function InputNilaiContent() {
               </div>
             </div>
 
+            {/* Kategori & Sumber */}
             <div className="bg-white rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-brand-yellow-100 shadow-xs space-y-5 sm:space-y-6">
               <div>
                 <label className="block text-[10px] sm:text-xs font-black text-ink-800 uppercase tracking-widest mb-3 sm:mb-4">Kategori Calon Santri *</label>
@@ -667,6 +691,7 @@ function InputNilaiContent() {
               </div>
             </div>
 
+            {/* 12 Pertanyaan */}
             <div className="space-y-3 sm:space-y-4">
               {CAWALSAN_QUESTIONS.map((q) => (
                 <div key={q.key} className="bg-white rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-brand-yellow-100 shadow-xs">
@@ -683,10 +708,11 @@ function InputNilaiContent() {
               ))}
             </div>
 
+            {/* Karakter & SPP & Rekomendasi */}
             <div className="bg-white rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-brand-yellow-100 shadow-xs space-y-5 sm:space-y-6">
               <div>
                 <label className="block text-[10px] sm:text-xs font-black text-ink-800 uppercase tracking-widest mb-2 sm:mb-3">Karakter Santri (Positif & Negatif) *</label>
-                <textarea value={cawalsanForm.karakter || ""} onChange={(e) => setCawalsanForm({ ...cawalsanForm, karakter: e.target.value })} rows={3} className="w-full px-4 sm:px-5 py-3.5 sm:py-4 bg-ink-50/30 border-2 border-ink-100 rounded-xl sm:rounded-2xl focus:border-brand-yellow-500 outline-none font-black text-brand-blue-950 transition-all resize-none placeholder:text-ink-400" placeholder="Deskripsikan karakter santri..." />
+                <textarea value={cawalsanForm.karakter || ""} onChange={(e) => setCawalsanForm({ ...cawalsanForm, karakter: e.target.value })} rows={3} className="w-full px-4 sm:px-5 py-3.5 sm:py-4 bg-ink-50/30 border-2 border-ink-100 rounded-xl sm:rounded-2xl focus:border-brand-yellow-500 outline-none font-black text-brand-blue-950 transition-all resize-none placeholder:text-ink-400" placeholder="Deskripsikan karakter santri yang menonjol..." />
               </div>
 
               <div>
@@ -723,7 +749,7 @@ function InputNilaiContent() {
 
               <div>
                 <label className="block text-[10px] sm:text-xs font-black text-ink-800 uppercase tracking-widest mb-2 sm:mb-3">Catatan Tambahan (opsional)</label>
-                <textarea value={cawalsanForm.catatan || ""} onChange={(e) => setCawalsanForm({ ...cawalsanForm, catatan: e.target.value })} rows={3} className="w-full px-4 sm:px-5 py-3.5 sm:py-4 bg-ink-50/30 border-2 border-ink-100 rounded-xl sm:rounded-2xl focus:border-brand-yellow-500 outline-none font-black text-brand-blue-950 transition-all resize-none placeholder:text-ink-400" placeholder="Catatan tambahan..." />
+                <textarea value={cawalsanForm.catatan || ""} onChange={(e) => setCawalsanForm({ ...cawalsanForm, catatan: e.target.value })} rows={3} className="w-full px-4 sm:px-5 py-3.5 sm:py-4 bg-ink-50/30 border-2 border-ink-100 rounded-xl sm:rounded-2xl focus:border-brand-yellow-500 outline-none font-black text-brand-blue-950 transition-all resize-none placeholder:text-ink-400" placeholder="Catatan tambahan pewawancara..." />
               </div>
             </div>
 
@@ -755,7 +781,7 @@ function InputNilaiContent() {
             ) : (
               <div className="flex items-center gap-3 text-brand-yellow-700/50 py-2">
                 <AlertCircle className="w-4 h-4 sm:w-5 sm:h-5" />
-                <span className="text-[10px] sm:text-xs font-black uppercase tracking-widest italic font-medium">Belum dinilai</span>
+                <span className="text-[10px] sm:text-xs font-black uppercase tracking-widest italic font-medium">Belum ada data wawancara wali santri</span>
               </div>
             )}
 
@@ -774,6 +800,9 @@ function InputNilaiContent() {
     );
   };
 
+  // ============================================================================
+  // RENDER: Main Page
+  // ============================================================================
   return (
     <div className="max-w-4xl mx-auto space-y-6 sm:space-y-8 pb-32">
       {/* Header */}
@@ -798,6 +827,15 @@ function InputNilaiContent() {
         </div>
       </div>
 
+      {/* Message */}
+      {message && (
+        <div className={`mb-4 p-4 rounded-xl flex items-center gap-2 text-sm font-semibold ${message.type === "success" ? "bg-green-50 text-green-700 border border-green-200" : "bg-red-50 text-red-700 border border-red-200"}`}>
+          {message.type === "success" ? <CheckCircle className="w-4 h-4" /> : <AlertCircle className="w-4 h-4" />}
+          {message.text}
+        </div>
+      )}
+
+      {/* Loading */}
       {loading ? (
         <div className="flex flex-col items-center justify-center py-24 bg-white rounded-4xl border border-brand-yellow-100 shadow-sm app-card">
           <Loader2 className="w-12 h-12 animate-spin text-brand-blue-600 mb-4" />
@@ -813,6 +851,7 @@ function InputNilaiContent() {
         <div className="space-y-8">
           {filteredPeserta.map((p) => (
             <div key={p.id} className="bg-white rounded-3xl sm:rounded-4xl p-5 sm:p-10 border border-brand-yellow-100 shadow-sm shadow-brand-blue-900/5 app-card">
+              {/* Peserta Header */}
               <div className="flex items-center gap-4 sm:gap-6 mb-6 sm:mb-8 pb-6 sm:pb-8 border-b border-ink-100/50">
                 <div className="w-14 h-14 sm:w-20 sm:h-20 bg-ink-50 rounded-2xl sm:rounded-3xl flex items-center justify-center border border-ink-100 shrink-0 shadow-inner">
                   <User className="w-7 h-7 sm:w-10 sm:h-10 text-brand-blue-300" />
@@ -830,6 +869,7 @@ function InputNilaiContent() {
                 </div>
               </div>
 
+              {/* Forms based on roles AND active session role */}
               <div className="space-y-4">
                 {p.roles.includes("quran") && visibleFormTypes.includes("quran") && renderQuranForm(p)}
                 {p.roles.includes("wawancara") && visibleFormTypes.includes("wawancara") && renderCalsanForm(p)}
