@@ -122,8 +122,8 @@ export default function UserManagementPage() {
         } catch (err) { setMessage({ type: "error", text: "An error occurred" }); }
     };
 
-    const filteredUsers = users.filter(u => 
-        u.full_name?.toLowerCase().includes(search.toLowerCase()) || 
+    const filteredUsers = users.filter(u =>
+        u.full_name?.toLowerCase().includes(search.toLowerCase()) ||
         u.email?.toLowerCase().includes(search.toLowerCase())
     );
 
@@ -182,11 +182,11 @@ export default function UserManagementPage() {
                                     <tr key={user.id} className="hover:bg-brand-yellow-50/30 transition-colors group">
                                         <td className="p-8">
                                             <div className="flex items-center gap-5">
-                                               <div className="w-12 h-12 rounded-2xl bg-brand-blue-100 flex items-center justify-center text-brand-blue-700 font-black text-xs border-2 border-white shadow-sm">{user.full_name.charAt(0)}</div>
-                                               <div>
-                                                  <p className="font-black text-ink-950 text-base leading-tight mb-1">{user.full_name}</p>
-                                                  <div className="flex items-center gap-2 text-xs text-ink-400 font-bold"><Mail className="w-3" /> {user.email}</div>
-                                               </div>
+                                                <div className="w-12 h-12 rounded-2xl bg-brand-blue-100 flex items-center justify-center text-brand-blue-700 font-black text-xs border-2 border-white shadow-sm">{user.full_name.charAt(0)}</div>
+                                                <div>
+                                                    <p className="font-black text-ink-950 text-base leading-tight mb-1">{user.full_name}</p>
+                                                    <div className="flex items-center gap-2 text-xs text-ink-400 font-bold"><Mail className="w-3" /> {user.email}</div>
+                                                </div>
                                             </div>
                                         </td>
                                         <td className="p-8 text-center">
@@ -220,8 +220,8 @@ export default function UserManagementPage() {
                     <div className="bg-white rounded-[3rem] shadow-2xl w-full max-w-2xl overflow-hidden animate-in zoom-in duration-300 border border-white/20">
                         <div className="p-12 border-b flex justify-between items-center bg-stone-50/50">
                             <div>
-                               <h3 className="text-3xl font-black text-ink-950 font-display italic tracking-tight uppercase leading-none mb-1">{isEditing ? "Configure" : "Initialize"} Account</h3>
-                               <p className="text-ink-400 font-bold text-sm tracking-wide">Pengaturan aksesibilitas user dashboard.</p>
+                                <h3 className="text-3xl font-black text-ink-950 font-display italic tracking-tight uppercase leading-none mb-1">{isEditing ? "Configure" : "Initialize"} Account</h3>
+                                <p className="text-ink-400 font-bold text-sm tracking-wide">Pengaturan aksesibilitas user dashboard.</p>
                             </div>
                             <button onClick={() => setIsModalOpen(false)} className="text-stone-300 hover:text-rose-600 transition-colors p-2 bg-stone-100 rounded-full hover:bg-rose-50"><XCircle className="w-10 h-10" /></button>
                         </div>
@@ -244,13 +244,13 @@ export default function UserManagementPage() {
                                 <div>
                                     <label className="block text-[10px] font-black uppercase text-ink-300 mb-3 tracking-widest">Access Key (Password)</label>
                                     <div className="relative">
-                                        <input 
-                                            required={!isEditing} 
-                                            type={showPassword ? "text" : "password"} 
-                                            value={formData.password} 
-                                            onChange={e => setFormData({ ...formData, password: e.target.value })} 
-                                            className="w-full px-8 py-5 pr-16 bg-stone-100/50 border-2 border-transparent focus:border-brand-blue-600 focus:bg-white focus:outline-none font-bold rounded-2xl transition-all" 
-                                            placeholder="••••••••" 
+                                        <input
+                                            required={!isEditing}
+                                            type={showPassword ? "text" : "password"}
+                                            value={formData.password}
+                                            onChange={e => setFormData({ ...formData, password: e.target.value })}
+                                            className="w-full px-8 py-5 pr-16 bg-stone-100/50 border-2 border-transparent focus:border-brand-blue-600 focus:bg-white focus:outline-none font-bold rounded-2xl transition-all"
+                                            placeholder="••••••••"
                                         />
                                         <button
                                             type="button"

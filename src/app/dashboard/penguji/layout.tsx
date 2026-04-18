@@ -53,7 +53,7 @@ export default function PengujiDashboardLayout({
         setPengujiName(name);
         setUserId(sessionData.session?.id || "");
         setUserRole(sessionData.session?.role || "");
-        
+
         // Debug: log available roles
         const roles = sessionData.availableRoles || [];
         console.log("[Penguji Layout] Available roles:", roles);
@@ -121,11 +121,10 @@ export default function PengujiDashboardLayout({
           key={item.name}
           href={item.href}
           onClick={() => setSidebarOpen(false)}
-          className={`group flex items-center px-4 py-3 text-sm font-bold rounded-xl transition-all duration-200 ${
-            item.active
+          className={`group flex items-center px-4 py-3 text-sm font-bold rounded-xl transition-all duration-200 ${item.active
               ? "bg-brand-blue-600 text-white shadow-lg shadow-brand-blue-200"
               : "text-ink-600 hover:bg-brand-blue-50 hover:text-brand-blue-700"
-          }`}
+            }`}
         >
           <item.icon className={`w-5 h-5 mr-3 shrink-0 transition-colors ${item.active ? 'text-white' : 'text-ink-400 group-hover:text-brand-blue-600'}`} />
           <span className="flex-1 truncate tracking-tight">{item.name}</span>
@@ -157,9 +156,9 @@ export default function PengujiDashboardLayout({
     <>
       <IdleTimeoutTracker />
       <div className="min-h-screen bg-surface-50 font-sans selection:bg-brand-blue-100 selection:text-brand-blue-900">
-        
+
         {/* Mobile Header - branding only, NO hamburger */}
-        <header 
+        <header
           data-ui-version="2"
           className="lg:hidden sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-surface-200 px-5 py-4 flex items-center justify-center"
         >
@@ -196,7 +195,7 @@ export default function PengujiDashboardLayout({
                   </div>
                   <div className="relative z-10 flex items-center gap-3 mb-3">
                     <div className="w-10 h-10 rounded-full bg-white shadow-premium-sm flex items-center justify-center border border-surface-100 font-black text-brand-blue-700">
-                       {pengujiName.charAt(0)}
+                      {pengujiName.charAt(0)}
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="font-black text-ink-950 text-sm truncate">{pengujiName}</p>
@@ -324,34 +323,34 @@ export default function PengujiDashboardLayout({
           <div className="flex-1 flex flex-col min-w-0 lg:ml-72 min-h-screen">
             {/* Topbar Desktop */}
             <header className="hidden lg:flex items-center justify-between h-24 px-10 sticky top-0 bg-surface-50/80 backdrop-blur-md z-30 shrink-0">
-               <div className="flex-1 max-w-xl">
-                  <div className="relative group">
-                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-ink-300 group-focus-within:text-brand-blue-600 transition-colors" />
-                    <input 
-                      type="text" 
-                      placeholder="Cari data pendaftar..." 
-                      className="w-full bg-white border border-surface-200 focus:border-brand-blue-300 focus:ring-4 focus:ring-brand-blue-500/5 rounded-[1.25rem] py-3 pl-11 pr-4 text-sm font-medium outline-none transition-all shadow-premium-sm"
-                    />
-                  </div>
-               </div>
+              <div className="flex-1 max-w-xl">
+                <div className="relative group">
+                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-ink-300 group-focus-within:text-brand-blue-600 transition-colors" />
+                  <input
+                    type="text"
+                    placeholder="Cari data pendaftar..."
+                    className="w-full bg-white border border-surface-200 focus:border-brand-blue-300 focus:ring-4 focus:ring-brand-blue-500/5 rounded-[1.25rem] py-3 pl-11 pr-4 text-sm font-medium outline-none transition-all shadow-premium-sm"
+                  />
+                </div>
+              </div>
 
-               <div className="flex items-center gap-6">
-                  <div className="flex items-center gap-4">
-                    <Link href="/" target="_blank" className="p-3 text-ink-400 hover:text-brand-blue-600 bg-white hover:bg-brand-blue-50 border border-surface-100 rounded-full transition-all shadow-premium-sm">
-                      <ExternalLink className="w-5 h-5" />
-                    </Link>
-                    <div className="w-px h-6 bg-surface-200" />
-                    <div className="flex items-center gap-3">
-                       <div className="text-right hidden xl:block">
-                          <p className="text-sm font-black text-ink-950 leading-none">{pengujiName}</p>
-                          <p className="text-[10px] font-bold text-brand-blue-600 uppercase tracking-widest mt-1">Penguji Penilai</p>
-                       </div>
-                       <div className="w-12 h-12 rounded-2xl bg-linear-to-br from-brand-blue-50 to-brand-blue-100 flex items-center justify-center border border-brand-blue-200 shadow-premium-sm text-brand-blue-700 font-black">
-                          {pengujiName.charAt(0)}
-                       </div>
+              <div className="flex items-center gap-6">
+                <div className="flex items-center gap-4">
+                  <Link href="/" target="_blank" className="p-3 text-ink-400 hover:text-brand-blue-600 bg-white hover:bg-brand-blue-50 border border-surface-100 rounded-full transition-all shadow-premium-sm">
+                    <ExternalLink className="w-5 h-5" />
+                  </Link>
+                  <div className="w-px h-6 bg-surface-200" />
+                  <div className="flex items-center gap-3">
+                    <div className="text-right hidden xl:block">
+                      <p className="text-sm font-black text-ink-950 leading-none">{pengujiName}</p>
+                      <p className="text-[10px] font-bold text-brand-blue-600 uppercase tracking-widest mt-1">Penguji Penilai</p>
+                    </div>
+                    <div className="w-12 h-12 rounded-2xl bg-linear-to-br from-brand-blue-50 to-brand-blue-100 flex items-center justify-center border border-brand-blue-200 shadow-premium-sm text-brand-blue-700 font-black">
+                      {pengujiName.charAt(0)}
                     </div>
                   </div>
-               </div>
+                </div>
+              </div>
             </header>
 
             {/* Content Area */}
@@ -373,20 +372,20 @@ export default function PengujiDashboardLayout({
 
             {/* Mobile Bottom Navigation */}
             <footer className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-surface-200 px-2 py-3 z-40 flex items-center justify-around shadow-[0_-10px_40px_-5px_rgba(0,0,0,0.05)] rounded-t-[2rem]">
-               {menuItems.map((item) => (
-                  <Link key={item.name} href={item.href} className="flex flex-col items-center gap-1 group py-1 min-w-[70px]">
-                     <div className={`p-2 rounded-2xl transition-all ${item.active ? 'bg-brand-blue-600 text-white shadow-lg shadow-brand-blue-200' : 'text-ink-400 group-hover:bg-brand-blue-50'}`}>
-                        <item.icon className="w-5 h-5" />
-                     </div>
-                     <span className={`text-[9px] font-black uppercase tracking-widest ${item.active ? 'text-brand-blue-700' : 'text-ink-400'}`}>{item.name}</span>
-                  </Link>
-               ))}
-               <button onClick={() => setSidebarOpen(true)} className="flex flex-col items-center gap-1 group py-1 min-w-[70px]">
-                  <div className="p-2 rounded-2xl text-ink-400 group-hover:bg-brand-blue-50 transition-all">
-                    <Menu className="w-5 h-5" />
+              {menuItems.map((item) => (
+                <Link key={item.name} href={item.href} className="flex flex-col items-center gap-1 group py-1 min-w-[70px]">
+                  <div className={`p-2 rounded-2xl transition-all ${item.active ? 'bg-brand-blue-600 text-white shadow-lg shadow-brand-blue-200' : 'text-ink-400 group-hover:bg-brand-blue-50'}`}>
+                    <item.icon className="w-5 h-5" />
                   </div>
-                  <span className="text-[9px] font-black uppercase tracking-widest text-ink-400">Menu</span>
-               </button>
+                  <span className={`text-[9px] font-black uppercase tracking-widest ${item.active ? 'text-brand-blue-700' : 'text-ink-400'}`}>{item.name}</span>
+                </Link>
+              ))}
+              <button onClick={() => setSidebarOpen(true)} className="flex flex-col items-center gap-1 group py-1 min-w-[70px]">
+                <div className="p-2 rounded-2xl text-ink-400 group-hover:bg-brand-blue-50 transition-all">
+                  <Menu className="w-5 h-5" />
+                </div>
+                <span className="text-[9px] font-black uppercase tracking-widest text-ink-400">Menu</span>
+              </button>
             </footer>
           </div>
         </div>
