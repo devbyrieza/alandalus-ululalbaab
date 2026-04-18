@@ -827,7 +827,7 @@ function AdminPendaftarContent() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
           {/* Jenjang Filter */}
           <div>
-            <label className="block text-sm font-medium text-stone-700 mb-2">
+            <label className="block text-sm font-bold text-brand-blue-900 mb-2 leading-none uppercase tracking-widest text-[10px]">
               Filter Jenjang Sekolah
             </label>
             <select
@@ -846,8 +846,8 @@ function AdminPendaftarContent() {
 
           {/* Gender Filter */}
           <div>
-            <label className="block text-sm font-medium text-stone-700 mb-2">
-              Filter Jenis Kelamin
+            <label className="block text-sm font-bold border-b-2 border-brand-yellow-400 text-brand-blue-900 mb-2 leading-none uppercase tracking-widest text-[10px]">
+              Filter Jenis Kelamin (BARU)
             </label>
             <select
               value={genderFilter}
@@ -865,7 +865,7 @@ function AdminPendaftarContent() {
 
           {/* Tahun Ajaran Filter */}
           <div>
-            <label className="block text-sm font-medium text-stone-700 mb-2">
+            <label className="block text-sm font-bold text-brand-blue-900 mb-2 leading-none uppercase tracking-widest text-[10px]">
               Filter Tahun Ajaran
             </label>
             <select
