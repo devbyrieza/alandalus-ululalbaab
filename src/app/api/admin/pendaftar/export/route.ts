@@ -35,6 +35,7 @@ export async function GET(req: NextRequest) {
     const kabupaten = searchParams.get("kabupaten") || "";
     const kecamatan = searchParams.get("kecamatan") || "";
     const kelurahan = searchParams.get("kelurahan") || "";
+    const jenisKelamin = searchParams.get("jenis_kelamin") || "";
 
     // Build query - fetch ALL records (no pagination for export)
     const where: Prisma.PendaftarWhereInput = {};
@@ -55,6 +56,7 @@ export async function GET(req: NextRequest) {
     if (kabupaten) where.kabupaten = kabupaten;
     if (kecamatan) where.kecamatan = kecamatan;
     if (kelurahan) where.kelurahan = kelurahan;
+    if (jenisKelamin) where.jenis_kelamin = jenisKelamin;
 
     const pendaftarData = await prisma.pendaftar.findMany({
       where,

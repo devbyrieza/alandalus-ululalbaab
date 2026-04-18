@@ -38,6 +38,7 @@ export async function GET(request: NextRequest) {
     const kabupaten = searchParams.get("kabupaten") || "";
     const kecamatan = searchParams.get("kecamatan") || "";
     const kelurahan = searchParams.get("kelurahan") || "";
+    const jenisKelamin = searchParams.get("jenis_kelamin") || "";
 
     const skip = (page - 1) * limit;
 
@@ -92,6 +93,7 @@ export async function GET(request: NextRequest) {
     if (kabupaten) where.kabupaten = kabupaten;
     if (kecamatan) where.kecamatan = kecamatan;
     if (kelurahan) where.kelurahan = kelurahan;
+    if (jenisKelamin) where.jenis_kelamin = jenisKelamin;
 
     // Execute query with transaction for count and data
     const [total, data] = await prisma.$transaction([

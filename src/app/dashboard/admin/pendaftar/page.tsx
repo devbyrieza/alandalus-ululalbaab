@@ -151,6 +151,7 @@ function AdminPendaftarContent() {
   */
 
   const [jenjangFilter, setJenjangFilter] = useState("");
+  const [genderFilter, setGenderFilter] = useState("");
   const [tahunAjaranFilter, setTahunAjaranFilter] = useState("");
   const [tahunAjaranList, setTahunAjaranList] = useState<TahunAjaran[]>([]);
   // Location filters
@@ -315,6 +316,7 @@ function AdminPendaftarContent() {
       if (search) params.append("search", search);
       if (statusFilter) params.append("status", statusFilter);
       if (jenjangFilter) params.append("jenjang", jenjangFilter);
+      if (genderFilter) params.append("jenis_kelamin", genderFilter);
       if (tahunAjaranFilter) params.append("tahun_ajaran", tahunAjaranFilter);
       if (provinsiFilter) params.append("provinsi", provinsiFilter);
       if (kabupatenFilter) params.append("kabupaten", kabupatenFilter);
@@ -341,6 +343,7 @@ function AdminPendaftarContent() {
     search,
     statusFilter,
     jenjangFilter,
+    genderFilter,
     tahunAjaranFilter,
     provinsiFilter,
     kabupatenFilter,
@@ -559,6 +562,7 @@ function AdminPendaftarContent() {
       if (search) params.append("search", search);
       if (statusFilter) params.append("status", statusFilter);
       if (jenjangFilter) params.append("jenjang", jenjangFilter);
+      if (genderFilter) params.append("jenis_kelamin", genderFilter);
       if (tahunAjaranFilter) params.append("tahun_ajaran", tahunAjaranFilter);
 
       const response = await fetch(`/api/admin/pendaftar/export?${params}`);
@@ -840,6 +844,25 @@ function AdminPendaftarContent() {
             </select>
           </div>
 
+          {/* Gender Filter */}
+          <div>
+            <label className="block text-sm font-medium text-stone-700 mb-2">
+              Filter Jenis Kelamin
+            </label>
+            <select
+              value={genderFilter}
+              onChange={(e) => {
+                setGenderFilter(e.target.value);
+                setPagination((prev) => ({ ...prev, page: 1 }));
+              }}
+              className="w-full px-4 py-2 border-2 border-stone-200 rounded-lg focus:border-blue-500 focus:outline-none"
+            >
+              <option value="">Semua (L/P)</option>
+              <option value="L">Laki-laki (Putra)</option>
+              <option value="P">Perempuan (Putri)</option>
+            </select>
+          </div>
+
           {/* Tahun Ajaran Filter */}
           <div>
             <label className="block text-sm font-medium text-stone-700 mb-2">
@@ -871,6 +894,7 @@ function AdminPendaftarContent() {
                   setSearchInput("");
                   setStatusFilter("");
                   setJenjangFilter("");
+                  setGenderFilter("");
                   setTahunAjaranFilter("");
                   // Clear location filters
                   setProvinsiFilter("");
