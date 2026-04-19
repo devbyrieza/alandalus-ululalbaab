@@ -45,6 +45,8 @@ services:
 
 volumes:
   postgres_ululalbaab_prod_data:
+    external: true
+    name: f8c4ws4oc0cgwc8ok8o4g4kw_postgres-ululalbaab-prod-data
   storage_ululalbaab_data:
 
 networks:
