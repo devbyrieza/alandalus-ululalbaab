@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Cron endpoint for H-0 reminders (1 hour before exam).
  * Called every 15 minutes by external cron.
  * Finds all jadwal with exams starting within the next 60-75 minutes

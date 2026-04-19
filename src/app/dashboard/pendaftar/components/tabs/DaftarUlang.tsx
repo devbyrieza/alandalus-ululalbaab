@@ -155,8 +155,8 @@ export default function DaftarUlangTab() {
             <AlertCircle className="w-4 h-4" /> Info Pembayaran
           </h3>
           <ul className="text-sm text-brand-blue-700 space-y-1 list-disc list-inside font-medium">
-            <li>Transfer ke Rekening <strong>BSI 7253701263</strong></li>
-            <li>a.n <strong>Al Andalus Ulul Albaab 1</strong></li>
+            <li>Transfer ke Rekening <strong>BSI 7171717171</strong></li>
+            <li>a.n <strong>PP Al-Andalus Ulul Albaab</strong></li>
             <li>Wajib bayar cicilan pertama min. <strong>Rp 4.900.000 (50%)</strong></li>
             <li>Pelunasan maksimal bulan <strong>Juli 2026</strong> (3x Cicilan)</li>
           </ul>

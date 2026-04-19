@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Cron endpoint for 4-hour reminders.
  * Called every 15 minutes by external cron.
  * Finds all jadwal with exams starting in exactly 4 hours and sends reminders immediately.

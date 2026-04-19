@@ -1,4 +1,4 @@
-﻿import type { KesiapanSection } from './types';
+import type { KesiapanSection } from './types';
 
 export const KESIAPAN_QUESTIONS: KesiapanSection[] = [
     {

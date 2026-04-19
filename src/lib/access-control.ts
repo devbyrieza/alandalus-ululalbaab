@@ -1,4 +1,4 @@
-﻿// Status yang valid sesuai database constraint
+// Status yang valid sesuai database constraint
 export type StatusProses =
   | 'draft'
   | 'payment_verification'

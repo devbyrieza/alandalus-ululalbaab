@@ -77,8 +77,8 @@ interface PaymentStatusResponse {
 
 const BANK_INFO = {
   nama_bank: "BSI (Bank Syariah Indonesia)",
-  nomor_rekening: "7253701263",
-  atas_nama: "Al Andalus Ulul Albaab 1",
+  nomor_rekening: "4222224441",
+  atas_nama: "PP Al-Andalus Ulul Albaab",
   kode_bank: "451",
 };
 

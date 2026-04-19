@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Wablas WhatsApp API Service
  * 
  * This service handles all WhatsApp notifications via Wablas API

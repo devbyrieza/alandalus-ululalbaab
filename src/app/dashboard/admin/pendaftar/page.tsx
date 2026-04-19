@@ -32,6 +32,7 @@ import {
 import Link from "next/link";
 import { UserRole } from "@/lib/access-control";
 import { exportToExcel, exportToPDF } from "@/lib/utils/export";
+import Swal from "sweetalert2";
 
 // Filter labels for dashboard categories
 const FILTER_LABELS: Record<string, string> = {
@@ -151,7 +152,6 @@ function AdminPendaftarContent() {
   */
 
   const [jenjangFilter, setJenjangFilter] = useState("");
-  const [genderFilter, setGenderFilter] = useState("");
   const [tahunAjaranFilter, setTahunAjaranFilter] = useState("");
   const [tahunAjaranList, setTahunAjaranList] = useState<TahunAjaran[]>([]);
   // Location filters
@@ -237,7 +237,7 @@ function AdminPendaftarContent() {
   const handleSoftDelete = async () => {
     if (!deletingPendaftar) return;
     if (deleteConfirmName !== deletingPendaftar.nama_lengkap) {
-      alert("Nama tidak cocok. Silakan ketik nama lengkap pendaftar dengan benar.");
+      Swal.fire("Gagal!", "Nama tidak cocok. Silakan ketik nama lengkap pendaftar dengan benar.", "error");
       return;
     }
 
@@ -253,7 +253,7 @@ function AdminPendaftarContent() {
         throw new Error(result.error || "Gagal menghapus data");
       }
 
-      alert(result.message || "Data berhasil dihapus");
+      Swal.fire("Selesai!", result.message || "Data berhasil dihapus", "success");
       setIsDeleteModalOpen(false);
       setDeletingPendaftar(null);
       setDeleteConfirmName("");
@@ -261,7 +261,7 @@ function AdminPendaftarContent() {
       fetchPendaftar();
     } catch (error: any) {
       console.error("Error soft deleting:", error);
-      alert(error.message || "Gagal menghapus data");
+      Swal.fire("Error!", error.message || "Gagal menghapus data", "error");
     } finally {
       setIsDeleting(false);
     }
@@ -287,12 +287,12 @@ function AdminPendaftarContent() {
         throw new Error(err.error || "Gagal menyimpan pengumuman");
       }
 
-      alert("Berhasil menyimpan hasil seleksi!");
+      Swal.fire("Tersimpan!", "Berhasil menyimpan hasil seleksi!", "success");
       setIsAnnouncementModalOpen(false);
       fetchPendaftar(); // Refresh list
     } catch (error: any) {
       console.error("Error submitting announcement:", error);
-      alert(error.message);
+      Swal.fire("Error!", error.message, "error");
     } finally {
       setIsSubmittingAnnouncement(false);
     }
@@ -316,7 +316,6 @@ function AdminPendaftarContent() {
       if (search) params.append("search", search);
       if (statusFilter) params.append("status", statusFilter);
       if (jenjangFilter) params.append("jenjang", jenjangFilter);
-      if (genderFilter) params.append("jenis_kelamin", genderFilter);
       if (tahunAjaranFilter) params.append("tahun_ajaran", tahunAjaranFilter);
       if (provinsiFilter) params.append("provinsi", provinsiFilter);
       if (kabupatenFilter) params.append("kabupaten", kabupatenFilter);
@@ -343,7 +342,6 @@ function AdminPendaftarContent() {
     search,
     statusFilter,
     jenjangFilter,
-    genderFilter,
     tahunAjaranFilter,
     provinsiFilter,
     kabupatenFilter,
@@ -525,7 +523,7 @@ function AdminPendaftarContent() {
 
   const handleBulkUpdate = async () => {
     if (!bulkStatus || selectedIds.length === 0) {
-      alert("Pilih status dan minimal 1 pendaftar");
+      Swal.fire("Perhatian", "Pilih status dan minimal 1 pendaftar", "warning");
       return;
     }
 
@@ -543,13 +541,13 @@ function AdminPendaftarContent() {
 
       if (!response.ok) throw new Error("Failed to update");
 
-      alert("Berhasil update status!");
+      Swal.fire("Sukses", "Berhasil update status!", "success");
       setSelectedIds([]);
       setBulkStatus("");
       fetchPendaftar();
     } catch (error) {
       console.error("Error bulk updating:", error);
-      alert("Gagal update status");
+      Swal.fire("Gagal", "Gagal update status", "error");
     } finally {
       setBulkUpdating(false);
     }
@@ -562,7 +560,6 @@ function AdminPendaftarContent() {
       if (search) params.append("search", search);
       if (statusFilter) params.append("status", statusFilter);
       if (jenjangFilter) params.append("jenjang", jenjangFilter);
-      if (genderFilter) params.append("jenis_kelamin", genderFilter);
       if (tahunAjaranFilter) params.append("tahun_ajaran", tahunAjaranFilter);
 
       const response = await fetch(`/api/admin/pendaftar/export?${params}`);
@@ -570,11 +567,7 @@ function AdminPendaftarContent() {
 
       const result = await response.json();
       const data = result.data;
-      let filterSuffix = "";
-      if (genderFilter) filterSuffix += `-${genderFilter === "L" ? "Putra" : "Putri"}`;
-      if (jenjangFilter) filterSuffix += `-${jenjangFilter}`;
-      
-      const filename = `data-pendaftar${filterSuffix}-${new Date().toISOString().split("T")[0]}`;
+      const filename = `data-pendaftar-${new Date().toISOString().split("T")[0]}`;
 
       if (type === "excel") {
         exportToExcel(data, filename, "Data Pendaftar");
@@ -586,7 +579,7 @@ function AdminPendaftarContent() {
       }
     } catch (error) {
       console.error("Error exporting:", error);
-      alert("Gagal export data");
+      Swal.fire("Gagal", "Gagal export data", "error");
     } finally {
       setExporting(false);
     }
@@ -831,7 +824,7 @@ function AdminPendaftarContent() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
           {/* Jenjang Filter */}
           <div>
-            <label className="block text-sm font-bold text-brand-blue-900 mb-2 leading-none uppercase tracking-widest text-[10px]">
+            <label className="block text-sm font-medium text-stone-700 mb-2">
               Filter Jenjang Sekolah
             </label>
             <select
@@ -848,28 +841,9 @@ function AdminPendaftarContent() {
             </select>
           </div>
 
-          {/* Gender Filter */}
-          <div>
-            <label className="block text-sm font-bold border-b-2 border-brand-yellow-400 text-brand-blue-900 mb-2 leading-none uppercase tracking-widest text-[10px]">
-              Filter Jenis Kelamin (BARU)
-            </label>
-            <select
-              value={genderFilter}
-              onChange={(e) => {
-                setGenderFilter(e.target.value);
-                setPagination((prev) => ({ ...prev, page: 1 }));
-              }}
-              className="w-full px-4 py-2 border-2 border-stone-200 rounded-lg focus:border-blue-500 focus:outline-none"
-            >
-              <option value="">Semua (L/P)</option>
-              <option value="L">Laki-laki (Putra)</option>
-              <option value="P">Perempuan (Putri)</option>
-            </select>
-          </div>
-
           {/* Tahun Ajaran Filter */}
           <div>
-            <label className="block text-sm font-bold text-brand-blue-900 mb-2 leading-none uppercase tracking-widest text-[10px]">
+            <label className="block text-sm font-medium text-stone-700 mb-2">
               Filter Tahun Ajaran
             </label>
             <select
@@ -898,7 +872,6 @@ function AdminPendaftarContent() {
                   setSearchInput("");
                   setStatusFilter("");
                   setJenjangFilter("");
-                  setGenderFilter("");
                   setTahunAjaranFilter("");
                   // Clear location filters
                   setProvinsiFilter("");

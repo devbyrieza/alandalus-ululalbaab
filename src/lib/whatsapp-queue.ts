@@ -1,4 +1,4 @@
-﻿/**
+/**
  * WhatsApp Queue Service — 6-Layer Anti-BAN Protection
  *
  * Layer 1: Database flag check (anti-duplicate)

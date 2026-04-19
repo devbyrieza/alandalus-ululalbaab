@@ -35,7 +35,6 @@ export async function GET(req: NextRequest) {
     const kabupaten = searchParams.get("kabupaten") || "";
     const kecamatan = searchParams.get("kecamatan") || "";
     const kelurahan = searchParams.get("kelurahan") || "";
-    const jenisKelamin = searchParams.get("jenis_kelamin") || "";
 
     // Build query - fetch ALL records (no pagination for export)
     const where: Prisma.PendaftarWhereInput = {};
@@ -56,7 +55,6 @@ export async function GET(req: NextRequest) {
     if (kabupaten) where.kabupaten = kabupaten;
     if (kecamatan) where.kecamatan = kecamatan;
     if (kelurahan) where.kelurahan = kelurahan;
-    if (jenisKelamin) where.jenis_kelamin = jenisKelamin;
 
     const pendaftarData = await prisma.pendaftar.findMany({
       where,
@@ -82,12 +80,6 @@ export async function GET(req: NextRequest) {
         created_at: true,
         tahun_ajaran: {
           select: { nama: true }
-        },
-        nilai_ujian: {
-          select: { nilai_total: true }
-        },
-        pengumuman: {
-          select: { status_kelulusan: true }
         }
       },
       orderBy: { created_at: "desc" },
@@ -113,8 +105,6 @@ export async function GET(req: NextRequest) {
       "Email",
       "Status",
       "Tahun Ajaran",
-      "Nilai Total",
-      "Hasil Seleksi",
       "Tanggal Daftar",
     ];
 
@@ -140,8 +130,6 @@ export async function GET(req: NextRequest) {
       "Email": item.email || "-",
       "Status": item.status_pendaftaran || "-",
       "Tahun Ajaran": item.tahun_ajaran?.nama || "-",
-      "Nilai Total": item.nilai_ujian?.[0]?.nilai_total || 0,
-      "Hasil Seleksi": item.pengumuman?.status_kelulusan || "-",
       "Tanggal Daftar": item.created_at
         ? new Date(item.created_at).toLocaleDateString("id-ID")
         : "-",

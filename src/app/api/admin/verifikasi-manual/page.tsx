@@ -1,4 +1,4 @@
-﻿// app/admin/verifikasi-manual/page.tsx
+// app/admin/verifikasi-manual/page.tsx
 "use client";
 
 import { useState, useEffect } from "react";
