@@ -4,19 +4,6 @@
 version: '3.8'
 
 services:
-  postgres-ulul:
-    image: postgres:15-alpine
-    container_name: pp-ululalbaab-db
-    restart: always
-    environment:
-      POSTGRES_USER: ${POSTGRES_USER:-admin_ulul}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password123}
-      POSTGRES_DB: ${POSTGRES_DB:-db_ululalbaab_prod}
-    ports:
-      - "5436:5432" # Port sesuai konfigurasi sebelumnya
-    volumes:
-      - postgres_ululalbaab_prod_data:/var/lib/postgresql/data
-
   app-ulul:
     build:
       context: .
@@ -35,12 +22,9 @@ services:
       NEXTAUTH_URL: ${NEXTAUTH_URL:-https://ppdb.alandalus-ululalbaab.com}
       NEXTAUTH_SECRET: ${NEXTAUTH_SECRET:-supersecretkeyulul123}
       FAGI_WA_KEY: ${FAGI_WA_KEY}
-    depends_on:
-      - postgres-ulul
     volumes:
       - storage_ululalbaab_data:/app/public/storage
       - storage_ululalbaab_data:/app/storage_data
 
 volumes:
-  postgres_ululalbaab_prod_data:
   storage_ululalbaab_data:
