@@ -570,7 +570,11 @@ function AdminPendaftarContent() {
 
       const result = await response.json();
       const data = result.data;
-      const filename = `data-pendaftar-${new Date().toISOString().split("T")[0]}`;
+      let filterSuffix = "";
+      if (genderFilter) filterSuffix += `-${genderFilter === "L" ? "Putra" : "Putri"}`;
+      if (jenjangFilter) filterSuffix += `-${jenjangFilter}`;
+      
+      const filename = `data-pendaftar${filterSuffix}-${new Date().toISOString().split("T")[0]}`;
 
       if (type === "excel") {
         exportToExcel(data, filename, "Data Pendaftar");

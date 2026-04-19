@@ -82,6 +82,12 @@ export async function GET(req: NextRequest) {
         created_at: true,
         tahun_ajaran: {
           select: { nama: true }
+        },
+        nilai_ujian: {
+          select: { nilai_total: true }
+        },
+        pengumuman: {
+          select: { status_kelulusan: true }
         }
       },
       orderBy: { created_at: "desc" },
@@ -107,6 +113,8 @@ export async function GET(req: NextRequest) {
       "Email",
       "Status",
       "Tahun Ajaran",
+      "Nilai Total",
+      "Hasil Seleksi",
       "Tanggal Daftar",
     ];
 
@@ -132,6 +140,8 @@ export async function GET(req: NextRequest) {
       "Email": item.email || "-",
       "Status": item.status_pendaftaran || "-",
       "Tahun Ajaran": item.tahun_ajaran?.nama || "-",
+      "Nilai Total": item.nilai_ujian?.nilai_total || 0,
+      "Hasil Seleksi": item.pengumuman?.status_kelulusan || "-",
       "Tanggal Daftar": item.created_at
         ? new Date(item.created_at).toLocaleDateString("id-ID")
         : "-",

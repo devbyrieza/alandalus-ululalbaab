@@ -22,8 +22,9 @@ export default function HeroSection() {
 
   return (
     <section className="relative min-h-[95vh] flex items-center pt-20 pb-16 md:pt-24 lg:pt-28 lg:pb-24 overflow-hidden bg-maroon-50/30">
-      {/* Sophisticated Background Elements */}
+      {/*Sophisticated Background Elements */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
+
         <div className="absolute -top-[10%] -left-[10%] w-[50%] h-[50%] bg-maroon-100/40 blur-[120px] rounded-full" />
         <div className="absolute top-[20%] -right-[10%] w-[40%] h-[50%] bg-cream-300/30 blur-[100px] rounded-full" />
         <div className="absolute bottom-[0%] left-[20%] w-[40%] h-[40%] bg-maroon-50/60 blur-[100px] rounded-full" />
