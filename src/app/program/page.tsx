@@ -40,6 +40,7 @@ const PROGRAMS = [
             "Bahasa Arab Aktif sebagai Pengantar",
             "Kurikulum Nasional (Diknas)",
             "Islamic Entrepreneurship"
+
         ],
         image: "/images/mts.webp",
         theme: "blue",
@@ -170,8 +171,8 @@ export default function ProgramPage() {
                                         ? program.theme === 'blue'
                                             ? 'bg-brand-blue-600 text-white border-brand-blue-600'
                                             : program.theme === 'teal'
-                                            ? 'bg-teal-600 text-white border-teal-600'
-                                            : 'bg-brand-yellow-500 text-white border-brand-yellow-500'
+                                                ? 'bg-teal-600 text-white border-teal-600'
+                                                : 'bg-brand-yellow-500 text-white border-brand-yellow-500'
                                         : 'bg-white text-ink-500 border-brand-blue-100 hover:border-brand-blue-300 hover:text-brand-blue-700'
                                     }`}
                             >
@@ -245,7 +246,7 @@ export default function ProgramPage() {
                                     {/* Stats Grid - Modern Design */}
                                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
                                         {program.stats.map((stat, sIdx) => (
-                                             <div key={sIdx} className={`app-card bg-white p-5 rounded-[2rem] border border-brand-blue-50 shadow-sm hover:shadow-md transition-all text-center group`}
+                                            <div key={sIdx} className={`app-card bg-white p-5 rounded-[2rem] border border-brand-blue-50 shadow-sm hover:shadow-md transition-all text-center group`}
                                             >
                                                 <div className={`w-10 h-10 rounded-xl mx-auto mb-3 flex items-center justify-center transition-transform group-hover:scale-110 border border-brand-blue-100
                                                     ${program.theme === 'blue' ? 'bg-brand-blue-50 text-brand-blue-600' : 'bg-brand-yellow-50 text-brand-yellow-700'}
@@ -300,8 +301,8 @@ export default function ProgramPage() {
                                         <Link href={`/daftar?program=${program.id}`}>
                                             <button className={`w-full sm:w-auto px-14 py-5 rounded-pill font-black text-white text-lg shadow-md transition-all hover:-translate-y-1
                                                 ${program.theme === 'blue' ? 'bg-brand-blue-700 hover:bg-brand-blue-800' :
-                                                  program.theme === 'teal' ? 'bg-teal-600 hover:bg-teal-700' :
-                                                  'bg-brand-yellow-600 hover:bg-brand-yellow-700'}
+                                                    program.theme === 'teal' ? 'bg-teal-600 hover:bg-teal-700' :
+                                                        'bg-brand-yellow-600 hover:bg-brand-yellow-700'}
                                             `}>
                                                 Daftarkan Sekarang
                                             </button>
