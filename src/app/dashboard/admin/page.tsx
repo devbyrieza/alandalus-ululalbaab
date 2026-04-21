@@ -29,8 +29,8 @@ function getPPDBCountdown() {
 }
 
 const JENJANG_LABELS: Record<string, string> = {
-  MTS: "MTs Ulul Albaab",
-  IL: "I'dad Lughowi (IL)",
+  MTS: "MTs",
+  IL: "IL",
   SMA: "SMA",
 };
 
@@ -182,7 +182,10 @@ export default function AdminDashboardPage() {
             
             {/* Mobile View: Cards */}
             <div className="md:hidden divide-y divide-brand-yellow-50">
-              {stats.stats_per_jenjang?.map((item: any, idx: number) => (
+              {[...(stats.stats_per_jenjang || [])].sort((a: any, b: any) => {
+                const order: Record<string, number> = { "MTS": 1, "IL": 2, "SMA": 3 };
+                return (order[a.jenjang] || 99) - (order[b.jenjang] || 99);
+              }).map((item: any, idx: number) => (
                 <div key={idx} className="p-6 space-y-4">
                   <div className="flex items-center gap-4">
                     <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-white font-black text-xs shrink-0 ${item.jenjang === 'MTS' ? 'bg-brand-blue-600' : (item.jenjang === 'SMA' ? 'bg-brand-blue-900' : 'bg-brand-yellow-500')}`}>
@@ -220,7 +223,10 @@ export default function AdminDashboardPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-brand-yellow-50 text-sm">
-                {stats.stats_per_jenjang?.map((item: any, idx: number) => (
+                {[...(stats.stats_per_jenjang || [])].sort((a: any, b: any) => {
+                  const order: Record<string, number> = { "MTS": 1, "IL": 2, "SMA": 3 };
+                  return (order[a.jenjang] || 99) - (order[b.jenjang] || 99);
+                }).map((item: any, idx: number) => (
                   <tr key={idx} className="hover:bg-brand-yellow-50/20 transition-colors">
                     <td className="px-6 py-6">
                       <div className="flex items-center gap-4">
