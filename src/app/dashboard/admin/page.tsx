@@ -198,13 +198,14 @@ export default function AdminDashboardPage() {
                       <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Kuota</span>
                       <span className="text-sm font-bold text-slate-600">{JENJANG_QUOTAS[item.jenjang] || "-"}</span>
                     </div>
-                    <div className="flex flex-col items-end text-right">
-                      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Calon Santri</span>
-                      <div className="flex items-center gap-2">
-                        <span className="px-2 py-1 bg-blue-50 text-blue-700 font-bold rounded-lg border border-blue-100 text-xs" title="Putra">{item.putra} L</span>
-                        <span className="px-2 py-1 bg-pink-50 text-pink-700 font-bold rounded-lg border border-pink-100 text-xs" title="Putri">{item.putri} P</span>
-                        <span className="px-3 py-1 bg-brand-yellow-100 text-brand-yellow-800 font-black rounded-lg border border-brand-yellow-200 text-sm ml-1">{item.pendaftar}</span>
-                      </div>
+                  </div>
+                  <div className="flex flex-col items-end text-right w-full mt-3 border-t border-brand-yellow-100 pt-3">
+                    <div className="flex flex-wrap items-center justify-end gap-2">
+                      <span className="px-2 py-1 bg-blue-50 text-blue-700 font-bold rounded-lg border border-blue-100 text-xs" title="Putra">L: {item.putra}</span>
+                      <span className="px-2 py-1 bg-pink-50 text-pink-700 font-bold rounded-lg border border-pink-100 text-xs" title="Putri">P: {item.putri}</span>
+                      <span className="px-2 py-1 bg-emerald-50 text-emerald-700 font-bold rounded-lg border border-emerald-100 text-xs" title="Lulus/Diterima">Lulus: {item.diterima}</span>
+                      <span className="px-2 py-1 bg-purple-50 text-purple-700 font-bold rounded-lg border border-purple-100 text-xs" title="Daftar Ulang">Ulang: {item.daftar_ulang || 0}</span>
+                      <span className="px-3 py-1 bg-brand-yellow-100 text-brand-yellow-800 font-black rounded-lg border border-brand-yellow-200 text-xs ml-1">Tot: {item.pendaftar}</span>
                     </div>
                   </div>
                 </div>
@@ -219,7 +220,9 @@ export default function AdminDashboardPage() {
                   <th className="px-6 py-5 text-center">Kuota Total</th>
                   <th className="px-6 py-5 text-center text-blue-700 bg-blue-50/50">Putra</th>
                   <th className="px-6 py-5 text-center text-pink-700 bg-pink-50/50">Putri</th>
-                  <th className="px-6 py-5 text-center text-brand-blue-800 bg-brand-yellow-50/50">Total Pendaftar</th>
+                  <th className="px-6 py-5 text-center text-brand-blue-800 bg-brand-yellow-50/50">Pendaftar</th>
+                  <th className="px-6 py-5 text-center text-emerald-700 bg-emerald-50/50">Lulus</th>
+                  <th className="px-6 py-5 text-center text-purple-700 bg-purple-50/50">Daftar Ulang</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-brand-yellow-50 text-sm">
@@ -240,8 +243,10 @@ export default function AdminDashboardPage() {
                     <td className="px-6 py-6 text-center font-black text-blue-700 bg-blue-50/20">{item.putra}</td>
                     <td className="px-6 py-6 text-center font-black text-pink-600 bg-pink-50/20">{item.putri}</td>
                     <td className="px-6 py-6 text-center bg-brand-yellow-50/20">
-                      <span className="px-4 py-2 bg-brand-yellow-100 text-brand-yellow-800 font-black rounded-xl border border-brand-yellow-200">{item.pendaftar}</span>
+                      <span className="px-4 py-1.5 bg-brand-yellow-100 text-brand-yellow-800 font-black rounded-xl border border-brand-yellow-200">{item.pendaftar}</span>
                     </td>
+                    <td className="px-6 py-6 text-center font-black text-emerald-700 bg-emerald-50/20">{item.diterima}</td>
+                    <td className="px-6 py-6 text-center font-black text-purple-700 bg-purple-50/20">{item.daftar_ulang || 0}</td>
                   </tr>
                 ))}
               </tbody>

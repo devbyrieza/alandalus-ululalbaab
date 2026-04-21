@@ -70,7 +70,7 @@ export async function GET(request: Request) {
     // Calculate pendaftar status counts
     const total_pendaftar = pendaftarData.length;
     const statusCounts: Record<string, number> = {};
-    const jenjangCounts: Record<string, { total: number; diterima: number; putra: number; putri: number }> = {};
+    const jenjangCounts: Record<string, { total: number; diterima: number; putra: number; putri: number; daftar_ulang: number }> = {};
     const provinsiCounts: Record<string, number> = {};
     const genderCounts: Record<string, number> = { "Laki-laki": 0, "Perempuan": 0, "Belum Diisi": 0 };
 
@@ -95,13 +95,16 @@ export async function GET(request: Request) {
 
       // Jenjang counts
       if (!jenjangCounts[jenjang]) {
-        jenjangCounts[jenjang] = { total: 0, diterima: 0, putra: 0, putri: 0 };
+        jenjangCounts[jenjang] = { total: 0, diterima: 0, putra: 0, putri: 0, daftar_ulang: 0 };
       }
       jenjangCounts[jenjang].total += 1;
       if (gender === "Laki-laki") jenjangCounts[jenjang].putra += 1;
       if (gender === "Perempuan") jenjangCounts[jenjang].putri += 1;
-      if (status === "accepted") {
+      if (status === "accepted" || status === "enrolled") {
         jenjangCounts[jenjang].diterima += 1;
+      }
+      if (status === "enrolled") {
+        jenjangCounts[jenjang].daftar_ulang += 1;
       }
 
       // Provinsi counts
@@ -211,6 +214,7 @@ export async function GET(request: Request) {
         putra: data.putra,
         putri: data.putri,
         diterima: data.diterima,
+        daftar_ulang: data.daftar_ulang,
       })),
 
       // === STATISTIK PER PROVINSI (Top 10) ===
