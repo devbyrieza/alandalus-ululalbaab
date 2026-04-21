@@ -24,37 +24,37 @@ const PROGRAMS = [
             "Kurikulum Nasional (Diknas)",
             "Islamic Entrepreneurship"
         ],
-        quota: "Putra 32 | Putri 30",
+        quotaLabel: "Kuota Putra 32 | Putri 30",
         icon: School,
         color: "brand-blue"
     },
     {
         title: "I'dad Lughowi (IL)",
-        subtitle: "Program Persiapan Bahasa (Pra-SMA)",
-        desc: "Program intensif 1 tahun penguasaan Bahasa Arab bagi santri yang belum lancar berbahasa Arab. Setelah IL, santri melanjutkan ke jenjang SMA Ulul Albaab.",
+        subtitle: "Persiapan + Menengah Atas — Total 4 Tahun",
+        desc: "Untuk santri yang belum lancar berbahasa Arab. Tahun pertama: persiapan Bahasa Arab intensif. Dilanjutkan 3 tahun SMA berbasis pesantren. Total durasi pendidikan: 4 tahun.",
         features: [
-            "Bahasa Arab Intensif (Aktif & Formal)",
-            "Pengenalan Dasar Ilmu Agama",
-            "Persiapan Universitas Timur Tengah",
-            "Persiapan PTN Favorit Dalam Negeri",
+            "1 Tahun Persiapan Bahasa Arab Intensif",
+            "3 Tahun SMA Pesantren (Setelah IL)",
+            "Total: 4 Tahun Pendidikan",
+            "Persiapan PTN & Universitas Timur Tengah",
             "Tahfizh Al-Qur'an"
         ],
-        quota: "Putra 32 | Putri 30",
+        quotaLabel: "Kuota Putra 32 | Putri 30",
         icon: BookOpen,
         color: "brand-yellow"
     },
     {
-        title: "SMA IT Al-Andalus",
-        subtitle: "Tingkat Menengah Atas (Setara SMA)",
-        desc: "Jenjang Aliyah berbasis pesantren untuk lulusan MTs atau I'dad Lughowi. Syarat masuk: hafal minimal 5 juz mutqin dan lancar berbahasa Arab.",
+        title: "SMA",
+        subtitle: "Menengah Atas — Langsung 3 Tahun",
+        desc: "Untuk santri yang sudah hafal min. 5 juz mutqin dan lancar berbahasa Arab. Masuk langsung ke jenjang SMA pesantren selama 3 tahun tanpa tahun persiapan bahasa.",
         features: [
             "Syarat: Hafal 5 Juz Mutqin",
             "Syarat: Lancar Berbahasa Arab",
+            "Langsung 3 Tahun (Tanpa Persiapan)",
             "Kajian Kitab Turots Mendalam",
-            "Persiapan PTN & Universitas Timur Tengah",
-            "Islamic Entrepreneurship Lanjutan"
+            "Persiapan PTN & Universitas Timur Tengah"
         ],
-        quota: "Info Menyusul",
+        quotaLabel: null,
         icon: GraduationCap,
         color: "teal"
     },
@@ -122,7 +122,7 @@ export default function ProgramSection() {
                                         <program.icon className="w-7 h-7" />
                                     </div>
                                     <div className="status-pill status-pill-pending bg-brand-yellow-100 py-1.5 px-3">
-                                        Kuota: {program.quota}
+                                        {program.quotaLabel ? `Kuota: ${program.quotaLabel}` : 'Segera Daftar'}
                                     </div>
                                 </div>
 

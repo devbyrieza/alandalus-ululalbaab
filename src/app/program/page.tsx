@@ -50,19 +50,19 @@ const PROGRAMS = [
         id: "il",
         name: "I'dad Lughowi",
         buttonLabel: "Daftar IL",
-        fullName: "Program I'dad Lughowi (Pra-SMA)",
-        description: "Program intensif 1 tahun penguasaan Bahasa Arab bagi santri lulusan non-MTs Ulul Albaab yang belum lancar berbahasa Arab. Setelah lulus IL, santri melanjutkan ke jenjang SMA.",
+        fullName: "I'dad Lughowi — Total 4 Tahun (1 Tahun Persiapan + 3 Tahun SMA)",
+        description: "Untuk santri yang belum lancar berbahasa Arab. Tahun pertama: persiapan Bahasa Arab intensif (I'dad Lughowi). Kemudian dilanjutkan 3 tahun SMA berbasis pesantren. Total durasi pendidikan: 4 tahun.",
         stats: [
-            { label: "Durasi", value: "1 Tahun", icon: Clock },
+            { label: "Total Durasi", value: "4 Tahun", icon: Clock },
             { label: "Kuota Putra", value: "32", icon: Users },
             { label: "Kuota Putri", value: "30", icon: Users },
         ],
         curriculum: [
-            "Bahasa Arab Intensif (Aktif & Formal)",
-            "Pengenalan Dasar Ilmu Agama",
-            "Persiapan Universitas Timur Tengah",
-            "Persiapan PTN Favorit Dalam Negeri",
-            "Tahfizh Al-Qur'an"
+            "Tahun 1 (I'dad): Bahasa Arab Intensif Aktif & Formal",
+            "Tahun 2-4 (SMA): Kajian Kitab Turots & Ilmu Syar'i",
+            "Tahfizh Al-Qur'an sepanjang program",
+            "Persiapan PTN & Universitas Timur Tengah",
+            "Islamic Entrepreneurship"
         ],
         image: "/images/il.webp",
         theme: "yellow",
@@ -71,10 +71,10 @@ const PROGRAMS = [
     },
     {
         id: "sma",
-        name: "SMA IT Al-Andalus",
+        name: "SMA",
         buttonLabel: "Daftar SMA",
-        fullName: "Jenjang SMA IT Al-Andalus Ulul Albaab",
-        description: "Jenjang Aliyah berbasis pesantren yang merupakan kelanjutan dari MTs atau I'dad Lughowi. Bagi pendaftar dari luar, disyaratkan telah hafal minimal 5 juz mutqin dan lancar berbahasa Arab aktif.",
+        fullName: "SMA Pesantren Al-Andalus Ulul Albaab — Langsung 3 Tahun",
+        description: "Untuk santri yang sudah hafal minimal 5 juz mutqin dan lancar berbahasa Arab. Masuk langsung ke jenjang SMA pesantren selama 3 tahun tanpa tahun persiapan bahasa. Berbeda dari jalur IL yang membutuhkan 4 tahun total.",
         stats: [
             { label: "Durasi", value: "3 Tahun", icon: Clock },
             { label: "Syarat Hafalan", value: "5 Juz", icon: Trophy },
@@ -83,9 +83,9 @@ const PROGRAMS = [
         curriculum: [
             "Syarat Masuk: Hafal 5 Juz Mutqin",
             "Syarat Masuk: Lancar Berbahasa Arab",
+            "Langsung 3 Tahun Tanpa Persiapan Bahasa",
             "Kajian Kitab Turots Mendalam",
-            "Persiapan PTN & Universitas Timur Tengah",
-            "Islamic Entrepreneurship Lanjutan"
+            "Persiapan PTN & Universitas Timur Tengah"
         ],
         image: "/images/il.webp",
         theme: "teal",
