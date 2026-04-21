@@ -33,7 +33,7 @@ export async function GET() {
   try {
     const profiles = await prisma.profile.findMany({
       where: {
-        role: { in: ["admin_berkas", "admin_keuangan", "penguji", "admin_super", "admin", "penguji_calsan", "pewawancara_calsan", "pewawancara_cawalsan", "tim_it"] },
+        role: { in: ["admin_berkas", "admin_keuangan", "penguji", "admin_super", "admin", "penguji_calsan", "pewawancara_calsan", "pewawancara_cawalsan", "tim_it", "head_of_it"] },
       },
       orderBy: { created_at: "desc" },
     });
