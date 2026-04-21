@@ -5,30 +5,27 @@ const prisma = new PrismaClient();
 
 export async function GET() {
   try {
-    const counts = await prisma.pendaftar.count({
-      where: {
-        jenis_kelamin: { contains: 'P', mode: 'insensitive' },
-        jenjang: { contains: 'MTS', mode: 'insensitive' },
-        status_pendaftaran: 'enrolled',
-        deleted_at: null
-      }
+    const statusDistribution = await prisma.pendaftar.groupBy({
+      by: ['status_pendaftaran'],
+      _count: true
     });
 
-    const samples = await prisma.pendaftar.findMany({
-      where: {
-        jenis_kelamin: { contains: 'P', mode: 'insensitive' },
-        jenjang: { contains: 'MTS', mode: 'insensitive' },
-        status_pendaftaran: 'enrolled',
-        deleted_at: null
-      },
-      take: 5,
-      select: { nama_lengkap: true, jenjang: true, jenis_kelamin: true, status_pendaftaran: true }
+    const jenjangDistribution = await prisma.pendaftar.groupBy({
+      by: ['jenjang'],
+      _count: true
+    });
+
+    const genderDistribution = await prisma.pendaftar.groupBy({
+      by: ['jenis_kelamin'],
+      _count: true
     });
 
     return NextResponse.json({
-      message: "Debug data retrieved",
-      count_putri_mts_enrolled: counts,
-      samples
+      message: "Production Debug Audit",
+      total_records: await prisma.pendaftar.count(),
+      statusDistribution,
+      jenjangDistribution,
+      genderDistribution
     });
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });
