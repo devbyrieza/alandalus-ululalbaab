@@ -16,11 +16,7 @@ services:
     container_name: pp-ululalbaab-app
     restart: always
     expose:
-      - "3000"
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.app-ulul.rule=Host(`alandalus-ululalbaab.com`) || Host(`www.alandalus-ululalbaab.com`) || Host(`ppdb.alandalus-ululalbaab.com`)"
-      - "traefik.http.services.app-ulul.loadbalancer.server.port=3000"
+      - "80"
     environment:
       DATABASE_URL: ${DATABASE_URL}
       NEXTAUTH_URL: ${NEXTAUTH_URL}
