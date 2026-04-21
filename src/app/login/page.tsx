@@ -235,8 +235,8 @@ export default function LoginPage() {
   return (
     <main className="min-h-screen bg-white flex items-center justify-center p-6 relative overflow-hidden">
       {/* Background Decor */}
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-cream-100/40 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-maroon-100/20 rounded-full blur-[100px] -translate-x-1/2 translate-y-1/2 pointer-events-none" />
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-brand-yellow-100/40 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-brand-blue-100/20 rounded-full blur-[100px] -translate-x-1/2 translate-y-1/2 pointer-events-none" />
       <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-[0.02] pointer-events-none" />
 
       <Container className="relative z-10 flex flex-col items-center">
@@ -252,7 +252,7 @@ export default function LoginPage() {
             </div>
           </Link>
           <h1 className="text-4xl md:text-5xl font-display font-black text-ink-950 mb-3 tracking-tight">
-            Portal <span className="text-gradient-maroon font-black">{BRANDING.schoolShortName}</span>
+            Portal <span className="text-gradient-blue font-black">{BRANDING.schoolShortName}</span>
           </h1>
           <p className="text-lg text-ink-700 font-medium">
             Masuk ke Sistem Administrasi & Pendaftaran
@@ -282,13 +282,13 @@ export default function LoginPage() {
 
               <button
                 onClick={() => { setActiveTab("pendaftar"); setError(""); }}
-                className={`flex-1 relative z-10 py-3.5 text-xs font-black uppercase tracking-widest text-center rounded-2xl transition-colors duration-300 ${activeTab === "pendaftar" ? "text-maroon-700" : "text-ink-600 hover:text-ink-800"}`}
+                className={`flex-1 relative z-10 py-3.5 text-xs font-black uppercase tracking-widest text-center rounded-2xl transition-colors duration-300 ${activeTab === "pendaftar" ? "text-brand-blue-700" : "text-ink-600 hover:text-ink-800"}`}
               >
                 Pendaftar
               </button>
               <button
                 onClick={() => { setActiveTab("admin"); setError(""); }}
-                className={`flex-1 relative z-10 py-3.5 text-xs font-black uppercase tracking-widest text-center rounded-2xl transition-colors duration-300 ${activeTab === "admin" ? "text-maroon-700" : "text-ink-600 hover:text-ink-800"}`}
+                className={`flex-1 relative z-10 py-3.5 text-xs font-black uppercase tracking-widest text-center rounded-2xl transition-colors duration-300 ${activeTab === "admin" ? "text-brand-blue-700" : "text-ink-600 hover:text-ink-800"}`}
               >
                 Portal Staf
               </button>
@@ -381,7 +381,7 @@ export default function LoginPage() {
                       value={nomorPendaftaran}
                       onChange={(e) => setNomorPendaftaran(e.target.value.toUpperCase())}
                       placeholder="Contoh: MTI2600001"
-                      className="w-full px-5 py-3 md:px-8 md:py-5 pl-14 md:pl-16 rounded-xl md:rounded-2xl bg-slate-50 border border-slate-200 focus:bg-white focus:border-maroon-300 focus:ring-4 focus:ring-maroon-50 transition-all font-bold text-ink-950 uppercase placeholder:normal-case placeholder:font-medium placeholder:text-ink-400 text-sm md:text-base shadow-inner"
+                      className="w-full px-5 py-3 md:px-8 md:py-5 pl-14 md:pl-16 rounded-xl md:rounded-2xl bg-slate-50 border border-slate-200 focus:bg-white focus:border-brand-blue-300 focus:ring-4 focus:ring-brand-blue-50 transition-all font-bold text-ink-950 uppercase placeholder:normal-case placeholder:font-medium placeholder:text-ink-400 text-sm md:text-base shadow-inner"
                       disabled={isLoading}
                     />
                   </AuthInput>
@@ -394,7 +394,7 @@ export default function LoginPage() {
                       value={nikPendaftar}
                       onChange={(e) => setNikPendaftar(e.target.value.replace(/\D/g, ""))}
                       placeholder="16 Digit NIK Sesuai KK"
-                      className="w-full px-5 py-3 md:px-8 md:py-5 pl-14 md:pl-16 rounded-xl md:rounded-2xl bg-slate-50 border border-slate-200 focus:bg-white focus:border-maroon-300 focus:ring-4 focus:ring-maroon-50 transition-all font-bold text-ink-950 placeholder:font-medium placeholder:text-ink-400 text-sm md:text-base shadow-inner"
+                      className="w-full px-5 py-3 md:px-8 md:py-5 pl-14 md:pl-16 rounded-xl md:rounded-2xl bg-slate-50 border border-slate-200 focus:bg-white focus:border-brand-blue-300 focus:ring-4 focus:ring-brand-blue-50 transition-all font-bold text-ink-950 placeholder:font-medium placeholder:text-ink-400 text-sm md:text-base shadow-inner"
                       disabled={isLoading}
                     />
                   </AuthInput>
@@ -404,7 +404,7 @@ export default function LoginPage() {
                     whileTap={{ scale: 0.98 }}
                     type="submit"
                     disabled={isLoading}
-                    className="w-full py-4 md:py-6 rounded-pill bg-maroon-700 text-white font-black text-lg md:text-xl hover:bg-maroon-800 shadow-xl shadow-maroon-100 transition-all flex items-center justify-center gap-3 disabled:opacity-50"
+                    className="w-full py-4 md:py-6 rounded-pill bg-brand-blue-700 text-white font-black text-lg md:text-xl hover:bg-brand-blue-800 shadow-xl shadow-brand-blue-100 transition-all flex items-center justify-center gap-3 disabled:opacity-50"
                   >
                     {isLoading ? (
                       <Loader2 className="w-6 h-6 animate-spin" />
@@ -420,7 +420,7 @@ export default function LoginPage() {
                     <p className="text-sm text-ink-600 font-bold uppercase tracking-widest mb-4">Belum Punya Akun?</p>
                     <Link
                       href="/daftar"
-                      className="inline-flex items-center gap-2 px-10 py-3 rounded-pill bg-cream-50 text-maroon-700 font-black text-sm border border-cream-200 hover:bg-white hover:shadow-sm transition-all"
+                      className="inline-flex items-center gap-2 px-10 py-3 rounded-pill bg-cream-50 text-brand-blue-700 font-black text-sm border border-cream-200 hover:bg-white hover:shadow-sm transition-all"
                     >
                       Daftar Baru Di Sini
                     </Link>
@@ -441,7 +441,7 @@ export default function LoginPage() {
                       value={emailAdmin}
                       onChange={(e) => setEmailAdmin(e.target.value)}
                       placeholder="admin@andalus.sch.id"
-                      className="w-full px-5 py-3 md:px-8 md:py-5 pl-14 md:pl-16 rounded-xl md:rounded-2xl bg-slate-50 border border-slate-200 focus:bg-white focus:border-maroon-300 focus:ring-4 focus:ring-maroon-50 transition-all font-bold text-ink-950 placeholder:font-medium placeholder:text-ink-400 text-sm md:text-base shadow-inner"
+                      className="w-full px-5 py-3 md:px-8 md:py-5 pl-14 md:pl-16 rounded-xl md:rounded-2xl bg-slate-50 border border-slate-200 focus:bg-white focus:border-brand-blue-300 focus:ring-4 focus:ring-brand-blue-50 transition-all font-bold text-ink-950 placeholder:font-medium placeholder:text-ink-400 text-sm md:text-base shadow-inner"
                       disabled={isLoading}
                     />
                   </AuthInput>
@@ -464,7 +464,7 @@ export default function LoginPage() {
                       value={passwordAdmin}
                       onChange={(e) => setPasswordAdmin(e.target.value)}
                       placeholder="••••••••"
-                      className="w-full px-5 py-3 md:px-8 md:py-5 pl-14 md:pl-16 pr-12 md:pr-16 rounded-xl md:rounded-2xl bg-slate-50 border border-slate-200 focus:bg-white focus:border-maroon-300 focus:ring-4 focus:ring-maroon-50 transition-all font-bold text-ink-950 placeholder:font-medium placeholder:text-ink-400 text-sm md:text-base shadow-inner"
+                      className="w-full px-5 py-3 md:px-8 md:py-5 pl-14 md:pl-16 pr-12 md:pr-16 rounded-xl md:rounded-2xl bg-slate-50 border border-slate-200 focus:bg-white focus:border-brand-blue-300 focus:ring-4 focus:ring-brand-blue-50 transition-all font-bold text-ink-950 placeholder:font-medium placeholder:text-ink-400 text-sm md:text-base shadow-inner"
                       disabled={isLoading}
                     />
                   </AuthInput>
