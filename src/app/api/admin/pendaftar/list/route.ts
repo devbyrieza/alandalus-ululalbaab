@@ -105,9 +105,14 @@ export async function GET(request: NextRequest) {
     if (kelurahan) where.kelurahan = kelurahan;
 
     // Execute query with transaction for count and data
-    const [total, data] = await prisma.$transaction([
-      prisma.pendaftar.count({ where }),
-      prisma.pendaftar.findMany({
+    console.log('--- API pendaftar/list ---');
+    console.log('Params:', { page, limit, search, status, jenjang, jenisKelamin, tahunAjaran });
+    console.log('Generated Where:', JSON.stringify(where, null, 2));
+
+    const total = await prisma.pendaftar.count({ where });
+    console.log('Total Count:', total);
+
+    const data = await prisma.pendaftar.findMany({
         where,
         select: {
           id: true,
@@ -122,7 +127,9 @@ export async function GET(request: NextRequest) {
           status_pendaftaran: true,
           created_at: true,
           tahun_ajaran: {
-            select: { nama: true }
+            select: {
+              nama: true,
+            },
           },
           pembayaran: {
             select: { status_pembayaran: true }
