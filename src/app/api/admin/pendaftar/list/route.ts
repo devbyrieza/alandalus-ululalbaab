@@ -165,8 +165,7 @@ export async function GET(request: NextRequest) {
         orderBy: { created_at: "desc" },
         skip,
         take: limit,
-      }),
-    ]);
+      });
 
     // Transform data: Master Merge for NilaiUjian and document status
     const isEmpty = (v: any) => {
