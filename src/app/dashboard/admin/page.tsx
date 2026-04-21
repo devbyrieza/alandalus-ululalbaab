@@ -35,8 +35,8 @@ const JENJANG_LABELS: Record<string, string> = {
 };
 
 const JENJANG_QUOTAS: Record<string, any> = {
-  MTS: 62,
-  IL: 62,
+  MTS: "Putra 32 • Putri 30",
+  IL: "Putra 32 • Putri 30",
   SMA: "-",
 };
 
@@ -217,9 +217,9 @@ export default function AdminDashboardPage() {
               <thead className="bg-stone-50 text-[10px] font-black uppercase tracking-widest text-ink-400">
                 <tr>
                   <th className="px-6 py-5">Jenjang</th>
-                  <th className="px-6 py-5 text-center">Kuota Total</th>
-                  <th className="px-6 py-5 text-center text-blue-700 bg-blue-50/50">Putra</th>
-                  <th className="px-6 py-5 text-center text-pink-700 bg-pink-50/50">Putri</th>
+                  <th className="px-6 py-5 text-center">Kuota</th>
+                  <th className="px-6 py-5 text-center text-blue-700 bg-blue-50/50">Pendaftar Putra</th>
+                  <th className="px-6 py-5 text-center text-pink-700 bg-pink-50/50">Pendaftar Putri</th>
                   <th className="px-6 py-5 text-center text-brand-blue-800 bg-brand-yellow-50/50">Pendaftar</th>
                   <th className="px-6 py-5 text-center text-emerald-700 bg-emerald-50/50">Lulus</th>
                   <th className="px-6 py-5 text-center text-purple-700 bg-purple-50/50">Daftar Ulang</th>
