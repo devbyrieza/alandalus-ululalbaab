@@ -15,12 +15,16 @@ services:
         NEXTAUTH_SECRET: ${NEXTAUTH_SECRET:-supersecretkeyulul123}
     container_name: pp-ululalbaab-app
     restart: always
-    ports:
-      - "3001:3000"
+    expose:
+      - "3000"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.app-ulul.rule=Host(`alandalus-ululalbaab.com`) || Host(`www.alandalus-ululalbaab.com`) || Host(`ppdb.alandalus-ululalbaab.com`)"
+      - "traefik.http.services.app-ulul.loadbalancer.server.port=3000"
     environment:
       DATABASE_URL: ${DATABASE_URL}
-      NEXTAUTH_URL: ${NEXTAUTH_URL:-https://ppdb.alandalus-ululalbaab.com}
-      NEXTAUTH_SECRET: ${NEXTAUTH_SECRET:-supersecretkeyulul123}
+      NEXTAUTH_URL: ${NEXTAUTH_URL}
+      NEXTAUTH_SECRET: ${NEXTAUTH_SECRET}
       FAGI_WA_KEY: ${FAGI_WA_KEY}
     networks:
       - coolify
