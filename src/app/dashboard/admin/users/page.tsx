@@ -27,6 +27,7 @@ interface AdminUser {
 }
 
 const ROLE_OPTIONS = [
+    { value: "head_of_it", label: "Head of IT" },
     { value: "tim_it", label: "Tim IT" },
     { value: "admin_super", label: "Admin Super" },
     { value: "admin_berkas", label: "Admin Berkas" },
@@ -109,14 +110,26 @@ export default function UserManagementPage() {
                 body: JSON.stringify(formData),
             });
             if (response.ok) {
-                setMessage({ type: "success", text: "User saved successfully" });
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil',
+                    text: 'Data user berhasil disimpan',
+                    confirmButtonColor: '#1e3a8a'
+                });
                 setIsModalOpen(false);
                 fetchUsers();
             } else {
                 const res = await response.json();
-                setMessage({ type: "error", text: res.error || "Failed to save" });
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Gagal Menyimpan',
+                    text: res.error || "Gagal menyimpan data",
+                    confirmButtonColor: '#e11d48'
+                });
             }
-        } catch (err) { setMessage({ type: "error", text: "An error occurred" }); }
+        } catch (err: any) { 
+            Swal.fire('Error', err.message || "An error occurred", 'error'); 
+        }
     };
 
     const handleDelete = async (id: string, name: string) => {
