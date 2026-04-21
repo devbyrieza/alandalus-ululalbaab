@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -33,7 +33,7 @@ export default function TentangPage() {
                         className="inline-flex items-center gap-2 px-4 py-1.5 rounded-pill bg-brand-blue-50 border border-brand-blue-100 text-brand-blue-700 text-xs font-bold uppercase tracking-widest mb-8 shadow-sm"
                     >
                         <Sparkles className="w-3.5 h-3.5" />
-                        <span>Mengenal Ulul Albaab • Managed by Al-Andalus IIBS</span>
+                        <span>Mengenal Ulul Albaab • Angkatan ke-4 Managed by Al-Andalus IIBS</span>
                     </motion.div>
 
                     <motion.h1
@@ -52,7 +52,7 @@ export default function TentangPage() {
                         transition={{ delay: 0.2 }}
                         className="text-base sm:text-lg md:text-xl text-ink-600 max-w-3xl mx-auto leading-relaxed font-medium mb-12 px-4"
                     >
-                        Menghadirkan standar keunggulan Al-Andalus International di Sukabumi — sistem pembentukan karakter Angkatan Pertama yang mencetak generasi Hanif, Kontributif, dan Adaptif.
+                        Pesantren Ulul-Albaab Sukabumi, cabang dari Pesantren Islam Internasional Al-Andalus (Jonggol, Bogor) yang bekerjasama dengan Universitas Islam ternama di 3 Benua. Tahun Ajaran 2026/2027 adalah Angkatan ke-4 sejak dikelola AL-Andalus.
                     </motion.p>
                 </Container>
             </section>
@@ -163,20 +163,21 @@ export default function TentangPage() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: 0.1 }}
-                                className="space-y-4 md:space-y-6 text-base md:text-[17px] text-ink-700 font-medium leading-[1.8] text-justify"
                             >
-                                <p>
-                                    <span className="text-ink-950 font-black">Pesantren Al-Andalus Ulul Albaab</span> hadir sebagai babak baru dalam dunia pendidikan Islam di Sukabumi. Sebagai cabang resmi dari <span className="text-brand-blue-700 italic font-bold">Managed by Al-Andalus International Islamic Boarding School</span>, kami menerapkan standar operasional, kurikulum, dan pengasuhan yang identik dengan kampus pusat.
-                                </p>
-                                <p>
-                                    Kami berkomitmen mencetak kader ulama rabbani yang beraqidah lurus dan berwawasan luas dengan dukungan fasilitas modern serta barisan asatidzah yang kompeten di bidangnya.
-                                </p>
-                                <p>
-                                    Mulai tahun 2026, Ulul Albaab bertransformasi total untuk memberikan layanan pendidikan terbaik, mencakup hirarki kepengurusan yang profesional, sistem pendidikan tahfidz intensif, dan pengasuhan berbasis adab.
-                                </p>
-                                <p className="font-bold text-brand-blue-800 bg-brand-blue-50/50 p-4 rounded-xl border border-brand-blue-100 italic text-center text-lg mt-6">
-                                    "Standar Internasional, Kini Hadir di Sukabumi"
-                                </p>
+                                <div className="space-y-4 md:space-y-6 text-base md:text-[17px] text-ink-700 font-medium leading-[1.8] text-justify">
+                                    <p>
+                                        <span className="text-ink-950 font-black">Pesantren Al-Andalus Ulul Albaab Sukabumi</span> adalah lembaga pendidikan Islam berbasis pesantren modern yang berdiri dan dikelola oleh <span className="text-brand-blue-700 italic font-bold">Pesantren Islam Internasional Al-Andalus</span> (Jonggol, Bogor). Tahun pelajaran 2026/2027 merupakan angkatan ke-4 sejak resmi dikelola Al-Andalus.
+                                    </p>
+                                    <p>
+                                        Al-Andalus telah bekerjasama dengan kampus-kampus Islam ternama di 3 Benua, termasuk Arab Saudi, Mesir, Maroko, dan berbagai Perguruan Tinggi Negeri terbaik dalam negeri. Alumni Ulul Albaab pun diarahkan untuk melanjutkan studi ke universitas-universitas tersebut.
+                                    </p>
+                                    <p>
+                                        Pesantren Ulul Albaab memadukan tahfizh Al-Qur'an, kurikulum pendidikan nasional (diknas), kurikulum khas pesantren berbasis Kitab Turots, dan entrepreneurship — semua dengan bahasa pengantar Bahasa Arab.
+                                    </p>
+                                    <p className="font-bold text-brand-blue-800 bg-brand-blue-50/50 p-4 rounded-xl border border-brand-blue-100 italic text-center text-lg mt-6">
+                                        "Mondok Di Sini Ngerasa Kaya Keluarga Sendiri"
+                                    </p>
+                                </div>
                             </motion.div>
 
                             <motion.div
@@ -252,7 +253,7 @@ export default function TentangPage() {
                             </div>
                             <h3 className="text-xl md:text-2xl font-black text-ink-950 mb-5">Visi</h3>
                             <p className="text-lg md:text-xl font-black text-brand-blue-800 italic leading-[1.5] md:leading-[1.4] flex-1">
-                                "Mencetak Generasi yang Memiliki Pribadi Hanif, Kontributif, dan Adaptif."
+                                "Kaderisasi Ummat Rabbani, Cendekia, dan Mandiri"
                             </p>
                         </motion.div>
 
@@ -270,9 +271,9 @@ export default function TentangPage() {
                             <h3 className="text-xl md:text-2xl font-black text-ink-950 mb-6">Tujuan</h3>
                             <ul className="space-y-4 md:space-y-6 flex-1">
                                 {[
-                                    "Membentuk pribadi Hanif: lurus akidah, benar ibadah, baik akhlaq.",
-                                    "Membentuk pribadi Kontributif: berkarya, berinovasi, dan berperan nyata.",
-                                    "Membentuk pribadi Adaptif: terbuka kritik, cerdas membaca realitas, teguh prinsip."
+                                    "Membina generasi Rabbani: taat kepada Allah sesuai sunnah dengan pemahaman salafushalih.",
+                                    "Menjadikan santri pribadi Cendekia: cerdas, cepat mengerti situasi, pandai mencari jalan keluar.",
+                                    "Mendidik pribadi Mandiri: mampu mengambil keputusan dan menyelesaikan tugas secara mandiri."
                                 ].map((item, idx) => (
                                     <li key={idx} className="flex gap-4 items-center group/item">
                                         <div className="w-6 h-6 rounded-full bg-yellow-500 text-white flex items-center justify-center text-[10px] font-bold shrink-0 shadow-sm">
@@ -301,10 +302,10 @@ export default function TentangPage() {
 
                             <ul className="grid md:grid-cols-2 gap-x-8 lg:gap-x-12 gap-y-6">
                                 {[
-                                    "Menguatkan akidah shahihah dan membiasakan beribadah sesuai sunnah dalam kehidupan sehari-hari melalui pembelajaran bahasa arab, ulumu syar'i, halaqoh tahfizh, dan adab islami.",
-                                    "Membimbing pembentukan karakter melalui sistem pengasuhan berbasis fitrah dengan pendekatan penyadaran dan pendewasaan — bukan sekadar hukuman.",
-                                    "Membekali Hard Skill melalui pembelajaran kewirausahaan dan ekstrakurikuler sebagai bekal hidup mandiri dan kontributif.",
-                                    "Menanamkan jiwa dakwah santri melalui metode hikmah dan mauidzoh hasanah, serta pengawasan penuh di setiap aktivitas santri."
+                                    "Menyelenggarakan pendidikan berbasis TICE (Tahfizh, Islamic Curriculum, dan Entrepreneurship) dengan bahasa pengantar Bahasa Arab.",
+                                    "Mencetak Hamalatul Qur'an dengan bekal ilmu syar'i yang mumpuni melalui pembelajaran Kitab Turots yang sistematis.",
+                                    "Menanamkan Jiwa Entrepreneur Muslim yang berwawasan Global — membekali santri dengan kecakapan hidup dan soft skill.",
+                                    "Pembiasaan Ibadah & Penanaman Karakter Islami berbasis Kesadaran melalui sistem pengasuhan berbasis fitrah."
                                 ].map((item, idx) => (
                                 <li key={idx} className="flex gap-4 items-start group/item bg-white p-5 rounded-2xl border border-brand-blue-50 shadow-sm">
                                     <div className="w-6 h-6 rounded-full bg-brand-blue-600 text-white flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5 shadow-sm">

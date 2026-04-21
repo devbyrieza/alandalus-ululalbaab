@@ -493,26 +493,26 @@ export default function KegiatanPage() {
   ];
 
   const ekstrakurikuler: Ekstrakurikuler[] = [
-    // Baris 1: Establised & Populer
+    // Ekstrakurikuler Putra
     { name: "Karate", icon: Shield, desc: "Bela diri untuk ketahanan fisik dan disiplin diri.", benefit: "Mentalitas Tangguh" },
     { name: "Pramuka", icon: Tent, desc: "Pembentukan karakter, kepemimpinan & kemandirian.", benefit: "Jiwa Pemimpin" },
     { name: "Panahan", icon: Target, desc: "Olahraga sunnah untuk melatih fokus & ketenangan.", benefit: "Fokus & Konsentrasi" },
     { name: "Futsal", icon: Dribbble, desc: "Olahraga tim untuk kesehatan dan sportivitas.", benefit: "Kerjasama Tim" },
     { name: "Volly", icon: Trophy, desc: "Melatih koordinasi mata-tangan dan kerjasama regu.", benefit: "Ketangkasan Sosial" },
-
-    // Baris 2: Kompetensi & Soft Skills
     { name: "Komputer", icon: Globe, desc: "Penguasaan software perkantoran & literasi digital.", benefit: "Kecakapan Teknologi" },
     { name: "Design Grafis", icon: PenTool, desc: "Seni kreativitas digital dan pengolahan visual.", benefit: "Kreativitas Modern" },
     { name: "Kaligrafi", icon: PenTool, desc: "Seni menulis indah ayat-ayat Al-Qur'an.", benefit: "Ketekunan Seni" },
     { name: "Jurnalistik", icon: BookText, desc: "Melatih kemampuan menulis dan analisis informasi.", benefit: "Komunikasi Publik" },
     { name: "Konten Kreator", icon: Camera, desc: "Edukasi pembuatan konten positif & beradab.", benefit: "Dakwah Digital" },
-
-    // Baris 3: Pengembangan & Masa Depan
     { name: "Basket", icon: Trophy, desc: "Olahraga dinamis untuk stamina dan tinggi badan.", benefit: "Stamina & Endurance" },
     { name: "Bulutangkis", icon: Zap, desc: "Melatih ketangkasan dan koordinasi motorik.", benefit: "Kelincahan Fisik" },
     { name: "Pertanian", icon: Home, desc: "Edukasi kemandirian pangan dan cinta alam.", benefit: "Kemandirian Hidup" },
-    { name: "Periklanan", icon: MessageCircle, desc: "Belajar strategi komunikasi visual dan pemasaran.", benefit: "Jiwa Entrepreneur" },
-    { name: "Web Programming", icon: Zap, desc: "Dasar-dasar pengembangan website (Coming Soon).", benefit: "Skill Masa Depan" },
+    { name: "Perikanan", icon: Zap, desc: "Budidaya ikan sebagai bekal jiwa wirausaha.", benefit: "Jiwa Entrepreneur" },
+    // Ekstrakurikuler Putri
+    { name: "Menjahit", icon: PenTool, desc: "Keterampilan menjahit dan fashion muslim.", benefit: "Kecakapan Putri" },
+    { name: "Tataboga", icon: MessageCircle, desc: "Memasak dan kuliner halal bernilai gizi tinggi.", benefit: "Life Skill" },
+    { name: "Merajut", icon: Heart, desc: "Kerajinan tangan kreatif dan produktif.", benefit: "Kreativitas & Sabar" },
+    { name: "Keputrian", icon: Star, desc: "Pembinaan akhlak, fikih muslimah, dan kepemimpinan putri.", benefit: "Muslimah Solihah" },
   ];
 
   return (

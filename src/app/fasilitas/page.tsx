@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Link from "next/link";
 import Image from "next/image";
@@ -198,7 +198,7 @@ export default function FasilitasPage() {
 
                   <h3 className="text-3xl sm:text-4xl lg:text-5xl font-black text-brand-blue-950 mb-6 leading-[1.1]">Masjid Jami' <br className="hidden sm:block" /> Ulul Albaab</h3>
                   <p className="text-base sm:text-lg lg:text-xl text-brand-blue-950/70 mb-8 sm:mb-10 leading-relaxed font-medium">
-                    Pusat peribadatan santri yang mampu menampung 1000 jamaah. Dilengkapi pendingin ruangan, karpet premium, dan sistem audio berkualitas tinggi.
+                    Pusat peribadatan santri yang mampu menampung <strong>900 jamaah</strong>. Dilengkapi pendingin ruangan, karpet premium, dan sistem audio berkualitas tinggi.
                   </p>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
@@ -588,7 +588,7 @@ export default function FasilitasPage() {
               <div className="w-12 h-12 bg-brand-blue-50 rounded-xl flex items-center justify-center text-brand-blue-700 mb-5 group-hover:scale-110 transition-transform border border-brand-blue-100 shadow-sm">
                 <Droplet className="w-6 h-6" />
               </div>
-              <h3 className="font-black text-lg text-brand-blue-950 mb-2">Depot Air</h3>
+              <h3 className="font-black text-lg text-brand-blue-950 mb-2">Mesin Air Bio & RO</h3>
               <p className="text-sm text-brand-blue-950/60 font-medium">Air minum higienis gratis</p>
               <div className="mt-4 pt-4 border-t border-brand-blue-50 w-full">
                 <span className="text-xs text-brand-blue-600 font-bold uppercase tracking-widest">💧 Minuman</span>

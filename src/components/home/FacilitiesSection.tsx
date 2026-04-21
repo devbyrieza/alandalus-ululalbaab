@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 import { navigateToDetail } from "@/lib/navigation-scroll";
 
 const FACILITIES = [
-    { name: "Masjid Kapasitas 1000 Jamaah", icon: Home, color: "maroon" },
+    { name: "Masjid Kapasitas 900 Jamaah", icon: Home, color: "maroon" },
     { name: "Gedung Sekolah Terpadu", icon: School, color: "cream" },
     { name: "Asrama Representatif", icon: Building2, color: "ink" },
     { name: "Fasilitas Olahraga", icon: Dumbbell, color: "gold" },
@@ -17,9 +17,11 @@ const FACILITIES = [
     { name: "Mini Market", icon: ShoppingCart, color: "orange" },
     { name: "Lab. Komputer", icon: Monitor, color: "indigo" },
     { name: "Ruang Makan Bersama", icon: UtensilsCrossed, color: "amber" },
-    { name: "Perpustakaan Digital", icon: Library, color: "emerald" },
-    { name: "Area Kemandirian", icon: Waves, color: "cyan" },
-    { name: "Kantin Sehat", icon: Coffee, color: "maroon" },
+    { name: "Perpustakaan", icon: Library, color: "emerald" },
+    { name: "Kolam Ikan", icon: Waves, color: "cyan" },
+    { name: "Kantin", icon: Coffee, color: "maroon" },
+    { name: "Aula Serbaguna", icon: Tent, color: "gold" },
+    { name: "Mesin Air Bio & RO", icon: Droplets, color: "teal" },
 ] as const;
 
 const FACILITY_IMAGES = [

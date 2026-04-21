@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState } from "react";
 import Link from "next/link";
@@ -198,7 +198,7 @@ export default function ContactPage() {
                         <ContactInfoCard
                             icon={MapPin}
                             title="Alamat Lengkap"
-                            content="Jl. KH Mama Oyon, Cihaur, Kec. Cicantayan, Kabupaten Sukabumi, Jawa Barat 43155"
+                            content="Jl. KH Mama Oyon Cihaur RT/RW 04/04, Cicantayan, Kabupaten Sukabumi, Jawa Barat 43155"
                             subContent="Lokasi Strategis & Asri"
                             delay={0.1}
                         />
@@ -213,8 +213,8 @@ export default function ContactPage() {
                         <ContactInfoCard
                             icon={Mail}
                             title="Email Resmi"
-                            content="alandalus.ululalbaab@gmail.com"
-                            href="mailto:alandalus.ululalbaab@gmail.com"
+                            content="ululalbaabalandalus@gmail.com"
+                            href="mailto:ululalbaabalandalus@gmail.com"
                             subContent="Surat Menyurat & Kerjasama"
                             delay={0.3}
                         />

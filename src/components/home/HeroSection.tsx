@@ -47,22 +47,22 @@ export default function HeroSection() {
                 className="inline-flex items-center gap-2 px-4 py-2 mt-4 lg:mt-0 rounded-pill bg-white border border-cream-200 shadow-sm text-brand-blue-700 text-[10px] lg:text-xs font-bold uppercase tracking-widest mx-auto lg:mx-0"
               >
                 <Sparkles className="w-3.5 h-3.5 text-cream-500" />
-                <span>Terakreditasi BAN-PDM • Managed by Al-Andalus IIBS</span>
+                <span>Angkatan ke-4 • Managed by Al-Andalus IIBS</span>
               </motion.div>
 
               <h1 className="leading-[1.15] tracking-tight mx-auto lg:mx-0 max-w-2xl lg:max-w-none text-maroon-900 font-black">
-                <span className="block">Mencetak Generasi</span>
-                <span className="block text-[#8B5A2B] drop-shadow-sm">Hanif, Kontributif,</span>
-                <span className="block text-[#8B5A2B] drop-shadow-sm">dan Adaptif</span>
+                <span className="block">Kaderisasi Ummat</span>
+                <span className="block text-[#8B5A2B] drop-shadow-sm">Rabbani, Cendekia,</span>
+                <span className="block text-[#8B5A2B] drop-shadow-sm">dan Mandiri</span>
               </h1>
 
               <p className="text-base lg:text-lg leading-relaxed max-w-2xl mx-auto lg:mx-0 font-medium font-sans text-ink-600 text-center lg:text-left">
-                Bukan sekadar tempat belajar agama — sistem pembentukan karakter berbasis <span className="font-bold text-maroon-800">Lingkungan, Kebiasaan, Komunitas, dan Spiritualitas</span> tanpa kekerasan dan luka pengasuhan.
+                Pesantren Ulul-Albaab Sukabumi — pendidikan berbasis <span className="font-bold text-maroon-800">Kitab Turots, Tahfizh Al-Qur'an, dan Entrepreneurship</span> dengan bahasa pengantar Bahasa Arab.
               </p>
 
               <div className="mt-4 pt-4 border-t border-cream-200/50">
                 <p className="text-sm lg:text-base font-bold text-maroon-800 text-center lg:text-left italic">
-                  "Pendidikan Berkualitas, Diperkuat Sistem {BRANDING.schoolName.includes("Al-Andalus") ? "Al-Andalus" : BRANDING.schoolShortName}"
+                  "Pendidikan Islam Terpadu: Tahfizh, Akademik, dan Entrepreneurship"
                 </p>
               </div>
             </div>
@@ -93,7 +93,7 @@ export default function HeroSection() {
                   ))}
                 </div>
                 <p className="text-xs font-semibold text-ink-500">
-                  <span className="text-brand-blue-700 font-bold uppercase tracking-wider">Angkatan Pertama</span> • Managed by Al-Andalus IIBS
+                  <span className="text-brand-blue-700 font-bold uppercase tracking-wider">Angkatan ke-4</span> • Managed by Al-Andalus IIBS
                 </p>
               </div>
             </div>
@@ -131,6 +131,7 @@ export default function HeroSection() {
               <div>
                 <p className="text-[10px] lg:text-xs font-bold text-ink-400 uppercase tracking-widest">Tersedia</p>
                 <p className="text-xs lg:text-sm font-black text-maroon-900">MTs &amp; IL</p>
+                <p className="text-[9px] font-semibold text-ink-400">Putra 32 · Putri 30</p>
               </div>
             </motion.div>
 

@@ -43,7 +43,7 @@ export default function AboutSection() {
               transition={{ delay: 0.1 }}
               className="section-title mb-6"
             >
-              Mengedepankan <br /><span className="text-gradient-maroon">Bimbingan & Pengawasan Melekat</span>
+              Mengedepankan <br /><span className="text-gradient-maroon">Pendidikan Qur'ani &amp; Entrepreneurship</span>
             </motion.h2>
 
             <motion.p
@@ -53,7 +53,7 @@ export default function AboutSection() {
               transition={{ delay: 0.2 }}
               className="section-subtitle text-justify md:text-center"
             >
-              <span className="font-bold text-maroon-900">Bukan sekadar tempat belajar agama.</span> Sistem pembentukan karakter berbasis Lingkungan, Kebiasaan, Komunitas, dan Spiritualitas — untuk mencetak generasi yang memiliki pribadi Hanif, Kontributif, dan Adaptif.
+              <span className="font-bold text-maroon-900">Pesantren Ulul-Albaab Sukabumi.</span> Lembaga pendidikan Islam berbasis pesantren modern yang mengusung visi Kaderisasi Ummat Rabbani, Cendekia, dan Mandiri — terafiliasi dengan Pesantren Islam Internasional Al-Andalus.
             </motion.p>
           </div>
 
@@ -75,7 +75,7 @@ export default function AboutSection() {
 
                 <blockquote className="relative max-w-3xl mx-auto">
                   <p className="text-maroon-900 leading-snug font-black text-2xl md:text-4xl italic">
-                    "Mencetak Generasi yang Memiliki Pribadi Hanif, Kontributif, dan Adaptif."
+                    "Kaderisasi Ummat Rabbani, Cendekia, dan Mandiri"
                   </p>
                   <div className="mt-8 w-12 h-1.5 bg-cream-300 rounded-full mx-auto" />
                 </blockquote>
@@ -104,10 +104,10 @@ export default function AboutSection() {
 
                 <ul className="grid md:grid-cols-2 gap-x-12 gap-y-8">
                   {[
-                    "Membentuk pribadi Hanif: lurus akidahnya, benar ibadahnya, dan baik akhlaqnya.",
-                    "Membentuk pribadi Kontributif: memiliki karya, gagasan, dan peran nyata bagi lingkungannya.",
-                    "Membentuk pribadi Adaptif: terbuka terhadap kritik, cerdas membaca realitas, kuat menjaga prinsip.",
-                    "Menanamkan jiwa dakwah melalui Bimbingan & Pengawasan Melekat tanpa kekerasan dan luka pengasuhan."
+                    "Menyelenggarakan pendidikan berbasis TICE (Tahfizh, Islamic Curriculum, dan Entrepreneurship).",
+                    "Mencetak Hamalatul Qur'an dengan bekal ilmu syar'i yang mumpuni.",
+                    "Menanamkan Jiwa Entrepreneur Muslim yang berwawasan Global.",
+                    "Pendidikan Islam berbasis Kitab Turots dengan Bahasa Pengantar Bahasa Arab."
                   ].map((misi, i) => (
                     <li key={i} className="flex gap-4 items-start p-4 rounded-xl bg-cream-50/50 border border-cream-100">
                       <div className="mt-0.5 w-6 h-6 rounded-full bg-cream-200 flex items-center justify-center shrink-0 text-maroon-700">

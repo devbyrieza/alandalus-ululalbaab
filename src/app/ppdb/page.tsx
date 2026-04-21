@@ -96,47 +96,53 @@ function PPDBContent() {
   const jenjang = searchParams.get('jenjang');
 
   const stats = [
-    { label: "Kuota MTs", value: "25 Santri", icon: Users },
-    { label: "Kuota I'dad", value: "25 Santri", icon: Users },
-    { label: "Asatidz", value: "Lulusan Terbaik", icon: GraduationCap },
-    { label: "Target", value: "TimTeng & PTN Favorit", icon: Target },
+    { label: "Kuota MTs Putra", value: "32 Santri", icon: Users },
+    { label: "Kuota MTs Putri", value: "30 Santri", icon: Users },
+    { label: "Kuota IL Putra", value: "32 Santri", icon: Users },
+    { label: "Kuota IL Putri", value: "30 Santri", icon: Users },
   ];
 
   const timeline = [
     {
       phase: "Registrasi Online",
-      date: "10 Feb - 30 Mei 2026",
-      desc: "Buat akun pendaftar dan isi formulir awal melalui website resmi.",
+      date: "31 Agustus - 30 Oktober 2026",
+      desc: "Daftar dan buat akun pendaftar melalui website resmi atau scan barcode di brosur.",
       status: "active",
     },
     {
-      phase: "Pembayaran Registrasi",
-      date: "Setelah Daftar",
-      desc: "Lakukan pembayaran biaya pendaftaran via Transfer Manual BSI yang tersedia di dashboard.",
+      phase: "Membayar Biaya Pendaftaran",
+      date: "Setelah Registrasi",
+      desc: "Lakukan pembayaran biaya pendaftaran sebesar Rp 250.000 via Transfer Bank.",
       status: "upcoming",
     },
     {
-      phase: "Lengkapi Data & Berkas",
+      phase: "Isi Formulir Online",
       date: "Setelah Bayar",
-      desc: "Lengkapi profil santri, data orang tua/wali, dan upload dokumen persyaratan.",
+      desc: "Lengkapi formulir online dengan data diri santri, orang tua/wali, dan informasi yang diperlukan.",
       status: "upcoming",
     },
     {
-      phase: "Ujian Seleksi",
+      phase: "Upload Berkas",
+      date: "Setelah Formulir",
+      desc: "Upload seluruh dokumen persyaratan termasuk format yang bisa didownload dari sistem.",
+      status: "upcoming",
+    },
+    {
+      phase: "Undangan Jadwal Tes Seleksi",
       date: "Jadwal Dipilih",
-      desc: "Tes Lisan (Tahfidz/Bacaan Al-Qur'an), Tes Tertulis (Pengetahuan Dasar Agama & Akademik), serta Wawancara Calsan & Orang Tua.",
+      desc: "Menerima undangan jadwal tes seleksi: Al-Qur'an, Kemampuan Akademik, Identifikasi Kepribadian, Tes Kesiapan, dan Wawancara.",
       status: "upcoming",
     },
     {
       phase: "Pengumuman Hasil",
-      date: "7 Hari Setelah Tes",
+      date: "Setelah Tes",
       desc: "Hasil seleksi diumumkan melalui Dashboard Pendaftar dan Notifikasi WhatsApp.",
       status: "upcoming",
     },
     {
-      phase: "Daftar Ulang",
-      date: "Setelah Lulus",
-      desc: "Melakukan pelunasan biaya masuk.",
+      phase: "Pembayaran Uang Pangkal",
+      date: "Setelah Diterima",
+      desc: "Melakukan pelunasan Uang Pangkal sebagai tanda jadi daftar ulang.",
       status: "upcoming",
     },
   ];
@@ -154,9 +160,9 @@ function PPDBContent() {
       ]
     },
     {
-      title: "Dokumen Pendukung",
+      title: "Dokumen Tambahan (Format Panitia)",
       icon: CheckCircle,
-      note: "Ketiga format dokumen di atas dapat di-unduh melalui akun Dashboard pendaftar saat Anda sudah berada di tahap upload berkas.",
+      note: "Ketiga format dokumen berikut dapat di-unduh (download) dari sistem pendaftaran setelah berada di tahap upload berkas.",
       items: [
         { name: "Surat Keterangan Sehat (Format Panitia)", type: "Wajib" },
         { name: "Scan Pakta Integritas (Format Panitia)", type: "Wajib" },
@@ -166,9 +172,9 @@ function PPDBContent() {
   ];
 
   const biaya = [
-    { label: "Biaya Pendaftaran", value: "Rp 200rb", icon: CreditCard },
-    { label: "Uang Pangkal", value: "Rp 7.5Jt", icon: Shield },
-    { label: "Taawun (SPP)", value: "Rp 1Jt", icon: Star },
+    { label: "Biaya Pendaftaran", value: "Rp 250rb", icon: CreditCard },
+    { label: "Uang Pangkal", value: "Rp 9,8 Jt", icon: Shield },
+    { label: "SPP/Taawun (All In)", value: "Rp 1,1Jt/bln", icon: Star },
   ];
 
   return (
@@ -187,7 +193,7 @@ function PPDBContent() {
               className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-surface-200 text-brand-blue-700 text-xs font-black uppercase tracking-widest mb-10 shadow-premium-sm"
             >
               <Sparkles className="w-3.5 h-3.5" />
-              <span>Penerimaan Santri Baru T.A 2026/2027</span>
+              <span>Penerimaan Santri Baru T.A 2026/2027 • Angkatan ke-4</span>
             </motion.div>
 
             <motion.h1
@@ -221,10 +227,10 @@ function PPDBContent() {
               </div>
               <div>
                 <h3 className="text-xl md:text-2xl font-display font-black text-brand-blue-900 mb-2">
-                  ✨ Kesempatan Emas: Angkatan Pertama Era Al-Andalus
+                  ✨ Angkatan ke-4: Lebih Matang, Lebih Teruji
                 </h3>
                 <p className="text-brand-blue-800 font-medium leading-relaxed">
-                  Menjadi bagian dari angkatan 2026/2027 adalah sebuah keistimewaan. Ananda akan menjadi <strong>pionir dan tonggak sejarah pertama</strong> yang merasakan secara penuh perpaduan mantap antara sistem unggulan Al-Andalus dengan kekayaan warisan Ulul Albaab.
+                  Menjadi bagian dari angkatan 2026/2027 adalah keistimewaan. Ananda akan bergabung dengan generasi ke-4 yang <strong>lebih matang sistemnya, lebih teruji kurikulumnya</strong>, dan selangkah lebih dekat menuju cita-cita kuliah di Timur Tengah maupun PTN favorit dalam negeri.
                 </p>
               </div>
             </motion.div>
@@ -306,7 +312,7 @@ function PPDBContent() {
         <Container>
           <div className="text-center mb-16 md:mb-24">
             <h2 className="text-3xl md:text-6xl font-display font-black text-ink-950 mb-6">Informasi Investasi <br /><span className="text-brand-blue-600">Pendidikan</span></h2>
-            <p className="text-xl text-ink-600 max-w-2xl mx-auto font-medium">Bentuk ikhtiar orang tua dalam memfasilitasi masa depan terbaik ananda.</p>
+            <p className="text-xl text-ink-600 max-w-2xl mx-auto font-medium">Informasi pembiayaan lengkap untuk Tahun Ajaran 2026/2027.</p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8 md:gap-12 max-w-6xl mx-auto">
@@ -331,21 +337,21 @@ function PPDBContent() {
             })}
           </div>
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="mt-16 max-w-4xl mx-auto bg-brand-blue-50 border border-brand-blue-100 rounded-[2.5rem] p-8 md:p-10 flex flex-col md:flex-row items-center gap-8 text-center md:text-left"
-          >
-            <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-brand-blue-600 shadow-premium-sm shrink-0">
-              <HelpCircle className="w-8 h-8" />
+          <div className="mt-10 max-w-4xl mx-auto bg-brand-blue-50 border border-brand-blue-100 rounded-[2rem] p-6 md:p-8">
+            <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6 text-center md:text-left">
+              <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-brand-blue-600 shrink-0">
+                <HelpCircle className="w-6 h-6" />
+              </div>
+              <div>
+                <p className="text-base text-brand-blue-900 font-bold leading-relaxed">
+                  💰 <strong>SPP All In Rp 13.200.000/Tahun</strong> mencakup: biaya makan, asrama, listrik, dan seluruh kegiatan pesantren. Dapat dicicil <strong>Rp 1.100.000/Bulan</strong>.
+                </p>
+                <p className="text-sm text-brand-blue-700 font-medium mt-2">
+                  Catatan: Biaya pendaftaran dan uang pangkal bersifat non-refundable.
+                </p>
+              </div>
             </div>
-            <div>
-              <p className="text-lg text-brand-blue-900 font-bold leading-relaxed">
-                Catatan Penting: Biaya pendaftaran dan uang pangkal bersifat non-refundable. Uang pangkal (daftar ulang) dapat dicicil maksimal 3x pembayaran, dengan <strong>syarat pembayaran pertama minimal 50%</strong>, dan wajib dilunasi sebelum Juli 2026.
-              </p>
-            </div>
-          </motion.div>
+          </div>
         </Container>
       </section>
 
@@ -441,12 +447,12 @@ function PPDBContent() {
                       a: "Ya, seluruh santri di Pesantren Al-Andalus Ulul Albaab wajib tinggal di asrama untuk mengikuti seluruh rangkaian kegiatan tarbiyah, halaqah tahfidz, dan pembelajaran kitab turots secara maksimal."
                     },
                     {
-                      q: "Kapan batas akhir pendaftaran?",
-                      a: "Pendaftaran PPDB Tahun Ajaran 2026/2027 dibuka mulai tanggal 10 Februari sampai dengan 30 Mei 2026. Namun, pendaftaran dapat ditutup lebih awal jika kuota santri baru sudah terpenuhi."
+                      q: "Kapan batas akhir pendaftaran PPDB 2026/2027?",
+                      a: "Pendaftaran PPDB Tahun Ajaran 2026/2027 dibuka mulai 31 Agustus sampai dengan 30 Oktober 2026. Hanya 2 bulan! Pendaftaran dapat ditutup lebih awal jika kuota terpenuhi. Segera daftar!"
                     },
                     {
-                      q: "Bagaimana sistem kurikulumnya?",
-                      a: "Kami menerapkan Kurikulum Terpadu yang menggabungkan kurikulum Nasional dengan kurikulum khas Al-Andalus yang berfokus pada penguasaan Bahasa Arab, Tahfidz Al-Qur'an, dan Kitab Turots."
+                      q: "Berapa total biaya yang harus disiapkan?",
+                      a: "Biaya pendaftaran Rp 250.000, Uang Pangkal Rp 9.800.000, dan SPP/Taawun Rp 1.100.000/bulan (All In = Rp 13.200.000/tahun sudah termasuk makan, asrama, dan seluruh kegiatan pesantren)."
                     }
                   ].map((faq, i) => (
                     <motion.div key={i} className="group">
@@ -515,7 +521,7 @@ function PPDBContent() {
                 </div>
                 <div className="flex items-center gap-2 text-brand-blue-100/70">
                   <Award className="w-4 h-4 text-brand-yellow-400" />
-                  <span className="text-xs font-bold uppercase tracking-widest">Sejak 1995 • 30 Tahun Melayani</span>
+                  <span className="text-xs font-bold uppercase tracking-widest">Angkatan ke-4 • TA 2026/2027</span>
                 </div>
                 <div className="flex items-center gap-2 text-brand-blue-100/70">
                   <GraduationCap className="w-4 h-4 text-blue-400" />

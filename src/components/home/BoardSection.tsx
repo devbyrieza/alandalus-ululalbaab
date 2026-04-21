@@ -7,28 +7,28 @@ import Image from "next/image";
 
 const BOARD_MEMBERS = [
     {
-        name: "Ustadz Dr. Muhammad Arifin Badri, Lc, M.A",
-        image: "/images/muhammad-arifin-badri.webp"
-    },
-    {
-        name: "Ustadz Nurdin Apud Sarbini, Lc, M.Pd",
+        name: "Ustadz Nurdin Apud Sabrini, Lc, M.Pd",
         image: "/images/nurdin-apud-sabrini.webp"
     },
     {
-        name: "H. Tarmen Tascha, SE",
-        image: "/images/tarmen-tascha.webp"
-    },
-    {
-        name: "Ustadz Aminullah Yasin, Lc, M.Pd",
-        image: "/images/aminullah-yasin.webp"
+        name: "Ustadz Dr. Muhammad Arifin Badri, Lc, M.A",
+        image: "/images/muhammad-arifin-badri.webp"
     },
     {
         name: "Ustadz Wahab Rajasam, M.Pd",
         image: "/images/wahab-rajasam.webp"
     },
     {
-        name: "Ustadz Thoriq Ziyad, Lc",
-        image: "/images/thoriq-ziyad.webp"
+        name: "KH. Dudun Abdul Gofar",
+        image: "/images/dudun-abdul-gofar.webp"
+    },
+    {
+        name: "Bpk. Tarmen Tascha, SE",
+        image: "/images/tarmen-tascha.webp"
+    },
+    {
+        name: "Ustadz Dwi Wahyu Iskandar, M.Pd",
+        image: "/images/dwi-wahyu-iskandar.webp"
     },
 ] as const;
 

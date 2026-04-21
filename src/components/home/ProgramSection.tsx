@@ -14,32 +14,32 @@ import { navigateToDetail } from "@/lib/navigation-scroll";
 
 const PROGRAMS = [
     {
-        title: "Madrasah Tsanawiyah",
+        title: "Madrasah Tsanawiyah (MTs)",
         subtitle: "Tingkat Menengah (Setara SMP)",
-        desc: "Pendidikan 3 tahun yang mencakup Tahfidz, Dasar Ilmu Syar'i, dan Akademik Nasional, serta pembentukan Adab sebagai fondasi utama.",
+        desc: "Memadukan tahfizh Al-Qur'an, kurikulum pendidikan nasional, kurikulum khas pesantren berbasis Kitab Turots, dan entrepreneurship. Bahasa pengantar Bahasa Arab.",
         features: [
-            "Target Hafalan 12 Juz",
-            "Sinergi Kurikulum Nasional & Al-Andalus",
-            "Bahasa Arab & Kitab Turots",
-            "Sanad Al-Qur'an & Hadith",
-            "Program TICE & Global"
+            "Target Hafalan Al-Qur'an 30 Juz",
+            "Kitab Turots & Ilmu Syar'i",
+            "Bahasa Arab Aktif sebagai Pengantar",
+            "Kurikulum Nasional (Diknas)",
+            "Islamic Entrepreneurship"
         ],
-        quota: "25 Kursi",
+        quota: "Putra 32 | Putri 30",
         icon: School,
         color: "brand-blue"
     },
     {
-        title: "I'dad Lughowi",
+        title: "I'dad Lughowi (IL)",
         subtitle: "Persiapan & Menengah Atas (Setara SMA)",
-        desc: "Program intensif Bahasa dan Syari'at untuk mencetak kader ulama masa depan. Persiapan matang studi ke Universitas Timur Tengah maupun Perguruan Tinggi Favorit Dalam Negeri.",
+        desc: "Program intensif satu tahun sebelum jenjang SMA IT Al-Andalus. Fokus pada penguasaan Bahasa Arab intensif dan dasar-dasar ilmu agama sebagai bekal untuk tingkat selanjutnya.",
         features: [
-            "Target Hafalan 16 Juz",
-            "Penguasaan Kitab Turots",
-            "Bahasa Arab Aktif & Formal",
-            "Persiapan Universitas Timur Tengah & Dalam Negeri",
-            "Ziarah Ilmiah"
+            "Bahasa Arab Intensif (Aktif & Formal)",
+            "Pengenalan Dasar Ilmu Agama",
+            "Persiapan Universitas Timur Tengah",
+            "Persiapan PTN Favorit Dalam Negeri",
+            "Tahfizh Al-Qur'an"
         ],
-        quota: "25 Kursi",
+        quota: "Putra 32 | Putri 30",
         icon: BookOpen,
         color: "brand-yellow"
     },
