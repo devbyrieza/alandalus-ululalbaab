@@ -119,16 +119,25 @@ export default function UserManagementPage() {
                 setIsModalOpen(false);
                 fetchUsers();
             } else {
-                const res = await response.json();
+                let errorText = "Gagal menyimpan data";
+                try {
+                    const res = await response.json();
+                    errorText = res.error || errorText;
+                } catch (e) {
+                    // if not JSON, could be a proxy/server down error
+                    if (response.status === 502 || response.status === 503) {
+                        errorText = "Sistem sedang diperbarui/restart. Silakan coba beberapa saat lagi.";
+                    }
+                }
                 Swal.fire({
                     icon: 'error',
                     title: 'Gagal Menyimpan',
-                    text: res.error || "Gagal menyimpan data",
+                    text: errorText,
                     confirmButtonColor: '#e11d48'
                 });
             }
         } catch (err: any) { 
-            Swal.fire('Error', err.message || "An error occurred", 'error'); 
+            Swal.fire('Error', "Sistem sedang sibuk atau offline. Coba lagi nanti.", 'error'); 
         }
     };
 
