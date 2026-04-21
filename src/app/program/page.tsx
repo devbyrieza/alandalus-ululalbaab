@@ -40,7 +40,6 @@ const PROGRAMS = [
             "Bahasa Arab Aktif sebagai Pengantar",
             "Kurikulum Nasional (Diknas)",
             "Islamic Entrepreneurship"
-
         ],
         image: "/images/mts.webp",
         theme: "blue",
