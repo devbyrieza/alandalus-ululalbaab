@@ -70,7 +70,7 @@ export async function GET(request: Request) {
     // Calculate pendaftar status counts
     const total_pendaftar = pendaftarData.length;
     const statusCounts: Record<string, number> = {};
-    const jenjangCounts: Record<string, { total: number; diterima: number }> = {};
+    const jenjangCounts: Record<string, { total: number; diterima: number; putra: number; putri: number }> = {};
     const provinsiCounts: Record<string, number> = {};
     const genderCounts: Record<string, number> = { "Laki-laki": 0, "Perempuan": 0, "Belum Diisi": 0 };
 
@@ -95,9 +95,11 @@ export async function GET(request: Request) {
 
       // Jenjang counts
       if (!jenjangCounts[jenjang]) {
-        jenjangCounts[jenjang] = { total: 0, diterima: 0 };
+        jenjangCounts[jenjang] = { total: 0, diterima: 0, putra: 0, putri: 0 };
       }
       jenjangCounts[jenjang].total += 1;
+      if (gender === "Laki-laki") jenjangCounts[jenjang].putra += 1;
+      if (gender === "Perempuan") jenjangCounts[jenjang].putri += 1;
       if (status === "accepted") {
         jenjangCounts[jenjang].diterima += 1;
       }
@@ -206,6 +208,8 @@ export async function GET(request: Request) {
       stats_per_jenjang: Object.entries(jenjangCounts).map(([jenjang, data]) => ({
         jenjang,
         pendaftar: data.total,
+        putra: data.putra,
+        putri: data.putri,
         diterima: data.diterima,
       })),
 

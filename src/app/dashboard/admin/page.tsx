@@ -195,9 +195,13 @@ export default function AdminDashboardPage() {
                       <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Kuota</span>
                       <span className="text-sm font-bold text-slate-600">{JENJANG_QUOTAS[item.jenjang] || "-"}</span>
                     </div>
-                    <div className="flex flex-col items-end">
+                    <div className="flex flex-col items-end text-right">
                       <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Calon Santri</span>
-                      <span className="px-4 py-1.5 bg-brand-yellow-100 text-brand-yellow-700 font-bold rounded-xl border border-brand-yellow-200 text-sm">{item.pendaftar}</span>
+                      <div className="flex items-center gap-2">
+                        <span className="px-2 py-1 bg-blue-50 text-blue-700 font-bold rounded-lg border border-blue-100 text-xs" title="Putra">{item.putra} L</span>
+                        <span className="px-2 py-1 bg-pink-50 text-pink-700 font-bold rounded-lg border border-pink-100 text-xs" title="Putri">{item.putri} P</span>
+                        <span className="px-3 py-1 bg-brand-yellow-100 text-brand-yellow-800 font-black rounded-lg border border-brand-yellow-200 text-sm ml-1">{item.pendaftar}</span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -208,15 +212,17 @@ export default function AdminDashboardPage() {
             <table className="hidden md:table w-full text-left">
               <thead className="bg-stone-50 text-[10px] font-black uppercase tracking-widest text-ink-400">
                 <tr>
-                  <th className="px-8 py-5">Jenjang</th>
-                  <th className="px-8 py-5 text-center">Kuota</th>
-                  <th className="px-8 py-5 text-center">Calon</th>
+                  <th className="px-6 py-5">Jenjang</th>
+                  <th className="px-6 py-5 text-center">Kuota Total</th>
+                  <th className="px-6 py-5 text-center text-blue-700 bg-blue-50/50">Putra</th>
+                  <th className="px-6 py-5 text-center text-pink-700 bg-pink-50/50">Putri</th>
+                  <th className="px-6 py-5 text-center text-brand-blue-800 bg-brand-yellow-50/50">Total Pendaftar</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-brand-yellow-50 text-sm">
                 {stats.stats_per_jenjang?.map((item: any, idx: number) => (
                   <tr key={idx} className="hover:bg-brand-yellow-50/20 transition-colors">
-                    <td className="px-8 py-6">
+                    <td className="px-6 py-6">
                       <div className="flex items-center gap-4">
                         <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-white font-black text-xs ${item.jenjang === 'MTS' ? 'bg-brand-blue-600' : (item.jenjang === 'SMA' ? 'bg-brand-blue-900' : 'bg-brand-yellow-500')}`}>
                           {item.jenjang.substring(0, 2)}
@@ -224,9 +230,11 @@ export default function AdminDashboardPage() {
                         <p className="font-bold text-slate-800">{JENJANG_LABELS[item.jenjang] || item.jenjang}</p>
                       </div>
                     </td>
-                    <td className="px-8 py-6 text-center font-bold text-slate-400">{JENJANG_QUOTAS[item.jenjang] || "-"}</td>
-                    <td className="px-8 py-6 text-center">
-                      <span className="px-4 py-2 bg-brand-yellow-100 text-brand-yellow-700 font-bold rounded-xl border border-brand-yellow-200">{item.pendaftar}</span>
+                    <td className="px-6 py-6 text-center font-bold text-slate-400">{JENJANG_QUOTAS[item.jenjang] || "-"}</td>
+                    <td className="px-6 py-6 text-center font-black text-blue-700 bg-blue-50/20">{item.putra}</td>
+                    <td className="px-6 py-6 text-center font-black text-pink-600 bg-pink-50/20">{item.putri}</td>
+                    <td className="px-6 py-6 text-center bg-brand-yellow-50/20">
+                      <span className="px-4 py-2 bg-brand-yellow-100 text-brand-yellow-800 font-black rounded-xl border border-brand-yellow-200">{item.pendaftar}</span>
                     </td>
                   </tr>
                 ))}
