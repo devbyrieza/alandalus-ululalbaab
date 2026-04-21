@@ -49,7 +49,7 @@ export async function GET(req: NextRequest) {
     }
 
     if (status) query_status(status, where);
-    if (jenjang) where.jenjang = jenjang;
+    if (jenjang) where.jenjang = jenjang.toUpperCase();
     if (tahunAjaran) where.tahun_ajaran_id = tahunAjaran;
     if (provinsi) where.provinsi = provinsi;
     if (kabupaten) where.kabupaten = kabupaten;

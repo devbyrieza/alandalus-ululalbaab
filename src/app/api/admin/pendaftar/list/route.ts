@@ -90,7 +90,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Other filters
-    if (jenjang) where.jenjang = jenjang;
+    if (jenjang) where.jenjang = jenjang.toUpperCase();
     if (jenisKelamin) where.jenis_kelamin = jenisKelamin;
     if (tahunAjaran) where.tahun_ajaran_id = tahunAjaran;
     if (provinsi) where.provinsi = provinsi;
