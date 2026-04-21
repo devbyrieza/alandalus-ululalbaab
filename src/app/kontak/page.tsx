@@ -213,8 +213,8 @@ export default function ContactPage() {
                         <ContactInfoCard
                             icon={Mail}
                             title="Email Resmi"
-                            content="ululalbaabalandalus@gmail.com"
-                            href="mailto:ululalbaabalandalus@gmail.com"
+                            content="alandalusululalbaab2@gmail.com"
+                            href="mailto:alandalusululalbaab2@gmail.com"
                             subContent="Surat Menyurat & Kerjasama"
                             delay={0.3}
                         />

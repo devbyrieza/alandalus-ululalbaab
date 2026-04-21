@@ -31,7 +31,7 @@ const CONTACT_INFO = [
   {
     icon: Mail,
     title: "Email Resmi",
-    content: "ululalbaabalandalus@gmail.com",
+    content: "alandalusululalbaab2@gmail.com",
     detail: "Kirim pertanyaan kapan saja",
     color: "gold",
   },
@@ -78,10 +78,9 @@ export default function ContactSection() {
             <div className="lg:w-1/2 grid sm:grid-cols-2 gap-4 sm:gap-6 w-full">
               {CONTACT_INFO.map((item, idx) => (
                 <div key={idx} className={`app-card p-6 md:p-8 flex flex-col items-start group ${idx === 0 ? 'sm:col-span-2' : ''}`}>
-                  <div className={`w-12 h-12 md:w-14 md:h-14 rounded-2xl flex items-center justify-center mb-5 md:mb-6 transition-colors shadow-sm group-hover:scale-110 duration-500 shrink-0 ${
-                      item.color === 'maroon' ? 'bg-maroon-50 text-maroon-600' :
+                  <div className={`w-12 h-12 md:w-14 md:h-14 rounded-2xl flex items-center justify-center mb-5 md:mb-6 transition-colors shadow-sm group-hover:scale-110 duration-500 shrink-0 ${item.color === 'maroon' ? 'bg-maroon-50 text-maroon-600' :
                       item.color === 'teal' ? 'bg-teal-50 text-teal-600' :
-                      'bg-yellow-50 text-yellow-600'
+                        'bg-yellow-50 text-yellow-600'
                     }`}>
                     <item.icon className="w-6 h-6 md:w-7 md:h-7" />
                   </div>

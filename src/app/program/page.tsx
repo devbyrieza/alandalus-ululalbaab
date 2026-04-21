@@ -50,8 +50,8 @@ const PROGRAMS = [
         id: "il",
         name: "I'dad Lughowi",
         buttonLabel: "Daftar IL",
-        fullName: "Program I'dad Lughowi (Persiapan SMA)",
-        description: "Program intensif penguasaan Bahasa Arab dan dasar-dasar ilmu agama. Persiapan matang menuju Universitas Timur Tengah maupun Perguruan Tinggi Negeri Favorit dalam negeri.",
+        fullName: "Program I'dad Lughowi (Pra-SMA)",
+        description: "Program intensif 1 tahun penguasaan Bahasa Arab bagi santri lulusan non-MTs Ulul Albaab yang belum lancar berbahasa Arab. Setelah lulus IL, santri melanjutkan ke jenjang SMA.",
         stats: [
             { label: "Durasi", value: "1 Tahun", icon: Clock },
             { label: "Kuota Putra", value: "32", icon: Users },
@@ -68,6 +68,29 @@ const PROGRAMS = [
         theme: "yellow",
         accent: "text-brand-yellow-600",
         bg: "bg-brand-yellow-50"
+    },
+    {
+        id: "sma",
+        name: "SMA IT Al-Andalus",
+        buttonLabel: "Daftar SMA",
+        fullName: "Jenjang SMA IT Al-Andalus Ulul Albaab",
+        description: "Jenjang Aliyah berbasis pesantren yang merupakan kelanjutan dari MTs atau I'dad Lughowi. Bagi pendaftar dari luar, disyaratkan telah hafal minimal 5 juz mutqin dan lancar berbahasa Arab aktif.",
+        stats: [
+            { label: "Durasi", value: "3 Tahun", icon: Clock },
+            { label: "Syarat Hafalan", value: "5 Juz", icon: Trophy },
+            { label: "Bahasa", value: "Arab Aktif", icon: Globe },
+        ],
+        curriculum: [
+            "Syarat Masuk: Hafal 5 Juz Mutqin",
+            "Syarat Masuk: Lancar Berbahasa Arab",
+            "Kajian Kitab Turots Mendalam",
+            "Persiapan PTN & Universitas Timur Tengah",
+            "Islamic Entrepreneurship Lanjutan"
+        ],
+        image: "/images/il.webp",
+        theme: "teal",
+        accent: "text-teal-600",
+        bg: "bg-teal-50"
     },
 ];
 
@@ -146,6 +169,8 @@ export default function ProgramPage() {
                                 ${activeSection === program.id
                                         ? program.theme === 'blue'
                                             ? 'bg-brand-blue-600 text-white border-brand-blue-600'
+                                            : program.theme === 'teal'
+                                            ? 'bg-teal-600 text-white border-teal-600'
                                             : 'bg-brand-yellow-500 text-white border-brand-yellow-500'
                                         : 'bg-white text-ink-500 border-brand-blue-100 hover:border-brand-blue-300 hover:text-brand-blue-700'
                                     }`}
@@ -274,7 +299,9 @@ export default function ProgramPage() {
                                     >
                                         <Link href={`/daftar?program=${program.id}`}>
                                             <button className={`w-full sm:w-auto px-14 py-5 rounded-pill font-black text-white text-lg shadow-md transition-all hover:-translate-y-1
-                                                ${program.theme === 'blue' ? 'bg-brand-blue-700 hover:bg-brand-blue-800' : 'bg-brand-yellow-600 hover:bg-brand-yellow-700'}
+                                                ${program.theme === 'blue' ? 'bg-brand-blue-700 hover:bg-brand-blue-800' :
+                                                  program.theme === 'teal' ? 'bg-teal-600 hover:bg-teal-700' :
+                                                  'bg-brand-yellow-600 hover:bg-brand-yellow-700'}
                                             `}>
                                                 Daftarkan Sekarang
                                             </button>

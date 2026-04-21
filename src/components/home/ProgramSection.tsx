@@ -30,8 +30,8 @@ const PROGRAMS = [
     },
     {
         title: "I'dad Lughowi (IL)",
-        subtitle: "Persiapan & Menengah Atas (Setara SMA)",
-        desc: "Program intensif satu tahun sebelum jenjang SMA IT Al-Andalus. Fokus pada penguasaan Bahasa Arab intensif dan dasar-dasar ilmu agama sebagai bekal untuk tingkat selanjutnya.",
+        subtitle: "Program Persiapan Bahasa (Pra-SMA)",
+        desc: "Program intensif 1 tahun penguasaan Bahasa Arab bagi santri yang belum lancar berbahasa Arab. Setelah IL, santri melanjutkan ke jenjang SMA Ulul Albaab.",
         features: [
             "Bahasa Arab Intensif (Aktif & Formal)",
             "Pengenalan Dasar Ilmu Agama",
@@ -42,6 +42,21 @@ const PROGRAMS = [
         quota: "Putra 32 | Putri 30",
         icon: BookOpen,
         color: "brand-yellow"
+    },
+    {
+        title: "SMA IT Al-Andalus",
+        subtitle: "Tingkat Menengah Atas (Setara SMA)",
+        desc: "Jenjang Aliyah berbasis pesantren untuk lulusan MTs atau I'dad Lughowi. Syarat masuk: hafal minimal 5 juz mutqin dan lancar berbahasa Arab.",
+        features: [
+            "Syarat: Hafal 5 Juz Mutqin",
+            "Syarat: Lancar Berbahasa Arab",
+            "Kajian Kitab Turots Mendalam",
+            "Persiapan PTN & Universitas Timur Tengah",
+            "Islamic Entrepreneurship Lanjutan"
+        ],
+        quota: "Info Menyusul",
+        icon: GraduationCap,
+        color: "teal"
     },
 ];
 
@@ -86,7 +101,7 @@ export default function ProgramSection() {
                 </div>
 
                 {/* Grid */}
-                <div className="grid md:grid-cols-2 gap-6 lg:gap-10 max-w-6xl mx-auto">
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 max-w-7xl mx-auto">
                     {PROGRAMS.map((program, idx) => (
                         <motion.div
                             key={idx}
@@ -100,7 +115,9 @@ export default function ProgramSection() {
                                 {/* Top Accents */}
                                 <div className="flex items-start justify-between mb-8">
                                     <div className={`w-14 h-14 rounded-2xl flex items-center justify-center shadow-sm transition-transform duration-500 group-hover:scale-110 ${
-                                        program.color === 'brand-blue' ? 'bg-brand-blue-50 text-brand-blue-600' : 'bg-brand-yellow-100 text-maroon-800'
+                                        program.color === 'brand-blue' ? 'bg-brand-blue-50 text-brand-blue-600' :
+                                        program.color === 'teal' ? 'bg-teal-50 text-teal-600' :
+                                        'bg-brand-yellow-100 text-maroon-800'
                                         }`}>
                                         <program.icon className="w-7 h-7" />
                                     </div>
