@@ -29,13 +29,15 @@ function getPPDBCountdown() {
 }
 
 const JENJANG_LABELS: Record<string, string> = {
-  MTs: "MTs Ulul Albaab",
-  IL: "I'dad Lughowi (Setara SMA)",
+  MTS: "MTs Ulul Albaab",
+  IL: "I'dad Lughowi (IL)",
+  SMA: "SMA",
 };
 
-const JENJANG_QUOTAS: Record<string, number> = {
-  MTs: 25,
-  IL: 25,
+const JENJANG_QUOTAS: Record<string, any> = {
+  MTS: 62,
+  IL: 62,
+  SMA: "-",
 };
 
 export default function AdminDashboardPage() {
@@ -183,7 +185,7 @@ export default function AdminDashboardPage() {
               {stats.stats_per_jenjang?.map((item: any, idx: number) => (
                 <div key={idx} className="p-6 space-y-4">
                   <div className="flex items-center gap-4">
-                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-white font-black text-xs shrink-0 ${item.jenjang === 'MTs' ? 'bg-brand-blue-600' : 'bg-brand-yellow-500'}`}>
+                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-white font-black text-xs shrink-0 ${item.jenjang === 'MTS' ? 'bg-brand-blue-600' : (item.jenjang === 'SMA' ? 'bg-brand-blue-900' : 'bg-brand-yellow-500')}`}>
                       {item.jenjang.substring(0, 2)}
                     </div>
                     <p className="font-extrabold text-slate-800 leading-tight">{JENJANG_LABELS[item.jenjang] || item.jenjang}</p>
@@ -216,7 +218,7 @@ export default function AdminDashboardPage() {
                   <tr key={idx} className="hover:bg-brand-yellow-50/20 transition-colors">
                     <td className="px-8 py-6">
                       <div className="flex items-center gap-4">
-                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-white font-black text-xs ${item.jenjang === 'MTs' ? 'bg-brand-blue-600' : 'bg-brand-yellow-500'}`}>
+                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-white font-black text-xs ${item.jenjang === 'MTS' ? 'bg-brand-blue-600' : (item.jenjang === 'SMA' ? 'bg-brand-blue-900' : 'bg-brand-yellow-500')}`}>
                           {item.jenjang.substring(0, 2)}
                         </div>
                         <p className="font-bold text-slate-800">{JENJANG_LABELS[item.jenjang] || item.jenjang}</p>
