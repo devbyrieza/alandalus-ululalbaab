@@ -309,7 +309,7 @@ function SectionHeader({
           className={`w-12 h-12 rounded-xl flex items-center justify-center transition-colors ${isCompleted
             ? "bg-emerald-100 text-emerald-600"
             : isOpen
-              ? "bg-cream-100 text-maroon-700"
+              ? "bg-brand-blue-50 text-brand-blue-700"
               : "bg-surface-200 text-ink-600"
             }`}
         >
@@ -361,7 +361,7 @@ function InputField({
   maxLength,
   inputFilter,
 }: InputFieldProps) {
-  const baseInputClass = "w-full px-4 py-3 bg-white border border-ink-200 rounded-xl text-ink-900 placeholder:text-stone-600 focus:border-maroon-600 focus:ring-4 focus:ring-maroon-600/10 transition-all outline-none disabled:bg-surface-100 disabled:text-ink-600 font-medium";
+  const baseInputClass = "w-full px-4 py-3 bg-white border border-ink-200 rounded-xl text-ink-900 placeholder:text-stone-600 focus:border-brand-blue-600 focus:ring-4 focus:ring-brand-blue-600/10 transition-all outline-none disabled:bg-surface-100 disabled:text-ink-600 font-medium";
 
   // Filter function for input validation
   const handleFilteredChange = (rawValue: string) => {
@@ -762,7 +762,7 @@ export default function DataLengkapForm({ onSuccess }: { onSuccess?: () => void 
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center h-64 space-y-4">
-        <Loader2 className="w-10 h-10 text-maroon-700 animate-spin" />
+        <Loader2 className="w-10 h-10 text-brand-blue-700 animate-spin" />
         <p className="text-ink-500 font-medium">Memuat data...</p>
       </div>
     );
@@ -1261,7 +1261,7 @@ export default function DataLengkapForm({ onSuccess }: { onSuccess?: () => void 
           <button
             type="submit"
             disabled={saving}
-            className="flex items-center gap-2 px-8 py-4 rounded-xl bg-gradient-to-r from-maroon-600 to-maroon-700 text-white font-bold text-lg shadow-lg shadow-maroon-600/30 hover:shadow-maroon-600/40 hover:-translate-y-1 transition-all disabled:opacity-50 disabled:transform-none"
+            className="flex items-center gap-2 px-8 py-4 rounded-xl bg-linear-to-r from-brand-blue-600 to-brand-blue-800 text-white font-bold text-lg shadow-lg shadow-brand-blue-600/30 hover:shadow-brand-blue-600/40 hover:-translate-y-1 transition-all disabled:opacity-50 disabled:transform-none"
           >
             {saving ? <Loader2 className="w-6 h-6 animate-spin" /> : isEditMode ? <Send className="w-6 h-6" /> : <Save className="w-6 h-6" />}
             <span>{saving ? "Menyimpan..." : isEditMode ? "Simpan & Ajukan Verifikasi" : "Simpan Data"}</span>
