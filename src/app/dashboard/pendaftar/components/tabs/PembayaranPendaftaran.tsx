@@ -264,7 +264,7 @@ function PaymentTimeline({ paymentStatus }: { paymentStatus: PaymentStatus }) {
         {steps.map((step, index) => {
           let statusColor = "bg-surface-100 border-surface-300 text-ink-300"; // default upcoming
           if (step.status === "completed") statusColor = "bg-emerald-500 border-emerald-500 text-white shadow-emerald-500/30";
-          if (step.status === "current") statusColor = "bg-white border-maroon-600 text-maroon-700 shadow-lg shadow-maroon-600/20";
+          if (step.status === "current") statusColor = "bg-white border-brand-blue-600 text-brand-blue-700 shadow-lg shadow-brand-blue-600/20";
 
           return (
             <div key={step.id} className="flex flex-col items-center">
@@ -382,16 +382,16 @@ function UploadArea({
     <div className="space-y-6">
       {/* Current file info (Always show existing file if available and NOT currently selecting a NEW file) */}
       {currentFile && !selectedFile && !isRejected && (
-        <div className="p-4 bg-cream-50 border border-cream-100 rounded-2xl flex items-center gap-4">
-          <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center border border-cream-100 shadow-sm transition-transform hover:scale-110">
-            <FileText className="w-6 h-6 text-cream-500" />
+        <div className="p-4 bg-brand-yellow-50 border border-brand-yellow-100 rounded-2xl flex items-center gap-4">
+          <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center border border-brand-yellow-100 shadow-sm transition-transform hover:scale-110">
+            <FileText className="w-6 h-6 text-brand-yellow-500" />
           </div>
           <div className="flex-1 min-w-0">
             <p className="text-xs font-bold text-blue-500 uppercase tracking-wide mb-0.5">File Terupload</p>
             <p className="font-bold text-ink-900 truncate">{currentFile.name}</p>
           </div>
-          <div className="w-8 h-8 rounded-full bg-cream-100 flex items-center justify-center">
-            <Check className="w-4 h-4 text-maroon-600" />
+          <div className="w-8 h-8 rounded-full bg-brand-yellow-100 flex items-center justify-center">
+            <Check className="w-4 h-4 text-brand-blue-600" />
           </div>
         </div>
       )}
@@ -399,12 +399,12 @@ function UploadArea({
       {/* Upload area */}
       <div
         className={`relative overflow-hidden group border-2 border-dashed rounded-[2rem] transition-all ${isDragging
-          ? "border-maroon-600 bg-cream-50/50 scale-[1.01]"
+          ? "border-brand-blue-600 bg-brand-yellow-50/50 scale-[1.01]"
           : isRejected && !selectedFile
             ? "border-red-300 bg-red-50 hover:border-red-400"
             : selectedFile
-              ? "border-maroon-600 bg-white" // Solid border when file selected
-              : "border-ink-200 hover:border-maroon-400 hover:bg-surface-50 cursor-pointer"
+              ? "border-brand-blue-600 bg-white" // Solid border when file selected
+              : "border-ink-200 hover:border-brand-blue-400 hover:bg-surface-50 cursor-pointer"
           } ${isUploading ? "pointer-events-none opacity-80" : ""}`}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
@@ -467,7 +467,7 @@ function UploadArea({
                 <button
                   onClick={handleUploadClick}
                   disabled={isUploading}
-                  className="flex-1 sm:flex-none px-8 py-3 bg-cream-400 text-maroon-950 font-black rounded-xl hover:bg-cream-300 transition-colors shadow-lg shadow-cream-400/30 flex items-center justify-center gap-2"
+                  className="flex-1 sm:flex-none px-8 py-3 bg-brand-yellow-400 text-brand-blue-950 font-black rounded-xl hover:bg-brand-yellow-300 transition-colors shadow-lg shadow-brand-yellow-400/30 flex items-center justify-center gap-2"
                 >
                   {isUploading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Upload className="w-5 h-5" />}
                   {isUploading ? "Mengirim..." : "Kirim Bukti"}
@@ -484,11 +484,11 @@ function UploadArea({
                       <path className="text-surface-200" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" strokeWidth="4" />
                       <path className="text-cream-500 transition-all duration-300 ease-out" strokeDasharray={`${uploadProgress}, 100`} d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" strokeWidth="4" />
                     </svg>
-                    <div className="absolute inset-0 flex items-center justify-center font-bold text-maroon-800 text-sm">
+                    <div className="absolute inset-0 flex items-center justify-center font-bold text-brand-blue-800 text-sm">
                       {uploadProgress}%
                     </div>
                   </div>
-                  <p className="font-bold text-maroon-900">Mengupload...</p>
+                  <p className="font-bold text-brand-blue-900">Mengupload...</p>
                 </div>
               </div>
             )}
@@ -499,7 +499,7 @@ function UploadArea({
             <div
               className={`w-20 h-20 rounded-3xl flex items-center justify-center transition-transform duration-300 group-hover:scale-110 shadow-sm ${isRejected && !currentFile
                 ? "bg-red-100 text-red-600"
-                : "bg-cream-50 text-maroon-700"
+                : "bg-brand-yellow-50 text-brand-blue-700"
                 }`}
             >
               <Upload className="w-10 h-10" />
@@ -723,15 +723,15 @@ export default function PembayaranPendaftaranTab({
       )}
 
       {/* Header Banner */}
-      <div className="relative overflow-hidden rounded-[2rem] bg-linear-to-br from-maroon-700 to-maroon-900 border border-maroon-600 p-8 md:p-10 text-white shadow-lg app-card">
-        <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-cream-50/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+      <div className="relative overflow-hidden rounded-[2rem] bg-linear-to-br from-brand-blue-700 to-brand-blue-900 border border-brand-blue-600 p-8 md:p-10 text-white shadow-lg app-card">
+        <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-brand-yellow-50/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="flex items-start gap-5">
             <div className="w-16 h-16 rounded-[1.5rem] bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 shadow-sm shrink-0">
               {isStatusOnly ? (
-                <Shield className="w-8 h-8 text-cream-100" />
+                <Shield className="w-8 h-8 text-brand-yellow-100" />
               ) : (
-                <CreditCard className="w-8 h-8 text-cream-100" />
+                <CreditCard className="w-8 h-8 text-brand-yellow-100" />
               )}
             </div>
             <div>
@@ -760,7 +760,7 @@ export default function PembayaranPendaftaranTab({
         <div className="lg:col-span-2 space-y-8">
 
           {/* Status Card */}
-          <div className="glass-panel p-8 rounded-[2rem] shadow-sm border border-cream-200 app-card relative overflow-hidden">
+          <div className="glass-panel p-8 rounded-[2rem] shadow-sm border border-brand-yellow-200 app-card relative overflow-hidden">
             <div className={`absolute top-0 left-0 w-2 h-full ${statusConfig.bgColor}`} /> {/* Accent Bar */}
 
             <div className="flex flex-col md:flex-row gap-6 md:items-center justify-between mb-8">
