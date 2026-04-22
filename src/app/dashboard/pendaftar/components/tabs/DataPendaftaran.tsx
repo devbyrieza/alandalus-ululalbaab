@@ -17,7 +17,7 @@ import {
 const DUMMY_DATA = {
   id: "dummy-id",
   nik: "3201010120100001",
-  nomor_pendaftaran: "MTI20260006",
+  nomor_pendaftaran: "MTA2600006",
   nama_lengkap: "Ahmad Zaki Mubarak",
   jenis_kelamin: "Laki-laki",
   jenjang: "MTs",

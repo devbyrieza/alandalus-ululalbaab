@@ -40,15 +40,15 @@ function PilihVerifikasiContent() {
     const prefix =
       jenis_kelamin === "L"
         ? jenjang === "MTs"
-          ? "MTI"
-          : jenjang === "IL"
-            ? "ILI"
-            : "MAI"
-        : jenjang === "MTs"
           ? "MTA"
           : jenjang === "IL"
             ? "ILA"
-            : "MAA";
+            : "SMA"
+        : jenjang === "MTs"
+          ? "MTI"
+          : jenjang === "IL"
+            ? "ILI"
+            : "SMI";
 
     // Random 4 digit untuk demo
     const randomNum = Math.floor(1000 + Math.random() * 9000);
