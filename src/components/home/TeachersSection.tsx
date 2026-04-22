@@ -73,7 +73,7 @@ export default function TeachersSection() {
                         </h2>
 
                         <p className="section-subtitle lg:ml-0 text-justify lg:text-left mb-10">
-                            Pesantren Al-Andalus Ulul Albaab didukung oleh asatidzah profesional lulusan universitas terbaik dunia Islam serta pakar pendidikan nasional.
+                            Pesantren Al Andalus Ulul Albaab didukung oleh asatidzah profesional lulusan universitas terbaik dunia Islam serta pakar pendidikan nasional.
                         </p>
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-5">

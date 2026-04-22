@@ -33,7 +33,7 @@ export default function TentangPage() {
                         className="inline-flex items-center gap-2 px-4 py-1.5 rounded-pill bg-brand-blue-50 border border-brand-blue-100 text-brand-blue-700 text-xs font-bold uppercase tracking-widest mb-8 shadow-sm"
                     >
                         <Sparkles className="w-3.5 h-3.5" />
-                        <span>Mengenal Ulul Albaab • Angkatan ke-4 Managed by Al-Andalus IIBS</span>
+                        <span>Mengenal Ulul Albaab • Angkatan ke-4 Managed by Al Andalus IIBS</span>
                     </motion.div>
 
                     <motion.h1
@@ -52,7 +52,7 @@ export default function TentangPage() {
                         transition={{ delay: 0.2 }}
                         className="text-base sm:text-lg md:text-xl text-ink-600 max-w-3xl mx-auto leading-relaxed font-medium mb-12 px-4"
                     >
-                        Pesantren Ulul-Albaab Sukabumi, cabang dari Pesantren Islam Internasional Al-Andalus (Jonggol, Bogor) yang bekerjasama dengan Universitas Islam ternama di 3 Benua. Tahun Ajaran 2026/2027 adalah Angkatan ke-4 sejak dikelola AL-Andalus.
+                        Pesantren Ulul Albaab Sukabumi, cabang dari Pesantren Islam Internasional Al Andalus (Jonggol, Bogor) yang bekerjasama dengan Universitas Islam ternama di 3 Benua. Tahun Ajaran 2026/2027 adalah Angkatan ke-4 sejak dikelola AL-Andalus.
                     </motion.p>
                 </Container>
             </section>
@@ -86,7 +86,7 @@ export default function TentangPage() {
                     >
                         <Image
                             src="/images/welcome-selamat-datang.webp"
-                            alt="Selamat Datang di Al-Andalus Ulul Albaab"
+                            alt="Selamat Datang di Al Andalus Ulul Albaab"
                             fill
                             className="object-cover transition-transform duration-1000 group-hover:scale-105"
                         />
@@ -110,7 +110,7 @@ export default function TentangPage() {
                                 <div className="relative w-full h-full rounded-[2rem] md:rounded-[2.5rem] overflow-hidden">
                                     <Image
                                         src="/images/tentang.webp"
-                                        alt="Pesantren Al-Andalus Ulul Albaab"
+                                        alt="Pesantren Al Andalus Ulul Albaab"
                                         fill
                                         className="object-cover"
                                     />
@@ -134,7 +134,7 @@ export default function TentangPage() {
                                         <p className="text-2xl sm:text-3xl md:text-4xl font-black text-ink-950 tracking-tight leading-none mb-1">2026</p>
                                         <p className="text-brand-blue-700 font-bold text-[9px] md:text-[10px] uppercase tracking-widest mb-1.5 md:mb-2">Era Baru</p>
                                         <div className="text-[9px] md:text-[10px] font-bold text-brand-blue-900 bg-brand-blue-50 px-2.5 py-1.5 rounded-lg border border-brand-blue-100 leading-tight">
-                                            Managed by Al-Andalus IIBS
+                                            Managed by Al Andalus IIBS
                                         </div>
                                     </div>
                                 </div>
@@ -166,10 +166,10 @@ export default function TentangPage() {
                             >
                                 <div className="space-y-4 md:space-y-6 text-base md:text-[17px] text-ink-700 font-medium leading-[1.8] text-justify">
                                     <p>
-                                        <span className="text-ink-950 font-black">Pesantren Al-Andalus Ulul Albaab Sukabumi</span> adalah lembaga pendidikan Islam berbasis pesantren modern yang berdiri dan dikelola oleh <span className="text-brand-blue-700 italic font-bold">Pesantren Islam Internasional Al-Andalus</span> (Jonggol, Bogor). Tahun pelajaran 2026/2027 merupakan angkatan ke-4 sejak resmi dikelola Al-Andalus.
+                                        <span className="text-ink-950 font-black">Pesantren Al Andalus Ulul Albaab Sukabumi</span> adalah lembaga pendidikan Islam berbasis pesantren modern yang berdiri dan dikelola oleh <span className="text-brand-blue-700 italic font-bold">Pesantren Islam Internasional Al Andalus</span> (Jonggol, Bogor). Tahun pelajaran 2026/2027 merupakan angkatan ke-4 sejak resmi dikelola Al Andalus.
                                     </p>
                                     <p>
-                                        Al-Andalus telah bekerjasama dengan kampus-kampus Islam ternama di 3 Benua, termasuk Arab Saudi, Mesir, Maroko, dan berbagai Perguruan Tinggi Negeri terbaik dalam negeri. Alumni Ulul Albaab pun diarahkan untuk melanjutkan studi ke universitas-universitas tersebut.
+                                        Al Andalus telah bekerjasama dengan kampus-kampus Islam ternama di 3 Benua, termasuk Arab Saudi, Mesir, Maroko, dan berbagai Perguruan Tinggi Negeri terbaik dalam negeri. Alumni Ulul Albaab pun diarahkan untuk melanjutkan studi ke universitas-universitas tersebut.
                                     </p>
                                     <p>
                                         Pesantren Ulul Albaab memadukan tahfizh Al-Qur'an, kurikulum pendidikan nasional (diknas), kurikulum khas pesantren berbasis Kitab Turots, dan entrepreneurship — semua dengan bahasa pengantar Bahasa Arab.
@@ -199,7 +199,7 @@ export default function TentangPage() {
                                         <ShieldCheck className="w-5 h-5 md:w-6 md:h-6" />
                                     </div>
                                     <h4 className="font-black text-ink-950 text-lg md:text-xl tracking-tighter mb-1">STABIL</h4>
-                                    <p className="text-[9px] md:text-[10px] font-bold text-ink-500 uppercase tracking-widest">Jaringan Al-Andalus</p>
+                                    <p className="text-[9px] md:text-[10px] font-bold text-ink-500 uppercase tracking-widest">Jaringan Al Andalus</p>
                                 </div>
                             </motion.div>
                         </div>
@@ -372,7 +372,7 @@ export default function TentangPage() {
                                 </div>
                                 <div className="flex items-center gap-2 text-brand-yellow-100/70">
                                     <BookOpen className="w-4 h-4 text-yellow-400" />
-                                    <span className="text-[10px] font-bold uppercase tracking-widest">Kurikulum Al-Andalus</span>
+                                    <span className="text-[10px] font-bold uppercase tracking-widest">Kurikulum Al Andalus</span>
                                 </div>
                                 <div className="flex items-center gap-2 text-brand-yellow-100/70">
                                     <Award className="w-4 h-4 text-blue-400" />

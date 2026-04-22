@@ -53,7 +53,7 @@ export default function AboutSection() {
               transition={{ delay: 0.2 }}
               className="section-subtitle text-justify md:text-center"
             >
-              <span className="font-bold text-maroon-900">Pesantren Ulul-Albaab Sukabumi.</span> Lembaga pendidikan Islam berbasis pesantren modern yang mengusung visi Kaderisasi Ummat Rabbani, Cendekia, dan Mandiri — terafiliasi dengan Pesantren Islam Internasional Al-Andalus.
+              <span className="font-bold text-maroon-900">Pesantren Ulul Albaab Sukabumi.</span> Lembaga pendidikan Islam berbasis pesantren modern yang mengusung visi Kaderisasi Ummat Rabbani, Cendekia, dan Mandiri — terafiliasi dengan Pesantren Islam Internasional Al Andalus.
             </motion.p>
           </div>
 

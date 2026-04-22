@@ -73,7 +73,7 @@ const PROGRAMS = [
         id: "sma",
         name: "SMA",
         buttonLabel: "Daftar SMA",
-        fullName: "SMA Pesantren Al-Andalus Ulul Albaab — Langsung 3 Tahun",
+        fullName: "SMA Pesantren Al Andalus Ulul Albaab — Langsung 3 Tahun",
         description: "Untuk santri yang sudah hafal minimal 5 juz mutqin dan lancar berbahasa Arab. Masuk langsung ke jenjang SMA pesantren selama 3 tahun tanpa tahun persiapan bahasa. Berbeda dari jalur IL yang membutuhkan 4 tahun total.",
         stats: [
             { label: "Durasi", value: "3 Tahun", icon: Clock },

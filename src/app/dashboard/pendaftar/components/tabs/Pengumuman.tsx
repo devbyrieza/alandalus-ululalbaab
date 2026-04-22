@@ -175,7 +175,7 @@ export default function PengumumanTab() {
                 </div>
               </div>
               <p className="text-emerald-50/90 mb-10 max-w-xl text-lg leading-relaxed">
-                Berdasarkan hasil seleksi, Anda dinyatakan <strong>LULUS DITERIMA</strong> sebagai santri baru PP Al-Andalus Ulul Albaab.
+                Berdasarkan hasil seleksi, Anda dinyatakan <strong>LULUS DITERIMA</strong> sebagai santri baru PP Al Andalus Ulul Albaab.
               </p>
  
               <button

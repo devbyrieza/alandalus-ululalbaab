@@ -17,7 +17,7 @@ export interface PendaftarPdfData {
     lokasi_ujian?: string;
 }
 
-const BRAND_NAME = "Pesantren Al-Andalus Ulul Albaab";
+const BRAND_NAME = "Pesantren Al Andalus Ulul Albaab";
 const BRAND_SUBTITLE = "Penerimaan Santri Baru (PPDB)";
 const BRAND_ADDRESS = "Jl. Karamat No. 123, Gunungpuyuh, Kota Sukabumi, Jawa Barat";
 
@@ -153,7 +153,7 @@ export const generateKartuUjian = (data: PendaftarPdfData) => {
     // Admin Signature Space
     doc.setFontSize(10);
     doc.text("Panitia PPDB,", pageWidth - 60, finalY);
-    doc.text("Ponpes Al-Andalus Ulul Albaab", pageWidth - 60, finalY + 5);
+    doc.text("Ponpes Al Andalus Ulul Albaab", pageWidth - 60, finalY + 5);
     doc.text("(............................)", pageWidth - 60, finalY + 30);
 
     drawFooter(doc);
@@ -234,7 +234,7 @@ export const generateSuratKelulusan = async (data: PendaftarPdfData) => {
     doc.setFont("helvetica", "normal");
     doc.setFontSize(11);
     
-    let closing = "Selamat bergabung menjadi keluarga besar Pesantren Al-Andalus Ulul Albaab. Silakan segera melakukan proses daftar ulang sesuai jadwal yang ditentukan.";
+    let closing = "Selamat bergabung menjadi keluarga besar Pesantren Al Andalus Ulul Albaab. Silakan segera melakukan proses daftar ulang sesuai jadwal yang ditentukan.";
     if (statusText === "CADANGAN") closing = "Anda masuk dalam daftar cadangan. Panitia akan menghubungi Anda jika terdapat kuota yang kosong.";
     if (statusText === "BELUM DITERIMA") closing = "Tetap semangat dan jangan berkecil hati. Anda dapat kembali mendaftar pada gelombang atau periode berikutnya.";
     

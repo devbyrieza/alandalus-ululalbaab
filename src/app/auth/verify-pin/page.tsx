@@ -171,7 +171,7 @@ function VerifyPinContent() {
                         
                         <div className="mt-10 pt-8 border-t border-stone-50">
                              <p className="text-[10px] text-stone-300 font-medium uppercase tracking-widest">
-                                Pesantren Al-Andalus Ulul Albaab
+                                Pesantren Al Andalus Ulul Albaab
                              </p>
                         </div>
                     </div>

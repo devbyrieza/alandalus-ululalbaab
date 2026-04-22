@@ -73,7 +73,7 @@ export default function GaleriPage() {
             transition={{ delay: 0.2 }}
             className="text-xl md:text-2xl text-ink-600 max-w-3xl mx-auto leading-relaxed font-medium"
           >
-            Koleksi foto suasana, fasilitas, dan kegiatan santri di Pesantren Al-Andalus Ulul Albaab.
+            Koleksi foto suasana, fasilitas, dan kegiatan santri di Pesantren Al Andalus Ulul Albaab.
           </motion.p>
         </Container>
       </section>

@@ -212,7 +212,7 @@ function PPDBContent() {
               transition={{ delay: 0.2 }}
               className="text-xl md:text-2xl text-ink-600 max-w-3xl mx-auto leading-relaxed font-medium mb-10"
             >
-              Bergabunglah dengan Pesantren Al-Andalus Ulul Albaab. Lingkungan yang kondusif untuk mencetak Hafidz Qur'an yang berwawasan luas dan berakhlak mulia.
+              Bergabunglah dengan Pesantren Al Andalus Ulul Albaab. Lingkungan yang kondusif untuk mencetak Hafidz Qur'an yang berwawasan luas dan berakhlak mulia.
             </motion.p>
 
             <motion.div
@@ -417,7 +417,7 @@ function PPDBContent() {
                   <h3 className="text-2xl md:text-3xl font-display font-black mb-8 md:mb-10 text-white tracking-tight text-center lg:text-left">Kenapa Pilih Kami?</h3>
                   <div className="grid gap-4 md:gap-6">
                     {[
-                      { icon: BookOpen, title: "Kurikulum Mutakhir", desc: "Perpaduan kurikulum Nasional & kurikulum khas Al-Andalus." },
+                      { icon: BookOpen, title: "Kurikulum Mutakhir", desc: "Perpaduan kurikulum Nasional & kurikulum khas Al Andalus." },
                       { icon: GraduationCap, title: "Guru Berkompeten", desc: "Alumni Perguruan Tinggi Terbaik Dalam & Luar Negeri serta Pondok Pesantren Unggulan." },
                       { icon: MapPin, title: "Lingkungan Asri", desc: "Suasana belajar yang tenang & udara bersih." },
                     ].map((feat, i) => {
@@ -444,7 +444,7 @@ function PPDBContent() {
                   {[
                     {
                       q: "Apakah santri wajib asrama?",
-                      a: "Ya, seluruh santri di Pesantren Al-Andalus Ulul Albaab wajib tinggal di asrama untuk mengikuti seluruh rangkaian kegiatan tarbiyah, halaqah tahfidz, dan pembelajaran kitab turots secara maksimal."
+                      a: "Ya, seluruh santri di Pesantren Al Andalus Ulul Albaab wajib tinggal di asrama untuk mengikuti seluruh rangkaian kegiatan tarbiyah, halaqah tahfidz, dan pembelajaran kitab turots secara maksimal."
                     },
                     {
                       q: "Kapan batas akhir pendaftaran PPDB 2026/2027?",

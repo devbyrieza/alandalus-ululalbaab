@@ -23,8 +23,8 @@ import {
   ShieldCheck,
   Bell,
   Search,
-  School
 } from "lucide-react";
+import { BRANDING } from "@/config/branding";
 import Link from "next/link";
 import IdleTimeoutTracker from "@/components/auth/IdleTimeoutTracker";
 import {
@@ -255,7 +255,7 @@ export default function DashboardLayout({
               <User className="w-6 h-6 text-brand-blue-700" />
             </div>
           </div>
-          <h1 className="text-3xl font-serif font-black uppercase text-brand-blue-950 mb-2">Pondok Pesantren Al-Andalus Ulul Albaab</h1>
+          <h1 className="text-3xl font-serif font-black uppercase text-brand-blue-950 mb-2">Pondok Pesantren Al Andalus Ulul Albaab</h1>
           <p className="text-ink-500 text-sm">Mohon tunggu sebentar...</p>
         </div>
       </div>
@@ -274,7 +274,7 @@ export default function DashboardLayout({
               <Menu className="w-6 h-6" />
             </button>
             <div className="flex flex-col">
-              <span className="text-[9px] sm:text-[10px] uppercase font-black tracking-widest text-ink-400 mb-0.5" style={{ display: 'none' }}>PPDB Al-Andalus Ulul Albaab</span>
+              <span className="text-[9px] sm:text-[10px] uppercase font-black tracking-widest text-ink-400 mb-0.5" style={{ display: 'none' }}>PPDB Al Andalus Ulul Albaab</span>
               <span className="text-sm sm:text-base font-black text-brand-blue-950 leading-none">Portal Santri</span>
             </div>
           </div>
@@ -296,11 +296,11 @@ export default function DashboardLayout({
               {/* Brand */}
               <div className="px-6 pt-8 pb-6 border-b border-brand-yellow-100/50 mb-2">
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 h-10 rounded-2xl bg-linear-to-br from-brand-blue-700 to-brand-blue-900 flex items-center justify-center text-white shadow-md border border-brand-blue-800 ring-4 ring-brand-yellow-50">
-                    <School className="w-5 h-5" />
+                  <div className="w-10 h-10 rounded-2xl bg-white flex items-center justify-center shadow-md ring-4 ring-brand-yellow-50 overflow-hidden">
+                    <img src={BRANDING.logoPath} alt="Logo" className="w-full h-full object-contain p-1" />
                   </div>
                   <div>
-                    <h1 className="font-black text-xl text-brand-blue-950 leading-none tracking-tight">PPDB <span className="text-brand-blue-700">Al-Andalus Ulul Albaab</span></h1>
+                    <h1 className="font-black text-xl text-brand-blue-950 leading-none tracking-tight">PPDB <span className="text-brand-blue-700">Al Andalus Ulul Albaab</span></h1>
                     <p className="text-[10px] text-ink-500 font-bold mt-1 uppercase tracking-widest">Tahun 2026/2027</p>
                   </div>
                 </div>
@@ -339,7 +339,7 @@ export default function DashboardLayout({
                   <span>Keluar Akun</span>
                 </button>
                 <p className="text-[10px] text-center text-ink-600 mt-4">
-                  &copy; 2026 Ponpes Al-Andalus Ulul Albaab
+                  &copy; 2026 Ponpes Al Andalus Ulul Albaab
                 </p>
               </div>
             </div>
@@ -353,10 +353,10 @@ export default function DashboardLayout({
               <div className="flex flex-col h-full overflow-hidden">
                 <div className="p-6 border-b border-surface-100 flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-brand-blue-800 flex items-center justify-center text-white">
-                      <School className="w-5 h-5" />
+                    <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-sm overflow-hidden">
+                      <img src={BRANDING.logoPath} alt="Logo" className="w-full h-full object-contain p-1" />
                     </div>
-                    <span className="font-black text-lg text-brand-blue-950 tracking-tight">PPDB Al-Andalus Ulul Albaab</span>
+                    <span className="font-black text-lg text-brand-blue-950 tracking-tight">PPDB Al Andalus Ulul Albaab</span>
                   </div>
                   <button onClick={() => setSidebarOpen(false)} className="p-2 text-ink-400 hover:text-brand-blue-700 bg-brand-yellow-50 rounded-full">
                     <X className="w-5 h-5" />

@@ -47,7 +47,7 @@ export default function HeroSection() {
                 className="inline-flex items-center gap-2 px-4 py-2 mt-4 lg:mt-0 rounded-pill bg-white border border-cream-200 shadow-sm text-brand-blue-700 text-[10px] lg:text-xs font-bold uppercase tracking-widest mx-auto lg:mx-0"
               >
                 <Sparkles className="w-3.5 h-3.5 text-cream-500" />
-                <span>Angkatan ke-4 • Managed by Al-Andalus IIBS</span>
+                <span>Angkatan ke-4 • Managed by Al Andalus IIBS</span>
               </motion.div>
 
               <h1 className="leading-[1.15] tracking-tight mx-auto lg:mx-0 max-w-2xl lg:max-w-none text-maroon-900 font-black">
@@ -57,7 +57,7 @@ export default function HeroSection() {
               </h1>
 
               <p className="text-base lg:text-lg leading-relaxed max-w-2xl mx-auto lg:mx-0 font-medium font-sans text-ink-600 text-center lg:text-left">
-                Pesantren Ulul-Albaab Sukabumi — pendidikan berbasis <span className="font-bold text-maroon-800">Kitab Turots, Tahfizh Al-Qur'an, dan Entrepreneurship</span> dengan bahasa pengantar Bahasa Arab.
+                Pesantren Ulul Albaab Sukabumi — pendidikan berbasis <span className="font-bold text-maroon-800">Kitab Turots, Tahfizh Al-Qur'an, dan Entrepreneurship</span> dengan bahasa pengantar Bahasa Arab.
               </p>
 
               <div className="mt-4 pt-4 border-t border-cream-200/50">
@@ -93,7 +93,7 @@ export default function HeroSection() {
                   ))}
                 </div>
                 <p className="text-xs font-semibold text-ink-600">
-                  <span className="text-brand-blue-700 font-bold uppercase tracking-wider">Angkatan ke-4</span> • Managed by Al-Andalus IIBS
+                  <span className="text-brand-blue-700 font-bold uppercase tracking-wider">Angkatan ke-4</span> • Managed by Al Andalus IIBS
                 </p>
               </div>
             </div>

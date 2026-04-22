@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Link from "next/link";
 import {
@@ -30,7 +30,7 @@ export default function Footer() {
           <div className="lg:col-span-1 space-y-8">
             <Link href="/" className="flex items-center gap-4">
               <div className="w-12 h-12 rounded-2xl flex items-center justify-center bg-brand-yellow-50 text-brand-blue-950 shadow-md overflow-hidden">
-                <img src={BRANDING.logoPath} alt={`Logo ${BRANDING.schoolName}`} className="w-full h-full object-cover" />
+                <img src={BRANDING.logoPath} alt={`Logo ${BRANDING.schoolName}`} className="w-full h-full object-contain p-1" />
               </div>
               <div>
                 <h3 className="text-xl font-black text-white tracking-tight leading-none">{BRANDING.schoolName}</h3>
@@ -38,7 +38,7 @@ export default function Footer() {
               </div>
             </Link>
             <p className="text-brand-yellow-100/80 font-medium leading-relaxed max-w-xs text-justify">
-              Membangun generasi Qur&apos;ani yang cerdas &amp; berakhlak mulia melalui sistem terintegrasi Al-Andalus.
+              Membangun generasi Qur&apos;ani yang cerdas &amp; berakhlak mulia melalui sistem terintegrasi Al Andalus.
             </p>
             <div className="flex gap-3">
               {[Instagram, Youtube, Facebook, Twitter].map((Icon, i) => (

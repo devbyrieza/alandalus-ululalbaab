@@ -6,8 +6,8 @@
 export const PPDB_CONFIG = {
   // 🏫 INFO PESANTREN (GANTI INI DULU!)
   pesantren: {
-    nama: "Pesantren Al-Andalus Ulul Albaab",
-    singkatan: "Al-Andalus Ulul Albaab",
+    nama: "Pesantren Al Andalus Ulul Albaab",
+    singkatan: "Al Andalus Ulul Albaab",
     alamat: "Jl. KH Mama Oyon, Cihaur, Kec. Cicantayan, Kabupaten Sukabumi, Jawa Barat 43155",
     telepon: "+62 888-0993-4970",
     email: "alandalus.ululalbaab@gmail.com",
@@ -104,13 +104,13 @@ export const PPDB_CONFIG = {
   contact: {
     whatsapp: "+6288809934970",
     instagram: "@pesantrenululalbaab",
-    facebook: "Pesantren Al-Andalus Ulul Albaab (Official Fanpage)",
-    youtube: "Al-Andalus Ulul Albaab"
+    facebook: "Pesantren Al Andalus Ulul Albaab (Official Fanpage)",
+    youtube: "Al Andalus Ulul Albaab"
   },
 
   // ⚙️ SETTING TEKNIS (UMUMNYA TIDAK PERLU DIUBAH)
   technical: {
-    appName: "PPDB Al-Andalus Ulul Albaab",
+    appName: "PPDB Al Andalus Ulul Albaab",
     appDescription: "Sistem Penerimaan Peserta Didik Baru",
     version: "2.0.0",
     author: "Rieza Eka Tomara"

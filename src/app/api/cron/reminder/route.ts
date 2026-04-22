@@ -88,7 +88,7 @@ export async function GET(request: Request) {
 
             const lokasi = googleMeetLink 
                 ? (googleMeetLink.startsWith("http") ? googleMeetLink : `${jadwal.exam_session?.location || "Online"} (${googleMeetLink})`)
-                : (jadwal.exam_session?.location || "Pesantren Al-Andalus Ulul Albaab");
+                : (jadwal.exam_session?.location || "Pesantren Al Andalus Ulul Albaab");
 
             // 1. Enqueue for Santri
             if (jadwal.pendaftar.no_hp) {

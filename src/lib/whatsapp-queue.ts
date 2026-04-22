@@ -573,7 +573,7 @@ export function buildMessageRegistrationSuccess(
 
 Assalamu'alaikum ${nama},
 
-Alhamdulillah, pendaftaran Anda di Pesantren Al-Andalus Ulul Albaab telah berhasil!
+Alhamdulillah, pendaftaran Anda di Pesantren Al Andalus Ulul Albaab telah berhasil!
 
 📋 *Detail Pendaftaran:*
 • Nomor Pendaftaran: ${nomor_pendaftaran}
@@ -590,7 +590,7 @@ Alhamdulillah, pendaftaran Anda di Pesantren Al-Andalus Ulul Albaab telah berhas
 Hubungi kami di 0851-1152-4441
 
 Jazakumullahu khairan,
-Panitia PPDB Al-Andalus Ulul Albaab`;
+Panitia PPDB Al Andalus Ulul Albaab`;
 }
 
 export function buildMessageDocumentVerified(nama: string, dokumenList: string): string {
@@ -609,7 +609,7 @@ Silakan pilih jadwal tes masuk melalui dashboard Anda (Menu Jadwal Ujian).
 Dashboard: ${process.env.NEXT_PUBLIC_APP_URL || DEFAULT_APP_URL}/dashboard/pendaftar/undangan-seleksi
 
 Jazakumullahu khairan,
-Panitia PPDB Al-Andalus Ulul Albaab`;
+Panitia PPDB Al Andalus Ulul Albaab`;
 }
 
 export function buildMessageDocumentRejected(nama: string, dokumenList: string, catatan: string): string {
@@ -634,7 +634,7 @@ ${catatan}
 Hubungi kami di 0851-1152-4441
 
 Jazakumullahu khairan,
-Panitia PPDB Al-Andalus Ulul Albaab`;
+Panitia PPDB Al Andalus Ulul Albaab`;
 }
 
 export function buildMessagePaymentVerified(nama: string, jumlah: string, metode: string, tanggal: string): string {
@@ -656,7 +656,7 @@ Setelah data lengkap, Anda bisa memilih jadwal tes.
 Dashboard: ${process.env.NEXT_PUBLIC_APP_URL || DEFAULT_APP_URL}/dashboard/pendaftar/kelengkapan-berkas
 
 Jazakumullahu khairan,
-Panitia PPDB Al-Andalus Ulul Albaab`;
+Panitia PPDB Al Andalus Ulul Albaab`;
 }
 
 export function buildMessagePaymentRejected(nama: string, catatan: string): string {
@@ -678,13 +678,13 @@ ${catatan}
 Hubungi kami di 0851-1152-4441
 
 Jazakumullahu khairan,
-Panitia PPDB Al-Andalus Ulul Albaab`;
+Panitia PPDB Al Andalus Ulul Albaab`;
 }
 
 export function buildMessageJadwalBelum(nama: string): string {
     return `${pickOpening()} ${nama},
 
-Terima kasih telah mendaftar di Pesantren Al-Andalus Ulul Albaab.
+Terima kasih telah mendaftar di Pesantren Al Andalus Ulul Albaab.
 
 Saat ini jadwal tes lanjutan (Tes Al-Qur'an, Wawancara Calsan, dan Wawancara Cawalsan Santri) belum tersedia. Mohon bersabar, kami akan menginformasikan kembali begitu jadwal sudah siap.
 
@@ -720,7 +720,7 @@ Panitia PPDB Ulul Albaab`;
 export function buildMessageJadwalLangsungTersedia(nama: string): string {
     return `${pickOpening()} ${nama},
 
-Terima kasih telah mencapai tahap Seleksi Pesantren Al-Andalus Ulul Albaab.
+Terima kasih telah mencapai tahap Seleksi Pesantren Al Andalus Ulul Albaab.
 
 Saat ini **jadwal tes lanjutan sudah tersedia dan bisa langsung Anda pilih**.
 
@@ -926,7 +926,7 @@ Ini adalah pengingat bahwa Anda dijadwalkan mengikuti *${jenisUjian}* pada:
 Mohon persiapkan diri dengan baik dan pastikan koneksi internet stabil jika ujian online. Sampai jumpa!
 
 ---
-*Panitia PPDB Al-Andalus Ulul Albaab*`;
+*Panitia PPDB Al Andalus Ulul Albaab*`;
 }
 
 /**
@@ -981,7 +981,7 @@ Mengingatkan jadwal ${isWawancara ? "wawancara" : "menguji"} Anda:
 Mohon kehadirannya tepat waktu. Syukron.
 
 ---
-*Sistem PPDB Al-Andalus Ulul Albaab*`;
+*Sistem PPDB Al Andalus Ulul Albaab*`;
 }
 
 export function buildMessagePembatalanJadwal(
@@ -1007,5 +1007,5 @@ Mohon segera login ke Dashboard PPDB untuk memilih kembali jadwal pengganti yang
 Dashboard: ${process.env.NEXT_PUBLIC_APP_URL || 'https://pesantren-ululalbaab.com'}/dashboard/pendaftar/undangan-seleksi
 
 ---
-*Panitia PPDB Al-Andalus Ulul Albaab*`;
+*Panitia PPDB Al Andalus Ulul Albaab*`;
 }

@@ -57,7 +57,7 @@ export default function ExamCardPage() {
                         jenis_ujian: j.jenis_ujian,
                         tanggal_ujian: new Date(j.tanggal_ujian).toLocaleDateString('id-ID'),
                         waktu: j.waktu_mulai.substring(0, 5),
-                        lokasi: j.lokasi || 'Pesantren Al-Andalus Ulul Albaab'
+                        lokasi: j.lokasi || 'Pesantren Al Andalus Ulul Albaab'
                     })) || []
                 };
 

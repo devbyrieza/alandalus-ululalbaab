@@ -8,45 +8,45 @@ const TESTIMONIALS = [
   {
     no: "001",
     name: "Bpk. Surwanto",
-    role: "Wali Santri Al-Andalus Pusat",
+    role: "Wali Santri Al Andalus Pusat",
     city: "Sukoharjo, Jawa Tengah",
     initial: "S",
     date: "Oktober 2024",
     quote:
-      "Tujuan kami menyekolahkan anak ke Al-Andalus Pusat adalah agar mereka benar-benar paham agama. Alhamdulillah, sistem Al-Andalus memberikan perubahan nyata pada anak kami — cara bicara, sikap, dan keseriusannya dalam ibadah.",
+      "Tujuan kami menyekolahkan anak ke Al Andalus Pusat adalah agar mereka benar-benar paham agama. Alhamdulillah, sistem Al Andalus memberikan perubahan nyata pada anak kami — cara bicara, sikap, dan keseriusannya dalam ibadah.",
     color: "maroon"
   },
   {
     no: "002",
     name: "Ibu Endah Wulandari",
-    role: "Wali Santri Al-Andalus Pusat",
+    role: "Wali Santri Al Andalus Pusat",
     city: "Kebumen, Jawa Tengah",
     initial: "E",
     date: "Januari 2025",
     quote:
-      "Awalnya saya khawatir dengan sistem boarding, namun kurikulum tahfidz di Al-Andalus Jonggol sangat sistematis. Dalam 6 bulan, anak saya sudah mampu memimpin shalat berjamaah di rumah dengan makhraj yang benar.",
+      "Awalnya saya khawatir dengan sistem boarding, namun kurikulum tahfidz di Al Andalus Jonggol sangat sistematis. Dalam 6 bulan, anak saya sudah mampu memimpin shalat berjamaah di rumah dengan makhraj yang benar.",
     color: "cream"
   },
   {
     no: "003",
     name: "Muhammad Razan",
-    role: "Alumni Al-Andalus Jonggol",
+    role: "Alumni Al Andalus Jonggol",
     city: "Purwokerto, Jawa Tengah",
     initial: "R",
     date: "Maret 2025",
     quote:
-      "Disiplin bahasa Arab dan hafalan Al-Qur'an di Al-Andalus sangat membantu saat saya melanjutkan pendidikan tinggi. Saat teman-teman lain masih belajar dasar nahwu, saya sudah bisa langsung membaca kitab.",
+      "Disiplin bahasa Arab dan hafalan Al-Qur'an di Al Andalus sangat membantu saat saya melanjutkan pendidikan tinggi. Saat teman-teman lain masih belajar dasar nahwu, saya sudah bisa langsung membaca kitab.",
     color: "gold"
   },
   {
     no: "004",
     name: "Faisal Ahmad",
-    role: "Alumni Al-Andalus Jonggol",
+    role: "Alumni Al Andalus Jonggol",
     city: "Cilacap, Jawa Tengah",
     initial: "A",
     date: "Agustus 2024",
     quote:
-      "Berkat bimbingan intensif para asatidz di Pesantren Al-Andalus Pusat, saya berhasil lulus seleksi masuk universitas di Timur Tengah. Fondasi bahasa Arab aktif yang ditanamkan benar-benar menjadi kunci.",
+      "Berkat bimbingan intensif para asatidz di Pesantren Al Andalus Pusat, saya berhasil lulus seleksi masuk universitas di Timur Tengah. Fondasi bahasa Arab aktif yang ditanamkan benar-benar menjadi kunci.",
     color: "teal"
   },
 ] as const;
@@ -120,7 +120,7 @@ export default function TestimonialsSection() {
             className="inline-flex items-center gap-2 px-4 py-1.5 rounded-pill bg-white border border-cream-200 text-maroon-700 text-xs font-bold uppercase tracking-widest mb-6 shadow-sm"
           >
             <MessageCircle className="w-3.5 h-3.5" />
-            <span>Reputasi Al-Andalus Pusat (Jonggol)</span>
+            <span>Reputasi Al Andalus Pusat (Jonggol)</span>
           </motion.div>
 
           <motion.h2
@@ -130,7 +130,7 @@ export default function TestimonialsSection() {
             transition={{ delay: 0.1 }}
             className="section-title mb-6"
           >
-            Cerita Keberhasilan <span className="text-gradient-maroon">Keluarga Al-Andalus</span>
+            Cerita Keberhasilan <span className="text-gradient-maroon">Keluarga Al Andalus</span>
           </motion.h2>
 
           <motion.p
@@ -140,7 +140,7 @@ export default function TestimonialsSection() {
             transition={{ delay: 0.2 }}
             className="section-subtitle mb-6"
           >
-            Ulul Albaab menerapkan standar keunggulan dan sistem yang sama dengan Pesantren Al-Andalus Pusat (Jonggol) International Islamic Boarding School.
+            Ulul Albaab menerapkan standar keunggulan dan sistem yang sama dengan Pesantren Al Andalus Pusat (Jonggol) International Islamic Boarding School.
           </motion.p>
 
           <motion.div

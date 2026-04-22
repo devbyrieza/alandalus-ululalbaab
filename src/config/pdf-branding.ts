@@ -1,13 +1,13 @@
 /**
  * Single Source of Truth for Institutional PDF Branding
  * "Locked" specifications for headers, lines, and signatures.
- * PP Al-Andalus Ulul Albaab
+ * PP Al Andalus Ulul Albaab
  */
 
 export const PDF_BRANDING = {
     // Institution Labels
     institution: {
-        name: "PESANTREN AL-ANDALUS ULUL ALBAAB",
+        name: "PESANTREN AL ANDALUS ULUL ALBAAB",
         subtitle: "Pesantren Ulul Albaab Managed by Andalus",
         committee: "PANITIA PENERIMAAN SANTRI BARU",
         academic_year: "2026-2027",
@@ -46,7 +46,7 @@ export const PDF_BRANDING = {
 
     // Official Mudir / Authority
     authority: {
-        name: "Mudir PP Al-Andalus Ulul Albaab",
+        name: "Mudir PP Al Andalus Ulul Albaab",
         role: "Mudir",
         city: "Sukabumi"
     }
