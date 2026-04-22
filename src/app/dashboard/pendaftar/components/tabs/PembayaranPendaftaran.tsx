@@ -885,70 +885,84 @@ export default function PembayaranPendaftaranTab({
                 {/* CARD 2: BSI MANUAL */}
                 <div
                   onClick={() => setActivePaymentMethod('manual')}
-                  className={`relative group bg-white rounded-[2.5rem] p-8 border-2 transition-all cursor-pointer shadow-lg hover:-translate-y-1 hover:shadow-xl ${activePaymentMethod === 'manual'
-                    ? 'border-maroon-600 ring-4 ring-maroon-600/10 shadow-maroon-600/10'
-                    : 'border-white hover:border-maroon-300'
+                  className={`relative group bg-white rounded-[2.5rem] p-8 border-2 transition-all cursor-pointer shadow-lg hover:-translate-y-2 hover:shadow-2xl overflow-hidden ${activePaymentMethod === 'manual'
+                    ? 'border-teal-500 ring-4 ring-teal-500/10 shadow-teal-500/10'
+                    : 'border-white hover:border-teal-300 shadow-sm'
                     }`}
                 >
+                  {/* Background Decor - BSI Teal Circle */}
+                  <div className={`absolute -top-10 -right-10 w-40 h-40 rounded-full transition-all duration-500 blur-2xl -z-0 ${
+                    activePaymentMethod === 'manual' ? 'bg-teal-100/60 scale-125' : 'bg-teal-50/50 group-hover:bg-teal-100/40'
+                  }`} />
+
                   {activePaymentMethod === 'manual' && (
-                    <div className="absolute top-6 right-6 lg:right-8">
-                      <div className="w-8 h-8 bg-maroon-600 rounded-full flex items-center justify-center animate-in zoom-in">
+                    <div className="absolute top-6 right-6 lg:right-8 z-20">
+                      <div className="w-8 h-8 bg-teal-600 rounded-full flex items-center justify-center animate-in zoom-in shadow-lg shadow-teal-600/30">
                         <Check className="w-5 h-5 text-white" />
                       </div>
                     </div>
                   )}
 
                   {/* Recommendation Badge */}
-                  <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-maroon-600 to-cream-500 text-white text-sm font-bold px-6 py-2 rounded-full shadow-lg shadow-maroon-600/30 z-20 flex items-center gap-2">
-                    <StarIcon className="w-4 h-4 fill-white" />
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-teal-600 to-emerald-500 text-white text-[10px] sm:text-xs font-black px-5 py-1.5 rounded-full shadow-lg shadow-teal-600/30 z-20 flex items-center gap-1.5 uppercase tracking-wider">
+                    <StarIcon className="w-3.5 h-3.5 fill-white" />
                     Rekomendasi
                   </div>
 
                   <div className="relative z-10 flex flex-col h-full pt-4">
                     <div className="mb-6">
-                      <div className="w-16 h-16 bg-cream-50 rounded-2xl flex items-center justify-center mb-6 shadow-sm text-maroon-700">
-                        <Building2 className="w-8 h-8" />
+                      <div className="h-16 flex items-center justify-start mb-6">
+                        <img 
+                          src="/images/bsi-logo.png" 
+                          alt="BSI Logo" 
+                          className="h-full w-auto object-contain drop-shadow-sm transition-transform group-hover:scale-105" 
+                        />
                       </div>
-                      <h4 className="font-bold text-maroon-700 uppercase tracking-widest text-xs mb-2">Transfer Manual</h4>
+                      <h4 className="font-bold text-teal-700 uppercase tracking-widest text-[10px] mb-2">Transfer Manual</h4>
                       <h3 className="font-black text-2xl text-ink-900 mb-2">Bank BSI</h3>
 
-
-                      <div className="inline-block bg-cream-100 text-maroon-900 text-xs font-bold px-3 py-1 rounded-full mb-6">
-                        Manual Check
+                      <div className="inline-block bg-teal-50 text-teal-700 text-[10px] font-bold px-3 py-1 rounded-lg mb-6 border border-teal-100">
+                        Pengecekan Manual (± 24 Jam)
                       </div>
 
                       <ul className="space-y-3 mb-8">
                         {[
                           "Transfer ke Rekening Pesantren",
-                          "Verifikasi Admin (1x24 Jam)",
-                          "Aman & Terpercaya",
-                          "Upload Bukti Transfer"
+                          "Verifikasi Tim Admin Kami",
+                          "Terjamin Aman & Amanah",
+                          "Unggah Bukti Transfer"
                         ].map((item, idx) => (
                           <li key={idx} className="flex items-start gap-3 text-ink-600 text-sm font-medium">
-                            <div className="w-5 h-5 rounded-full bg-cream-100 flex items-center justify-center shrink-0 mt-0.5">
-                              <Check className="w-3 h-3 text-maroon-700" />
+                            <div className="w-5 h-5 rounded-full bg-teal-50 flex items-center justify-center shrink-0 mt-0.5 border border-teal-100">
+                              <Check className="w-3 h-3 text-teal-600" />
                             </div>
-                            {item}
+                            <span>{item}</span>
                           </li>
                         ))}
                       </ul>
                     </div>
 
                     <div className="mt-auto">
-                      <button className={`w-full py-4 rounded-xl font-black transition-all flex items-center justify-center gap-2 ${activePaymentMethod === 'manual'
-                        ? 'bg-cream-400 text-maroon-950 hover:bg-cream-300 shadow-lg shadow-cream-400/20 border border-cream-500'
-                        : 'bg-cream-50 text-maroon-800 hover:bg-cream-100'
+                      <button className={`w-full py-4 rounded-2xl font-black transition-all flex items-center justify-center gap-2 ${activePaymentMethod === 'manual'
+                        ? 'bg-teal-600 text-white hover:bg-teal-700 shadow-xl shadow-teal-600/20'
+                        : 'bg-surface-50 text-teal-800 hover:bg-teal-50 group-hover:bg-teal-600 group-hover:text-white'
                         }`}>
                         {activePaymentMethod === 'manual' ? (
                           <>
-                            <Check className="w-5 h-5" />
-                            <span>Metode Dipilih</span>
+                            <CheckCircle className="w-5 h-5" />
+                            <span>Metode Aktif</span>
                           </>
-                        ) : "Pilih Metode Ini"}
+                        ) : (
+                          <>
+                            <span>Pilih Metode Ini</span>
+                            <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all" />
+                          </>
+                        )}
                       </button>
                     </div>
                   </div>
                 </div>
+
               </div>
 
               {/* DETAIL & UPLOAD SECTION (SHOWN BELOW GRID) */}
@@ -962,39 +976,48 @@ export default function PembayaranPendaftaranTab({
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 items-stretch">
                       {/* LEFT COLUMN: BANK INFO */}
-                      <div className="bg-gradient-to-br from-cream-50 to-white border border-cream-100 rounded-[2.5rem] p-8 shadow-sm relative overflow-hidden flex flex-col justify-between">
-                        <div className="absolute top-0 right-0 w-64 h-64 bg-cream-100/50 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+                      <div className="bg-gradient-to-br from-teal-600 to-teal-800 border border-teal-500 rounded-[2.5rem] p-8 shadow-xl relative overflow-hidden flex flex-col justify-between text-white group/card">
+                        <div className="absolute top-0 right-0 w-80 h-80 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+                        <div className="absolute bottom-0 left-0 w-40 h-40 bg-teal-400/20 rounded-full blur-2xl translate-y-1/2 -translate-x-1/2 pointer-events-none" />
 
                         <div className="relative z-10">
-                          <div className="flex justify-between items-start mb-8">
+                          <div className="flex justify-between items-start mb-10">
                             <div>
-                              <p className="text-xs font-bold text-maroon-700 uppercase tracking-widest mb-2">Bank Syariah Indonesia (BSI)</p>
+                              <p className="text-[10px] font-black text-teal-100 uppercase tracking-[0.2em] mb-3 opacity-90">Bank Syariah Indonesia (BSI)</p>
+                              <img src="/images/bsi-logo.png" alt="BSI" className="h-10 w-auto brightness-0 invert" />
                             </div>
-                            <div className="bg-white p-3 rounded-2xl shadow-sm border border-cream-100 flex items-center justify-center text-maroon-700">
+                            <div className="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/20 shadow-sm flex items-center justify-center text-white">
                               <Building2 className="w-8 h-8" />
                             </div>
                           </div>
 
-                          <div className="mb-8">
-                            <div className="flex flex-wrap items-center gap-4 mb-2">
-                              <h4 className="font-black text-3xl sm:text-4xl md:text-5xl text-ink-900 tracking-tight break-all">{BANK_INFO.nomor_rekening}</h4>
-                              <CopyButton text={BANK_INFO.nomor_rekening} label="Salin" />
+                          <div className="mb-10">
+                            <p className="text-xs font-bold text-teal-100 mb-3 opacity-80 uppercase tracking-widest">Nomor Rekening</p>
+                            <div className="flex flex-wrap items-center gap-4 mb-4">
+                              <h4 className="font-black text-4xl sm:text-5xl text-white tracking-tighter drop-shadow-sm break-all">{BANK_INFO.nomor_rekening}</h4>
+                              <div className="bg-teal-500/30 hover:bg-teal-500/50 transition-colors p-1 rounded-xl backdrop-blur-sm">
+                                <CopyButton text={BANK_INFO.nomor_rekening} label="Salin" />
+                              </div>
                             </div>
-                            <p className="text-lg font-bold text-ink-500">a.n {BANK_INFO.atas_nama}</p>
+                            <div className="flex flex-col gap-1">
+                              <p className="text-[10px] font-bold text-teal-100 uppercase opacity-80">Atas Nama</p>
+                              <p className="text-xl font-bold text-white tracking-tight">{BANK_INFO.atas_nama}</p>
+                            </div>
                           </div>
                         </div>
 
-                        <div className="mt-auto relative z-10">
-                          <div className="flex items-start gap-4 bg-white/80 p-5 rounded-2xl border border-cream-100 backdrop-blur-sm shadow-sm">
-                            <div className="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center shrink-0">
-                              <AlertCircle className="w-5 h-5 text-amber-600" />
+                        <div className="mt-8 relative z-10">
+                          <div className="flex items-start gap-4 bg-black/10 p-5 rounded-2xl border border-white/10 backdrop-blur-md shadow-inner">
+                            <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center shrink-0 border border-white/10">
+                              <Info className="w-5 h-5 text-teal-100" />
                             </div>
-                            <p className="text-sm text-ink-600 leading-relaxed font-medium text-left w-full">
-                              <strong>Penting:</strong> Pastikan nominal transfer tepat <strong>{formatRupiah(biayaPendaftaran)}</strong> agar proses verifikasi berjalan lancar.
+                            <p className="text-xs text-teal-50 leading-relaxed font-medium text-left w-full">
+                              <strong>Penting:</strong> Pastikan nominal transfer tepat <strong>{formatRupiah(biayaPendaftaran)}</strong> agar sistem kami dapat memproses verifikasi lebih cepat (Auto-Match).
                             </p>
                           </div>
                         </div>
                       </div>
+
 
                       {/* RIGHT COLUMN: UPLOAD AREA */}
                       <div className="bg-white rounded-[2.5rem] border-2 border-dashed border-ink-200 p-8 flex flex-col justify-center relative group hover:border-maroon-300 transition-colors">

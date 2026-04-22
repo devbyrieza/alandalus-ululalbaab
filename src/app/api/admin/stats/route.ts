@@ -163,9 +163,10 @@ export async function GET(request: Request) {
     });
 
     // Quota configuration (Moved to API for centralized management)
+    // Updated to match Fixed Data 2026/2027 (DATA_SANTRI_ULUL_ALBAAB_2026-2027-1.md)
     const QUOTAS: Record<string, { putra: number; putri: number; total: number }> = {
-      MTS: { putra: 32, putri: 30, total: 62 },
-      IL: { putra: 32, putri: 30, total: 62 },
+      MTS: { putra: 49, putri: 24, total: 73 },
+      IL: { putra: 27, putri: 12, total: 39 },
       SMA: { putra: 0, putri: 0, total: 0 }
     };
 
