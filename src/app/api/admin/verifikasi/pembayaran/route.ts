@@ -144,14 +144,19 @@ export async function PATCH(request: NextRequest) {
     });
 
     // Also update pendaftar status
+    const { getStatusIndex } = await import("@/lib/access-control");
     let newPendaftarStatus = pembayaran.pendaftar.status_pendaftaran;
     
     if (status_pembayaran === "verified") {
-       if (['draft', 'registered', 'awaiting_payment', 'payment_verification', 'payment_rejected'].includes(newPendaftarStatus)) {
+       // Upgrade status only if current status is lower than 'verified'
+       if (getStatusIndex(newPendaftarStatus) < getStatusIndex('verified')) {
            newPendaftarStatus = 'verified';
        }
-    } else {
-       newPendaftarStatus = 'payment_rejected';
+    } else if (status_pembayaran === "rejected") {
+       // If payment is rejected, set status to payment_rejected (unless already higher/verified)
+       if (getStatusIndex(newPendaftarStatus) <= getStatusIndex('payment_verification')) {
+           newPendaftarStatus = 'payment_rejected';
+       }
     }
 
     if (newPendaftarStatus !== pembayaran.pendaftar.status_pendaftaran) {

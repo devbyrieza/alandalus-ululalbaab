@@ -1,6 +1,7 @@
 // Status yang valid sesuai database constraint
 export type StatusProses =
   | 'draft'
+  | 'registered'      // Baru mendaftar, belum bayar
   | 'payment_verification'
   | 'verified'        // Pembayaran terverifikasi (Lunas)
   | 'payment_rejected' // Pembayaran bermasalah/ditolak sementara
@@ -17,9 +18,13 @@ export type StatusProses =
   | 'announced'
   | 'enrolled';
 
-// Status order untuk progress calculation
+/**
+ * URUTAN STATUS PENDAFTARAN (Hierarki)
+ * Digunakan untuk menentukan akses menu dan progres.
+ */
 export const STATUS_ORDER: StatusProses[] = [
   'draft',
+  'registered',
   'awaiting_payment',
   'payment_verification',
   'verified',
@@ -34,9 +39,15 @@ export const STATUS_ORDER: StatusProses[] = [
   'enrolled'
 ];
 
-// Get status index for comparison
-export function getStatusIndex(status: StatusProses): number {
-  const index = STATUS_ORDER.indexOf(status);
+/**
+ * Mendapatkan index status dalam hierarki.
+ * Jika status tidak ditemukan, return 0 (draft).
+ */
+export function getStatusIndex(status: StatusProses | string): number {
+  if (!status) return 0;
+  // Case-insensitive check to be safe
+  const s = status.toLowerCase() as StatusProses;
+  const index = STATUS_ORDER.indexOf(s);
   return index >= 0 ? index : 0;
 }
 

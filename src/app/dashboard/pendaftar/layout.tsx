@@ -66,45 +66,46 @@ export default function DashboardLayout({
         // 1. Get session
         const sessionRes = await fetch("/api/auth/session");
         if (!sessionRes.ok) {
-          const errorText = await sessionRes.text();
-          throw new Error(`Failed to get session: ${sessionRes.status} - ${errorText}`);
+          throw new Error(`Failed to get session: ${sessionRes.status}`);
         }
 
         const sessionData = await sessionRes.json();
+        const fallbackName = sessionData.session?.full_name || sessionData.session?.name || sessionData.session?.email || "Pendaftar";
+
+        // 2. Validate pendaftar_id
         if (!sessionData.pendaftar_id) {
-          console.warn("No pendaftar_id in session");
-          // Still set basic info from session
-          const fallbackName = sessionData.session?.full_name || sessionData.session?.name || sessionData.session?.email || "Pendaftar";
+          console.warn("⚠️ [Layout] No pendaftar_id found in session");
           setNamaLengkap(fallbackName);
+          setStatusProses("draft");
           setLoading(false);
           return;
         }
-        const fallbackName =
-          sessionData.full_name || sessionData.name || sessionData.email || "Pendaftar";
 
-        // 2. Get user status
+        // 3. Fetch current registration status (Force dynamic & No-cache)
         const statusRes = await fetch(
-          `/api/pendaftar/status?pendaftar_id=${sessionData.pendaftar_id}`,
+          `/api/pendaftar/status?pendaftar_id=${sessionData.pendaftar_id}&t=${Date.now()}`,
+          { cache: 'no-store' }
         );
-
-        const statusText = await statusRes.text();
-
+        
         if (!statusRes.ok) {
-          console.error(`Status API failed: ${statusRes.status} - ${statusText}`);
-          // Set what we have from session
+          console.error("❌ [Layout] Status fetch failed:", statusRes.status);
           setNamaLengkap(fallbackName);
           setLoading(false);
           return;
         }
 
-        const userData = JSON.parse(statusText);
-        setStatusProses((userData.status_proses || "draft") as StatusProses);
+        const userData = await statusRes.json();
+        
+        // 4. Update state with fresh data
+        const currentStatus = (userData.status_proses || "draft") as StatusProses;
+        console.log(`✅ [Layout] Current Status: ${currentStatus}`);
+        
+        setStatusProses(currentStatus);
         setNomorPendaftaran(userData.nomor_pendaftaran || "-");
         setNamaLengkap(userData.nama_lengkap || fallbackName);
 
       } catch (error: any) {
-        console.error("Error fetching user data:", error?.message || error);
-        // Keep default values on error
+        console.error("Error in Layout fetchUserData:", error?.message || error);
       } finally {
         setLoading(false);
       }
