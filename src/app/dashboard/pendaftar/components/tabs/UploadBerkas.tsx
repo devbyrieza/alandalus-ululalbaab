@@ -21,6 +21,7 @@ import {
   Send,
   Lock,
   ShieldCheck,
+  Download,
 } from "lucide-react";
 
 // ============================================
@@ -311,6 +312,16 @@ function DokumenCard({
             </div>
           </div>
           <div className="flex items-center gap-2">
+            {["surat_kesehatan", "pakta_integritas", "pernyataan_bebas_negatif"].includes(dokumen.key) && (
+              <button
+                disabled
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-brand-blue-50 text-brand-blue-400 rounded-lg text-[10px] font-black border border-brand-blue-100 cursor-not-allowed opacity-70"
+                title="Format dokumen sedang disiapkan panitia"
+              >
+                <Download className="w-3.5 h-3.5" />
+                Format Belum Ready
+              </button>
+            )}
             {dokumen.status !== "pending" && (
               <button
                 onClick={(e) => {

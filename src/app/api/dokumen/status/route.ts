@@ -10,9 +10,9 @@ const JENIS_DOKUMEN = [
   { key: "rapor_sem2", label: "Scan Rapor Semester 2 Terakhir", required: true },
   { key: "nisn", label: "Scan NISN (Nomor Induk Siswa Nasional)", required: true },
   { key: "foto_setengah_badan", label: "Foto Setengah Badan", required: true },
-  { key: "surat_kesehatan", label: "Surat Keterangan Sehat (Download format)", required: true },
-  { key: "pakta_integritas", label: "Scan Pakta Integritas (Download format)", required: true },
-  { key: "pernyataan_bebas_negatif", label: "Scan Pernyataan Bebas Perilaku Negatif (Download format)", required: true },
+  { key: "surat_kesehatan", label: "Surat Keterangan Sehat", required: true },
+  { key: "pakta_integritas", label: "Scan Pakta Integritas", required: true },
+  { key: "pernyataan_bebas_negatif", label: "Scan Pernyataan Bebas Perilaku Negatif", required: true },
 ];
 
 export async function GET(request: NextRequest) {
