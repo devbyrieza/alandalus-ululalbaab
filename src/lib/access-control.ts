@@ -172,6 +172,7 @@ export function getNextStep(currentStatus: StatusProses): {
 } | null {
   const nextSteps: Record<string, { status: StatusProses; action: string; href: string }> = {
     'draft': { status: 'payment_verification', action: 'Lakukan pembayaran pendaftaran', href: '/dashboard/pendaftar/pembayaran-pendaftaran' },
+    'registered': { status: 'payment_verification', action: 'Lakukan pembayaran pendaftaran', href: '/dashboard/pendaftar/pembayaran-pendaftaran' },
     'awaiting_payment': { status: 'payment_verification', action: 'Upload bukti pembayaran', href: '/dashboard/pendaftar/pembayaran-pendaftaran' },
     'payment_verification': { status: 'verified', action: 'Tunggu verifikasi pembayaran', href: '/dashboard/pendaftar/pembayaran-pendaftaran' },
     'verified': { status: 'data_completed', action: 'Isi formulir data lengkap', href: '/dashboard/pendaftar/kelengkapan-berkas' },
@@ -192,6 +193,7 @@ export function getNextStep(currentStatus: StatusProses): {
 export function formatStatusDisplay(status: StatusProses): { label: string; color: string } {
   const statusMap: Record<StatusProses, { label: string; color: string }> = {
     'draft': { label: 'Belum Bayar', color: 'bg-amber-100 text-amber-700' },
+    'registered': { label: 'Belum Bayar', color: 'bg-amber-100 text-amber-700' },
     'awaiting_payment': { label: 'Menunggu Pembayaran', color: 'bg-amber-100 text-amber-700' },
     'payment_verification': { label: 'Menunggu Verifikasi', color: 'bg-orange-100 text-orange-700' },
     'verified': { label: 'Pembayaran Lunas', color: 'bg-blue-100 text-blue-700' },
