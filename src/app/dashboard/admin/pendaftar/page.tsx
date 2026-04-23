@@ -611,8 +611,6 @@ function AdminPendaftarContent() {
       waiting_payment: { label: "Menunggu Pembayaran", color: "bg-brand-yellow-100 text-brand-yellow-700" },
       awaiting_payment: { label: "Menunggu Pembayaran", color: "bg-brand-yellow-100 text-brand-yellow-700" },
       payment_verification: { label: "Verifikasi Pembayaran", color: "bg-brand-blue-50 text-brand-blue-700 border border-brand-blue-100" },
-      awaiting_payment: { label: "Draft", color: "bg-stone-100 text-stone-700" },
-      payment_verification: { label: "Verifikasi Bayar", color: "bg-brand-blue-50 text-brand-blue-700 border border-brand-blue-100" },
       paid: { label: "Terdaftar", color: "bg-brand-blue-100 text-brand-blue-800" },
       verified: { label: "Terdaftar", color: "bg-brand-blue-100 text-brand-blue-800" },
       data_completed: { label: "Data Lengkap", color: "bg-brand-yellow-50 text-brand-yellow-800 border border-brand-yellow-100" },
