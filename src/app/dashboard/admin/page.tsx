@@ -30,6 +30,8 @@ const JENJANG_LABELS: Record<string, string> = {
   SMA: "SMA",
 };
 
+import Swal from "sweetalert2";
+
 export default function AdminDashboardPage() {
   const [loading, setLoading] = useState(true);
   const [role, setRole] = useState<UserRole | null>(null);
@@ -44,6 +46,63 @@ export default function AdminDashboardPage() {
 
   const [tahunAjaranList, setTahunAjaranList] = useState<any[]>([]);
   const [selectedTahunAjaranId, setSelectedTahunAjaranId] = useState<string>("");
+
+  const handleSyncMaster = async () => {
+    const { value: file } = await Swal.fire({
+      title: "Sync Master Data",
+      text: "Upload file Excel MASTER untuk sinkronisasi status pendaftaran massal.",
+      input: "file",
+      inputAttributes: {
+        accept: ".xlsx, .xls, .csv",
+        "aria-label": "Upload master excel file",
+      },
+      showCancelButton: true,
+      confirmButtonText: "Upload & Sync",
+      confirmButtonColor: "#0284c7",
+    });
+
+    if (file) {
+      Swal.fire({
+        title: "Memproses...",
+        text: "Harap tunggu sementara sistem menyinkronkan data.",
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        },
+      });
+
+      const formData = new FormData();
+      formData.append("file", file);
+
+      try {
+        const res = await fetch("/api/admin/sync/master", {
+          method: "POST",
+          body: formData,
+        });
+
+        const result = await res.json();
+        if (res.ok) {
+          Swal.fire({
+            icon: "success",
+            title: "Sinkronisasi Berhasil",
+            html: `
+              <div class="text-left text-sm space-y-1">
+                <p>✅ <b>${result.results.updated}</b> Data berhasil di-update.</p>
+                <p>❓ <b>${result.results.notFound}</b> Data tidak ditemukan di database.</p>
+                <p>Total baris diproses: ${result.results.updated + result.results.notFound}</p>
+              </div>
+            `,
+          }).then(() => {
+            if (selectedTahunAjaranId) fetchStats(selectedTahunAjaranId);
+          });
+        } else {
+          throw new Error(result.error);
+        }
+      } catch (error: any) {
+        Swal.fire("Gagal", error.message, "error");
+      }
+    }
+  };
 
   useEffect(() => {
     async function init() {
@@ -296,9 +355,17 @@ export default function AdminDashboardPage() {
             <p className="text-brand-blue-100 font-bold mb-8 opacity-100">
               Unduh data pendaftaran terbaru untuk keperluan rapat panitia.
             </p>
-            <button className="w-full bg-white text-brand-blue-900 py-5 rounded-2xl font-black uppercase text-xs tracking-widest hover:bg-brand-yellow-300 transition-all shadow-xl">
-              Export Database
-            </button>
+            <div className="flex flex-col gap-4">
+              <button className="w-full bg-white text-brand-blue-900 py-5 rounded-2xl font-black uppercase text-xs tracking-widest hover:bg-brand-yellow-300 transition-all shadow-xl">
+                Export Database
+              </button>
+              <button 
+                onClick={handleSyncMaster}
+                className="w-full bg-brand-yellow-400 text-brand-blue-900 py-5 rounded-2xl font-black uppercase text-xs tracking-widest hover:bg-white transition-all shadow-xl flex items-center justify-center gap-2"
+              >
+                <FileCheck className="w-4 h-4" /> Sync Master Data
+              </button>
+            </div>
           </div>
         </div>
         <div className="lg:col-span-2">
