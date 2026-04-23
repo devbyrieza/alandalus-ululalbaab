@@ -210,12 +210,13 @@ export default function PendaftarDetailPage() {
       verified: { label: "Terdaftar", color: "bg-brand-blue-100 text-brand-blue-800" },
       data_completed: { label: "Data Lengkap", color: "bg-brand-yellow-50 text-brand-yellow-800 border border-brand-yellow-100" },
       docs_uploaded: { label: "Data Lengkap", color: "bg-brand-yellow-50 text-brand-yellow-800 border border-brand-yellow-100" },
-      docs_verified: { label: "Dokumen Lengkap", color: "bg-emerald-50 text-emerald-800 border border-emerald-100" },
-      scheduled: { label: "Dokumen Lengkap", color: "bg-emerald-50 text-emerald-800 border border-emerald-100" },
+      docs_verified: { label: "Berkas Lengkap", color: "bg-emerald-50 text-emerald-800 border border-emerald-100" },
+      scheduled: { label: "Berkas Lengkap", color: "bg-emerald-50 text-emerald-800 border border-emerald-100" },
       testing: { label: "Sedang Ujian", color: "bg-violet-100 text-violet-700 border border-violet-200" },
       tested: { label: "Sudah Ujian", color: "bg-brand-blue-600 text-white shadow-sm" },
       exam_completed: { label: "Sudah Ujian", color: "bg-brand-blue-600 text-white shadow-sm" },
-      announced: { label: "Diumumkan", color: "bg-brand-blue-50 text-brand-blue-700" },
+      announced: { label: "Cadangan", color: "bg-brand-yellow-100 text-brand-yellow-800 border border-brand-yellow-200" },
+      cadangan: { label: "Cadangan", color: "bg-brand-yellow-100 text-brand-yellow-800 border border-brand-yellow-200" },
       accepted: { label: "Diterima", color: "bg-emerald-600 text-white" },
       rejected: { label: "Ditolak", color: "bg-rose-600 text-white" },
       enrolled: { label: "Sudah Daftar Ulang", color: "bg-emerald-100 text-emerald-800" },
@@ -358,7 +359,7 @@ export default function PendaftarDetailPage() {
                   <option value="docs_verified">Dokumen Terverifikasi</option>
                   <option value="scheduled">Terjadwal Ujian</option>
                   <option value="tested">Sudah Ujian</option>
-                  <option value="announced">Diumumkan</option>
+                  <option value="announced">Cadangan</option>
                   <option value="accepted">Diterima</option>
                   <option value="rejected">Ditolak</option>
                   <option value="enrolled">Sudah Daftar Ulang</option>

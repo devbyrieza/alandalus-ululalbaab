@@ -617,12 +617,13 @@ function AdminPendaftarContent() {
       verified: { label: "Terdaftar", color: "bg-brand-blue-100 text-brand-blue-800" },
       data_completed: { label: "Data Lengkap", color: "bg-brand-yellow-50 text-brand-yellow-800 border border-brand-yellow-100" },
       docs_uploaded: { label: "Data Lengkap", color: "bg-brand-yellow-50 text-brand-yellow-800 border border-brand-yellow-100" },
-      docs_verified: { label: "Dokumen Lengkap", color: "bg-emerald-50 text-emerald-800 border border-emerald-100" },
-      scheduled: { label: "Dokumen Lengkap", color: "bg-emerald-50 text-emerald-800 border border-emerald-100" },
+      docs_verified: { label: "Berkas Lengkap", color: "bg-emerald-50 text-emerald-800 border border-emerald-100" },
+      scheduled: { label: "Berkas Lengkap", color: "bg-emerald-50 text-emerald-800 border border-emerald-100" },
       testing: { label: "Sedang Ujian", color: "bg-violet-100 text-violet-700 border border-violet-200 shadow-sm" },
       tested: { label: "Sudah Ujian", color: "bg-brand-blue-600 text-white shadow-sm" },
       exam_completed: { label: "Sudah Ujian", color: "bg-brand-blue-600 text-white shadow-sm" },
-      announced: { label: "Diumumkan", color: "bg-brand-blue-50 text-brand-blue-700" },
+      announced: { label: "Cadangan", color: "bg-brand-yellow-100 text-brand-yellow-800 border border-brand-yellow-200" },
+      cadangan: { label: "Cadangan", color: "bg-brand-yellow-100 text-brand-yellow-800 border border-brand-yellow-200" },
       accepted: { label: "Diterima", color: "bg-emerald-600 text-white" },
       rejected: { label: "Ditolak", color: "bg-rose-600 text-white" },
       enrolled: { label: "Sudah Daftar Ulang", color: "bg-emerald-100 text-emerald-800" },
@@ -787,7 +788,7 @@ function AdminPendaftarContent() {
                     <option value="menunggu_verifikasi_dokumen" className="font-bold bg-yellow-50">
                       Menunggu Verifikasi Dokumen (Data Lengkap)
                     </option>
-                    <option value="dokumen_terverifikasi">Dokumen Lengkap (Siap Ujian)</option>
+                    <option value="dokumen_terverifikasi">Berkas Lengkap (Siap Ujian)</option>
                     <option value="dokumen_ditolak">Dokumen Ditolak</option>
                   </optgroup>
                 </>
@@ -819,8 +820,9 @@ function AdminPendaftarContent() {
                 <option value="paid">Terdaftar (paid)</option>
                 <option value="data_completed">Data Lengkap</option>
                 <option value="docs_uploaded">Data Lengkap (docs)</option>
-                <option value="docs_verified">Dokumen Lengkap</option>
-                <option value="scheduled">Dokumen Lengkap (scheduled)</option>
+                <option value="docs_verified">Berkas Lengkap</option>
+                <option value="scheduled">Berkas Lengkap (scheduled)</option>
+                <option value="cadangan">Cadangan</option>
                 <option value="accepted">Diterima</option>
                 <option value="rejected">Ditolak</option>
                 <option value="enrolled">Sudah Daftar Ulang</option>
