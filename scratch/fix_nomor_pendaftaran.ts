@@ -65,7 +65,7 @@ async function migrateNomorPendaftaran() {
           where: { id: p.id },
           data: { nomor_pendaftaran: `${newNomor}_TMP` }
         });
-      } catch (err) {
+      } catch (err: any) {
         console.error(`Failed to update ${p.nama_lengkap} (TMP): ${err.message}`);
       }
     }
@@ -84,7 +84,7 @@ async function migrateNomorPendaftaran() {
           where: { id: p.id },
           data: { nomor_pendaftaran: finalNomor }
         });
-    } catch (err) {
+    } catch (err: any) {
         console.error(`Failed to finalize ${p.nama_lengkap}: ${err.message}`);
     }
   }
