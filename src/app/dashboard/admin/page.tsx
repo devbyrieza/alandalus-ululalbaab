@@ -172,14 +172,12 @@ export default function AdminDashboardPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
         {[
-          { label: "Total Calon", val: stats.total_pendaftar, icon: Users, color: "blue" },
-          { label: "Lunas Daftar", val: stats.sudah_bayar, icon: Wallet, color: "yellow", show: canViewKeuangan },
-          { label: "Daftar Ulang", val: stats.daftar_ulang, icon: FileCheck, color: "indigo" },
+          { label: "Total Pendaftar", val: stats.total_pendaftar, icon: Users, color: "blue" },
           { label: "Diterima", val: stats.diterima, icon: GraduationCap, color: "emerald" },
+          { label: "Lunas Daftar Ulang", val: stats.daftar_ulang, icon: Wallet, color: "indigo" },
         ]
-          .filter((i) => i.show !== false)
           .map((item, id) => (
             <div
               key={id}
