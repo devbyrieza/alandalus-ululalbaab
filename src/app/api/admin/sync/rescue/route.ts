@@ -6,8 +6,7 @@ export async function GET() {
     // Restore anyone deleted in the last 60 minutes
     const result = await prisma.pendaftar.updateMany({
       where: {
-        deleted_at: { not: null },
-        updated_at: { gte: new Date(Date.now() - 60 * 60 * 1000) }
+        deleted_at: { not: null }
       },
       data: { deleted_at: null }
     });
