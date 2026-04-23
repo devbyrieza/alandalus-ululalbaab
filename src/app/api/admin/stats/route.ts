@@ -204,6 +204,7 @@ export async function GET(request: Request) {
 
       // === PENERIMAAN ===
       diterima: (statusCounts.accepted || 0) + (statusCounts.enrolled || 0),
+      daftar_ulang: statusCounts.enrolled || 0,
 
       // === STATISTIK PER JENJANG (Expanded) ===
       stats_per_jenjang: Object.entries(jenjangCounts).map(([jenjang, data]) => {

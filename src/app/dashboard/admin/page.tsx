@@ -38,6 +38,7 @@ export default function AdminDashboardPage() {
     sudah_bayar: 0,
     sudah_isi_data: 0,
     diterima: 0,
+    daftar_ulang: 0,
     stats_per_jenjang: [],
   });
 
@@ -174,9 +175,9 @@ export default function AdminDashboardPage() {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
         {[
           { label: "Total Calon", val: stats.total_pendaftar, icon: Users, color: "blue" },
-          { label: "Lunas", val: stats.sudah_bayar, icon: Wallet, color: "yellow", show: canViewKeuangan },
-          { label: "Berkas Ok", val: stats.sudah_isi_data, icon: FileCheck, color: "emerald", show: canViewBerkas },
-          { label: "Diterima", val: stats.diterima, icon: GraduationCap, color: "purple" },
+          { label: "Lunas Daftar", val: stats.sudah_bayar, icon: Wallet, color: "yellow", show: canViewKeuangan },
+          { label: "Daftar Ulang", val: stats.daftar_ulang, icon: FileCheck, color: "indigo" },
+          { label: "Diterima", val: stats.diterima, icon: GraduationCap, color: "emerald" },
         ]
           .filter((i) => i.show !== false)
           .map((item, id) => (
@@ -190,9 +191,9 @@ export default function AdminDashboardPage() {
                     ? "bg-brand-blue-50 text-brand-blue-600"
                     : item.color === "yellow"
                     ? "bg-brand-yellow-50 text-brand-yellow-600"
-                    : item.color === "emerald"
-                    ? "bg-emerald-50 text-emerald-600"
-                    : "bg-purple-50 text-purple-600"
+                    : item.color === "indigo"
+                    ? "bg-indigo-50 text-indigo-600"
+                    : "bg-emerald-50 text-emerald-600"
                 }`}
               >
                 <item.icon className="w-7 h-7" />
