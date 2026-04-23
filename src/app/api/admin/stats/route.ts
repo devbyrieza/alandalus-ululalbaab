@@ -110,11 +110,18 @@ export async function GET(request: Request) {
         genderCounts["Belum Diisi"]++; 
       }
 
-      // Diterima Logic: accepted, enrolled, or announced (if they are visually grouped)
-      if (status === "accepted" || status === "enrolled" || status === "announced") {
+      // Diterima Logic: accepted or enrolled only (announced is for Cadangan)
+      if (status === "accepted" || status === "enrolled") {
         j.accepted++;
         if (isL) j.accepted_putra++;
         if (isP) j.accepted_putri++;
+      }
+
+      // Cadangan Logic: announced
+      if (status === "announced") {
+        j.cadangan = (j.cadangan || 0) + 1;
+        if (isL) j.cadangan_putra = (j.cadangan_putra || 0) + 1;
+        if (isP) j.cadangan_putri = (j.cadangan_putri || 0) + 1;
       }
 
       // Daftar Ulang Logic: enrolled only
@@ -127,7 +134,8 @@ export async function GET(request: Request) {
 
     const stats = {
       total_pendaftar,
-      diterima: (statusCounts.accepted || 0) + (statusCounts.enrolled || 0) + (statusCounts.announced || 0),
+      diterima: (statusCounts.accepted || 0) + (statusCounts.enrolled || 0),
+      cadangan: statusCounts.announced || 0,
       daftar_ulang: statusCounts.enrolled || 0,
       
       // Secondary metrics
@@ -138,6 +146,7 @@ export async function GET(request: Request) {
         const data = jenjangCounts[jenjang] || {
           total: 0, putra: 0, putri: 0,
           accepted: 0, accepted_putra: 0, accepted_putri: 0,
+          cadangan: 0, cadangan_putra: 0, cadangan_putri: 0,
           ulang_total: 0, ulang_putra: 0, ulang_putri: 0
         };
         const QUOTAS: Record<string, any> = {
@@ -150,10 +159,12 @@ export async function GET(request: Request) {
           jenjang,
           kuota_putra: q.putra, kuota_putri: q.putri, kuota_total: q.total,
           pendaftar: data.total, pendaftar_putra: data.putra, pendaftar_putri: data.putri,
-          sudah_ujian: data.accepted, 
           diterima: data.accepted,
           diterima_putra: data.accepted_putra,
           diterima_putri: data.accepted_putri,
+          cadangan: data.cadangan || 0,
+          cadangan_putra: data.cadangan_putra || 0,
+          cadangan_putri: data.cadangan_putri || 0,
           daftar_ulang: data.ulang_total,
           ulang_putra: data.ulang_putra,
           ulang_putri: data.ulang_putri
@@ -162,7 +173,8 @@ export async function GET(request: Request) {
 
       stats_gender: genderCounts,
       pie_chart_status: {
-        diterima: (statusCounts.accepted || 0) + (statusCounts.enrolled || 0) + (statusCounts.announced || 0),
+        diterima: (statusCounts.accepted || 0) + (statusCounts.enrolled || 0),
+        cadangan: statusCounts.announced || 0,
         menunggu: (statusCounts.tested || 0) + (statusCounts.scheduled || 0) + (statusCounts.docs_verified || 0),
         proses: (statusCounts.draft || 0) + (statusCounts.verified || 0) + (statusCounts.data_completed || 0),
         ditolak: statusCounts.rejected || 0,

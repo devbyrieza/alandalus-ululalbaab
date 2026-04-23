@@ -47,6 +47,36 @@ export default function AdminDashboardPage() {
   const [tahunAjaranList, setTahunAjaranList] = useState<any[]>([]);
   const [selectedTahunAjaranId, setSelectedTahunAjaranId] = useState<string>("");
 
+  const handleExportDatabase = async () => {
+    try {
+      Swal.fire({
+        title: "Menyiapkan Data...",
+        text: "Sistem sedang mengonversi database ke format Excel.",
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        },
+      });
+
+      const res = await fetch(`/api/admin/pendaftar/export?tahun_ajaran_id=${selectedTahunAjaranId}`);
+      if (res.ok) {
+        const blob = await res.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `Data_Pendaftar_${tahunAjaranList.find(t => t.id === selectedTahunAjaranId)?.nama || "Export"}.xlsx`;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        Swal.close();
+      } else {
+        throw new Error("Gagal mengunduh data");
+      }
+    } catch (error: any) {
+      Swal.fire("Gagal", error.message, "error");
+    }
+  };
+
   const handleSyncMaster = async () => {
     const { value: file } = await Swal.fire({
       title: "Sync Master Data",
@@ -231,19 +261,20 @@ export default function AdminDashboardPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
         {[
           { label: "Total Pendaftar", val: stats.total_pendaftar, icon: Users, color: "blue" },
-          { label: "Diterima", val: stats.diterima, icon: GraduationCap, color: "emerald" },
-          { label: "Lunas Daftar Ulang", val: stats.daftar_ulang, icon: Wallet, color: "indigo" },
+          { label: "Lolos Utama", val: stats.diterima, icon: GraduationCap, color: "emerald" },
+          { label: "Cadangan", val: stats.cadangan, icon: Loader2, color: "yellow" },
+          { label: "Sudah Daftar Ulang", val: stats.daftar_ulang, icon: Wallet, color: "indigo" },
         ]
           .map((item, id) => (
             <div
               key={id}
-              className="bg-white rounded-4xl p-8 border border-brand-yellow-100 shadow-sm app-card group"
+              className="bg-white rounded-4xl p-6 md:p-8 border border-brand-yellow-100 shadow-sm app-card group"
             >
               <div
-                className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-6 shadow-clay-sm transition-transform group-hover:scale-110 ${
+                className={`w-12 h-12 md:w-14 md:h-14 rounded-2xl flex items-center justify-center mb-6 shadow-clay-sm transition-transform group-hover:scale-110 ${
                   item.color === "blue"
                     ? "bg-brand-blue-50 text-brand-blue-600"
                     : item.color === "yellow"
@@ -253,15 +284,25 @@ export default function AdminDashboardPage() {
                     : "bg-emerald-50 text-emerald-600"
                 }`}
               >
-                <item.icon className="w-7 h-7" />
+                <item.icon className={`w-6 h-6 md:w-7 md:h-7 ${item.label === "Cadangan" ? "animate-spin-slow" : ""}`} />
               </div>
               <p className="text-[10px] font-black text-ink-300 uppercase tracking-widest mb-1">{item.label}</p>
-              <p className="text-3xl md:text-5xl font-black text-brand-blue-950 font-display tracking-tight leading-none">
+              <p className="text-2xl md:text-5xl font-black text-brand-blue-950 font-display tracking-tight leading-none">
                 {item.val}
               </p>
             </div>
           ))}
       </div>
+
+      <style jsx global>{`
+        @keyframes spin-slow {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        .animate-spin-slow {
+          animation: spin-slow 8s linear infinite;
+        }
+      `}</style>
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
         <div className="lg:col-span-4 space-y-8">
@@ -278,8 +319,9 @@ export default function AdminDashboardPage() {
                   <th rowSpan={2} className="px-6 py-4 border-r border-brand-yellow-50">Jenjang</th>
                   <th colSpan={3} className="px-4 py-3 text-center border-r border-brand-yellow-50 bg-slate-100/50">Kuota</th>
                   <th colSpan={3} className="px-4 py-3 text-center border-r border-brand-yellow-50 bg-blue-50">Pendaftar</th>
+                  <th colSpan={3} className="px-4 py-3 text-center border-r border-brand-yellow-50 bg-orange-50">Cadangan</th>
                   <th colSpan={3} className="px-4 py-3 text-center border-r border-brand-yellow-50 bg-emerald-50">Diterima</th>
-                  <th colSpan={3} className="px-4 py-3 text-center bg-purple-50">Daftar Ulang</th>
+                  <th colSpan={3} className="px-4 py-3 text-center bg-purple-50">Sudah Daftar Ulang</th>
                 </tr>
                 <tr className="border-b border-brand-yellow-100">
                   {/* Kuota */}
@@ -290,6 +332,10 @@ export default function AdminDashboardPage() {
                   <th className="px-2 py-2 text-center border-r border-brand-yellow-50 text-blue-600">L</th>
                   <th className="px-2 py-2 text-center border-r border-brand-yellow-50 text-pink-600">P</th>
                   <th className="px-2 py-2 text-center border-r border-brand-yellow-50 font-black text-blue-800">T</th>
+                  {/* Cadangan */}
+                  <th className="px-2 py-2 text-center border-r border-brand-yellow-50 text-orange-600">L</th>
+                  <th className="px-2 py-2 text-center border-r border-brand-yellow-50 text-pink-600">P</th>
+                  <th className="px-2 py-2 text-center border-r border-brand-yellow-50 font-black text-orange-800">T</th>
                   {/* Diterima */}
                   <th className="px-2 py-2 text-center border-r border-brand-yellow-50 text-emerald-600">L</th>
                   <th className="px-2 py-2 text-center border-r border-brand-yellow-50 text-pink-600">P</th>
@@ -333,6 +379,10 @@ export default function AdminDashboardPage() {
                       <td className="px-2 py-4 text-center border-r border-brand-yellow-50 font-black text-blue-600 bg-blue-50/10">{item.pendaftar_putra}</td>
                       <td className="px-2 py-4 text-center border-r border-brand-yellow-50 font-black text-pink-600 bg-blue-50/10">{item.pendaftar_putri}</td>
                       <td className="px-2 py-4 text-center border-r border-brand-yellow-50 font-black text-blue-900 bg-blue-50/30">{item.pendaftar}</td>
+                      {/* Cadangan */}
+                      <td className="px-2 py-4 text-center border-r border-brand-yellow-50 font-black text-orange-600 bg-orange-50/10">{item.cadangan_putra}</td>
+                      <td className="px-2 py-4 text-center border-r border-brand-yellow-50 font-black text-pink-600 bg-orange-50/10">{item.cadangan_putri}</td>
+                      <td className="px-2 py-4 text-center border-r border-brand-yellow-50 font-black text-orange-900 bg-orange-50/30">{item.cadangan}</td>
                       {/* Diterima */}
                       <td className="px-2 py-4 text-center border-r border-brand-yellow-50 font-black text-emerald-600 bg-emerald-50/10">{item.diterima_putra}</td>
                       <td className="px-2 py-4 text-center border-r border-brand-yellow-50 font-black text-pink-600 bg-emerald-50/10">{item.diterima_putri}</td>
@@ -356,7 +406,10 @@ export default function AdminDashboardPage() {
               Unduh data pendaftaran terbaru untuk keperluan rapat panitia.
             </p>
             <div className="flex flex-col gap-4">
-              <button className="w-full bg-white text-brand-blue-900 py-5 rounded-2xl font-black uppercase text-xs tracking-widest hover:bg-brand-yellow-300 transition-all shadow-xl">
+              <button 
+                onClick={handleExportDatabase}
+                className="w-full bg-white text-brand-blue-900 py-5 rounded-2xl font-black uppercase text-xs tracking-widest hover:bg-brand-yellow-300 transition-all shadow-xl"
+              >
                 Export Database
               </button>
               <button 
