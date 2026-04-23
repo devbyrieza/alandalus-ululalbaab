@@ -215,7 +215,7 @@ export default function PendaftarDetailPage() {
       announced: { label: "Diumumkan", color: "bg-brand-blue-50 text-brand-blue-700" },
       accepted: { label: "Diterima", color: "bg-emerald-600 text-white" },
       rejected: { label: "Ditolak", color: "bg-rose-600 text-white" },
-      enrolled: { label: "Terdaftar", color: "bg-emerald-100 text-emerald-800" },
+      enrolled: { label: "Sudah Daftar Ulang", color: "bg-emerald-100 text-emerald-800" },
       // Added missing keys matching seed/list
       verified: { label: "Terverifikasi", color: "bg-emerald-100 text-emerald-700" },
       payment_verification: { label: "Verifikasi Pembayaran", color: "bg-brand-blue-50 text-brand-blue-700 border border-brand-blue-100" },
@@ -361,7 +361,7 @@ export default function PendaftarDetailPage() {
                   <option value="announced">Diumumkan</option>
                   <option value="accepted">Diterima</option>
                   <option value="rejected">Ditolak</option>
-                  <option value="enrolled">Terdaftar</option>
+                  <option value="enrolled">Sudah Daftar Ulang</option>
                 </select>
                 <button
                   onClick={handleUpdateStatus}

@@ -625,7 +625,7 @@ function AdminPendaftarContent() {
       announced: { label: "Diumumkan", color: "bg-brand-blue-50 text-brand-blue-700" },
       accepted: { label: "Diterima", color: "bg-emerald-600 text-white" },
       rejected: { label: "Ditolak", color: "bg-rose-600 text-white" },
-      enrolled: { label: "Terdaftar", color: "bg-emerald-100 text-emerald-800" },
+      enrolled: { label: "Sudah Daftar Ulang", color: "bg-emerald-100 text-emerald-800" },
       // Fix for legacy/seed data
       verified: { label: "Terverifikasi", color: "bg-emerald-100 text-emerald-700" },
     };
@@ -827,7 +827,7 @@ function AdminPendaftarContent() {
                 <option value="scheduled">Terjadwal Ujian</option>
                 <option value="accepted">Diterima</option>
                 <option value="rejected">Ditolak</option>
-                <option value="enrolled">Terdaftar</option>
+                <option value="enrolled">Sudah Daftar Ulang</option>
               </optgroup>
             </select>
           </div>
@@ -1038,7 +1038,7 @@ function AdminPendaftarContent() {
                   <option value="announced">Diumumkan</option>
                   <option value="accepted">Diterima</option>
                   <option value="rejected">Ditolak</option>
-                  <option value="enrolled">Terdaftar</option>
+                  <option value="enrolled">Sudah Daftar Ulang</option>
                 </select>
 
                 <button
