@@ -244,6 +244,8 @@ function AdminPendaftarContent() {
 
     try {
       setIsDeleting(true);
+      console.log("Attempting to delete pendaftar:", deletingPendaftar.id);
+      
       const res = await fetch(`/api/admin/pendaftar/${deletingPendaftar.id}`, {
         method: "DELETE",
       });
@@ -251,7 +253,8 @@ function AdminPendaftarContent() {
       const result = await res.json();
 
       if (!res.ok) {
-        throw new Error(result.error || "Gagal menghapus data");
+        console.error("Delete failed:", result);
+        throw new Error(result.error || `Gagal menghapus data (Status: ${res.status})`);
       }
 
       Swal.fire("Selesai!", result.message || "Data berhasil dihapus", "success");
@@ -262,7 +265,12 @@ function AdminPendaftarContent() {
       fetchPendaftar();
     } catch (error: any) {
       console.error("Error soft deleting:", error);
-      Swal.fire("Error!", error.message || "Gagal menghapus data", "error");
+      Swal.fire({
+        title: "Gagal Menghapus",
+        text: error.message || "Terjadi kesalahan sistem saat menghapus data.",
+        icon: "error",
+        footer: "Hubungi tim IT jika masalah berlanjut."
+      });
     } finally {
       setIsDeleting(false);
     }
