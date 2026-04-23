@@ -63,7 +63,7 @@ export async function POST(request: NextRequest) {
         .trim();
     };
 
-    // 3. Fetch all active students for this TA to match efficiently
+    // 3. Fetch all active students for this TA
     const students = await prisma.pendaftar.findMany({
       where: { tahun_ajaran_id: activeTA.id, deleted_at: null },
       select: { id: true, nama_lengkap: true }
@@ -74,7 +74,10 @@ export async function POST(request: NextRequest) {
       studentMap.set(normalize(s.nama_lengkap), s.id);
     });
 
-    // 4. Process Rows
+    const excelNames = new Set();
+    const updatedIds = new Set<string>();
+
+    // 4. Process Rows & Update
     for (const row of data) {
       const rawName = row["NAMA LENGKAP"] || row["Nama Lengkap"] || row["NAMA"];
       const statusPenerimaan = row["STATUS PENERIMAAN"] || row["Status"];
@@ -83,12 +86,12 @@ export async function POST(request: NextRequest) {
       if (!rawName) continue;
 
       const normName = normalize(rawName);
+      excelNames.add(normName);
       const studentId = studentMap.get(normName);
 
       if (studentId) {
         let newStatus = "draft";
         
-        // Logic: Enrolled (Lunas) > Accepted (Diterima)
         if (String(statusLunas).toLowerCase().includes("lunas")) {
           newStatus = "enrolled";
         } else if (String(statusPenerimaan).toLowerCase().includes("diterima")) {
@@ -97,22 +100,33 @@ export async function POST(request: NextRequest) {
           newStatus = "announced";
         }
 
-        if (newStatus !== "draft") {
-          await prisma.pendaftar.update({
-            where: { id: studentId },
-            data: { status_pendaftaran: newStatus }
-          });
-          results.updated++;
-        }
+        await prisma.pendaftar.update({
+          where: { id: studentId },
+          data: { status_pendaftaran: newStatus }
+        });
+        results.updated++;
+        updatedIds.add(studentId);
       } else {
         results.notFound++;
-        results.details.push(`Not Found: ${rawName}`);
+        results.details.push(`Not Found in DB: ${rawName}`);
       }
     }
 
+    // 5. Cleanup: Soft-delete students NOT in Excel
+    const toDelete = students.filter(s => !updatedIds.has(s.id));
+    for (const s of toDelete) {
+      await prisma.pendaftar.update({
+        where: { id: s.id },
+        data: { deleted_at: new Date() }
+      });
+    }
+
     return NextResponse.json({
-      message: "Synchronization completed",
-      results
+      message: "Full synchronization completed",
+      results: {
+        ...results,
+        cleaned: toDelete.length
+      }
     });
 
   } catch (error: any) {
