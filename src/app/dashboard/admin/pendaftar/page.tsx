@@ -826,6 +826,8 @@ function AdminPendaftarContent() {
                 <option value="accepted">Diterima</option>
                 <option value="rejected">Ditolak</option>
                 <option value="enrolled">Sudah Daftar Ulang</option>
+                  </>
+                )}
               </optgroup>
             </select>
           </div>
