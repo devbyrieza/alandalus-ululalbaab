@@ -82,7 +82,9 @@ export async function GET(request: Request) {
       ulang_total: number;
       ulang_putra: number;
       ulang_putri: number;
-      accepted: number; // for legacy diterima
+      accepted: number;
+      accepted_putra: number;
+      accepted_putri: number;
     }
     const jenjangCounts: Record<string, JenjangMetric> = {};
     const provinsiCounts: Record<string, number> = {};
@@ -113,7 +115,7 @@ export async function GET(request: Request) {
           total: 0, putra: 0, putri: 0, 
           ujian_total: 0, ujian_putra: 0, ujian_putri: 0,
           ulang_total: 0, ulang_putra: 0, ulang_putri: 0,
-          accepted: 0
+          accepted: 0, accepted_putra: 0, accepted_putri: 0
         };
       }
       
@@ -140,6 +142,8 @@ export async function GET(request: Request) {
       // Accepted (Diterima) mapping
       if (status === "accepted" || status === "enrolled") {
         jData.accepted += 1;
+        if (gender === "Laki-laki") jData.accepted_putra += 1;
+        if (gender === "Perempuan") jData.accepted_putri += 1;
       }
 
       // Provinsi counts
@@ -222,8 +226,10 @@ export async function GET(request: Request) {
           daftar_ulang: data.ulang_total,
           ulang_putra: data.ulang_putra,
           ulang_putri: data.ulang_putri,
-          // Legacy/Compatibility
-          diterima: data.accepted
+          // Accepted (Diterima)
+          diterima: data.accepted,
+          diterima_putra: data.accepted_putra,
+          diterima_putri: data.accepted_putri
         };
       }),
 

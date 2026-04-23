@@ -220,7 +220,7 @@ export default function AdminDashboardPage() {
                   <th rowSpan={2} className="px-6 py-4 border-r border-brand-yellow-50">Jenjang</th>
                   <th colSpan={3} className="px-4 py-3 text-center border-r border-brand-yellow-50 bg-slate-100/50">Kuota</th>
                   <th colSpan={3} className="px-4 py-3 text-center border-r border-brand-yellow-50 bg-blue-50">Pendaftar</th>
-                  <th colSpan={3} className="px-4 py-3 text-center border-r border-brand-yellow-50 bg-emerald-50">Sudah Ujian</th>
+                  <th colSpan={3} className="px-4 py-3 text-center border-r border-brand-yellow-50 bg-emerald-50">Diterima</th>
                   <th colSpan={3} className="px-4 py-3 text-center bg-purple-50">Daftar Ulang</th>
                 </tr>
                 <tr className="border-b border-brand-yellow-100">
@@ -232,7 +232,7 @@ export default function AdminDashboardPage() {
                   <th className="px-2 py-2 text-center border-r border-brand-yellow-50 text-blue-600">L</th>
                   <th className="px-2 py-2 text-center border-r border-brand-yellow-50 text-pink-600">P</th>
                   <th className="px-2 py-2 text-center border-r border-brand-yellow-50 font-black text-blue-800">T</th>
-                  {/* Sudah Ujian */}
+                  {/* Diterima */}
                   <th className="px-2 py-2 text-center border-r border-brand-yellow-50 text-emerald-600">L</th>
                   <th className="px-2 py-2 text-center border-r border-brand-yellow-50 text-pink-600">P</th>
                   <th className="px-2 py-2 text-center border-r border-brand-yellow-50 font-black text-emerald-800">T</th>
@@ -275,10 +275,10 @@ export default function AdminDashboardPage() {
                       <td className="px-2 py-4 text-center border-r border-brand-yellow-50 font-black text-blue-600 bg-blue-50/10">{item.pendaftar_putra}</td>
                       <td className="px-2 py-4 text-center border-r border-brand-yellow-50 font-black text-pink-600 bg-blue-50/10">{item.pendaftar_putri}</td>
                       <td className="px-2 py-4 text-center border-r border-brand-yellow-50 font-black text-blue-900 bg-blue-50/30">{item.pendaftar}</td>
-                      {/* Sudah Ujian */}
-                      <td className="px-2 py-4 text-center border-r border-brand-yellow-50 font-black text-emerald-600 bg-emerald-50/10">{item.ujian_putra}</td>
-                      <td className="px-2 py-4 text-center border-r border-brand-yellow-50 font-black text-pink-600 bg-emerald-50/10">{item.ujian_putri}</td>
-                      <td className="px-2 py-4 text-center border-r border-brand-yellow-50 font-black text-emerald-900 bg-emerald-50/30">{item.sudah_ujian}</td>
+                      {/* Diterima */}
+                      <td className="px-2 py-4 text-center border-r border-brand-yellow-50 font-black text-emerald-600 bg-emerald-50/10">{item.diterima_putra}</td>
+                      <td className="px-2 py-4 text-center border-r border-brand-yellow-50 font-black text-pink-600 bg-emerald-50/10">{item.diterima_putri}</td>
+                      <td className="px-2 py-4 text-center border-r border-brand-yellow-50 font-black text-emerald-900 bg-emerald-50/30">{item.diterima}</td>
                       {/* Daftar Ulang */}
                       <td className="px-2 py-4 text-center border-r border-brand-yellow-50 font-black text-purple-600 bg-purple-50/10">{item.ulang_putra}</td>
                       <td className="px-2 py-4 text-center border-r border-brand-yellow-50 font-black text-pink-600 bg-purple-50/10">{item.ulang_putri}</td>

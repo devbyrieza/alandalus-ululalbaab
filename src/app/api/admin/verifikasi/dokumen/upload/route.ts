@@ -163,6 +163,7 @@ export async function POST(request: NextRequest) {
                 });
                 console.log(`✅ [Admin Upload] Auto-unlocked pendaftar ${pendaftarId} to docs_verified`);
 
+                /* 
                 // Send WhatsApp notification
                 if (currentPendaftar.no_hp) {
                     try {
@@ -176,6 +177,7 @@ export async function POST(request: NextRequest) {
                         console.error("WhatsApp notification error after admin upload:", waError);
                     }
                 }
+                */
             }
         }
 

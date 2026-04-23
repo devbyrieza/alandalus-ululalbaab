@@ -415,16 +415,22 @@ export default function VerifikasiPembayaranPage() {
                     )}
 
                     {statusFilter === "verified" && (
-                      <div className="flex items-center justify-center gap-2 px-4 py-3 bg-emerald-50 text-emerald-700 rounded-xl font-bold text-sm border border-emerald-100">
+                      <button
+                        onClick={() => openModal(pay)}
+                        className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-3 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded-xl font-bold text-sm border border-emerald-100 transition-all"
+                      >
                         <CheckCircle className="w-4 h-4" />
-                        Sudah Valid
-                      </div>
+                        Terverifikasi
+                      </button>
                     )}
                     {statusFilter === "rejected" && (
-                      <div className="flex items-center justify-center gap-2 px-4 py-3 bg-red-50 text-red-700 rounded-xl font-bold text-sm border border-red-100">
+                      <button
+                        onClick={() => openModal(pay)}
+                        className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-3 bg-red-50 hover:bg-red-100 text-red-700 rounded-xl font-bold text-sm border border-red-100 transition-all"
+                      >
                         <XCircle className="w-4 h-4" />
                         Ditolak
-                      </div>
+                      </button>
                     )}
                   </div>
                 </div>
