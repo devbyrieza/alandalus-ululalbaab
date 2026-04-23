@@ -12,9 +12,15 @@ export async function GET(request: NextRequest) {
       });
     }
 
+    const targetIds = [
+      "ccab0426-d199-4f13-8908-9859cdf13727", // Nahla Ajwa Nursyifa
+      "0b663546-ec68-4e87-8150-0c857eacb6b9", // Iklimah Mardhatillah
+      "6d5c0aa1-b9aa-43a5-b6e8-27577ad20ad4"  // Hudzaifah Al fawwaz
+    ];
+
     const result = await prisma.pendaftar.updateMany({
       where: {
-        NOT: { deleted_at: null }
+        id: { in: targetIds }
       },
       data: {
         deleted_at: null
@@ -22,8 +28,8 @@ export async function GET(request: NextRequest) {
     });
 
     return NextResponse.json({
-      message: `Success! Restored ${result.count} students.`,
-      count: result.count
+      message: `Success! Restored ${result.count} specific students.`,
+      restored_count: result.count
     });
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });
