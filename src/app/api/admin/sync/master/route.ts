@@ -19,51 +19,53 @@ async function checkAdmin() {
 export async function POST(request: NextRequest) {
   try {
     const session = await checkAdmin();
-    if (!session) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
+    if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     const formData = await request.formData();
     const file = formData.get("file") as File;
-
-    if (!file) {
-      return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
-    }
+    if (!file) return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
 
     const buffer = await file.arrayBuffer();
     const workbook = XLSX.read(buffer, { type: "buffer" });
-    const sheetName = workbook.SheetNames[0];
-    const sheet = workbook.Sheets[sheetName];
+    const sheet = workbook.Sheets[workbook.SheetNames[0]];
     
-    // Skip first 2 title rows, start from Row 3 (index 2)
-    const data = XLSX.utils.sheet_to_json(sheet, { range: 2 }) as any[];
-
-    // 1. Get Active TA
-    const activeTA = await prisma.tahunAjaran.findFirst({
-      where: { is_active: true }
-    });
-
-    if (!activeTA) {
-      return NextResponse.json({ error: "No active Year of Study found" }, { status: 404 });
+    // Read raw data to find headers
+    const rawData = XLSX.utils.sheet_to_json(sheet, { header: 1 }) as any[][];
+    
+    // Find header row (the one containing "Nama" or similar)
+    let headerRowIndex = -1;
+    for (let i = 0; i < Math.min(rawData.length, 10); i++) {
+      if (rawData[i].some(cell => String(cell).toLowerCase().includes("nama santri") || String(cell).toLowerCase().includes("nama lengkap"))) {
+        headerRowIndex = i;
+        break;
+      }
     }
 
-    const results = {
-      updated: 0,
-      notFound: 0,
-      errors: 0,
-      details: [] as string[]
+    if (headerRowIndex === -1) {
+      return NextResponse.json({ error: "Could not find 'Nama Santri' column in Excel" }, { status: 400 });
+    }
+
+    const headers = rawData[headerRowIndex].map(h => String(h).trim());
+    const dataRows = rawData.slice(headerRowIndex + 1);
+
+    const colIdx = {
+      nama: headers.findIndex(h => h.toLowerCase().includes("nama santri") || h.toLowerCase().includes("nama lengkap")),
+      status: headers.findIndex(h => h.toLowerCase().includes("hasil tes") || h.toLowerCase().includes("status penerimaan")),
+      bayar: headers.findIndex(h => h.toLowerCase().includes("status pembayaran") || h.toLowerCase().includes("lunas"))
     };
 
-    // 2. Normalization function
+    // 1. Get Active TA
+    const activeTA = await prisma.tahunAjaran.findFirst({ where: { is_active: true } });
+    if (!activeTA) return NextResponse.json({ error: "No active TA" }, { status: 404 });
+
+    const results = { updated: 0, notFound: 0, details: [] as string[] };
+
     const normalize = (name: string) => {
       if (!name) return "";
-      return String(name)
-        .toLowerCase()
-        .replace(/[^a-z0-9]/g, "")
-        .trim();
+      return String(name).toLowerCase().replace(/[^a-z0-9]/g, "").trim();
     };
 
-    // 3. Fetch all active students for this TA
+    // 3. Fetch all active students
     const students = await prisma.pendaftar.findMany({
       where: { tahun_ajaran_id: activeTA.id, deleted_at: null },
       select: { id: true, nama_lengkap: true }
@@ -76,29 +78,33 @@ export async function POST(request: NextRequest) {
 
     const updatedIds = new Set<string>();
 
-    // 4. Process Rows & Update
-    for (const row of data) {
-      // Map based on observed column names
-      const rawName = row["Nama Santri"];
-      const statusPenerimaan = row["Hasil Tes Al-Qur'an"];
-      const statusLunas = row["Status Pembayaran"];
-
+    // 4. Process Rows
+    for (const row of dataRows) {
+      const rawName = row[colIdx.nama];
       if (!rawName) continue;
 
       const normName = normalize(rawName);
-      const studentId = studentMap.get(normName);
+      let studentId = studentMap.get(normName);
+
+      // Fallback: Try partial match if not found exactly
+      if (!studentId) {
+        const bestMatch = students.find(s => {
+          const dbNorm = normalize(s.nama_lengkap);
+          return dbNorm.includes(normName) || normName.includes(dbNorm);
+        });
+        if (bestMatch) studentId = bestMatch.id;
+      }
 
       if (studentId) {
         let newStatus = "draft";
-        
-        const isLunas = String(statusLunas).toLowerCase().includes("lunas") || 
-                        String(statusLunas).toLowerCase().includes("gratis");
+        const statusPenerimaan = String(row[colIdx.status] || "").toLowerCase();
+        const statusLunas = String(row[colIdx.bayar] || "").toLowerCase();
 
-        if (isLunas) {
+        if (statusLunas.includes("lunas") || statusLunas.includes("gratis")) {
           newStatus = "enrolled";
-        } else if (String(statusPenerimaan).toLowerCase().includes("diterima")) {
+        } else if (statusPenerimaan.includes("diterima")) {
           newStatus = "accepted";
-        } else if (String(statusPenerimaan).toLowerCase().includes("cadangan")) {
+        } else if (statusPenerimaan.includes("cadangan")) {
           newStatus = "announced";
         }
 
@@ -110,29 +116,26 @@ export async function POST(request: NextRequest) {
         updatedIds.add(studentId);
       } else {
         results.notFound++;
-        results.details.push(`Not Found in DB: ${rawName}`);
+        results.details.push(`Not Found: ${rawName}`);
       }
     }
 
-    // 5. Cleanup: Soft-delete students NOT in Excel
-    const toDelete = students.filter(s => !updatedIds.has(s.id));
-    for (const s of toDelete) {
-      await prisma.pendaftar.update({
-        where: { id: s.id },
-        data: { deleted_at: new Date() }
-      });
+    // 5. Cleanup (ONLY if we found at least 50% of the students, to be safe)
+    let cleanedCount = 0;
+    if (results.updated > dataRows.length * 0.5) {
+      const toDelete = students.filter(s => !updatedIds.has(s.id));
+      for (const s of toDelete) {
+        await prisma.pendaftar.update({ where: { id: s.id }, data: { deleted_at: new Date() } });
+      }
+      cleanedCount = toDelete.length;
     }
 
     return NextResponse.json({
-      message: "Full synchronization completed",
-      results: {
-        ...results,
-        cleaned: toDelete.length
-      }
+      message: "Sync complete",
+      results: { ...results, cleaned: cleanedCount }
     });
 
   } catch (error: any) {
-    console.error("Sync Error:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
