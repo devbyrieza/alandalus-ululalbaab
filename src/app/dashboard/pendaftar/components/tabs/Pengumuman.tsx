@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import {
   Trophy,
   CheckCircle,
@@ -25,8 +26,10 @@ export default function PengumumanTab() {
   const [docData, setDocData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
+    setIsMounted(true);
     fetchPengumuman();
   }, []);
 
@@ -115,6 +118,8 @@ export default function PengumumanTab() {
       </div>
     );
   }
+
+  if (!isMounted) return null;
 
   return (
     <motion.div 
