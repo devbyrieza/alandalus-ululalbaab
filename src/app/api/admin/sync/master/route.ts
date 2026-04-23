@@ -34,7 +34,9 @@ export async function POST(request: NextRequest) {
     const workbook = XLSX.read(buffer, { type: "buffer" });
     const sheetName = workbook.SheetNames[0];
     const sheet = workbook.Sheets[sheetName];
-    const data = XLSX.utils.sheet_to_json(sheet) as any[];
+    
+    // Skip first 2 title rows, start from Row 3 (index 2)
+    const data = XLSX.utils.sheet_to_json(sheet, { range: 2 }) as any[];
 
     // 1. Get Active TA
     const activeTA = await prisma.tahunAjaran.findFirst({
@@ -44,8 +46,6 @@ export async function POST(request: NextRequest) {
     if (!activeTA) {
       return NextResponse.json({ error: "No active Year of Study found" }, { status: 404 });
     }
-
-    console.log(`🚀 Starting sync for TA: ${activeTA.nama}`);
 
     const results = {
       updated: 0,
@@ -57,7 +57,7 @@ export async function POST(request: NextRequest) {
     // 2. Normalization function
     const normalize = (name: string) => {
       if (!name) return "";
-      return name
+      return String(name)
         .toLowerCase()
         .replace(/[^a-z0-9]/g, "")
         .trim();
@@ -74,25 +74,27 @@ export async function POST(request: NextRequest) {
       studentMap.set(normalize(s.nama_lengkap), s.id);
     });
 
-    const excelNames = new Set();
     const updatedIds = new Set<string>();
 
     // 4. Process Rows & Update
     for (const row of data) {
-      const rawName = row["NAMA LENGKAP"] || row["Nama Lengkap"] || row["NAMA"];
-      const statusPenerimaan = row["STATUS PENERIMAAN"] || row["Status"];
-      const statusLunas = row["LUNAS"] || row["Status Pembayaran"];
+      // Map based on observed column names
+      const rawName = row["Nama Santri"];
+      const statusPenerimaan = row["Hasil Tes Al-Qur'an"];
+      const statusLunas = row["Status Pembayaran"];
 
       if (!rawName) continue;
 
       const normName = normalize(rawName);
-      excelNames.add(normName);
       const studentId = studentMap.get(normName);
 
       if (studentId) {
         let newStatus = "draft";
         
-        if (String(statusLunas).toLowerCase().includes("lunas")) {
+        const isLunas = String(statusLunas).toLowerCase().includes("lunas") || 
+                        String(statusLunas).toLowerCase().includes("gratis");
+
+        if (isLunas) {
           newStatus = "enrolled";
         } else if (String(statusPenerimaan).toLowerCase().includes("diterima")) {
           newStatus = "accepted";
