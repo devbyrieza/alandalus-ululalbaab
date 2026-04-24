@@ -261,10 +261,9 @@ export default function AdminDashboardPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8">
         {[
           { label: "Total Pendaftar", val: stats.total_pendaftar, icon: Users, color: "blue" },
-          { label: "Cadangan", val: stats.cadangan, icon: Loader2, color: "yellow" },
           { label: "Diterima", val: stats.diterima, icon: GraduationCap, color: "emerald" },
           { label: "Sudah Daftar Ulang", val: stats.daftar_ulang, icon: Wallet, color: "indigo" },
         ]
@@ -284,7 +283,7 @@ export default function AdminDashboardPage() {
                     : "bg-emerald-50 text-emerald-600"
                 }`}
               >
-                <item.icon className={`w-6 h-6 md:w-7 md:h-7 ${item.label === "Cadangan" ? "animate-spin-slow" : ""}`} />
+                <item.icon className="w-6 h-6 md:w-7 md:h-7" />
               </div>
               <p className="text-[10px] font-black text-ink-300 uppercase tracking-widest mb-1">{item.label}</p>
               <p className="text-2xl md:text-5xl font-black text-brand-blue-950 font-display tracking-tight leading-none">
@@ -294,15 +293,6 @@ export default function AdminDashboardPage() {
           ))}
       </div>
 
-      <style jsx global>{`
-        @keyframes spin-slow {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-        .animate-spin-slow {
-          animation: spin-slow 8s linear infinite;
-        }
-      `}</style>
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
         <div className="lg:col-span-4 space-y-8">
