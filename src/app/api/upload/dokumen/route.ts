@@ -182,9 +182,14 @@ export async function POST(request: NextRequest) {
     });
 
   } catch (error: any) {
-    console.error("Upload error:", error);
+    console.error("Upload error details:", error);
     return NextResponse.json(
-      { success: false, error: "Terjadi kesalahan saat mengupload file" },
+      { 
+        success: false, 
+        error: "Terjadi kesalahan saat mengupload file",
+        details: error.message,
+        stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+      },
       { status: 500 }
     );
   }
