@@ -264,8 +264,8 @@ export default function AdminDashboardPage() {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
         {[
           { label: "Total Pendaftar", val: stats.total_pendaftar, icon: Users, color: "blue" },
-          { label: "Lolos Utama", val: stats.diterima, icon: GraduationCap, color: "emerald" },
           { label: "Cadangan", val: stats.cadangan, icon: Loader2, color: "yellow" },
+          { label: "Diterima", val: stats.diterima, icon: GraduationCap, color: "emerald" },
           { label: "Sudah Daftar Ulang", val: stats.daftar_ulang, icon: Wallet, color: "indigo" },
         ]
           .map((item, id) => (

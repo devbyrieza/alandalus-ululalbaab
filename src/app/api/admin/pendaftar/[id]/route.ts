@@ -68,15 +68,12 @@ export async function GET(
     const mergedPendaftar = {
       ...pendaftar,
       nilai_ujian: pendaftar.nilai_ujian && pendaftar.nilai_ujian.length > 0 ? pendaftar.nilai_ujian[0] : null,
-      // Identity
       tempat_lahir: pendaftar.tempat_lahir || santri.tempat_lahir || null,
       tanggal_lahir: pendaftar.tanggal_lahir || (santri.tanggal_lahir ? new Date(santri.tanggal_lahir) : null),
       golongan_darah: pendaftar.golongan_darah || santri.golongan_darah || null,
       hobi: pendaftar.hobi || santri.hobi || null,
       cita_cita: pendaftar.cita_cita || santri.cita_cita || null,
-
-      // Address - Main
-      alamat: pendaftar.alamat || santri.alamat || null,
+      alamat: (pendaftar.alamat && pendaftar.alamat !== '-') ? pendaftar.alamat : (santri.alamat || null),
       rt: pendaftar.rt || santri.rt || null,
       rw: pendaftar.rw || santri.rw || null,
       kelurahan: pendaftar.kelurahan || santri.kelurahan || null,
@@ -84,14 +81,14 @@ export async function GET(
       kabupaten: pendaftar.kabupaten || santri.kabupaten || null,
       provinsi: pendaftar.provinsi || santri.provinsi || null,
       kode_pos: pendaftar.kode_pos || santri.kode_pos || null,
-
-      // School
-      asal_sekolah: pendaftar.asal_sekolah || santri.asal_sekolah || null,
+      asal_sekolah: (pendaftar.asal_sekolah && pendaftar.asal_sekolah !== '-') ? pendaftar.asal_sekolah : (santri.asal_sekolah || null),
       alamat_sekolah: pendaftar.alamat_sekolah || santri.alamat_sekolah || null,
-      tahun_lulus: pendaftar.tahun_lulus || (santri.tahun_lulus ? parseInt(santri.tahun_lulus) : null),
+      tahun_lulus: pendaftar.tahun_lulus || santri.tahun_lulus || null,
       nisn: pendaftar.nisn || santri.nisn || null,
       anak_ke: pendaftar.anak_ke || (santri.anak_ke ? parseInt(santri.anak_ke) : null),
-      jumlah_saudara: pendaftar.jumlah_saudara || (santri.berapa_bersaudara ? parseInt(santri.berapa_bersaudara) : null),
+      jumlah_saudara: pendaftar.jumlah_saudara || (santri.berapa_bersaudara ? parseInt(santri.berapa_bersaudara) : (santri.jumlah_saudara ? parseInt(santri.jumlah_saudara) : null)),
+      no_hp: (pendaftar.no_hp && pendaftar.no_hp !== '-') ? pendaftar.no_hp : (santri.no_hp || null),
+      email: pendaftar.email || santri.email || null,
 
       // Parents (Nested object override)
       orang_tua: pendaftar.orang_tua ? {
