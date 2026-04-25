@@ -386,7 +386,13 @@ function InputNilaiContent() {
           catatan_quran: quranForm.catatan || "",
         };
       } else if (formType === "wawancara") {
-        const isPutri = p.jenjang?.toLowerCase().includes('putri');
+        const isPutriByJenjang = p.jenjang?.toLowerCase().includes('putri');
+        // Fallback: If examiner is Halimah or Rima, it's definitely a Putri session
+        const isPutriByExaminer = ["Halimah Fauziah", "Rima Maryani Putri Utami", "Iklimah Mardhatillah"].some(name => 
+          p.detail_wawancara?.nama_pewawancara === name
+        );
+        const isPutri = isPutriByJenjang || isPutriByExaminer;
+        
         const criteria = isPutri ? CALSAN_CRITERIA_PUTRI : CALSAN_CRITERIA_PUTRA;
         const scores = criteria.map((c) => calsanForm[c.key] || 0);
         const avgScore = scores.reduce((a: number, b: number) => a + b, 0) / scores.length;
@@ -604,7 +610,14 @@ function InputNilaiContent() {
   const renderCalsanForm = (p: Peserta) => {
     const isSaved = !!(p.detail_wawancara?.rekomendasi || p.nilai_wawancara_santri != null);
     const isEditing = editingId === p.id + "wawancara";
-    const isPutri = p.jenjang?.toLowerCase().includes('putri');
+    
+    const isPutriByJenjang = p.jenjang?.toLowerCase().includes('putri');
+    // Also check if the current selected interviewer is from the Putri list
+    const isPutriByExaminer = ["Halimah Fauziah", "Rima Maryani Putri Utami", "Iklimah Mardhatillah"].some(name => 
+      calsanForm.nama_pewawancara === name || p.detail_wawancara?.nama_pewawancara === name
+    );
+    const isPutri = isPutriByJenjang || isPutriByExaminer;
+    
     const criteria = isPutri ? CALSAN_CRITERIA_PUTRI : CALSAN_CRITERIA_PUTRA;
 
     return (
