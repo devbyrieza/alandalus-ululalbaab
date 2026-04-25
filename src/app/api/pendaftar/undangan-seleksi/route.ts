@@ -118,12 +118,14 @@ export async function GET() {
             kesiapan: { completed: hasKesiapan, label: "Tes Kesiapan" },
         };
 
-        // 3. Fetch Grup B — Available exam sessions (future, active)
+        // 3. Fetch Grup B — Available exam sessions (active)
+        // We removed the 'gte: new Date()' filter to allow pendaftars to see/book sessions 
+        // even if the start_time has just passed (to accommodate late-starts)
         const availableSessions = await prisma.examSession.findMany({
             where: {
                 is_active: true,
-                start_time: { gte: new Date() },
             },
+
             include: {
                 _count: { select: { bookings: true } },
             },
