@@ -984,7 +984,9 @@ export default function PembayaranPendaftaranTab({
                           <div className="flex justify-between items-start mb-10">
                             <div>
                               <p className="text-[10px] font-black text-teal-100 uppercase tracking-[0.2em] mb-3 opacity-90">Bank Syariah Indonesia (BSI)</p>
-                              <img src="/images/bsi-logo.png" alt="BSI" className="h-10 w-auto brightness-0 invert" />
+                              <div className="bg-white p-2 rounded-xl inline-flex items-center justify-center shadow-sm">
+                                <img src="/images/bsi-logo.png" alt="BSI" className="h-7 w-auto object-contain" />
+                              </div>
                             </div>
                             <div className="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/20 shadow-sm flex items-center justify-center text-white">
                               <Building2 className="w-8 h-8" />
