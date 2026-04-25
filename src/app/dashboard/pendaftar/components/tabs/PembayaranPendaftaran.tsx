@@ -828,22 +828,22 @@ export default function PembayaranPendaftaranTab({
           {/* Manual Transfer Instructions (hanya di halaman Pembayaran) */}
           {!isStatusOnly && canMakePayment && (
             <div className="space-y-8">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <h3 className="text-xl font-bold text-ink-900 px-2">Pilih Metode Pembayaran</h3>
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 px-2">
+                <h3 className="text-2xl font-black text-brand-blue-950 tracking-tight">Pilih Metode Pembayaran</h3>
                 {/* Total Price Tag */}
-                <div className="bg-indigo-50 text-indigo-700 px-6 py-3 rounded-2xl font-black text-lg border border-indigo-100 shadow-sm flex items-center gap-2">
-                  <span>Total:</span>
-                  <span className="text-2xl">{formatRupiah(biayaPendaftaran)}</span>
+                <div className="bg-brand-blue-50 text-brand-blue-700 px-5 py-3 md:px-7 md:py-4 rounded-[1.5rem] font-black text-xl md:text-2xl border border-brand-blue-100 shadow-sm flex items-center justify-between sm:justify-center gap-4">
+                  <span className="text-sm md:text-base uppercase tracking-widest opacity-70">Total:</span>
+                  <span className="tabular-nums">{formatRupiah(biayaPendaftaran)}</span>
                 </div>
               </div>
 
               {/* PAYMENT CARDS GRID */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 pt-4">
 
                 {/* CARD 1: MIDTRANS (DEV) */}
-                <div className="relative group bg-white rounded-[2.5rem] p-8 border border-ink-100 shadow-sm transition-all hover:shadow-lg hover:-translate-y-1 overflow-hidden opacity-80 hover:opacity-100 grayscale-[0.5] hover:grayscale-0">
+                <div className="relative group bg-white rounded-[2.5rem] p-8 border border-surface-200 shadow-sm transition-all hover:shadow-lg overflow-visible opacity-80 grayscale-[0.5] hover:grayscale-0">
                   {/* Background Decor */}
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-amber-50 rounded-bl-[4rem] -z-0" />
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-brand-yellow-50 rounded-bl-[4rem] -z-0" />
 
                   <div className="relative z-10 flex flex-col h-full">
                     <div className="mb-6">
@@ -885,31 +885,31 @@ export default function PembayaranPendaftaranTab({
                 {/* CARD 2: BSI MANUAL */}
                 <div
                   onClick={() => setActivePaymentMethod('manual')}
-                  className={`relative group bg-white rounded-[2.5rem] p-8 border-2 transition-all cursor-pointer shadow-lg hover:-translate-y-2 hover:shadow-2xl overflow-hidden ${activePaymentMethod === 'manual'
-                    ? 'border-teal-500 ring-4 ring-teal-500/10 shadow-teal-500/10'
-                    : 'border-white hover:border-teal-300 shadow-sm'
+                  className={`relative group bg-white rounded-[2.5rem] p-8 border-2 transition-all cursor-pointer shadow-lg md:hover:-translate-y-2 md:hover:shadow-2xl overflow-visible ${activePaymentMethod === 'manual'
+                    ? 'border-brand-blue-600 ring-4 ring-brand-blue-600/10 shadow-brand-blue-600/10'
+                    : 'border-white hover:border-brand-blue-300 shadow-sm'
                     }`}
                 >
-                  {/* Background Decor - BSI Teal Circle */}
+                  {/* Background Decor - Blue Blur */}
                   <div className={`absolute -top-10 -right-10 w-40 h-40 rounded-full transition-all duration-500 blur-2xl -z-0 ${
-                    activePaymentMethod === 'manual' ? 'bg-teal-100/60 scale-125' : 'bg-teal-50/50 group-hover:bg-teal-100/40'
+                    activePaymentMethod === 'manual' ? 'bg-brand-blue-100/60 scale-125' : 'bg-brand-blue-50/50 group-hover:bg-brand-blue-100/40'
                   }`} />
 
                   {activePaymentMethod === 'manual' && (
                     <div className="absolute top-6 right-6 lg:right-8 z-20">
-                      <div className="w-8 h-8 bg-teal-600 rounded-full flex items-center justify-center animate-in zoom-in shadow-lg shadow-teal-600/30">
+                      <div className="w-8 h-8 bg-brand-blue-600 rounded-full flex items-center justify-center animate-in zoom-in shadow-lg shadow-brand-blue-600/30">
                         <Check className="w-5 h-5 text-white" />
                       </div>
                     </div>
                   )}
 
                   {/* Recommendation Badge */}
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-teal-600 to-emerald-500 text-white text-[10px] sm:text-xs font-black px-5 py-1.5 rounded-full shadow-lg shadow-teal-600/30 z-20 flex items-center gap-1.5 uppercase tracking-wider">
-                    <StarIcon className="w-3.5 h-3.5 fill-white" />
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-linear-to-r from-brand-blue-700 to-brand-blue-500 text-white text-[10px] sm:text-xs font-black px-6 py-2 rounded-full shadow-lg shadow-brand-blue-600/30 z-20 flex items-center gap-2 uppercase tracking-widest whitespace-nowrap">
+                    <StarIcon className="w-3.5 h-3.5 fill-brand-yellow-300 text-brand-yellow-300" />
                     Rekomendasi
                   </div>
 
-                  <div className="relative z-10 flex flex-col h-full pt-4">
+                  <div className="relative z-10 flex flex-col h-full pt-6">
                     <div className="mb-6">
                       <div className="h-16 flex items-center justify-start mb-6">
                         <img 
@@ -1020,10 +1020,10 @@ export default function PembayaranPendaftaranTab({
 
 
                       {/* RIGHT COLUMN: UPLOAD AREA */}
-                      <div className="bg-white rounded-[2.5rem] border-2 border-dashed border-ink-200 p-8 flex flex-col justify-center relative group hover:border-maroon-300 transition-colors">
+                      <div className="bg-white rounded-[2.5rem] border-2 border-dashed border-surface-200 p-8 flex flex-col justify-center relative group hover:border-brand-blue-300 transition-colors">
                         <div className="text-center mb-8">
                           <h5 className="font-bold text-ink-900 text-lg flex items-center justify-center gap-2 mb-2">
-                            <Upload className="w-5 h-5 text-maroon-700" />
+                            <Upload className="w-5 h-5 text-brand-blue-700" />
                             Upload Bukti Transfer
                           </h5>
                           <p className="text-sm text-ink-400">Format: JPG, PNG, PDF, WebP (Maks. 5MB)</p>
@@ -1078,7 +1078,7 @@ export default function PembayaranPendaftaranTab({
               </div>
               <a
                 href="/dashboard/pendaftar/pembayaran-pendaftaran"
-                className="px-6 py-3 bg-cream-400 hover:bg-cream-300 text-maroon-950 rounded-xl font-black shadow-lg shadow-cream-400/20 transition-all hover:scale-105 flex items-center gap-2 border border-cream-500"
+                className="px-6 py-3 bg-brand-yellow-400 hover:bg-brand-yellow-300 text-brand-blue-950 rounded-xl font-black shadow-lg shadow-brand-yellow-400/20 transition-all hover:scale-105 flex items-center gap-2 border border-brand-yellow-500"
               >
                 <span>Ke Halaman Pembayaran</span>
               </a>
@@ -1088,9 +1088,9 @@ export default function PembayaranPendaftaranTab({
 
         {/* Sidebar Column */}
         <div className="space-y-6">
-          <div className="glass-panel p-6 rounded-[2rem] shadow-sm border border-cream-200 app-card border border-white/50">
+          <div className="glass-panel p-6 rounded-[2.5rem] shadow-sm border border-brand-yellow-200 app-card">
             <h3 className="text-lg font-bold text-ink-900 mb-4 flex items-center gap-2">
-              <Info className="w-5 h-5 text-maroon-700" />
+              <Info className="w-5 h-5 text-brand-blue-700" />
               Rincian Biaya
             </h3>
             <div className="space-y-3">
@@ -1105,7 +1105,7 @@ export default function PembayaranPendaftaranTab({
               <div className="h-px bg-ink-100 my-2" />
               <div className="flex justify-between items-center">
                 <span className="text-ink-900 font-bold">Total Pembayaran</span>
-                <span className="text-xl font-black text-maroon-700">{formatRupiah(biayaPendaftaran)}</span>
+                <span className="text-xl font-black text-brand-blue-700">{formatRupiah(biayaPendaftaran)}</span>
               </div>
             </div>
           </div>
