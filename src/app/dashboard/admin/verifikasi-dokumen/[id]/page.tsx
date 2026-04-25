@@ -107,70 +107,49 @@ export default function VerifikasiDokumenDetailPage() {
                 }
             }
 
-            // Ensure all required document types are present in the list
+            // Process uploaded documents
             const docsData = result.data || [];
-            const allDocs = JENIS_DOKUMEN_ORDER.map(label => {
-                // Find if this document already exists in the response
-                const existing = docsData.find((d: any) => {
-                        let currentLabel = d.jenis_dokumen;
-                        switch (d.jenis_dokumen) {
-                            case 'foto_setengah_badan': currentLabel = "Foto Setengah Badan"; break;
-                            case 'kartu_keluarga': currentLabel = "Scan Kartu Keluarga"; break;
-                            case 'akta_kelahiran': currentLabel = "Scan Akte Kelahiran"; break;
-                            case 'rapor_sem1': currentLabel = "Scan Rapor 2 Semester Terakhir (1)"; break;
-                            case 'rapor_sem2': currentLabel = "Scan Rapor 2 Semester Terakhir (2)"; break;
-                            case 'nisn': currentLabel = "Scan NISN"; break;
-                            case 'surat_kesehatan': currentLabel = "Surat Keterangan Sehat"; break;
-                            case 'pakta_integritas': currentLabel = "Scan Pakta Integritas"; break;
-                            case 'pernyataan_bebas_negatif': currentLabel = "Scan Pernyataan Bebas Perilaku Negatif"; break;
-                            default: currentLabel = d.jenis_dokumen.replace(/_/g, " ");
-                        }
-                        return currentLabel === label;
-                    });
+            const allDocs = docsData.map((d: any) => {
+                let label = d.jenis_dokumen;
+                switch (d.jenis_dokumen) {
+                    case 'foto_setengah_badan': label = "Foto Setengah Badan"; break;
+                    case 'kartu_keluarga': label = "Scan Kartu Keluarga"; break;
+                    case 'akta_kelahiran': label = "Scan Akte Kelahiran"; break;
+                    case 'rapor_sem1': label = "Scan Rapor 2 Semester Terakhir (1)"; break;
+                    case 'rapor_sem2': label = "Scan Rapor 2 Semester Terakhir (2)"; break;
+                    case 'nisn': label = "Scan NISN"; break;
+                    case 'surat_kesehatan': label = "Surat Keterangan Sehat"; break;
+                    case 'pakta_integritas': label = "Scan Pakta Integritas"; break;
+                    case 'pernyataan_bebas_negatif': label = "Scan Pernyataan Bebas Perilaku Negatif"; break;
+                    default: label = d.jenis_dokumen.replace(/_/g, " ");
+                }
 
-                    if (existing) {
-                        return {
-                            id: existing.id,
-                            jenis_dokumen: label,
-                            raw_jenis: existing.jenis_dokumen,
-                            status_verifikasi: existing.is_verified ? "verified" : (existing.catatan ? "rejected" : "pending"),
-                            is_verified: existing.is_verified,
-                            catatan: existing.catatan,
-                            file_url: existing.file_url,
-                            file_type: existing.file_type,
-                            created_at: existing.created_at,
-                            updated_at: existing.updated_at,
-                            pendaftar_id: id,
-                        };
-                    } else {
-                        // Create a placeholder for missing document
-                        const rawJenis = label.toLowerCase().replace(/scan /g, "").replace(/ /g, "_").replace(/\(/g, "").replace(/\)/g, "");
-                        // Map back to proper keys
-                        let finalRaw = rawJenis;
-                        if (label.includes("(1)")) finalRaw = "rapor_sem1";
-                        if (label.includes("(2)")) finalRaw = "rapor_sem2";
-                        if (label.includes("Akte")) finalRaw = "akta_kelahiran";
-                        if (label.includes("Keluarga")) finalRaw = "kartu_keluarga";
-                        if (label.includes("Kesehatan")) finalRaw = "surat_kesehatan";
-                        if (label.includes("Foto")) finalRaw = "foto_setengah_badan";
+                return {
+                    id: d.id,
+                    jenis_dokumen: label,
+                    raw_jenis: d.jenis_dokumen,
+                    status_verifikasi: d.is_verified ? "verified" : (d.catatan ? "rejected" : "pending"),
+                    is_verified: d.is_verified,
+                    catatan: d.catatan,
+                    file_url: d.file_url,
+                    file_type: d.file_type,
+                    created_at: d.created_at,
+                    updated_at: d.updated_at,
+                    pendaftar_id: id,
+                };
+            });
 
-                        return {
-                            id: `new-${finalRaw}`,
-                            jenis_dokumen: label,
-                            raw_jenis: finalRaw,
-                            status_verifikasi: "empty",
-                            is_verified: false,
-                            catatan: null,
-                            file_url: null,
-                            file_type: null,
-                            created_at: new Date().toISOString(),
-                            updated_at: new Date().toISOString(),
-                            pendaftar_id: id,
-                        };
-                    }
-                });
+            // Sort documents based on JENIS_DOKUMEN_ORDER
+            allDocs.sort((a: any, b: any) => {
+                const aIndex = JENIS_DOKUMEN_ORDER.indexOf(a.jenis_dokumen);
+                const bIndex = JENIS_DOKUMEN_ORDER.indexOf(b.jenis_dokumen);
+                if (aIndex === -1 && bIndex === -1) return a.jenis_dokumen.localeCompare(b.jenis_dokumen);
+                if (aIndex === -1) return 1;
+                if (bIndex === -1) return -1;
+                return aIndex - bIndex;
+            });
 
-                setDokumenList(allDocs);
+            setDokumenList(allDocs);
             } catch (error) {
             console.error("Error fetching data:", error);
         } finally {
