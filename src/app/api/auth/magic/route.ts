@@ -12,11 +12,12 @@ export async function GET(request: NextRequest) {
 
         // 1. Verify token mathematically (stateless)
         const verification = verifyMagicToken(token);
+        const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://ppdb.alandalus-ululalbaab.com";
 
         if (!verification.valid || !verification.data) {
             // Decode URI components for safe passage
             const errReason = encodeURIComponent(verification.reason || "Token_tidak_valid");
-            return NextResponse.redirect(new URL(`/login?error=${errReason}`, request.url));
+            return NextResponse.redirect(new URL(`/login?error=${errReason}`, baseUrl));
         }
 
         const { id, role, full_name, redirect } = verification.data;
@@ -30,7 +31,7 @@ export async function GET(request: NextRequest) {
         
         // If user has a valid phone number, they MUST verify PIN
         if (user && user.phone && user.phone !== "-" && user.phone.length > 5) {
-            const pinUrl = new URL("/auth/verify-pin", request.nextUrl.origin);
+            const pinUrl = new URL("/auth/verify-pin", baseUrl);
             pinUrl.searchParams.set("token", token);
             return NextResponse.redirect(pinUrl);
         }
@@ -38,9 +39,8 @@ export async function GET(request: NextRequest) {
         // 4. Fallback: Build secure cookie directly if no PIN protection is active
         const targetUrl = redirect || "/dashboard/penguji/input-nilai";
         
-        // Use the request URL's origin as the base to ensure consistency
-        const dynamicBaseUrl = request.nextUrl.origin;
-        const response = NextResponse.redirect(new URL(targetUrl, dynamicBaseUrl));
+        // Use the robust base URL
+        const response = NextResponse.redirect(new URL(targetUrl, baseUrl));
 
         response.cookies.set(
             "app_session",

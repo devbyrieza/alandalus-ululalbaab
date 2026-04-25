@@ -84,7 +84,9 @@ export const PERMANENT_SLUGS: Record<string, string> = {
     "bachtiar": "Maulidin Bachtiar",
     "muhajir": "Muhajir",
     "syauqi": "Muhammad Syauqi Al Faruq",
-    "teguh": "Teguh"
+    "teguh": "Teguh",
+    "halimah": "Halimah Fauziah",
+    "fatimah": "Andi Fatimah"
 };
 
 /**
