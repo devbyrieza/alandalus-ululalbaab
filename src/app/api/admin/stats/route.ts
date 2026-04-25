@@ -141,6 +141,8 @@ export async function GET(request: Request) {
       // Secondary metrics
       sudah_bayar: total_pendaftar - (statusCounts.draft || 0), 
       sudah_isi_data: total_pendaftar - (statusCounts.draft || 0) - (statusCounts.waiting_payment || 0),
+      waiting_payment: statusCounts.waiting_payment || 0,
+      waiting_docs: statusCounts.data_completed || 0,
 
       stats_per_jenjang: ["MTS", "IL", "SMA"].map(jenjang => {
         const data = jenjangCounts[jenjang] || {
