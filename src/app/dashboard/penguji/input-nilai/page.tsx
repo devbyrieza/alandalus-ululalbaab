@@ -492,6 +492,14 @@ function InputNilaiContent() {
   const renderQuranForm = (p: Peserta) => {
     const isSaved = !!(p.detail_quran?.rekomendasi || p.nilai_tes_quran != null || p.score_quran != null);
     const isEditing = editingId === p.id + "quran";
+    
+    const isPutriByJenjang = p.jenjang?.toLowerCase().includes('putri');
+    const isPutriByPrefix = ['MTI', 'ILI', 'SMI'].some(prefix => p.nomor_pendaftaran?.startsWith(prefix));
+    const isPutriByExaminer = ["Halimah Fauziah", "Rima Maryani Putri Utami", "Iklimah Mardhatillah"].some(name => 
+      quranForm.nama_penguji === name || p.detail_quran?.nama_penguji === name
+    );
+    const isPutri = isPutriByJenjang || isPutriByPrefix || isPutriByExaminer;
+    const examinerList = isPutri ? PENGUJI_QURAN_LIST_PUTRI : PENGUJI_QURAN_LIST_PUTRA;
 
     return (
       <div className="bg-emerald-50/50 border border-emerald-100 rounded-2xl sm:rounded-3xl p-5 sm:p-8 space-y-5 sm:space-y-6 shadow-sm">
@@ -536,7 +544,7 @@ function InputNilaiContent() {
               <label className="block text-[10px] sm:text-xs font-black text-ink-700 uppercase tracking-widest mb-2 sm:mb-3">Nama Penguji *</label>
               <select value={quranForm.nama_penguji || ""} onChange={(e) => setQuranForm({ ...quranForm, nama_penguji: e.target.value })} className="w-full px-4 sm:px-5 py-3.5 sm:py-4 bg-white border-2 border-emerald-100 rounded-xl sm:rounded-2xl focus:border-emerald-500 outline-none font-black text-emerald-950 transition-all cursor-pointer">
                 <option value="">Pilih Penguji</option>
-                {(p.jenjang?.toLowerCase().includes("putri") ? PENGUJI_QURAN_LIST_PUTRI : PENGUJI_QURAN_LIST_PUTRA).map((n) => <option key={n} value={n}>{n}</option>)}
+                {examinerList.map((n) => <option key={n} value={n}>{n}</option>)}
               </select>
             </div>
 
