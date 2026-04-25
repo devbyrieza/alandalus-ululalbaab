@@ -27,19 +27,20 @@ export async function GET(request: NextRequest) {
             where: { id },
             select: { phone: true }
         });
-
-        const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://pesantren-ululalbaab.com";
         
         // If user has a valid phone number, they MUST verify PIN
         if (user && user.phone && user.phone !== "-" && user.phone.length > 5) {
-            const pinUrl = new URL("/auth/verify-pin", baseUrl);
+            const pinUrl = new URL("/auth/verify-pin", request.nextUrl.origin);
             pinUrl.searchParams.set("token", token);
             return NextResponse.redirect(pinUrl);
         }
 
         // 4. Fallback: Build secure cookie directly if no PIN protection is active
         const targetUrl = redirect || "/dashboard/penguji/input-nilai";
-        const response = NextResponse.redirect(new URL(targetUrl, baseUrl));
+        
+        // Use the request URL's origin as the base to ensure consistency
+        const dynamicBaseUrl = request.nextUrl.origin;
+        const response = NextResponse.redirect(new URL(targetUrl, dynamicBaseUrl));
 
         response.cookies.set(
             "app_session",
