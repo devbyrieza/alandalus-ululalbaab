@@ -63,6 +63,17 @@ export async function GET() {
         });
         console.log(`🔍 [API /penguji/peserta] assigned count: ${assigned.length}`);
 
+        // HARDCODED BYPASS FOR HALIMAH (URGENT INTERVIEW)
+        if (userId === '692e528a-e729-4966-aea1-b5e8e53c49cf' && assigned.length === 0) {
+            console.log("🚀 [API /penguji/peserta] Hardcoded bypass triggered for Halimah");
+            const iklimah = await prisma.jadwalUjian.findFirst({
+                where: { pendaftar: { nomor_pendaftaran: 'MTI2600013' } },
+                include: { pendaftar: { include: { nilai_ujian: true } }, exam_session: true }
+            });
+            if (iklimah) assigned.push(iklimah);
+        }
+
+
 
         // Fetch ALL jadwal records for the exam sessions we're dealing with
         // This is needed to properly match scores to their jadwal records
