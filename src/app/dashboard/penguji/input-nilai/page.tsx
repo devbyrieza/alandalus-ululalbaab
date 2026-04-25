@@ -53,7 +53,7 @@ interface Peserta {
 // FORM DEFINITIONS
 // ============================================================================
 
-const CALSAN_CRITERIA = [
+const CALSAN_CRITERIA_PUTRA = [
   {
     key: "motivasi",
     label: "Motivasi masuk pesantren",
@@ -78,7 +78,7 @@ const CALSAN_CRITERIA = [
   },
   {
     key: "game",
-    label: "Permainan / Game yang Disuka",
+    label: "Permainan / Game yang Disuka (Putra)",
     options: [
       { value: 5, label: "5: Hobi bermanfaat (olahraga, membaca, permainan edukatif)." },
       { value: 4, label: "4: Game rekreasi wajar, tidak berlebihan." },
@@ -100,7 +100,7 @@ const CALSAN_CRITERIA = [
   },
   {
     key: "rokok",
-    label: "Tentang Rokok/Vape/Pod",
+    label: "Tentang Rokok/Vape/Pod (Putra)",
     options: [
       { value: 5, label: "5: Jelas menolak, punya alasan agama/ilmu." },
       { value: 4, label: "4: Menolak, tapi alasannya umum." },
@@ -129,6 +129,86 @@ const CALSAN_CRITERIA = [
       { value: 3, label: "3: Hobi kurang bermanfaat, tapi tidak berbahaya." },
       { value: 2, label: "2: Hobi berisiko (main game berlebihan, nongkrong tanpa tujuan)." },
       { value: 1, label: "1: Hobi negatif (rokok, balapan liar, dll)." },
+    ],
+  },
+];
+
+const CALSAN_CRITERIA_PUTRI = [
+  {
+    key: "motivasi",
+    label: "Motivasi masuk pesantren",
+    options: [
+      { value: 5, label: "5: Sangat jelas, kuat, dan sesuai visi pesantren (ingin belajar agama, mandiri, dekat dengan Allah)." },
+      { value: 4, label: "4: Cukup jelas, alasan positif namun masih umum." },
+      { value: 3, label: "3: Alasan kurang terarah, dipengaruhi orang tua, tapi ada kesediaan." },
+      { value: 2, label: "2: Alasan lemah, tidak paham tujuan pesantren." },
+      { value: 1, label: "1: Tidak ada motivasi, terpaksa, atau menolak." },
+    ],
+  },
+  {
+    key: "lingkungan",
+    label: "Lingkungan di rumah",
+    options: [
+      { value: 5, label: "5: Lingkungan sangat mendukung (keluarga islami, shalat berjamaah, kontrol gadget baik)." },
+      { value: 4, label: "4: Lingkungan cukup mendukung, ada perhatian orang tua." },
+      { value: 3, label: "3: Lingkungan biasa saja, kadang ada pengaruh negatif." },
+      { value: 2, label: "2: Lingkungan kurang mendukung (teman/saudara sering pengaruh negatif)." },
+      { value: 1, label: "1: Lingkungan sangat tidak mendukung (bebas tanpa kontrol, pergaulan buruk)." },
+    ],
+  },
+  {
+    key: "game",
+    label: "Penggunaan Media Sosial / TikTok / IG (Putri)",
+    options: [
+      { value: 5, label: "5: Jarang menggunakan, hanya untuk hal positif/edukasi." },
+      { value: 4, label: "4: Penggunaan wajar, masih dalam kontrol orang tua." },
+      { value: 3, label: "3: Sering menggunakan, terkadang mengganggu waktu belajar." },
+      { value: 2, label: "2: Sangat intens, sering mengikuti tren yang kurang baik." },
+      { value: 1, label: "1: Kecanduan parah, sulit lepas dari gadget/medsos." },
+    ],
+  },
+  {
+    key: "teman",
+    label: "Teman / Pergaulan di Rumah",
+    options: [
+      { value: 5, label: "5: Berteman dengan lingkungan positif (majelis taklim, teman shalihah)." },
+      { value: 4, label: "4: Mayoritas teman baik, pergaulan terjaga." },
+      { value: 3, label: "3: Teman biasa saja, netral." },
+      { value: 2, label: "2: Sering bergaul dengan teman yang pengaruhnya kurang baik." },
+      { value: 1, label: "1: Pergaulan bebas, sering keluar tanpa izin/kontrol." },
+    ],
+  },
+  {
+    key: "rokok",
+    label: "Kesenangan / Idola / Fandom (Putri)",
+    options: [
+      { value: 5, label: "5: Tidak punya idola berlebihan, paham batasan syar'i." },
+      { value: 4, label: "4: Suka sewajarnya, tidak sampai mengganggu aktivitas." },
+      { value: 3, label: "3: Suka K-Pop/Artis/Influencer, sering menghabiskan waktu menonton." },
+      { value: 2, label: "2: Sangat fanatik, mulai meniru gaya hidup/penampilan idola." },
+      { value: 1, label: "1: Obsesi berlebihan, mengutamakan idola dibanding kewajiban agama/belajar." },
+    ],
+  },
+  {
+    key: "pornografi",
+    label: "Pornografi",
+    options: [
+      { value: 5, label: "5: Menolak dengan tegas, paham bahaya dan dosa." },
+      { value: 4, label: "4: Menolak, tapi belum terlalu paham alasannya." },
+      { value: 3, label: "3: Pernah melihat, tapi merasa salah dan ingin menjauhi." },
+      { value: 2, label: "2: Sering terpapar, belum bisa lepas." },
+      { value: 1, label: "1: Kecanduan pornografi." },
+    ],
+  },
+  {
+    key: "hobi",
+    label: "Hobi / Kesukaan",
+    options: [
+      { value: 5, label: "5: Hobi positif, produktif (olahraga, membaca, seni islami, memasak)." },
+      { value: 4, label: "4: Hobi umum yang wajar." },
+      { value: 3, label: "3: Hobi kurang bermanfaat, tapi tidak berbahaya." },
+      { value: 2, label: "2: Hobi berisiko/buang waktu (nonton drama berlebihan)." },
+      { value: 1, label: "1: Hobi negatif/melanggar norma." },
     ],
   },
 ];
