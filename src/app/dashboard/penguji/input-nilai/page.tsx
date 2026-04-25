@@ -809,14 +809,17 @@ function InputNilaiContent() {
       <div className="bg-white rounded-3xl sm:rounded-4xl p-6 sm:p-10 border border-brand-yellow-100 shadow-sm app-card overflow-hidden relative">
         <div className="absolute top-0 right-0 w-64 h-64 bg-brand-blue-600/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
         <div className="flex flex-col sm:flex-row sm:items-center justify-between relative z-10 gap-6">
-          <div className="flex items-center gap-4 sm:gap-6">
-            <div className="w-12 h-12 sm:w-16 sm:h-16 bg-brand-blue-50 rounded-2xl flex items-center justify-center border border-brand-blue-100 shrink-0 shadow-sm">
-              <ClipboardCheck className="w-6 h-6 sm:w-8 sm:h-8 text-brand-blue-700" />
-            </div>
-            <div>
+        <div className="flex flex-col md:flex-row md:items-end justify-between relative z-10 gap-6">
+          <div>
+            <div className="flex items-center gap-3 mb-2">
               <h1 className="text-xl sm:text-3xl font-black text-brand-blue-950 font-display tracking-tight leading-none">Input Nilai Ujian</h1>
-              <p className="text-xs sm:text-sm font-bold text-ink-700 mt-2">Total Terdaftar: <span className="text-brand-blue-700 bg-brand-blue-50 px-2 py-0.5 rounded-lg border border-brand-blue-100/50">{peserta.length} peserta</span></p>
+              {(process.env.NODE_ENV !== 'production' || true) && (
+                <span className="text-[10px] font-mono bg-red-100 text-red-600 px-2 py-0.5 rounded">
+                  DEBUG: {activeRole} | {peserta.length}p | {new Date().toLocaleTimeString()}
+                </span>
+              )}
             </div>
+            <p className="text-xs sm:text-sm font-bold text-ink-700 mt-2">Total Terdaftar: <span className="text-brand-blue-700 bg-brand-blue-50 px-2 py-0.5 rounded-lg border border-brand-blue-100/50">{peserta.length} peserta</span></p>
           </div>
         </div>
 
