@@ -387,11 +387,12 @@ function InputNilaiContent() {
         };
       } else if (formType === "wawancara") {
         const isPutriByJenjang = p.jenjang?.toLowerCase().includes('putri');
+        const isPutriByPrefix = ['MTI', 'ILI', 'SMI'].some(prefix => p.nomor_pendaftaran?.startsWith(prefix));
         // Fallback: If examiner is Halimah or Rima, it's definitely a Putri session
         const isPutriByExaminer = ["Halimah Fauziah", "Rima Maryani Putri Utami", "Iklimah Mardhatillah"].some(name => 
           p.detail_wawancara?.nama_pewawancara === name
         );
-        const isPutri = isPutriByJenjang || isPutriByExaminer;
+        const isPutri = isPutriByJenjang || isPutriByPrefix || isPutriByExaminer;
         
         const criteria = isPutri ? CALSAN_CRITERIA_PUTRI : CALSAN_CRITERIA_PUTRA;
         const scores = criteria.map((c) => calsanForm[c.key] || 0);
@@ -612,13 +613,15 @@ function InputNilaiContent() {
     const isEditing = editingId === p.id + "wawancara";
     
     const isPutriByJenjang = p.jenjang?.toLowerCase().includes('putri');
+    const isPutriByPrefix = ['MTI', 'ILI', 'SMI'].some(prefix => p.nomor_pendaftaran?.startsWith(prefix));
     // Also check if the current selected interviewer is from the Putri list
     const isPutriByExaminer = ["Halimah Fauziah", "Rima Maryani Putri Utami", "Iklimah Mardhatillah"].some(name => 
       calsanForm.nama_pewawancara === name || p.detail_wawancara?.nama_pewawancara === name
     );
-    const isPutri = isPutriByJenjang || isPutriByExaminer;
+    const isPutri = isPutriByJenjang || isPutriByPrefix || isPutriByExaminer;
     
     const criteria = isPutri ? CALSAN_CRITERIA_PUTRI : CALSAN_CRITERIA_PUTRA;
+    const examinerList = isPutri ? PEWAWANCARA_CALSAN_LIST_PUTRI : PEWAWANCARA_CALSAN_LIST_PUTRA;
 
     return (
       <div className="bg-brand-blue-50/50 border border-brand-blue-100 rounded-2xl sm:rounded-3xl p-5 sm:p-8 space-y-5 sm:space-y-6 shadow-sm">
@@ -655,7 +658,7 @@ function InputNilaiContent() {
                 <label className="block text-[10px] sm:text-xs font-black text-ink-800 uppercase tracking-widest mb-2 sm:mb-3">Nama Pewawancara *</label>
                 <select value={calsanForm.nama_pewawancara || ""} onChange={(e) => setCalsanForm({ ...calsanForm, nama_pewawancara: e.target.value })} className="w-full px-4 sm:px-5 py-3.5 sm:py-4 bg-ink-50/50 border-2 border-ink-100 rounded-xl sm:rounded-2xl focus:border-brand-blue-500 outline-none font-black text-brand-blue-950 transition-all cursor-pointer">
                   <option value="">Pilih Pewawancara</option>
-                  {(p.jenjang?.toLowerCase().includes("putri") ? PEWAWANCARA_CALSAN_LIST_PUTRI : PEWAWANCARA_CALSAN_LIST_PUTRA).map((n) => <option key={n} value={n}>{n}</option>)}
+                  {examinerList.map((n) => <option key={n} value={n}>{n}</option>)}
                 </select>
               </div>
 
@@ -736,6 +739,10 @@ function InputNilaiContent() {
   const renderCawalsanForm = (p: Peserta) => {
     const isSaved = !!(p.detail_cawalsan?.rekomendasi || p.nilai_wawancara_ortu != null);
     const isEditing = editingId === p.id + "ortu";
+    const isPutriByJenjang = p.jenjang?.toLowerCase().includes('putri');
+    const isPutriByPrefix = ['MTI', 'ILI', 'SMI'].some(prefix => p.nomor_pendaftaran?.startsWith(prefix));
+    const isPutri = isPutriByJenjang || isPutriByPrefix;
+    const examinerList = isPutri ? PEWAWANCARA_CAWALSAN_LIST_PUTRI : PEWAWANCARA_CAWALSAN_LIST_PUTRA;
 
     return (
       <div className="bg-brand-yellow-50/50 border border-brand-yellow-100 rounded-2xl sm:rounded-3xl p-5 sm:p-8 space-y-5 sm:space-y-6 shadow-sm">
@@ -840,7 +847,7 @@ function InputNilaiContent() {
                 <label className="block text-[10px] sm:text-xs font-black text-ink-800 uppercase tracking-widest mb-2 sm:mb-3">Nama Pewawancara *</label>
                 <select value={cawalsanForm.nama_pewawancara || ""} onChange={(e) => setCawalsanForm({ ...cawalsanForm, nama_pewawancara: e.target.value })} className="w-full px-4 sm:px-5 py-3.5 sm:py-4 bg-ink-50/30 border-2 border-ink-100 rounded-xl sm:rounded-2xl focus:border-brand-yellow-500 outline-none font-black text-brand-blue-950 transition-all cursor-pointer">
                   <option value="">Pilih Pewawancara</option>
-                  {(p.jenjang?.toLowerCase().includes("putri") ? PEWAWANCARA_CAWALSAN_LIST_PUTRI : PEWAWANCARA_CAWALSAN_LIST_PUTRA).map((n) => <option key={n} value={n}>{n}</option>)}
+                  {examinerList.map((n) => <option key={n} value={n}>{n}</option>)}
                 </select>
               </div>
 
