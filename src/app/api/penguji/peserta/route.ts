@@ -20,7 +20,7 @@ export async function GET() {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const userId = session.user_id || session.id;
+    const { id: userId, full_name } = session;
     console.log(`🔍 [API /penguji/peserta] userId: ${userId}`);
 
 
@@ -64,14 +64,28 @@ export async function GET() {
         console.log(`🔍 [API /penguji/peserta] assigned count: ${assigned.length}`);
 
         // HARDCODED BYPASS FOR HALIMAH (URGENT INTERVIEW)
-        if (userId === '692e528a-e729-4966-aea1-b5e8e53c49cf' && assigned.length === 0) {
-            console.log("🚀 [API /penguji/peserta] Hardcoded bypass triggered for Halimah");
+        const isHalimah = full_name?.includes("Halimah") || userId === '692e528a-e729-4966-aea1-b5e8e53c49cf';
+        if (isHalimah && assigned.length === 0) {
+            console.log("🚀 [API /penguji/peserta] Hardcoded bypass triggered for Halimah by Name/ID");
             const iklimah = await prisma.jadwalUjian.findFirst({
                 where: { pendaftar: { nomor_pendaftaran: 'MTI2600013' } },
-                include: { pendaftar: { include: { nilai_ujian: true } }, exam_session: true }
+                include: {
+                    pendaftar: {
+                        select: {
+                            id: true,
+                            nama_lengkap: true,
+                            nomor_pendaftaran: true,
+                            jenjang: true,
+                            nilai_ujian: true,
+                        }
+                    },
+                    exam_session: { select: { title: true, created_by: true } },
+                }
             });
-            if (iklimah) assigned.push(iklimah);
+            if (iklimah) (assigned as any).push(iklimah);
         }
+
+
 
 
 
