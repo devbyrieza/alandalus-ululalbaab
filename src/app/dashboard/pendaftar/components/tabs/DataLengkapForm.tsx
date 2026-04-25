@@ -480,6 +480,7 @@ export default function DataLengkapForm({ onSuccess }: { onSuccess?: () => void 
   const [saving, setSaving] = useState(false);
   const [requestStatus, setRequestStatus] = useState<any>(null);
   const [statusPendaftaran, setStatusPendaftaran] = useState<string>("draft");
+  const [jenjang, setJenjang] = useState<string>("");
 
   const toggleSection = (section: keyof typeof openSections) => {
     setOpenSections((prev) => ({ ...prev, [section]: !prev[section] }));
@@ -580,9 +581,24 @@ export default function DataLengkapForm({ onSuccess }: { onSuccess?: () => void 
 
         const result = await dataRes.json();
         if (result.success && result.data) {
+          const loadedJenjang = result.data.jenjang || "";
+          setJenjang(loadedJenjang);
+
+          // Auto-determine gender based on jenjang
+          let autoGender = result.data.santri.jenis_kelamin;
+          if (loadedJenjang.toLowerCase().includes("putra")) {
+            autoGender = "Laki-laki";
+          } else if (loadedJenjang.toLowerCase().includes("putri")) {
+            autoGender = "Perempuan";
+          }
+
           setFormData((prev) => ({
             ...prev,
-            santri: { ...prev.santri, ...result.data.santri },
+            santri: { 
+              ...prev.santri, 
+              ...result.data.santri,
+              jenis_kelamin: autoGender 
+            },
             ayah: { ...prev.ayah, ...result.data.ayah },
             ibu: { ...prev.ibu, ...result.data.ibu },
             wali: { ...prev.wali, ...result.data.wali },
@@ -893,7 +909,15 @@ export default function DataLengkapForm({ onSuccess }: { onSuccess?: () => void 
                     required
                   />
                   <InputField label="Tanggal Lahir" name="tanggal_lahir" value={formData.santri.tanggal_lahir} onChange={(v) => updateSantri("tanggal_lahir", v)} type="date" required />
-                  <InputField label="Jenis Kelamin" name="jenis_kelamin" value={formData.santri.jenis_kelamin} onChange={(v) => updateSantri("jenis_kelamin", v)} options={[{ label: "Laki-laki", value: "L" }, { label: "Perempuan", value: "P" }]} required />
+                   <InputField 
+                    label="Jenis Kelamin" 
+                    name="jenis_kelamin" 
+                    value={formData.santri.jenis_kelamin} 
+                    onChange={(v) => updateSantri("jenis_kelamin", v)} 
+                    options={[{ label: "Laki-laki", value: "Laki-laki" }, { label: "Perempuan", value: "Perempuan" }]} 
+                    required 
+                    disabled={jenjang.toLowerCase().includes("putra") || jenjang.toLowerCase().includes("putri")} 
+                  />
                   <InputField
                     label="Kewarganegaraan"
                     name="kewarganegaraan"

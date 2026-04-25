@@ -60,6 +60,7 @@ export async function GET() {
       success: true,
       data: {
         ...responseData,
+        jenjang: pendaftar.jenjang,
         status_pendaftaran: pendaftar.status_pendaftaran
       },
     });
