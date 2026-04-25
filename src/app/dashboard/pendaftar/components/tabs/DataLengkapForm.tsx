@@ -708,6 +708,9 @@ export default function DataLengkapForm({ onSuccess }: { onSuccess?: () => void 
     formData.santri.kecamatan &&
     formData.santri.kelurahan &&
     formData.santri.kode_pos &&
+    formData.santri.alamat &&
+    formData.santri.rt &&
+    formData.santri.rw &&
     formData.santri.anak_ke &&
     formData.santri.berapa_bersaudara &&
     formData.santri.golongan_darah &&
@@ -733,7 +736,10 @@ export default function DataLengkapForm({ onSuccess }: { onSuccess?: () => void 
       formData.ayah.kabupaten &&
       formData.ayah.kecamatan &&
       formData.ayah.kelurahan &&
-      formData.ayah.kode_pos
+      formData.ayah.kode_pos &&
+      formData.ayah.alamat &&
+      formData.ayah.rt &&
+      formData.ayah.rw
     ))
   ));
 
@@ -751,7 +757,10 @@ export default function DataLengkapForm({ onSuccess }: { onSuccess?: () => void 
       formData.ibu.kabupaten &&
       formData.ibu.kecamatan &&
       formData.ibu.kelurahan &&
-      formData.ibu.kode_pos
+      formData.ibu.kode_pos &&
+      formData.ibu.alamat &&
+      formData.ibu.rt &&
+      formData.ibu.rw
     ))
   ));
 
@@ -766,7 +775,10 @@ export default function DataLengkapForm({ onSuccess }: { onSuccess?: () => void 
       formData.wali.kabupaten &&
       formData.wali.kecamatan &&
       formData.wali.kelurahan &&
-      formData.wali.kode_pos
+      formData.wali.kode_pos &&
+      formData.wali.alamat &&
+      formData.wali.rt &&
+      formData.wali.rw
     ))
   ));
 

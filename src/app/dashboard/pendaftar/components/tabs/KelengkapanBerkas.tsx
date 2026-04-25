@@ -480,14 +480,14 @@ export default function KelengkapanBerkasTab() {
 
         if (!isAyahDeceased && (
           !ayah.nama_lengkap || !ayah.nik || !ayah.tanggal_lahir || !ayah.pendidikan_terakhir || !ayah.pekerjaan || !ayah.no_hp || !ayah.no_wa ||
-          (isAyahAddressRequired && (!ayah.alamat || !ayah.rt || !ayah.rw || !ayah.provinsi || !ayah.kabupaten))
+          (isAyahAddressRequired && (!ayah.alamat || !ayah.rt || !ayah.rw || !ayah.provinsi || !ayah.kabupaten || !ayah.kecamatan || !ayah.kelurahan || !ayah.kode_pos))
         )) {
           missing.push("Data Ayah");
         }
 
         if (!isIbuDeceased && (
           !ibu.nama_lengkap || !ibu.nik || !ibu.tanggal_lahir || !ibu.pendidikan_terakhir || !ibu.pekerjaan || !ibu.no_hp || !ibu.no_wa ||
-          (isIbuAddressRequired && (!ibu.alamat || !ibu.rt || !ibu.rw || !ibu.provinsi || !ibu.kabupaten))
+          (isIbuAddressRequired && (!ibu.alamat || !ibu.rt || !ibu.rw || !ibu.provinsi || !ibu.kabupaten || !ibu.kecamatan || !ibu.kelurahan || !ibu.kode_pos))
         )) {
           missing.push("Data Ibu");
         }
@@ -496,7 +496,7 @@ export default function KelengkapanBerkasTab() {
         if ((isAyahDeceased && isIbuDeceased) || s.tinggal_bersama === "Wali") {
           const wali = d.wali || {};
           if (!wali.nama_lengkap || !wali.nik || !wali.hubungan || !wali.no_hp ||
-            (isWaliAddressRequired && (!wali.alamat || !wali.rt || !wali.rw || !wali.provinsi || !wali.kabupaten))
+            (isWaliAddressRequired && (!wali.alamat || !wali.rt || !wali.rw || !wali.provinsi || !wali.kabupaten || !wali.kecamatan || !wali.kelurahan || !wali.kode_pos))
           ) {
             missing.push("Data Wali");
           }
