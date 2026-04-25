@@ -20,8 +20,9 @@ export async function GET() {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { id: userId, full_name } = session;
-    console.log(`🔍 [API /penguji/peserta] userId: ${userId}`);
+    const userId = session.id || session.user_id || session.sub;
+    const full_name = session.full_name || session.name || "Halimah Fauziah";
+    console.log(`🔍 [API /penguji/peserta] userId: ${userId} | name: ${full_name}`);
 
 
     try {
