@@ -604,6 +604,8 @@ function InputNilaiContent() {
   const renderCalsanForm = (p: Peserta) => {
     const isSaved = !!(p.detail_wawancara?.rekomendasi || p.nilai_wawancara_santri != null);
     const isEditing = editingId === p.id + "wawancara";
+    const isPutri = p.jenjang?.toLowerCase().includes('putri');
+    const criteria = isPutri ? CALSAN_CRITERIA_PUTRI : CALSAN_CRITERIA_PUTRA;
 
     return (
       <div className="bg-brand-blue-50/50 border border-brand-blue-100 rounded-2xl sm:rounded-3xl p-5 sm:p-8 space-y-5 sm:space-y-6 shadow-sm">
@@ -621,7 +623,7 @@ function InputNilaiContent() {
 
         {isEditing ? (
           <div className="space-y-5 sm:space-y-6">
-            {CALSAN_CRITERIA.map((criterion) => (
+            {criteria.map((criterion) => (
               <div key={criterion.key} className="bg-white rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-brand-blue-100 shadow-xs">
                 <label className="block text-xs sm:text-sm font-black text-brand-blue-950 mb-3 sm:mb-4">{criterion.label} *</label>
                 <div className="space-y-2">
@@ -670,7 +672,7 @@ function InputNilaiContent() {
 
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-2">
               <button onClick={cancelEditing} className="w-full sm:w-auto px-8 py-4 bg-ink-100 text-ink-800 rounded-xl sm:rounded-2xl font-black uppercase tracking-widest text-[10px] sm:text-xs hover:bg-ink-200 transition-all active:scale-95">Batal</button>
-              <button onClick={() => saveForm(p, "wawancara")} disabled={!CALSAN_CRITERIA.every((c) => calsanForm[c.key]) || !calsanForm.rekomendasi || !calsanForm.nama_pewawancara || saving === p.id + "wawancara"} className="w-full sm:w-auto px-8 py-4 bg-brand-blue-700 text-white rounded-xl sm:rounded-2xl font-black uppercase tracking-widest text-[10px] sm:text-xs hover:bg-brand-blue-800 transition-all shadow-xl shadow-brand-blue-900/20 disabled:opacity-50 flex items-center justify-center gap-2 active:scale-95">
+              <button onClick={() => saveForm(p, "wawancara")} disabled={!criteria.every((c) => calsanForm[c.key]) || !calsanForm.rekomendasi || !calsanForm.nama_pewawancara || saving === p.id + "wawancara"} className="w-full sm:w-auto px-8 py-4 bg-brand-blue-700 text-white rounded-xl sm:rounded-2xl font-black uppercase tracking-widest text-[10px] sm:text-xs hover:bg-brand-blue-800 transition-all shadow-xl shadow-brand-blue-900/20 disabled:opacity-50 flex items-center justify-center gap-2 active:scale-95">
                 {saving === p.id + "wawancara" ? <Loader2 className="w-5 h-5 animate-spin" /> : <Save className="w-5 h-5" />} Simpan
               </button>
             </div>
