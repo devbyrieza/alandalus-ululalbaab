@@ -191,13 +191,13 @@ const CALSAN_CRITERIA_PUTRI = [
   },
   {
     key: "pornografi",
-    label: "Pornografi",
+    label: "Interaksi Lawan Jenis & Adab Pergaulan (Putri)",
     options: [
-      { value: 5, label: "5: Menolak dengan tegas, paham bahaya dan dosa." },
-      { value: 4, label: "4: Menolak, tapi belum terlalu paham alasannya." },
-      { value: 3, label: "3: Pernah melihat, tapi merasa salah dan ingin menjauhi." },
-      { value: 2, label: "2: Sering terpapar, belum bisa lepas." },
-      { value: 1, label: "1: Kecanduan pornografi." },
+      { value: 5, label: "5: Sangat menjaga adab, paham batasan syar'i, tidak tertarik berpacaran." },
+      { value: 4, label: "4: Bisa menjaga adab, alasan menolak pacaran karena prinsip agama." },
+      { value: 3, label: "3: Pernah berinteraksi intens di sosmed, tapi masih ada rasa malu/segan." },
+      { value: 2, label: "2: Pernah/sedang berpacaran atau berinteraksi bebas tanpa kontrol." },
+      { value: 1, label: "1: Terlibat hubungan terlarang atau pergaulan bebas yang serius." },
     ],
   },
   {
