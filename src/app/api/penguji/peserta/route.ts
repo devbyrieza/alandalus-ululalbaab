@@ -139,7 +139,13 @@ export async function GET() {
                     if (hasWawancaraMatch) roles.push('wawancara');
                     if (hasOrtuMatch) roles.push('ortu');
                 }
+
+                // FORCE ROLE FOR HALIMAH BYPASS
+                if (roles.length === 0 && (full_name?.includes("Halimah") || userId === '692e528a-e729-4966-aea1-b5e8e53c49cf')) {
+                    roles.push('wawancara');
+                }
             }
+
 
             // Find ALL score records for this pendaftar
             // Include both session-specific scores and general scores to ensure no data is lost
