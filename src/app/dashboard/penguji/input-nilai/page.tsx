@@ -386,7 +386,9 @@ function InputNilaiContent() {
           catatan_quran: quranForm.catatan || "",
         };
       } else if (formType === "wawancara") {
-        const scores = CALSAN_CRITERIA.map((c) => calsanForm[c.key] || 0);
+        const isPutri = p.jenjang?.toLowerCase().includes('putri');
+        const criteria = isPutri ? CALSAN_CRITERIA_PUTRI : CALSAN_CRITERIA_PUTRA;
+        const scores = criteria.map((c) => calsanForm[c.key] || 0);
         const avgScore = scores.reduce((a: number, b: number) => a + b, 0) / scores.length;
         body = {
           detail_wawancara: calsanForm,
