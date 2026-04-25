@@ -541,32 +541,35 @@ export default function JadwalPengujiPage() {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div className="bg-white rounded-3xl p-5 md:p-8 border border-cream-200 shadow-sm app-card">
-        <div className="flex flex-col gap-4">
-          <div className="flex items-center gap-4">
-            <div className="w-14 h-14 bg-maroon-50 rounded-2xl flex items-center justify-center border border-maroon-100 shrink-0">
-              <Calendar className="w-7 h-7 text-maroon-600" />
+      {/* Header Section */}
+      <div className="bg-white rounded-[2rem] p-6 md:p-10 border border-brand-yellow-100 shadow-sm app-card overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-brand-blue-600/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+        
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 relative z-10">
+          <div className="flex items-center gap-5">
+            <div className="w-16 h-16 bg-brand-blue-50 rounded-2xl flex items-center justify-center border border-brand-blue-100 shrink-0 shadow-sm">
+              <Calendar className="w-8 h-8 text-brand-blue-700" />
             </div>
             <div>
-              <h2 className="text-2xl font-black text-ink-950 font-display tracking-tight">
+              <h1 className="text-2xl md:text-4xl font-black text-brand-blue-950 font-display tracking-tight leading-none mb-2">
                 Jadwal & Sesi Ujian
-              </h2>
-              <p className="text-sm font-bold text-ink-500 mt-1">
-                Kelola jadwal seleksi dan ketersediaan waktu
+              </h1>
+              <p className="text-xs md:text-sm font-bold text-ink-500 uppercase tracking-widest opacity-70">
+                Management & Availability
               </p>
             </div>
           </div>
-          <div className="flex bg-cream-50 p-1.5 rounded-2xl border border-cream-200 w-full">
+
+          <div className="flex bg-ink-50/50 p-1.5 rounded-2xl border border-ink-100 w-full md:w-auto min-w-[320px]">
             <button
               onClick={() => setActiveTab('assigned')}
-              className={`flex-1 py-3 px-3 rounded-xl font-black text-xs md:text-sm transition-all text-center ${activeTab === 'assigned' ? 'bg-white shadow-sm text-maroon-700 border border-cream-100' : 'text-ink-400 hover:text-ink-700 hover:bg-cream-100/50'}`}
+              className={`flex-1 py-3 px-6 rounded-xl font-black text-xs transition-all text-center uppercase tracking-wider ${activeTab === 'assigned' ? 'bg-white shadow-md text-brand-blue-700 border border-ink-100 scale-[1.02]' : 'text-ink-400 hover:text-ink-600'}`}
             >
               Jadwal Saya
             </button>
             <button
               onClick={() => setActiveTab('slots')}
-              className={`flex-1 py-3 px-3 rounded-xl font-black text-xs md:text-sm transition-all text-center ${activeTab === 'slots' ? 'bg-white shadow-sm text-maroon-700 border border-cream-100' : 'text-ink-400 hover:text-ink-700 hover:bg-cream-100/50'}`}
+              className={`flex-1 py-3 px-6 rounded-xl font-black text-xs transition-all text-center uppercase tracking-wider ${activeTab === 'slots' ? 'bg-white shadow-md text-brand-blue-700 border border-ink-100 scale-[1.02]' : 'text-ink-400 hover:text-ink-600'}`}
             >
               Sesi Ketersediaan
             </button>
@@ -623,43 +626,49 @@ export default function JadwalPengujiPage() {
                 {filteredAssignments.map(item => (
                   <div key={item.id} className={`bg-white rounded-3xl p-5 md:p-8 border transition-all app-card ${isToday(item.tanggal_ujian) ? "border-emerald-200 shadow-md ring-4 ring-emerald-50" : "border-cream-200 shadow-sm hover:border-maroon-200 hover:shadow-md"}`}>
                     {/* Top section: Date badge + Name */}
-                    <div className="flex items-start gap-4 mb-4">
-                      <div className={`p-3 rounded-2xl font-bold text-center min-w-[72px] shrink-0 border flex flex-col justify-center ${isToday(item.tanggal_ujian) ? 'bg-emerald-50 border-emerald-100 text-emerald-700' : 'bg-maroon-50 border-maroon-100 text-maroon-700'}`}>
-                        <div className="text-[9px] uppercase tracking-widest opacity-70 mb-0.5">
+                    <div className="flex items-start gap-5 mb-6">
+                      <div className={`p-4 rounded-[1.5rem] font-bold text-center min-w-[85px] shrink-0 border flex flex-col justify-center shadow-sm ${isToday(item.tanggal_ujian) ? 'bg-brand-blue-600 text-white border-brand-blue-500' : 'bg-brand-blue-50 border-brand-blue-100 text-brand-blue-900'}`}>
+                        <div className="text-[10px] uppercase tracking-[0.2em] font-black opacity-80 mb-1">
                           {new Date(item.tanggal_ujian).toLocaleDateString('id-ID', { weekday: 'short' }).replace('Min', 'Ahd')}
                         </div>
-                        <div className="text-2xl font-display leading-none">{new Date(item.tanggal_ujian).getDate()}</div>
-                        <div className="text-[9px] uppercase tracking-wider mt-1 opacity-70">
+                        <div className="text-3xl font-black font-display leading-none">{new Date(item.tanggal_ujian).getDate()}</div>
+                        <div className="text-[10px] uppercase tracking-widest font-black mt-1 opacity-80">
                           {new Date(item.tanggal_ujian).toLocaleDateString('id-ID', { month: 'short' })}
                         </div>
                       </div>
                       <div className="flex-1 min-w-0">
-                        <div className="flex flex-wrap items-center gap-2 mb-1.5">
-                          <span className="px-2 py-0.5 bg-surface-100 text-ink-600 border border-surface-200 rounded-lg text-[10px] font-black uppercase tracking-widest">{item.pendaftar.jenjang}</span>
-                          <span className="px-2 py-0.5 bg-maroon-50 text-maroon-700 border border-maroon-100 rounded-lg text-[10px] font-black uppercase tracking-widest flex items-center gap-1"><Hash className="w-3 h-3" /> {item.pendaftar.nomor_pendaftaran}</span>
+                        <div className="flex flex-wrap items-center gap-2 mb-3">
+                          <span className="px-3 py-1 bg-brand-blue-50 text-brand-blue-700 border border-brand-blue-100 rounded-lg text-[9px] font-black uppercase tracking-[0.15em]">{item.pendaftar.jenjang}</span>
+                          <span className="px-3 py-1 bg-brand-yellow-400 text-brand-blue-950 rounded-lg text-[9px] font-black uppercase tracking-[0.15em] flex items-center gap-1.5"><Hash className="w-3.5 h-3.5" /> {item.pendaftar.nomor_pendaftaran}</span>
                         </div>
-                        <h3 className="text-base md:text-xl font-black text-ink-950 font-display leading-tight">{item.pendaftar.nama_lengkap}</h3>
-                        <div className="flex items-center gap-1.5 text-xs text-ink-500 mt-1 font-bold">
-                          <FileText className="w-3.5 h-3.5 text-ink-400 shrink-0" />
-                          <span className="text-maroon-700 uppercase tracking-wide">{item.jenis_tugas}</span>
+                        <h3 className="text-lg md:text-2xl font-black text-brand-blue-950 font-display leading-tight mb-2">{item.pendaftar.nama_lengkap}</h3>
+                        <div className="flex items-center gap-2 text-xs text-ink-500 font-bold">
+                          <div className="w-2 h-2 rounded-full bg-brand-blue-600 animate-pulse" />
+                          <span className="text-brand-blue-700 uppercase tracking-widest font-black">{item.jenis_tugas}</span>
                         </div>
                       </div>
                     </div>
 
                     {/* Time & Location Row */}
-                    <div className="flex flex-wrap items-center gap-3 mb-4 px-1 py-3 bg-cream-50 rounded-2xl border border-cream-100">
-                      <div className="flex items-center gap-2 text-sm text-ink-600 font-bold">
-                        <Clock className="w-4 h-4 text-maroon-500 shrink-0" />
-                        {formatTime(item.waktu_mulai)} WIB
+                    <div className="grid grid-cols-2 gap-4 mb-6 px-4 py-4 bg-brand-blue-50/30 rounded-2xl border border-brand-blue-100/50">
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-xl bg-white flex items-center justify-center shadow-sm">
+                          <Clock className="w-4 h-4 text-brand-blue-600" />
+                        </div>
+                        <div className="flex flex-col">
+                          <span className="text-[10px] text-ink-400 font-black uppercase tracking-widest">Waktu</span>
+                          <span className="text-sm text-brand-blue-950 font-black">{formatTime(item.waktu_mulai)} WIB</span>
+                        </div>
                       </div>
-                      <div className="w-px h-4 bg-cream-200" />
-                      <div className="flex items-center gap-2 text-sm text-ink-600 font-bold">
-                        <MapPin className="w-4 h-4 text-maroon-500 shrink-0" />
-                        {item.lokasi || "Lokasi belum ditentukan"}
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-xl bg-white flex items-center justify-center shadow-sm">
+                          <MapPin className="w-4 h-4 text-brand-blue-600" />
+                        </div>
+                        <div className="flex flex-col">
+                          <span className="text-[10px] text-ink-400 font-black uppercase tracking-widest">Lokasi</span>
+                          <span className="text-sm text-brand-blue-950 font-black truncate">{item.lokasi || "Online"}</span>
+                        </div>
                       </div>
-                      {item.session_title && (
-                        <span className="text-xs text-ink-400 ml-auto">Sesi: {item.session_title}</span>
-                      )}
                     </div>
 
                     {/* Action Buttons: Status Completion */}
@@ -687,7 +696,7 @@ export default function JadwalPengujiPage() {
                                 <CheckCircle className="w-4 h-4" /> Wawancara Calsan Selesai
                               </div>
                             ) : (
-                              <button onClick={() => handleCompleteExam(item.id)} className="w-full py-3.5 bg-maroon-600 hover:bg-maroon-700 text-white text-sm font-black rounded-2xl transition-colors active:scale-95">
+                              <button onClick={() => handleCompleteExam(item.id)} className="w-full py-4 bg-brand-blue-600 hover:bg-brand-blue-700 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-2xl transition-all active:scale-95 shadow-lg shadow-brand-blue-600/20">
                                 ✓ Tandai Wawancara Selesai
                               </button>
                             )
@@ -698,7 +707,7 @@ export default function JadwalPengujiPage() {
                                 <CheckCircle className="w-4 h-4" /> Tes Al-Qur'an Selesai
                               </div>
                             ) : (
-                              <button onClick={() => handleCompleteExam(item.id)} className="w-full py-3.5 bg-maroon-600 hover:bg-maroon-700 text-white text-sm font-black rounded-2xl transition-colors active:scale-95">
+                              <button onClick={() => handleCompleteExam(item.id)} className="w-full py-4 bg-brand-blue-600 hover:bg-brand-blue-700 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-2xl transition-all active:scale-95 shadow-lg shadow-brand-blue-600/20">
                                 ✓ Tandai Tes Al-Qur'an Selesai
                               </button>
                             )
@@ -709,24 +718,25 @@ export default function JadwalPengujiPage() {
                                 <CheckCircle className="w-4 h-4" /> Wawancara Cawalsan Selesai
                               </div>
                             ) : (
-                              <button onClick={() => handleCompleteExam(item.id)} className="w-full py-3.5 bg-maroon-600 hover:bg-maroon-700 text-white text-sm font-black rounded-2xl transition-colors active:scale-95">
+                              <button onClick={() => handleCompleteExam(item.id)} className="w-full py-4 bg-brand-blue-600 hover:bg-brand-blue-700 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-2xl transition-all active:scale-95 shadow-lg shadow-brand-blue-600/20">
                                 ✓ Tandai Wawancara Cawalsan Selesai
                               </button>
                             )
                           )}
                           {/* Bottom row: Lihat Data + Batalkan */}
-                          <div className="flex gap-2 mt-1">
+                          <div className="flex gap-3 mt-2">
                             <button
                               onClick={() => { setSelectedPendaftar(item.pendaftar); setIsDetailModalOpen(true); }}
-                              className="flex-1 py-3 border border-cream-200 text-ink-600 hover:bg-cream-50 rounded-2xl text-xs font-bold transition-all flex items-center justify-center gap-2 active:scale-95"
+                              className="flex-1 py-4 bg-white border border-brand-blue-100 text-brand-blue-700 hover:bg-brand-blue-50 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-2 active:scale-95 shadow-sm"
                             >
-                              <FileText className="w-3.5 h-3.5" /> Lihat Data
+                              <FileText className="w-4 h-4" /> Lihat Data
                             </button>
                             <button
                               onClick={() => handleCancelAssignment(item.id, item.pendaftar.nama_lengkap)}
-                              className="flex-1 py-3 border border-red-200 text-red-600 hover:bg-red-50 rounded-2xl text-xs font-bold transition-all flex items-center justify-center gap-2 active:scale-95"
+                              className="px-4 py-4 border border-red-100 text-red-500 hover:bg-red-50 rounded-2xl transition-all flex items-center justify-center active:scale-95 shadow-sm"
+                              title="Batalkan Jadwal"
                             >
-                              <Trash2 className="w-3.5 h-3.5" /> Batalkan
+                              <Trash2 className="w-4 h-4" />
                             </button>
                           </div>
                         </div>
@@ -743,24 +753,26 @@ export default function JadwalPengujiPage() {
       {/* TAB CONTENT: SLOTS */}
       {activeTab === 'slots' && (
         <>
-          <div className="bg-white p-5 md:p-6 rounded-2xl border border-cream-200 space-y-4">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-              <div>
-                <h3 className="font-bold text-ink-950">Sesi Ketersediaan Anda</h3>
-                <p className="text-xs text-cream-500 mt-0.5">Buat sesi waktu dimana Anda bersedia menguji.</p>
+          <div className="bg-white p-6 md:p-8 rounded-[2rem] border border-brand-yellow-100 shadow-sm app-card relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-32 h-32 bg-brand-blue-600/5 rounded-full blur-2xl -translate-x-1/2 -translate-y-1/2" />
+            
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
+              <div className="max-w-md">
+                <h3 className="text-xl font-black text-brand-blue-950 font-display tracking-tight mb-2">Kelola Sesi Ketersediaan</h3>
+                <p className="text-xs font-bold text-ink-500 leading-relaxed uppercase tracking-widest opacity-60">Pilih waktu dimana Anda bersedia menguji calon santri atau orang tua.</p>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
                 <button
                   onClick={() => setIsBulkModalOpen(true)}
-                  className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-3 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-2xl font-bold border border-indigo-200 transition-all text-sm active:scale-95"
+                  className="w-full sm:w-auto flex items-center justify-center gap-3 px-6 py-4 bg-brand-blue-50 hover:bg-brand-blue-100 text-brand-blue-700 rounded-2xl font-black border border-brand-blue-100 transition-all text-xs uppercase tracking-widest active:scale-95 shadow-sm"
                 >
-                  <Plus className="w-4 h-4" /> Buat Massal
+                  <Plus className="w-5 h-5" /> Buat Massal
                 </button>
                 <button
                   onClick={() => setIsSlotModalOpen(true)}
-                  className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-3 bg-maroon-600 hover:bg-maroon-700 text-white rounded-2xl font-bold shadow-lg shadow-maroon-200 transition-all text-sm active:scale-95"
+                  className="w-full sm:w-auto flex items-center justify-center gap-3 px-6 py-4 bg-brand-blue-600 hover:bg-brand-blue-700 text-white rounded-2xl font-black shadow-lg shadow-brand-blue-600/20 transition-all text-xs uppercase tracking-widest active:scale-95"
                 >
-                  <Plus className="w-4 h-4" /> Buat Sesi
+                  <Plus className="w-5 h-5" /> Buat Sesi Tunggal
                 </button>
               </div>
             </div>
@@ -773,31 +785,42 @@ export default function JadwalPengujiPage() {
               <p>Belum ada sesi waktu yang dibuat.</p>
             </div>
           ) : (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {slots.map(slot => (
-                <div key={slot.id} className="bg-white rounded-3xl p-6 border border-cream-200 shadow-sm hover:shadow-md transition-all group relative app-card">
+                <div key={slot.id} className="bg-white rounded-[2rem] p-6 border border-brand-yellow-100 shadow-sm hover:shadow-xl hover:shadow-brand-blue-600/5 transition-all group relative app-card">
                   <button
                     onClick={() => handleDeleteSlot(slot.id, slot._count?.bookings || 0)}
-                    className="absolute top-4 right-4 p-2 text-ink-300 hover:text-red-600 hover:bg-red-50 rounded-full transition-colors"
+                    className="absolute top-6 right-6 p-2.5 text-ink-300 hover:text-red-600 hover:bg-red-50 rounded-full transition-all active:scale-90"
+                    title="Hapus Sesi"
                   >
                     <Trash2 className="w-5 h-5" />
                   </button>
-                  <div className="w-12 h-12 bg-cream-50 rounded-2xl flex items-center justify-center border border-cream-100 mb-4 text-ink-400 font-black">
-                    {slot.title?.charAt(0) || "S"}
+                  
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="w-14 h-14 bg-brand-blue-50 rounded-2xl flex items-center justify-center border border-brand-blue-100 text-brand-blue-700 font-black text-xl shadow-sm">
+                      {slot.title?.charAt(0) || "S"}
+                    </div>
+                    <div>
+                      <h4 className="font-black text-lg text-brand-blue-950 font-display leading-tight">{slot.title || "Sesi Seleksi"}</h4>
+                      <div className="flex items-center gap-1.5 mt-1">
+                        <div className={`w-2 h-2 rounded-full ${slot._count?.bookings ? 'bg-amber-500 animate-pulse' : 'bg-green-500'}`} />
+                        <span className="text-[10px] font-black text-ink-400 uppercase tracking-widest">{slot._count?.bookings ? 'Terisi' : 'Tersedia'}</span>
+                      </div>
+                    </div>
                   </div>
-                  <h4 className="font-black text-lg text-ink-950 mb-1 font-display">{slot.title || "Sesi Tanpa Judul"}</h4>
-                  <div className="space-y-3 mt-4 text-sm font-bold">
-                    <div className="flex items-center gap-3 text-ink-600 bg-cream-50/50 p-2 rounded-xl">
-                      <Calendar className="w-4 h-4 text-maroon-600 shrink-0" />
+
+                  <div className="space-y-3 mb-2">
+                    <div className="flex items-center gap-3 text-brand-blue-900 bg-brand-blue-50/50 p-3 rounded-2xl border border-brand-blue-100/30 font-bold text-xs">
+                      <Calendar className="w-4 h-4 text-brand-blue-600 shrink-0" />
                       {formatDate(slot.start_time)}
                     </div>
-                    <div className="flex items-center gap-3 text-ink-600 bg-cream-50/50 p-2 rounded-xl">
-                      <Clock className="w-4 h-4 text-maroon-600 shrink-0" />
+                    <div className="flex items-center gap-3 text-brand-blue-900 bg-brand-blue-50/50 p-3 rounded-2xl border border-brand-blue-100/30 font-bold text-xs">
+                      <Clock className="w-4 h-4 text-brand-blue-600 shrink-0" />
                       {formatTime(slot.start_time)}{slot.end_time ? ` – ${formatTime(slot.end_time)}` : ''} WIB
                     </div>
-                    <div className="flex items-center gap-3 text-ink-600 bg-cream-50/50 p-2 rounded-xl">
-                      <MapPin className="w-4 h-4 text-maroon-600 shrink-0" />
-                      <span className="truncate">{slot.location || "-"}</span>
+                    <div className="flex items-center gap-3 text-brand-blue-900 bg-brand-blue-50/50 p-3 rounded-2xl border border-brand-blue-100/30 font-bold text-xs">
+                      <MapPin className="w-4 h-4 text-brand-blue-600 shrink-0" />
+                      <span className="truncate">{slot.location || "Online / Zoom"}</span>
                     </div>
                   </div>
                 </div>
