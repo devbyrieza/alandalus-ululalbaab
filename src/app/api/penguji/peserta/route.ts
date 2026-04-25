@@ -21,6 +21,8 @@ export async function GET() {
     }
 
     const userId = session.user_id || session.id;
+    console.log(`🔍 [API /penguji/peserta] userId: ${userId}`);
+
 
     try {
         // Fetch user profile to see if they're an admin
@@ -59,6 +61,8 @@ export async function GET() {
             },
             orderBy: { tanggal_ujian: 'asc' }
         });
+        console.log(`🔍 [API /penguji/peserta] assigned count: ${assigned.length}`);
+
 
         // Fetch ALL jadwal records for the exam sessions we're dealing with
         // This is needed to properly match scores to their jadwal records
