@@ -345,8 +345,8 @@ function InputNilaiContent() {
         await Swal.fire({
           icon: 'success',
           title: 'Berhasil!',
-          text: 'Data penilaian berhasil disimpan.',
-          timer: 1500,
+          text: 'Input nilai berhasil dikirim.',
+          timer: 2000,
           showConfirmButton: false
         });
 
@@ -812,9 +812,6 @@ function InputNilaiContent() {
           <div>
             <div className="flex items-center gap-3 mb-2">
               <h1 className="text-xl sm:text-3xl font-black text-brand-blue-950 font-display tracking-tight leading-none">Input Nilai Ujian</h1>
-              <span className="text-[10px] font-mono bg-red-100 text-red-600 px-2 py-0.5 rounded">
-                DEBUG: {activeRole} | {peserta.length}p | {new Date().toLocaleTimeString()}
-              </span>
             </div>
             <p className="text-xs sm:text-sm font-bold text-ink-700 mt-2">Total Terdaftar: <span className="text-brand-blue-700 bg-brand-blue-50 px-2 py-0.5 rounded-lg border border-brand-blue-100/50">{peserta.length} peserta</span></p>
           </div>
