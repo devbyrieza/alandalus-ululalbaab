@@ -12,7 +12,7 @@ export const PPDB_CONFIG = {
     telepon: "+62 888-0993-4970",
     email: "alandalus.ululalbaab@gmail.com",
     emailPpdb: "alandalus.ululalbaab@gmail.com",
-    website: "https://www.pesantren-ululalbaab.com",
+    website: "https://www.ppdb.alandalus-ululalbaab.com",
   },
 
   // 🎨 BRAND COLORS (GANTI SESUAI LOGO)

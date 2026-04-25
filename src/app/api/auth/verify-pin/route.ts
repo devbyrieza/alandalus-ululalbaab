@@ -43,7 +43,7 @@ export async function POST(request: NextRequest) {
 
         // 4. Success! Create session cookie
         const targetUrl = redirect || "/dashboard/penguji/input-nilai";
-        const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://pesantren-ululalbaab.com";
+        const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://ppdb.alandalus-ululalbaab.com";
         const response = NextResponse.json({ 
             success: true, 
             redirect: new URL(targetUrl, baseUrl).toString() 

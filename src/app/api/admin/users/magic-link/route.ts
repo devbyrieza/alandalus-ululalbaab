@@ -44,7 +44,7 @@ export async function POST(request: NextRequest) {
         const token = generateMagicToken(user.id, user.role, user.full_name, 24);
 
         // Create full URL wrapper
-        const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://pesantren-ululalbaab.com";
+        const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://ppdb.alandalus-ululalbaab.com";
         const magicLinkUrl = `${baseUrl}/api/auth/magic?token=${token}`;
 
         // Generate automatic tinyurl for the magic link
@@ -94,7 +94,7 @@ export async function GET(request: NextRequest) {
             orderBy: { full_name: 'asc' }
         });
 
-        const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://pesantren-ululalbaab.com";
+        const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://ppdb.alandalus-ululalbaab.com";
 
         const results = await Promise.all(examiners.map(async user => {
             // Determine active role for input nilai (prioritize examiner/interviewer roles)

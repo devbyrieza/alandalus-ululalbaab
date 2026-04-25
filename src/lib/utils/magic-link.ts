@@ -135,7 +135,7 @@ export function getManualTinyUrl(fullName: string): string | null {
  * Supports optional pendaftar number for deep-linking
  */
 export function getPermanentAuthUrl(slug: string, pendaftarNomor?: string): string {
-    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://pesantren-ululalbaab.com";
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://ppdb.alandalus-ululalbaab.com";
     let url = `${baseUrl}/api/auth/short/${slug}`;
     if (pendaftarNomor) {
         url += `?p=${encodeURIComponent(pendaftarNomor)}`;

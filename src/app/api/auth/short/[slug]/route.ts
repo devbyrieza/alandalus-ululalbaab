@@ -45,7 +45,7 @@ export async function GET(
         const token = generateMagicToken(user.id, activeRole, user.full_name, 48, redirectPath);
 
         // Redirect to the actual auth magic handler
-        const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://pesantren-ululalbaab.com";
+        const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://ppdb.alandalus-ululalbaab.com";
         const targetUrl = `${baseUrl}/api/auth/magic?token=${token}`;
 
         return NextResponse.redirect(new URL(targetUrl, baseUrl));
