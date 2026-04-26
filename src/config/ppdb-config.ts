@@ -9,9 +9,9 @@ export const PPDB_CONFIG = {
     nama: "Pesantren Al Andalus Ulul Albaab",
     singkatan: "Al Andalus Ulul Albaab",
     alamat: "Jl. KH Mama Oyon, Cihaur, Kec. Cicantayan, Kabupaten Sukabumi, Jawa Barat 43155",
-    telepon: "+62 888-0993-4970",
-    email: "alandalus.ululalbaab@gmail.com",
-    emailPpdb: "alandalus.ululalbaab@gmail.com",
+    telepon: "+62 812-8530-0800",
+    email: "alandalusululalbaab2@gmail.com",
+    emailPpdb: "alandalusululalbaab2@gmail.com",
     website: "https://www.ppdb.alandalus-ululalbaab.com",
   },
 
@@ -102,9 +102,9 @@ export const PPDB_CONFIG = {
 
   // 🔗 KONTAK & SOSMED (GANTI SESUAI!)
   contact: {
-    whatsapp: "+6288809934970",
-    instagram: "@pesantrenululalbaab",
-    facebook: "Pesantren Al Andalus Ulul Albaab (Official Fanpage)",
+    whatsapp: "+6281285300800",
+    instagram: "@alandalusululalbaab",
+    facebook: "Pesantren Al-Andalus Ulul Albaab",
     youtube: "Al Andalus Ulul Albaab"
   },
 
