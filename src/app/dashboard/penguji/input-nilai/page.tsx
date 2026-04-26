@@ -232,9 +232,9 @@ const PENGUJI_QURAN_LIST_PUTRA = ["Maulidin Bachtiar", "Teguh", "Abah", "Ust. Ab
 const PEWAWANCARA_CALSAN_LIST_PUTRA = ["Maulidin Bachtiar", "Teguh", "Abah", "Muhammad Adib Achsan"];
 const PEWAWANCARA_CAWALSAN_LIST_PUTRA = ["Maulidin Bachtiar", "Teguh", "Abah", "Muhammad Adib Achsan"];
 
-const PENGUJI_QURAN_LIST_PUTRI = ["Halimah Fauziah", "Iklimah Mardhatillah", "Rima Maryani Putri Utami"];
-const PEWAWANCARA_CALSAN_LIST_PUTRI = ["Halimah Fauziah", "Rima Maryani Putri Utami", "Iklimah Mardhatillah"];
-const PEWAWANCARA_CAWALSAN_LIST_PUTRI = ["Halimah Fauziah", "Rima Maryani Putri Utami", "Iklimah Mardhatillah"];
+const PENGUJI_QURAN_LIST_PUTRI = ["Andi Fatimah Azzahra Rahman"];
+const PEWAWANCARA_CALSAN_LIST_PUTRI = ["Halimah Fauziah", "Rima Maryani Putri Utami"];
+const PEWAWANCARA_CAWALSAN_LIST_PUTRI = ["Halimah Fauziah", "Rima Maryani Putri Utami"];
 
 const JENJANG_OPTIONS = ["MTs Putra", "MTs Putri", "IL Putra", "IL Putri", "SMA Putra", "SMA Putri"];
 
@@ -495,7 +495,7 @@ function InputNilaiContent() {
     
     const isPutriByJenjang = p.jenjang?.toLowerCase().includes('putri');
     const isPutriByPrefix = ['MTI', 'ILI', 'SMI'].some(prefix => p.nomor_pendaftaran?.startsWith(prefix));
-    const isPutriByExaminer = ["Halimah Fauziah", "Rima Maryani Putri Utami", "Iklimah Mardhatillah"].some(name => 
+    const isPutriByExaminer = ["Andi Fatimah Azzahra Rahman", "Halimah Fauziah", "Rima Maryani Putri Utami"].some(name => 
       quranForm.nama_penguji === name || p.detail_quran?.nama_penguji === name
     );
     const isPutri = isPutriByJenjang || isPutriByPrefix || isPutriByExaminer;

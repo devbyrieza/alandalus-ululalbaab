@@ -64,27 +64,6 @@ export async function GET() {
         });
         console.log(`🔍 [API /penguji/peserta] assigned count: ${assigned.length}`);
 
-        // HARDCODED BYPASS FOR HALIMAH (URGENT INTERVIEW)
-        const isHalimah = full_name?.includes("Halimah") || userId === '692e528a-e729-4966-aea1-b5e8e53c49cf';
-        if (isHalimah && assigned.length === 0) {
-            console.log("🚀 [API /penguji/peserta] Hardcoded bypass triggered for Halimah by Name/ID");
-            const iklimah = await prisma.jadwalUjian.findFirst({
-                where: { pendaftar: { nomor_pendaftaran: 'MTI2600013' } },
-                include: {
-                    pendaftar: {
-                        select: {
-                            id: true,
-                            nama_lengkap: true,
-                            nomor_pendaftaran: true,
-                            jenjang: true,
-                            nilai_ujian: true,
-                        }
-                    },
-                    exam_session: { select: { title: true, created_by: true } },
-                }
-            });
-            if (iklimah) (assigned as any).push(iklimah);
-        }
 
 
 
@@ -141,10 +120,6 @@ export async function GET() {
                     if (hasOrtuMatch) roles.push('ortu');
                 }
 
-                // FORCE ROLE FOR HALIMAH BYPASS
-                if (roles.length === 0 && (full_name?.includes("Halimah") || userId === '692e528a-e729-4966-aea1-b5e8e53c49cf')) {
-                    roles.push('wawancara');
-                }
             }
 
 
@@ -249,39 +224,6 @@ export async function GET() {
 
         let data = Array.from(pesertaMap.values());
 
-        // ============================================================================
-        // NUCLEAR BYPASS (URGENT FIX)
-        // If results are empty, ALWAYS pull Iklimah for now to unblock interview
-        // ============================================================================
-        if (data.length === 0) {
-            console.log("☢️ [API /penguji/peserta] NUCLEAR BYPASS TRIGGERED");
-            const emergencyData = await prisma.jadwalUjian.findFirst({
-                where: { pendaftar: { nomor_pendaftaran: 'MTI2600013' } },
-                include: {
-                    pendaftar: {
-                        select: {
-                            id: true,
-                            nama_lengkap: true,
-                            nomor_pendaftaran: true,
-                            jenjang: true,
-                            nilai_ujian: true,
-                        }
-                    },
-                    exam_session: { select: { title: true, created_by: true } },
-                }
-            });
-
-            if (emergencyData) {
-                data = [{
-                    id: emergencyData.pendaftar.id,
-                    nama_lengkap: emergencyData.pendaftar.nama_lengkap,
-                    nomor_pendaftaran: emergencyData.pendaftar.nomor_pendaftaran,
-                    jenjang: emergencyData.pendaftar.jenjang,
-                    jadwal_id: emergencyData.id,
-                    roles: ['wawancara', 'quran', 'ortu'],
-                }];
-            }
-        }
 
         return NextResponse.json({ data });
     } catch (error: any) {
