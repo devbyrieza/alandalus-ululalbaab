@@ -228,13 +228,13 @@ const CAWALSAN_QUESTIONS = [
   { key: "q12", label: "12. Jika ananda terkena sanksi, apa reaksi  Abu/Ummu?", options: ["A. Menerima sebagai konsekuensi (selama bimbingan sudah maksimal)", "B. Menasehati anak", "C. Tidak terima"] },
 ];
 
-const PENGUJI_QURAN_LIST_PUTRA = ["Maulidin Bachtiar", "Teguh", "Abah", "Ust. Abdurrahman"];
-const PEWAWANCARA_CALSAN_LIST_PUTRA = ["Maulidin Bachtiar", "Teguh", "Abah", "Muhammad Adib Achsan"];
-const PEWAWANCARA_CAWALSAN_LIST_PUTRA = ["Maulidin Bachtiar", "Teguh", "Abah", "Muhammad Adib Achsan"];
+const PENGUJI_QURAN_LIST_PUTRA = ["Agus Cahyono", "Jusman", "Testing"];
+const PEWAWANCARA_CALSAN_LIST_PUTRA = ["Muhammad Syauqi Al Faruq", "Muhajir", "Testing"];
+const PEWAWANCARA_CAWALSAN_LIST_PUTRA = ["Maulidin Bachtiar", "Muhammad Adib Achsan", "Testing"];
 
-const PENGUJI_QURAN_LIST_PUTRI = ["Andi Fatimah Azzahra Rahman"];
-const PEWAWANCARA_CALSAN_LIST_PUTRI = ["Halimah Fauziah", "Rima Maryani Putri Utami"];
-const PEWAWANCARA_CAWALSAN_LIST_PUTRI = ["Halimah Fauziah", "Rima Maryani Putri Utami"];
+const PENGUJI_QURAN_LIST_PUTRI = ["Andi Fatimah Azzahra Rahman", "Testing"];
+const PEWAWANCARA_CALSAN_LIST_PUTRI = ["Halimah Fauziah", "Rima Maryani Putri Utami", "Testing"];
+const PEWAWANCARA_CAWALSAN_LIST_PUTRI = ["Maulidin Bachtiar", "Muhammad Adib Achsan", "Testing"];
 
 const JENJANG_OPTIONS = ["MTs Putra", "MTs Putri", "IL Putra", "IL Putri", "SMA Putra", "SMA Putri"];
 
