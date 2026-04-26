@@ -693,10 +693,10 @@ Untuk sementara, Anda sudah bisa mengerjakan tes online yang tersedia di dashboa
 - Identifikasi Kepribadian
 - Tes Kesiapan
 
-Dashboard: ${process.env.NEXT_PUBLIC_APP_URL || 'https://ppdb.alandalus-ululalbaab.com'}/dashboard/pendaftar/undangan-seleksi
+Dashboard: ${process.env.NEXT_PUBLIC_APP_URL || DEFAULT_APP_URL}/dashboard/pendaftar/undangan-seleksi
 
 Jazakumullahu khairan,
-Panitia PPDB Ulul Albaab`;
+Panitia PPDB Al Andalus Ulul Albaab`;
 }
 
 export function buildMessageJadwalTersedia(nama: string): string {
@@ -711,10 +711,10 @@ Silakan login ke dashboard dan pilih jadwal yang sesuai untuk:
 
 Segera pilih jadwal sebelum kuota penuh.
 
-Dashboard: ${process.env.NEXT_PUBLIC_APP_URL || 'https://ppdb.alandalus-ululalbaab.com'}/dashboard/pendaftar/undangan-seleksi
+Dashboard: ${process.env.NEXT_PUBLIC_APP_URL || DEFAULT_APP_URL}/dashboard/pendaftar/undangan-seleksi
 
 Jazakumullahu khairan,
-Panitia PPDB Ulul Albaab`;
+Panitia PPDB Al Andalus Ulul Albaab`;
 }
 
 export function buildMessageJadwalLangsungTersedia(nama: string): string {
@@ -734,7 +734,7 @@ Harap segera memilih jadwal sebelum rentang waktu habis atau kuota penuh. Jangan
 Dashboard: ${process.env.NEXT_PUBLIC_APP_URL || DEFAULT_APP_URL}/dashboard/pendaftar/undangan-seleksi
 
 Jazakumullahu khairan,
-Panitia PPDB Ulul Albaab`;
+Panitia PPDB Al Andalus Ulul Albaab`;
 }
 
 export function buildMessageKonfirmasiJadwal(
@@ -783,10 +783,10 @@ Pengingat jadwal ${jenisUjian} Anda:
 
 Mohon hadir tepat waktu dan persiapkan diri dengan baik. Semoga dimudahkan dan diberkahi.
 
-Dashboard: ${process.env.NEXT_PUBLIC_APP_URL || 'https://ppdb.alandalus-ululalbaab.com'}/dashboard/pendaftar/undangan-seleksi
+Dashboard: ${process.env.NEXT_PUBLIC_APP_URL || DEFAULT_APP_URL}/dashboard/pendaftar/undangan-seleksi
 
 Jazakumullahu khairan,
-Panitia PPDB Ulul Albaab`;
+Panitia PPDB Al Andalus Ulul Albaab`;
 }
 
 export function buildMessageReminderH0(
@@ -807,7 +807,7 @@ Mohon segera bersiap. Pastikan koneksi internet stabil jika ujian dilakukan seca
 Semoga dimudahkan dan diberkahi.
 
 Jazakumullahu khairan,
-Panitia PPDB Ulul Albaab`;
+Panitia PPDB Al Andalus Ulul Albaab`;
 }
 
 export function buildMessageHasilTes(nama: string): string {
@@ -818,10 +818,10 @@ export function buildMessageHasilTes(nama: string): string {
  Silakan login ke dashboard untuk melihat hasil lengkap Anda dan mendownload file *PDF Surat Keterangan Lulus (SKL)*.
  
  🔗 *Link Dasbor & Unduh Surat:* 
- ${process.env.NEXT_PUBLIC_APP_URL || 'https://ppdb.alandalus-ululalbaab.com'}/dashboard/pendaftar/pengumuman
+ ${process.env.NEXT_PUBLIC_APP_URL || DEFAULT_APP_URL}/dashboard/pendaftar/pengumuman
  
  Jazakumullahu khairan,
- Panitia PPDB Ulul Albaab`;
+ Panitia PPDB Al Andalus Ulul Albaab`;
 }
 
 /**
@@ -1024,7 +1024,7 @@ Telah *DIBATALKAN* oleh Penguji karena alasan: *${alasan}*.
 
 Mohon segera login ke Dashboard PPDB untuk memilih kembali jadwal pengganti yang tersedia di menu Undangan Seleksi.
 
-Dashboard: ${process.env.NEXT_PUBLIC_APP_URL || 'https://ppdb.alandalus-ululalbaab.com'}/dashboard/pendaftar/undangan-seleksi
+Dashboard: ${process.env.NEXT_PUBLIC_APP_URL || DEFAULT_APP_URL}/dashboard/pendaftar/undangan-seleksi
 
 ---
 *Panitia PPDB Al Andalus Ulul Albaab*`;
