@@ -282,6 +282,7 @@ function InputNilaiContent() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
   const [activeRole, setActiveRole] = useState<string>("");
+  const [activeName, setActiveName] = useState<string>("");
 
   // Form states for each type
   const [quranForm, setQuranForm] = useState<any>({});
@@ -327,7 +328,9 @@ function InputNilaiContent() {
       .then((res) => res.json())
       .then((data) => {
         const role = data.session?.role || "";
+        const name = data.session?.full_name || data.session?.name || "Reviewer";
         setActiveRole(role);
+        setActiveName(name);
       })
       .catch((err) => console.error("Error fetching session:", err));
 
@@ -354,10 +357,20 @@ function InputNilaiContent() {
 
   const startEditing = (p: Peserta, type: "quran" | "wawancara" | "ortu") => {
     setEditingId(p.id + type);
+    
     // Pre-fill forms from existing data
-    setQuranForm(p.detail_quran || {});
-    setCalsanForm(p.detail_wawancara || {});
-    setCawalsanForm(p.detail_cawalsan || {});
+    const quranData = p.detail_quran || {};
+    const calsanData = p.detail_wawancara || {};
+    const cawalsanData = p.detail_cawalsan || {};
+
+    // Auto-fill examiner/interviewer name if not already set
+    if (!quranData.nama_penguji) quranData.nama_penguji = activeName;
+    if (!calsanData.nama_pewawancara) calsanData.nama_pewawancara = activeName;
+    if (!cawalsanData.nama_pewawancara) cawalsanData.nama_pewawancara = activeName;
+
+    setQuranForm(quranData);
+    setCalsanForm(calsanData);
+    setCawalsanForm(cawalsanData);
     setMessage(null);
   };
 
@@ -541,11 +554,8 @@ function InputNilaiContent() {
             </div>
 
             <div>
-              <label className="block text-[10px] sm:text-xs font-black text-ink-700 uppercase tracking-widest mb-2 sm:mb-3">Nama Penguji *</label>
-              <select value={quranForm.nama_penguji || ""} onChange={(e) => setQuranForm({ ...quranForm, nama_penguji: e.target.value })} className="w-full px-4 sm:px-5 py-3.5 sm:py-4 bg-white border-2 border-emerald-100 rounded-xl sm:rounded-2xl focus:border-emerald-500 outline-none font-black text-emerald-950 transition-all cursor-pointer">
-                <option value="">Pilih Penguji</option>
-                {examinerList.map((n) => <option key={n} value={n}>{n}</option>)}
-              </select>
+              <label className="block text-[10px] sm:text-xs font-black text-ink-700 uppercase tracking-widest mb-2 sm:mb-3">Nama Penguji (Otomatis)</label>
+              <input type="text" value={quranForm.nama_penguji || activeName} readOnly className="w-full px-4 sm:px-5 py-3.5 sm:py-4 bg-emerald-50/50 border-2 border-emerald-100 rounded-xl sm:rounded-2xl font-black text-emerald-950 outline-none cursor-not-allowed" />
             </div>
 
             <div>
@@ -663,11 +673,8 @@ function InputNilaiContent() {
 
             <div className="bg-white rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-brand-blue-100 shadow-xs space-y-5 sm:space-y-6">
               <div>
-                <label className="block text-[10px] sm:text-xs font-black text-ink-800 uppercase tracking-widest mb-2 sm:mb-3">Nama Pewawancara *</label>
-                <select value={calsanForm.nama_pewawancara || ""} onChange={(e) => setCalsanForm({ ...calsanForm, nama_pewawancara: e.target.value })} className="w-full px-4 sm:px-5 py-3.5 sm:py-4 bg-ink-50/50 border-2 border-ink-100 rounded-xl sm:rounded-2xl focus:border-brand-blue-500 outline-none font-black text-brand-blue-950 transition-all cursor-pointer">
-                  <option value="">Pilih Pewawancara</option>
-                  {examinerList.map((n) => <option key={n} value={n}>{n}</option>)}
-                </select>
+                <label className="block text-[10px] sm:text-xs font-black text-ink-800 uppercase tracking-widest mb-2 sm:mb-3">Nama Pewawancara (Otomatis)</label>
+                <input type="text" value={calsanForm.nama_pewawancara || activeName} readOnly className="w-full px-4 sm:px-5 py-3.5 sm:py-4 bg-brand-blue-50/50 border-2 border-ink-100 rounded-xl sm:rounded-2xl font-black text-brand-blue-950 outline-none cursor-not-allowed" />
               </div>
 
               <div>
@@ -852,11 +859,8 @@ function InputNilaiContent() {
               </div>
 
               <div>
-                <label className="block text-[10px] sm:text-xs font-black text-ink-800 uppercase tracking-widest mb-2 sm:mb-3">Nama Pewawancara *</label>
-                <select value={cawalsanForm.nama_pewawancara || ""} onChange={(e) => setCawalsanForm({ ...cawalsanForm, nama_pewawancara: e.target.value })} className="w-full px-4 sm:px-5 py-3.5 sm:py-4 bg-ink-50/30 border-2 border-ink-100 rounded-xl sm:rounded-2xl focus:border-brand-yellow-500 outline-none font-black text-brand-blue-950 transition-all cursor-pointer">
-                  <option value="">Pilih Pewawancara</option>
-                  {examinerList.map((n) => <option key={n} value={n}>{n}</option>)}
-                </select>
+                <label className="block text-[10px] sm:text-xs font-black text-ink-800 uppercase tracking-widest mb-2 sm:mb-3">Nama Pewawancara (Otomatis)</label>
+                <input type="text" value={cawalsanForm.nama_pewawancara || activeName} readOnly className="w-full px-4 sm:px-5 py-3.5 sm:py-4 bg-brand-yellow-50/50 border-2 border-ink-100 rounded-xl sm:rounded-2xl font-black text-brand-blue-950 outline-none cursor-not-allowed" />
               </div>
 
               <div>
