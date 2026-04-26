@@ -162,21 +162,20 @@ export async function PATCH(request: NextRequest) {
         where: { pendaftar_id: dokumen.pendaftar_id }
       });
 
-      // Pending = Not Verified AND No Note (Rejected usually implies Note)
-      // Adjust logic if "Rejected" state is defined differently.
-      // Based on GET implementation: blocked if is_verified=false & catatan=null
-      const pendingDocs = allDocs.filter(d => !d.is_verified && !d.catatan);
+      // Check if all MANDATORY documents for this pendaftar have been processed
+      const mandatoryDocs = allDocs.filter(d => REQUIRED_DOC_TYPES.includes(d.jenis_dokumen));
+      const pendingMandatory = mandatoryDocs.filter(d => !d.is_verified && !d.catatan);
 
-      if (pendingDocs.length === 0) {
-        // All documents UP TO NOW have been processed.
-        const rejectedDocs = allDocs.filter(d => !d.is_verified && d.catatan);
-        const verifiedTypes = new Set(allDocs.filter(d => d.is_verified).map(d => d.jenis_dokumen));
-        const hasAllRequired = REQUIRED_DOC_TYPES.every(type => verifiedTypes.has(type));
+      // We notify if all mandatory docs are processed, OR if we have at least one rejection (to notify ASAP)
+      const rejectedDocs = allDocs.filter(d => !d.is_verified && d.catatan);
+      const isSomeRejected = rejectedDocs.length > 0;
+      
+      const verifiedTypes = new Set(allDocs.filter(d => d.is_verified).map(d => d.jenis_dokumen));
+      const hasAllRequired = REQUIRED_DOC_TYPES.every(type => verifiedTypes.has(type));
+      const isAllVerifiedAndComplete = !isSomeRejected && hasAllRequired;
 
-        const isSomeRejected = rejectedDocs.length > 0;
-        const isAllVerifiedAndComplete = !isSomeRejected && hasAllRequired;
-
-        // ONLY Notify if we have rejections OR if they are FINALLY complete (all 9 verified)
+      // Logic: Notify if (All Mandatory Processed) OR (Something is Rejected)
+      if (pendingMandatory.length === 0 || isSomeRejected) {
         const recipientPhone = dokumen.pendaftar.no_hp || (dokumen.pendaftar as any).user?.phone;
 
         if (isSomeRejected || isAllVerifiedAndComplete) {

@@ -597,16 +597,10 @@ export function buildMessageDocumentVerified(nama: string, dokumenList: string):
     return `✅ *Dokumen Diverifikasi*
 
 Assalamu'alaikum ${nama},
-
 Alhamdulillah, dokumen Anda telah diverifikasi dan *DITERIMA*.
-
-📄 *Dokumen yang Diverifikasi:*
-${dokumenList}
 
 📝 *Langkah Selanjutnya:*
 Silakan pilih jadwal tes masuk melalui dashboard Anda (Menu Jadwal Ujian).
-
-Dashboard: ${process.env.NEXT_PUBLIC_APP_URL || DEFAULT_APP_URL}/dashboard/pendaftar/undangan-seleksi
 
 Jazakumullahu khairan,
 Panitia PPDB Al Andalus Ulul Albaab`;
