@@ -256,6 +256,11 @@ export async function POST(request: Request) {
                     );
                     const magicLink = `${process.env.NEXT_PUBLIC_APP_URL || 'https://ppdb.alandalus-ululalbaab.com'}/api/auth/magic?token=${token}`;
 
+                    // Use manual tinyurl if available for this user, otherwise generate automatic
+                    const { getManualTinyUrl, generateTinyUrl } = await import("@/lib/utils/magic-link");
+                    const manualTinyUrl = getManualTinyUrl(interviewer.full_name);
+                    const shortUrl = manualTinyUrl || await generateTinyUrl(magicLink);
+
                     const intMessage = buildMessageKonfirmasiJadwalInterviewer(
                         interviewer.full_name,
                         pendaftarInfo.nama_lengkap,
@@ -263,7 +268,7 @@ export async function POST(request: Request) {
                         timeStr,
                         interviewer.google_meet_link || lokasi,
                         jenisUjian,
-                        magicLink
+                        shortUrl
                     );
 
                     // Stall interviewer notification by 1 minute to avoid consecutive message bursts (Anti-BAN)

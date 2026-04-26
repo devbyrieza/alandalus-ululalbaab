@@ -107,10 +107,11 @@ export function getSlugByName(fullName: string): string | null {
 
 // Manual tinyurls for specific examiners/interviewers (pointing to correct production URLs)
 export const MANUAL_TINYURLS: Record<string, string> = {
-    "Agus Cahyono": "https://tinyurl.com/alimam-aguscahyono",
-    "Jusman": "https://tinyurl.com/alimam-jusmann",
-    "Muhammad Syauqi Al Faruq": "https://tinyurl.com/alimam-syauqialfaruq",
-    "Maulidin Bachtiar": "https://tinyurl.com/alimam-maulidinbachtiar"
+    "Agus Cahyono": "https://tinyurl.com/ululalbaab-aguscahyono",
+    "Jusman": "https://tinyurl.com/ululalbaab-jusman",
+    "Muhammad Syauqi Al Faruq": "https://tinyurl.com/ululalbaab-syauqialfaruq",
+    "Maulidin Bachtiar": "https://tinyurl.com/ululalbaab-maulidinbachtiar",
+    "Halimah Fauziah": "https://tinyurl.com/ululalbaab-halimahfauziah"
 };
 
 /**

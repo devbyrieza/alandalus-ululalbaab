@@ -744,23 +744,25 @@ export function buildMessageKonfirmasiJadwal(
     lokasi: string,
     jenisUjian: string
 ): string {
-    return `${pickOpening()} ${nama},
+    return `*KONFIRMASI JADWAL SELEKSI*
 
-Jadwal ${jenisUjian} Anda telah terkonfirmasi:
+Assalamu'alaikum *${nama}*,
 
-Tanggal: ${tanggal}
-Waktu: ${waktu} WIB
-Tempat: ${lokasi}
+Jadwal *${jenisUjian}* Anda telah berhasil terkonfirmasi:
+
+📅 *Hari/Tanggal:* ${tanggal}
+⏰ *Waktu:* ${waktu}
+📍 *Tempat/Link:* ${lokasi}
 
 Persiapan:
 - Hadir 30 menit sebelum waktu tes
 - Berpakaian sopan dan rapi
-- Bawa alat tulis
+- Pastikan koneksi internet stabil jika online
 
-Dashboard: ${process.env.NEXT_PUBLIC_APP_URL || 'https://ppdb.alandalus-ululalbaab.com'}/dashboard/pendaftar/undangan-seleksi
+Dashboard: ${process.env.NEXT_PUBLIC_APP_URL || DEFAULT_APP_URL}/dashboard/pendaftar/undangan-seleksi
 
-Jazakumullahu khairan,
-Panitia PPDB Ulul Albaab`;
+---
+*Panitia PPDB Al Andalus Ulul Albaab*`;
 }
 
 export function buildMessageReminderH1(
@@ -834,25 +836,46 @@ export function buildMessageKonfirmasiJadwalInterviewer(
     jenisUjian: string,
     inputNilaiLink?: string
 ): string {
+    const isWawancara = jenisUjian.toLowerCase().includes("wawancara");
     const title = (namaInterviewer || "").toLowerCase().includes("ustadzah") ? "Ustadzah" : "Ustadz";
-    const opening = pickOpening();
-    let msg = `${opening} ${title} ${namaInterviewer},
- 
- Informasikan jadwal ${jenisUjian} baru untuk santri berikut:
- 
- Nama Santri: ${namaSantri}
- Tanggal: ${tanggal}
- Waktu: ${waktu} WIB
- Tempat: ${lokasi}`;
 
-    if (inputNilaiLink) {
-        msg += `\n\n🔗 *Input Hasil:* ${inputNilaiLink}\n(PIN: 4 digit terakhir No. HP Anda)`;
+    if (isWawancara) {
+        return `*KONFIRMASI JADWAL WAWANCARA*
+
+Assalamu'alaikum ${title} *${namaInterviewer}*,
+
+Informasi jadwal wawancara baru untuk santri berikut:
+
+📝 *Agenda:* Wawancara Calon Santri / Ortu
+👤 *Nama Santri:* ${namaSantri}
+📅 *Hari/Tanggal:* ${tanggal}
+⏰ *Waktu:* ${waktu}
+📍 *Link Meet:* ${lokasi}
+🔗 *Input Hasil:* ${inputNilaiLink || "-"}
+
+Mohon untuk bersiap di ruangan virtual/fisik tepat waktu. Syukran.
+
+---
+*Sistem PPDB Al Andalus Ulul Albaab*`;
     }
 
-    msg += `\n\nMohon untuk bersiap di ruangan virtual/fisik tepat waktu. Syukran.
- 
- Panitia PPDB Ulul Albaab`;
-    return msg;
+    return `*KONFIRMASI JADWAL MENGUJI*
+
+Assalamu'alaikum ${title} *${namaInterviewer}*,
+
+Informasi jadwal menguji baru untuk santri berikut:
+
+📝 *Agenda:* ${jenisUjian}
+👤 *Nama Santri:* ${namaSantri}
+📅 *Hari/Tanggal:* ${tanggal}
+⏰ *Waktu:* ${waktu}
+📍 *Link Meet:* ${lokasi}
+🔗 *Input Hasil:* ${inputNilaiLink || "-"}
+
+Mohon untuk bersiap di ruangan virtual/fisik tepat waktu. Syukran.
+
+---
+*Sistem PPDB Al Andalus Ulul Albaab*`;
 }
 
 // ============================================================================
@@ -896,22 +919,12 @@ export function buildMessageReminderH1Santri(
     lokasi: string,
     jenisUjian: string
 ): string {
-    // Robust deduplication for Time - remove any existing WIB and ensure single WIB at end
+    // Robust deduplication for Time
     let cleanJam = (jam || "").replace(/\s*WIB\s*/gi, " ").trim();
-    cleanJam = cleanJam.replace(/\s+/g, " "); // collapse multiple spaces
+    cleanJam = cleanJam.replace(/\s+/g, " ");
     const finalJam = `${cleanJam} WIB`;
 
-    // Robust deduplication for Day - handle various formats
-    let cleanTanggal = (tanggal || "").trim();
-    // Remove day name if it appears at the start (case insensitive, with or without comma)
-    if (hari) {
-        const dayPattern = new RegExp(`^${hari}\\s*,?\\s*`, "i");
-        cleanTanggal = cleanTanggal.replace(dayPattern, "");
-    }
-    // Also remove any day name pattern at the start (e.g., "Kamis, ")
-    cleanTanggal = cleanTanggal.replace(/^(?:senin|selasa|rabu|kamis|jumat|sabtu|ahad|minggu)\s*,?\s*/i, "");
-
-    const finalHariTanggal = `${hari}, ${cleanTanggal}`;
+    const finalHariTanggal = `${hari}, ${tanggal}`;
 
     return `*PENGINGAT UJIAN SELEKSI*
 
@@ -942,38 +955,45 @@ export function buildMessageReminderH1Penguji(
     jenisUjian: string,
     inputNilaiLink?: string
 ): string {
-    const title = (namaPenguji || "").toLowerCase().includes("ustadzah") ? "Ustadzah" : "Ustadz";
     const isWawancara = jenisUjian.toLowerCase().includes("wawancara");
+    const title = (namaPenguji || "").toLowerCase().includes("ustadzah") ? "Ustadzah" : "Ustadz";
 
-    // Robust deduplication for Time - remove any existing WIB and ensure single WIB at end
+    // Robust deduplication for Time
     let cleanJam = (jam || "").replace(/\s*WIB\s*/gi, " ").trim();
-    cleanJam = cleanJam.replace(/\s+/g, " "); // collapse multiple spaces
+    cleanJam = cleanJam.replace(/\s+/g, " ");
     const finalJam = `${cleanJam} WIB`;
 
-    // Robust deduplication for Day - handle various formats
-    let cleanTanggal = (tanggal || "").trim();
-    // Remove day name if it appears at the start (case insensitive, with or without comma)
-    if (hari) {
-        const dayPattern = new RegExp(`^${hari}\\s*,?\\s*`, "i");
-        cleanTanggal = cleanTanggal.replace(dayPattern, "");
-    }
-    // Also remove any day name pattern at the start (e.g., "Kamis, ")
-    cleanTanggal = cleanTanggal.replace(/^(?:senin|selasa|rabu|kamis|jumat|sabtu|ahad|minggu)\s*,?\s*/i, "");
+    const finalHariTanggal = `${hari}, ${tanggal}`;
 
-    const finalHariTanggal = `${hari}, ${cleanTanggal}`;
-
-    const templateTitle = isWawancara ? "*REMINDER JADWAL WAWANCARA*" : "*REMINDER JADWAL MENGUJI*";
-    const agendaText = isWawancara ? "Wawancara Calon Santri / Ortu" : jenisUjian;
-
-    return `${templateTitle}
+    if (isWawancara) {
+        return `*REMINDER JADWAL WAWANCARA*
 
 Assalamu'alaikum ${title} *${namaPenguji}*,
 
-Mengingatkan jadwal ${isWawancara ? "wawancara" : "menguji"} Anda:
+Mengingatkan jadwal wawancara Anda:
 
-📝 *Agenda:* ${agendaText}
+📝 *Agenda:* Wawancara Calon Santri / Ortu
 👤 *Nama Santri:* ${namaSantri}
-📅 *Hari/Tanggal:* ${finalHariTanggal}    
+📅 *Hari/Tanggal:* ${finalHariTanggal}
+⏰ *Waktu:* ${finalJam}
+📍 *Link Meet:* ${lokasi}
+🔗 *Input Hasil:* ${inputNilaiLink || "-"}
+
+Mohon kehadirannya tepat waktu. Syukron.
+
+---
+*Sistem PPDB Al Andalus Ulul Albaab*`;
+    }
+
+    return `*REMINDER JADWAL MENGUJI*
+
+Assalamu'alaikum ${title} *${namaPenguji}*,
+
+Mengingatkan jadwal menguji Anda:
+
+📝 *Agenda:* ${jenisUjian}
+👤 *Nama Santri:* ${namaSantri}
+📅 *Hari/Tanggal:* ${finalHariTanggal}
 ⏰ *Waktu:* ${finalJam}
 📍 *Link Meet:* ${lokasi}
 🔗 *Input Hasil:* ${inputNilaiLink || "-"}
