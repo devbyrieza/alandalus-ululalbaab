@@ -389,7 +389,7 @@ function InputNilaiContent() {
         const isPutriByJenjang = p.jenjang?.toLowerCase().includes('putri');
         const isPutriByPrefix = ['MTI', 'ILI', 'SMI'].some(prefix => p.nomor_pendaftaran?.startsWith(prefix));
         // Fallback: If examiner is Halimah or Rima, it's definitely a Putri session
-        const isPutriByExaminer = ["Halimah Fauziah", "Rima Maryani Putri Utami", "Iklimah Mardhatillah"].some(name => 
+        const isPutriByExaminer = ["Halimah Fauziah", "Rima Maryani Putri Utami"].some(name => 
           p.detail_wawancara?.nama_pewawancara === name
         );
         const isPutri = isPutriByJenjang || isPutriByPrefix || isPutriByExaminer;
@@ -623,7 +623,7 @@ function InputNilaiContent() {
     const isPutriByJenjang = p.jenjang?.toLowerCase().includes('putri');
     const isPutriByPrefix = ['MTI', 'ILI', 'SMI'].some(prefix => p.nomor_pendaftaran?.startsWith(prefix));
     // Also check if the current selected interviewer is from the Putri list
-    const isPutriByExaminer = ["Halimah Fauziah", "Rima Maryani Putri Utami", "Iklimah Mardhatillah"].some(name => 
+    const isPutriByExaminer = ["Halimah Fauziah", "Rima Maryani Putri Utami"].some(name => 
       calsanForm.nama_pewawancara === name || p.detail_wawancara?.nama_pewawancara === name
     );
     const isPutri = isPutriByJenjang || isPutriByPrefix || isPutriByExaminer;
