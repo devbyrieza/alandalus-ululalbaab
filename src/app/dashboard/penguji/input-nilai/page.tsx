@@ -274,7 +274,7 @@ export default function InputNilaiPage() {
 function InputNilaiContent() {
   const searchParams = useSearchParams();
   const initialSearch = searchParams.get("search") || "";
-  
+
   const [peserta, setPeserta] = useState<Peserta[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState(initialSearch);
@@ -302,16 +302,16 @@ function InputNilaiContent() {
 
   const getLockInfo = (inputAt: string | null | undefined) => {
     if (!inputAt) return { isLocked: false, remainingText: "" };
-    
+
     const isAdmin = ['admin_super', 'admin', 'head_of_it'].includes(activeRole);
     if (isAdmin) return { isLocked: false, remainingText: "Akses Admin: Bebas Edit" };
 
     const inputDate = new Date(inputAt);
     const lockDate = new Date(inputDate.getTime() + 24 * 60 * 60 * 1000);
     const now = new Date();
-    
+
     const isLocked = now > lockDate;
-    
+
     if (isLocked) {
       return { isLocked: true, remainingText: "Terkunci (Batas edit 24 jam habis)" };
     } else {
@@ -357,7 +357,7 @@ function InputNilaiContent() {
 
   const startEditing = (p: Peserta, type: "quran" | "wawancara" | "ortu") => {
     setEditingId(p.id + type);
-    
+
     // Pre-fill forms from existing data
     const quranData = p.detail_quran || {};
     const calsanData = p.detail_wawancara || {};
@@ -402,11 +402,11 @@ function InputNilaiContent() {
         const isPutriByJenjang = p.jenjang?.toLowerCase().includes('putri');
         const isPutriByPrefix = ['MTI', 'ILI', 'SMI'].some(prefix => p.nomor_pendaftaran?.startsWith(prefix));
         // Fallback: If examiner is Halimah or Rima, it's definitely a Putri session
-        const isPutriByExaminer = ["Halimah Fauziah", "Rima Maryani Putri Utami"].some(name => 
+        const isPutriByExaminer = ["Halimah Fauziah", "Rima Maryani Putri Utami"].some(name =>
           p.detail_wawancara?.nama_pewawancara === name
         );
         const isPutri = isPutriByJenjang || isPutriByPrefix || isPutriByExaminer;
-        
+
         const criteria = isPutri ? CALSAN_CRITERIA_PUTRI : CALSAN_CRITERIA_PUTRA;
         const scores = criteria.map((c) => calsanForm[c.key] || 0);
         const avgScore = scores.reduce((a: number, b: number) => a + b, 0) / scores.length;
@@ -505,10 +505,10 @@ function InputNilaiContent() {
   const renderQuranForm = (p: Peserta) => {
     const isSaved = !!(p.detail_quran?.rekomendasi || p.nilai_tes_quran != null || p.score_quran != null);
     const isEditing = editingId === p.id + "quran";
-    
+
     const isPutriByJenjang = p.jenjang?.toLowerCase().includes('putri');
     const isPutriByPrefix = ['MTI', 'ILI', 'SMI'].some(prefix => p.nomor_pendaftaran?.startsWith(prefix));
-    const isPutriByExaminer = ["Andi Fatimah Azzahra Rahman", "Halimah Fauziah", "Rima Maryani Putri Utami"].some(name => 
+    const isPutriByExaminer = ["Andi Fatimah Azzahra Rahman", "Halimah Fauziah", "Rima Maryani Putri Utami"].some(name =>
       quranForm.nama_penguji === name || p.detail_quran?.nama_penguji === name
     );
     const isPutri = isPutriByJenjang || isPutriByPrefix || isPutriByExaminer;
@@ -610,7 +610,7 @@ function InputNilaiContent() {
                 <span className="text-[10px] sm:text-xs font-black uppercase tracking-widest italic">Peserta belum dinilai</span>
               </div>
             )}
-            
+
             {(!isSaved || !getLockInfo(p.input_at_quran).isLocked) ? (
               <button onClick={() => startEditing(p, "quran")} className="mt-5 sm:mt-6 px-8 py-4 bg-emerald-600 text-white rounded-xl sm:rounded-2xl text-[10px] sm:text-xs font-black uppercase tracking-widest hover:bg-emerald-700 transition-all shadow-lg shadow-emerald-900/20 active:scale-95 leading-none">
                 {isSaved ? "Edit Nilai" : "Input Nilai"}
@@ -629,15 +629,15 @@ function InputNilaiContent() {
   const renderCalsanForm = (p: Peserta) => {
     const isSaved = !!(p.detail_wawancara?.rekomendasi || p.nilai_wawancara_santri != null);
     const isEditing = editingId === p.id + "wawancara";
-    
+
     const isPutriByJenjang = p.jenjang?.toLowerCase().includes('putri');
     const isPutriByPrefix = ['MTI', 'ILI', 'SMI'].some(prefix => p.nomor_pendaftaran?.startsWith(prefix));
     // Also check if the current selected interviewer is from the Putri list
-    const isPutriByExaminer = ["Halimah Fauziah", "Rima Maryani Putri Utami"].some(name => 
+    const isPutriByExaminer = ["Halimah Fauziah", "Rima Maryani Putri Utami"].some(name =>
       calsanForm.nama_pewawancara === name || p.detail_wawancara?.nama_pewawancara === name
     );
     const isPutri = isPutriByJenjang || isPutriByPrefix || isPutriByExaminer;
-    
+
     const criteria = isPutri ? CALSAN_CRITERIA_PUTRI : CALSAN_CRITERIA_PUTRA;
     const examinerList = isPutri ? PEWAWANCARA_CALSAN_LIST_PUTRI : PEWAWANCARA_CALSAN_LIST_PUTRA;
 
