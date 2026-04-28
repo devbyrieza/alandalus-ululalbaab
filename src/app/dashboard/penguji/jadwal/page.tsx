@@ -17,6 +17,7 @@ import {
   Save,
   Trophy,
   AlertCircle,
+  Edit2,
 } from "lucide-react";
 import Swal from "sweetalert2";
 
@@ -129,6 +130,12 @@ export default function JadwalPengujiPage() {
     notes: "",
   });
   const [submittingSlot, setSubmittingSlot] = useState(false);
+
+  // Edit Modal State
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editingSlot, setEditingSlot] = useState<ExamSession | null>(null);
+  const [editForm, setEditForm] = useState({ date: "", start_time: "08:00", end_time: "09:00", location: "", notes: "" });
+  const [submittingEdit, setSubmittingEdit] = useState(false);
   
   // Bulk Modal State
   const [isBulkModalOpen, setIsBulkModalOpen] = useState(false);
@@ -403,6 +410,68 @@ export default function JadwalPengujiPage() {
       showConfirmButton: false,
       timer: 1500
     });
+  };
+
+  const handleOpenEdit = (slot: ExamSession) => {
+    const start = new Date(slot.start_time);
+    const end = new Date(slot.end_time);
+    const toLocalDate = (d: Date) => {
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      return `${y}-${m}-${day}`;
+    };
+    const toLocalTime = (d: Date) =>
+      `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+    setEditingSlot(slot);
+    setEditForm({
+      date: toLocalDate(start),
+      start_time: toLocalTime(start),
+      end_time: toLocalTime(end),
+      location: slot.location || "",
+      notes: slot.notes || "",
+    });
+    setIsEditModalOpen(true);
+  };
+
+  const handleEditSlot = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingSlot) return;
+    setSubmittingEdit(true);
+    try {
+      const startDateTime = new Date(`${editForm.date}T${editForm.start_time}:00`);
+      const endDateTime = new Date(`${editForm.date}T${editForm.end_time}:00`);
+      const diffMinutes = (endDateTime.getTime() - startDateTime.getTime()) / (1000 * 60);
+      if (diffMinutes <= 0) {
+        setMessage({ type: "error", text: "Jam selesai harus lebih besar dari jam mulai." });
+        setSubmittingEdit(false);
+        return;
+      }
+      const response = await fetch(`/api/exam-sessions?id=${editingSlot.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title: editingSlot.title,
+          start_time: startDateTime.toISOString(),
+          end_time: endDateTime.toISOString(),
+          location: editForm.location || "Online",
+          notes: editForm.notes,
+        }),
+      });
+      const result = await response.json();
+      if (response.ok) {
+        setMessage({ type: "success", text: "Sesi berhasil diperbarui!" });
+        setIsEditModalOpen(false);
+        setEditingSlot(null);
+        fetchSlots();
+      } else {
+        throw new Error(result.error || "Gagal memperbarui sesi");
+      }
+    } catch (error: any) {
+      setMessage({ type: "error", text: error.message });
+    } finally {
+      setSubmittingEdit(false);
+    }
   };
 
   const handleDeleteSlot = async (id: string, count: number) => {
@@ -791,13 +860,22 @@ export default function JadwalPengujiPage() {
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {slots.map(slot => (
                 <div key={slot.id} className="bg-white rounded-[2rem] p-6 border border-brand-yellow-100 shadow-sm hover:shadow-xl hover:shadow-brand-blue-600/5 transition-all group relative app-card">
-                  <button
-                    onClick={() => handleDeleteSlot(slot.id, slot._count?.bookings || 0)}
-                    className="absolute top-6 right-6 p-2.5 text-ink-300 hover:text-red-600 hover:bg-red-50 rounded-full transition-all active:scale-90"
-                    title="Hapus Sesi"
-                  >
-                    <Trash2 className="w-5 h-5" />
-                  </button>
+                  <div className="absolute top-6 right-6 flex items-center gap-1">
+                    <button
+                      onClick={() => handleOpenEdit(slot)}
+                      className="p-2.5 text-ink-300 hover:text-brand-blue-600 hover:bg-brand-blue-50 rounded-full transition-all active:scale-90"
+                      title="Edit Sesi"
+                    >
+                      <Edit2 className="w-4 h-4" />
+                    </button>
+                    <button
+                      onClick={() => handleDeleteSlot(slot.id, slot._count?.bookings || 0)}
+                      className="p-2.5 text-ink-300 hover:text-red-600 hover:bg-red-50 rounded-full transition-all active:scale-90"
+                      title="Hapus Sesi"
+                    >
+                      <Trash2 className="w-5 h-5" />
+                    </button>
+                  </div>
                   
                   <div className="flex items-center gap-4 mb-6">
                     <div className="w-14 h-14 bg-brand-blue-50 rounded-2xl flex items-center justify-center border border-brand-blue-100 text-brand-blue-700 font-black text-xl shadow-sm">
@@ -831,6 +909,107 @@ export default function JadwalPengujiPage() {
             </div>
           )}
         </>
+      )}
+
+      {/* MODAL EDIT SLOT */}
+      {isEditModalOpen && editingSlot && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-brand-blue-950/40 backdrop-blur-md animate-in fade-in duration-300">
+          <div className="bg-white rounded-[32px] shadow-2xl w-full max-w-md overflow-hidden border border-white/20 animate-in zoom-in-95 duration-300">
+            <div className="p-6 border-b border-stone-100 flex justify-between items-center bg-stone-50/50">
+              <div>
+                <h3 className="text-xl font-black text-brand-blue-950 tracking-tight leading-none">Edit Sesi</h3>
+                <p className="text-[10px] text-ink-300 font-bold uppercase tracking-widest mt-1.5">{editingSlot.title || "Sesi Seleksi"}</p>
+              </div>
+              <button
+                onClick={() => { setIsEditModalOpen(false); setEditingSlot(null); }}
+                className="p-2 hover:bg-stone-200 rounded-full transition-colors text-stone-400"
+              >
+                <XCircle className="w-6 h-6" />
+              </button>
+            </div>
+
+            <form onSubmit={handleEditSlot} className="p-8 space-y-5">
+              {/* Tanggal */}
+              <div>
+                <label className="block text-xs font-black text-ink-400 uppercase tracking-widest mb-2">Tanggal</label>
+                <input
+                  type="date"
+                  required
+                  className="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-xl focus:ring-2 focus:ring-brand-blue-500 outline-none font-bold text-brand-blue-950 transition-all"
+                  value={editForm.date}
+                  onChange={e => setEditForm({ ...editForm, date: e.target.value })}
+                />
+              </div>
+
+              {/* Waktu */}
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-black text-ink-400 uppercase tracking-widest mb-2">Mulai</label>
+                  <input
+                    type="time"
+                    required
+                    className="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-xl focus:ring-2 focus:ring-brand-blue-500 outline-none font-bold text-brand-blue-950"
+                    value={editForm.start_time}
+                    onChange={e => setEditForm({ ...editForm, start_time: e.target.value })}
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-black text-ink-400 uppercase tracking-widest mb-2">Selesai</label>
+                  <input
+                    type="time"
+                    required
+                    className="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-xl focus:ring-2 focus:ring-brand-blue-500 outline-none font-bold text-brand-blue-950"
+                    value={editForm.end_time}
+                    onChange={e => setEditForm({ ...editForm, end_time: e.target.value })}
+                  />
+                </div>
+              </div>
+
+              {/* Lokasi */}
+              <div>
+                <label className="block text-xs font-black text-ink-400 uppercase tracking-widest mb-2">Lokasi</label>
+                <input
+                  type="text"
+                  placeholder="Online / Zoom / Pesantren"
+                  className="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-xl focus:ring-2 focus:ring-brand-blue-500 outline-none font-bold text-brand-blue-950"
+                  value={editForm.location}
+                  onChange={e => setEditForm({ ...editForm, location: e.target.value })}
+                />
+              </div>
+
+              {/* Catatan */}
+              <div>
+                <label className="block text-xs font-black text-ink-400 uppercase tracking-widest mb-2">Catatan (Opsional)</label>
+                <textarea
+                  rows={2}
+                  placeholder="Catatan tambahan..."
+                  className="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-xl focus:ring-2 focus:ring-brand-blue-500 outline-none font-bold text-brand-blue-950 resize-none"
+                  value={editForm.notes}
+                  onChange={e => setEditForm({ ...editForm, notes: e.target.value })}
+                />
+              </div>
+
+              {/* Actions */}
+              <div className="flex gap-3 pt-2">
+                <button
+                  type="button"
+                  onClick={() => { setIsEditModalOpen(false); setEditingSlot(null); }}
+                  className="flex-1 py-3.5 border border-stone-200 text-stone-600 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-stone-50 transition-all"
+                >
+                  Batal
+                </button>
+                <button
+                  type="submit"
+                  disabled={submittingEdit}
+                  className="flex-1 py-3.5 bg-brand-blue-600 hover:bg-brand-blue-700 disabled:opacity-50 text-white rounded-2xl font-black text-xs uppercase tracking-widest transition-all flex items-center justify-center gap-2 shadow-lg shadow-brand-blue-600/20"
+                >
+                  {submittingEdit ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+                  Simpan Perubahan
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
       )}
 
       {/* MODAL CREATE SLOT */}
