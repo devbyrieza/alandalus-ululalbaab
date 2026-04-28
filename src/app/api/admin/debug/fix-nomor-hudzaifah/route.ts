@@ -36,41 +36,31 @@ export async function GET() {
 
 export async function POST() {
   try {
-    // Hudzaifah Al fawwaz saat ini punya ILA2600003A
-    // Kita cari nomor ILA berikutnya yang kosong setelah semua yang ada
-    const allILA = await prisma.pendaftar.findMany({
-      where: { nomor_pendaftaran: { startsWith: "ILA26" } },
-      select: { nomor_pendaftaran: true },
+    // ILA2600015 adalah nomor terakhir di seri 2600
+    // ILA2600016 tersedia → nomor bersih untuk Hudzaifah
+    const NOMOR_BARU = "ILA2600016";
+
+    const conflict = await prisma.pendaftar.findUnique({
+      where: { nomor_pendaftaran: NOMOR_BARU }
     });
 
-    // Cari nomor bersih yang available
-    // Cek dari ILA2600050 ke atas untuk nomor fresh yang tidak konflik
-    const usedNomors = new Set(allILA.map(p => p.nomor_pendaftaran));
-    let nomorBaru: string | null = null;
-
-    for (let i = 50; i <= 999; i++) {
-      const candidate = `ILA26000${i.toString().padStart(2, "0")}`;
-      if (!usedNomors.has(candidate)) {
-        nomorBaru = candidate;
-        break;
-      }
-    }
-
-    if (!nomorBaru) {
-      return NextResponse.json({ error: "Tidak ada nomor tersedia" }, { status: 409 });
+    if (conflict) {
+      return NextResponse.json({
+        error: `${NOMOR_BARU} sudah dipakai oleh ${conflict.nama_lengkap}`
+      }, { status: 409 });
     }
 
     const updated = await prisma.pendaftar.update({
       where: { nomor_pendaftaran: "ILA2600003A" },
-      data: { nomor_pendaftaran: nomorBaru }
+      data: { nomor_pendaftaran: NOMOR_BARU }
     });
 
     return NextResponse.json({
       success: true,
       nama: updated.nama_lengkap,
       sebelum: "ILA2600003A",
-      sesudah: nomorBaru,
-      login_baru: nomorBaru,
+      sesudah: NOMOR_BARU,
+      login_baru: NOMOR_BARU,
     });
   } catch (error) {
     return NextResponse.json({ error: String(error) }, { status: 500 });
