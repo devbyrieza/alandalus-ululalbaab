@@ -36,12 +36,18 @@ export async function GET(request: NextRequest) {
     }
 
     // 4. Fetch data pendaftar dari database
-    const pendaftar = await prisma.pendaftar.findUnique({
-      where: { id: session.id },
+    // session.id adalah ID dari tabel profiles, bukan pendaftar
+    // Cari pendaftar berdasarkan user_id (FK ke profiles)
+    const pendaftar = await prisma.pendaftar.findFirst({
+      where: {
+        user_id: session.id,
+        deleted_at: null,
+      },
       include: {
         orang_tua: true,
         dokumen: true,
       },
+      orderBy: { created_at: 'desc' }, // Ambil yang terbaru jika ada lebih dari 1
     });
 
     if (!pendaftar) {
@@ -51,10 +57,13 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    // 5. Return data
+    // 5. Return data dengan field alias untuk kompatibilitas Profil.tsx
     return NextResponse.json({
       success: true,
-      data: pendaftar,
+      data: {
+        ...pendaftar,
+        status_proses: pendaftar.status_pendaftaran, // Alias untuk Profil.tsx
+      },
       isDummy: false,
     });
 
