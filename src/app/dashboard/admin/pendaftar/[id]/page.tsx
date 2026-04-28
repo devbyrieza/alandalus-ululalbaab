@@ -982,9 +982,17 @@ export default function PendaftarDetailPage() {
                 <div className="md:col-span-2">
                   <p className="text-xs text-stone-500 mb-1">Riwayat Penyakit</p>
                   <div className="p-3 bg-red-50 text-red-900 rounded-lg border border-red-100 min-h-[60px]">
-                    {pendaftar.hobi || "Tidak ada riwayat penyakit yang dilaporkan"}
+                    {pendaftar.kesehatan?.riwayat_penyakit || "Tidak ada riwayat penyakit yang dilaporkan"}
                   </div>
                 </div>
+                {pendaftar.kesehatan?.penyakit_kronis && (
+                  <div className="md:col-span-2">
+                    <p className="text-xs text-stone-500 mb-1">Penyakit Kronis</p>
+                    <div className="p-3 bg-orange-50 text-orange-900 rounded-lg border border-orange-100 min-h-[40px]">
+                      {pendaftar.kesehatan.penyakit_kronis}
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           )}
