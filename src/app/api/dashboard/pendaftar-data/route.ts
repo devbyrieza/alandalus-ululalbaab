@@ -36,18 +36,18 @@ export async function GET(request: NextRequest) {
     }
 
     // 4. Fetch data pendaftar dari database
-    // session.id adalah ID dari tabel profiles, bukan pendaftar
-    // Cari pendaftar berdasarkan user_id (FK ke profiles)
+    // session.id = pendaftar.id (login pendaftar pakai NIK + nomor_pendaftaran)
     const pendaftar = await prisma.pendaftar.findFirst({
       where: {
-        user_id: session.id,
+        id: session.id,
         deleted_at: null,
       },
       include: {
         orang_tua: true,
         dokumen: true,
+        kesehatan: true,
+        pembayaran: true,
       },
-      orderBy: { created_at: 'desc' }, // Ambil yang terbaru jika ada lebih dari 1
     });
 
     if (!pendaftar) {

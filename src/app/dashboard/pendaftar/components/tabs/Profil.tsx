@@ -22,15 +22,27 @@ interface ProfileData {
   jenjang: string;
   tempat_lahir: string | null;
   tanggal_lahir: string | null;
+  golongan_darah: string | null;
+  nisn: string | null;
+  anak_ke: number | null;
+  jumlah_saudara: number | null;
+  hobi: string | null;
+  cita_cita: string | null;
   no_hp: string | null;
   email: string | null;
   alamat: string | null;
+  rt: string | null;
+  rw: string | null;
   kelurahan: string | null;
   kecamatan: string | null;
   kabupaten: string | null;
   provinsi: string | null;
+  kode_pos: string | null;
   asal_sekolah: string | null;
+  alamat_sekolah: string | null;
+  tahun_lulus: number | null;
   status_proses: string;
+  status_pendaftaran: string;
   nomor_pendaftaran: string;
 }
 
@@ -161,11 +173,19 @@ export default function ProfilTab() {
               value={["L", "Laki-laki"].includes(profile.jenis_kelamin) ? "Laki-laki" : "Perempuan"}
             />
             <InfoItem label="Jenjang" value={profile.jenjang} />
+            <InfoItem label="NISN" value={profile.nisn} />
             <InfoItem label="Tempat Lahir" value={profile.tempat_lahir} />
             <InfoItem
               label="Tanggal Lahir"
               value={formatDate(profile.tanggal_lahir)}
             />
+            <InfoItem label="Golongan Darah" value={profile.golongan_darah} />
+            <InfoItem
+              label="Anak Ke"
+              value={profile.anak_ke != null ? `${profile.anak_ke} dari ${(profile.anak_ke + (profile.jumlah_saudara ?? 0))} bersaudara` : null}
+            />
+            <InfoItem label="Hobi" value={profile.hobi} />
+            <InfoItem label="Cita-Cita" value={profile.cita_cita} />
           </div>
         </div>
 
@@ -205,10 +225,15 @@ export default function ProfilTab() {
 
           <div className="space-y-3">
             <InfoItem label="Alamat Lengkap" value={profile.alamat} />
-            <InfoItem label="Kelurahan" value={profile.kelurahan} />
+            <InfoItem
+              label="RT/RW"
+              value={(profile.rt || profile.rw) ? `${profile.rt || '-'}/${profile.rw || '-'}` : null}
+            />
+            <InfoItem label="Kelurahan/Desa" value={profile.kelurahan} />
             <InfoItem label="Kecamatan" value={profile.kecamatan} />
             <InfoItem label="Kabupaten/Kota" value={profile.kabupaten} />
             <InfoItem label="Provinsi" value={profile.provinsi} />
+            <InfoItem label="Kode Pos" value={profile.kode_pos} />
           </div>
         </div>
 
@@ -223,6 +248,11 @@ export default function ProfilTab() {
 
           <div className="space-y-3">
             <InfoItem label="Nama Sekolah" value={profile.asal_sekolah} />
+            <InfoItem label="Alamat Sekolah" value={profile.alamat_sekolah} />
+            <InfoItem
+              label="Tahun Lulus"
+              value={profile.tahun_lulus ? String(profile.tahun_lulus) : null}
+            />
           </div>
         </div>
       </div>
