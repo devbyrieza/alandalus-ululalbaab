@@ -120,6 +120,14 @@ interface PendaftarDetail {
     nilai_wawancara_ortu?: number;
     catatan_ortu?: string;
   } | null;
+  kesehatan: {
+    riwayat_penyakit: string | null;
+    penyakit_kronis: string | null;
+    golongan_darah?: string | null;
+    tinggi_badan?: number | null;
+    berat_badan?: number | null;
+  } | null;
+  status_pendaftaran?: string;
 }
 
 /* import { useSession } from "next-auth/react"; -- Removed */
