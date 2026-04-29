@@ -122,7 +122,7 @@ export function generatePrefix(jenjang: string, jenis_kelamin: string): string {
   } else if (jenjang === "IL") {
     prefix = "IL";
   } else if (jenjang === "SMA" || jenjang === "MA") {
-    prefix = "SM";
+    prefix = "MA";
   } else {
     throw new Error(`Jenjang tidak valid: ${jenjang}`);
   }
@@ -157,7 +157,7 @@ export function validateNomorPendaftaranFormat(
   if (nomorPendaftaran.length !== 10) return false;
 
   // Check format: Valid prefix + 2 digits + 5 digits
-  const regex = /^(MTA|MTI|ILA|ILI|SMA|SMI)\d{7}$/;
+  const regex = /^(MTA|MTI|ILA|ILI|MAA|MAI)\d{7}$/;
   return regex.test(nomorPendaftaran);
 }
 
@@ -191,7 +191,7 @@ export function parseNomorPendaftaran(nomorPendaftaran: string): {
     jenjang = "MTs";
   } else if (prefix.startsWith("IL")) {
     jenjang = "IL";
-  } else if (prefix.startsWith("SM")) {
+  } else if (prefix.startsWith("MA")) {
     jenjang = "SMA";
   }
 
@@ -329,8 +329,8 @@ export function getPrefixLabel(prefix: string): string {
     MTI: "MTs Putri (Perempuan)",
     ILA: "I'dad Lughowi Putra (Laki-laki)",
     ILI: "I'dad Lughowi Putri (Perempuan)",
-    SMA: "SMA Putra (Laki-laki)",
-    SMI: "SMA Putri (Perempuan)",
+    MAA: "SMA Putra (Laki-laki)",
+    MAI: "SMA Putri (Perempuan)",
   };
 
   return labels[prefix] || prefix;
