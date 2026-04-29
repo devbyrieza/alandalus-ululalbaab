@@ -847,10 +847,11 @@ export default function PendaftarDetailPage() {
                           setNewPhone(pendaftar.no_hp || "");
                           setEditingPhone(true);
                         }}
-                        className="opacity-0 group-hover:opacity-100 transition-opacity p-1.5 text-brand-blue-400 hover:text-brand-blue-600 hover:bg-brand-blue-50 rounded-lg"
+                        className="p-1.5 text-brand-blue-500 hover:text-brand-blue-700 bg-brand-blue-50 hover:bg-brand-blue-100 rounded-lg transition-colors flex items-center gap-1"
                         title="Edit Nomor HP"
                       >
                         <Edit className="w-3.5 h-3.5" />
+                        <span className="text-[10px] font-bold">Edit</span>
                       </button>
                     )}
                   </div>
