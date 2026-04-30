@@ -814,6 +814,9 @@ export function buildMessageHasilTes(nama: string): string {
  🔗 *Dashboard & Unduh Surat:*
  ${process.env.NEXT_PUBLIC_APP_URL || DEFAULT_APP_URL}/dashboard/pendaftar/pengumuman
  
+ *Informasi Daftar Ulang:*
+ Pembayaran minimal 50% paling lambat sepekan setelah pengumuman. Keringanan hubungi Finance: 0812-2063-6945.
+ 
  Jazakumullahu khairan.
  Panitia PPDB Al Andalus Ulul Albaab`;
 }
