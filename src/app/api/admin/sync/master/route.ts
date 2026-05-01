@@ -74,6 +74,26 @@ export async function POST(request: NextRequest) {
       return String(name).toLowerCase().replace(/[^a-z0-9]/g, "").trim();
     };
 
+    const protectedNames = [
+      "rumaisha hanin hanifa",
+      "iklimah mardhatillah",
+      "nahla ajwa nursyifa",
+      "hudzaifah al fawwaz"
+    ].map(n => normalize(n));
+
+    // PHASE 0: RESTORE PROTECTED STUDENTS
+    await prisma.pendaftar.updateMany({
+      where: {
+        OR: [
+          { nama_lengkap: { contains: "Rumaisha", mode: "insensitive" } },
+          { nama_lengkap: { contains: "Iklimah", mode: "insensitive" } },
+          { nama_lengkap: { contains: "Nahla", mode: "insensitive" } },
+          { nama_lengkap: { contains: "Hudzaifah", mode: "insensitive" } }
+        ]
+      },
+      data: { deleted_at: null }
+    });
+
     // 3. Fetch all current students for matching
     const currentStudents = await prisma.pendaftar.findMany({
       where: { tahun_ajaran_id: activeTA.id, deleted_at: null },
@@ -81,12 +101,6 @@ export async function POST(request: NextRequest) {
     });
 
     const updatedIds = new Set<string>();
-    const protectedNames = [
-      "rumaisha hanin hanifa",
-      "iklimah mardhatillah",
-      "nahla ajwa nursyifa",
-      "hudzaifah al fawwaz"
-    ];
 
     // 4. Process Rows
     for (const row of dataRows) {
@@ -152,11 +166,9 @@ export async function POST(request: NextRequest) {
       });
 
       // SYNC PAYMENTS
-      // 1. Registration Payment
       const existingPayReg = await prisma.pembayaran.findFirst({
         where: { pendaftar_id: studentId, jenis_pembayaran: JenisPembayaran.PENDAFTARAN }
       });
-
       if (existingPayReg) {
         await prisma.pembayaran.update({
           where: { id: existingPayReg.id },
@@ -177,7 +189,6 @@ export async function POST(request: NextRequest) {
         });
       }
 
-      // 2. Re-enrollment Payment
       if (statusBayar.includes("lunas") || statusBayar.includes("gratis")) {
         const nominal1 = parseFloat(String(row[colIdx.nominal1] || "0").replace(/[^0-9]/g, "")) || 0;
         const nominal2 = parseFloat(String(row[colIdx.nominal2] || "0").replace(/[^0-9]/g, "")) || 0;
@@ -186,15 +197,10 @@ export async function POST(request: NextRequest) {
         const existingPayDU = await prisma.pembayaran.findFirst({
           where: { pendaftar_id: studentId, jenis_pembayaran: JenisPembayaran.DAFTAR_ULANG }
         });
-
         if (existingPayDU) {
           await prisma.pembayaran.update({
             where: { id: existingPayDU.id },
-            data: { 
-              status_pembayaran: "verified", 
-              jumlah: total || undefined,
-              verified_at: new Date() 
-            }
+            data: { status_pembayaran: "verified", jumlah: total || undefined, verified_at: new Date() }
           });
         } else {
           await prisma.pembayaran.create({
@@ -216,7 +222,8 @@ export async function POST(request: NextRequest) {
 
     // 5. Cleanup
     const toDelete = currentStudents.filter(s => {
-      const isProtected = protectedNames.includes(normalize(s.nama_lengkap));
+      const normalizedName = normalize(s.nama_lengkap);
+      const isProtected = protectedNames.includes(normalizedName);
       return !updatedIds.has(s.id) && !isProtected;
     });
 
