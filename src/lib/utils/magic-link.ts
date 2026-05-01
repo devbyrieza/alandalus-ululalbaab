@@ -3,6 +3,9 @@ import { createHmac } from "crypto";
 const MAGIC_LINK_SECRET =
     process.env.MAGIC_LINK_SECRET || "fallback-secret-for-dev";
 
+// Fixed expiration for "permanent" links (Year 2099) to ensure token doesn't change
+export const PERMANENT_EXPIRATION = 4070908800000; 
+
 // Token Structure: base64(payload).signature
 // payload: { id: string, role: string, full_name: string, exp: number }
 
@@ -13,7 +16,11 @@ export function generateMagicToken(
     expiresInHours = 24,
     redirect?: string
 ): string {
-    const exp = Date.now() + expiresInHours * 60 * 60 * 1000;
+    // If expiresInHours is -1, use the fixed PERMANENT_EXPIRATION
+    const exp = expiresInHours === -1 
+        ? PERMANENT_EXPIRATION 
+        : Date.now() + expiresInHours * 60 * 60 * 1000;
+
     const payload = { id: profileId, role, full_name: fullName, exp, redirect };
 
     // Convert payload to base64
@@ -107,11 +114,16 @@ export function getSlugByName(fullName: string): string | null {
 
 // Manual tinyurls for specific examiners/interviewers (pointing to correct production URLs)
 export const MANUAL_TINYURLS: Record<string, string> = {
-    "Agus Cahyono": "https://tinyurl.com/ululalbaab-aguscahyono",
-    "Jusman": "https://tinyurl.com/ululalbaab-jusman",
-    "Muhammad Syauqi Al Faruq": "https://tinyurl.com/ululalbaab-syauqialfaruq",
-    "Maulidin Bachtiar": "https://tinyurl.com/ululalbaab-maulidinbachtiar",
-    "Halimah Fauziah": "https://tinyurl.com/ululalbaab-halimahfauziah"
+    "Agus Cahyono": "https://tinyurl.com/alandalus-ululalbaab-agus",
+    "Jusman": "https://tinyurl.com/alandalus-ululalbaab-jusman",
+    "Fuad Khomsatun": "https://tinyurl.com/alandalus-ululalbaab-fuad",
+    "Andi Fatimah Azzahra Rahman": "https://tinyurl.com/alandalus-ululalbaab-fatimah",
+    "Muhammad Syauqi Al Faruq": "https://tinyurl.com/alandalus-ululalbaab-syauqi",
+    "Muhajir": "https://tinyurl.com/alandalus-ululalbaab-muhajir",
+    "Rima Maryani Putri Utami": "https://tinyurl.com/alandalus-ululalbaab-rima",
+    "Halimah Fauziah": "https://tinyurl.com/alandalus-ululalbaab-halimah",
+    "Maulidin Bachtiar": "https://tinyurl.com/alandalus-ululalbaab-bachtiar",
+    "Muhammad Adib Achsan": "https://tinyurl.com/alandalus-ululalbaab-adib"
 };
 
 /**
