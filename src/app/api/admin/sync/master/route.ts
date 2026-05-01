@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import * as XLSX from "xlsx";
 import { cookies } from "next/headers";
+import { JenisPembayaran, TipeCicilan } from "@prisma/client";
 
 async function checkAdmin() {
   const cookieStore = await cookies();
@@ -29,113 +30,208 @@ export async function POST(request: NextRequest) {
     const workbook = XLSX.read(buffer, { type: "buffer" });
     const sheet = workbook.Sheets[workbook.SheetNames[0]];
     
-    // Read raw data to find headers
+    // Read raw data
     const rawData = XLSX.utils.sheet_to_json(sheet, { header: 1 }) as any[][];
     
-    // Find header row (the one containing "Nama" or similar)
+    // Find header row
     let headerRowIndex = -1;
     for (let i = 0; i < Math.min(rawData.length, 10); i++) {
-      if (rawData[i].some(cell => String(cell).toLowerCase().includes("nama santri") || String(cell).toLowerCase().includes("nama lengkap"))) {
+      if (rawData[i].some(cell => {
+        const c = String(cell).toLowerCase();
+        return c.includes("nama santri") || c.includes("nama lengkap") || c.includes("no pendaftaran");
+      })) {
         headerRowIndex = i;
         break;
       }
     }
 
     if (headerRowIndex === -1) {
-      return NextResponse.json({ error: "Could not find 'Nama Santri' column in Excel" }, { status: 400 });
+      return NextResponse.json({ error: "Could not find header row in Excel" }, { status: 400 });
     }
 
     const headers = rawData[headerRowIndex].map(h => String(h).trim());
     const dataRows = rawData.slice(headerRowIndex + 1);
 
     const colIdx = {
-      nama: headers.findIndex(h => h.toLowerCase().includes("nama santri") || h.toLowerCase().includes("nama lengkap")),
-      status: headers.findIndex(h => h.toLowerCase().includes("hasil tes") || h.toLowerCase().includes("status penerimaan")),
-      bayar: headers.findIndex(h => h.toLowerCase().includes("status pembayaran") || h.toLowerCase().includes("lunas"))
+      no: headers.findIndex(h => h.toLowerCase().includes("no") && (h.toLowerCase().includes("pendaftaran") || h.toLowerCase().includes("reg"))),
+      nama: headers.findIndex(h => h.toLowerCase().includes("nama")),
+      gender: headers.findIndex(h => h.toLowerCase() === "l/p" || h.toLowerCase().includes("kelamin")),
+      jenjang: headers.findIndex(h => h.toLowerCase().includes("jenjang")),
+      hasil: headers.findIndex(h => h.toLowerCase().includes("hasil") || h.toLowerCase().includes("status penerimaan")),
+      status_bayar: headers.findIndex(h => h.toLowerCase().includes("status") && (h.toLowerCase().includes("pembayaran") || h.toLowerCase().includes("lunas"))),
+      nominal1: headers.findIndex(h => h.toLowerCase().includes("nominal 1")),
+      nominal2: headers.findIndex(h => h.toLowerCase().includes("nominal 2"))
     };
 
     // 1. Get Active TA
     const activeTA = await prisma.tahunAjaran.findFirst({ where: { is_active: true } });
     if (!activeTA) return NextResponse.json({ error: "No active TA" }, { status: 404 });
 
-    const results = { updated: 0, notFound: 0, details: [] as string[] };
+    const results = { created: 0, updated: 0, skipped: 0, details: [] as string[] };
 
     const normalize = (name: string) => {
       if (!name) return "";
       return String(name).toLowerCase().replace(/[^a-z0-9]/g, "").trim();
     };
 
-    // 3. Fetch all active students
-    const students = await prisma.pendaftar.findMany({
+    // 3. Fetch all current students for matching
+    const currentStudents = await prisma.pendaftar.findMany({
       where: { tahun_ajaran_id: activeTA.id, deleted_at: null },
-      select: { id: true, nama_lengkap: true }
-    });
-
-    const studentMap = new Map();
-    students.forEach(s => {
-      studentMap.set(normalize(s.nama_lengkap), s.id);
+      select: { id: true, nomor_pendaftaran: true, nama_lengkap: true }
     });
 
     const updatedIds = new Set<string>();
+    const protectedNames = [
+      "rumaisha hanin hanifa",
+      "iklimah mardhatillah",
+      "nahla ajwa nursyifa",
+      "hudzaifah al fawwaz"
+    ];
 
     // 4. Process Rows
     for (const row of dataRows) {
-      const rawName = row[colIdx.nama];
-      if (!rawName) continue;
+      const rawNo = String(row[colIdx.no] || "").trim();
+      const rawName = String(row[colIdx.nama] || "").trim();
+      
+      if (!rawName && !rawNo) continue;
 
-      const normName = normalize(rawName);
-      let studentId = studentMap.get(normName);
+      let student = currentStudents.find(s => 
+        (rawNo && s.nomor_pendaftaran === rawNo) || 
+        (rawName && normalize(s.nama_lengkap) === normalize(rawName))
+      );
 
-      // Fallback: Try partial match if not found exactly
+      let studentId = student?.id;
+
       if (!studentId) {
-        const bestMatch = students.find(s => {
-          const dbNorm = normalize(s.nama_lengkap);
-          return dbNorm.includes(normName) || normName.includes(dbNorm);
+        // CREATE NEW STUDENT
+        const jenjangRaw = String(row[colIdx.jenjang] || "MTS").toUpperCase();
+        const jenjang = jenjangRaw.includes("SMA") ? "SMA" : (jenjangRaw.includes("IL") ? "IL" : "MTS");
+        const jkRaw = String(row[colIdx.gender] || "").toUpperCase();
+        const jenis_kelamin = jkRaw.includes("P") ? "Perempuan" : "Laki-laki";
+        
+        // Generate nomor pendaftaran if missing
+        const finalNo = rawNo || `${jenjang}${Date.now().toString().slice(-6)}`;
+
+        const newStudent = await prisma.pendaftar.create({
+          data: {
+            tahun_ajaran_id: activeTA.id,
+            nomor_pendaftaran: finalNo,
+            nama_lengkap: rawName,
+            nik: `32${Math.floor(Math.random() * 10000000000000).toString().padStart(14, '0')}`, // Dummy NIK
+            jenis_kelamin,
+            jenjang,
+            status_pendaftaran: "draft"
+          }
         });
-        if (bestMatch) studentId = bestMatch.id;
+        studentId = newStudent.id;
+        results.created++;
+      } else {
+        results.updated++;
       }
 
-      if (studentId) {
-        let newStatus = "draft";
-        const statusPenerimaan = String(row[colIdx.status] || "").toLowerCase();
-        const statusLunas = String(row[colIdx.bayar] || "").toLowerCase();
+      updatedIds.add(studentId!);
 
-        if (statusLunas.includes("lunas") || statusLunas.includes("gratis")) {
-          newStatus = "enrolled";
-        } else if (statusPenerimaan.includes("diterima")) {
-          newStatus = "accepted";
-        } else if (statusPenerimaan.includes("cadangan")) {
-          newStatus = "announced";
+      // Sync Status & Payments
+      const hasil = String(row[colIdx.hasil] || "").toLowerCase();
+      const statusBayar = String(row[colIdx.status_bayar] || "").toLowerCase();
+      
+      let newStatus = "draft";
+      if (statusBayar.includes("lunas") || statusBayar.includes("gratis")) {
+        newStatus = "enrolled";
+      } else if (hasil.includes("diterima")) {
+        newStatus = "accepted";
+      } else if (hasil.includes("cadangan")) {
+        newStatus = "announced";
+      } else if (hasil.includes("ditolak")) {
+        newStatus = "rejected";
+      }
+
+      await prisma.pendaftar.update({
+        where: { id: studentId },
+        data: { status_pendaftaran: newStatus }
+      });
+
+      // SYNC PAYMENTS
+      // 1. Registration Payment (Always verified if in master list)
+      await prisma.pembayaran.upsert({
+        where: {
+          id: (await prisma.pembayaran.findFirst({
+            where: { pendaftar_id: studentId, jenis_pembayaran: JenisPembayaran.PENDAFTARAN }
+          }))?.id || "dummy-id-for-upsert"
+        },
+        create: {
+          pendaftar_id: studentId!,
+          tahun_ajaran_id: activeTA.id,
+          metode_pembayaran: "manual",
+          jumlah: activeTA.biaya_pendaftaran,
+          status_pembayaran: "verified",
+          jenis_pembayaran: JenisPembayaran.PENDAFTARAN,
+          verified_at: new Date(),
+          catatan_verifikasi: "Synced from Master Excel"
+        },
+        update: {
+          status_pembayaran: "verified",
+          verified_at: new Date()
         }
+      });
 
-        await prisma.pendaftar.update({
-          where: { id: studentId },
-          data: { status_pendaftaran: newStatus }
+      // 2. Re-enrollment Payment
+      if (statusBayar.includes("lunas") || statusBayar.includes("gratis")) {
+        const nominal1 = parseFloat(String(row[colIdx.nominal1] || "0").replace(/[^0-9]/g, "")) || 0;
+        const nominal2 = parseFloat(String(row[colIdx.nominal2] || "0").replace(/[^0-9]/g, "")) || 0;
+        const total = nominal1 + nominal2;
+
+        await prisma.pembayaran.upsert({
+          where: {
+            id: (await prisma.pembayaran.findFirst({
+              where: { pendaftar_id: studentId, jenis_pembayaran: JenisPembayaran.DAFTAR_ULANG }
+            }))?.id || "dummy-id-for-upsert"
+          },
+          create: {
+            pendaftar_id: studentId!,
+            tahun_ajaran_id: activeTA.id,
+            metode_pembayaran: "manual",
+            jumlah: total || 9800000, // Default if not found
+            status_pembayaran: "verified",
+            jenis_pembayaran: JenisPembayaran.DAFTAR_ULANG,
+            tipe_cicilan: TipeCicilan.LUNAS,
+            verified_at: new Date(),
+            catatan_verifikasi: "Synced from Master Excel (Lunas/Gratis)"
+          },
+          update: {
+            status_pembayaran: "verified",
+            jumlah: total || undefined,
+            verified_at: new Date()
+          }
         });
-        results.updated++;
-        updatedIds.add(studentId);
-      } else {
-        results.notFound++;
-        results.details.push(`Not Found: ${rawName}`);
       }
     }
 
-    // 5. Cleanup (ONLY if we found at least 50% of the students, to be safe)
-    let cleanedCount = 0;
-    if (results.updated > dataRows.length * 0.5) {
-      const toDelete = students.filter(s => !updatedIds.has(s.id));
-      for (const s of toDelete) {
-        await prisma.pendaftar.update({ where: { id: s.id }, data: { deleted_at: new Date() } });
-      }
-      cleanedCount = toDelete.length;
+    // 5. Cleanup (Carefully)
+    // Only delete students who are NOT in Excel AND NOT in protected list
+    const toDelete = currentStudents.filter(s => {
+      const isProtected = protectedNames.includes(normalize(s.nama_lengkap));
+      return !updatedIds.has(s.id) && !isProtected;
+    });
+
+    for (const s of toDelete) {
+      await prisma.pendaftar.update({
+        where: { id: s.id },
+        data: { deleted_at: new Date() }
+      });
     }
 
     return NextResponse.json({
       message: "Sync complete",
-      results: { ...results, cleaned: cleanedCount }
+      results: { 
+        ...results, 
+        cleaned: toDelete.length,
+        total_in_db: await prisma.pendaftar.count({ where: { tahun_ajaran_id: activeTA.id, deleted_at: null } })
+      }
     });
 
   } catch (error: any) {
+    console.error("Sync Error:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
