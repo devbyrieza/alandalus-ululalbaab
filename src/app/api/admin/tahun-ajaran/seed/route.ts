@@ -78,13 +78,30 @@ export async function POST() {
         });
 
         // NEW: Fix existing payments that are 200000 for PENDAFTARAN
-        console.log(`[SEED] Updating existing PENDAFTARAN payments from 200000 to 250000`);
+        console.log(`[SEED] Updating existing PENDAFTARAN payments to 250000`);
         await tx.pembayaran.updateMany({
           where: { 
             jenis_pembayaran: 'PENDAFTARAN',
-            jumlah: 200000
+            jumlah: { lte: 200000 }
           },
           data: { 
+            jumlah: 250000,
+            total_tagihan: 250000
+          }
+        });
+
+        // SPECIFIC FIX: Rumaisha Hanin Hanifa
+        await tx.pembayaran.updateMany({
+          where: {
+            pendaftar: {
+              nama_lengkap: {
+                contains: 'Rumaisha Hanin Hanifa',
+                mode: 'insensitive'
+              }
+            },
+            jenis_pembayaran: 'PENDAFTARAN'
+          },
+          data: {
             jumlah: 250000,
             total_tagihan: 250000
           }
@@ -129,13 +146,30 @@ export async function POST() {
       await tx.reservasiPSB.updateMany({ data: { tahun_ajaran_id: newTA.id } });
 
       // NEW: Fix existing payments that are 200000 for PENDAFTARAN
-      console.log(`[SEED] Updating existing PENDAFTARAN payments from 200000 to 250000`);
+      console.log(`[SEED] Updating existing PENDAFTARAN payments to 250000`);
       await tx.pembayaran.updateMany({
         where: { 
           jenis_pembayaran: 'PENDAFTARAN',
-          jumlah: 200000
+          jumlah: { lte: 200000 }
         },
         data: { 
+          jumlah: 250000,
+          total_tagihan: 250000
+        }
+      });
+
+      // SPECIFIC FIX: Rumaisha Hanin Hanifa
+      await tx.pembayaran.updateMany({
+        where: {
+          pendaftar: {
+            nama_lengkap: {
+              contains: 'Rumaisha Hanin Hanifa',
+              mode: 'insensitive'
+            }
+          },
+          jenis_pembayaran: 'PENDAFTARAN'
+        },
+        data: {
           jumlah: 250000,
           total_tagihan: 250000
         }
@@ -203,9 +237,28 @@ export async function GET() {
     const updateCount = await prisma.pembayaran.updateMany({
       where: { 
         jenis_pembayaran: 'PENDAFTARAN',
-        jumlah: 200000
+        jumlah: {
+          lte: 200000 // Fix anything 200k or less just in case
+        }
       },
       data: { 
+        jumlah: 250000,
+        total_tagihan: 250000
+      }
+    });
+
+    // SPECIFIC FIX: Rumaisha Hanin Hanifa
+    await prisma.pembayaran.updateMany({
+      where: {
+        pendaftar: {
+          nama_lengkap: {
+            contains: 'Rumaisha Hanin Hanifa',
+            mode: 'insensitive'
+          }
+        },
+        jenis_pembayaran: 'PENDAFTARAN'
+      },
+      data: {
         jumlah: 250000,
         total_tagihan: 250000
       }
