@@ -152,28 +152,30 @@ export async function POST(request: NextRequest) {
       });
 
       // SYNC PAYMENTS
-      // 1. Registration Payment (Always verified if in master list)
-      await prisma.pembayaran.upsert({
-        where: {
-          id: (await prisma.pembayaran.findFirst({
-            where: { pendaftar_id: studentId, jenis_pembayaran: JenisPembayaran.PENDAFTARAN }
-          }))?.id || "dummy-id-for-upsert"
-        },
-        create: {
-          pendaftar_id: studentId!,
-          tahun_ajaran_id: activeTA.id,
-          metode_pembayaran: "manual",
-          jumlah: activeTA.biaya_pendaftaran,
-          status_pembayaran: "verified",
-          jenis_pembayaran: JenisPembayaran.PENDAFTARAN,
-          verified_at: new Date(),
-          catatan_verifikasi: "Synced from Master Excel"
-        },
-        update: {
-          status_pembayaran: "verified",
-          verified_at: new Date()
-        }
+      // 1. Registration Payment
+      const existingPayReg = await prisma.pembayaran.findFirst({
+        where: { pendaftar_id: studentId, jenis_pembayaran: JenisPembayaran.PENDAFTARAN }
       });
+
+      if (existingPayReg) {
+        await prisma.pembayaran.update({
+          where: { id: existingPayReg.id },
+          data: { status_pembayaran: "verified", verified_at: new Date() }
+        });
+      } else {
+        await prisma.pembayaran.create({
+          data: {
+            pendaftar_id: studentId!,
+            tahun_ajaran_id: activeTA.id,
+            metode_pembayaran: "manual",
+            jumlah: activeTA.biaya_pendaftaran,
+            status_pembayaran: "verified",
+            jenis_pembayaran: JenisPembayaran.PENDAFTARAN,
+            verified_at: new Date(),
+            catatan_verifikasi: "Synced from Master Excel"
+          }
+        });
+      }
 
       // 2. Re-enrollment Payment
       if (statusBayar.includes("lunas") || statusBayar.includes("gratis")) {
@@ -181,34 +183,38 @@ export async function POST(request: NextRequest) {
         const nominal2 = parseFloat(String(row[colIdx.nominal2] || "0").replace(/[^0-9]/g, "")) || 0;
         const total = nominal1 + nominal2;
 
-        await prisma.pembayaran.upsert({
-          where: {
-            id: (await prisma.pembayaran.findFirst({
-              where: { pendaftar_id: studentId, jenis_pembayaran: JenisPembayaran.DAFTAR_ULANG }
-            }))?.id || "dummy-id-for-upsert"
-          },
-          create: {
-            pendaftar_id: studentId!,
-            tahun_ajaran_id: activeTA.id,
-            metode_pembayaran: "manual",
-            jumlah: total || 9800000, // Default if not found
-            status_pembayaran: "verified",
-            jenis_pembayaran: JenisPembayaran.DAFTAR_ULANG,
-            tipe_cicilan: TipeCicilan.LUNAS,
-            verified_at: new Date(),
-            catatan_verifikasi: "Synced from Master Excel (Lunas/Gratis)"
-          },
-          update: {
-            status_pembayaran: "verified",
-            jumlah: total || undefined,
-            verified_at: new Date()
-          }
+        const existingPayDU = await prisma.pembayaran.findFirst({
+          where: { pendaftar_id: studentId, jenis_pembayaran: JenisPembayaran.DAFTAR_ULANG }
         });
+
+        if (existingPayDU) {
+          await prisma.pembayaran.update({
+            where: { id: existingPayDU.id },
+            data: { 
+              status_pembayaran: "verified", 
+              jumlah: total || undefined,
+              verified_at: new Date() 
+            }
+          });
+        } else {
+          await prisma.pembayaran.create({
+            data: {
+              pendaftar_id: studentId!,
+              tahun_ajaran_id: activeTA.id,
+              metode_pembayaran: "manual",
+              jumlah: total || 9800000,
+              status_pembayaran: "verified",
+              jenis_pembayaran: JenisPembayaran.DAFTAR_ULANG,
+              tipe_cicilan: TipeCicilan.LUNAS,
+              verified_at: new Date(),
+              catatan_verifikasi: "Synced from Master Excel (Lunas/Gratis)"
+            }
+          });
+        }
       }
     }
 
-    // 5. Cleanup (Carefully)
-    // Only delete students who are NOT in Excel AND NOT in protected list
+    // 5. Cleanup
     const toDelete = currentStudents.filter(s => {
       const isProtected = protectedNames.includes(normalize(s.nama_lengkap));
       return !updatedIds.has(s.id) && !isProtected;
