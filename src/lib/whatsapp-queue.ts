@@ -576,7 +576,7 @@ Kode ini berlaku selama *5 menit*.
 
 ⚠️ *PENTING:*
 • Jangan berikan kode ini kepada siapapun
-• Tim Al-Andalus Al-Imam tidak akan pernah meminta kode OTP Anda
+• Tim Al-Andalus Ulul-Albaab tidak akan pernah meminta kode OTP Anda
 
 Jazakumullahu khairan
 ---
@@ -597,20 +597,20 @@ export function buildMessageRegistrationSuccess(
 
 Assalamu'alaikum *${nama}*,
 
-Alhamdulillah, pendaftaran Anda di Pesantren Al-Andalus Al-Imam telah berhasil!
+Alhamdulillah, pendaftaran Anda di Pesantren Al-Andalus Ulul-Albaab telah berhasil!
 
 📋 *Detail Pendaftaran:*
 • Nomor Pendaftaran: ${nomor_pendaftaran}
 • Jenjang: ${jenjangStr}
 
 📝 *Langkah Selanjutnya:*
-1. Login ke dashboard: https://pesantren-alimam.com/dashboard/pendaftar
+1. Login ke dashboard: https://ppdb.alandalus-ululalbaab.com/dashboard/pendaftar
    *(Gunakan Nomor Pendaftaran & NIK untuk Login)*
 2. Lakukan Pembayaran Pendaftaran (Transfer)
 3. Lengkapi biodata & upload dokumen (setelah pembayaran diverifikasi)
 
 💡 *Butuh Bantuan?*
-Hubungi kami di 0851-1152-4441
+Hubungi kami di 0812-2063-6945
 
 Jazakumullahu khairan
 ---
