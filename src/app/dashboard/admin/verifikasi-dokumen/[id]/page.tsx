@@ -108,8 +108,11 @@ export default function VerifikasiDokumenDetailPage() {
             }
 
             // Process uploaded documents
+            // Process uploaded documents
             const docsData = result.data || [];
-            const allDocs = docsData.map((d: any) => {
+            const uploadedTypes = new Set(docsData.map((d: any) => d.jenis_dokumen));
+            
+            const processedDocs = docsData.map((d: any) => {
                 let label = d.jenis_dokumen;
                 switch (d.jenis_dokumen) {
                     case 'foto_setengah_badan': label = "Foto Setengah Badan"; break;
@@ -139,8 +142,46 @@ export default function VerifikasiDokumenDetailPage() {
                 };
             });
 
+            // Add placeholders for missing required documents
+            const REQUIRED_RAW_TYPES = [
+                'foto_setengah_badan', 'kartu_keluarga', 'akta_kelahiran', 
+                'rapor_sem1', 'rapor_sem2', 'nisn', 'surat_kesehatan', 
+                'pakta_integritas', 'pernyataan_bebas_negatif'
+            ];
+
+            REQUIRED_RAW_TYPES.forEach(rawType => {
+                if (!uploadedTypes.has(rawType)) {
+                    let label = rawType;
+                    switch (rawType) {
+                        case 'foto_setengah_badan': label = "Foto Setengah Badan"; break;
+                        case 'kartu_keluarga': label = "Scan Kartu Keluarga"; break;
+                        case 'akta_kelahiran': label = "Scan Akte Kelahiran"; break;
+                        case 'rapor_sem1': label = "Scan Rapor 2 Semester Terakhir (1)"; break;
+                        case 'rapor_sem2': label = "Scan Rapor 2 Semester Terakhir (2)"; break;
+                        case 'nisn': label = "Scan NISN"; break;
+                        case 'surat_kesehatan': label = "Surat Keterangan Sehat"; break;
+                        case 'pakta_integritas': label = "Scan Pakta Integritas"; break;
+                        case 'pernyataan_bebas_negatif': label = "Scan Pernyataan Bebas Perilaku Negatif"; break;
+                    }
+
+                    processedDocs.push({
+                        id: `placeholder-${rawType}`,
+                        jenis_dokumen: label,
+                        raw_jenis: rawType,
+                        status_verifikasi: "empty",
+                        is_verified: false,
+                        catatan: null,
+                        file_url: null,
+                        file_type: null,
+                        created_at: new Date().toISOString(),
+                        updated_at: new Date().toISOString(),
+                        pendaftar_id: id,
+                    });
+                }
+            });
+
             // Sort documents based on JENIS_DOKUMEN_ORDER
-            allDocs.sort((a: any, b: any) => {
+            processedDocs.sort((a: any, b: any) => {
                 const aIndex = JENIS_DOKUMEN_ORDER.indexOf(a.jenis_dokumen);
                 const bIndex = JENIS_DOKUMEN_ORDER.indexOf(b.jenis_dokumen);
                 if (aIndex === -1 && bIndex === -1) return a.jenis_dokumen.localeCompare(b.jenis_dokumen);
@@ -149,7 +190,7 @@ export default function VerifikasiDokumenDetailPage() {
                 return aIndex - bIndex;
             });
 
-            setDokumenList(allDocs);
+            setDokumenList(processedDocs);
             } catch (error) {
             console.error("Error fetching data:", error);
         } finally {
@@ -438,6 +479,11 @@ export default function VerifikasiDokumenDetailPage() {
                                     <div className="flex items-center gap-1 text-rose-600 bg-rose-50 px-2 py-1 rounded-lg text-[10px] font-black uppercase">
                                         <XCircle className="w-3 h-3" />
                                         Ditolak
+                                    </div>
+                                ) : dok.status_verifikasi === "empty" ? (
+                                    <div className="flex items-center gap-1 text-stone-400 bg-stone-50 px-2 py-1 rounded-lg text-[10px] font-black uppercase border border-stone-200 italic">
+                                        <Clock className="w-3 h-3" />
+                                        Belum Ada
                                     </div>
                                 ) : dok.status_verifikasi === "pending" ? (
                                     <div className="flex items-center gap-1 text-amber-600 bg-amber-50 px-2 py-1 rounded-lg text-[10px] font-black uppercase border border-amber-200">
