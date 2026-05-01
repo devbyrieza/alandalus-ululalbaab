@@ -9,17 +9,16 @@ import { getFileLocal } from "@/lib/storage/local";
  * URL format: /api/files/category/owner_id/filename
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export async function GET(request: NextRequest, props: { params: Promise<{ path: string[] }> }) {
+export async function GET(request: NextRequest, { params }: { params: Promise<{ path: string[] }> }) {
     try {
-        const params = await props.params;
-        const { path: pathSegments } = params; // Rename for clarity
+        const pathSegments = (await params).path;
 
         if (!pathSegments || pathSegments.length < 3) {
             return NextResponse.json({ error: "Invalid path" }, { status: 400 });
         }
 
         // Validate structure: category/ownerId/filename
-        const [category, ownerId] = pathSegments;
+        const [, ownerId] = pathSegments;
         // Construct path using segments directly for better cross-platform compatibility
         const relativePath = path.join(...pathSegments); 
 
@@ -60,7 +59,7 @@ export async function GET(request: NextRequest, props: { params: Promise<{ path:
 
         // 4. Return File
         // Using Response instead of NextResponse for cleaner binary handling in some environments
-        const response = new Response(fileData.buffer, {
+        const response = new Response(new Uint8Array(fileData.buffer), {
             headers: {
                 "Content-Type": fileData.mimeType,
                 "Content-Disposition": `inline; filename="${pathSegments[pathSegments.length - 1]}"`,
