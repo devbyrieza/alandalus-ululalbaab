@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState } from "react";
 import { HelpCircle, ChevronDown } from "lucide-react";
@@ -26,10 +26,6 @@ const FAQS = [
     {
         question: "Bagaimana sistem seleksi yang diterapkan?",
         answer: "Sistem seleksi meliputi tes lisan (tahfidz/bacaan Al-Qur'an), tes tertulis (pengetahuan dasar agama dan akademik), serta Wawancara Calsan dan orang tua.",
-    },
-    {
-        question: "Apakah tersedia program beasiswa?",
-        answer: "Ya, Al Andalus Ulul Albaab menyediakan program beasiswa bagi santri berprestasi (tahfidz 30 juz) dan santri dari keluarga yatim/piatu/dhuafa dengan syarat dan ketentuan yang berlaku.",
     },
 ] as const;
 
