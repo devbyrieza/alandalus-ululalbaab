@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { exportToExcel, exportToPDF } from "@/lib/utils/export";
+import Swal from "sweetalert2";
 
 interface Pembayaran {
   id: string;
@@ -55,6 +56,7 @@ export default function VerifikasiPembayaranPage() {
   const [processing, setProcessing] = useState(false);
   const [exporting, setExporting] = useState(false);
   const [uploadingProof, setUploadingProof] = useState<string | null>(null);
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const [activeTab, setActiveTab] = useState<"PENDAFTARAN" | "DAFTAR_ULANG">("PENDAFTARAN");
   const [tipeCicilanFilter, setTipeCicilanFilter] = useState<"ALL" | "LUNAS" | "CICILAN">("ALL");
   const [editTipeCicilan, setEditTipeCicilan] = useState("LUNAS");
@@ -66,9 +68,11 @@ export default function VerifikasiPembayaranPage() {
     fetchPembayaran();
   }, [statusFilter, activeTab]);
 
-  const fetchPembayaran = async () => {
+  const fetchPembayaran = async (silent = false) => {
     try {
-      setLoading(true);
+      if (!silent) setLoading(true);
+      else setIsRefreshing(true);
+      
       const response = await fetch(
         `/api/admin/verifikasi/pembayaran?status=${statusFilter}&jenis=${activeTab}`
       );
@@ -80,6 +84,7 @@ export default function VerifikasiPembayaranPage() {
       console.error("Error fetching pembayaran:", error);
     } finally {
       setLoading(false);
+      setIsRefreshing(false);
     }
   };
 
@@ -126,7 +131,7 @@ export default function VerifikasiPembayaranPage() {
       }
     } catch (error) {
       console.error("Error exporting:", error);
-      alert("Gagal export data");
+      Swal.fire("Gagal!", "Gagal export data", "error");
     } finally {
       setExporting(false);
     }
@@ -153,13 +158,21 @@ export default function VerifikasiPembayaranPage() {
 
       if (!response.ok) throw new Error("Failed to verify");
 
-      await fetchPembayaran();
+      Swal.fire({
+        title: 'Berhasil!',
+        text: `Pembayaran berhasil ${status === 'verified' ? 'diverifikasi' : 'ditolak'}.`,
+        icon: 'success',
+        timer: 2000,
+        showConfirmButton: false
+      });
+
+      await fetchPembayaran(true); // Silent refresh
       setShowModal(false);
       setSelectedPembayaran(null);
       setCatatan("");
     } catch (error) {
       console.error("Error verifying pembayaran:", error);
-      alert("Gagal memverifikasi pembayaran");
+      Swal.fire("Gagal!", "Gagal memverifikasi pembayaran", "error");
     } finally {
       setProcessing(false);
     }
@@ -190,15 +203,20 @@ export default function VerifikasiPembayaranPage() {
       const data = await response.json();
 
       if (data.success) {
-        alert("Bukti pembayaran berhasil diganti dan otomatis diverifikasi");
-        fetchPembayaran(); // Refresh the list
+        Swal.fire({
+          title: "Berhasil!",
+          text: "Bukti pembayaran berhasil diganti dan otomatis diverifikasi",
+          icon: "success",
+          confirmButtonColor: "#1e40af"
+        });
+        fetchPembayaran(true); // Silent refresh
         setShowModal(false); // Close modal
       } else {
-        alert(data.error || "Gagal mengunggah bukti pembayaran");
+        Swal.fire("Gagal!", data.error || "Gagal mengunggah bukti pembayaran", "error");
       }
     } catch (error) {
       console.error("Error replacing payment proof:", error);
-      alert("Terjadi kesalahan saat mengunggah");
+      Swal.fire("Error!", "Terjadi kesalahan saat mengunggah", "error");
     } finally {
       setUploadingProof(null);
       if (fileInputRef.current) fileInputRef.current.value = ""; // Reset input
@@ -315,10 +333,11 @@ export default function VerifikasiPembayaranPage() {
               <span className="hidden sm:inline">PDF</span>
             </button>
             <button
-              onClick={fetchPembayaran}
-              className="flex items-center gap-2 px-3 md:px-6 py-2.5 bg-white hover:bg-stone-50 border border-stone-200 text-stone-700 rounded-xl font-bold transition-all shadow-sm hover:shadow-md text-sm"
+              onClick={() => fetchPembayaran(true)}
+              disabled={isRefreshing}
+              className="flex items-center gap-2 px-3 md:px-6 py-2.5 bg-white hover:bg-stone-50 border border-stone-200 text-stone-700 rounded-xl font-bold transition-all shadow-sm hover:shadow-md text-sm disabled:opacity-50"
             >
-              <RefreshCw className="w-4 h-4" />
+              <RefreshCw className={`w-4 h-4 ${isRefreshing ? 'animate-spin' : ''}`} />
               <span className="hidden sm:inline">Refresh</span>
             </button>
           </div>
@@ -416,7 +435,16 @@ export default function VerifikasiPembayaranPage() {
             </p>
           </div>
         ) : (
-          <div className="divide-y divide-stone-100">
+          <div className="relative">
+            {isRefreshing && (
+              <div className="absolute inset-0 bg-white/60 backdrop-blur-[1px] z-10 flex items-center justify-center animate-in fade-in duration-300">
+                <div className="flex items-center gap-3 px-6 py-3 bg-white rounded-2xl shadow-xl border border-stone-100">
+                  <Loader2 className="w-5 h-5 animate-spin text-brand-blue-700" />
+                  <span className="text-sm font-bold text-stone-600 tracking-wide">Memperbarui data...</span>
+                </div>
+              </div>
+            )}
+            <div className="divide-y divide-stone-100">
             {filteredPembayaran.map((pay) => (
               <div
                 key={pay.id}

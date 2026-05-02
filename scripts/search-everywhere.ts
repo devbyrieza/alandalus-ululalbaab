@@ -3,7 +3,7 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function main() {
-    const targets = ['Raylan', 'Azzam', 'Sukari'];
+    const targets = ['Fakhira'];
 
     // Get all models
     const models = (prisma as any)._runtimeDataModel.models;

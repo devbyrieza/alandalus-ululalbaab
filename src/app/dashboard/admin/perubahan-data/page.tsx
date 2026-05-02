@@ -14,6 +14,7 @@ import {
     Eye
 } from "lucide-react";
 import Link from "next/link";
+import Swal from "sweetalert2";
 
 export default function PerubahanDataPage() {
     const [loading, setLoading] = useState(true);
@@ -55,11 +56,12 @@ export default function PerubahanDataPage() {
             const result = await res.json();
             if (result.success) {
                 fetchRequests();
+                Swal.fire("Berhasil!", "Permintaan berhasil diproses.", "success");
             } else {
-                alert(result.error || "Gagal memproses permintaan");
+                Swal.fire("Gagal!", result.error || "Gagal memproses permintaan", "error");
             }
         } catch (error) {
-            alert("Terjadi kesalahan koneksi");
+            Swal.fire("Error!", "Terjadi kesalahan koneksi", "error");
         } finally {
             setProcessing(null);
         }

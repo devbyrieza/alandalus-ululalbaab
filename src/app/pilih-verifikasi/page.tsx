@@ -14,6 +14,8 @@ import {
   Zap,
 } from "lucide-react";
 
+import Swal from "sweetalert2";
+
 // MODE DEMO - Set true untuk bypass OTP
 const DEMO_MODE = true;
 
@@ -101,7 +103,7 @@ function PilihVerifikasiContent() {
       router.push(`/daftar-sukses?${params.toString()}`);
     } catch (error: any) {
       setIsLoading(false);
-      alert(error.message || "Terjadi kesalahan");
+      Swal.fire("Gagal!", error.message || "Terjadi kesalahan", "error");
     }
   };
 

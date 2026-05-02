@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
+import Swal from "sweetalert2";
 import {
   Upload,
   FileText,
@@ -955,12 +956,12 @@ export default function KelengkapanBerkasTab() {
                     if (result.success) {
                       router.push("/dashboard/pendaftar/upload-berkas");
                     } else {
-                      alert(result.error || "Gagal melakukan konfirmasi");
+                      Swal.fire("Gagal!", result.error || "Gagal melakukan konfirmasi", "error");
                       setLoading(false);
                       setShowConfirmModal(false);
                     }
                   } catch (err) {
-                    alert("Terjadi kesalahan koneksi");
+                    Swal.fire("Error!", "Terjadi kesalahan koneksi", "error");
                     setLoading(false);
                     setShowConfirmModal(false);
                   }
