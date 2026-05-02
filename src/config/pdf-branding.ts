@@ -1,24 +1,23 @@
 /**
  * Single Source of Truth for Institutional PDF Branding
  * "Locked" specifications for headers, lines, and signatures.
- * PP Al Andalus Ulul Albaab
  */
 
 export const PDF_BRANDING = {
     // Institution Labels
     institution: {
         name: "PESANTREN AL ANDALUS ULUL ALBAAB",
-        subtitle: "Pesantren Ulul Albaab Managed by Andalus",
+        subtitle: "Islamic Boarding School Managed by Al-Andalus",
         committee: "PANITIA PENERIMAAN SANTRI BARU",
         academic_year: "2026-2027",
-        address: "Jl. Karamat No. 123, Gunungpuyuh, Kota Sukabumi, Jawa Barat 43123",
-        contact: "Website: https://ppdb.alandalus-ululalbaab.com | Email: info@alandalus-ululalbaab.com",
-        phones: "WhatsApp: 0813-7000-xxxx", // Base phone
+        address: "Jl. KH Mama Oyon Cihaur RT/RW 04/04, Cicantayan, Kabupaten Sukabumi, Jawa Barat 43155",
+        contact: "Website: https://ppdb.alandalus-ululalbaab.com | Email: alandalusululalbaab2@gmail.com",
+        phones: "WhatsApp: 0812-8530-0800", // Base phone
     },
 
     // Resource Paths
     assets: {
-        logo: "/images/kop-surat.png",
+        logo: "/images/logo.png",
         stamp: "/images/stempel-pesantren.jpg",
         signature: "/images/ttd-mudir.png",
     },
@@ -46,7 +45,7 @@ export const PDF_BRANDING = {
 
     // Official Mudir / Authority
     authority: {
-        name: "Mudir PP Al Andalus Ulul Albaab",
+        name: "M. Abdul Aziz, S.Pd.I",
         role: "Mudir",
         city: "Sukabumi"
     }

@@ -72,6 +72,7 @@ export async function GET(request: Request) {
     const total_pendaftar = pendaftarData.length;
     const statusCounts: Record<string, number> = {};
     const jenjangCounts: Record<string, any> = {};
+    const provinsiCounts: Record<string, number> = {};
     const genderCounts: Record<string, number> = { "Laki-laki": 0, "Perempuan": 0, "Belum Diisi": 0 };
 
     pendaftarData.forEach(p => {
@@ -79,12 +80,12 @@ export async function GET(request: Request) {
       statusCounts[status] = (statusCounts[status] || 0) + 1;
 
       // Normalize Jenjang: Handle common variations
-      let jRaw = (p.jenjang || "UNKNOWN").toUpperCase();
+      let jRaw = (p.jenjang || "UNKNOWN").toUpperCase().trim();
       let jenjang = "MTS"; // Default fallback
       if (jRaw.includes("MTS")) jenjang = "MTS";
       else if (jRaw.includes("IL")) jenjang = "IL";
       else if (jRaw.includes("SMA")) jenjang = "SMA";
-      else jenjang = "MTS"; // Map unknown to MTS as it's the largest pool
+      else jenjang = "MTS";
 
       if (!jenjangCounts[jenjang]) {
         jenjangCounts[jenjang] = {
@@ -146,6 +147,13 @@ export async function GET(request: Request) {
         if (isL) j.ulang_putra++;
         if (isP) j.ulang_putri++;
       }
+
+      // Normalize Provinsi
+      let provinsi = p.provinsi || "Belum Diisi";
+      if (provinsi && provinsi !== "Belum Diisi") {
+        provinsi = provinsi.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+      }
+      provinsiCounts[provinsi] = (provinsiCounts[provinsi] || 0) + 1;
     });
 
     const stats = {
@@ -193,6 +201,9 @@ export async function GET(request: Request) {
         };
       }),
 
+      stats_per_provinsi: Object.entries(provinsiCounts)
+        .sort((a, b) => b[1] - a[1])
+        .map(([provinsi, jumlah]) => ({ provinsi, jumlah })),
       stats_gender: genderCounts,
       pie_chart_status: {
         diterima: (statusCounts.accepted || 0) + (statusCounts.enrolled || 0),

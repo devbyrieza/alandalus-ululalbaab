@@ -256,7 +256,7 @@ export default function DashboardLayout({
               <User className="w-6 h-6 text-brand-blue-700" />
             </div>
           </div>
-          <h1 className="text-3xl font-serif font-black uppercase text-brand-blue-950 mb-2">Pondok Pesantren Al Andalus Ulul Albaab</h1>
+          <h1 className="text-3xl font-serif font-black uppercase text-brand-blue-950 mb-2">Pondok Pesantren {BRANDING.schoolName}</h1>
           <p className="text-ink-500 text-sm">Mohon tunggu sebentar...</p>
         </div>
       </div>
@@ -275,7 +275,7 @@ export default function DashboardLayout({
               <Menu className="w-6 h-6" />
             </button>
             <div className="flex flex-col">
-              <span className="text-[9px] sm:text-[10px] uppercase font-black tracking-widest text-ink-400 mb-0.5" style={{ display: 'none' }}>PPDB Al Andalus Ulul Albaab</span>
+              <span className="text-[9px] sm:text-[10px] uppercase font-black tracking-widest text-ink-400 mb-0.5" style={{ display: 'none' }}>PPDB {BRANDING.schoolName}</span>
               <span className="text-sm sm:text-base font-black text-brand-blue-950 leading-none">Portal Santri</span>
             </div>
           </div>
@@ -301,7 +301,7 @@ export default function DashboardLayout({
                     <img src={BRANDING.logoPath} alt="Logo" className="w-full h-full object-contain p-1" />
                   </div>
                   <div>
-                    <h1 className="font-black text-xl text-brand-blue-950 leading-none tracking-tight">PPDB <span className="text-brand-blue-700">Al Andalus Ulul Albaab</span></h1>
+                    <h1 className="font-black text-xl text-brand-blue-950 leading-none tracking-tight">PPDB <span className="text-brand-blue-700">{BRANDING.schoolName}</span></h1>
                     <p className="text-[10px] text-ink-500 font-bold mt-1 uppercase tracking-widest">Tahun 2026/2027</p>
                   </div>
                 </div>
@@ -340,7 +340,7 @@ export default function DashboardLayout({
                   <span>Keluar Akun</span>
                 </button>
                 <p className="text-[10px] text-center text-ink-600 mt-4">
-                  &copy; 2026 Ponpes Al Andalus Ulul Albaab
+                  &copy; 2026 Ponpes {BRANDING.schoolName}
                 </p>
               </div>
             </div>
@@ -357,7 +357,7 @@ export default function DashboardLayout({
                     <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-sm overflow-hidden">
                       <img src={BRANDING.logoPath} alt="Logo" className="w-full h-full object-contain p-1" />
                     </div>
-                    <span className="font-black text-lg text-brand-blue-950 tracking-tight">PPDB Al Andalus Ulul Albaab</span>
+                    <span className="font-black text-lg text-brand-blue-950 tracking-tight">PPDB {BRANDING.schoolName}</span>
                   </div>
                   <button onClick={() => setSidebarOpen(false)} className="p-2 text-ink-400 hover:text-brand-blue-700 bg-brand-yellow-50 rounded-full">
                     <X className="w-5 h-5" />

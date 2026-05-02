@@ -121,14 +121,6 @@ interface PendaftarDetail {
     nilai_wawancara_ortu?: number;
     catatan_ortu?: string;
   } | null;
-  kesehatan: {
-    riwayat_penyakit: string | null;
-    penyakit_kronis: string | null;
-    golongan_darah?: string | null;
-    tinggi_badan?: number | null;
-    berat_badan?: number | null;
-  } | null;
-  status_pendaftaran?: string;
 }
 
 /* import { useSession } from "next-auth/react"; -- Removed */
@@ -477,13 +469,13 @@ export default function PendaftarDetailPage() {
                   <option value="draft">Draft</option>
                   <option value="awaiting_payment">Menunggu Pembayaran</option>
                   <option value="paid">Sudah Bayar</option>
+                  <option value="paid">Terdaftar</option>
                   <option value="data_completed">Data Lengkap</option>
-                  <option value="docs_uploaded">Dokumen Terupload</option>
-                  <option value="docs_verified">Dokumen Terverifikasi</option>
-                  <option value="scheduled">Terjadwal Ujian</option>
+                  <option value="docs_verified">Berkas Lengkap</option>
+                  <option value="testing">Sedang Ujian</option>
                   <option value="tested">Sudah Ujian</option>
-                  <option value="announced">Cadangan</option>
                   <option value="accepted">Diterima</option>
+                  <option value="announced">Cadangan</option>
                   <option value="rejected">Ditolak</option>
                   <option value="enrolled">Sudah Daftar Ulang</option>
                 </select>
@@ -1114,17 +1106,9 @@ export default function PendaftarDetailPage() {
                 <div className="md:col-span-2">
                   <p className="text-xs text-stone-500 mb-1">Riwayat Penyakit</p>
                   <div className="p-3 bg-red-50 text-red-900 rounded-lg border border-red-100 min-h-[60px]">
-                    {pendaftar.kesehatan?.riwayat_penyakit || "Tidak ada riwayat penyakit yang dilaporkan"}
+                    {pendaftar.hobi || "Tidak ada riwayat penyakit yang dilaporkan"}
                   </div>
                 </div>
-                {pendaftar.kesehatan?.penyakit_kronis && (
-                  <div className="md:col-span-2">
-                    <p className="text-xs text-stone-500 mb-1">Penyakit Kronis</p>
-                    <div className="p-3 bg-orange-50 text-orange-900 rounded-lg border border-orange-100 min-h-[40px]">
-                      {pendaftar.kesehatan.penyakit_kronis}
-                    </div>
-                  </div>
-                )}
               </div>
             </div>
           )}

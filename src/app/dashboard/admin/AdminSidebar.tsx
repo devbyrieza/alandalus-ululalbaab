@@ -31,6 +31,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { getMenuItemsForRole, UserRole, ROLE_LABELS } from "@/lib/access-control";
+import Swal from "sweetalert2";
 
 // Map icon strings to components
 const ICON_MAP: Record<string, any> = {
@@ -115,11 +116,11 @@ export default function AdminSidebar({ children, userRole, adminName, userId, av
             if (data.success) {
                 window.location.href = data.redirectTo;
             } else {
-                alert(data.error || "Gagal berpindah role");
+                Swal.fire("Gagal Switch Role", data.error || "Gagal berpindah role", "error");
             }
         } catch (error) {
             console.error(error);
-            alert("Terjadi kesalahan sistem");
+            Swal.fire("Error", "Terjadi kesalahan sistem saat berpindah role", "error");
         }
     };
 

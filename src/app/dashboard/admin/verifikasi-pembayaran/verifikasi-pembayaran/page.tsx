@@ -54,11 +54,11 @@ export default function VerifikasiPembayaranPage() {
   const [editJumlah, setEditJumlah] = useState("");
   const [processing, setProcessing] = useState(false);
   const [exporting, setExporting] = useState(false);
-  const [uploadingProof, setUploadingProof] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<"PENDAFTARAN" | "DAFTAR_ULANG">("PENDAFTARAN");
   const [tipeCicilanFilter, setTipeCicilanFilter] = useState<"ALL" | "LUNAS" | "CICILAN">("ALL");
   const [editTipeCicilan, setEditTipeCicilan] = useState("LUNAS");
   const [editJumlahCicilan, setEditJumlahCicilan] = useState(1);
+  const [uploadingProof, setUploadingProof] = useState<string | null>(null);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -97,7 +97,7 @@ export default function VerifikasiPembayaranPage() {
     try {
       setExporting(true);
       // Fetch ALL data for export
-      const response = await fetch(`/api/admin/verifikasi/pembayaran?status=all`);
+      const response = await fetch(`/api/admin/verifikasi/pembayaran?status=all&jenis=${activeTab}`);
       if (!response.ok) throw new Error("Failed to export");
 
       const result = await response.json();
@@ -115,14 +115,14 @@ export default function VerifikasiPembayaranPage() {
         "Catatan": item.catatan || "-"
       }));
 
-      const filename = `data-pembayaran-${new Date().toISOString().split("T")[0]}`;
+      const filename = `data-pembayaran-${activeTab.toLowerCase()}-${new Date().toISOString().split("T")[0]}`;
 
       if (type === "excel") {
-        exportToExcel(data, filename, "Data Pembayaran");
+        exportToExcel(data, filename, `Data Pembayaran ${activeTab.replace("_", " ")}`);
       } else {
         const headers = Object.keys(data[0] || {});
         const rows = data.map((item: any) => Object.values(item));
-        exportToPDF("Laporan Pembayaran Masuk", headers, rows, filename, "landscape");
+        exportToPDF(`Laporan Pembayaran ${activeTab.replace("_", " ")}`, headers, rows, filename, "landscape");
       }
     } catch (error) {
       console.error("Error exporting:", error);
@@ -134,7 +134,7 @@ export default function VerifikasiPembayaranPage() {
 
   const handleVerify = async (
     pembayaranId: string,
-    status: "verified" | "rejected"
+    status: "verified" | "rejected" | "pending"
   ) => {
     try {
       setProcessing(true);
@@ -263,30 +263,6 @@ export default function VerifikasiPembayaranPage() {
               </p>
             </div>
           </div>
-          
-          <div className="flex bg-stone-100 p-1.5 rounded-[1.25rem] w-fit shadow-inner ring-1 ring-stone-200/50">
-            <button
-              onClick={() => setActiveTab("PENDAFTARAN")}
-              className={`px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all duration-300 ${
-                activeTab === "PENDAFTARAN"
-                  ? "bg-white text-brand-blue-700 shadow-clay-sm ring-1 ring-stone-100"
-                  : "text-stone-400 hover:text-stone-600 hover:bg-stone-50"
-              }`}
-            >
-              Pendaftaran
-            </button>
-            <button
-              onClick={() => setActiveTab("DAFTAR_ULANG")}
-              className={`px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all duration-300 ${
-                activeTab === "DAFTAR_ULANG"
-                  ? "bg-white text-brand-blue-700 shadow-clay-sm ring-1 ring-stone-100"
-                  : "text-stone-400 hover:text-stone-600 hover:bg-stone-50"
-              }`}
-            >
-              Daftar Ulang
-            </button>
-          </div>
-
           <div className="flex items-center gap-2 flex-shrink-0">
             <button
               onClick={() => handleExport("excel")}
@@ -323,21 +299,46 @@ export default function VerifikasiPembayaranPage() {
             </button>
           </div>
         </div>
+      </div>
 
-        {/* Search Bar */}
-        <div className="mt-5 relative group">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-stone-400 group-focus-within:text-brand-blue-600 transition-colors" />
-          <input
-            type="text"
-            placeholder="Cari nama atau nomor pendaftaran..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-12 pr-4 py-4 bg-white border border-stone-200 rounded-2xl focus:border-brand-blue-500 focus:ring-4 focus:ring-brand-blue-500/5 focus:outline-none transition-all text-sm md:text-base font-bold text-stone-800 placeholder:text-stone-400 shadow-sm"
-          />
-        </div>
+      {/* Tabs Jenis Pembayaran */}
+      <div className="flex gap-1 bg-slate-100 p-1 rounded-xl w-fit mb-2">
+        <button
+          onClick={() => setActiveTab("PENDAFTARAN")}
+          className={`px-5 py-2.5 rounded-lg text-sm font-bold transition-all flex items-center gap-2 ${
+            activeTab === "PENDAFTARAN"
+              ? "bg-white text-brand-blue-800 shadow-sm"
+              : "text-slate-500 hover:text-slate-700"
+          }`}
+        >
+          💳 Biaya Pendaftaran
+        </button>
+        <button
+          onClick={() => setActiveTab("DAFTAR_ULANG")}
+          className={`px-5 py-2.5 rounded-lg text-sm font-bold transition-all flex items-center gap-2 ${
+            activeTab === "DAFTAR_ULANG"
+              ? "bg-white text-brand-blue-800 shadow-sm"
+              : "text-slate-500 hover:text-slate-700"
+          }`}
+        >
+          🎓 Biaya Daftar Ulang
+        </button>
+      </div>
 
-        {/* Stats / Filter Bar */}
-        <div className="mt-5 md:mt-8 flex flex-wrap items-center gap-3 border-t border-stone-100 pt-5 md:pt-6">
+      {/* Search Bar */}
+      <div className="relative group">
+        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-stone-400 group-focus-within:text-brand-blue-600 transition-colors" />
+        <input
+          type="text"
+          placeholder="Cari nama atau nomor pendaftaran..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="w-full pl-12 pr-4 py-4 bg-white border border-stone-200 rounded-2xl focus:border-brand-blue-500 focus:ring-4 focus:ring-brand-blue-500/5 focus:outline-none transition-all text-sm md:text-base font-bold text-stone-800 placeholder:text-stone-400 shadow-sm"
+        />
+      </div>
+
+      {/* Stats / Filter Bar */}
+      <div className="flex flex-wrap items-center gap-3 bg-white p-4 rounded-2xl shadow-sm border border-stone-100">
           <div className="px-4 py-2 bg-stone-100 rounded-lg text-sm font-bold text-stone-600">
             Total: {filteredPembayaran.length}
           </div>
@@ -392,8 +393,6 @@ export default function VerifikasiPembayaranPage() {
             </>
           )}
         </div>
-      </div>
-
       {/* List */}
       <div className="bg-white rounded-[2rem] shadow-sm border border-stone-100 overflow-hidden min-h-[400px]">
         {loading ? (
@@ -486,17 +485,13 @@ export default function VerifikasiPembayaranPage() {
 
                   {/* Actions Column */}
                   <div className="flex sm:flex-col gap-3 sm:w-48 shrink-0">
-                    {pay.bukti_transfer_url && (
-                      <a
-                        href={pay.bukti_transfer_url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2.5 bg-white border-2 border-dashed border-stone-300 hover:border-brand-blue-500 hover:bg-brand-blue-50 text-stone-600 hover:text-brand-blue-800 rounded-xl text-sm font-bold transition-all"
-                      >
-                        <Eye className="w-4 h-4" />
-                        Lihat Bukti
-                      </a>
-                    )}
+                    <button
+                      onClick={() => openModal(pay)}
+                      className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2.5 bg-white border-2 border-dashed border-stone-300 hover:border-brand-blue-500 hover:bg-brand-blue-50 text-stone-600 hover:text-brand-blue-800 rounded-xl text-sm font-bold transition-all"
+                    >
+                      <Eye className="w-4 h-4" />
+                      Detail & Bukti
+                    </button>
 
                     {statusFilter === "pending" && (
                       <button
@@ -510,20 +505,22 @@ export default function VerifikasiPembayaranPage() {
 
                     {statusFilter === "verified" && (
                       <button
-                        onClick={() => openModal(pay)}
-                        className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-3 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded-xl font-bold text-sm border border-emerald-100 transition-all"
+                        onClick={() => handleVerify(pay.id, "pending")}
+                        disabled={processing}
+                        className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-3 bg-stone-100 hover:bg-stone-200 text-stone-700 rounded-xl font-bold text-sm border border-stone-200 transition-all"
                       >
-                        <CheckCircle className="w-4 h-4" />
-                        Terverifikasi
+                         <RefreshCw className={`w-4 h-4 ${processing ? 'animate-spin' : ''}`} />
+                         Batalkan Verifikasi
                       </button>
                     )}
                     {statusFilter === "rejected" && (
                       <button
-                        onClick={() => openModal(pay)}
-                        className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-3 bg-red-50 hover:bg-red-100 text-red-700 rounded-xl font-bold text-sm border border-red-100 transition-all"
+                        onClick={() => handleVerify(pay.id, "pending")}
+                        disabled={processing}
+                        className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-3 bg-stone-100 hover:bg-stone-200 text-stone-700 rounded-xl font-bold text-sm border border-stone-200 transition-all"
                       >
-                        <XCircle className="w-4 h-4" />
-                        Ditolak
+                         <RefreshCw className={`w-4 h-4 ${processing ? 'animate-spin' : ''}`} />
+                         Reset Status
                       </button>
                     )}
                   </div>

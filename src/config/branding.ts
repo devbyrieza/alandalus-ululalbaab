@@ -7,4 +7,10 @@ export const BRANDING = {
   faviconPath: process.env.NEXT_PUBLIC_FAVICON_PATH || "/favicon.ico",
   websiteUrl: process.env.NEXT_PUBLIC_WEBSITE_URL || "https://ppdb.alandalus-ululalbaab.com",
   dashboardTitle: process.env.NEXT_PUBLIC_DASHBOARD_TITLE || "Panel Admin PPDB Ulul Albaab",
+  address: process.env.NEXT_PUBLIC_ADDRESS || "Jl. KH Mama Oyon Cihaur RT/RW 04/04, Cicantayan, Kabupaten Sukabumi, Jawa Barat 43155",
+  phone: process.env.NEXT_PUBLIC_PHONE || "+62 812-8530-0800",
+  email: process.env.NEXT_PUBLIC_EMAIL || "alandalusululalbaab2@gmail.com",
+  igUrl: process.env.NEXT_PUBLIC_IG_URL || "https://www.instagram.com/alandalusululalbaab/",
+  ytUrl: process.env.NEXT_PUBLIC_YT_URL || "https://www.youtube.com/@AlAndalusUlulAlbaab",
+  fbUrl: process.env.NEXT_PUBLIC_FB_URL || "https://www.facebook.com/alandalus.ululalbaab/",
 };

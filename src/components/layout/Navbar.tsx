@@ -132,7 +132,7 @@ export default function Navbar() {
                 Masuk
               </Link>
               <Link href="/ppdb" className="btn-primary flex items-center gap-2 group">
-                PPDB 2026/2027
+                Daftar PPDB
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
               </Link>
             </div>
@@ -215,7 +215,7 @@ export default function Navbar() {
                     onClick={() => setIsMenuOpen(false)}
                     className="w-full py-4 text-base font-bold rounded-2xl bg-brand-blue-700 text-white hover:bg-brand-blue-800 text-center transition-all min-h-[56px] flex items-center justify-center shadow-lg shadow-brand-blue-700/20"
                   >
-                    Daftar PPDB 2026/2027
+                    Daftar PPDB Online
                   </Link>
 
                   <div className="h-6" /> {/* Safe padding */}

@@ -254,8 +254,6 @@ function AdminPendaftarContent() {
 
     try {
       setIsDeleting(true);
-      console.log("Attempting to delete pendaftar:", deletingPendaftar.id);
-      
       const res = await fetch(`/api/admin/pendaftar/${deletingPendaftar.id}`, {
         method: "DELETE",
       });
@@ -263,8 +261,7 @@ function AdminPendaftarContent() {
       const result = await res.json();
 
       if (!res.ok) {
-        console.error("Delete failed:", result);
-        throw new Error(result.error || `Gagal menghapus data (Status: ${res.status})`);
+        throw new Error(result.error || "Gagal menghapus data");
       }
 
       Swal.fire("Selesai!", result.message || "Data berhasil dihapus", "success");
@@ -275,12 +272,7 @@ function AdminPendaftarContent() {
       fetchPendaftar();
     } catch (error: any) {
       console.error("Error soft deleting:", error);
-      Swal.fire({
-        title: "Gagal Menghapus",
-        text: error.message || "Terjadi kesalahan sistem saat menghapus data.",
-        icon: "error",
-        footer: "Hubungi tim IT jika masalah berlanjut."
-      });
+      Swal.fire("Error!", error.message || "Gagal menghapus data", "error");
     } finally {
       setIsDeleting(false);
     }
@@ -657,7 +649,12 @@ function AdminPendaftarContent() {
       if (search) params.append("search", search);
       if (statusFilter) params.append("status", statusFilter);
       if (jenjangFilter) params.append("jenjang", jenjangFilter);
+      if (jenisKelaminFilter) params.append("jenis_kelamin", jenisKelaminFilter);
       if (tahunAjaranFilter) params.append("tahun_ajaran", tahunAjaranFilter);
+      if (provinsiFilter) params.append("provinsi", provinsiFilter);
+      if (kabupatenFilter) params.append("kabupaten", kabupatenFilter);
+      if (kecamatanFilter) params.append("kecamatan", kecamatanFilter);
+      if (kelurahanFilter) params.append("kelurahan", kelurahanFilter);
 
       const response = await fetch(`/api/admin/pendaftar/export?${params}`);
       if (!response.ok) throw new Error("Failed to export");
@@ -694,9 +691,8 @@ function AdminPendaftarContent() {
   const formatStatus = (status: string) => {
     const statusMap: Record<string, { label: string; color: string }> = {
       draft: { label: "Draft", color: "bg-stone-100 text-stone-700" },
-      waiting_payment: { label: "Menunggu Pembayaran", color: "bg-brand-yellow-100 text-brand-yellow-700" },
-      awaiting_payment: { label: "Menunggu Pembayaran", color: "bg-brand-yellow-100 text-brand-yellow-700" },
-      payment_verification: { label: "Verifikasi Pembayaran", color: "bg-brand-blue-50 text-brand-blue-700 border border-brand-blue-100" },
+      awaiting_payment: { label: "Draft", color: "bg-stone-100 text-stone-700" },
+      payment_verification: { label: "Verifikasi Bayar", color: "bg-brand-blue-50 text-brand-blue-700 border border-brand-blue-100" },
       paid: { label: "Terdaftar", color: "bg-brand-blue-100 text-brand-blue-800" },
       verified: { label: "Terdaftar", color: "bg-brand-blue-100 text-brand-blue-800" },
       data_completed: { label: "Data Lengkap", color: "bg-brand-yellow-50 text-brand-yellow-800 border border-brand-yellow-100" },
@@ -915,7 +911,9 @@ function AdminPendaftarContent() {
                 {canViewKeuangan && (
                   <>
                     <option value="payment_verification">Verifikasi Pembayaran</option>
-                <option value="paid">Terdaftar (paid)</option>
+                    <option value="paid">Terdaftar (paid)</option>
+                  </>
+                )}
                 <option value="data_completed">Data Lengkap</option>
                 <option value="docs_uploaded">Data Lengkap (docs)</option>
                 <option value="docs_verified">Berkas Lengkap</option>
@@ -924,8 +922,6 @@ function AdminPendaftarContent() {
                 <option value="accepted">Diterima</option>
                 <option value="rejected">Ditolak</option>
                 <option value="enrolled">Sudah Daftar Ulang</option>
-                  </>
-                )}
               </optgroup>
             </select>
           </div>
@@ -1136,7 +1132,7 @@ function AdminPendaftarContent() {
                   <option value="announced">Diumumkan</option>
                   <option value="accepted">Diterima</option>
                   <option value="rejected">Ditolak</option>
-                  <option value="enrolled">Sudah Daftar Ulang</option>
+                  <option value="enrolled">Terdaftar</option>
                 </select>
 
                 <button
@@ -1249,7 +1245,7 @@ function AdminPendaftarContent() {
                         >
                           <Eye className="w-3.5 h-3.5" /> Buka Detail
                         </Link>
-                        {userRole === 'admin_super' && (
+                        {userRole && ['admin_super', 'admin', 'penguji'].includes(userRole) && (
                           <>
                             <button
                               onClick={() => handleOpenAnnouncement(item)}
@@ -1419,16 +1415,18 @@ function AdminPendaftarContent() {
                                   {item.pembayaran[0].status_pembayaran === 'verified' ? 'Lunas' :
                                     item.pembayaran[0].status_pembayaran === 'pending' ? 'Cek' : 'Belum'}
                                 </span>
-                                <button
-                                 onClick={() => {
-                                   setSelectedPayId(item.pembayaran![0].id);
-                                   setTimeout(() => payInputRef.current?.click(), 100);
-                                 }}
-                                 className="px-2 py-1 bg-brand-yellow-50 text-brand-yellow-700 hover:bg-brand-yellow-100 rounded-lg text-[9px] font-black uppercase flex items-center justify-center gap-1 border border-brand-yellow-100 transition-colors"
-                                 title="Upload Bukti Bayar"
-                               >
-                                 <CreditCard className="w-3 h-3" /> Upload
-                               </button>
+                                {item.pembayaran && item.pembayaran.length > 0 && (
+                                  <button
+                                   onClick={() => {
+                                     setSelectedPayId(item.pembayaran![0].id);
+                                     setTimeout(() => payInputRef.current?.click(), 100);
+                                   }}
+                                   className="px-2 py-1 bg-brand-yellow-50 text-brand-yellow-700 hover:bg-brand-yellow-100 rounded-lg text-[9px] font-black uppercase flex items-center justify-center gap-1 border border-brand-yellow-100 transition-colors"
+                                   title="Upload Bukti Bayar"
+                                 >
+                                   <CreditCard className="w-3 h-3" /> Upload
+                                 </button>
+                                )}
                               </div>
                             ) : (
                               <span className="text-stone-500 text-xs">-</span>
