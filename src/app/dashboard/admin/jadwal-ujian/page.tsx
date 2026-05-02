@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import {
   Calendar,
   Clock,
@@ -42,10 +43,16 @@ interface Pendaftar {
   tahun_ajaran_id: string;
 }
 
-export default function JadwalUjianPage() {
+function JadwalUjianContent() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  const urlSearch = searchParams.get("search") || "";
+
   const [sessions, setSessions] = useState<ExamSession[]>([]);
   const [pendaftar, setPendaftar] = useState<Pendaftar[]>([]);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
 
   const [showAddSession, setShowAddSession] = useState(false);
   const [newSession, setNewSession] = useState({
@@ -57,13 +64,14 @@ export default function JadwalUjianPage() {
     notes: ""
   });
 
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(urlSearch);
   const [selectedPendaftarId, setSelectedPendaftarId] = useState<string | null>(null);
   const [assigning, setAssigning] = useState(false);
   const [showBroadcastModal, setShowBroadcastModal] = useState(false);
   const [resetFlags, setResetFlags] = useState(false);
   const [availStats, setAvailStats] = useState({ eligibleCount: 0, totalAvailableSlots: 0 });
   const [broadcasting, setBroadcasting] = useState(false);
+  const [userRole, setUserRole] = useState<string | null>(null);
   const [sendingProgress, setSendingProgress] = useState<{
     active: boolean;
     curr: number;
@@ -75,6 +83,38 @@ export default function JadwalUjianPage() {
     total: 0,
     logs: []
   });
+
+  useEffect(() => {
+    const fetchSession = async () => {
+      try {
+        const res = await fetch("/api/auth/session");
+        if (res.ok) {
+          const data = await res.json();
+          if (data.session?.role) setUserRole(data.session.role);
+          else if (data.user?.user_metadata?.role)
+            setUserRole(data.user.user_metadata.role);
+        }
+      } catch (e) {
+        console.error("Failed to fetch session", e);
+      }
+    };
+    fetchSession();
+  }, []);
+
+  const isAdmin = userRole === "admin_super" || userRole === "admin";
+
+  useEffect(() => {
+    if (urlSearch && urlSearch !== search) setSearch(urlSearch);
+  }, [urlSearch]);
+
+  const updateFilters = (newSearch?: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    if (newSearch !== undefined) {
+      if (newSearch) params.set("search", newSearch);
+      else params.delete("search");
+    }
+    router.push(`?${params.toString()}`);
+  };
 
   useEffect(() => {
     fetchData();
@@ -95,7 +135,9 @@ export default function JadwalUjianPage() {
 
   const fetchData = async () => {
     try {
-      setLoading(true);
+      if (sessions.length === 0) setLoading(true);
+      else setRefreshing(true);
+
       const [sessionsRes, pendaftarRes] = await Promise.all([
         fetch("/api/admin/exam-sessions"),
         fetch("/api/admin/pendaftar/list?status=paid,docs_verified&limit=100")
@@ -113,6 +155,7 @@ export default function JadwalUjianPage() {
       console.error(e);
     } finally {
       setLoading(false);
+      setRefreshing(false);
     }
   };
 
@@ -280,6 +323,17 @@ export default function JadwalUjianPage() {
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto">
+      {/* Standardized Refreshing Overlay */}
+      {refreshing && (
+        <div className="fixed inset-0 bg-white/40 backdrop-blur-[1px] z-[100] flex items-center justify-center pointer-events-none">
+          <div className="bg-white/80 px-6 py-3 rounded-2xl shadow-xl border border-stone-100 flex items-center gap-3 animate-in fade-in zoom-in duration-300">
+            <Loader2 className="w-5 h-5 animate-spin text-purple-600" />
+            <span className="text-sm font-bold text-stone-700 tracking-tight">
+              Memperbarui data...
+            </span>
+          </div>
+        </div>
+      )}
       {/* Header */}
       <div className="bg-white rounded-2xl shadow-clay-lg p-8 border border-white/40 overflow-hidden relative">
         <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/5 rounded-full -mr-16 -mt-16 blur-3xl"></div>
@@ -294,20 +348,24 @@ export default function JadwalUjianPage() {
             </div>
           </div>
           <div className="flex flex-col md:flex-row gap-3">
-            <button
-              onClick={() => setShowBroadcastModal(true)}
-              className="flex items-center gap-3 px-6 py-3 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-2xl font-black border border-indigo-200 transition-all"
-            >
-              <Send className="w-5 h-5" />
-              Pulse Notifikasi
-            </button>
-            <button
-              onClick={() => setShowAddSession(true)}
-              className="flex items-center gap-3 px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-2xl font-black shadow-lg shadow-purple-600/20 transition-all hover:-translate-y-0.5"
-            >
-              <Plus className="w-5 h-5" />
-              Sesi Baru
-            </button>
+            {isAdmin && (
+              <button
+                onClick={() => setShowBroadcastModal(true)}
+                className="flex items-center gap-3 px-6 py-3 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-2xl font-black border border-indigo-200 transition-all"
+              >
+                <Send className="w-5 h-5" />
+                Pulse Notifikasi
+              </button>
+            )}
+            {isAdmin && (
+              <button
+                onClick={() => setShowAddSession(true)}
+                className="flex items-center gap-3 px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-2xl font-black shadow-lg shadow-purple-600/20 transition-all hover:-translate-y-0.5"
+              >
+                <Plus className="w-5 h-5" />
+                Sesi Baru
+              </button>
+            )}
           </div>
         </div>
       </div>
@@ -432,7 +490,10 @@ export default function JadwalUjianPage() {
                   type="text"
                   placeholder="Cari calon peserta..."
                   value={search}
-                  onChange={(e) => setSearch(e.target.value)}
+                  onChange={(e) => {
+                    setSearch(e.target.value);
+                    updateFilters(e.target.value);
+                  }}
                   className="w-full bg-white border border-ink-100 rounded-xl pl-9 pr-4 py-2 text-sm focus:ring-2 focus:ring-indigo-500/10 outline-none"
                 />
               </div>
@@ -670,6 +731,21 @@ export default function JadwalUjianPage() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function JadwalUjianPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex flex-col items-center justify-center p-20 bg-white rounded-3xl border border-brand-yellow-100">
+          <Loader2 className="w-12 h-12 animate-spin text-purple-600 mb-4" />
+          <p className="text-ink-400 font-bold tracking-wide">Memuat halaman...</p>
+        </div>
+      }
+    >
+      <JadwalUjianContent />
+    </Suspense>
   );
 }
 

@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, Suspense } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import {
   FileCheck,
   Filter,
@@ -34,16 +35,65 @@ interface PendaftarSummary {
   dokumen: DokumenSummary[];
 }
 
-export default function VerifikasiDokumenPage() {
+function VerifikasiDokumenContent() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  const urlStatus = searchParams.get("status") || "pending";
+  const urlSearch = searchParams.get("search") || "";
+
   const [pendaftarList, setPendaftarList] = useState<PendaftarSummary[]>([]);
   const [loading, setLoading] = useState(true);
-  const [statusFilter, setStatusFilter] = useState("pending");
-  const [searchTerm, setSearchTerm] = useState("");
+  const [refreshing, setRefreshing] = useState(false);
+  const [statusFilter, setStatusFilter] = useState(urlStatus);
+  const [searchTerm, setSearchTerm] = useState(urlSearch);
   const [exporting, setExporting] = useState(false);
+  const [userRole, setUserRole] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchSession = async () => {
+      try {
+        const res = await fetch("/api/auth/session");
+        if (res.ok) {
+          const data = await res.json();
+          if (data.session?.role) setUserRole(data.session.role);
+          else if (data.user?.user_metadata?.role)
+            setUserRole(data.user.user_metadata.role);
+        }
+      } catch (e) {
+        console.error("Failed to fetch session", e);
+      }
+    };
+    fetchSession();
+  }, []);
+
+  const canVerify =
+    userRole === "admin_super" ||
+    userRole === "admin" ||
+    userRole === "admin_berkas";
+
+  useEffect(() => {
+    if (urlStatus && urlStatus !== statusFilter) setStatusFilter(urlStatus);
+    if (urlSearch && urlSearch !== searchTerm) setSearchTerm(urlSearch);
+  }, [urlStatus, urlSearch]);
+
+  const updateFilters = (newStatus?: string, newSearch?: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    if (newStatus !== undefined) params.set("status", newStatus);
+    if (newSearch !== undefined) {
+      if (newSearch) params.set("search", newSearch);
+      else params.delete("search");
+    }
+    router.push(`?${params.toString()}`);
+  };
 
   const fetchData = useCallback(async () => {
     try {
-      setLoading(true);
+      if (pendaftarList.length === 0) {
+        setLoading(true);
+      } else {
+        setRefreshing(true);
+      }
       // We fetch based on status but we want to group by pendaftar
       const response = await fetch(
         `/api/admin/verifikasi/dokumen?status=${statusFilter}`
@@ -81,8 +131,9 @@ export default function VerifikasiDokumenPage() {
       console.error("Error fetching data:", error);
     } finally {
       setLoading(false);
+      setRefreshing(false);
     }
-  }, [statusFilter]);
+  }, [statusFilter, pendaftarList.length]);
 
   useEffect(() => {
     fetchData();
@@ -166,10 +217,11 @@ export default function VerifikasiDokumenPage() {
             </button>
             <button
               onClick={fetchData}
-              className="p-2 bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white rounded-xl transition-all"
+              disabled={refreshing}
+              className="p-2 bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white rounded-xl transition-all disabled:opacity-50"
               title="Muat Ulang Data"
             >
-              <RefreshCw className="w-5 h-5" />
+              <RefreshCw className={`w-5 h-5 ${refreshing ? "animate-spin" : ""}`} />
             </button>
           </div>
         </div>
@@ -182,7 +234,10 @@ export default function VerifikasiDokumenPage() {
               type="text"
               placeholder="Cari nama atau nomor pendaftaran..."
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              onChange={(e) => {
+                setSearchTerm(e.target.value);
+                updateFilters(undefined, e.target.value);
+              }}
               className="w-full pl-12 pr-4 py-4 bg-brand-yellow-50/50 border border-brand-yellow-100 rounded-2xl focus:border-brand-blue-500 focus:bg-white focus:outline-none transition-all text-sm md:text-base font-bold text-brand-blue-950 placeholder:text-ink-300"
             />
           </div>
@@ -194,7 +249,7 @@ export default function VerifikasiDokumenPage() {
             ].map((s) => (
               <button
                 key={s.id}
-                onClick={() => setStatusFilter(s.id)}
+                onClick={() => updateFilters(s.id)}
                 className={`px-4 md:px-8 py-3 rounded-2xl font-black transition-all text-sm md:text-base whitespace-nowrap active:scale-95 ${statusFilter === s.id
                   ? "bg-brand-blue-700 text-white shadow-lg shadow-brand-blue-700/30 ring-2 ring-brand-blue-500/20"
                   : "bg-white border border-brand-yellow-200 text-ink-400 hover:bg-brand-yellow-50 hover:text-brand-blue-700"
@@ -207,96 +262,128 @@ export default function VerifikasiDokumenPage() {
         </div>
       </div>
 
-      {loading ? (
+      {/* Standardized Refreshing Overlay */}
+      {refreshing && (
+        <div className="fixed inset-0 bg-white/40 backdrop-blur-[1px] z-[100] flex items-center justify-center pointer-events-none">
+          <div className="bg-white/80 px-6 py-3 rounded-2xl shadow-xl border border-stone-100 flex items-center gap-3 animate-in fade-in zoom-in duration-300">
+            <Loader2 className="w-5 h-5 animate-spin text-brand-blue-600" />
+            <span className="text-sm font-bold text-stone-700 tracking-tight">
+              Memperbarui data...
+            </span>
+          </div>
+        </div>
+      )}
+
+      {loading && pendaftarList.length === 0 ? (
         <div className="flex flex-col items-center justify-center p-20 bg-white rounded-3xl border border-brand-yellow-100">
           <Loader2 className="w-12 h-12 animate-spin text-brand-blue-600 mb-4" />
           <p className="text-ink-400 font-bold tracking-wide">Mengambil data pendaftar...</p>
         </div>
-      ) : filteredList.length === 0 ? (
-        <div className="flex flex-col items-center justify-center p-20 bg-white rounded-3xl border-2 border-stone-100 text-center">
-          <div className="w-20 h-20 bg-stone-50 rounded-full flex items-center justify-center mb-6">
-            <FileCheck className="w-10 h-10 text-stone-300" />
-          </div>
-          <h3 className="text-xl font-bold text-stone-900 mb-2">Tidak Ada Pendaftar</h3>
-          <p className="text-stone-500">Belum ada dokumen yang perlu diverifikasi pada kategori ini.</p>
-        </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredList.map((pendaftar) => {
-            const verifiedCount = pendaftar.dokumen.filter(d => d.is_verified).length;
-            const totalCount = pendaftar.dokumen.length;
-            const percentage = Math.round((verifiedCount / totalCount) * 100);
+        <>
+          {/* Removed previous inline refreshing indicator in favor of global overlay */}
+          {filteredList.length === 0 ? (
+            <div className="flex flex-col items-center justify-center p-20 bg-white rounded-3xl border-2 border-stone-100 text-center">
+              <div className="w-20 h-20 bg-stone-50 rounded-full flex items-center justify-center mb-6">
+                <FileCheck className="w-10 h-10 text-stone-300" />
+              </div>
+              <h3 className="text-xl font-bold text-stone-900 mb-2">Tidak Ada Pendaftar</h3>
+              <p className="text-stone-500">Belum ada dokumen yang perlu diverifikasi pada kategori ini.</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredList.map((pendaftar) => {
+                const verifiedCount = pendaftar.dokumen.filter(d => d.is_verified).length;
+                const totalCount = pendaftar.dokumen.length;
+                const percentage = Math.round((verifiedCount / totalCount) * 100);
 
-            return (
-              <Link
-                key={pendaftar.id}
-                href={`/dashboard/admin/verifikasi-dokumen/${pendaftar.id}`}
-                className="group bg-white rounded-3xl border border-brand-yellow-100 hover:border-brand-blue-400 p-6 transition-all hover:shadow-xl hover:shadow-brand-blue-900/5 relative overflow-hidden"
-              >
-                {/* Background Decor */}
-                <div className="absolute top-0 right-0 w-32 h-32 bg-linear-to-br from-brand-blue-50 to-brand-yellow-50 -mr-16 -mt-16 rounded-full opacity-50 transition-transform group-hover:scale-110" />
+                return (
+                  <Link
+                    key={pendaftar.id}
+                    href={`/dashboard/admin/verifikasi-dokumen/${pendaftar.id}`}
+                    className="group bg-white rounded-3xl border border-brand-yellow-100 hover:border-brand-blue-400 p-6 transition-all hover:shadow-xl hover:shadow-brand-blue-900/5 relative overflow-hidden"
+                  >
+                    {/* Background Decor */}
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-linear-to-br from-brand-blue-50 to-brand-yellow-50 -mr-16 -mt-16 rounded-full opacity-50 transition-transform group-hover:scale-110" />
 
-                <div className="relative">
-                  <div className="flex items-center gap-4 mb-6">
-                    <div className="w-14 h-14 bg-brand-yellow-100 rounded-2xl flex items-center justify-center group-hover:from-brand-blue-600 group-hover:to-brand-blue-900 transition-all duration-500 shadow-inner border border-brand-yellow-200">
-                      <User className="w-6 h-6 text-brand-blue-400 group-hover:text-white transition-colors" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h3 className="font-black text-brand-blue-950 truncate group-hover:text-brand-blue-700 transition-colors leading-tight mb-1">
-                        {toTitleCase(pendaftar.nama_lengkap)}
-                      </h3>
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs font-mono font-black text-brand-blue-400 bg-brand-blue-50 px-2 py-0.5 rounded">
-                          {pendaftar.nomor_pendaftaran}
-                        </span>
-                        <span className="text-[10px] font-black uppercase tracking-widest text-brand-blue-700 bg-brand-yellow-100 border border-brand-yellow-200 px-2 py-0.5 rounded shadow-xs">
-                          {pendaftar.jenjang}
-                        </span>
+                    <div className="relative">
+                      <div className="flex items-center gap-4 mb-6">
+                        <div className="w-14 h-14 bg-brand-yellow-100 rounded-2xl flex items-center justify-center group-hover:from-brand-blue-600 group-hover:to-brand-blue-900 transition-all duration-500 shadow-inner border border-brand-yellow-200">
+                          <User className="w-6 h-6 text-brand-blue-400 group-hover:text-white transition-colors" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <h3 className="font-black text-brand-blue-950 truncate group-hover:text-brand-blue-700 transition-colors leading-tight mb-1">
+                            {toTitleCase(pendaftar.nama_lengkap)}
+                          </h3>
+                          <div className="flex items-center gap-2">
+                            <span className="text-xs font-mono font-black text-brand-blue-400 bg-brand-blue-50 px-2 py-0.5 rounded">
+                              {pendaftar.nomor_pendaftaran}
+                            </span>
+                            <span className="text-[10px] font-black uppercase tracking-widest text-brand-blue-700 bg-brand-yellow-100 border border-brand-yellow-200 px-2 py-0.5 rounded shadow-xs">
+                              {pendaftar.jenjang}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Progress Section */}
+                      <div className="space-y-3 mb-6">
+                        <div className="flex items-center justify-between text-xs font-black uppercase tracking-widest leading-none">
+                          <span className="text-ink-300">Penyelesaian Verifikasi</span>
+                          <span className="text-brand-blue-700">{percentage}%</span>
+                        </div>
+                        <div className="h-2.5 bg-brand-yellow-100/50 rounded-full overflow-hidden shadow-inner border border-brand-yellow-50">
+                          <div
+                            className="h-full bg-linear-to-r from-brand-blue-500 to-brand-blue-700 rounded-full transition-all duration-1000 ease-out"
+                            style={{ width: `${percentage}%` }}
+                          />
+                        </div>
+                        <div className="flex items-center gap-4">
+                          <div className="flex items-center gap-1.5">
+                            <div className="w-2 h-2 rounded-full bg-emerald-500 shadow-sm shadow-emerald-500/50" />
+                            <span className="text-xs font-bold text-stone-600">{verifiedCount} Terverifikasi</span>
+                          </div>
+                          <div className="flex items-center gap-1.5">
+                            <div className="w-2 h-2 rounded-full bg-amber-400 shadow-sm shadow-amber-400/50" />
+                            <span className="text-xs font-bold text-stone-600">{totalCount - verifiedCount} Menunggu</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center justify-between pt-4 border-t border-brand-yellow-50 group-hover:border-brand-blue-100 transition-colors">
+                        <div className="flex items-center gap-2 text-ink-300 font-black text-[10px] uppercase tracking-widest group-hover:text-brand-blue-600 transition-colors">
+                          Proses Verifikasi
+                          <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                        </div>
+                        {percentage === 100 ? (
+                          <CheckCircle className="w-6 h-6 text-emerald-500" />
+                        ) : (
+                          <Clock className="w-5 h-5 text-brand-blue-500 animate-pulse" />
+                        )}
                       </div>
                     </div>
-                  </div>
-
-                  {/* Progress Section */}
-                  <div className="space-y-3 mb-6">
-                    <div className="flex items-center justify-between text-xs font-black uppercase tracking-widest leading-none">
-                      <span className="text-ink-300">Penyelesaian Verifikasi</span>
-                      <span className="text-brand-blue-700">{percentage}%</span>
-                    </div>
-                    <div className="h-2.5 bg-brand-yellow-100/50 rounded-full overflow-hidden shadow-inner border border-brand-yellow-50">
-                      <div
-                        className="h-full bg-linear-to-r from-brand-blue-500 to-brand-blue-700 rounded-full transition-all duration-1000 ease-out"
-                        style={{ width: `${percentage}%` }}
-                      />
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <div className="flex items-center gap-1.5">
-                        <div className="w-2 h-2 rounded-full bg-emerald-500 shadow-sm shadow-emerald-500/50" />
-                        <span className="text-xs font-bold text-stone-600">{verifiedCount} Terverifikasi</span>
-                      </div>
-                      <div className="flex items-center gap-1.5">
-                        <div className="w-2 h-2 rounded-full bg-amber-400 shadow-sm shadow-amber-400/50" />
-                        <span className="text-xs font-bold text-stone-600">{totalCount - verifiedCount} Menunggu</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center justify-between pt-4 border-t border-brand-yellow-50 group-hover:border-brand-blue-100 transition-colors">
-                    <div className="flex items-center gap-2 text-ink-300 font-black text-[10px] uppercase tracking-widest group-hover:text-brand-blue-600 transition-colors">
-                      Proses Verifikasi
-                      <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                    </div>
-                    {percentage === 100 ? (
-                      <CheckCircle className="w-6 h-6 text-emerald-500" />
-                    ) : (
-                      <Clock className="w-5 h-5 text-brand-blue-500 animate-pulse" />
-                    )}
-                  </div>
-                </div>
-              </Link>
-            );
-          })}
-        </div>
+                  </Link>
+                );
+              })}
+            </div>
+          )}
+        </>
       )}
     </div>
+  );
+}
+
+export default function VerifikasiDokumenPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex flex-col items-center justify-center p-20 bg-white rounded-3xl border border-brand-yellow-100">
+          <Loader2 className="w-12 h-12 animate-spin text-brand-blue-600 mb-4" />
+          <p className="text-ink-400 font-bold tracking-wide">Memuat halaman...</p>
+        </div>
+      }
+    >
+      <VerifikasiDokumenContent />
+    </Suspense>
   );
 }

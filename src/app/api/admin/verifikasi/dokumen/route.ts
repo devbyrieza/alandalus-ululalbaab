@@ -94,10 +94,10 @@ export async function PATCH(request: NextRequest) {
     const session = await getServerSession();
     if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-    // Check custom role
-    const allowedRoles = ["admin", "admin_berkas", "admin_keuangan", "penguji", "admin_super"];
+    // Check custom role: ONLY Admin and Berkas can verify
+    const allowedRoles = ["admin", "admin_super", "admin_berkas"];
     if (!allowedRoles.includes(session.role)) {
-      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+      return NextResponse.json({ error: "Forbidden: Only Document Admin or Super Admin can verify documents" }, { status: 403 });
     }
 
     // Get request body
