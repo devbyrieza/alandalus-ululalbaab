@@ -136,7 +136,7 @@ export default function FaqSection() {
                         <div className="absolute inset-0 bg-gradient-to-r from-brand-yellow-100/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                         <p className="text-ink-600 font-bold mb-5 relative z-10 text-sm tracking-wide uppercase">Punya pertanyaan lain?</p>
                         <a
-                            href="https://wa.me/6288809934970"
+                            href="https://wa.me/6281285300800"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="btn-primary w-full relative z-10 justify-center shadow-md bg-[#25D366] hover:bg-[#20BE5A] hover:shadow-lg"
