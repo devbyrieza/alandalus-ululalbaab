@@ -10,122 +10,343 @@ import {
   Mail,
   Twitter,
   Globe,
-  ArrowUpRight
+  ArrowUpRight,
 } from "lucide-react";
+import Image from "next/image";
 import { Container } from "@/components/layout/Container";
 import { BRANDING } from "@/config/branding";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
+  const socialLinks = [
+    { Icon: Instagram, href: BRANDING.igUrl, label: "Instagram" },
+    { Icon: Youtube, href: BRANDING.ytUrl, label: "YouTube" },
+    { Icon: Facebook, href: BRANDING.fbUrl, label: "Facebook" },
+    { Icon: Twitter, href: "#", label: "Twitter / X" },
+  ];
+
+  const lembagaLinks = [
+    "Tentang Kami",
+    "Program Studi",
+    "Fasilitas",
+    "Kegiatan Santri",
+  ];
+
+  const infoLinks = [
+    "Pendaftaran PPDB",
+    "Biaya Pendidikan",
+    "Beasiswa Tahfidz",
+    "Kalender Akademik",
+  ];
+
   return (
-    <footer className="bg-brand-blue-950 border-t border-brand-blue-900 pt-20 pb-28 md:pb-12 overflow-hidden relative">
-      {/* Decorative gradient orb */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-brand-blue-800/30 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+    <footer
+      className="relative overflow-hidden pt-20 pb-28 md:pb-14"
+      style={{
+        background:
+          "linear-gradient(160deg, var(--color-brand-blue-900) 0%, var(--color-brand-blue-950) 55%, #010E28 100%)",
+        borderTop: "1px solid rgba(255,255,255,0.05)",
+      }}
+    >
+      {/* ── Decorative orbs — blue + yellow (energik, dua warna) ── */}
+      {/* Orb utama: biru cerah kanan-atas */}
+      <div
+        className="absolute top-0 right-0 w-[520px] h-[520px] rounded-full pointer-events-none -translate-y-1/2 translate-x-1/3"
+        style={{
+          background:
+            "radial-gradient(circle, rgba(3,105,199,0.22) 0%, transparent 70%)",
+        }}
+      />
+      {/* Orb aksen: kuning kiri-bawah — signature Ulul Albaab */}
+      <div
+        className="absolute bottom-0 left-0 w-[280px] h-[280px] rounded-full pointer-events-none translate-y-1/2 -translate-x-1/4"
+        style={{
+          background:
+            "radial-gradient(circle, rgba(251,191,36,0.10) 0%, transparent 70%)",
+        }}
+      />
+      {/* Orb kecil aksen tengah-kiri */}
+      <div
+        className="absolute top-1/2 left-1/4 w-[160px] h-[160px] rounded-full pointer-events-none -translate-y-1/2"
+        style={{
+          background:
+            "radial-gradient(circle, rgba(14,134,232,0.08) 0%, transparent 70%)",
+        }}
+      />
+      {/* Topline shimmer */}
+      <div
+        className="absolute top-0 left-0 right-0 h-px pointer-events-none"
+        style={{
+          background:
+            "linear-gradient(90deg, transparent 0%, rgba(251,191,36,0.25) 50%, transparent 100%)",
+        }}
+      />
 
       <Container className="relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-10 mb-16">
 
-          {/* Brand Info */}
+          {/* ── Brand Info ── */}
           <div className="lg:col-span-1 space-y-8">
-            <Link href="/" className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-2xl flex items-center justify-center bg-brand-yellow-50 text-brand-blue-950 shadow-md overflow-hidden">
-                <img src={BRANDING.logoPath} alt={`Logo ${BRANDING.schoolName}`} className="w-full h-full object-contain p-1" />
+            <Link href="/" className="flex items-center gap-4 group">
+              <div
+                className="w-12 h-12 rounded-2xl flex items-center justify-center overflow-hidden flex-shrink-0 transition-all duration-500 group-hover:scale-105 group-hover:-rotate-3"
+                style={{
+                  background:
+                    "linear-gradient(135deg, var(--color-brand-yellow-200) 0%, var(--color-brand-yellow-400) 100%)",
+                  boxShadow: "0 4px 20px rgba(251,191,36,0.30)",
+                }}
+              >
+                <Image
+                  src={BRANDING.logoPath}
+                  alt={`Logo ${BRANDING.schoolName}`}
+                  width={48}
+                  height={48}
+                  className="w-full h-full object-contain p-1"
+                />
               </div>
               <div>
-                <h3 className="text-xl font-black text-white tracking-tight leading-none">{BRANDING.schoolName}</h3>
-                <p className="text-[10px] font-bold text-brand-yellow-100/80 uppercase tracking-widest mt-2">Islamic Boarding School</p>
+                <h3 className="text-lg font-black text-white tracking-tight leading-tight">
+                  {BRANDING.schoolName}
+                </h3>
+                <p
+                  className="text-[10px] font-bold uppercase tracking-widest mt-1.5"
+                  style={{ color: "var(--color-brand-yellow-400)" }}
+                >
+                  Islamic Boarding School
+                </p>
               </div>
             </Link>
-            <p className="text-brand-yellow-100/80 font-medium leading-relaxed max-w-xs text-justify">
-              Membangun generasi Qur&apos;ani yang cerdas &amp; berakhlak mulia melalui sistem terintegrasi Al Andalus.
+
+            <p
+              className="font-medium leading-relaxed max-w-xs text-sm"
+              style={{ color: "rgba(255,255,255,0.55)" }}
+            >
+              Membangun generasi Qur&apos;ani yang cerdas &amp; berakhlak mulia
+              melalui sistem terintegrasi Al Andalus.
             </p>
-            <div className="flex gap-3">
-              {[
-                { Icon: Instagram, href: BRANDING.igUrl },
-                { Icon: Youtube, href: BRANDING.ytUrl },
-                { Icon: Facebook, href: BRANDING.fbUrl },
-                { Icon: Twitter, href: "#" }
-              ].map(({ Icon, href }, i) => (
-                <Link key={i} href={href} className="w-10 h-10 rounded-xl bg-brand-blue-900 border border-brand-blue-800 flex items-center justify-center text-brand-yellow-100 hover:bg-brand-yellow-400 hover:text-brand-blue-950 hover:border-brand-yellow-400 transition-all duration-300 shadow-sm">
-                  <Icon className="w-5 h-5" />
+
+            {/* Social Links */}
+            <div className="flex gap-2.5">
+              {socialLinks.map(({ Icon, href, label }) => (
+                <Link
+                  key={label}
+                  href={href}
+                  aria-label={label}
+                  className="w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300"
+                  style={{
+                    background: "rgba(255,255,255,0.06)",
+                    border: "1px solid rgba(255,255,255,0.10)",
+                    color: "rgba(255,255,255,0.55)",
+                  }}
+                  onMouseEnter={(e) => {
+                    const el = e.currentTarget as HTMLElement;
+                    el.style.background = "var(--color-brand-yellow-400)";
+                    el.style.borderColor = "var(--color-brand-yellow-400)";
+                    el.style.color = "var(--color-brand-blue-950)";
+                    el.style.transform = "translateY(-2px)";
+                    el.style.boxShadow = "0 6px 16px rgba(251,191,36,0.35)";
+                  }}
+                  onMouseLeave={(e) => {
+                    const el = e.currentTarget as HTMLElement;
+                    el.style.background = "rgba(255,255,255,0.06)";
+                    el.style.borderColor = "rgba(255,255,255,0.10)";
+                    el.style.color = "rgba(255,255,255,0.55)";
+                    el.style.transform = "translateY(0)";
+                    el.style.boxShadow = "none";
+                  }}
+                >
+                  <Icon className="w-4 h-4" strokeWidth={2} />
                 </Link>
               ))}
             </div>
           </div>
 
-          {/* Quick Links */}
+          {/* ── Lembaga Links ── */}
           <div className="space-y-6">
-            <h4 className="text-sm font-black text-brand-yellow-400 uppercase tracking-widest">Lembaga</h4>
-            <ul className="space-y-4">
-              {['Tentang Kami', 'Program Studi', 'Fasilitas', 'Kegiatan Santri'].map((item) => (
+            <h4
+              className="text-xs font-black uppercase tracking-[0.12em]"
+              style={{ color: "var(--color-brand-yellow-400)" }}
+            >
+              Lembaga
+            </h4>
+            <ul className="space-y-3.5">
+              {lembagaLinks.map((item) => (
                 <li key={item}>
-                  <Link href="#" className="text-brand-yellow-100/80 font-bold hover:text-white flex items-center gap-2 group transition-colors">
+                  <Link
+                    href="#"
+                    className="text-sm font-semibold flex items-center gap-1.5 group/link transition-colors duration-200"
+                    style={{ color: "rgba(255,255,255,0.55)" }}
+                    onMouseEnter={(e) => {
+                      (e.currentTarget as HTMLElement).style.color = "#fff";
+                    }}
+                    onMouseLeave={(e) => {
+                      (e.currentTarget as HTMLElement).style.color =
+                        "rgba(255,255,255,0.55)";
+                    }}
+                  >
                     {item}
-                    <ArrowUpRight className="w-3.5 h-3.5 opacity-0 -translate-y-1 translate-x-1 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all text-brand-yellow-400" />
+                    <ArrowUpRight
+                      className="w-3.5 h-3.5 opacity-0 -translate-y-0.5 translate-x-0.5 group-hover/link:opacity-100 group-hover/link:translate-y-0 group-hover/link:translate-x-0 transition-all duration-200 flex-shrink-0"
+                      style={{ color: "var(--color-brand-yellow-400)" }}
+                    />
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Support */}
+          {/* ── Informasi Links ── */}
           <div className="space-y-6">
-            <h4 className="text-sm font-black text-brand-yellow-400 uppercase tracking-widest">Informasi</h4>
-            <ul className="space-y-4">
-              {['Pendaftaran PPDB', 'Biaya Pendidikan', 'Beasiswa Tahfidz', 'Kalender Akademik'].map((item) => (
+            <h4
+              className="text-xs font-black uppercase tracking-[0.12em]"
+              style={{ color: "var(--color-brand-yellow-400)" }}
+            >
+              Informasi
+            </h4>
+            <ul className="space-y-3.5">
+              {infoLinks.map((item) => (
                 <li key={item}>
-                  <Link href="#" className="text-brand-yellow-100/80 font-bold hover:text-white transition-colors">{item}</Link>
+                  <Link
+                    href="#"
+                    className="text-sm font-semibold transition-colors duration-200"
+                    style={{ color: "rgba(255,255,255,0.55)" }}
+                    onMouseEnter={(e) => {
+                      (e.currentTarget as HTMLElement).style.color = "#fff";
+                    }}
+                    onMouseLeave={(e) => {
+                      (e.currentTarget as HTMLElement).style.color =
+                        "rgba(255,255,255,0.55)";
+                    }}
+                  >
+                    {item}
+                  </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Contact */}
+          {/* ── Kontak ── */}
           <div className="space-y-6">
-            <h4 className="text-sm font-black text-brand-yellow-400 uppercase tracking-widest">Kontak Kami</h4>
-            <div className="space-y-5">
-              <div className="flex gap-4">
-                <div className="w-10 h-10 rounded-xl bg-brand-blue-900 flex items-center justify-center text-brand-yellow-400 shrink-0 border border-brand-blue-800">
-                  <MapPin className="w-5 h-5" />
+            <h4
+              className="text-xs font-black uppercase tracking-[0.12em]"
+              style={{ color: "var(--color-brand-yellow-400)" }}
+            >
+              Kontak Kami
+            </h4>
+            <div className="space-y-4">
+
+              {/* Alamat */}
+              <div className="flex gap-3.5">
+                <div
+                  className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5"
+                  style={{
+                    background: "rgba(255,255,255,0.06)",
+                    border: "1px solid rgba(255,255,255,0.10)",
+                    color: "var(--color-brand-yellow-400)",
+                  }}
+                >
+                  <MapPin className="w-4 h-4" />
                 </div>
-                <div className="text-sm font-medium text-brand-yellow-100/80 text-left pt-1">
-                  <div dangerouslySetInnerHTML={{ __html: BRANDING.address.replace(/,/g, ',<br />') }} />
+                <p
+                  className="text-sm font-medium leading-relaxed pt-1"
+                  style={{ color: "rgba(255,255,255,0.55)" }}
+                  dangerouslySetInnerHTML={{
+                    __html: BRANDING.address.replace(/,/g, ",<br />"),
+                  }}
+                />
+              </div>
+
+              {/* Telepon */}
+              <div className="flex gap-3.5">
+                <div
+                  className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
+                  style={{
+                    background: "rgba(255,255,255,0.06)",
+                    border: "1px solid rgba(255,255,255,0.10)",
+                    color: "var(--color-brand-yellow-400)",
+                  }}
+                >
+                  <Phone className="w-4 h-4" />
+                </div>
+                <div className="pt-1">
+                  <p className="text-sm font-bold text-white">
+                    {BRANDING.phone}
+                  </p>
+                  <p
+                    className="text-[11px] font-medium tracking-wide mt-0.5"
+                    style={{ color: "rgba(255,255,255,0.35)" }}
+                  >
+                    Layanan Pelanggan
+                  </p>
                 </div>
               </div>
-              <div className="flex gap-4">
-                <div className="w-10 h-10 rounded-xl bg-brand-blue-900 flex items-center justify-center text-brand-yellow-400 shrink-0 border border-brand-blue-800">
-                  <Phone className="w-5 h-5" />
+
+              {/* Email */}
+              <div className="flex gap-3.5">
+                <div
+                  className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
+                  style={{
+                    background: "rgba(255,255,255,0.06)",
+                    border: "1px solid rgba(255,255,255,0.10)",
+                    color: "var(--color-brand-yellow-400)",
+                  }}
+                >
+                  <Mail className="w-4 h-4" />
                 </div>
-                <div className="text-sm font-bold text-white text-left pt-1">
-                  {BRANDING.phone}
-                  <p className="text-[10px] text-brand-yellow-100/80 font-medium tracking-wide mt-0.5">Layanan Pelanggan</p>
-                </div>
-              </div>
-              <div className="flex gap-4">
-                <div className="w-10 h-10 rounded-xl bg-brand-blue-900 flex items-center justify-center text-brand-yellow-400 shrink-0 border border-brand-blue-800">
-                  <Mail className="w-5 h-5" />
-                </div>
-                <div className="text-sm font-bold text-white text-left pt-2.5 break-all">
+                <p className="text-sm font-bold text-white break-all pt-1.5">
                   {BRANDING.email}
-                </div>
+                </p>
               </div>
+
             </div>
           </div>
-
         </div>
 
-        {/* Bottom Bar */}
-        <div className="pt-8 border-t border-brand-blue-900 flex flex-col md:flex-row justify-between items-center gap-6">
-          <p className="text-sm font-medium text-brand-yellow-100/50 order-2 md:order-1 text-center md:text-left">
-            &copy; {currentYear} {BRANDING.schoolName}. Hak cipta dilindungi undang-undang.
+        {/* ── Bottom Bar ── */}
+        <div
+          className="pt-8 flex flex-col md:flex-row justify-between items-center gap-5"
+          style={{ borderTop: "1px solid rgba(255,255,255,0.07)" }}
+        >
+          <p
+            className="text-xs font-medium order-2 md:order-1 text-center md:text-left"
+            style={{ color: "rgba(255,255,255,0.30)" }}
+          >
+            &copy; {currentYear} {BRANDING.schoolName}. Hak cipta dilindungi
+            undang-undang.
           </p>
-          <div className="flex flex-wrap justify-center items-center gap-6 text-sm font-bold text-brand-yellow-100/60 order-1 md:order-2">
-            <Link href="#" className="hover:text-white transition-colors">Kebijakan Privasi</Link>
-            <Link href="#" className="hover:text-white transition-colors">Syarat &amp; Ketentuan</Link>
-            <div className="flex items-center gap-2 bg-brand-blue-900 px-3 py-1.5 rounded-lg border border-brand-blue-800 text-brand-yellow-100">
-              <Globe className="w-4 h-4" />
-              <span className="text-xs">ID / AR</span>
+
+          <div className="flex flex-wrap justify-center items-center gap-5 order-1 md:order-2">
+            {["Kebijakan Privasi", "Syarat & Ketentuan"].map((item) => (
+              <Link
+                key={item}
+                href="#"
+                className="text-xs font-semibold transition-colors duration-200"
+                style={{ color: "rgba(255,255,255,0.35)" }}
+                onMouseEnter={(e) => {
+                  (e.currentTarget as HTMLElement).style.color =
+                    "rgba(255,255,255,0.85)";
+                }}
+                onMouseLeave={(e) => {
+                  (e.currentTarget as HTMLElement).style.color =
+                    "rgba(255,255,255,0.35)";
+                }}
+              >
+                {item}
+              </Link>
+            ))}
+
+            {/* Language toggle — yellow accent */}
+            <div
+              className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold"
+              style={{
+                background: "rgba(251,191,36,0.08)",
+                border: "1px solid rgba(251,191,36,0.18)",
+                color: "var(--color-brand-yellow-400)",
+              }}
+            >
+              <Globe className="w-3.5 h-3.5" />
+              <span>ID / AR</span>
             </div>
           </div>
         </div>
