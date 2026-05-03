@@ -16,20 +16,20 @@ const SPRING: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 const misi = [
   {
+    label: "Rabbani",
+    text: "Membina generasi yang taat kepada Allah sesuai sunnah dengan pemahaman salafushalih.",
+  },
+  {
+    label: "Cendekia",
+    text: "Menjadikan santri pribadi yang cerdas, cepat mengerti situasi, dan pandai mencari solusi.",
+  },
+  {
+    label: "Mandiri",
+    text: "Mendidik pribadi yang mampu mengambil keputusan dan menyelesaikan tugas secara mandiri.",
+  },
+  {
     label: "TICE",
-    text: "Menyelenggarakan pendidikan berbasis TICE (Tahfizh, Islamic Curriculum, dan Entrepreneurship).",
-  },
-  {
-    label: "Hamalatul Qur'an",
-    text: "Mencetak Hamalatul Qur'an dengan bekal ilmu syar'i yang mumpuni.",
-  },
-  {
-    label: "Entrepreneur",
-    text: "Menanamkan Jiwa Entrepreneur Muslim yang berwawasan Global.",
-  },
-  {
-    label: "Kitab Turots",
-    text: "Pendidikan Islam berbasis Kitab Turots dengan Bahasa Pengantar Bahasa Arab.",
+    text: "Menyelenggarakan pendidikan berbasis Tahfizh, Islamic Curriculum, dan Entrepreneurship.",
   },
 ];
 
