@@ -156,7 +156,8 @@ export default function DaftarPage() {
         }
       }
     }
-
+    if (!formData.jenis_kelamin) {
+      errors.jenis_kelamin = "Pilih jenis kelamin santri";
     } else if (formData.jenis_kelamin === "L") {
       errors.jenis_kelamin = "Mohon maaf, pendaftaran Santri Putra dilakukan melalui Pesantren Al-Imam.";
     }
@@ -164,7 +165,6 @@ export default function DaftarPage() {
     if (!formData.jenjang) {
       errors.jenjang = "Pilih jenjang pendidikan";
     }
-
 
     setFieldErrors(errors);
     return Object.keys(errors).length === 0;
