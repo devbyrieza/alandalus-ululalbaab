@@ -158,7 +158,7 @@ export default function HeroSection() {
               style={{ borderRadius: "2rem", border: "10px solid var(--color-white)", boxShadow: "var(--shadow-premium-2xl), 0 0 0 1px var(--color-brand-blue-100)", overflow: "hidden" }}
             >
               <Image
-                src="/images/hero.webp"
+                src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=1400&auto=format&fit=crop"
                 alt={`${BRANDING.schoolName} — Pesantren Modern`}
                 width={800} height={600}
                 className="w-full h-auto object-cover aspect-[4/3]"
@@ -166,6 +166,7 @@ export default function HeroSection() {
                 onMouseEnter={(e) => { if (!shouldReduceMotion) e.currentTarget.style.transform = "scale(1.04)"; }}
                 onMouseLeave={(e) => { e.currentTarget.style.transform = "scale(1)"; }}
                 priority
+                sizes="(max-width: 768px) 100vw, 800px"
               />
               <div className="absolute inset-0 pointer-events-none" style={{ background: "linear-gradient(to top, rgba(1,30,66,0.50) 0%, transparent 55%)" }} aria-hidden="true" />
             </div>

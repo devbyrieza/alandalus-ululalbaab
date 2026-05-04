@@ -123,7 +123,7 @@ export default function Navbar() {
                   {BRANDING.schoolShortName}
                 </h1>
                 <p className="text-[9px] sm:text-[10px] font-bold text-[var(--color-brand-blue-500)] uppercase tracking-widest mt-0.5 leading-tight">
-                  Managed by Al Andalus IIBS
+                  Di bawah naungan Al-Andalus IIBS
                 </p>
               </div>
             </Link>
@@ -269,7 +269,7 @@ export default function Navbar() {
                 {/* Yellow accent pill — signature Ulul Albaab */}
                 <div className="ml-auto">
                   <span className="text-[10px] font-black px-2.5 py-1 rounded-full bg-[var(--color-brand-yellow-100)] text-[var(--color-brand-yellow-700)] border border-[var(--color-brand-yellow-200)] uppercase tracking-wider">
-                    PPDB Open
+                    PPDB Dibuka
                   </span>
                 </div>
               </div>
