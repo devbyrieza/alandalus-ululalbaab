@@ -27,7 +27,7 @@ interface FormData {
   tanggal_lahir: string;
   no_hp: string;
   jenis_kelamin: "L" | "P" | "";
-  jenjang: "MTs" | "IL" | "SMA" | "";
+  jenjang: "MTs" | "IL" | "";
 }
 
 // ========================================
@@ -64,12 +64,12 @@ const InputField = ({
 
 export default function DaftarPage() {
   const router = useRouter();
-  const [jenjangFromUrl, setJenjangFromUrl] = useState<"MTs" | "IL" | "SMA" | "">("");
+  const [jenjangFromUrl, setJenjangFromUrl] = useState<"MTs" | "IL" | "">("");
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search);
-      const jenjang = params.get('jenjang') as "MTs" | "IL" | "SMA" | null;
+      const jenjang = params.get('jenjang') as "MTs" | "IL" | null;
       if (jenjang) {
         setJenjangFromUrl(jenjang);
       }
@@ -157,15 +157,14 @@ export default function DaftarPage() {
       }
     }
 
-    if (!formData.jenis_kelamin) {
-      errors.jenis_kelamin = "Pilih jenis kelamin santri";
+    } else if (formData.jenis_kelamin === "L") {
+      errors.jenis_kelamin = "Mohon maaf, pendaftaran Santri Putra dilakukan melalui Pesantren Al-Imam.";
     }
 
     if (!formData.jenjang) {
       errors.jenjang = "Pilih jenjang pendidikan";
-    } else if (formData.jenjang === "SMA") {
-      errors.jenjang = "Mohon maaf, pendaftaran SMA Reguler telah ditutup.";
     }
+
 
     setFieldErrors(errors);
     return Object.keys(errors).length === 0;
@@ -348,11 +347,12 @@ export default function DaftarPage() {
 
                 <div data-error={!!fieldErrors.jenjang} className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   {[
-                    { value: "MTs", title: "Madrasah Tsanawiyah", subtitle: "Lulusan SD/Sederajat" },
-                    { value: "IL", title: "I'dad Lughowi", subtitle: "Lulusan SMP/Sederajat" },
-                    { value: "SMA", title: "Madrasah Aliyah (SMA)", subtitle: "Lulusan SMP/Sederajat" },
+                    { value: "MTs", title: "MTs Putri", subtitle: "Lulusan SD/Sederajat" },
+                    { value: "IL", title: "I'dad Lughowi Putri", subtitle: "Lulusan SMP/Sederajat" },
                   ].map((option) => {
-                    const isClosed = option.value === "SMA";
+                    const isPutra = formData.jenis_kelamin === "L";
+                    const isPutri = formData.jenis_kelamin === "P";
+                    const isClosed = isPutra; // Tutup jika memilih Putra di Ulul Albaab
                     
                     return (
                       <motion.div
@@ -373,7 +373,7 @@ export default function DaftarPage() {
                       >
                         {isClosed && (
                           <div className="absolute top-4 right-4 bg-red-600 text-white text-[10px] font-black px-2 py-1 rounded-full uppercase tracking-tighter shadow-sm z-10">
-                            Kuota Penuh / Tutup
+                            Khusus Putri
                           </div>
                         )}
                         
@@ -389,18 +389,7 @@ export default function DaftarPage() {
                           </div>
                         </div>
 
-                        {/* Special Note for SMA */}
-                        {option.value === "SMA" && (
-                          <motion.div 
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: "auto" }}
-                            className="mt-4 p-3 bg-brand-yellow-100/30 rounded-xl border border-brand-yellow-200/50 relative z-0"
-                          >
-                            <p className="text-[10px] leading-relaxed text-brand-blue-900 font-bold italic">
-                              * Syarat pendaftar SMA langsung (tanpa I'dad): Wajib memiliki hafalan 5 Juz Mutqin & lancar berbahasa Arab.
-                            </p>
-                          </motion.div>
-                        )}
+
                       </motion.div>
                     );
                   })}
