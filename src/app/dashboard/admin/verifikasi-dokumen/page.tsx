@@ -67,11 +67,6 @@ function VerifikasiDokumenContent() {
     fetchSession();
   }, []);
 
-  const canVerify =
-    userRole === "admin_super" ||
-    userRole === "admin" ||
-    userRole === "admin_berkas";
-
   useEffect(() => {
     if (urlStatus && urlStatus !== statusFilter) setStatusFilter(urlStatus);
     if (urlSearch && urlSearch !== searchTerm) setSearchTerm(urlSearch);
@@ -94,7 +89,6 @@ function VerifikasiDokumenContent() {
       } else {
         setRefreshing(true);
       }
-      // We fetch based on status but we want to group by pendaftar
       const response = await fetch(
         `/api/admin/verifikasi/dokumen?status=${statusFilter}`
       );
@@ -102,7 +96,6 @@ function VerifikasiDokumenContent() {
 
       const result = await response.json();
 
-      // Group by pendaftar
       const grouped: Record<string, PendaftarSummary> = {};
 
       for (const dok of result.data || []) {
@@ -147,7 +140,13 @@ function VerifikasiDokumenContent() {
 
       const result = await response.json();
 
-      const data = result.data.map((item: any) => ({
+      const data = result.data.map((item: { 
+        pendaftar?: { nama_lengkap: string; nomor_pendaftaran: string; jenjang: string };
+        jenis_dokumen: string;
+        is_verified: boolean;
+        catatan: string | null;
+        created_at: string;
+      }) => ({
         "Nama Pendaftar": item.pendaftar?.nama_lengkap ? toTitleCase(item.pendaftar.nama_lengkap) : "-",
         "No Pendaftaran": item.pendaftar?.nomor_pendaftaran || "-",
         "Jenjang": item.pendaftar?.jenjang || "-",
@@ -186,8 +185,7 @@ function VerifikasiDokumenContent() {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div className="bg-white rounded-2xl shadow-sm p-4 md:p-8 border border-brand-yellow-100 mb-8">
+      <div className="bg-white rounded-2xl shadow-sm p-4 md:p-8 border border-brand-blue-100 mb-8">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
           <div className="flex items-center gap-3 md:gap-5">
             <div className="p-2.5 md:p-4 bg-linear-to-br from-brand-blue-600 to-brand-blue-900 rounded-2xl shadow-xl shadow-brand-blue-900/20 flex-shrink-0">
@@ -218,7 +216,7 @@ function VerifikasiDokumenContent() {
             <button
               onClick={fetchData}
               disabled={refreshing}
-              className="p-2 bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white rounded-xl transition-all disabled:opacity-50"
+              className="p-2 bg-brand-blue-50 text-brand-blue-600 hover:bg-brand-blue-600 hover:text-white rounded-xl transition-all disabled:opacity-50"
               title="Muat Ulang Data"
             >
               <RefreshCw className={`w-5 h-5 ${refreshing ? "animate-spin" : ""}`} />
@@ -226,8 +224,7 @@ function VerifikasiDokumenContent() {
           </div>
         </div>
 
-        {/* Global Filter Bar */}
-        <div className="flex flex-col gap-3 md:gap-6 pt-6 border-t border-brand-yellow-50">
+        <div className="flex flex-col gap-3 md:gap-6 pt-6 border-t border-brand-blue-50">
           <div className="relative flex-1 group">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-ink-300 group-focus-within:text-brand-blue-600 transition-colors" />
             <input
@@ -238,7 +235,7 @@ function VerifikasiDokumenContent() {
                 setSearchTerm(e.target.value);
                 updateFilters(undefined, e.target.value);
               }}
-              className="w-full pl-12 pr-4 py-4 bg-brand-yellow-50/50 border border-brand-yellow-100 rounded-2xl focus:border-brand-blue-500 focus:bg-white focus:outline-none transition-all text-sm md:text-base font-bold text-brand-blue-950 placeholder:text-ink-300"
+              className="w-full pl-12 pr-4 py-4 bg-brand-blue-50/50 border border-brand-blue-100 rounded-2xl focus:border-brand-blue-500 focus:bg-white focus:outline-none transition-all text-sm md:text-base font-bold text-brand-blue-950 placeholder:text-ink-300"
             />
           </div>
           <div className="flex flex-wrap gap-2">
@@ -252,7 +249,7 @@ function VerifikasiDokumenContent() {
                 onClick={() => updateFilters(s.id)}
                 className={`px-4 md:px-8 py-3 rounded-2xl font-black transition-all text-sm md:text-base whitespace-nowrap active:scale-95 ${statusFilter === s.id
                   ? "bg-brand-blue-700 text-white shadow-lg shadow-brand-blue-700/30 ring-2 ring-brand-blue-500/20"
-                  : "bg-white border border-brand-yellow-200 text-ink-400 hover:bg-brand-yellow-50 hover:text-brand-blue-700"
+                  : "bg-white border border-brand-blue-100 text-ink-400 hover:bg-brand-blue-50 hover:text-brand-blue-700"
                   }`}
               >
                 {s.label}
@@ -262,12 +259,11 @@ function VerifikasiDokumenContent() {
         </div>
       </div>
 
-      {/* Standardized Refreshing Overlay */}
       {refreshing && (
         <div className="fixed inset-0 bg-white/40 backdrop-blur-[1px] z-[100] flex items-center justify-center pointer-events-none">
-          <div className="bg-white/80 px-6 py-3 rounded-2xl shadow-xl border border-stone-100 flex items-center gap-3 animate-in fade-in zoom-in duration-300">
+          <div className="bg-white/80 px-6 py-3 rounded-2xl shadow-xl border border-brand-blue-100 flex items-center gap-3 animate-in fade-in zoom-in duration-300">
             <Loader2 className="w-5 h-5 animate-spin text-brand-blue-600" />
-            <span className="text-sm font-bold text-stone-700 tracking-tight">
+            <span className="text-sm font-bold text-ink-700 tracking-tight">
               Memperbarui data...
             </span>
           </div>
@@ -275,20 +271,19 @@ function VerifikasiDokumenContent() {
       )}
 
       {loading && pendaftarList.length === 0 ? (
-        <div className="flex flex-col items-center justify-center p-20 bg-white rounded-3xl border border-brand-yellow-100">
+        <div className="flex flex-col items-center justify-center p-20 bg-white rounded-3xl border border-brand-blue-100">
           <Loader2 className="w-12 h-12 animate-spin text-brand-blue-600 mb-4" />
           <p className="text-ink-400 font-bold tracking-wide">Mengambil data pendaftar...</p>
         </div>
       ) : (
         <>
-          {/* Removed previous inline refreshing indicator in favor of global overlay */}
           {filteredList.length === 0 ? (
-            <div className="flex flex-col items-center justify-center p-20 bg-white rounded-3xl border-2 border-stone-100 text-center">
-              <div className="w-20 h-20 bg-stone-50 rounded-full flex items-center justify-center mb-6">
-                <FileCheck className="w-10 h-10 text-stone-300" />
+            <div className="flex flex-col items-center justify-center p-20 bg-white rounded-3xl border-2 border-brand-blue-50 text-center">
+              <div className="w-20 h-20 bg-brand-blue-50 rounded-full flex items-center justify-center mb-6">
+                <FileCheck className="w-10 h-10 text-brand-blue-300" />
               </div>
-              <h3 className="text-xl font-bold text-stone-900 mb-2">Tidak Ada Pendaftar</h3>
-              <p className="text-stone-500">Belum ada dokumen yang perlu diverifikasi pada kategori ini.</p>
+              <h3 className="text-xl font-bold text-brand-blue-950 mb-2">Tidak Ada Pendaftar</h3>
+              <p className="text-ink-600">Belum ada dokumen yang perlu diverifikasi pada kategori ini.</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -301,14 +296,13 @@ function VerifikasiDokumenContent() {
                   <Link
                     key={pendaftar.id}
                     href={`/dashboard/admin/verifikasi-dokumen/${pendaftar.id}`}
-                    className="group bg-white rounded-3xl border border-brand-yellow-100 hover:border-brand-blue-400 p-6 transition-all hover:shadow-xl hover:shadow-brand-blue-900/5 relative overflow-hidden"
+                    className="group bg-white rounded-3xl border border-brand-blue-100 hover:border-brand-blue-400 p-6 transition-all hover:shadow-xl hover:shadow-brand-blue-900/5 relative overflow-hidden"
                   >
-                    {/* Background Decor */}
                     <div className="absolute top-0 right-0 w-32 h-32 bg-linear-to-br from-brand-blue-50 to-brand-yellow-50 -mr-16 -mt-16 rounded-full opacity-50 transition-transform group-hover:scale-110" />
 
                     <div className="relative">
                       <div className="flex items-center gap-4 mb-6">
-                        <div className="w-14 h-14 bg-brand-yellow-100 rounded-2xl flex items-center justify-center group-hover:from-brand-blue-600 group-hover:to-brand-blue-900 transition-all duration-500 shadow-inner border border-brand-yellow-200">
+                        <div className="w-14 h-14 bg-brand-blue-50 rounded-2xl flex items-center justify-center group-hover:from-brand-blue-600 group-hover:to-brand-blue-900 transition-all duration-500 shadow-inner border border-brand-blue-100">
                           <User className="w-6 h-6 text-brand-blue-400 group-hover:text-white transition-colors" />
                         </div>
                         <div className="flex-1 min-w-0">
@@ -319,20 +313,19 @@ function VerifikasiDokumenContent() {
                             <span className="text-xs font-mono font-black text-brand-blue-400 bg-brand-blue-50 px-2 py-0.5 rounded">
                               {pendaftar.nomor_pendaftaran}
                             </span>
-                            <span className="text-[10px] font-black uppercase tracking-widest text-brand-blue-700 bg-brand-yellow-100 border border-brand-yellow-200 px-2 py-0.5 rounded shadow-xs">
+                            <span className="text-[10px] font-black uppercase tracking-widest text-brand-blue-700 bg-brand-blue-50 border border-brand-blue-100 px-2 py-0.5 rounded shadow-xs">
                               {pendaftar.jenjang}
                             </span>
                           </div>
                         </div>
                       </div>
 
-                      {/* Progress Section */}
                       <div className="space-y-3 mb-6">
                         <div className="flex items-center justify-between text-xs font-black uppercase tracking-widest leading-none">
                           <span className="text-ink-300">Penyelesaian Verifikasi</span>
                           <span className="text-brand-blue-700">{percentage}%</span>
                         </div>
-                        <div className="h-2.5 bg-brand-yellow-100/50 rounded-full overflow-hidden shadow-inner border border-brand-yellow-50">
+                        <div className="h-2.5 bg-brand-blue-50/50 rounded-full overflow-hidden shadow-inner border border-brand-blue-50">
                           <div
                             className="h-full bg-linear-to-r from-brand-blue-500 to-brand-blue-700 rounded-full transition-all duration-1000 ease-out"
                             style={{ width: `${percentage}%` }}
@@ -341,16 +334,16 @@ function VerifikasiDokumenContent() {
                         <div className="flex items-center gap-4">
                           <div className="flex items-center gap-1.5">
                             <div className="w-2 h-2 rounded-full bg-emerald-500 shadow-sm shadow-emerald-500/50" />
-                            <span className="text-xs font-bold text-stone-600">{verifiedCount} Terverifikasi</span>
+                            <span className="text-xs font-bold text-ink-600">{verifiedCount} Terverifikasi</span>
                           </div>
                           <div className="flex items-center gap-1.5">
                             <div className="w-2 h-2 rounded-full bg-amber-400 shadow-sm shadow-amber-400/50" />
-                            <span className="text-xs font-bold text-stone-600">{totalCount - verifiedCount} Menunggu</span>
+                            <span className="text-xs font-bold text-ink-600">{totalCount - verifiedCount} Menunggu</span>
                           </div>
                         </div>
                       </div>
 
-                      <div className="flex items-center justify-between pt-4 border-t border-brand-yellow-50 group-hover:border-brand-blue-100 transition-colors">
+                      <div className="flex items-center justify-between pt-4 border-t border-brand-blue-50 group-hover:border-brand-blue-100 transition-colors">
                         <div className="flex items-center gap-2 text-ink-300 font-black text-[10px] uppercase tracking-widest group-hover:text-brand-blue-600 transition-colors">
                           Proses Verifikasi
                           <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -377,7 +370,7 @@ export default function VerifikasiDokumenPage() {
   return (
     <Suspense
       fallback={
-        <div className="flex flex-col items-center justify-center p-20 bg-white rounded-3xl border border-brand-yellow-100">
+        <div className="flex flex-col items-center justify-center p-20 bg-white rounded-3xl border border-brand-blue-100">
           <Loader2 className="w-12 h-12 animate-spin text-brand-blue-600 mb-4" />
           <p className="text-ink-400 font-bold tracking-wide">Memuat halaman...</p>
         </div>

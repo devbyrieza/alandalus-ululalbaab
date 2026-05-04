@@ -11,7 +11,7 @@ import {
   Loader2,
   RefreshCw,
   User,
-  Calendar,
+  Calendar as CalendarIcon,
   Phone,
   DollarSign,
   FileSpreadsheet,
@@ -155,7 +155,7 @@ function VerifikasiPembayaranContent() {
       const result = await response.json();
       const rawData = result.data;
 
-      const data = rawData.map((item: any) => ({
+      const data = rawData.map((item: Pembayaran) => ({
         "Nama Lengkap": item.pendaftar?.nama_lengkap
           ? toTitleCase(item.pendaftar.nama_lengkap)
           : "-",
@@ -575,7 +575,7 @@ function VerifikasiPembayaranContent() {
                               : "Transfer Manual"}
                           </div>
                           <div className="flex items-center gap-2 text-xs text-stone-500">
-                            <Calendar className="w-3.5 h-3.5" />
+                            <CalendarIcon className="w-3.5 h-3.5" />
                             {pay.tanggal_pembayaran
                               ? formatDate(pay.tanggal_pembayaran)
                               : formatDate(pay.created_at)}

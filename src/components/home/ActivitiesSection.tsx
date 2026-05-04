@@ -5,7 +5,7 @@ import Image from "next/image";
 import {
     Users, Trophy, Shield, Target, Monitor, Zap,
     TreePine, Waves, FileText, PenTool, Dumbbell,
-    Play, Palette, Sparkles, ArrowRight,
+    Play, Palette, Sparkles, ArrowRight, Calendar as CalendarIcon,
 } from "lucide-react";
 import { Container } from "@/components/layout/Container";
 import { motion } from "framer-motion";
@@ -273,32 +273,63 @@ export default function ActivitiesSection() {
                         </p>
                     </motion.div>
 
-                    {/* Chips grid */}
-                    <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-3 md:gap-4">
-                        {EXTRA_ACTIVITIES.map((item, idx) => (
-                            <ExtraChip key={item.name} item={item} index={idx} />
-                        ))}
+                    {/* Extra Activities Grid */}
+                    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4 mb-20">
+                        {EXTRA_ACTIVITIES.map((item, idx) => {
+                            const Icon = item.icon;
+                            return (
+                                <motion.div
+                                    key={idx}
+                                    initial={{ opacity: 0, scale: 0.9 }}
+                                    whileInView={{ opacity: 1, scale: 1 }}
+                                    viewport={{ once: true }}
+                                    transition={{ delay: 0.1 + idx * 0.05 }}
+                                    className="flex flex-col items-center gap-3 p-4 bg-white rounded-2xl border border-brand-blue-50 shadow-sm hover:border-brand-blue-100 hover:shadow-md transition-all group text-center"
+                                >
+                                    <div className="w-10 h-10 rounded-xl bg-brand-blue-50 flex items-center justify-center text-brand-blue-600 group-hover:bg-brand-blue-600 group-hover:text-white transition-colors">
+                                        <Icon className="w-5 h-5" />
+                                    </div>
+                                    <span className="text-[11px] font-bold text-ink-950 uppercase tracking-wider">{item.name}</span>
+                                </motion.div>
+                            );
+                        })}
                     </div>
-                </div>
 
-                {/* ── CTA ── */}
-                <motion.div
-                    initial={{ opacity: 0, y: 16 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.1, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                    className="flex justify-center"
-                >
-                    <Link href="/kegiatan">
-                        <button className="btn-secondary inline-flex items-center gap-2.5 px-10 group/btn">
-                            <span>Lihat Semua Kegiatan</span>
-                            <ArrowRight
-                                className="w-4 h-4 transition-transform duration-300 group-hover/btn:translate-x-1"
-                                strokeWidth={2}
-                            />
-                        </button>
-                    </Link>
-                </motion.div>
+                    {/* Footer Card (Big CTA) */}
+                    <motion.div 
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                        className="w-full"
+                    >
+                        <div className="relative p-10 md:p-12 rounded-[2.5rem] bg-brand-blue-900 overflow-hidden shadow-2xl">
+                            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10" />
+                            <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-brand-yellow-500/10 rounded-full blur-[60px] -translate-y-1/2 translate-x-1/4" />
+                            
+                            <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left">
+                                <div className="max-w-md">
+                                    <h4 className="text-2xl md:text-3xl font-black text-white mb-4 tracking-tight">
+                                        Lihat Jadwal Harian Lengkap Santri
+                                    </h4>
+                                    <p className="text-brand-blue-100/70 font-medium text-sm leading-relaxed">
+                                        Kedisiplinan adalah kunci kesuksesan. Unduh jadwal harian lengkap untuk mengetahui rutinitas santri Ulul Albaab.
+                                    </p>
+                                </div>
+                                
+                                <div className="shrink-0">
+                                    <Link href="/kegiatan">
+                                        <button className="group relative inline-flex items-center gap-3 px-8 py-4 bg-brand-yellow-500 text-brand-blue-950 font-black text-sm uppercase tracking-widest rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-xl hover:scale-105 active:scale-95">
+                                            <span className="relative z-10">Unduh Jadwal Harian</span>
+                                            <CalendarIcon className="relative z-10 w-5 h-5 transition-transform duration-300 group-hover:rotate-12" />
+                                            <div className="absolute inset-0 bg-brand-yellow-400 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                                        </button>
+                                    </Link>
+                                </div>
+                            </div>
+                        </div>
+                    </motion.div>
+                </div>
 
             </Container>
         </section>
