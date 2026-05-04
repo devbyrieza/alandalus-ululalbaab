@@ -193,9 +193,8 @@
   }
 
   body {
-    /* Background biru sangat muda — fresh & bersih */
-    background-color: var(--color-surface-50);
-    color: var(--color-ink-900);
+    background-color: #FFFFFF; /* Pure white — fresh & clean */
+    color: var(--color-ink-700);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -220,7 +219,7 @@
     letter-spacing: -0.03em;
     font-size: clamp(2.25rem, 5vw + 1rem, 5rem);
     line-height: 1.05;
-    color: var(--color-brand-blue-900);
+    color: var(--color-brand-blue-700); /* vivid navy, not near-black */
   }
 
   h2 {
@@ -229,7 +228,7 @@
     letter-spacing: -0.025em;
     font-size: clamp(1.75rem, 3.5vw + 0.75rem, 3.5rem);
     line-height: 1.15;
-    color: var(--color-brand-blue-800);
+    color: var(--color-brand-blue-700);
   }
 
   h3 {
@@ -238,7 +237,7 @@
     letter-spacing: -0.02em;
     font-size: clamp(1.25rem, 2vw + 0.5rem, 2rem);
     line-height: 1.25;
-    color: var(--color-brand-blue-700);
+    color: var(--color-brand-blue-600);
   }
 
   h4 {
