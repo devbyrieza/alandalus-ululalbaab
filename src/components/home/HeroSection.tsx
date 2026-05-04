@@ -219,7 +219,11 @@ export default function HeroSection() {
                 className="text-sm font-semibold italic"
                 style={{ color: "var(--color-brand-blue-700)" }}
               >
-                "Pendidikan Islam Terpadu: Tahfizh, Akademik, dan Entrepreneurship"
+                "Pendidikan Berkualitas, Diperkuat Sistem{" "}
+                {BRANDING.schoolName.toLowerCase().includes("al andalus")
+                  ? "Al Andalus"
+                  : BRANDING.schoolShortName}
+                "
               </p>
               <div
                 className="h-px flex-1 max-w-[3rem]"
@@ -502,15 +506,15 @@ export default function HeroSection() {
                   className="text-[9px] font-black uppercase tracking-[0.1em] leading-none mb-1.5"
                   style={{ color: "var(--color-brand-blue-950)" }}
                 >
-                  Beasiswa
+                  Info PPDB
                 </p>
                 <p
                   className="text-base font-black leading-tight"
                   style={{ color: "var(--color-brand-blue-900)" }}
                 >
-                  Dhuafa
+                  Pendaftaran
                   <br />
-                  Berprestasi
+                  Dibuka
                 </p>
                 <div
                   className="mt-2 py-1 px-2.5 rounded-full"
