@@ -1,10 +1,16 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Download, FileText, AlertCircle, CheckCircle, Loader2 } from "lucide-react";
+import {
+  Download,
+  FileText,
+  AlertCircle,
+  CheckCircle,
+  Loader2,
+} from "lucide-react";
 import {
   generateBuktiPendaftaran,
-  generateKartuUjian
+  generateKartuUjian,
 } from "@/lib/utils/pdf-generator";
 
 export default function DownloadBerkasTab() {
@@ -18,7 +24,9 @@ export default function DownloadBerkasTab() {
         const session = await sessionRes.json();
 
         if (session.pendaftar_id) {
-          const res = await fetch(`/api/pendaftar/document-data?pendaftar_id=${session.pendaftar_id}`);
+          const res = await fetch(
+            `/api/pendaftar/document-data?pendaftar_id=${session.pendaftar_id}`,
+          );
           const result = await res.json();
           setData(result.data);
         }
@@ -43,8 +51,23 @@ export default function DownloadBerkasTab() {
   }
 
   const status = data?.status_proses || "draft";
-  const isDataCompleted = ["data_completed", "docs_uploaded", "docs_verified", "scheduled", "tested", "announced", "accepted", "enrolled"].includes(status);
-  const isScheduled = ["scheduled", "tested", "announced", "accepted", "enrolled"].includes(status);
+  const isDataCompleted = [
+    "data_completed",
+    "docs_uploaded",
+    "docs_verified",
+    "scheduled",
+    "tested",
+    "announced",
+    "accepted",
+    "enrolled",
+  ].includes(status);
+  const isScheduled = [
+    "scheduled",
+    "tested",
+    "announced",
+    "accepted",
+    "enrolled",
+  ].includes(status);
 
   const documents = [
     {
@@ -54,7 +77,7 @@ export default function DownloadBerkasTab() {
       action: async () => await generateBuktiPendaftaran(data),
     },
     {
-      name: "Kartu Ujian",
+      name: "kartu seleksi",
       description: "Kartu identitas ujian seleksi",
       status: isScheduled ? "available" : "pending",
       action: async () => await generateKartuUjian(data),
@@ -89,8 +112,12 @@ export default function DownloadBerkasTab() {
             <Download className="w-8 h-8 text-brand-yellow-100" />
           </div>
           <div>
-            <h1 className="text-2xl md:text-3xl font-black mb-2 tracking-tight text-white font-display">Download Berkas</h1>
-            <p className="text-brand-yellow-100/90 font-medium max-w-xl text-sm md:text-base">Unduh dokumen penting untuk proses pendaftaran Anda.</p>
+            <h1 className="text-2xl md:text-3xl font-black mb-2 tracking-tight text-white font-display">
+              Download Berkas
+            </h1>
+            <p className="text-brand-yellow-100/90 font-medium max-w-xl text-sm md:text-base">
+              Unduh dokumen penting untuk proses pendaftaran Anda.
+            </p>
           </div>
         </div>
       </div>
@@ -157,23 +184,37 @@ export default function DownloadBerkasTab() {
             </div>
           </div>
           <div>
-            <h4 className="font-black text-brand-blue-900 mb-3 text-lg">Informasi Penting</h4>
+            <h4 className="font-black text-brand-blue-900 mb-3 text-lg">
+              Informasi Penting
+            </h4>
             <ul className="text-sm text-brand-blue-800 space-y-2 font-medium">
               <li className="flex items-start gap-2">
                 <span className="text-brand-blue-400 mt-1">●</span>
-                <span>Bukti pendaftaran tersedia setelah data diri santri dilengkapi sepenuhnya.</span>
+                <span>
+                  Bukti pendaftaran tersedia setelah data diri santri dilengkapi
+                  sepenuhnya.
+                </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-brand-blue-400 mt-1">●</span>
-                <span>Kartu Peserta Ujian akan muncul otomatis setelah jadwal ujian dikonfirmasi oleh panitia.</span>
+                <span>
+                  Kartu Peserta Ujian akan muncul otomatis setelah jadwal
+                  seleksi dikonfirmasi oleh panitia.
+                </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-brand-blue-400 mt-1">●</span>
-                <span>Pastikan browser Anda mengizinkan pop-up untuk mengunduh file PDF secara otomatis.</span>
+                <span>
+                  Pastikan browser Anda mengizinkan pop-up untuk mengunduh file
+                  PDF secara otomatis.
+                </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-brand-blue-400 mt-1">●</span>
-                <span>Simpan semua dokumen yang diunduh dengan baik atau segera cetak untuk keperluan fisik.</span>
+                <span>
+                  Simpan semua dokumen yang diunduh dengan baik atau segera
+                  cetak untuk keperluan fisik.
+                </span>
               </li>
             </ul>
           </div>

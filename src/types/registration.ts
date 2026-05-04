@@ -86,7 +86,11 @@ export type FieldErrors = Partial<Record<keyof RegistrationFormData, string>>;
 
 export const JENJANG_OPTIONS = [
   { value: "MTs", label: "MTs Putri", description: "Fondasi Kokoh" },
-  { value: "IL", label: "I'dad Lughowi Putri", description: "Persiapan Bahasa Arab" },
+  {
+    value: "IL",
+    label: "I'dad Lughowi Putri",
+    description: "Persiapan Bahasa Arab",
+  },
 ] as const;
 
 export type JenjangValue = (typeof JENJANG_OPTIONS)[number]["value"];

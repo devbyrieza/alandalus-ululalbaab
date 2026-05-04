@@ -4,10 +4,17 @@ import { motion, useMotionValue, animate } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { useEffect, useRef } from "react";
 import { Container } from "@/components/layout/Container";
-import { Calendar, Users, GraduationCap, Award, TrendingUp, ShieldCheck } from 'lucide-react';
+import {
+  Calendar,
+  Users,
+  GraduationCap,
+  Award,
+  TrendingUp,
+  ShieldCheck,
+} from "lucide-react";
 
 // ─── Types ───────────────────────────────────────────
-type StatColor = 'blue' | 'yellow';
+type StatColor = "blue" | "yellow";
 
 interface Stat {
   id: string;
@@ -23,51 +30,51 @@ interface Stat {
 // ─── Data ────────────────────────────────────────────
 const STATS: Stat[] = [
   {
-    id: 'batch',
-    label: 'Angkatan Ke-4',
+    id: "batch",
+    label: "Angkatan Ke-4",
     value: 4,
     icon: Calendar,
-    color: 'blue',
-    suffix: '',
-    sublabel: 'Managed by Al Andalus',
-    description: 'Rekam jejak terbukti & terstruktur',
+    color: "blue",
+    suffix: "",
+    sublabel: "Managed by Al Andalus",
+    description: "Rekam jejak terbukti & terstruktur",
   },
   {
-    id: 'quality',
-    label: 'Standar Global',
+    id: "quality",
+    label: "Standar Global",
     value: 100,
     icon: Award,
-    color: 'yellow',
-    suffix: '%',
-    sublabel: 'Kurikulum Unggulan',
-    description: 'Kurikulum terintegrasi penuh',
+    color: "yellow",
+    suffix: "%",
+    sublabel: "Kurikulum Unggulan",
+    description: "Kurikulum terintegrasi penuh",
   },
   {
-    id: 'levels',
-    label: 'Jenjang Tersedia',
+    id: "levels",
+    label: "Jenjang Tersedia",
     value: 3,
     icon: GraduationCap,
-    color: 'blue',
-    suffix: '',
-    sublabel: 'MTs · IL · SMA',
-    description: 'Pendidikan menengah lengkap',
+    color: "blue",
+    suffix: "",
+    sublabel: "MTs · IL · SMA",
+    description: "Pendidikan menengah lengkap",
   },
   {
-    id: 'quota',
-    label: 'Kuota Tersedia',
+    id: "quota",
+    label: "Kuota Tersedia",
     value: 124,
     icon: Users,
-    color: 'yellow',
-    suffix: '',
-    sublabel: 'Santri Putra & Putri',
-    description: 'Terbuka untuk semua',
+    color: "yellow",
+    suffix: "",
+    sublabel: "Santri Putra & Putri",
+    description: "Terbuka untuk semua",
   },
 ];
 
 const TRUST_BADGES = [
-  { icon: null, label: 'Pendaftaran Dibuka', pulse: true },
-  { icon: ShieldCheck, label: 'Resmi Kemendikdasmen', pulse: false },
-  { icon: TrendingUp, label: 'Kurikulum Terintegrasi', pulse: false },
+  { icon: null, label: "Pendaftaran Dibuka", pulse: true },
+  { icon: ShieldCheck, label: "Resmi Kemendikdasmen", pulse: false },
+  { icon: TrendingUp, label: "Kurikulum Terintegrasi", pulse: false },
 ];
 
 // ─── Animated Counter ────────────────────────────────
@@ -104,10 +111,18 @@ function AnimatedCounter({
 }
 
 // ─── Stat Card ───────────────────────────────────────
-function StatCard({ stat, index, trigger }: { stat: Stat; index: number; trigger: boolean }) {
+function StatCard({
+  stat,
+  index,
+  trigger,
+}: {
+  stat: Stat;
+  index: number;
+  trigger: boolean;
+}) {
   const Icon = stat.icon;
-  const isBlue = stat.color === 'blue';
-  const isYellow = stat.color === 'yellow';
+  const isBlue = stat.color === "blue";
+  const isYellow = stat.color === "yellow";
 
   return (
     <motion.div
@@ -122,40 +137,53 @@ function StatCard({ stat, index, trigger }: { stat: Stat; index: number; trigger
       className="group relative"
     >
       <div className="relative flex flex-col items-center text-center px-6 py-8 md:px-8 md:py-10 bg-white rounded-2xl border border-brand-blue-100 shadow-premium-sm transition-all duration-500 ease-spring hover:-translate-y-1.5 hover:shadow-premium-md hover:border-brand-blue-200 overflow-hidden">
-
         {/* Hover radial bg — biru untuk blue, kuning untuk yellow */}
         <div
           className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
           style={{
             background: isBlue
-              ? 'radial-gradient(ellipse 80% 60% at 50% 100%, rgba(3,105,199,0.04) 0%, transparent 70%)'
-              : 'radial-gradient(ellipse 80% 60% at 50% 100%, rgba(245,158,11,0.06) 0%, transparent 70%)',
+              ? "radial-gradient(ellipse 80% 60% at 50% 100%, rgba(3,105,199,0.04) 0%, transparent 70%)"
+              : "radial-gradient(ellipse 80% 60% at 50% 100%, rgba(245,158,11,0.06) 0%, transparent 70%)",
           }}
         />
 
         {/* Icon */}
-        <div className={[
-          'relative mb-6 w-13 h-13 md:w-14 md:h-14 flex items-center justify-center rounded-xl shadow-xs',
-          'transition-all duration-500 group-hover:scale-110',
-          isBlue ? 'bg-brand-blue-50 text-brand-blue-600 group-hover:bg-brand-blue-100' : '',
-          isYellow ? 'bg-brand-yellow-50 text-brand-yellow-600 group-hover:bg-brand-yellow-100' : '',
-        ].join(' ')}>
+        <div
+          className={[
+            "relative mb-6 w-13 h-13 md:w-14 md:h-14 flex items-center justify-center rounded-xl shadow-xs",
+            "transition-all duration-500 group-hover:scale-110",
+            isBlue
+              ? "bg-brand-blue-50 text-brand-blue-600 group-hover:bg-brand-blue-100"
+              : "",
+            isYellow
+              ? "bg-brand-yellow-50 text-brand-yellow-600 group-hover:bg-brand-yellow-100"
+              : "",
+          ].join(" ")}
+        >
           <Icon className="w-5 h-5 md:w-6 md:h-6" strokeWidth={1.75} />
           {/* Ring accent on hover */}
-          <div className={[
-            'absolute inset-0 rounded-xl ring-0 transition-all duration-500',
-            isBlue ? 'group-hover:ring-2 group-hover:ring-brand-blue-200' : '',
-            isYellow ? 'group-hover:ring-2 group-hover:ring-brand-yellow-300' : '',
-          ].join(' ')} />
+          <div
+            className={[
+              "absolute inset-0 rounded-xl ring-0 transition-all duration-500",
+              isBlue
+                ? "group-hover:ring-2 group-hover:ring-brand-blue-200"
+                : "",
+              isYellow
+                ? "group-hover:ring-2 group-hover:ring-brand-yellow-300"
+                : "",
+            ].join(" ")}
+          />
         </div>
 
         {/* Number */}
         <div className="flex items-baseline justify-center gap-0.5 mb-1">
-          <span className={[
-            'text-[2.625rem] md:text-[3.25rem] font-black leading-none tracking-[-0.04em]',
-            isBlue ? 'text-brand-blue-700' : '',
-            isYellow ? 'text-brand-yellow-700' : '',
-          ].join(' ')}>
+          <span
+            className={[
+              "text-[2.625rem] md:text-[3.25rem] font-black leading-none tracking-[-0.04em]",
+              isBlue ? "text-brand-blue-700" : "",
+              isYellow ? "text-brand-yellow-700" : "",
+            ].join(" ")}
+          >
             <AnimatedCounter
               value={stat.value}
               trigger={trigger}
@@ -163,11 +191,13 @@ function StatCard({ stat, index, trigger }: { stat: Stat; index: number; trigger
             />
           </span>
           {stat.suffix && (
-            <span className={[
-              'text-2xl md:text-3xl font-black leading-none tracking-[-0.03em]',
-              isBlue ? 'text-brand-blue-500' : '',
-              isYellow ? 'text-brand-yellow-500' : '',
-            ].join(' ')}>
+            <span
+              className={[
+                "text-2xl md:text-3xl font-black leading-none tracking-[-0.03em]",
+                isBlue ? "text-brand-blue-500" : "",
+                isYellow ? "text-brand-yellow-500" : "",
+              ].join(" ")}
+            >
               {stat.suffix}
             </span>
           )}
@@ -179,11 +209,13 @@ function StatCard({ stat, index, trigger }: { stat: Stat; index: number; trigger
         </p>
 
         {/* Sublabel */}
-        <p className={[
-          'text-[0.6rem] md:text-[0.65rem] font-semibold tracking-wide mt-0.5',
-          isBlue ? 'text-brand-blue-400' : '',
-          isYellow ? 'text-brand-yellow-500' : '',
-        ].join(' ')}>
+        <p
+          className={[
+            "text-[0.6rem] md:text-[0.65rem] font-semibold tracking-wide mt-0.5",
+            isBlue ? "text-brand-blue-400" : "",
+            isYellow ? "text-brand-yellow-500" : "",
+          ].join(" ")}
+        >
           {stat.sublabel}
         </p>
 
@@ -193,11 +225,15 @@ function StatCard({ stat, index, trigger }: { stat: Stat; index: number; trigger
         </p>
 
         {/* Bottom accent line */}
-        <div className={[
-          'mt-5 h-[2px] w-6 rounded-full transition-all duration-500 group-hover:w-10',
-          isBlue ? 'bg-brand-blue-200 group-hover:bg-brand-blue-500' : '',
-          isYellow ? 'bg-brand-yellow-200 group-hover:bg-brand-yellow-500' : '',
-        ].join(' ')} />
+        <div
+          className={[
+            "mt-5 h-[2px] w-6 rounded-full transition-all duration-500 group-hover:w-10",
+            isBlue ? "bg-brand-blue-200 group-hover:bg-brand-blue-500" : "",
+            isYellow
+              ? "bg-brand-yellow-200 group-hover:bg-brand-yellow-500"
+              : "",
+          ].join(" ")}
+        />
       </div>
     </motion.div>
   );
@@ -216,19 +252,20 @@ export default function StatsSection() {
       <div
         className="absolute -top-1/4 right-0 w-[600px] h-[600px] translate-x-1/2 pointer-events-none"
         style={{
-          background: 'radial-gradient(circle, rgba(220,237,255,0.65) 0%, transparent 65%)',
+          background:
+            "radial-gradient(circle, rgba(220,237,255,0.65) 0%, transparent 65%)",
         }}
       />
       <div
         className="absolute -bottom-1/4 left-0 w-[500px] h-[500px] -translate-x-1/2 pointer-events-none"
         style={{
-          background: 'radial-gradient(circle, rgba(254,243,199,0.5) 0%, transparent 65%)',
+          background:
+            "radial-gradient(circle, rgba(254,243,199,0.5) 0%, transparent 65%)",
         }}
       />
 
       <Container className="relative z-10">
         <div className="max-w-5xl mx-auto space-y-12 md:space-y-14">
-
           {/* Grid */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-5">
             {STATS.map((stat, i) => (
@@ -255,7 +292,10 @@ export default function StatsSection() {
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500" />
                   </span>
                 ) : BadgeIcon ? (
-                  <BadgeIcon className="w-3 h-3 shrink-0 text-brand-blue-500" strokeWidth={2} />
+                  <BadgeIcon
+                    className="w-3 h-3 shrink-0 text-brand-blue-500"
+                    strokeWidth={2}
+                  />
                 ) : null}
                 <span className="text-[0.6rem] md:text-[0.65rem] font-bold text-ink-700 uppercase tracking-[0.1em] whitespace-nowrap">
                   {label}
@@ -263,7 +303,6 @@ export default function StatsSection() {
               </div>
             ))}
           </motion.div>
-
         </div>
       </Container>
     </section>

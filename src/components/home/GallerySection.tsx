@@ -13,7 +13,12 @@ import {
   Moon,
   Star,
 } from "lucide-react";
-import { motion, useInView, type Variants, type Transition } from "framer-motion";
+import {
+  motion,
+  useInView,
+  type Variants,
+  type Transition,
+} from "framer-motion";
 import { useRef } from "react";
 import { Container } from "@/components/layout/Container";
 
@@ -142,9 +147,7 @@ function GalleryCard({
         <div className="absolute inset-0 bg-gradient-to-t from-brand-blue-950/80 via-brand-blue-900/20 to-transparent transition-opacity duration-500 opacity-80 group-hover:opacity-100" />
       </div>
 
-      <div
-        className="absolute top-3.5 right-3.5 w-8 h-8 rounded-xl bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/30 text-white opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:bg-brand-yellow-400 group-hover:border-brand-yellow-300 group-hover:text-brand-blue-900 shadow-sm"
-      >
+      <div className="absolute top-3.5 right-3.5 w-8 h-8 rounded-xl bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/30 text-white opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:bg-brand-yellow-400 group-hover:border-brand-yellow-300 group-hover:text-brand-blue-900 shadow-sm">
         <Icon className="w-4 h-4" />
       </div>
 
@@ -176,7 +179,9 @@ function ScheduleCard({
       variants={scheduleVariants}
       className="flex items-center gap-3.5 p-3.5 rounded-[1.25rem] bg-white border border-brand-blue-100 transition-all duration-300 hover:border-brand-blue-200 shadow-premium-sm hover:shadow-premium-md"
     >
-      <div className={`w-10 h-10 rounded-[10px] ${iconBg} flex items-center justify-center ${iconColor} shrink-0 ring-1 ring-black/5`}>
+      <div
+        className={`w-10 h-10 rounded-[10px] ${iconBg} flex items-center justify-center ${iconColor} shrink-0 ring-1 ring-black/5`}
+      >
         <Icon className="w-4 h-4" strokeWidth={2} />
       </div>
 
@@ -197,10 +202,16 @@ export default function GallerySection() {
   const scheduleRef = useRef<HTMLDivElement>(null);
 
   const headerInView = useInView(headerRef, { once: true, margin: "-80px" });
-  const scheduleInView = useInView(scheduleRef, { once: true, margin: "-60px" });
+  const scheduleInView = useInView(scheduleRef, {
+    once: true,
+    margin: "-60px",
+  });
 
   return (
-    <section id="gallery" className="section-std !pb-0 overflow-hidden relative">
+    <section
+      id="gallery"
+      className="section-std !pb-0 overflow-hidden relative"
+    >
       <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-[0.02] pointer-events-none" />
 
       <Container className="relative z-10">
@@ -223,8 +234,12 @@ export default function GallerySection() {
               Galeri <span className="text-gradient-blue">Aktivitas</span>
             </motion.h2>
 
-            <motion.p variants={fadeUpVariants} className="section-subtitle lg:ml-0 text-left mt-3 text-justify">
-              Intip kegiatan sehari-hari para santri dalam menuntut ilmu dan beribadah.
+            <motion.p
+              variants={fadeUpVariants}
+              className="section-subtitle lg:ml-0 text-left mt-3 text-justify"
+            >
+              Intip kegiatan sehari-hari para santri dalam menuntut ilmu dan
+              beribadah.
             </motion.p>
           </div>
 
@@ -254,8 +269,11 @@ export default function GallerySection() {
           <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-brand-blue-300 via-brand-yellow-300 to-transparent" />
 
           <div className="relative z-10 grid lg:grid-cols-[1fr_1.1fr] gap-10 lg:gap-14 items-center p-8 md:p-12 lg:p-14 max-w-6xl mx-auto">
-            
-            <motion.div variants={containerVariants} initial="hidden" animate={scheduleInView ? "visible" : "hidden"}>
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              animate={scheduleInView ? "visible" : "hidden"}
+            >
               <motion.div variants={fadeUpVariants}>
                 <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-brand-yellow-50 border border-brand-yellow-200 text-brand-blue-700 text-[0.65rem] font-bold uppercase tracking-[0.12em] mb-5 shadow-xs">
                   <Star className="w-3 h-3 fill-current" />
@@ -263,12 +281,19 @@ export default function GallerySection() {
                 </div>
               </motion.div>
 
-              <motion.h3 variants={fadeUpVariants} className="font-display font-black text-[2rem] md:text-[2.5rem] text-ink-950 tracking-tight mb-4 leading-[1.15]">
+              <motion.h3
+                variants={fadeUpVariants}
+                className="font-display font-black text-[2rem] md:text-[2.5rem] text-ink-950 tracking-tight mb-4 leading-[1.15]"
+              >
                 Jadwal Harian Berkah
               </motion.h3>
 
-              <motion.p variants={fadeUpVariants} className="text-ink-600 font-[450] mb-8 max-w-md leading-relaxed text-[0.9375rem] text-justify">
-                Setiap detik sangat berharga. Kami mengatur jadwal santri agar seimbang antara ibadah, belajar, istirahat, dan bersosialisasi.
+              <motion.p
+                variants={fadeUpVariants}
+                className="text-ink-600 font-[450] mb-8 max-w-md leading-relaxed text-[0.9375rem] text-justify"
+              >
+                Setiap detik sangat berharga. Kami mengatur jadwal santri agar
+                seimbang antara ibadah, belajar, istirahat, dan bersosialisasi.
               </motion.p>
 
               <motion.div variants={fadeUpVariants}>
@@ -281,7 +306,12 @@ export default function GallerySection() {
               </motion.div>
             </motion.div>
 
-            <motion.div variants={containerVariants} initial="hidden" animate={scheduleInView ? "visible" : "hidden"} className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              animate={scheduleInView ? "visible" : "hidden"}
+              className="grid grid-cols-1 sm:grid-cols-2 gap-3.5"
+            >
               {SCHEDULE_ITEMS.map((item, idx) => (
                 <ScheduleCard key={idx} {...item} index={idx} />
               ))}

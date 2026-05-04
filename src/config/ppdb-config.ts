@@ -8,7 +8,8 @@ export const PPDB_CONFIG = {
   pesantren: {
     nama: "Pesantren Al Andalus Ulul Albaab",
     singkatan: "Al Andalus Ulul Albaab",
-    alamat: "Jl. KH Mama Oyon, Cihaur, Kec. Cicantayan, Kabupaten Sukabumi, Jawa Barat 43155",
+    alamat:
+      "Jl. KH Mama Oyon, Cihaur, Kec. Cicantayan, Kabupaten Sukabumi, Jawa Barat 43155",
     telepon: "+62 812-8530-0800",
     email: "alandalusululalbaab2@gmail.com",
     emailPpdb: "alandalusululalbaab2@gmail.com",
@@ -25,10 +26,10 @@ export const PPDB_CONFIG = {
       300: "#7dd3fc",
       400: "#38bdf8",
       500: "#0ea5e9",
-      600: "#0284c7",  // Warna tombol & aksi utama
-      700: "#0369a1",  // Warna teks penting
+      600: "#0284c7", // Warna tombol & aksi utama
+      700: "#0369a1", // Warna teks penting
       800: "#075985",
-      900: "#0c4a6e",  // Warna teks gelap
+      900: "#0c4a6e", // Warna teks gelap
     },
 
     // Secondary Colors (Kuning / Amber)
@@ -42,10 +43,10 @@ export const PPDB_CONFIG = {
 
     // Accent Colors (Warna Aksen)
     accent: {
-      gold: "#fbbf24",     // Untuk highlight & achievement
-      teal: "#14b8a6",     // Untuk success & info
-      red: "#ef4444",      // Untuk error & warning
-    }
+      gold: "#fbbf24", // Untuk highlight & achievement
+      teal: "#14b8a6", // Untuk success & info
+      red: "#ef4444", // Untuk error & warning
+    },
   },
 
   // 📱 PROGRAM PENDIDIKAN (SESUAIKAN!)
@@ -54,18 +55,20 @@ export const PPDB_CONFIG = {
       id: "mts",
       name: "MTs",
       fullName: "Madrasah Tsanawiyah",
-      description: "Program pendidikan formal setara SMP dengan kurikulum integrasi pesantren.",
+      description:
+        "Program pendidikan formal setara SMP dengan kurikulum integrasi pesantren.",
       image: "/images/mts.webp",
-      theme: "brown"
+      theme: "brown",
     },
     {
       id: "il",
       name: "I'dad Lughowi",
       fullName: "Program Persiapan Bahasa Arab",
-      description: "Program intensif persiapan bahasa Arab untuk jenjang lebih tinggi.",
+      description:
+        "Program intensif persiapan bahasa Arab untuk jenjang lebih tinggi.",
       image: "/images/il.webp",
-      theme: "gold"
-    }
+      theme: "gold",
+    },
   ],
 
   // 💰 BIAYA PENDAFTARAN (GANTI SESUAI)
@@ -73,23 +76,23 @@ export const PPDB_CONFIG = {
     {
       label: "Uang Pendaftaran",
       amount: "Rp 250.000",
-      note: "Tidak dapat dikembalikan"
+      note: "Tidak dapat dikembalikan",
     },
     {
       label: "Uang Pangkal",
       amount: "Rp 9.800.000",
-      note: "Pembayaran dapat dicicil"
+      note: "Pembayaran dapat dicicil",
     },
     {
       label: "Iuran Taawun/Tahun",
       amount: "Rp 13.200.000",
-      note: "All in (SPP + Makan + Asrama)"
+      note: "All in (SPP + Makan + Asrama)",
     },
     {
       label: "Cicilan per Bulan",
       amount: "Rp 1.100.000",
-      note: "Jika memilih sistem cicilan"
-    }
+      note: "Jika memilih sistem cicilan",
+    },
   ],
 
   // 📋 PERSYARATAN BERKAS (SESUAIKAN!)
@@ -97,7 +100,7 @@ export const PPDB_CONFIG = {
     "Fotocopy Kartu Keluarga (1 lembar)",
     "Fotocopy Akta Kelahiran (1 lembar)",
     "Fotocopy Rapor (2 semester terakhir)",
-    "Pas Foto 3x4 (4 lembar)"
+    "Pas Foto 3x4 (4 lembar)",
   ],
 
   // 🔗 KONTAK & SOSMED (GANTI SESUAI!)
@@ -105,7 +108,7 @@ export const PPDB_CONFIG = {
     whatsapp: "+6281285300800",
     instagram: "@alandalusululalbaab",
     facebook: "Pesantren Al Andalus Ulul Albaab",
-    youtube: "Al Andalus Ulul Albaab"
+    youtube: "Al Andalus Ulul Albaab",
   },
 
   // ⚙️ SETTING TEKNIS (UMUMNYA TIDAK PERLU DIUBAH)
@@ -113,8 +116,8 @@ export const PPDB_CONFIG = {
     appName: "PPDB Al Andalus Ulul Albaab",
     appDescription: "Sistem Penerimaan Peserta Didik Baru",
     version: "2.0.0",
-    author: "Rieza Eka Tomara"
-  }
+    author: "Rieza Eka Tomara",
+  },
 };
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -135,6 +138,6 @@ export const generateCSSVariables = () => {
   return {
     primary: colors.primary,
     secondary: colors.secondary,
-    accent: colors.accent
+    accent: colors.accent,
   };
 };

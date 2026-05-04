@@ -9,10 +9,18 @@ async function checkAdmin() {
   if (!sessionCookie) return null;
   try {
     const session = JSON.parse(sessionCookie.value);
-    if (["admin_super", "admin", "admin_berkas", "admin_keuangan", "penguji"].includes(session.role)) {
+    if (
+      [
+        "admin_super",
+        "admin",
+        "admin_berkas",
+        "admin_keuangan",
+        "penguji",
+      ].includes(session.role)
+    ) {
       return session;
     }
-  } catch { }
+  } catch {}
   return null;
 }
 
@@ -33,14 +41,17 @@ export async function GET(request: Request) {
     let finalTAId: string | undefined = tahunAjaranId || undefined;
     if (!finalTAId) {
       const activeTA = await prisma.tahunAjaran.findFirst({
-        where: { is_active: true }
+        where: { is_active: true },
       });
       if (activeTA) finalTAId = activeTA.id;
     }
 
     if (!finalTAId) {
       console.error("❌ [API Stats] No active Year of Study found");
-      return NextResponse.json({ error: "No active Year of Study found" }, { status: 404 });
+      return NextResponse.json(
+        { error: "No active Year of Study found" },
+        { status: 404 },
+      );
     }
 
     // 2. Build where clause
@@ -57,25 +68,35 @@ export async function GET(request: Request) {
           jenjang: true,
           provinsi: true,
           jenis_kelamin: true,
-          nama_lengkap: true
-        }
+          nama_lengkap: true,
+        },
       }),
       prisma.pembayaran.findMany({
         where: { tahun_ajaran_id: finalTAId },
-        select: { pendaftar_id: true, status_pembayaran: true, jenis_pembayaran: true }
-      })
+        select: {
+          pendaftar_id: true,
+          status_pembayaran: true,
+          jenis_pembayaran: true,
+        },
+      }),
     ]);
 
-    console.log(`✅ [API Stats] Data fetched. Pendaftar: ${pendaftarData.length}, Pembayaran: ${pembayaranData.length}`);
+    console.log(
+      `✅ [API Stats] Data fetched. Pendaftar: ${pendaftarData.length}, Pembayaran: ${pembayaranData.length}`,
+    );
 
     // 4. Calculate Stats
     const total_pendaftar = pendaftarData.length;
     const statusCounts: Record<string, number> = {};
     const jenjangCounts: Record<string, any> = {};
     const provinsiCounts: Record<string, number> = {};
-    const genderCounts: Record<string, number> = { "Laki-laki": 0, "Perempuan": 0, "Belum Diisi": 0 };
+    const genderCounts: Record<string, number> = {
+      "Laki-laki": 0,
+      Perempuan: 0,
+      "Belum Diisi": 0,
+    };
 
-    pendaftarData.forEach(p => {
+    pendaftarData.forEach((p) => {
       const status = p.status_pendaftaran || "draft";
       statusCounts[status] = (statusCounts[status] || 0) + 1;
 
@@ -89,10 +110,18 @@ export async function GET(request: Request) {
 
       if (!jenjangCounts[jenjang]) {
         jenjangCounts[jenjang] = {
-          total: 0, putra: 0, putri: 0,
-          bayar_total: 0, bayar_putra: 0, bayar_putri: 0,
-          accepted: 0, accepted_putra: 0, accepted_putri: 0,
-          ulang_total: 0, ulang_putra: 0, ulang_putri: 0
+          total: 0,
+          putra: 0,
+          putri: 0,
+          bayar_total: 0,
+          bayar_putra: 0,
+          bayar_putri: 0,
+          accepted: 0,
+          accepted_putra: 0,
+          accepted_putri: 0,
+          ulang_total: 0,
+          ulang_putra: 0,
+          ulang_putri: 0,
         };
       }
 
@@ -102,22 +131,32 @@ export async function GET(request: Request) {
       const isP = p.jenis_kelamin === "P" || p.jenis_kelamin === "Perempuan";
 
       j.total++;
-      if (isL) { 
-        j.putra++; 
-        genderCounts["Laki-laki"]++; 
-      } else if (isP) { 
-        j.putri++; 
-        genderCounts["Perempuan"]++; 
-      } else { 
-        genderCounts["Belum Diisi"]++; 
+      if (isL) {
+        j.putra++;
+        genderCounts["Laki-laki"]++;
+      } else if (isP) {
+        j.putri++;
+        genderCounts["Perempuan"]++;
+      } else {
+        genderCounts["Belum Diisi"]++;
       }
 
       // Sudah Bayar Pendaftaran Logic: verified or higher
       const verifiedIndex = 3; // 'verified' index in status list below
       const statusList = [
-        'draft', 'awaiting_payment', 'payment_verification', 'verified', 'paid', 
-        'data_completed', 'docs_uploaded', 'docs_verified', 'scheduled', 'tested', 
-        'announced', 'accepted', 'enrolled'
+        "draft",
+        "awaiting_payment",
+        "payment_verification",
+        "verified",
+        "paid",
+        "data_completed",
+        "docs_uploaded",
+        "docs_verified",
+        "scheduled",
+        "tested",
+        "announced",
+        "accepted",
+        "enrolled",
       ];
       const currentIndex = statusList.indexOf(status);
 
@@ -151,7 +190,11 @@ export async function GET(request: Request) {
       // Normalize Provinsi
       let provinsi = p.provinsi || "Belum Diisi";
       if (provinsi && provinsi !== "Belum Diisi") {
-        provinsi = provinsi.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+        provinsi = provinsi
+          .toLowerCase()
+          .split(" ")
+          .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(" ");
       }
       provinsiCounts[provinsi] = (provinsiCounts[provinsi] || 0) + 1;
     });
@@ -161,31 +204,48 @@ export async function GET(request: Request) {
       diterima: (statusCounts.accepted || 0) + (statusCounts.enrolled || 0),
       cadangan: statusCounts.announced || 0,
       daftar_ulang: statusCounts.enrolled || 0,
-      
+
       // Secondary metrics
-      sudah_bayar: total_pendaftar - (statusCounts.draft || 0), 
-      sudah_isi_data: total_pendaftar - (statusCounts.draft || 0) - (statusCounts.waiting_payment || 0),
+      sudah_bayar: total_pendaftar - (statusCounts.draft || 0),
+      sudah_isi_data:
+        total_pendaftar -
+        (statusCounts.draft || 0) -
+        (statusCounts.waiting_payment || 0),
       waiting_payment: statusCounts.waiting_payment || 0,
       waiting_docs: statusCounts.data_completed || 0,
 
-      stats_per_jenjang: ["MTS", "IL", "SMA"].map(jenjang => {
+      stats_per_jenjang: ["MTS", "IL", "SMA"].map((jenjang) => {
         const data = jenjangCounts[jenjang] || {
-          total: 0, putra: 0, putri: 0,
-          bayar_total: 0, bayar_putra: 0, bayar_putri: 0,
-          accepted: 0, accepted_putra: 0, accepted_putri: 0,
-          cadangan: 0, cadangan_putra: 0, cadangan_putri: 0,
-          ulang_total: 0, ulang_putra: 0, ulang_putri: 0
+          total: 0,
+          putra: 0,
+          putri: 0,
+          bayar_total: 0,
+          bayar_putra: 0,
+          bayar_putri: 0,
+          accepted: 0,
+          accepted_putra: 0,
+          accepted_putri: 0,
+          cadangan: 0,
+          cadangan_putra: 0,
+          cadangan_putri: 0,
+          ulang_total: 0,
+          ulang_putra: 0,
+          ulang_putri: 0,
         };
         const QUOTAS: Record<string, any> = {
           MTS: { putra: 49, putri: 24, total: 73 },
           IL: { putra: 27, putri: 12, total: 39 },
-          SMA: { putra: 0, putri: 0, total: 0 }
+          SMA: { putra: 0, putri: 0, total: 0 },
         };
         const q = QUOTAS[jenjang];
         return {
           jenjang,
-          kuota_putra: q.putra, kuota_putri: q.putri, kuota_total: q.total,
-          pendaftar: data.total, pendaftar_putra: data.putra, pendaftar_putri: data.putri,
+          kuota_putra: q.putra,
+          kuota_putri: q.putri,
+          kuota_total: q.total,
+          pendaftar: data.total,
+          pendaftar_putra: data.putra,
+          pendaftar_putri: data.putri,
           bayar_total: data.bayar_total,
           bayar_putra: data.bayar_putra,
           bayar_putri: data.bayar_putri,
@@ -197,7 +257,7 @@ export async function GET(request: Request) {
           cadangan_putri: data.cadangan_putri || 0,
           daftar_ulang: data.ulang_total,
           ulang_putra: data.ulang_putra,
-          ulang_putri: data.ulang_putri
+          ulang_putri: data.ulang_putri,
         };
       }),
 
@@ -208,15 +268,24 @@ export async function GET(request: Request) {
       pie_chart_status: {
         diterima: (statusCounts.accepted || 0) + (statusCounts.enrolled || 0),
         cadangan: statusCounts.announced || 0,
-        menunggu: (statusCounts.tested || 0) + (statusCounts.scheduled || 0) + (statusCounts.docs_verified || 0),
-        proses: (statusCounts.draft || 0) + (statusCounts.verified || 0) + (statusCounts.data_completed || 0),
+        menunggu:
+          (statusCounts.tested || 0) +
+          (statusCounts.scheduled || 0) +
+          (statusCounts.docs_verified || 0),
+        proses:
+          (statusCounts.draft || 0) +
+          (statusCounts.verified || 0) +
+          (statusCounts.data_completed || 0),
         ditolak: statusCounts.rejected || 0,
-      }
+      },
     };
 
     return NextResponse.json(stats);
   } catch (error) {
     console.error("Error in admin stats API:", error);
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 },
+    );
   }
 }

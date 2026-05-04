@@ -83,22 +83,48 @@ export default function ProfilTab() {
   const formatStatus = (status: string) => {
     const statusMap: Record<string, { label: string; color: string }> = {
       draft: { label: "Draft", color: "bg-stone-100 text-stone-700" },
-      awaiting_payment: { label: "Menunggu Pembayaran", color: "bg-amber-100 text-amber-700" },
+      awaiting_payment: {
+        label: "Menunggu Pembayaran",
+        color: "bg-amber-100 text-amber-700",
+      },
       paid: { label: "Sudah Bayar", color: "bg-blue-100 text-blue-700" },
-      data_completed: { label: "Data Lengkap", color: "bg-brand-yellow-100 text-brand-blue-800" },
-      docs_uploaded: { label: "Dokumen Terupload", color: "bg-indigo-100 text-indigo-700" },
-      docs_verified: { label: "Dokumen Terverifikasi", color: "bg-green-100 text-green-700" },
-      scheduled: { label: "Terjadwal Ujian", color: "bg-purple-100 text-purple-700" },
-      testing: { label: "Sedang Ujian", color: "bg-violet-100 text-violet-800 border border-violet-200" },
+      data_completed: {
+        label: "Data Lengkap",
+        color: "bg-brand-yellow-100 text-brand-blue-800",
+      },
+      docs_uploaded: {
+        label: "Dokumen Terupload",
+        color: "bg-indigo-100 text-indigo-700",
+      },
+      docs_verified: {
+        label: "Dokumen Terverifikasi",
+        color: "bg-green-100 text-green-700",
+      },
+      scheduled: {
+        label: "Terjadwal Ujian",
+        color: "bg-purple-100 text-purple-700",
+      },
+      testing: {
+        label: "Sedang Ujian",
+        color: "bg-violet-100 text-violet-800 border border-violet-200",
+      },
       tested: { label: "Sudah Ujian", color: "bg-violet-100 text-violet-700" },
       announced: { label: "Diumumkan", color: "bg-cyan-100 text-cyan-700" },
       accepted: { label: "Diterima", color: "bg-green-100 text-green-700" },
       rejected: { label: "Ditolak", color: "bg-red-100 text-red-700" },
-      enrolled: { label: "Terdaftar", color: "bg-emerald-100 text-emerald-700" },
+      enrolled: {
+        label: "Terdaftar",
+        color: "bg-emerald-100 text-emerald-700",
+      },
     };
-    const statusInfo = statusMap[status] || { label: status, color: "bg-stone-100 text-stone-700" };
+    const statusInfo = statusMap[status] || {
+      label: status,
+      color: "bg-stone-100 text-stone-700",
+    };
     return (
-      <span className={`px-4 py-2 rounded-full text-sm font-bold ${statusInfo.color}`}>
+      <span
+        className={`px-4 py-2 rounded-full text-sm font-bold ${statusInfo.color}`}
+      >
         {statusInfo.label}
       </span>
     );
@@ -170,7 +196,11 @@ export default function ProfilTab() {
             <InfoItem label="NIK" value={profile.nik} />
             <InfoItem
               label="Jenis Kelamin"
-              value={["L", "Laki-laki"].includes(profile.jenis_kelamin) ? "Laki-laki" : "Perempuan"}
+              value={
+                ["L", "Laki-laki"].includes(profile.jenis_kelamin)
+                  ? "Laki-laki"
+                  : "Perempuan"
+              }
             />
             <InfoItem label="Jenjang" value={profile.jenjang} />
             <InfoItem label="NISN" value={profile.nisn} />
@@ -182,7 +212,11 @@ export default function ProfilTab() {
             <InfoItem label="Golongan Darah" value={profile.golongan_darah} />
             <InfoItem
               label="Anak Ke"
-              value={profile.anak_ke != null ? `${profile.anak_ke} dari ${(profile.anak_ke + (profile.jumlah_saudara ?? 0))} bersaudara` : null}
+              value={
+                profile.anak_ke != null
+                  ? `${profile.anak_ke} dari ${profile.anak_ke + (profile.jumlah_saudara ?? 0)} bersaudara`
+                  : null
+              }
             />
             <InfoItem label="Hobi" value={profile.hobi} />
             <InfoItem label="Cita-Cita" value={profile.cita_cita} />
@@ -227,7 +261,11 @@ export default function ProfilTab() {
             <InfoItem label="Alamat Lengkap" value={profile.alamat} />
             <InfoItem
               label="RT/RW"
-              value={(profile.rt || profile.rw) ? `${profile.rt || '-'}/${profile.rw || '-'}` : null}
+              value={
+                profile.rt || profile.rw
+                  ? `${profile.rt || "-"}/${profile.rw || "-"}`
+                  : null
+              }
             />
             <InfoItem label="Kelurahan/Desa" value={profile.kelurahan} />
             <InfoItem label="Kecamatan" value={profile.kecamatan} />
@@ -266,13 +304,10 @@ export default function ProfilTab() {
             </div>
           </div>
           <div>
-            <h4 className="font-bold text-blue-900 mb-2">
-              Informasi Penting
-            </h4>
+            <h4 className="font-bold text-blue-900 mb-2">Informasi Penting</h4>
             <ul className="text-sm text-blue-800 space-y-1">
               <li>
-                • Pastikan data Anda sudah benar dan sesuai dengan dokumen
-                resmi
+                • Pastikan data Anda sudah benar dan sesuai dengan dokumen resmi
               </li>
               <li>
                 • Jika ada perubahan data, hubungi panitia PPDB di nomor yang

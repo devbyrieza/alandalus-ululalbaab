@@ -21,7 +21,12 @@ export async function GET(req: NextRequest) {
     }
 
     // Check custom role
-    const allowedRoles = ["admin", "admin_super", "admin_berkas", "admin_keuangan"];
+    const allowedRoles = [
+      "admin",
+      "admin_super",
+      "admin_berkas",
+      "admin_keuangan",
+    ];
     if (!allowedRoles.includes(session.role)) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
@@ -85,8 +90,8 @@ export async function GET(req: NextRequest) {
         status_pendaftaran: true,
         created_at: true,
         tahun_ajaran: {
-          select: { nama: true }
-        }
+          select: { nama: true },
+        },
       },
       orderBy: { created_at: "desc" },
     });
@@ -117,24 +122,26 @@ export async function GET(req: NextRequest) {
     // Return as JSON for client-side export
     const exportData = pendaftarData.map((item) => ({
       "Nomor Pendaftaran": item.nomor_pendaftaran || "-",
-      "NIK": item.nik ? `'${item.nik}` : "-", // Text format for Excel
+      NIK: item.nik ? `'${item.nik}` : "-", // Text format for Excel
       "Nama Lengkap": item.nama_lengkap || "-",
-      "Jenis Kelamin": ["L", "Laki-laki"].includes(item.jenis_kelamin || "") ? "Laki-laki" : "Perempuan",
+      "Jenis Kelamin": ["L", "Laki-laki"].includes(item.jenis_kelamin || "")
+        ? "Laki-laki"
+        : "Perempuan",
       "Tempat Lahir": item.tempat_lahir || "-",
       "Tanggal Lahir": item.tanggal_lahir
         ? new Date(item.tanggal_lahir).toLocaleDateString("id-ID")
         : "-",
-      "Jenjang": item.jenjang || "-",
+      Jenjang: item.jenjang || "-",
       "Asal Sekolah": item.asal_sekolah || "-",
-      "Alamat": item.alamat || "-",
-      "Kelurahan": item.kelurahan || "-",
-      "Kecamatan": item.kecamatan || "-",
+      Alamat: item.alamat || "-",
+      Kelurahan: item.kelurahan || "-",
+      Kecamatan: item.kecamatan || "-",
       "Kota/Kabupaten": item.kabupaten || "-",
-      "Provinsi": item.provinsi || "-",
+      Provinsi: item.provinsi || "-",
       "Kode Pos": item.kode_pos || "-",
       "No HP": item.no_hp ? `'${item.no_hp}` : "-",
-      "Email": item.email || "-",
-      "Status": item.status_pendaftaran || "-",
+      Email: item.email || "-",
+      Status: item.status_pendaftaran || "-",
       "Tahun Ajaran": item.tahun_ajaran?.nama || "-",
       "Tanggal Daftar": item.created_at
         ? new Date(item.created_at).toLocaleDateString("id-ID")
@@ -146,7 +153,7 @@ export async function GET(req: NextRequest) {
     console.error("Export error:", error);
     return NextResponse.json(
       { error: "Internal server error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -155,13 +162,41 @@ function query_status(status: string, where: any) {
   const filterMapping: Record<string, string[]> = {
     belum_bayar: ["draft", "waiting_payment", "awaiting_payment"],
     menunggu_verifikasi_pembayaran: ["payment_verification"],
-    sudah_bayar: ["paid", "verified", "data_completed", "docs_uploaded", "docs_verified", "scheduled", "tested", "announced", "accepted", "enrolled"],
+    sudah_bayar: [
+      "paid",
+      "verified",
+      "data_completed",
+      "docs_uploaded",
+      "docs_verified",
+      "scheduled",
+      "tested",
+      "announced",
+      "accepted",
+      "enrolled",
+    ],
     pembayaran_ditolak: ["rejected", "payment_rejected"],
     belum_isi_data: ["verified", "paid"],
-    sudah_isi_data: ["data_completed", "docs_uploaded", "docs_verified", "scheduled", "tested", "announced", "accepted", "enrolled"],
+    sudah_isi_data: [
+      "data_completed",
+      "docs_uploaded",
+      "docs_verified",
+      "scheduled",
+      "tested",
+      "announced",
+      "accepted",
+      "enrolled",
+    ],
     belum_upload_dokumen: ["data_completed"],
     menunggu_verifikasi_dokumen: ["docs_uploaded"],
-    dokumen_terverifikasi: ["docs_verified", "scheduled", "tested", "passed", "announced", "accepted", "enrolled"],
+    dokumen_terverifikasi: [
+      "docs_verified",
+      "scheduled",
+      "tested",
+      "passed",
+      "announced",
+      "accepted",
+      "enrolled",
+    ],
     dokumen_ditolak: ["docs_rejected"],
     terjadwal_ujian: ["scheduled"],
     belum_ujian: ["scheduled"],

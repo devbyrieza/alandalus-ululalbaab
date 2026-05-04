@@ -41,8 +41,12 @@ function PilihVerifikasiContent() {
     const year = new Date().getFullYear();
     const prefix =
       jenis_kelamin === "L"
-        ? (jenjang === "MTs" ? "MTI" : "ILI")
-        : (jenjang === "MTs" ? "MTA" : "ILA");
+        ? jenjang === "MTs"
+          ? "MTI"
+          : "ILI"
+        : jenjang === "MTs"
+          ? "MTA"
+          : "ILA";
 
     // Random 4 digit untuk demo
     const randomNum = Math.floor(1000 + Math.random() * 9000);
@@ -139,10 +143,11 @@ function PilihVerifikasiContent() {
             console.log("Memilih WhatsApp");
             setSelectedChannel("whatsapp");
           }}
-          className={`app-card w-full p-6 rounded-[1.5rem] border-2 transition-all duration-300 text-left relative ${selectedChannel === "whatsapp"
+          className={`app-card w-full p-6 rounded-[1.5rem] border-2 transition-all duration-300 text-left relative ${
+            selectedChannel === "whatsapp"
               ? "border-brand-blue-600 bg-brand-blue-50 shadow-md scale-[1.02]"
               : "border-brand-blue-100 bg-white hover:border-brand-blue-200 hover:shadow-sm"
-            }`}
+          }`}
         >
           {/* Selected Badge */}
           {selectedChannel === "whatsapp" && (
@@ -154,16 +159,18 @@ function PilihVerifikasiContent() {
           <div className="flex items-center gap-4">
             {/* Icon */}
             <div
-              className={`p-4 rounded-xl transition-all duration-300 ${selectedChannel === "whatsapp"
+              className={`p-4 rounded-xl transition-all duration-300 ${
+                selectedChannel === "whatsapp"
                   ? "bg-brand-blue-600 shadow-md"
                   : "bg-brand-yellow-100"
-                }`}
+              }`}
             >
               <Smartphone
-                className={`w-8 h-8 ${selectedChannel === "whatsapp"
+                className={`w-8 h-8 ${
+                  selectedChannel === "whatsapp"
                     ? "text-white"
                     : "text-brand-blue-700"
-                  }`}
+                }`}
               />
             </div>
 
@@ -171,10 +178,11 @@ function PilihVerifikasiContent() {
             <div className="flex-1">
               <div className="flex items-center gap-2 mb-1">
                 <h3
-                  className={`text-xl font-black ${selectedChannel === "whatsapp"
+                  className={`text-xl font-black ${
+                    selectedChannel === "whatsapp"
                       ? "text-brand-blue-900"
                       : "text-ink-950"
-                    }`}
+                  }`}
                 >
                   WhatsApp
                 </h3>
@@ -189,10 +197,11 @@ function PilihVerifikasiContent() {
               </p>
               <div className="flex items-center gap-2">
                 <div
-                  className={`w-2 h-2 rounded-full ${selectedChannel === "whatsapp"
+                  className={`w-2 h-2 rounded-full ${
+                    selectedChannel === "whatsapp"
                       ? "bg-brand-blue-600"
                       : "bg-brand-yellow-300"
-                    }`}
+                  }`}
                 />
                 <span className="text-xs text-ink-500 font-bold">
                   {DEMO_MODE
@@ -211,10 +220,11 @@ function PilihVerifikasiContent() {
             console.log("Memilih SMS");
             setSelectedChannel("sms");
           }}
-          className={`app-card w-full p-6 rounded-[1.5rem] border-2 transition-all duration-300 text-left relative ${selectedChannel === "sms"
+          className={`app-card w-full p-6 rounded-[1.5rem] border-2 transition-all duration-300 text-left relative ${
+            selectedChannel === "sms"
               ? "border-brand-blue-600 bg-brand-yellow-50 shadow-md scale-[1.02]"
               : "border-brand-yellow-200 bg-white hover:border-brand-blue-200 hover:shadow-sm"
-            }`}
+          }`}
         >
           {/* Selected Badge */}
           {selectedChannel === "sms" && (
@@ -226,22 +236,29 @@ function PilihVerifikasiContent() {
           <div className="flex items-center gap-4">
             {/* Icon */}
             <div
-              className={`p-4 rounded-xl transition-all duration-300 ${selectedChannel === "sms"
+              className={`p-4 rounded-xl transition-all duration-300 ${
+                selectedChannel === "sms"
                   ? "bg-brand-blue-600 shadow-md"
                   : "bg-brand-yellow-100"
-                }`}
+              }`}
             >
               <MessageSquare
-                className={`w-8 h-8 ${selectedChannel === "sms" ? "text-white" : "text-brand-blue-700"
-                  }`}
+                className={`w-8 h-8 ${
+                  selectedChannel === "sms"
+                    ? "text-white"
+                    : "text-brand-blue-700"
+                }`}
               />
             </div>
 
             {/* Content */}
             <div className="flex-1">
               <h3
-                className={`text-xl font-black mb-1 ${selectedChannel === "sms" ? "text-brand-blue-900" : "text-ink-950"
-                  }`}
+                className={`text-xl font-black mb-1 ${
+                  selectedChannel === "sms"
+                    ? "text-brand-blue-900"
+                    : "text-ink-950"
+                }`}
               >
                 SMS
               </h3>
@@ -252,8 +269,11 @@ function PilihVerifikasiContent() {
               </p>
               <div className="flex items-center gap-2">
                 <div
-                  className={`w-2 h-2 rounded-full ${selectedChannel === "sms" ? "bg-brand-blue-600" : "bg-brand-yellow-300"
-                    }`}
+                  className={`w-2 h-2 rounded-full ${
+                    selectedChannel === "sms"
+                      ? "bg-brand-blue-600"
+                      : "bg-brand-yellow-300"
+                  }`}
                 />
                 <span className="text-xs text-ink-500 font-bold">
                   {DEMO_MODE
@@ -268,15 +288,19 @@ function PilihVerifikasiContent() {
 
       {/* Info Box - Pilihan Aktif */}
       <div
-        className={`relative z-10 mb-6 p-4 rounded-xl border transition-all duration-300 ${selectedChannel === "whatsapp"
+        className={`relative z-10 mb-6 p-4 rounded-xl border transition-all duration-300 ${
+          selectedChannel === "whatsapp"
             ? "bg-brand-yellow-50 border-brand-blue-200"
             : "bg-brand-yellow-50 border-brand-blue-200"
-          }`}
+        }`}
       >
         <div className="flex items-center gap-3">
           <div
-            className={`p-2 rounded-lg ${selectedChannel === "whatsapp" ? "bg-brand-blue-600" : "bg-brand-blue-600"
-              }`}
+            className={`p-2 rounded-lg ${
+              selectedChannel === "whatsapp"
+                ? "bg-brand-blue-600"
+                : "bg-brand-blue-600"
+            }`}
           >
             <Check className="w-5 h-5 text-white" />
           </div>
@@ -307,10 +331,11 @@ function PilihVerifikasiContent() {
         <button
           onClick={handleProsesDemo}
           disabled={isLoading}
-          className={`w-full py-4 px-6 font-black text-lg md:text-xl rounded-pill transition-all duration-300 disabled:opacity-50 flex items-center justify-center gap-3 shadow-md hover:scale-[1.02] active:scale-95 ${selectedChannel === "whatsapp"
+          className={`w-full py-4 px-6 font-black text-lg md:text-xl rounded-pill transition-all duration-300 disabled:opacity-50 flex items-center justify-center gap-3 shadow-md hover:scale-[1.02] active:scale-95 ${
+            selectedChannel === "whatsapp"
               ? "bg-maroon-900 hover:bg-cream-100 border border-maroon-900 hover:text-maroon-900 text-white"
               : "bg-maroon-900 hover:bg-cream-100 border border-maroon-900 hover:text-maroon-900 text-white"
-            }`}
+          }`}
         >
           {isLoading ? (
             <>
@@ -338,7 +363,9 @@ function PilihVerifikasiContent() {
           className="w-full py-4 px-6 border-2 border-cream-200 text-ink-600 font-bold rounded-pill app-card hover:bg-cream-50 transition-all duration-300 flex items-center justify-center gap-2"
         >
           <ArrowLeft className="w-5 h-5" />
-          <span className="uppercase tracking-widest text-xs font-black">Kembali</span>
+          <span className="uppercase tracking-widest text-xs font-black">
+            Kembali
+          </span>
         </button>
       </div>
 

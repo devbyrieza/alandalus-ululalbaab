@@ -9,8 +9,8 @@ export function getAdminWhereClause(tahunAjaranId?: string): any {
     deleted_at: null,
     NOT: [
       { nama_lengkap: { startsWith: "TEST ", mode: "insensitive" } },
-      { nama_lengkap: { contains: "BYPASS", mode: "insensitive" } }
-    ]
+      { nama_lengkap: { contains: "BYPASS", mode: "insensitive" } },
+    ],
   };
 
   if (tahunAjaranId) {

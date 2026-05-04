@@ -125,7 +125,9 @@ export function generatePrefix(jenjang: string, jenis_kelamin: string): string {
   if (jenis_kelamin === "P") {
     prefix += "I"; // Putri
   } else {
-    throw new Error(`Jenis kelamin tidak valid untuk Ulul Albaab (Hanya Putri): ${jenis_kelamin}`);
+    throw new Error(
+      `Jenis kelamin tidak valid untuk Ulul Albaab (Hanya Putri): ${jenis_kelamin}`,
+    );
   }
 
   return prefix;
