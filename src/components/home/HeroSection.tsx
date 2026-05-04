@@ -78,7 +78,7 @@ export default function HeroSection() {
                 <span className="block">Kaderisasi Ummat</span>
                 <span
                   className="block mt-1"
-                  style={{ background: "linear-gradient(135deg, var(--color-brand-blue-500) 0%, var(--color-brand-yellow-400) 40%, var(--color-brand-blue-600) 100%)", WebkitBackgroundClip: "text", backgroundClip: "text", WebkitTextFillColor: "transparent", paddingBottom: "0.15em" }}
+                  style={{ background: "linear-gradient(135deg, var(--color-brand-blue-500) 0%, var(--color-brand-yellow-300) 35%, var(--color-brand-yellow-400) 55%, var(--color-brand-blue-600) 100%)", WebkitBackgroundClip: "text", backgroundClip: "text", WebkitTextFillColor: "transparent", paddingBottom: "0.15em" }}
                 >
                   Rabbani, Cendekia,{" "}
                   <br className="hidden xl:block" />
