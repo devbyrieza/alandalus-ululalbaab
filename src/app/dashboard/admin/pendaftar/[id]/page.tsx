@@ -679,7 +679,7 @@ export default function PendaftarDetailPage() {
           )}
 
           {/* Hasil Seleksi & Ujian (Tampil untuk Admin Super, Admin Umum, dan Penguji) */}
-          {(isPenguji || userRole === "admin_super" || userRole === "admin" || userRole === "head_of_it") && (
+          {(isPenguji || userRole === "admin_super" || userRole === "admin") && (
             <div className="bg-white rounded-3xl shadow-sm p-6 border border-brand-yellow-100">
               <div className="flex items-center gap-3 mb-6">
                 <div className="p-3 bg-brand-yellow-50 rounded-xl">
@@ -687,7 +687,7 @@ export default function PendaftarDetailPage() {
                 </div>
                 <div>
                   <h3 className="text-xl font-black text-brand-blue-950 tracking-tight leading-tight">Hasil Seleksi & Ujian</h3>
-                  <p className="text-sm text-ink-300 font-medium tracking-tight">Rincian nilai 6 komponen tes Calon Santri & Wali Santri</p>
+                  <p className="text-sm text-ink-300 font-medium tracking-tight">Rincian nilai 6 komponen tes Calon Santri & Calon Orangtua/Wali Santri</p>
                 </div>
               </div>
 
@@ -739,7 +739,7 @@ export default function PendaftarDetailPage() {
                 {/* 4. Tes Al-Qur'an (Offline) */}
                 <div className="bg-emerald-50/50 p-4 rounded-xl border border-emerald-100 flex flex-col justify-between">
                   <div>
-                    <span className="block text-xs text-emerald-600 font-bold uppercase tracking-wide mb-1">Wawancara: Al-Qur'an</span>
+                    <span className="block text-xs text-emerald-600 font-bold uppercase tracking-wide mb-1">Tes Al-Qur&apos;an</span>
                     {!pendaftar.nilai_ujian ?
                       <span className="text-sm font-bold text-stone-400 italic">Belum Ujian</span> :
                       <div className="flex items-baseline gap-2">
@@ -760,7 +760,7 @@ export default function PendaftarDetailPage() {
                 {/* 5. Wawancara Calsan (Offline) */}
                 <div className="bg-amber-50/50 p-4 rounded-xl border border-amber-100 flex flex-col justify-between">
                   <div>
-                    <span className="block text-xs text-amber-600 font-bold uppercase tracking-wide mb-1">Wawancara: Calsan</span>
+                    <span className="block text-xs text-amber-600 font-bold uppercase tracking-wide mb-1">Wawancara Calon Santri</span>
                     {!pendaftar.nilai_ujian ?
                       <span className="text-sm font-bold text-stone-400 italic">Belum Ujian</span> :
                       <div className="flex items-baseline gap-2">
@@ -781,7 +781,7 @@ export default function PendaftarDetailPage() {
                 {/* 6. Wawancara Cawalsan (Offline) */}
                 <div className="bg-rose-50/50 p-4 rounded-xl border border-rose-100 flex flex-col justify-between">
                   <div>
-                    <span className="block text-xs text-rose-600 font-bold uppercase tracking-wide mb-1">Wawancara: Cawalsan</span>
+                    <span className="block text-xs text-rose-600 font-bold uppercase tracking-wide mb-1">Wawancara Calon Orangtua/Wali Santri</span>
                     {!pendaftar.nilai_ujian ?
                       <span className="text-sm font-bold text-stone-400 italic inline-block mt-2 px-3 py-1 bg-stone-100 rounded">Belum Ada</span> :
                       (pendaftar.nilai_ujian?.nilai_wawancara_ortu || (pendaftar.nilai_ujian as any)?.detail_cawalsan ? (

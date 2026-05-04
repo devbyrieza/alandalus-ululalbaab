@@ -155,7 +155,7 @@ export async function PATCH(
             if (existing?.input_at_ortu && !isAdmin) {
                 const diff = now.getTime() - new Date(existing.input_at_ortu).getTime();
                 if (diff > LOCK_TIME) {
-                    return NextResponse.json({ error: "Masa edit (24 jam) untuk Wawancara Wali Santri sudah habis. Silakan hubungi Admin Super." }, { status: 403 });
+                    return NextResponse.json({ error: "Masa edit (24 jam) untuk Wawancara Calon Orangtua/Wali Santri sudah habis. Silakan hubungi Admin Super." }, { status: 403 });
                 }
             }
 

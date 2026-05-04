@@ -104,7 +104,7 @@ export const PPDB_CONFIG = {
   contact: {
     whatsapp: "+6281285300800",
     instagram: "@alandalusululalbaab",
-    facebook: "Pesantren Al-Andalus Ulul Albaab",
+    facebook: "Pesantren Al Andalus Ulul Albaab",
     youtube: "Al Andalus Ulul Albaab"
   },
 

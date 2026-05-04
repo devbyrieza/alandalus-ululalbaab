@@ -15,7 +15,7 @@ if (fs.existsSync(envProdPath)) {
 }
 
 // Baca Nama Sekolah secara langsung setelah Env dimuat
-const schoolName = process.env.NEXT_PUBLIC_SCHOOL_NAME || 'Al-Andalus PPDB';
+const schoolName = process.env.NEXT_PUBLIC_SCHOOL_NAME || 'Al Andalus PPDB';
 
 // DEBUG: Pastikan alamat yang dibaca benar
 const dbUrl = process.env.DATABASE_URL || 'TIDAK DITEMUKAN';
@@ -32,8 +32,8 @@ async function main() {
     console.log(`🚀 Memulai Sinkronisasi Pasukan Admin & Penguji: ${schoolName}...`);
 
     // Tentukan Suffix Email berdasarkan Branding
-    // Jika ada Al-Imam di nama sekolah, gunakan @alimam.com, jika tidak @ululalbaab.com
-    const emailSuffix = schoolName.toLowerCase().includes('al-imam') 
+    // Jika ada Al Imam di nama sekolah, gunakan @alimam.com, jika tidak @ululalbaab.com
+    const emailSuffix = schoolName.toLowerCase().includes('al imam') 
         ? 'alimam.com' 
         : 'ululalbaab.com';
 
@@ -67,7 +67,7 @@ async function main() {
         { 
             prefix: 'headit', 
             name: 'Head of IT', 
-            role: 'head_of_it', 
+            role: 'admin_super', 
             phone: '085111524441' 
         }
     ];
@@ -115,7 +115,7 @@ async function main() {
         }
     }
 
-    // Penanganan Legacy Admin (Opsional: Jika ada admin lama @ululalbaab.com di database Al-Imam)
+    // Penanganan Legacy Admin (Opsional: Jika ada admin lama @ululalbaab.com di database Al Imam)
     if (emailSuffix === 'alimam.com') {
         const legacyAdmin = await prisma.profile.findFirst({
             where: { email: 'admin@ululalbaab.com' }

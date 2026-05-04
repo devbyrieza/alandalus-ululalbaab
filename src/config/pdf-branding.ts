@@ -7,7 +7,7 @@ export const PDF_BRANDING = {
     // Institution Labels
     institution: {
         name: "PESANTREN AL ANDALUS ULUL ALBAAB",
-        subtitle: "Islamic Boarding School Managed by Al-Andalus",
+        subtitle: "Islamic Boarding School Managed by Al Andalus",
         committee: "PANITIA PENERIMAAN SANTRI BARU",
         academic_year: "2026-2027",
         address: "Jl. KH Mama Oyon Cihaur RT/RW 04/04, Cicantayan, Kabupaten Sukabumi, Jawa Barat 43155",

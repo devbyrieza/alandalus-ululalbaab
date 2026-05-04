@@ -19,7 +19,12 @@ export async function GET(request: Request) {
     try {
         const result = await sendMessage({
             phone,
-            message: `Halo! Ini adalah pesan tes koneksi WABLAS. Jika Anda menerima ini, berarti sistem PPDB Ulul Albaab sudah terhubung dengan benar.\n\n_Pesanan ini dikirim secara otomatis oleh sistem PPDB Ulul Albaab._\n\nTerima kasih,\nTim IT Ulul Albaab.`,
+            message: `Halo! Ini adalah pesan tes koneksi WABLAS. Jika Anda menerima ini, berarti sistem PPDB Ulul Albaab sudah terhubung dengan benar.
+
+_Pesanan ini dikirim secara otomatis oleh sistem PPDB Ulul Albaab._
+
+Terima kasih,
+Admin Pusat Ulul Albaab.`,
         });
 
         return NextResponse.json({

@@ -50,8 +50,8 @@ const PROGRAMS = [
         id: "il",
         name: "I'dad Lughowi",
         buttonLabel: "Daftar IL",
-        fullName: "I'dad Lughowi — Total 4 Tahun (1 Tahun Persiapan + 3 Tahun SMA)",
-        description: "Untuk santri yang belum lancar berbahasa Arab. Tahun pertama: persiapan Bahasa Arab intensif (I'dad Lughowi). Kemudian dilanjutkan 3 tahun SMA berbasis pesantren. Total durasi pendidikan: 4 tahun.",
+        fullName: "Program I'dad Lughowi (Persiapan SMA)",
+        description: "Program persiapan intensif Bahasa Arab selama 1 tahun bagi lulusan SMP/MTs, yang kemudian dilanjutkan ke jenjang SMA Pesantren Al Andalus selama 3 tahun. Total durasi pendidikan adalah 4 tahun.",
         stats: [
             { label: "Total Durasi", value: "4 Tahun", icon: Clock },
             { label: "Kuota Putra", value: "32", icon: Users },
@@ -68,29 +68,6 @@ const PROGRAMS = [
         theme: "yellow",
         accent: "text-brand-yellow-600",
         bg: "bg-brand-yellow-50"
-    },
-    {
-        id: "sma",
-        name: "SMA",
-        buttonLabel: "Daftar SMA",
-        fullName: "SMA Pesantren Al Andalus Ulul Albaab — Langsung 3 Tahun",
-        description: "Untuk santri yang sudah hafal minimal 5 juz mutqin dan lancar berbahasa Arab. Masuk langsung ke jenjang SMA pesantren selama 3 tahun tanpa tahun persiapan bahasa. Berbeda dari jalur IL yang membutuhkan 4 tahun total.",
-        stats: [
-            { label: "Durasi", value: "3 Tahun", icon: Clock },
-            { label: "Syarat Hafalan", value: "5 Juz", icon: Trophy },
-            { label: "Bahasa", value: "Arab Aktif", icon: Globe },
-        ],
-        curriculum: [
-            "Syarat Masuk: Hafal 5 Juz Mutqin",
-            "Syarat Masuk: Lancar Berbahasa Arab",
-            "Langsung 3 Tahun Tanpa Persiapan Bahasa",
-            "Kajian Kitab Turots Mendalam",
-            "Persiapan PTN & Universitas Timur Tengah"
-        ],
-        image: "/images/il.webp",
-        theme: "teal",
-        accent: "text-teal-600",
-        bg: "bg-teal-50"
     },
 ];
 

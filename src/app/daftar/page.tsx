@@ -159,7 +159,7 @@ export default function DaftarPage() {
     if (!formData.jenis_kelamin) {
       errors.jenis_kelamin = "Pilih jenis kelamin santri";
     } else if (formData.jenis_kelamin === "L") {
-      errors.jenis_kelamin = "Mohon maaf, pendaftaran Santri Putra dilakukan melalui Pesantren Al-Imam.";
+      errors.jenis_kelamin = "Mohon maaf, pendaftaran Santri Putra dilakukan melalui Pesantren Al Imam.";
     }
 
     if (!formData.jenjang) {

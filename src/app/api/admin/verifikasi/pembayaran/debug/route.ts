@@ -6,7 +6,7 @@ import path from "path";
 export async function GET(request: NextRequest) {
     try {
         const session = await getServerSession() as any;
-        if (!session || !["admin", "admin_super", "admin_keuangan", "head_of_it", "tim_it"].includes(session.role)) {
+        if (!session || !["admin", "admin_super", "admin_keuangan"].includes(session.role)) {
             return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
         }
 

@@ -8,8 +8,8 @@
     }
   ],
   "env": {
-    "NEXT_PUBLIC_APP_NAME": "PPDB Ulul-Albaab Islamic Boarding School",
-    "NEXT_PUBLIC_APP_DESCRIPTION": "Sistem PPDB modern untuk Pesantren Al-Andalus Ulul-Albaab"
+    "NEXT_PUBLIC_APP_NAME": "PPDB Ulul Albaab Islamic Boarding School",
+    "NEXT_PUBLIC_APP_DESCRIPTION": "Sistem PPDB modern untuk Pesantren Al Andalus Ulul Albaab"
   },
   "regions": ["sin1"],
   "functions": {

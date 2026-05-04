@@ -124,7 +124,7 @@ export default function Navbar() {
                   {BRANDING.schoolShortName}
                 </h1>
                 <p className="text-[9px] sm:text-[10px] font-bold text-[var(--color-brand-blue-500)] uppercase tracking-widest mt-0.5 leading-tight">
-                  Di bawah naungan Al-Andalus IIBS
+                  Di bawah naungan Al Andalus IIBS
                 </p>
               </div>
             </Link>
