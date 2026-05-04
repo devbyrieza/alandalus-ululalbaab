@@ -2,139 +2,168 @@
 
 import Link from "next/link";
 import {
-  Calendar,
-  BookOpen,
-  GraduationCap,
-  Download,
-  ArrowRight,
-  Clock,
-  ArrowUpRight
+    Calendar,
+    Download,
+    Clock,
+    ArrowUpRight
 } from "lucide-react";
 import { Container } from "@/components/layout/Container";
 import { motion } from "framer-motion";
 
+// ─── Data ────────────────────────────────────────────
 const IMPORTANT_DATES = [
-  {
-    date: "10 Feb - 30 Mei 2026",
-    title: "Pendaftaran PPDB",
-    description: "Pendaftaran santri baru dibuka secara online melalui website resmi.",
-    color: "maroon",
-  },
-  {
-    date: "Sesuai Jadwal",
-    title: "Tes Seleksi",
-    description: "Ujian lisan dan tertulis dilaksanakan setelah verifikasi berkas.",
-    color: "cream",
-  },
-  {
-    date: "15 Juli 2026",
-    title: "Hari Pertama KBM",
-    description: "Khutbah Ta'aruf dan awal pengenalan lingkungan.",
-    color: "gold",
-  },
+    {
+        date: "10 Feb - 30 Mei 2026",
+        title: "Pendaftaran PPDB",
+        description: "Pendaftaran santri baru dibuka secara online melalui website resmi.",
+        accent: "blue" as const,
+    },
+    {
+        date: "Sesuai Jadwal",
+        title: "Tes Seleksi",
+        description: "Ujian lisan dan tertulis dilaksanakan setelah verifikasi berkas.",
+        accent: "yellow" as const,
+    },
+    {
+        date: "15 Juli 2026",
+        title: "Hari Pertama KBM",
+        description: "Khutbah Ta'aruf dan awal pengenalan lingkungan.",
+        accent: "blue" as const,
+    },
 ] as const;
 
+const EASE = [0.16, 1, 0.3, 1] as const;
+
+const ACCENT_MAP = {
+    blue: {
+        number: "bg-brand-blue-600 text-white",
+        badge: "bg-brand-blue-50 text-brand-blue-700 border-brand-blue-100",
+        title: "group-hover:text-brand-blue-700",
+    },
+    yellow: {
+        number: "bg-brand-yellow-50 text-brand-yellow-700 border border-brand-yellow-200",
+        badge: "bg-brand-yellow-50 text-brand-yellow-700 border-brand-yellow-200",
+        title: "group-hover:text-brand-yellow-700",
+    },
+};
+
+// ─── Main ─────────────────────────────────────────────
 export default function CalendarSection() {
-  return (
-    <section id="kalender" className="section-std">
-      <Container>
-        <div className="flex flex-col lg:flex-row gap-16 lg:gap-24">
+    return (
+        <section id="kalender" className="section-std relative border-y border-brand-blue-100 overflow-hidden">
+            
+            <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-[0.02] pointer-events-none" />
 
-          {/* Timeline side */}
-          <div className="lg:w-[55%]">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-            >
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-pill bg-cream-50 border border-cream-200 text-maroon-700 text-xs font-bold uppercase tracking-widest mb-6 shadow-sm">
-                <Calendar className="w-3.5 h-3.5" />
-                <span>Agenda Penting</span>
-              </div>
-              <h2 className="section-title mb-10">
-                Timeline <span className="text-gradient-maroon">Terstruktur</span>
-              </h2>
+            <Container className="relative z-10">
+                <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-center lg:items-start">
 
-              <div className="space-y-8 relative">
-                {/* Vertical Line */}
-                <div className="absolute left-[23px] top-6 bottom-6 w-0.5 bg-cream-200" />
+                    <div className="lg:w-[55%] w-full">
+                        <motion.div
+                            initial={{ opacity: 0, x: -20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true, margin: "-40px" }}
+                            transition={{ duration: 0.6, ease: EASE }}
+                        >
+                            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-blue-50 border border-brand-blue-100 text-brand-blue-700 text-[0.65rem] font-bold uppercase tracking-[0.12em] mb-5 shadow-xs">
+                                <Calendar className="w-3 h-3 shrink-0" strokeWidth={2} />
+                                <span>Agenda Penting</span>
+                            </div>
+                            
+                            <h2 className="section-title mb-10">
+                                Timeline <span className="text-gradient-blue">Terstruktur</span>
+                            </h2>
 
-                {IMPORTANT_DATES.map((item, idx) => (
-                  <motion.div
-                    key={idx}
-                    initial={{ opacity: 0, y: 10 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: idx * 0.1 }}
-                    className="relative flex items-start gap-6 sm:gap-8 group"
-                  >
-                    <div className={`w-12 h-12 rounded-[14px] flex items-center justify-center relative z-10 shrink-0 shadow-sm transition-transform duration-500 group-hover:scale-110 ${
-                        item.color === 'maroon' ? 'bg-maroon-700 text-white' :
-                        item.color === 'cream' ? 'bg-cream-200 text-maroon-800 border border-cream-300' :
-                        'bg-yellow-500 text-white border border-yellow-600'
-                      }`}>
-                      <span className="font-display font-black text-lg">{idx + 1}</span>
+                            <div className="space-y-6 relative pl-3">
+                                <div className="absolute left-[35px] top-6 bottom-6 w-px bg-gradient-to-b from-brand-blue-200 via-brand-yellow-200 to-transparent" />
+
+                                {IMPORTANT_DATES.map((item, idx) => {
+                                    const colors = ACCENT_MAP[item.accent];
+                                    return (
+                                        <motion.div
+                                            key={idx}
+                                            initial={{ opacity: 0, y: 16 }}
+                                            whileInView={{ opacity: 1, y: 0 }}
+                                            viewport={{ once: true }}
+                                            transition={{ delay: idx * 0.1, duration: 0.5, ease: EASE }}
+                                            className="relative flex items-start gap-5 sm:gap-7 group"
+                                        >
+                                            <div className={[
+                                                "w-11 h-11 rounded-2xl flex items-center justify-center relative z-10 shrink-0 shadow-xs",
+                                                "transition-transform duration-400 group-hover:scale-110",
+                                                colors.number
+                                            ].join(" ")}>
+                                                <span className="font-display font-black text-[1.0625rem]">{idx + 1}</span>
+                                            </div>
+
+                                            <div className="bg-white p-6 md:p-7 rounded-2xl border border-brand-blue-100 shadow-premium-sm hover:shadow-premium-md hover:border-brand-blue-200 transition-all duration-400 flex-grow relative overflow-hidden">
+                                                <div className="absolute inset-0 bg-gradient-to-br from-brand-blue-50/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
+                                                
+                                                <div className="relative z-10">
+                                                    <span className={[
+                                                        "inline-block px-2.5 py-1 rounded-md text-[0.6rem] font-black uppercase tracking-widest mb-3 border shadow-xs",
+                                                        colors.badge
+                                                    ].join(" ")}>
+                                                        {item.date}
+                                                    </span>
+                                                    <h4 className={`font-bold text-ink-900 text-lg mb-1.5 tracking-tight transition-colors duration-200 ${colors.title}`}>
+                                                        {item.title}
+                                                    </h4>
+                                                    <p className="text-[0.8125rem] text-ink-500 font-[450] leading-relaxed">
+                                                        {item.description}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </motion.div>
+                                    );
+                                })}
+                            </div>
+                        </motion.div>
                     </div>
-                    <div className="app-card bg-surface-50 p-6 md:p-8 flex-grow hover:bg-white transition-all duration-300">
-                      <div className="flex items-center justify-between gap-4 mb-4">
-                        <span className={`px-3 py-1.5 rounded-pill text-[10px] font-bold uppercase tracking-widest ${
-                            item.color === 'maroon' ? 'bg-maroon-50 text-maroon-700 border border-maroon-100' :
-                            item.color === 'cream' ? 'bg-cream-100 text-maroon-800 border border-cream-200' :
-                            'bg-yellow-50 text-yellow-700 border border-yellow-200'
-                          }`}>
-                          {item.date}
-                        </span>
-                      </div>
-                      <h4 className="font-bold text-ink-950 text-xl mb-2 tracking-tight group-hover:text-maroon-700 transition-colors">{item.title}</h4>
-                      <p className="text-sm text-ink-600 font-medium leading-relaxed">{item.description}</p>
+
+                    <div className="lg:w-[45%] w-full">
+                        <motion.div
+                            initial={{ opacity: 0, x: 20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true, margin: "-40px" }}
+                            transition={{ duration: 0.6, ease: EASE }}
+                            className="bg-white rounded-[2.5rem] p-8 sm:p-10 md:p-12 flex flex-col justify-center items-center text-center relative overflow-hidden shadow-premium-lg border border-brand-blue-100 group hover:border-brand-blue-200 transition-all duration-500"
+                        >
+                            <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-brand-yellow-100/50 rounded-full blur-[60px] pointer-events-none transition-transform duration-700 group-hover:scale-110" />
+                            <div className="absolute -top-24 -left-24 w-64 h-64 bg-brand-blue-50/80 rounded-full blur-[60px] pointer-events-none transition-transform duration-700 group-hover:scale-110" />
+
+                            <div className="relative z-10 flex flex-col items-center">
+                                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-brand-blue-50 rounded-2xl flex items-center justify-center mb-6 shadow-sm border border-brand-blue-100 group-hover:scale-105 group-hover:border-brand-blue-200 transition-all duration-400">
+                                    <Clock className="w-8 h-8 sm:w-10 sm:h-10 text-brand-blue-600" strokeWidth={1.5} />
+                                </div>
+                                
+                                <h3 className="text-[1.35rem] sm:text-[1.75rem] font-display font-black text-ink-900 mb-4 tracking-tight leading-snug group-hover:text-brand-blue-800 transition-colors duration-300">
+                                    Manajemen Waktu <br /> yang Barokah
+                                </h3>
+                                
+                                <p className="text-[0.8125rem] sm:text-[0.875rem] text-ink-500 font-[450] mb-8 leading-relaxed max-w-[260px]">
+                                    Disiplin adalah kunci sukses. Ketahui seluruh jadwal akademik dan kegiatan santri dengan teliti.
+                                </p>
+
+                                <div className="space-y-3.5 w-full max-w-[240px]">
+                                    <Link href="/kalender" className="block w-full">
+                                        <button className="btn-primary w-full justify-center py-3 shadow-md">
+                                            Cek Kalender
+                                            <ArrowUpRight className="w-4 h-4 ml-1" />
+                                        </button>
+                                    </Link>
+                                    <Link href="#" className="block w-full">
+                                        <button className="btn-secondary w-full justify-center py-3 bg-white hover:bg-brand-blue-50 border-brand-blue-100 group/btn">
+                                            <Download className="w-4 h-4 mr-2 group-hover/btn:-translate-y-0.5 transition-transform" />
+                                            <span className="text-[0.8125rem]">Unduh PDF</span>
+                                        </button>
+                                    </Link>
+                                </div>
+                            </div>
+                        </motion.div>
                     </div>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-          </div>
 
-          {/* Card action side */}
-          <div className="lg:w-[45%]">
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="bg-white rounded-[2.5rem] p-8 sm:p-10 md:p-14 flex flex-col justify-center items-center text-center relative overflow-hidden shadow-lg border border-cream-200 h-full hover:shadow-xl transition-all duration-500"
-            >
-              <div className="w-20 h-20 sm:w-24 sm:h-24 bg-cream-50 rounded-full flex items-center justify-center mb-8 shadow-sm">
-                <Clock className="w-10 h-10 sm:w-12 sm:h-12 text-maroon-600" />
-              </div>
-              <h3 className="text-2xl sm:text-3xl font-display font-black text-ink-950 mb-6 tracking-tight">Manajemen Waktu yang Barokah</h3>
-              <p className="text-sm sm:text-base text-ink-600 font-medium mb-10 leading-relaxed max-w-sm">
-                Disiplin adalah kunci sukses. Ketahui seluruh jadwal akademik dan kegiatan santri dengan teliti.
-              </p>
-
-              <div className="space-y-4 w-full max-w-xs">
-                <Link href="/kalender">
-                  <button className="btn-primary w-full shadow-lg">
-                    Cek Kalender Akademik
-                    <ArrowUpRight className="w-4 h-4 ml-1" />
-                  </button>
-                </Link>
-                <Link href="#">
-                  <button className="btn-secondary w-full group overflow-hidden relative">
-                    <span className="relative z-10 flex items-center justify-center gap-2">
-                        <Download className="w-4 h-4 group-hover:translate-y-[2px] transition-transform" />
-                        Unduh Jadwal (PDF)
-                    </span>
-                  </button>
-                </Link>
-              </div>
-
-              {/* Decorative blobs */}
-              <div className="absolute -bottom-24 -right-24 w-72 h-72 bg-cream-200/50 rounded-full blur-[80px] -z-10" />
-              <div className="absolute -top-24 -left-24 w-72 h-72 bg-maroon-50 rounded-full blur-[80px] -z-10" />
-            </motion.div>
-          </div>
-
-        </div>
-      </Container>
-    </section>
-  );
+                </div>
+            </Container>
+        </section>
+    );
 }
