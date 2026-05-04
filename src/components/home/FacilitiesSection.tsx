@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 import { navigateToDetail } from "@/lib/navigation-scroll";
 
 const FACILITIES = [
-    { name: "Masjid Kapasitas 900 Jamaah", icon: Home, color: "maroon" },
+    { name: "Masjid Kapasitas 900 Jamaah", icon: Home, color: "blue" },
     { name: "Gedung Sekolah Terpadu", icon: School, color: "cream" },
     { name: "Asrama Representatif", icon: Building2, color: "ink" },
     { name: "Fasilitas Olahraga", icon: Dumbbell, color: "gold" },
@@ -19,7 +19,7 @@ const FACILITIES = [
     { name: "Ruang Makan Bersama", icon: UtensilsCrossed, color: "amber" },
     { name: "Perpustakaan", icon: Library, color: "emerald" },
     { name: "Kolam Ikan", icon: Waves, color: "cyan" },
-    { name: "Kantin", icon: Coffee, color: "maroon" },
+    { name: "Kantin", icon: Coffee, color: "blue" },
     { name: "Aula Serbaguna", icon: Tent, color: "gold" },
     { name: "Mesin Air Bio & RO", icon: Droplets, color: "teal" },
 ] as const;
@@ -57,7 +57,7 @@ export default function FacilitiesSection() {
                         transition={{ delay: 0.1 }}
                         className="section-title mb-6"
                     >
-                        Fasilitas <span className="text-gradient-maroon">Terpadu & Lengkap</span>
+                        Fasilitas <span className="text-gradient-blue">Terpadu & Lengkap</span>
                     </motion.h2>
 
                     <motion.p
@@ -105,11 +105,11 @@ export default function FacilitiesSection() {
                             whileInView={{ opacity: 1, scale: 1 }}
                             viewport={{ once: true }}
                             transition={{ delay: idx * 0.05 }}
-                            className="flex items-center gap-4 p-4 rounded-2xl bg-white border border-cream-200 group hover:bg-cream-50 hover:border-maroon-200 hover:shadow-md transition-all duration-300"
+                            className="flex items-center gap-4 p-4 rounded-2xl bg-white border border-cream-200 group hover:bg-cream-50 hover:border-brand-blue-200 hover:shadow-md transition-all duration-300"
                         >
                             <div className={`w-11 h-11 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center shrink-0 shadow-sm transition-transform duration-500 group-hover:scale-110 ${
-                                facility.color === 'maroon' ? 'bg-maroon-50 text-brand-blue-600' :
-                                facility.color === 'cream' ? 'bg-brand-yellow-100 text-maroon-800' :
+                                facility.color === 'blue' ? 'bg-brand-blue-50 text-brand-blue-600' :
+                                facility.color === 'cream' ? 'bg-brand-yellow-100 text-brand-blue-900' :
                                 facility.color === 'gold' ? 'bg-yellow-50 text-yellow-600' :
                                 facility.color === 'teal' ? 'bg-teal-50 text-teal-600' :
                                 facility.color === 'red' ? 'bg-red-50 text-red-600' :
@@ -122,7 +122,7 @@ export default function FacilitiesSection() {
                                 }`}>
                                 <facility.icon className="w-5 h-5" />
                             </div>
-                            <span className="font-bold text-ink-950 text-sm leading-tight group-hover:text-maroon-800 transition-colors">{facility.name}</span>
+                            <span className="font-bold text-ink-950 text-sm leading-tight group-hover:text-brand-blue-800 transition-colors">{facility.name}</span>
                         </motion.div>
                     ))}
                 </div>

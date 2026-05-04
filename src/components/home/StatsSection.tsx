@@ -7,10 +7,10 @@ import { Container } from "@/components/layout/Container";
 import { Calendar, Users, GraduationCap, Award, TrendingUp, BookOpen } from 'lucide-react';
 
 const STATS = [
-  { id: 'batch', label: 'Angkatan Ke-4', value: 4, icon: Calendar, color: 'maroon' as const, suffix: '', sublabel: 'Managed by Al Andalus' },
-  { id: 'quality', label: 'Standar Global', value: 100, icon: Award, color: 'maroon' as const, suffix: '%', sublabel: 'Kurikulum Unggulan' },
-  { id: 'levels', label: 'Jenjang Tersedia', value: 3, icon: GraduationCap, color: 'maroon' as const, suffix: '', sublabel: 'MTs · IL · SMA' },
-  { id: 'quota', label: 'Kuota Terbatas', value: 124, icon: Users, color: 'maroon' as const, suffix: '', sublabel: 'Santri (Putra & Putri)' },
+  { id: 'batch', label: 'Angkatan Ke-4', value: 4, icon: Calendar, color: 'blue' as const, suffix: '', sublabel: 'Managed by Al Andalus' },
+  { id: 'quality', label: 'Standar Global', value: 100, icon: Award, color: 'yellow' as const, suffix: '%', sublabel: 'Kurikulum Unggulan' },
+  { id: 'levels', label: 'Jenjang Tersedia', value: 3, icon: GraduationCap, color: 'blue' as const, suffix: '', sublabel: 'MTs · IL · SMA' },
+  { id: 'quota', label: 'Kuota Terbatas', value: 124, icon: Users, color: 'yellow' as const, suffix: '', sublabel: 'Santri (Putra & Putri)' },
 ] as const;
 
 export default function StatsSection() {
@@ -52,7 +52,7 @@ export default function StatsSection() {
   return (
     <section className="py-16 md:py-24 bg-white relative overflow-hidden border-b border-cream-200">
       {/* Sophisticated Background Element */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-maroon-50/50 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2" />
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-blue-50/50 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2" />
       <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-brand-yellow-100/40 rounded-full blur-[120px] translate-y-1/2 -translate-x-1/2" />
 
       <Container className="relative z-10">
@@ -69,18 +69,18 @@ export default function StatsSection() {
                 className="app-card p-6 md:p-8 flex flex-col items-center text-center group"
               >
                 <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-5 transition-transform duration-500 group-hover:scale-110 shadow-sm
-                  ${stat.color === 'maroon' ? 'bg-maroon-50 text-maroon-600' :
-                  'bg-brand-blue-100 text-brand-blue-800'
+                  ${stat.color === 'blue' ? 'bg-brand-blue-50 text-brand-blue-600' :
+                  'bg-brand-yellow-50 text-brand-yellow-600'
                   }`}>
                   <stat.icon className="w-6 h-6" />
                 </div>
 
                 <div className="relative">
                   <motion.div
-                    className="text-4xl md:text-5xl font-black text-maroon-700 mb-2 tracking-tighter"
+                    className="text-4xl md:text-5xl font-black text-brand-blue-700 mb-2 tracking-tighter"
                   >
                     {counters[stat.id as keyof typeof counters]}
-                    {stat.suffix && <span className="text-maroon-600 ml-0.5">{stat.suffix}</span>}
+                    {stat.suffix && <span className="text-brand-blue-600 ml-0.5">{stat.suffix}</span>}
                   </motion.div>
                 </div>
 
@@ -94,7 +94,7 @@ export default function StatsSection() {
                 )}
 
                 {/* Subtle underline decoration */}
-                <div className="mt-4 w-6 h-1 bg-cream-200 rounded-full group-hover:w-12 group-hover:bg-maroon-400 transition-all duration-500" />
+                <div className="mt-4 w-6 h-1 bg-cream-200 rounded-full group-hover:w-12 group-hover:bg-brand-blue-400 transition-all duration-500" />
               </motion.div>
             ))}
           </div>

@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { UserPlus, FileText, CreditCard, ClipboardCheck, GraduationCap, CheckCircle, BellRing } from "lucide-react";
 import { Container } from "@/components/layout/Container";
@@ -9,7 +9,7 @@ const STEPS = [
         icon: UserPlus,
         title: "Buat Akun",
         description: "Daftarkan data diri awal dan buat akun pendaftaran santri baru.",
-        color: "maroon",
+        color: "brand-blue",
     },
     {
         icon: CreditCard,
@@ -33,7 +33,7 @@ const STEPS = [
         icon: BellRing,
         title: "Pengumuman",
         description: "Lihat hasil kelulusan seleksi melalui dashboard pendaftar & WhatsApp.",
-        color: "maroon",
+        color: "brand-blue",
     },
     {
         icon: GraduationCap,
@@ -67,7 +67,7 @@ export default function ProcessSection() {
                         viewport={{ once: true }}
                         className="section-title mb-6"
                     >
-                        Alur <span className="text-gradient-maroon">Pendaftaran</span>
+                        Alur <span className="text-gradient-blue">Pendaftaran</span>
                     </motion.h2>
 
                     <motion.p
@@ -103,7 +103,7 @@ export default function ProcessSection() {
                                 <div className={`w-20 h-20 md:w-[120px] md:h-[120px] rounded-[1.5rem] md:rounded-[2rem] border-2 flex items-center justify-center mb-5 md:mb-8 shadow-sm transition-all duration-500 group-hover:scale-105 group-hover:shadow-md ${
                                     step.color === 'brand-blue' ? 'bg-brand-blue-50 text-brand-blue-600 border-brand-blue-100 hover:bg-brand-blue-100' :
                                     step.color === 'brand-yellow' ? 'bg-white text-brand-yellow-800 border-brand-yellow-200 hover:border-brand-yellow-200 hover:bg-brand-yellow-50' :
-                                    'bg-yellow-50 text-yellow-600 border-yellow-100 hover:bg-yellow-100'
+                                    'bg-cream-50 text-brand-blue-700 border-cream-200 hover:bg-cream-100'
                                     }`}>
                                     <step.icon className="w-8 h-8 md:w-12 md:h-12" />
                                 </div>

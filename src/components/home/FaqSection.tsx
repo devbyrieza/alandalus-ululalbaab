@@ -31,7 +31,7 @@ const FAQS = [
 
 function FaqItem({ question, answer, isOpen, toggle }: { question: string, answer: string, isOpen: boolean, toggle: () => void }) {
     return (
-        <div className={`rounded-[24px] border transition-all duration-300 overflow-hidden ${isOpen ? 'bg-white border-cream-200 shadow-md ring-1 ring-brand-yellow-100' : 'bg-white border-cream-200 hover:border-maroon-200 hover:bg-cream-50/50'}`}>
+        <div className={`rounded-[24px] border transition-all duration-300 overflow-hidden ${isOpen ? 'bg-white border-cream-200 shadow-md ring-1 ring-brand-yellow-100' : 'bg-white border-cream-200 hover:border-brand-blue-200 hover:bg-cream-50/50'}`}>
             <button
                 onClick={toggle}
                 className="w-full px-6 py-5 md:px-8 md:py-6 text-left flex items-center justify-between gap-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue-500 rounded-[24px]"
@@ -39,7 +39,7 @@ function FaqItem({ question, answer, isOpen, toggle }: { question: string, answe
                 <span className={`font-bold text-base md:text-lg tracking-tight transition-colors pr-4 ${isOpen ? 'text-brand-blue-700' : 'text-ink-950'}`}>
                     {question}
                 </span>
-                <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 transition-all duration-300 ${isOpen ? 'bg-brand-blue-600 text-white rotate-180 shadow-md' : 'bg-brand-yellow-100 text-brand-blue-600 group-hover:bg-maroon-100'}`}>
+                <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 transition-all duration-300 ${isOpen ? 'bg-brand-blue-600 text-white rotate-180 shadow-md' : 'bg-brand-yellow-100 text-brand-blue-600 group-hover:bg-brand-blue-100'}`}>
                     <ChevronDown className="w-5 h-5" />
                 </div>
             </button>
@@ -90,7 +90,7 @@ export default function FaqSection() {
                         viewport={{ once: true }}
                         className="section-title mb-6"
                     >
-                        Sering <span className="text-gradient-maroon">Ditanyakan</span>
+                        Sering <span className="text-gradient-blue">Ditanyakan</span>
                     </motion.h2>
 
                     <motion.p

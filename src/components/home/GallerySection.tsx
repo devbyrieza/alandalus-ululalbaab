@@ -58,7 +58,7 @@ function GalleryCard({
           fill
           className="object-cover transition-transform duration-700 group-hover:scale-110"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-maroon-950/80 via-maroon-900/20 to-transparent opacity-90 transition-opacity duration-300" />
+        <div className="absolute inset-0 bg-gradient-to-t from-brand-blue-950/80 via-brand-blue-900/20 to-transparent opacity-90 transition-opacity duration-300" />
       </div>
 
       {/* Floating Icon */}
@@ -87,7 +87,7 @@ export default function GallerySection() {
               <span>Dokumentasi</span>
             </div>
             <h2 className="section-title mb-0">
-              Galeri <span className="text-gradient-maroon">Aktivitas</span>
+              Galeri <span className="text-gradient-blue">Aktivitas</span>
             </h2>
             <p className="section-subtitle lg:ml-0 text-left mt-4 text-justify">
               Intip kegiatan sehari-hari para santri dalam menuntut ilmu dan beribadah.
@@ -116,7 +116,7 @@ export default function GallerySection() {
 
           <div className="relative z-10 grid lg:grid-cols-2 gap-10 items-center max-w-6xl mx-auto">
             <div>
-              <h3 className="text-3xl font-black text-maroon-900 mb-4 tracking-tight">Jadwal Harian Berkah</h3>
+              <h3 className="text-3xl font-black text-brand-blue-900 mb-4 tracking-tight">Jadwal Harian Berkah</h3>
               <p className="text-ink-600 font-medium mb-8 max-w-md leading-relaxed text-justify">
                 Setiap detik sangat berharga. Kami mengatur jadwal santri agar seimbang antara ibadah, belajar, istirahat, dan bersosialisasi.
               </p>

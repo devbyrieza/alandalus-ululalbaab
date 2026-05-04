@@ -110,7 +110,7 @@ export default function FeaturesSection() {
             >
               <div className="space-y-4 lg:space-y-6 mt-12">
                 <div className="app-card p-6 sm:p-8 min-h-56 md:h-64 flex flex-col justify-end items-start group">
-                  <p className="text-4xl lg:text-5xl font-black text-maroon-900 mb-2 tracking-tighter uppercase">TA 26/27</p>
+                  <p className="text-4xl lg:text-5xl font-black text-ink-900 mb-2 tracking-tighter uppercase">TA 26/27</p>
                   <div className="space-y-1">
                     <p className="text-sm font-bold text-ink-700 uppercase tracking-wider">Angkatan Pertama</p>
                     <p className="text-xs leading-tight text-ink-500 font-medium">
@@ -140,11 +140,11 @@ export default function FeaturesSection() {
                   <div className="w-20 h-20 bg-brand-yellow-100 rounded-xl flex items-center justify-center mb-6 shadow-sm group-hover:scale-110 transition-transform duration-500">
                     <ShieldCheck className="w-10 h-10 text-brand-blue-600" />
                   </div>
-                  <p className="font-black text-2xl text-maroon-900">Lingkungan<br />Islami</p>
+                  <p className="font-black text-2xl text-ink-900">Lingkungan<br />Islami</p>
                 </div>
 
                 <div className="bg-cream-50/80 backdrop-blur-lg border border-cream-200 p-6 sm:p-8 rounded-[2rem] shadow-sm min-h-56 md:h-64 flex flex-col justify-end items-start hover:shadow-md transition-all duration-300">
-                  <p className="text-4xl font-black mb-1 text-maroon-800 tracking-tighter">RESMI</p>
+                  <p className="text-4xl font-black mb-1 text-ink-900 tracking-tighter">RESMI</p>
                   <div className="space-y-1 mt-2">
                     <p className="text-sm font-bold text-ink-800">Ijazah Diakui Negara</p>
                     <p className="text-xs text-ink-500 font-medium leading-tight">

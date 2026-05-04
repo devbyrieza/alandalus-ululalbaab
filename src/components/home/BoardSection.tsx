@@ -44,7 +44,7 @@ export default function BoardSection() {
                         initial={{ opacity: 0, y: 10 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="inline-flex items-center gap-2 px-4 py-1.5 rounded-pill bg-cream-50 border border-cream-200 text-maroon-700 text-xs font-bold uppercase tracking-widest mb-6 shadow-sm"
+                        className="inline-flex items-center gap-2 px-4 py-1.5 rounded-pill bg-white border border-cream-200 text-brand-blue-700 text-xs font-bold uppercase tracking-widest mb-6 shadow-sm"
                     >
                         <Users className="w-3.5 h-3.5" />
                         <span>Struktur Organisasi</span>
@@ -57,7 +57,7 @@ export default function BoardSection() {
                         transition={{ delay: 0.1 }}
                         className="section-title mb-6"
                     >
-                        Dewan <span className="text-gradient-maroon">Pembina</span>
+                        Dewan <span className="text-gradient-blue">Pembina</span>
                     </motion.h2>
 
                     <motion.p
@@ -92,18 +92,18 @@ export default function BoardSection() {
                                             priority={idx < 4}
                                             className="object-cover"
                                         />
-                                        <div className="absolute inset-0 bg-maroon-900/0 group-hover:bg-maroon-900/10 transition-colors duration-500" />
+                                        <div className="absolute inset-0 bg-brand-blue-900/0 group-hover:bg-brand-blue-900/10 transition-colors duration-500" />
                                     </div>
                                 ) : (
-                                    <div className="w-full h-full flex flex-col items-center justify-center group-hover:bg-maroon-50 transition-all duration-500">
-                                        <User className="w-8 h-8 text-maroon-300 group-hover:text-maroon-600 transition-colors" />
+                                    <div className="w-full h-full flex flex-col items-center justify-center group-hover:bg-brand-blue-50 transition-all duration-500">
+                                        <User className="w-8 h-8 text-ink-300 group-hover:text-brand-blue-600 transition-colors" />
                                     </div>
                                 )}
 
                             </div>
 
                             <div className="min-w-0 py-2">
-                                <h4 className="font-bold text-ink-950 text-base leading-snug group-hover:text-maroon-700 transition-colors">
+                                <h4 className="font-bold text-ink-950 text-base leading-snug group-hover:text-brand-blue-700 transition-colors">
                                     {member.name}
                                 </h4>
                             </div>

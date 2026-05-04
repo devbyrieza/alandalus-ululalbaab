@@ -7,27 +7,27 @@ import { Container } from "@/components/layout/Container";
 import { motion } from "framer-motion";
 
 const ACTIVITIES = [
-    { name: "Pembelajaran Aktif", color: "maroon", description: "Metode interaktif yang memadukan teori dan praktik syar'i guna mengoptimalkan potensi akademik santri secara mendalam.", image: "/images/pembelajaran-kitab-turotz.webp" },
+    { name: "Pembelajaran Aktif", color: "blue", description: "Metode interaktif yang memadukan teori dan praktik syar'i guna mengoptimalkan potensi akademik santri secara mendalam.", image: "/images/pembelajaran-kitab-turotz.webp" },
     { name: "Kegiatan Rutin Harian", color: "cream", description: "Pembiasaan ibadah melalui sholat berjamaah tepat waktu dan halaqah tahfidz Al-Qur'an setiap hari secara konsisten.", image: "/images/tahfidz.webp" },
-    { name: "Ekstrakurikuler Unggulan", color: "maroon-alt", description: "Tersedia 15+ pilihan kegiatan mulai dari beladiri hingga Desain Grafis untuk mengasah minat dan bakat santri.", image: "/images/extra-karate.webp" },
-    { name: "Kemandirian & Skill", color: "maroon-light", description: "Program pelatihan entrepreneurship dan keterampilan hidup mandiri guna mencetak santri yang siap berdikari di masa depan.", image: "/images/luar-kelas.webp" },
+    { name: "Ekstrakurikuler Unggulan", color: "blue-alt", description: "Tersedia 15+ pilihan kegiatan mulai dari beladiri hingga Desain Grafis untuk mengasah minat dan bakat santri.", image: "/images/extra-karate.webp" },
+    { name: "Kemandirian & Skill", color: "blue-light", description: "Program pelatihan entrepreneurship dan keterampilan hidup mandiri guna mencetak santri yang siap berdikari di masa depan.", image: "/images/luar-kelas.webp" },
 ] as const;
 
 const EXTRA_ACTIVITIES = [
-    { name: "Karate", icon: Trophy, color: "maroon" },
+    { name: "Karate", icon: Trophy, color: "blue" },
     { name: "Pramuka", icon: Shield, color: "cream" },
-    { name: "Panahan", icon: Target, color: "maroon" },
+    { name: "Panahan", icon: Target, color: "blue" },
     { name: "Futsal", icon: Trophy, color: "gold" },
-    { name: "Volly", icon: Trophy, color: "maroon" },
+    { name: "Volly", icon: Trophy, color: "blue" },
     { name: "Komputer", icon: Monitor, color: "cream" },
-    { name: "Design Grafis", icon: Palette, color: "maroon" },
+    { name: "Design Grafis", icon: Palette, color: "blue" },
     { name: "Kaligrafi", icon: PenTool, color: "gold" },
-    { name: "Jurnalistik", icon: FileText, color: "maroon" },
+    { name: "Jurnalistik", icon: FileText, color: "blue" },
     { name: "Konten Kreator", icon: Play, color: "cream" },
-    { name: "Basket", icon: Dumbbell, color: "maroon" },
+    { name: "Basket", icon: Dumbbell, color: "blue" },
     { name: "Bulutangkis", icon: Zap, color: "gold" },
     { name: "Pertanian", icon: TreePine, color: "cream" },
-    { name: "Periklanan", icon: Waves, color: "maroon" },
+    { name: "Periklanan", icon: Waves, color: "blue" },
     { name: "Web Programming", icon: Sparkles, color: "gold" },
 ] as const;
 
@@ -43,7 +43,7 @@ export default function ActivitiesSection() {
                         initial={{ opacity: 0, y: 10 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="inline-flex items-center gap-2 px-4 py-1.5 rounded-pill bg-white border border-cream-200 text-maroon-700 text-xs font-bold uppercase tracking-widest mb-6 shadow-sm"
+                        className="inline-flex items-center gap-2 px-4 py-1.5 rounded-pill bg-white border border-cream-200 text-brand-blue-700 text-xs font-bold uppercase tracking-widest mb-6 shadow-sm"
                     >
                         <Users className="w-3.5 h-3.5" />
                         <span>Kegiatan Santri</span>
@@ -56,7 +56,7 @@ export default function ActivitiesSection() {
                         transition={{ delay: 0.1 }}
                         className="section-title mb-6"
                     >
-                        Kegiatan <span className="text-gradient-maroon">Bervariasi & Edukatif</span>
+                        Kegiatan <span className="text-gradient-blue">Bervariasi & Edukatif</span>
                     </motion.h2>
 
                     <motion.p
@@ -79,7 +79,7 @@ export default function ActivitiesSection() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: idx * 0.1 }}
-                            className="bg-white rounded-[2rem] border-2 border-transparent hover:border-maroon-200 shadow-lg hover:shadow-xl hover:-translate-y-2 transition-all duration-500 group overflow-hidden flex flex-col"
+                            className="bg-white rounded-[2rem] border-2 border-transparent hover:border-brand-blue-200 shadow-lg hover:shadow-xl hover:-translate-y-2 transition-all duration-500 group overflow-hidden flex flex-col"
                         >
                             <div className="relative h-48 overflow-hidden shrink-0">
                                 <Image
@@ -93,7 +93,7 @@ export default function ActivitiesSection() {
                                 <div className="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-transparent" />
                             </div>
                             <div className="p-6 md:p-8 grow flex flex-col">
-                                <h3 className="text-xl font-bold text-ink-950 mb-3 tracking-tight group-hover:text-maroon-700 transition-colors">{activity.name}</h3>
+                                <h3 className="text-xl font-bold text-ink-950 mb-3 tracking-tight group-hover:text-brand-blue-700 transition-colors">{activity.name}</h3>
                                 <p className="text-ink-500 font-medium text-[15px] leading-relaxed mb-6 grow">
                                     {activity.description}
                                 </p>
@@ -110,12 +110,12 @@ export default function ActivitiesSection() {
                         viewport={{ once: true }}
                         className="text-center mb-10"
                     >
-                        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-pill bg-cream-50 border border-cream-200 text-maroon-700 text-xs font-bold uppercase tracking-widest shadow-sm">
+                        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-pill bg-cream-50 border border-cream-200 text-brand-blue-700 text-xs font-bold uppercase tracking-widest shadow-sm">
                             <Sparkles className="w-3.5 h-3.5" />
                             <span>Minat & Bakat</span>
                         </div>
                         <h3 className="text-2xl md:text-3xl font-bold text-ink-950 mt-4 mb-2">
-                            Ekstrakurikuler <span className="text-gradient-maroon">Terpadu</span>
+                            Ekstrakurikuler <span className="text-gradient-blue">Terpadu</span>
                         </h3>
                         <p className="text-ink-600 font-medium max-w-2xl mx-auto">
                             Mengembangkan potensi santri secara holistik melalui berbagai pilihan kegiatan yang mendukung kemandirian, kreativitas, dan fisik yang kuat.
@@ -130,16 +130,16 @@ export default function ActivitiesSection() {
                                 whileInView={{ opacity: 1, scale: 1 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: idx * 0.03 }}
-                                className="bg-white p-5 md:p-6 rounded-2xl border border-cream-200 flex flex-col items-center justify-center text-center group hover:bg-cream-50 hover:border-maroon-200 hover:shadow-md transition-all duration-500 cursor-default"
+                                className="bg-white p-5 md:p-6 rounded-2xl border border-cream-200 flex flex-col items-center justify-center text-center group hover:bg-cream-50 hover:border-brand-blue-200 hover:shadow-md transition-all duration-500 cursor-default"
                             >
                                 <div className={`w-12 h-12 md:w-14 md:h-14 rounded-2xl flex items-center justify-center mb-3 md:mb-4 shadow-sm group-hover:scale-110 transition-transform duration-500 ${
-                                    item.color === 'maroon' ? 'bg-maroon-50 text-maroon-600' :
-                                    item.color === 'cream' ? 'bg-cream-100 text-maroon-700' :
+                                    item.color === 'blue' ? 'bg-brand-blue-50 text-brand-blue-600' :
+                                    item.color === 'cream' ? 'bg-cream-100 text-brand-blue-700' :
                                     'bg-yellow-50 text-yellow-600'
                                     }`}>
                                     <item.icon className="w-6 h-6 md:w-7 md:h-7" />
                                 </div>
-                                <p className="text-[9px] md:text-[10px] font-bold tracking-widest text-ink-950 uppercase group-hover:text-maroon-800 transition-colors leading-tight">
+                                <p className="text-[9px] md:text-[10px] font-bold tracking-widest text-ink-950 uppercase group-hover:text-brand-blue-800 transition-colors leading-tight">
                                     {item.name}
                                 </p>
                             </motion.div>
