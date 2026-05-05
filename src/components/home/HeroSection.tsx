@@ -312,7 +312,7 @@ export default function HeroSection() {
               }}
             >
               <Image
-                src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=1400&auto=format&fit=crop"
+                src="/images/hero.webp"
                 alt={`${BRANDING.schoolName} — Pesantren Modern`}
                 width={800}
                 height={600}
