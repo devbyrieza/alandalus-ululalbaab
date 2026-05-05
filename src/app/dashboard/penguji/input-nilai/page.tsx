@@ -286,7 +286,7 @@ function InputNilaiContent() {
   // Form states for each type
   const [quranForm, setQuranForm] = useState<any>({});
   const [calsanForm, setSantriForm] = useState<any>({});
-  const [cawalsanForm, setOrang TuaForm] = useState<any>({});
+  const [cawalsanForm, setOrangTuaForm] = useState<any>({});
 
   // Determine which form types are visible based on the active session role
   const visibleFormTypes = ROLE_TO_FORM_TYPES[activeRole] || ['quran', 'wawancara', 'ortu'];
@@ -369,7 +369,7 @@ function InputNilaiContent() {
 
     setQuranForm(quranData);
     setSantriForm(calsanData);
-    setOrang TuaForm(cawalsanData);
+    setOrangTuaForm(cawalsanData);
     setMessage(null);
   };
 
@@ -377,7 +377,7 @@ function InputNilaiContent() {
     setEditingId(null);
     setQuranForm({});
     setSantriForm({});
-    setOrang TuaForm({});
+    setOrangTuaForm({});
   };
 
   const saveForm = async (p: Peserta, formType: "quran" | "wawancara" | "ortu") => {
@@ -750,7 +750,7 @@ function InputNilaiContent() {
   // ============================================================================
   // RENDER: Seleksi Wawancara Orang Tua Form
   // ============================================================================
-  const renderOrang TuaForm = (p: Peserta) => {
+  const renderOrangTuaForm = (p: Peserta) => {
     const isSaved = !!(p.detail_cawalsan?.rekomendasi || p.nilai_wawancara_ortu != null);
     const isEditing = editingId === p.id + "ortu";
     const isPutriByJenjang = p.jenjang?.toLowerCase().includes('putri');
@@ -778,11 +778,11 @@ function InputNilaiContent() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 bg-white rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-brand-yellow-100 shadow-xs">
               <div>
                 <label className="block text-[10px] sm:text-xs font-black text-ink-800 uppercase tracking-widest mb-2 sm:mb-3">Nama Audiens/Orangtua *</label>
-                <input type="text" value={cawalsanForm.nama_orangtua || ""} onChange={(e) => setOrang TuaForm({ ...cawalsanForm, nama_orangtua: e.target.value })} className="w-full px-4 sm:px-5 py-3.5 sm:py-4 bg-ink-50/30 border-2 border-ink-100 rounded-xl sm:rounded-2xl focus:border-brand-yellow-500 outline-none font-black text-brand-blue-950 transition-all placeholder:text-ink-400" placeholder="Nama orangtua/wali" />
+                <input type="text" value={cawalsanForm.nama_orangtua || ""} onChange={(e) => setOrangTuaForm({ ...cawalsanForm, nama_orangtua: e.target.value })} className="w-full px-4 sm:px-5 py-3.5 sm:py-4 bg-ink-50/30 border-2 border-ink-100 rounded-xl sm:rounded-2xl focus:border-brand-yellow-500 outline-none font-black text-brand-blue-950 transition-all placeholder:text-ink-400" placeholder="Nama orangtua/wali" />
               </div>
               <div>
                 <label className="block text-[10px] sm:text-xs font-black text-ink-800 uppercase tracking-widest mb-2 sm:mb-3">Asal Daerah *</label>
-                <input type="text" value={cawalsanForm.asal || ""} onChange={(e) => setOrang TuaForm({ ...cawalsanForm, asal: e.target.value })} className="w-full px-4 sm:px-5 py-3.5 sm:py-4 bg-ink-50/30 border-2 border-ink-100 rounded-xl sm:rounded-2xl focus:border-brand-yellow-500 outline-none font-black text-brand-blue-950 transition-all placeholder:text-ink-400" placeholder="Contoh: Sukabumi, Jakarta" />
+                <input type="text" value={cawalsanForm.asal || ""} onChange={(e) => setOrangTuaForm({ ...cawalsanForm, asal: e.target.value })} className="w-full px-4 sm:px-5 py-3.5 sm:py-4 bg-ink-50/30 border-2 border-ink-100 rounded-xl sm:rounded-2xl focus:border-brand-yellow-500 outline-none font-black text-brand-blue-950 transition-all placeholder:text-ink-400" placeholder="Contoh: Sukabumi, Jakarta" />
               </div>
             </div>
 
@@ -793,7 +793,7 @@ function InputNilaiContent() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2 sm:gap-3">
                   {KATEGORI_OPTIONS.map((opt) => (
                     <label key={opt} className={`flex items-center gap-3 sm:gap-4 p-3.5 sm:p-4 rounded-xl cursor-pointer border-2 transition-all text-xs sm:text-sm font-black ${cawalsanForm.kategori === opt ? "border-brand-yellow-400 bg-brand-yellow-50 text-brand-blue-950 shadow-sm" : "border-ink-50 hover:border-brand-yellow-200 bg-ink-50/30 text-ink-700"}`}>
-                      <input type="radio" name={`kategori-${p.id}`} value={opt} checked={cawalsanForm.kategori === opt} onChange={() => setOrang TuaForm({ ...cawalsanForm, kategori: opt })} className="w-4 h-4 sm:w-5 sm:h-5 shrink-0 accent-brand-yellow-500" />
+                      <input type="radio" name={`kategori-${p.id}`} value={opt} checked={cawalsanForm.kategori === opt} onChange={() => setOrangTuaForm({ ...cawalsanForm, kategori: opt })} className="w-4 h-4 sm:w-5 sm:h-5 shrink-0 accent-brand-yellow-500" />
                       <span>{opt}</span>
                     </label>
                   ))}
@@ -802,7 +802,7 @@ function InputNilaiContent() {
 
               <div>
                 <label className="block text-[10px] sm:text-xs font-black text-ink-800 uppercase tracking-widest mb-2 sm:mb-3">Sumber Informasi *</label>
-                <select value={cawalsanForm.sumber_info || ""} onChange={(e) => setOrang TuaForm({ ...cawalsanForm, sumber_info: e.target.value })} className="w-full px-4 sm:px-5 py-3.5 sm:py-4 bg-ink-50/30 border-2 border-ink-100 rounded-xl sm:rounded-2xl focus:border-brand-yellow-500 outline-none font-black text-brand-blue-950 transition-all cursor-pointer">
+                <select value={cawalsanForm.sumber_info || ""} onChange={(e) => setOrangTuaForm({ ...cawalsanForm, sumber_info: e.target.value })} className="w-full px-4 sm:px-5 py-3.5 sm:py-4 bg-ink-50/30 border-2 border-ink-100 rounded-xl sm:rounded-2xl focus:border-brand-yellow-500 outline-none font-black text-brand-blue-950 transition-all cursor-pointer">
                   <option value="">Pilih Sumber Informasi</option>
                   {SUMBER_INFO_OPTIONS.map((n) => <option key={n} value={n}>{n}</option>)}
                 </select>
@@ -817,7 +817,7 @@ function InputNilaiContent() {
                   <div className="space-y-2">
                     {q.options.map((opt) => (
                       <label key={opt} className={`flex items-start gap-3 sm:gap-4 p-3.5 sm:p-4 rounded-xl cursor-pointer border-2 transition-all text-xs sm:text-sm font-black ${cawalsanForm[q.key] === opt ? "border-brand-yellow-400 bg-brand-yellow-50 text-brand-blue-950 shadow-sm" : "border-ink-50 hover:border-brand-yellow-200 bg-ink-50/30 text-ink-700"}`}>
-                        <input type="radio" name={`${q.key}-${p.id}`} value={opt} checked={cawalsanForm[q.key] === opt} onChange={() => setOrang TuaForm({ ...cawalsanForm, [q.key]: opt })} className="w-4 h-4 sm:w-5 sm:h-5 shrink-0 mt-0.5 accent-brand-yellow-500" />
+                        <input type="radio" name={`${q.key}-${p.id}`} value={opt} checked={cawalsanForm[q.key] === opt} onChange={() => setOrangTuaForm({ ...cawalsanForm, [q.key]: opt })} className="w-4 h-4 sm:w-5 sm:h-5 shrink-0 mt-0.5 accent-brand-yellow-500" />
                         <span>{opt}</span>
                       </label>
                     ))}
@@ -830,7 +830,7 @@ function InputNilaiContent() {
             <div className="bg-white rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-brand-yellow-100 shadow-xs space-y-5 sm:space-y-6">
               <div>
                 <label className="block text-[10px] sm:text-xs font-black text-ink-800 uppercase tracking-widest mb-2 sm:mb-3">Karakter Santri (Positif & Negatif) *</label>
-                <textarea value={cawalsanForm.karakter || ""} onChange={(e) => setOrang TuaForm({ ...cawalsanForm, karakter: e.target.value })} rows={3} className="w-full px-4 sm:px-5 py-3.5 sm:py-4 bg-ink-50/30 border-2 border-ink-100 rounded-xl sm:rounded-2xl focus:border-brand-yellow-500 outline-none font-black text-brand-blue-950 transition-all resize-none placeholder:text-ink-400" placeholder="Deskripsikan karakter santri yang menonjol..." />
+                <textarea value={cawalsanForm.karakter || ""} onChange={(e) => setOrangTuaForm({ ...cawalsanForm, karakter: e.target.value })} rows={3} className="w-full px-4 sm:px-5 py-3.5 sm:py-4 bg-ink-50/30 border-2 border-ink-100 rounded-xl sm:rounded-2xl focus:border-brand-yellow-500 outline-none font-black text-brand-blue-950 transition-all resize-none placeholder:text-ink-400" placeholder="Deskripsikan karakter santri yang menonjol..." />
               </div>
 
               <div>
@@ -838,7 +838,7 @@ function InputNilaiContent() {
                 <div className="flex gap-3 sm:gap-4">
                   {["Sudah", "Belum"].map((opt) => (
                     <label key={opt} className={`flex-1 px-4 sm:px-5 py-3.5 sm:py-4 rounded-xl cursor-pointer border-2 transition-all text-[10px] sm:text-xs font-black shadow-sm text-center uppercase tracking-widest ${cawalsanForm.tahu_spp === opt ? "border-brand-yellow-400 bg-brand-yellow-50 text-brand-blue-950 shadow-sm" : "border-ink-200 bg-ink-50/30 text-ink-700"}`}>
-                      <input type="radio" name={`spp-${p.id}`} value={opt} checked={cawalsanForm.tahu_spp === opt} onChange={() => setOrang TuaForm({ ...cawalsanForm, tahu_spp: opt })} className="hidden" />
+                      <input type="radio" name={`spp-${p.id}`} value={opt} checked={cawalsanForm.tahu_spp === opt} onChange={() => setOrangTuaForm({ ...cawalsanForm, tahu_spp: opt })} className="hidden" />
                       {opt}
                     </label>
                   ))}
@@ -850,7 +850,7 @@ function InputNilaiContent() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-2 sm:gap-3">
                   {["Diterima", "Diterima dengan catatan", "Ditolak"].map((opt) => (
                     <label key={opt} className={`px-4 sm:px-5 py-3.5 sm:py-4 rounded-xl cursor-pointer border-2 transition-all text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-center shadow-sm ${cawalsanForm.rekomendasi === opt ? (opt === "Diterima" ? "border-emerald-500 bg-emerald-50 text-emerald-700 shadow-sm" : opt.includes("catatan") ? "border-brand-yellow-500 bg-brand-yellow-50 text-brand-yellow-800 shadow-sm" : "border-red-500 bg-red-50 text-red-700 shadow-sm") : "border-ink-200 bg-ink-50/30 text-ink-700"}`}>
-                      <input type="radio" name={`rekom-cawalsan-${p.id}`} value={opt} checked={cawalsanForm.rekomendasi === opt} onChange={() => setOrang TuaForm({ ...cawalsanForm, rekomendasi: opt })} className="hidden" />
+                      <input type="radio" name={`rekom-cawalsan-${p.id}`} value={opt} checked={cawalsanForm.rekomendasi === opt} onChange={() => setOrangTuaForm({ ...cawalsanForm, rekomendasi: opt })} className="hidden" />
                       {opt}
                     </label>
                   ))}
@@ -864,7 +864,7 @@ function InputNilaiContent() {
 
               <div>
                 <label className="block text-[10px] sm:text-xs font-black text-ink-800 uppercase tracking-widest mb-2 sm:mb-3">Catatan Tambahan (opsional)</label>
-                <textarea value={cawalsanForm.catatan || ""} onChange={(e) => setOrang TuaForm({ ...cawalsanForm, catatan: e.target.value })} rows={3} className="w-full px-4 sm:px-5 py-3.5 sm:py-4 bg-ink-50/30 border-2 border-ink-100 rounded-xl sm:rounded-2xl focus:border-brand-yellow-500 outline-none font-black text-brand-blue-950 transition-all resize-none placeholder:text-ink-400" placeholder="Catatan tambahan pewawancara..." />
+                <textarea value={cawalsanForm.catatan || ""} onChange={(e) => setOrangTuaForm({ ...cawalsanForm, catatan: e.target.value })} rows={3} className="w-full px-4 sm:px-5 py-3.5 sm:py-4 bg-ink-50/30 border-2 border-ink-100 rounded-xl sm:rounded-2xl focus:border-brand-yellow-500 outline-none font-black text-brand-blue-950 transition-all resize-none placeholder:text-ink-400" placeholder="Catatan tambahan pewawancara..." />
               </div>
             </div>
 
@@ -986,7 +986,7 @@ function InputNilaiContent() {
               <div className="space-y-4">
                 {p.roles.includes("quran") && visibleFormTypes.includes("quran") && renderQuranForm(p)}
                 {p.roles.includes("wawancara") && visibleFormTypes.includes("wawancara") && renderSantriForm(p)}
-                {p.roles.includes("ortu") && visibleFormTypes.includes("ortu") && renderOrang TuaForm(p)}
+                {p.roles.includes("ortu") && visibleFormTypes.includes("ortu") && renderOrangTuaForm(p)}
               </div>
             </div>
           ))}
