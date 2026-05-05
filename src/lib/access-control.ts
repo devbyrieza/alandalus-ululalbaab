@@ -199,6 +199,7 @@ export function getMenuItemsForRole(role: UserRole) {
       { name: "Dashboard", href: "/dashboard/admin", icon: "LayoutDashboard" },
       { name: "Data Pendaftar", href: "/dashboard/admin/pendaftar", icon: "Users", group: "OPERASIONAL" },
       { name: "Monitoring Jadwal", href: "/dashboard/admin/jadwal/monitoring", icon: "Calendar", group: "OPERASIONAL" },
+      { name: "Audit Hasil Seleksi", href: "/dashboard/admin/audit-seleksi", icon: "Activity", group: "HASIL SELEKSI" },
       { name: "Hasil Seleksi", href: "/dashboard/admin/hasil-seleksi", icon: "Trophy", group: "HASIL SELEKSI" },
       { name: "Pengumuman", href: "/dashboard/admin/pengumuman", icon: "Bell", group: "HASIL SELEKSI" },
       { name: "Rekap Keuangan", href: "/dashboard/admin/keuangan", icon: "Landmark", group: "KEUANGAN & SDM" },
