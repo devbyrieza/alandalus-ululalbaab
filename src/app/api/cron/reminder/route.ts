@@ -95,7 +95,11 @@ export async function GET(request: Request) {
                 : (jadwal.exam_session?.location || "Pesantren Al Andalus Ulul Albaab");
 
             // 1. Enqueue for Santri / Parents
-            const isOrangTua = jenisUjian.toLowerCase().includes("cawalsan") || (jadwal.exam_session?.title || "").toLowerCase().includes("cawalsan");
+            const isOrangTua = 
+                jenisUjian.toLowerCase().includes("ortu") || 
+                jenisUjian.toLowerCase().includes("cawalsan") || 
+                (jadwal.exam_session?.title || "").toLowerCase().includes("ortu") ||
+                (jadwal.exam_session?.title || "").toLowerCase().includes("cawalsan");
             
             if (isOrangTua) {
                 // Send to parents
