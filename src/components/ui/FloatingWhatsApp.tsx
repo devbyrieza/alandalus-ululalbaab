@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -38,7 +38,7 @@ export default function FloatingWhatsApp() {
               <X className="w-3.5 h-3.5" />
             </button>
             <p className="text-xs font-bold text-ink-700 leading-relaxed pr-4">
-              Ada pertanyaan tentang PPDB? Chat kami sekarang! 😊
+              Ada pertanyaan tentang PPDB? Chat kami sekarang! ??
             </p>
             {/* Arrow */}
             <div className="absolute -bottom-2 right-5 w-4 h-4 bg-white border-r border-b border-surface-100 rotate-45" />

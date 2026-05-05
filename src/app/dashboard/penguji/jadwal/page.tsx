@@ -80,26 +80,26 @@ interface ExamSession {
 // --- Component ---
 
 const ROLE_TO_JADWAL_TYPES: Record<string, string[]> = {
-  penguji_calsan: ["Seleksi Al Qur'an"],
-  pewawancara_calsan: ["Seleksi Wawancara Santri"],
-  pewawancara_cawalsan: ["Seleksi Wawancara Orang Tua/Wali"],
+  penguji: ["Seleksi Al Qur'an"],
+  pewawancara_calsan: ["Seleksi Wawancara Calon Santri"],
+  pewawancara_cawalsan: ["Seleksi Wawancara Orang Tua"],
   admin: [
     "Seleksi Al Qur'an",
-    "Seleksi Wawancara Santri",
-    "Seleksi Wawancara Orang Tua/Wali",
+    "Seleksi Wawancara Calon Santri",
+    "Seleksi Wawancara Orang Tua",
   ],
   admin_super: [
     "Seleksi Al Qur'an",
-    "Seleksi Wawancara Santri",
-    "Seleksi Wawancara Orang Tua/Wali",
+    "Seleksi Wawancara Calon Santri",
+    "Seleksi Wawancara Orang Tua",
   ],
 };
 
 // Auto-map role to session title (for specific examiner roles)
 const ROLE_TO_SESSION_TITLE: Record<string, string> = {
-  penguji_calsan: "Tes Al-Quran",
-  pewawancara_calsan: "Seleksi Wawancara Santri",
-  pewawancara_cawalsan: "Seleksi Wawancara Orang Tua/Wali",
+  penguji: "Tes Al-Quran",
+  pewawancara_calsan: "Seleksi Wawancara Calon Santri",
+  pewawancara_cawalsan: "Seleksi Wawancara Orang Tua",
 };
 
 // Roles that can choose any session type (need dropdown)
@@ -970,7 +970,7 @@ export default function JadwalPengujiPage() {
               // Filter assignments based on active role
               const visibleTypes = ROLE_TO_JADWAL_TYPES[activeRole] || [
                 "Seleksi Al Qur'an",
-                "Seleksi Wawancara Santri",
+                "Seleksi Wawancara Calon Santri",
                 "Seleksi Wawancara Orang Tua",
               ];
               const filteredAssignments = assignments.filter((item) => {
@@ -1105,14 +1105,14 @@ export default function JadwalPengujiPage() {
                               (item.status_santri === "completed" ? (
                                 <div className="flex items-center gap-2 px-4 py-3 bg-green-50 text-green-700 rounded-2xl text-sm font-bold border border-green-100">
                                   <CheckCircle className="w-4 h-4" /> Seleksi
-                                  Wawancara Santri Selesai
+                                  Wawancara Calon Santri Selesai
                                 </div>
                               ) : (
                                 <button
                                   onClick={() => handleCompleteExam(item.id)}
                                   className="w-full py-4 bg-brand-blue-600 hover:bg-brand-blue-700 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-2xl transition-all active:scale-95 shadow-lg shadow-brand-blue-600/20"
                                 >
-                                  ✓ Tandai Wawancara Selesai
+                                  ✓ Tandai Wawancara Calon Santri Selesai
                                 </button>
                               ))}
                             {userId &&
@@ -1836,8 +1836,8 @@ export default function JadwalPengujiPage() {
                       Pilih Jenis Ujian
                     </option>
                     <option value="Tes Al-Quran">Tes Al-Quran</option>
-                    <option value="Seleksi Wawancara Santri">
-                      Seleksi Wawancara Santri
+                    <option value="Seleksi Wawancara Calon Santri">
+                      Seleksi Wawancara Calon Santri
                     </option>
                     <option value="Seleksi Wawancara Orang Tua">
                       Seleksi Wawancara Orang Tua

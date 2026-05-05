@@ -116,8 +116,7 @@ export async function PATCH(
       isQuran ||
       isQuranFallback ||
       baseRole.includes("quran") ||
-      baseRole === "penguji" ||
-      baseRole === "penguji_calsan";
+      baseRole === "penguji";
     const canEditWawancara =
       isAdmin ||
       isWawancara ||
@@ -184,7 +183,7 @@ export async function PATCH(
           return NextResponse.json(
             {
               error:
-                "Masa edit (24 jam) untuk Wawancara Santri sudah habis. Silakan hubungi Admin Super.",
+                "Masa edit (24 jam) untuk Wawancara Calon Santri sudah habis. Silakan hubungi Admin Super.",
             },
             { status: 403 },
           );

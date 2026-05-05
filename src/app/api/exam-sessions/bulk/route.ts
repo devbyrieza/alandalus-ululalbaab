@@ -24,7 +24,6 @@ export async function POST(request: Request) {
     "admin",
     "head_of_it",
     "penguji",
-    "penguji_calsan",
     "pewawancara_calsan",
     "pewawancara_cawalsan",
   ];
@@ -62,8 +61,8 @@ export async function POST(request: Request) {
       const role = session.role;
       if (role === "pewawancara_cawalsan") {
         finalTitle = "Seleksi Wawancara Orang Tua";
-      } else if (role === "pewawancara_calsan" || role === "penguji_calsan") {
-        finalTitle = "Seleksi Wawancara Santri";
+      } else if (role === "pewawancara_calsan") {
+        finalTitle = "Seleksi Wawancara Calon Santri";
       } else if (role === "penguji_quran" || role === "penguji") {
         finalTitle = "Seleksi Al Qur'an";
       } else {

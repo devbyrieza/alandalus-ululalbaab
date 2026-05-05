@@ -135,15 +135,13 @@ export default function UserManagementPage() {
         setIsModalOpen(false);
         fetchUsers();
       } else {
-        let errorText = "Gagal menyimpan data";
+        let errorText = "Gagal menyimpan data user.";
         try {
           const res = await response.json();
           errorText = res.error || errorText;
         } catch (e) {
-          // if not JSON, could be a proxy/server down error
           if (response.status === 502 || response.status === 503) {
-            errorText =
-              "Sistem sedang diperbarui/restart. Silakan coba beberapa saat lagi.";
+            errorText = "Sistem sedang diperbarui/restart. Silakan coba beberapa saat lagi.";
           }
         }
         Swal.fire({
@@ -430,7 +428,7 @@ export default function UserManagementPage() {
                   <label className="block text-[10px] font-black uppercase text-stone-500 mb-3 tracking-widest">
                     Access Key (Password)
                   </label>
-                  <div className="relative">
+                  <div className="relative group/pass">
                     <input
                       required={!isEditing}
                       type={showPassword ? "text" : "password"}
@@ -438,7 +436,7 @@ export default function UserManagementPage() {
                       onChange={(e) =>
                         setFormData({ ...formData, password: e.target.value })
                       }
-                      className="w-full px-8 py-5 bg-stone-100/50 border-2 border-transparent focus:border-brand-blue-600 focus:bg-white focus:outline-none font-bold rounded-2xl transition-all"
+                      className="w-full px-8 py-5 bg-stone-100/50 border-2 border-transparent focus:border-brand-blue-600 focus:bg-white focus:outline-none font-bold rounded-2xl transition-all pr-16"
                       placeholder={
                         isEditing ? "(Kosongkan jika tidak ubah)" : "••••••••"
                       }
@@ -446,7 +444,7 @@ export default function UserManagementPage() {
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-6 top-1/2 -translate-y-1/2 text-stone-400 hover:text-brand-blue-600 transition-colors"
+                      className="absolute right-4 top-1/2 -translate-y-1/2 p-2 text-stone-400 hover:text-brand-blue-600 transition-colors z-10"
                     >
                       {showPassword ? (
                         <EyeOff className="w-5 h-5" />
@@ -455,6 +453,20 @@ export default function UserManagementPage() {
                       )}
                     </button>
                   </div>
+                </div>
+                <div className="col-span-2">
+                  <label className="block text-[10px] font-black uppercase text-stone-500 mb-3 tracking-widest">
+                    Nomor WhatsApp (untuk Magic Link)
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Contoh: 08123456789"
+                    value={formData.phone}
+                    onChange={(e) =>
+                      setFormData({ ...formData, phone: e.target.value })
+                    }
+                    className="w-full px-8 py-5 bg-stone-100/50 border-2 border-transparent focus:border-brand-blue-600 focus:bg-white focus:outline-none font-bold rounded-2xl transition-all"
+                  />
                 </div>
                 <div className="col-span-2">
                   <label className="block text-[10px] font-black uppercase text-stone-500 mb-3 tracking-widest">

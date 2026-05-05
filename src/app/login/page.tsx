@@ -48,7 +48,7 @@ const ROLE_INFO: Record<
     color: "from-emerald-50 to-teal-50 border-emerald-200",
   },
   pewawancara_cawalsan: {
-    label: "Pewawancara Calon Orangtua/Wali Santri",
+    label: "Pewawancara Cawalsan",
     icon: "🎙️",
     desc: "Wawancara calon orangtua/wali santri",
     color: "from-purple-50 to-violet-50 border-purple-200",
@@ -59,7 +59,7 @@ const ROLE_INFO: Record<
     desc: "Wawancara calon santri",
     color: "from-rose-50 to-pink-50 border-rose-200",
   },
-  penguji_calsan: {
+  penguji: {
     label: "Penguji Al-Qur'an",
     icon: "📖",
     desc: "Penguji tes Al-Qur'an",
@@ -246,7 +246,6 @@ export default function LoginPage() {
       } else if (
         [
           "penguji",
-          "penguji_calsan",
           "pewawancara_calsan",
           "pewawancara_cawalsan",
         ].includes(data.role)

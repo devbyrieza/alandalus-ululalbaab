@@ -35,7 +35,6 @@ export async function GET(request: Request) {
     "head_of_it",
     "penguji",
     "admin_berkas",
-    "penguji_calsan",
     "pewawancara_calsan",
     "pewawancara_cawalsan",
   ];
@@ -102,7 +101,6 @@ export async function POST(request: Request) {
     "head_of_it",
     "penguji",
     "admin_berkas",
-    "penguji_calsan",
     "pewawancara_calsan",
     "pewawancara_cawalsan",
   ];
@@ -129,7 +127,7 @@ export async function POST(request: Request) {
       if (role === "pewawancara_cawalsan") {
         finalTitle = "Seleksi Wawancara Orang Tua";
       } else if (role === "pewawancara_calsan" || role === "penguji_calsan") {
-        finalTitle = "Seleksi Wawancara Santri";
+        finalTitle = "Seleksi Wawancara Calon Santri";
       } else if (role === "penguji_quran" || role === "penguji") {
         finalTitle = "Seleksi Al Qur'an";
       } else {
@@ -199,7 +197,6 @@ export async function DELETE(request: Request) {
       "head_of_it",
       "penguji",
       "admin_berkas",
-      "penguji_calsan",
       "pewawancara_calsan",
       "pewawancara_cawalsan",
     ].includes(session.role);
@@ -243,7 +240,6 @@ export async function PATCH(request: Request) {
     "head_of_it",
     "penguji",
     "admin_berkas",
-    "penguji_calsan",
     "pewawancara_calsan",
     "pewawancara_cawalsan",
   ];

@@ -1120,7 +1120,7 @@ export default function ExaminerDashboard() {
                     {inputType === "quran"
                       ? "Al-Qur'an"
                       : inputType === "wawancara_santri"
-                        ? "Wawancara Santri"
+                        ? "Wawancara Calon Santri"
                         : "Wawancara Ortu/Wali"}
                   </h3>
                 </div>
