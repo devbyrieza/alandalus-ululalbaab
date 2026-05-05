@@ -58,20 +58,6 @@ const PROGRAMS: ProgramItem[] = [
     icon: BookOpen,
     variant: "yellow",
   },
-  {
-    title: "SMA",
-    subtitle: "Menengah Atas · Langsung 3 Tahun",
-    desc: "Untuk santri yang sudah hafal min. 5 juz mutqin dan lancar berbahasa Arab. Masuk langsung ke jenjang SMA pesantren selama 3 tahun tanpa tahun persiapan bahasa.",
-    features: [
-      "Syarat: Hafal 5 Juz Mutqin",
-      "Syarat: Lancar Berbahasa Arab",
-      "Langsung 3 Tahun (Tanpa Persiapan)",
-      "Kajian Kitab Turots Mendalam",
-      "Persiapan PTN & Universitas Timur Tengah",
-    ],
-    quotaLabel: null,
-    icon: GraduationCap,
-    variant: "teal",
   },
 ];
 
@@ -203,7 +189,7 @@ export default function ProgramSection() {
         </div>
 
         <motion.div
-          className="grid md:grid-cols-2 xl:grid-cols-3 gap-5 lg:gap-6 max-w-6xl mx-auto"
+          className="grid md:grid-cols-2 gap-5 lg:gap-8 max-w-5xl mx-auto"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-60px" }}
@@ -219,7 +205,7 @@ export default function ProgramSection() {
                   y: -4,
                   transition: { duration: 0.3, ease: EASE },
                 }}
-                className={`group h-full ${idx === 2 ? "md:col-span-2 xl:col-span-1" : ""}`}
+                className="group h-full"
               >
                 <div className="relative h-full flex flex-col bg-white rounded-[1.5rem] border border-brand-blue-100 overflow-hidden shadow-premium-sm group-hover:shadow-premium-md group-hover:border-brand-blue-200 transition-all duration-400">
                   <div
