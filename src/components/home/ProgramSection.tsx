@@ -57,8 +57,7 @@ const PROGRAMS: ProgramItem[] = [
     quotaLabel: "Putra 32 · Putri 30",
     icon: BookOpen,
     variant: "yellow",
-  },
-  },
+  }
 ];
 
 const containerVariants: Variants = {
