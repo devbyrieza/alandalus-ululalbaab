@@ -328,7 +328,7 @@ export default function HeroSection() {
                   e.currentTarget.style.transform = "scale(1)";
                 }}
                 priority
-                sizes="(max-width: 768px) 100vw, 800px"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 800px"
               />
               <div
                 className="absolute inset-0 pointer-events-none"
