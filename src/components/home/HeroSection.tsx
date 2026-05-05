@@ -157,7 +157,7 @@ export default function HeroSection() {
                     paddingBottom: "0.15em",
                   }}
                 >
-                  Rabbani, Cendekia, <br className="hidden xl:block" />
+                  Rabbani, Cendekia, <br className="hidden sm:block" />
                   dan Mandiri 🌟
                 </span>
               </h1>
