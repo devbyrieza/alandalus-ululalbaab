@@ -259,7 +259,7 @@ function PPDBContent() {
               </div>
               <div>
                 <h3 className="text-xl md:text-2xl font-display font-black text-brand-blue-900 mb-2">
-                  ✨ Angkatan ke-4: Lebih Matang, Lebih Teruji
+                  Angkatan ke-4: Lebih Matang, Lebih Teruji
                 </h3>
                 <p className="text-brand-blue-800 font-medium leading-relaxed">
                   Menjadi bagian dari angkatan 2026/2027 adalah keistimewaan.
