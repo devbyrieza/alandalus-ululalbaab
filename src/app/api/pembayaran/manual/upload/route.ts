@@ -302,9 +302,9 @@ export async function POST(request: NextRequest) {
   } catch (error: any) {
     console.error("Error in POST /api/pembayaran/manual/upload:", error);
     return NextResponse.json(
-      {
-        success: false,
-        error: "Terjadi kesalahan sistem saat mengupload bukti pembayaran",
+      { 
+        success: false, 
+        error: "Terjadi kesalahan sistem saat mengupload bukti: " + (error instanceof Error ? error.message : String(error)) 
       },
       { status: 500 },
     );
