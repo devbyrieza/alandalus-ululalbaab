@@ -160,9 +160,12 @@ export default function DaftarPage() {
     }
     if (!formData.jenis_kelamin) {
       errors.jenis_kelamin = "Pilih jenis kelamin santri";
-    } else if (formData.jenis_kelamin === "L") {
+    } else if (formData.jenis_kelamin === "L" && formData.jenjang === "MTs") {
       errors.jenis_kelamin =
-        "Mohon maaf, pendaftaran Santri Putra dilakukan melalui Pesantren Al Imam.";
+        "Mohon maaf, pendaftaran MTs Putra sudah ditutup.";
+    } else if (formData.jenis_kelamin === "P" && formData.jenjang === "IL") {
+      errors.jenis_kelamin =
+        "Mohon maaf, pendaftaran I'dad Lughowi Putri belum dibuka.";
     }
 
     if (!formData.jenjang) {
@@ -362,18 +365,22 @@ export default function DaftarPage() {
                   {[
                     {
                       value: "MTs",
-                      title: "MTs Putri",
+                      title: "Madrasah Tsanawiyah",
                       subtitle: "Lulusan SD/Sederajat",
                     },
                     {
                       value: "IL",
-                      title: "I'dad Lughowi Putri",
+                      title: "I'dad Lughowi",
                       subtitle: "Lulusan SMP/Sederajat",
                     },
                   ].map((option) => {
                     const isPutra = formData.jenis_kelamin === "L";
                     const isPutri = formData.jenis_kelamin === "P";
-                    const isClosed = isPutra; // Tutup jika memilih Putra di Ulul Albaab
+                    const isClosed = option.value === "MTs" ? isPutra : isPutri;
+                    const closedLabel =
+                      option.value === "MTs"
+                        ? "Pendaftaran Putra Sudah Ditutup"
+                        : "Pendaftaran Putri Belum Dibuka";
 
                     return (
                       <motion.div
@@ -397,7 +404,7 @@ export default function DaftarPage() {
                       >
                         {isClosed && (
                           <div className="absolute top-4 right-4 bg-red-600 text-white text-[10px] font-black px-2 py-1 rounded-full uppercase tracking-tighter shadow-sm z-10">
-                            Khusus Putri
+                            {closedLabel}
                           </div>
                         )}
 
