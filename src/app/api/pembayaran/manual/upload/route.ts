@@ -94,7 +94,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // 5. Ambil data pendaftar & tahun ajaran & nilai ujian (untuk cek kelulusan)
+    // 5. Ambil data pendaftar & tahun ajaran
     const pendaftar = await prisma.pendaftar.findUnique({
       where: { id: session.id },
       include: {
@@ -229,7 +229,7 @@ export async function POST(request: NextRequest) {
 
     // Save to storage_data/bukti-pembayaran/{pendaftar_id}/...
     const filePath = await saveFileLocal(
-      file,
+      buffer,
       "bukti-pembayaran",
       session.id,
       fileName,

@@ -251,7 +251,7 @@ export async function POST(request: NextRequest) {
 
     // Save to storage_data/dokumen-pendaftaran/{pendaftar_id}/...
     const filePath = await saveFileLocal(
-      file,
+      buffer,
       "dokumen-pendaftaran",
       session.id,
       fileName,
@@ -321,14 +321,9 @@ export async function POST(request: NextRequest) {
       },
     });
   } catch (error: any) {
-    console.error("Upload error details:", error);
+    console.error("Upload error:", error);
     return NextResponse.json(
-      {
-        success: false,
-        error: "Terjadi kesalahan saat mengupload file",
-        details: error.message,
-        stack: process.env.NODE_ENV === "development" ? error.stack : undefined,
-      },
+      { success: false, error: "Terjadi kesalahan saat mengupload file" },
       { status: 500 },
     );
   }
