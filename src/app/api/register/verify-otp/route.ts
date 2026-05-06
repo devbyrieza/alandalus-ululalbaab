@@ -46,11 +46,13 @@ export async function POST(request: NextRequest) {
 
     const nomorPendaftaran = await generateNomorPendaftaran(regData.jenjang, regData.jenis_kelamin);
     const profileId = crypto.randomUUID();
+    const pendaftarId = crypto.randomUUID();
 
     await prisma.$transaction([
       prisma.profile.create({ data: { id: profileId, full_name: regData.nama_lengkap, phone: normalizedPhone, role: "pendaftar" } }),
       prisma.pendaftar.create({
         data: {
+          id: pendaftarId,
           nik: regData.nik, nama_lengkap: regData.nama_lengkap, jenis_kelamin: regData.jenis_kelamin,
           jenjang: regData.jenjang, no_hp: no_hp, status_pendaftaran: "draft", user_id: profileId,
           tahun_ajaran_id: activeTA!.id, nomor_pendaftaran: nomorPendaftaran,
@@ -60,7 +62,7 @@ export async function POST(request: NextRequest) {
     ]);
 
     await enqueueWhatsapp({
-      pendaftarId: profileId,
+      pendaftarId: pendaftarId,
       phone: no_hp,
       jenisNotif: "registration_success",
       messageContent: buildMessageRegistrationSuccess(regData.nama_lengkap, nomorPendaftaran, regData.jenjang),
