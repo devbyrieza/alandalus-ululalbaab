@@ -376,11 +376,9 @@ export default function DaftarPage() {
                   ].map((option) => {
                     const isPutra = formData.jenis_kelamin === "L";
                     const isPutri = formData.jenis_kelamin === "P";
-                    const isClosed = option.value === "MTs" ? isPutra : isPutri;
-                    const closedLabel =
-                      option.value === "MTs"
-                        ? "Pendaftaran Putra Sudah Ditutup"
-                        : "Pendaftaran Putri Belum Dibuka";
+                    // Saat ini: MTs Putri & IL Putri BUKA, MTs Putra & IL Putra DITUTUP
+                    const isClosed = isPutra;
+                    const closedLabel = "Pendaftaran Putra Sudah Ditutup";
 
                     return (
                       <motion.div
