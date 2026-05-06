@@ -27,11 +27,28 @@ export async function POST(request: NextRequest) {
     const activeTA = await prisma.tahunAjaran.findFirst({ where: { is_active: true } })
       || await prisma.tahunAjaran.findFirst({ orderBy: { created_at: "desc" } });
 
+    if (!activeTA) {
+      return NextResponse.json({ success: false, error: "Tahun Ajaran aktif tidak ditemukan" }, { status: 500 });
+    }
+
+    // Cek duplikat NIK sebelum membuat akun
+    const existingPendaftar = await prisma.pendaftar.findFirst({
+      where: { nik: regData.nik },
+    });
+    if (existingPendaftar) {
+      // Hapus OTP agar tidak bisa coba lagi dengan data yang sama
+      await prisma.otpVerification.delete({ where: { id: otpRecord.id } }).catch(() => {});
+      return NextResponse.json({ 
+        success: false, 
+        error: "NIK ini sudah terdaftar. Gunakan NIK lain atau hubungi panitia jika ini adalah kesalahan." 
+      }, { status: 409 });
+    }
+
     const nomorPendaftaran = await generateNomorPendaftaran(regData.jenjang, regData.jenis_kelamin);
     const profileId = crypto.randomUUID();
 
     await prisma.$transaction([
-      prisma.profile.create({ data: { id: profileId, full_name: regData.nama_lengkap, phone: no_hp, role: "pendaftar" } }),
+      prisma.profile.create({ data: { id: profileId, full_name: regData.nama_lengkap, phone: normalizedPhone, role: "pendaftar" } }),
       prisma.pendaftar.create({
         data: {
           nik: regData.nik, nama_lengkap: regData.nama_lengkap, jenis_kelamin: regData.jenis_kelamin,
@@ -59,6 +76,7 @@ export async function POST(request: NextRequest) {
       }
     });
   } catch (error: any) {
-    return NextResponse.json({ success: false, error: "Verification failed" }, { status: 500 });
+    console.error("[verify-otp] Error:", error?.message || error);
+    return NextResponse.json({ success: false, error: error?.message || "Verification failed" }, { status: 500 });
   }
 }
