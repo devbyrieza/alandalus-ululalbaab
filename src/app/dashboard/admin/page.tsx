@@ -27,9 +27,9 @@ const StatWidget = ({ label, value, icon: Icon, color, trend, breakdown }: any) 
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-premium-sm hover:shadow-premium-lg transition-all group relative overflow-hidden"
+      className="bg-white p-8 rounded-[2.5rem] border border-ink-100 shadow-premium-sm hover:shadow-premium-lg transition-all group relative overflow-hidden"
     >
-      <div className="absolute top-0 right-0 w-32 h-32 bg-slate-50 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover:bg-blue-50 transition-colors duration-500" />
+      <div className="absolute top-0 right-0 w-32 h-32 bg-sand-50 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover:bg-blue-50 transition-colors duration-500" />
       
       <div className="relative z-10">
         <div className="flex items-center justify-between mb-8">
@@ -45,32 +45,32 @@ const StatWidget = ({ label, value, icon: Icon, color, trend, breakdown }: any) 
         </div>
         
         <div className="mb-8">
-          <p className="text-[11px] font-black text-slate-400 uppercase tracking-[0.25em] mb-2">{label}</p>
+          <p className="text-[11px] font-black text-ink-400 uppercase tracking-[0.25em] mb-2">{label}</p>
           <div className="flex items-baseline gap-2">
-            <h3 className="text-5xl font-black text-slate-900 tracking-tighter italic">{value}</h3>
-            <span className="text-xs font-bold text-slate-400">Total</span>
+            <h3 className="text-5xl font-black text-ink-900 tracking-tighter italic">{value}</h3>
+            <span className="text-xs font-bold text-ink-400">Orang</span>
           </div>
         </div>
 
         {breakdown && (
-          <div className="grid grid-cols-2 gap-4 pt-6 border-t border-slate-50">
+          <div className="grid grid-cols-2 gap-4 pt-6 border-t border-sand-100">
             <div className="space-y-4">
               <div className="flex flex-col">
-                <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">MTs Putra</span>
+                <span className="text-[9px] font-black text-ink-400 uppercase tracking-widest mb-1">MTs Putra</span>
                 <span className="text-base font-black text-blue-800 leading-none">{breakdown.mts_l || 0}</span>
               </div>
               <div className="flex flex-col">
-                <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">MTs Putri</span>
+                <span className="text-[9px] font-black text-ink-400 uppercase tracking-widest mb-1">MTs Putri</span>
                 <span className="text-base font-black text-pink-500 leading-none">{breakdown.mts_p || 0}</span>
               </div>
             </div>
-            <div className="space-y-4 border-l border-slate-50 pl-4">
+            <div className="space-y-4 border-l border-sand-100 pl-4">
               <div className="flex flex-col">
-                <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">IL Putra</span>
+                <span className="text-[9px] font-black text-ink-400 uppercase tracking-widest mb-1">IL Putra</span>
                 <span className="text-base font-black text-blue-800 leading-none">{breakdown.il_l || 0}</span>
               </div>
               <div className="flex flex-col">
-                <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">IL Putri</span>
+                <span className="text-[9px] font-black text-ink-400 uppercase tracking-widest mb-1">IL Putri</span>
                 <span className="text-base font-black text-pink-500 leading-none">{breakdown.il_p || 0}</span>
               </div>
             </div>
@@ -124,7 +124,7 @@ export default function AdminDashboardPage() {
   if (loading && stats.total_pendaftar === 0) return (
     <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
       <Loader2 className="w-10 h-10 animate-spin text-blue-600" />
-      <p className="text-sm font-bold text-slate-400 tracking-widest animate-pulse uppercase">Sinkronisasi Data...</p>
+      <p className="text-sm font-bold text-ink-400 tracking-widest animate-pulse uppercase">Sinkronisasi Data...</p>
     </div>
   );
 
@@ -133,16 +133,16 @@ export default function AdminDashboardPage() {
       {/* HEADER */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-black text-slate-900 tracking-tight italic">Executive Dashboard</h1>
-          <p className="text-sm text-slate-500 font-medium mt-1">Monitoring pendaftaran Ulul Albaab secara real-time.</p>
+          <h1 className="text-3xl font-black text-ink-900 tracking-tight italic">Dasbor Ulul Albaab</h1>
+          <p className="text-sm text-ink-500 font-medium mt-1">Pantau perkembangan pendaftaran santri secara langsung.</p>
         </div>
-        <button onClick={fetchStats} className="p-3 bg-white border border-slate-200 rounded-2xl text-slate-500 hover:text-blue-600 transition-all shadow-premium-sm">
+        <button onClick={fetchStats} className="p-3 bg-white border border-sand-200 rounded-2xl text-ink-500 hover:text-blue-600 transition-all shadow-premium-sm">
           <RefreshCw className={`w-5 h-5 ${loading ? "animate-spin" : ""}`} />
         </button>
       </div>
 
       {/* HERO SECTION */}
-      <div className="bg-slate-900 rounded-[3rem] p-12 text-white relative overflow-hidden shadow-2xl border border-white/5">
+      <div className="bg-blue-950 rounded-[3rem] p-12 text-white relative overflow-hidden shadow-2xl border border-white/5">
         <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2" />
         <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-12">
           <div className="max-w-xl">
@@ -151,27 +151,27 @@ export default function AdminDashboardPage() {
               <span>Status Operasional: Aktif</span>
             </div>
             <h2 className="text-6xl font-black mb-6 tracking-tighter leading-tight italic">
-              Grow with <span className="text-blue-400">Ulul Albaab</span>
+              Berkembang Bersama <span className="text-blue-400">Ulul Albaab</span>
             </h2>
             <div className="flex items-center gap-12 mt-12">
               <div>
                 <span className="text-5xl font-black text-white italic">{stats.total_pendaftar}</span>
-                <p className="text-[11px] font-black text-slate-500 uppercase tracking-widest mt-2">Pendaftar</p>
+                <p className="text-[11px] font-black text-blue-200 uppercase tracking-widest mt-2">Pendaftar</p>
               </div>
-              <div className="w-px h-16 bg-slate-800" />
+              <div className="w-px h-16 bg-white/20" />
               <div>
                 <span className="text-5xl font-black text-blue-400 italic">{stats.sudah_bayar}</span>
-                <p className="text-[11px] font-black text-slate-500 uppercase tracking-widest mt-2">Terverifikasi</p>
+                <p className="text-[11px] font-black text-blue-200 uppercase tracking-widest mt-2">Terverifikasi</p>
               </div>
             </div>
           </div>
           <div className="grid grid-cols-2 gap-6 w-full lg:w-auto">
              <div className="bg-white/5 backdrop-blur-md p-8 rounded-[2.5rem] border border-white/10 flex flex-col items-center">
-                <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-4">Lulus Seleksi</p>
+                <p className="text-[10px] font-black text-blue-200 uppercase tracking-widest mb-4">Lulus Seleksi</p>
                 <p className="text-4xl font-black text-emerald-400 italic">{stats.diterima}</p>
              </div>
              <div className="bg-white/5 backdrop-blur-md p-8 rounded-[2.5rem] border border-white/10 flex flex-col items-center">
-                <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-4">Daftar Ulang</p>
+                <p className="text-[10px] font-black text-blue-200 uppercase tracking-widest mb-4">Daftar Ulang</p>
                 <p className="text-4xl font-black text-blue-400 italic">{stats.daftar_ulang}</p>
              </div>
           </div>
@@ -182,7 +182,7 @@ export default function AdminDashboardPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {isAdminSuper && (
           <>
-            <StatWidget label="Total Pendaftar" value={stats.total_pendaftar} icon={Users} color="blue" trend="+5% week" breakdown={getBreakdown("total")} />
+            <StatWidget label="Total Pendaftar" value={stats.total_pendaftar} icon={Users} color="blue" trend="+5% minggu ini" breakdown={getBreakdown("total")} />
             <StatWidget label="Lulus Seleksi" value={stats.diterima} icon={CheckCircle2} color="emerald" breakdown={getBreakdown("lulus")} />
             <StatWidget label="Sudah Daftar Ulang" value={stats.daftar_ulang} icon={ClipboardCheck} color="amber" breakdown={getBreakdown("ulang")} />
           </>
@@ -207,33 +207,33 @@ export default function AdminDashboardPage() {
 
       {/* SUMMARY INSIGHTS */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="bg-slate-900 rounded-[2.5rem] p-10 text-white relative overflow-hidden group">
+        <div className="bg-blue-950 rounded-[2.5rem] p-10 text-white relative overflow-hidden group">
           <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:rotate-12 transition-transform duration-700">
             <TrendingUp className="w-48 h-48" />
           </div>
           <div className="relative z-10">
             <h3 className="text-2xl font-black mb-8 tracking-tight flex items-center gap-3 italic">
               <div className="w-2 h-8 bg-blue-500 rounded-full" />
-              Insight Pendaftaran
+              Ringkasan Pendaftaran
             </h3>
             <div className="grid grid-cols-2 gap-8">
               <div className="space-y-8">
                 <div>
-                  <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">Sudah Bayar</p>
+                  <p className="text-[10px] font-black text-blue-200 uppercase tracking-widest mb-2">Sudah Bayar</p>
                   <p className="text-4xl font-black text-white italic">{stats.sudah_bayar}</p>
                 </div>
                 <div>
-                  <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">Lengkap Berkas</p>
+                  <p className="text-[10px] font-black text-blue-200 uppercase tracking-widest mb-2">Lengkap Berkas</p>
                   <p className="text-4xl font-black text-blue-400 italic">{stats.sudah_isi_data}</p>
                 </div>
               </div>
               <div className="space-y-8 pl-10 border-l border-white/5">
                 <div>
-                  <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">Antrean Verifikasi</p>
+                  <p className="text-[10px] font-black text-blue-200 uppercase tracking-widest mb-2">Antrean Verifikasi</p>
                   <p className="text-4xl font-black text-white italic">{stats.waiting_payment + stats.waiting_docs}</p>
                 </div>
                 <div>
-                  <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">Target Konversi</p>
+                  <p className="text-[10px] font-black text-blue-200 uppercase tracking-widest mb-2">Tingkat Kelulusan</p>
                   <p className="text-4xl font-black text-emerald-400 italic">
                     {stats.total_pendaftar > 0 ? Math.round((stats.diterima / stats.total_pendaftar) * 100) : 0}%
                   </p>
@@ -243,42 +243,42 @@ export default function AdminDashboardPage() {
           </div>
         </div>
 
-        <div className="bg-white rounded-[2.5rem] border border-slate-100 p-10 shadow-premium-sm relative overflow-hidden group">
+        <div className="bg-white rounded-[2.5rem] border border-sand-100 p-10 shadow-premium-sm relative overflow-hidden group">
           <div className="relative z-10">
-            <h3 className="text-2xl font-black text-slate-900 mb-8 tracking-tight flex items-center gap-3 italic">
-              <div className="w-2 h-8 bg-slate-900 rounded-full" />
-              Quick Action
+            <h3 className="text-2xl font-black text-ink-900 mb-8 tracking-tight flex items-center gap-3 italic">
+              <div className="w-2 h-8 bg-blue-600 rounded-full" />
+              Tindakan Cepat
             </h3>
             <div className="space-y-4">
-              <div className="flex items-center justify-between p-6 bg-slate-50 rounded-3xl border border-slate-100 hover:border-blue-200 transition-all cursor-default group/item">
+              <div className="flex items-center justify-between p-6 bg-sand-50 rounded-3xl border border-sand-100 hover:border-blue-200 transition-all cursor-default group/item">
                 <div className="flex items-center gap-5">
                   <div className="w-12 h-12 rounded-2xl bg-white shadow-sm flex items-center justify-center text-blue-600 transition-transform group-hover/item:scale-110">
                     <Users className="w-6 h-6" />
                   </div>
                   <div>
-                    <p className="text-sm font-black text-slate-900 uppercase tracking-tighter leading-none mb-1">Cek Dokumen</p>
-                    <p className="text-[11px] text-slate-400 font-bold">Verifikasi berkas santri baru</p>
+                    <p className="text-sm font-black text-ink-900 uppercase tracking-tighter leading-none mb-1">Cek Dokumen</p>
+                    <p className="text-[11px] text-ink-400 font-bold">Verifikasi berkas santri baru</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
-                  <span className="text-2xl font-black text-slate-900 italic">{stats.waiting_docs}</span>
-                  <ChevronRight className="w-5 h-5 text-slate-300" />
+                  <span className="text-2xl font-black text-ink-900 italic">{stats.waiting_docs}</span>
+                  <ChevronRight className="w-5 h-5 text-ink-300" />
                 </div>
               </div>
 
-              <div className="flex items-center justify-between p-6 bg-slate-50 rounded-3xl border border-slate-100 hover:border-emerald-200 transition-all cursor-default group/item">
+              <div className="flex items-center justify-between p-6 bg-sand-50 rounded-3xl border border-sand-100 hover:border-emerald-200 transition-all cursor-default group/item">
                 <div className="flex items-center gap-5">
                   <div className="w-12 h-12 rounded-2xl bg-white shadow-sm flex items-center justify-center text-emerald-600 transition-transform group-hover/item:scale-110">
                     <Wallet className="w-6 h-6" />
                   </div>
                   <div>
-                    <p className="text-sm font-black text-slate-900 uppercase tracking-tighter leading-none mb-1">Cek Pembayaran</p>
-                    <p className="text-[11px] text-slate-400 font-bold">Konfirmasi bukti transfer</p>
+                    <p className="text-sm font-black text-ink-900 uppercase tracking-tighter leading-none mb-1">Cek Pembayaran</p>
+                    <p className="text-[11px] text-ink-400 font-bold">Konfirmasi bukti transfer</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
-                  <span className="text-2xl font-black text-slate-900 italic">{stats.waiting_payment}</span>
-                  <ChevronRight className="w-5 h-5 text-slate-300" />
+                  <span className="text-2xl font-black text-ink-900 italic">{stats.waiting_payment}</span>
+                  <ChevronRight className="w-5 h-5 text-ink-300" />
                 </div>
               </div>
             </div>
