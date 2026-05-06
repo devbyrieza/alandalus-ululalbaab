@@ -195,7 +195,7 @@ export default function AuditSeleksiPage() {
         getGrade(nu?.score_kepribadian, "kepribadian").label,
         getGrade(avgW, "wawancara").label,
         getGrade(nu?.score_kesiapan, "kesiapan").label,
-        nu?.nilai_total?.toFixed(2) || "-",
+        (nu?.nilai_total != null ? Number(nu.nilai_total).toFixed(2) : undefined) || "-",
         c.status_pendaftaran.toUpperCase(),
       ];
     });
@@ -439,7 +439,7 @@ export default function AuditSeleksiPage() {
                       <td className="px-6 py-4 text-center bg-brand-blue-50/20">
                         <div className="flex flex-col items-center">
                           <span className="text-lg font-black text-brand-blue-700 leading-none">
-                            {nu?.nilai_total?.toFixed(2) || "-"}
+                            {(nu?.nilai_total != null ? Number(nu.nilai_total).toFixed(2) : undefined) || "-"}
                           </span>
                           <span className="text-[8px] font-black text-brand-blue-400 uppercase tracking-widest mt-1">
                             Final Score
