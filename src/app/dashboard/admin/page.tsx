@@ -11,6 +11,8 @@ const StatWidget = ({ label, value, icon: Icon, color, trend, breakdown }: any) 
     emerald: "from-emerald-600 to-emerald-700",
     amber: "from-amber-500 to-amber-600",
     purple: "from-purple-600 to-purple-700",
+    rose: "from-rose-600 to-rose-700",
+    slate: "from-slate-600 to-slate-700",
   };
   return (
     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
@@ -90,6 +92,9 @@ export default function AdminDashboardPage() {
     if (type === "total") return { mts_l: mts.pendaftar_putra || 0, mts_p: mts.pendaftar_putri || 0, il_l: il.pendaftar_putra || 0, il_p: il.pendaftar_putri || 0 };
     if (type === "lulus") return { mts_l: mts.diterima_putra || 0, mts_p: mts.diterima_putri || 0, il_l: il.diterima_putra || 0, il_p: il.diterima_putri || 0 };
     if (type === "ulang") return { mts_l: mts.ulang_putra || 0, mts_p: mts.ulang_putri || 0, il_l: il.ulang_putra || 0, il_p: il.ulang_putri || 0 };
+    if (type === "cadangan") return { mts_l: mts.cadangan_putra || 0, mts_p: mts.cadangan_putri || 0, il_l: il.cadangan_putra || 0, il_p: il.cadangan_putri || 0 };
+    if (type === "ditolak") return { mts_l: mts.ditolak_putra || 0, mts_p: mts.ditolak_putri || 0, il_l: il.ditolak_putra || 0, il_p: il.ditolak_putri || 0 };
+    if (type === "berkas") return { mts_l: mts.berkas_putra || 0, mts_p: mts.berkas_putri || 0, il_l: il.berkas_putra || 0, il_p: il.berkas_putri || 0 };
     return null;
   };
 
@@ -151,8 +156,11 @@ export default function AdminDashboardPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {isAdminSuper && (<>
           <StatWidget label="Total Pendaftar" value={stats.total_pendaftar} icon={Users} color="blue" trend="+5% minggu ini" breakdown={getBreakdown("total")} />
+          <StatWidget label="Berkas Lengkap" value={stats.berkas_lengkap} icon={ClipboardCheck} color="purple" breakdown={getBreakdown("berkas")} />
           <StatWidget label="Lulus Seleksi" value={stats.diterima} icon={CheckCircle2} color="emerald" breakdown={getBreakdown("lulus")} />
-          <StatWidget label="Sudah Daftar Ulang" value={stats.daftar_ulang} icon={ClipboardCheck} color="amber" breakdown={getBreakdown("ulang")} />
+          <StatWidget label="Sudah Daftar Ulang" value={stats.daftar_ulang} icon={Wallet} color="amber" breakdown={getBreakdown("ulang")} />
+          <StatWidget label="Status Cadangan" value={stats.cadangan} icon={Clock} color="slate" breakdown={getBreakdown("cadangan")} />
+          <StatWidget label="Ditolak / Gugur" value={stats.ditolak} icon={Activity} color="rose" breakdown={getBreakdown("ditolak")} />
         </>)}
         {isAdminBerkas && (<>
           <StatWidget label="Total Pendaftar" value={stats.total_pendaftar} icon={Users} color="blue" />
@@ -170,81 +178,81 @@ export default function AdminDashboardPage() {
       {!isAdminSuper && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="bg-brand-blue-900 rounded-[2.5rem] p-10 text-white relative overflow-hidden group">
-          <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:rotate-12 transition-transform duration-700">
-            <TrendingUp className="w-48 h-48" />
-          </div>
-          <div className="relative z-10">
-            <h3 className="text-2xl font-black mb-8 tracking-tight flex items-center gap-3 italic text-white">
-              <div className="w-2 h-8 bg-brand-yellow-400 rounded-full" />
-              Statistik Pendaftaran
-            </h3>
-            <div className="grid grid-cols-2 gap-8">
-              <div className="space-y-8">
-                <div>
-                  <p className="text-[10px] font-black text-brand-blue-200 uppercase tracking-widest mb-2">Total Lunas</p>
-                  <p className="text-4xl font-black text-white italic">{stats.sudah_bayar}</p>
+            <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:rotate-12 transition-transform duration-700">
+              <TrendingUp className="w-48 h-48" />
+            </div>
+            <div className="relative z-10">
+              <h3 className="text-2xl font-black mb-8 tracking-tight flex items-center gap-3 italic text-white">
+                <div className="w-2 h-8 bg-brand-yellow-400 rounded-full" />
+                Statistik Pendaftaran
+              </h3>
+              <div className="grid grid-cols-2 gap-8">
+                <div className="space-y-8">
+                  <div>
+                    <p className="text-[10px] font-black text-brand-blue-200 uppercase tracking-widest mb-2">Total Lunas</p>
+                    <p className="text-4xl font-black text-white italic">{stats.sudah_bayar}</p>
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-black text-brand-blue-200 uppercase tracking-widest mb-2">Data Komplit</p>
+                    <p className="text-4xl font-black text-brand-blue-300 italic">{stats.sudah_isi_data}</p>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-[10px] font-black text-brand-blue-200 uppercase tracking-widest mb-2">Data Komplit</p>
-                  <p className="text-4xl font-black text-brand-blue-300 italic">{stats.sudah_isi_data}</p>
-                </div>
-              </div>
-              <div className="space-y-8 pl-10 border-l border-white/20">
-                <div>
-                  <p className="text-[10px] font-black text-brand-blue-200 uppercase tracking-widest mb-2">Antrean Aktif</p>
-                  <p className="text-4xl font-black text-amber-300 italic">{stats.waiting_payment + stats.waiting_docs}</p>
-                </div>
-                <div>
-                  <p className="text-[10px] font-black text-brand-blue-200 uppercase tracking-widest mb-2">Tingkat Kelulusan</p>
-                  <p className="text-4xl font-black text-emerald-400 italic">
-                    {stats.total_pendaftar > 0 ? Math.round((stats.diterima / stats.total_pendaftar) * 100) : 0}%
-                  </p>
+                <div className="space-y-8 pl-10 border-l border-white/20">
+                  <div>
+                    <p className="text-[10px] font-black text-brand-blue-200 uppercase tracking-widest mb-2">Antrean Aktif</p>
+                    <p className="text-4xl font-black text-amber-300 italic">{stats.waiting_payment + stats.waiting_docs}</p>
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-black text-brand-blue-200 uppercase tracking-widest mb-2">Tingkat Kelulusan</p>
+                    <p className="text-4xl font-black text-emerald-400 italic">
+                      {stats.total_pendaftar > 0 ? Math.round((stats.diterima / stats.total_pendaftar) * 100) : 0}%
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div className="bg-white rounded-[2.5rem] border border-ink-100 p-10 shadow-premium-sm relative overflow-hidden group">
-          <div className="relative z-10">
-            <h3 className="text-2xl font-black text-ink-900 mb-8 tracking-tight flex items-center gap-3 italic">
-              <div className="w-2 h-8 bg-brand-blue-600 rounded-full" />
-              Aksi Cepat
-            </h3>
-            <div className="space-y-4">
-              <div className="flex items-center justify-between p-6 bg-brand-blue-50 rounded-3xl border border-brand-blue-100 hover:border-brand-blue-200 transition-all cursor-default group/item">
-                <div className="flex items-center gap-5">
-                  <div className="w-12 h-12 rounded-2xl bg-white shadow-sm flex items-center justify-center text-brand-blue-600 transition-transform group-hover/item:scale-110">
-                    <Users className="w-6 h-6" />
+          <div className="bg-white rounded-[2.5rem] border border-ink-100 p-10 shadow-premium-sm relative overflow-hidden group">
+            <div className="relative z-10">
+              <h3 className="text-2xl font-black text-ink-900 mb-8 tracking-tight flex items-center gap-3 italic">
+                <div className="w-2 h-8 bg-brand-blue-600 rounded-full" />
+                Aksi Cepat
+              </h3>
+              <div className="space-y-4">
+                <div className="flex items-center justify-between p-6 bg-brand-blue-50 rounded-3xl border border-brand-blue-100 hover:border-brand-blue-200 transition-all cursor-default group/item">
+                  <div className="flex items-center gap-5">
+                    <div className="w-12 h-12 rounded-2xl bg-white shadow-sm flex items-center justify-center text-brand-blue-600 transition-transform group-hover/item:scale-110">
+                      <Users className="w-6 h-6" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-black text-ink-900 uppercase tracking-tighter leading-none mb-1">Cek Dokumen</p>
+                      <p className="text-[11px] text-ink-400 font-bold">Verifikasi berkas santri baru</p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="text-sm font-black text-ink-900 uppercase tracking-tighter leading-none mb-1">Cek Dokumen</p>
-                    <p className="text-[11px] text-ink-400 font-bold">Verifikasi berkas santri baru</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <span className="text-2xl font-black text-ink-900 italic">{stats.waiting_docs}</span>
-                  <ChevronRight className="w-5 h-5 text-ink-300" />
-                </div>
-              </div>
-              <div className="flex items-center justify-between p-6 bg-brand-blue-50 rounded-3xl border border-brand-blue-100 hover:border-emerald-200 transition-all cursor-default group/item">
-                <div className="flex items-center gap-5">
-                  <div className="w-12 h-12 rounded-2xl bg-white shadow-sm flex items-center justify-center text-emerald-600 transition-transform group-hover/item:scale-110">
-                    <Wallet className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-black text-ink-900 uppercase tracking-tighter leading-none mb-1">Cek Pembayaran</p>
-                    <p className="text-[11px] text-ink-400 font-bold">Konfirmasi bukti transfer</p>
+                  <div className="flex items-center gap-3">
+                    <span className="text-2xl font-black text-ink-900 italic">{stats.waiting_docs}</span>
+                    <ChevronRight className="w-5 h-5 text-ink-300" />
                   </div>
                 </div>
-                <div className="flex items-center gap-3">
-                  <span className="text-2xl font-black text-ink-900 italic">{stats.waiting_payment}</span>
-                  <ChevronRight className="w-5 h-5 text-ink-300" />
+                <div className="flex items-center justify-between p-6 bg-brand-blue-50 rounded-3xl border border-brand-blue-100 hover:border-emerald-200 transition-all cursor-default group/item">
+                  <div className="flex items-center gap-5">
+                    <div className="w-12 h-12 rounded-2xl bg-white shadow-sm flex items-center justify-center text-emerald-600 transition-transform group-hover/item:scale-110">
+                      <Wallet className="w-6 h-6" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-black text-ink-900 uppercase tracking-tighter leading-none mb-1">Cek Pembayaran</p>
+                      <p className="text-[11px] text-ink-400 font-bold">Konfirmasi bukti transfer</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className="text-2xl font-black text-ink-900 italic">{stats.waiting_payment}</span>
+                    <ChevronRight className="w-5 h-5 text-ink-300" />
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
         </div>
       )}
     </div>

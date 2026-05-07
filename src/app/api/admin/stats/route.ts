@@ -180,6 +180,21 @@ export async function GET(request: Request) {
         if (isP) j.cadangan_putri = (j.cadangan_putri || 0) + 1;
       }
 
+      // Ditolak Logic: rejected
+      if (status === "rejected") {
+        j.ditolak = (j.ditolak || 0) + 1;
+        if (isL) j.ditolak_putra = (j.ditolak_putra || 0) + 1;
+        if (isP) j.ditolak_putri = (j.ditolak_putri || 0) + 1;
+      }
+
+      // Berkas Lengkap Logic: docs_verified or higher
+      const docsVerifiedIndex = 8; // 'docs_verified' index
+      if (currentIndex >= docsVerifiedIndex && status !== "rejected") {
+        j.berkas_total = (j.berkas_total || 0) + 1;
+        if (isL) j.berkas_putra = (j.berkas_putra || 0) + 1;
+        if (isP) j.berkas_putri = (j.berkas_putri || 0) + 1;
+      }
+
       // Daftar Ulang Logic: enrolled only
       if (status === "enrolled") {
         j.ulang_total++;
@@ -203,6 +218,8 @@ export async function GET(request: Request) {
       total_pendaftar,
       diterima: (statusCounts.accepted || 0) + (statusCounts.enrolled || 0),
       cadangan: statusCounts.announced || 0,
+      ditolak: statusCounts.rejected || 0,
+      berkas_lengkap: ["docs_verified", "scheduled", "tested", "announced", "accepted", "enrolled"].reduce((acc, s) => acc + (statusCounts[s] || 0), 0),
       daftar_ulang: statusCounts.enrolled || 0,
 
       // Secondary metrics
@@ -228,6 +245,12 @@ export async function GET(request: Request) {
           cadangan: 0,
           cadangan_putra: 0,
           cadangan_putri: 0,
+          ditolak: 0,
+          ditolak_putra: 0,
+          ditolak_putri: 0,
+          berkas_total: 0,
+          berkas_putra: 0,
+          berkas_putri: 0,
           ulang_total: 0,
           ulang_putra: 0,
           ulang_putri: 0,
@@ -252,9 +275,15 @@ export async function GET(request: Request) {
           diterima: data.accepted,
           diterima_putra: data.accepted_putra,
           diterima_putri: data.accepted_putri,
-          cadangan: data.cadangan || 0,
-          cadangan_putra: data.cadangan_putra || 0,
-          cadangan_putri: data.cadangan_putri || 0,
+          cadangan: data.cadangan,
+          cadangan_putra: data.cadangan_putra,
+          cadangan_putri: data.cadangan_putri,
+          ditolak: data.ditolak,
+          ditolak_putra: data.ditolak_putra,
+          ditolak_putri: data.ditolak_putri,
+          berkas_lengkap: data.berkas_total,
+          berkas_putra: data.berkas_putra,
+          berkas_putri: data.berkas_putri,
           daftar_ulang: data.ulang_total,
           ulang_putra: data.ulang_putra,
           ulang_putri: data.ulang_putri,
