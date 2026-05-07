@@ -86,7 +86,7 @@ export default function AdminDashboardPage() {
   const isAdminKeuangan = role === "admin_keuangan";
   const isAdminBerkas = role === "admin_berkas";
 
-  const getBreakdown = (type: "total" | "lulus" | "ulang") => {
+  const getBreakdown = (type: "total" | "lulus" | "ulang" | "cadangan" | "ditolak" | "berkas") => {
     const mts = stats.stats_per_jenjang.find((j: any) => j.jenjang === "MTS") || {};
     const il = stats.stats_per_jenjang.find((j: any) => j.jenjang === "IL") || {};
     if (type === "total") return { mts_l: mts.pendaftar_putra || 0, mts_p: mts.pendaftar_putri || 0, il_l: il.pendaftar_putra || 0, il_p: il.pendaftar_putri || 0 };
