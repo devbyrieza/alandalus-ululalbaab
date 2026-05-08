@@ -664,7 +664,8 @@ export default function PendaftarDetailPage() {
                   { id: "nisn", label: "NISN" },
                   { id: "foto_setengah_badan", label: "Foto" },
                   { id: "surat_kesehatan", label: "Sehat" },
-                  { id: "pakta_integritas", label: "Pakta" },
+                  { id: "pakta_integritas_santri", label: "Pakta Santri" },
+                  { id: "pakta_integritas_ortu", label: "Pakta Ortu/Wali" },
                   { id: "pernyataan_bebas_negatif", label: "Bebas Negatif" },
                 ].map((item) => (
                   <button

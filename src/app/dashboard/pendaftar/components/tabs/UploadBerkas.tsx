@@ -333,7 +333,8 @@ function DokumenCard({
           <div className="flex items-center gap-2">
             {[
               "surat_kesehatan",
-              "pakta_integritas",
+              "pakta_integritas_santri",
+              "pakta_integritas_ortu",
               "pernyataan_bebas_negatif",
             ].includes(dokumen.key) && (
               <button
