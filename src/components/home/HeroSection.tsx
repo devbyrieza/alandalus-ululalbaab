@@ -312,7 +312,7 @@ export default function HeroSection() {
               }}
             >
               <Image
-                src="/images/hero.webp"
+                src="/images/hero.jpg"
                 alt={`${BRANDING.schoolName} — Pesantren Modern`}
                 width={800}
                 height={600}
