@@ -215,7 +215,7 @@ export default function PengumumanTab() {
                     Kami dengan bangga mengumumkan bahwa berdasarkan hasil
                     seleksi, Anda dinyatakan{" "}
                     <span className="text-brand-yellow-300 font-black underline decoration-brand-yellow-400/50 underline-offset-4">
-                      LULUS SELEKSI
+                      DITERIMA
                     </span>{" "}
                     sebagai santri baru di PP Al Andalus Ulul Albaab.
                   </p>
