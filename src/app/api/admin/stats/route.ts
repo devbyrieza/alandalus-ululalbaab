@@ -119,6 +119,9 @@ export async function GET(request: Request) {
           accepted: 0,
           accepted_putra: 0,
           accepted_putri: 0,
+          data_total: 0,
+          data_putra: 0,
+          data_putri: 0,
           ulang_total: 0,
           ulang_putra: 0,
           ulang_putri: 0,
@@ -185,6 +188,14 @@ export async function GET(request: Request) {
         j.ditolak = (j.ditolak || 0) + 1;
         if (isL) j.ditolak_putra = (j.ditolak_putra || 0) + 1;
         if (isP) j.ditolak_putri = (j.ditolak_putri || 0) + 1;
+      }
+
+      // Data Lengkap Logic: payment_verification or higher
+      const dataVerifiedIndex = 2; // 'payment_verification' index
+      if (currentIndex >= dataVerifiedIndex && status !== "rejected") {
+        j.data_total++;
+        if (isL) j.data_putra++;
+        if (isP) j.data_putri++;
       }
 
       // Berkas Lengkap Logic: docs_verified or higher
@@ -254,6 +265,9 @@ export async function GET(request: Request) {
           ulang_total: 0,
           ulang_putra: 0,
           ulang_putri: 0,
+          data_total: 0,
+          data_putra: 0,
+          data_putri: 0,
         };
         const QUOTAS: Record<string, any> = {
           MTS: { putra: 49, putri: 24, total: 73 },
@@ -272,6 +286,9 @@ export async function GET(request: Request) {
           bayar_total: data.bayar_total,
           bayar_putra: data.bayar_putra,
           bayar_putri: data.bayar_putri,
+          data_total: data.data_total || 0,
+          data_putra: data.data_putra || 0,
+          data_putri: data.data_putri || 0,
           diterima: data.accepted,
           diterima_putra: data.accepted_putra,
           diterima_putri: data.accepted_putri,
