@@ -391,7 +391,7 @@ export default function ContactPage() {
               >
                 <div className="rounded-[2rem] md:rounded-[2.5rem] overflow-hidden h-[300px] md:h-[400px] relative border border-surface-50">
                   <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15842.170258079815!2d106.84883492584104!3d-6.9457494681995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68370000000001%3A0x6737000000000000!2sPesantren%20Al-Andalus%20Ulul%20Albaab!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15842.170258079815!2d106.84883492584104!3d-6.9457494681995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68370000000001%3A0x6737000000000000!2sPesantren%20Al Andalus%20Ulul%20Albaab!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid"
                     width="100%"
                     height="100%"
                     style={{ border: 0 }}

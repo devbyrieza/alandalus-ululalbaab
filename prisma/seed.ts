@@ -9,7 +9,7 @@ async function main() {
     console.log('Start seeding...');
 
     // Ambil Nama Sekolah langsung dari Env (Menghindari bug hoisting)
-    const schoolName = process.env.NEXT_PUBLIC_SCHOOL_NAME || 'Al-Andalus PPDB';
+    const schoolName = process.env.NEXT_PUBLIC_SCHOOL_NAME || 'Al Andalus PPDB';
 
     // Tentukan Suffix Email berdasarkan Branding
     const emailSuffix = schoolName.toLowerCase().includes('al-imam') 
