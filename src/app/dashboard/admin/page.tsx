@@ -5,7 +5,7 @@ import { Users, Wallet, Loader2, RefreshCw, Clock, FileCheck, CheckCircle2, Clip
 import { UserRole } from "@/lib/access-control";
 import { motion } from "framer-motion";
 
-const StatWidget = ({ label, value, icon: Icon, color, trend, breakdown }: any) => {
+const StatWidget = ({ label, value, icon: Icon, color, trend, breakdown, highlighted }: any) => {
   const colorMap: any = {
     blue: "from-brand-blue-600 to-brand-blue-800",
     emerald: "from-emerald-600 to-emerald-700",
@@ -16,47 +16,85 @@ const StatWidget = ({ label, value, icon: Icon, color, trend, breakdown }: any) 
   };
   return (
     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-      className="bg-white p-5 sm:p-6 lg:p-8 rounded-[1.5rem] sm:rounded-[2rem] lg:rounded-[2.5rem] border border-brand-blue-100 shadow-premium-sm hover:shadow-premium-lg transition-all group relative overflow-hidden">
-      <div className="absolute top-0 right-0 w-32 h-32 bg-brand-blue-50 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover:bg-brand-blue-100 transition-colors duration-500" />
+      className={`p-5 sm:p-6 lg:p-8 rounded-[1.5rem] sm:rounded-[2rem] lg:rounded-[2.5rem] border transition-all group relative overflow-hidden duration-300 ${
+        highlighted 
+          ? "bg-linear-to-br from-brand-blue-900 via-brand-blue-950 to-brand-blue-900 text-white border-brand-blue-800 shadow-premium-lg hover:shadow-premium-xl hover:scale-102" 
+          : "bg-white text-brand-blue-950 border-brand-blue-100 shadow-premium-sm hover:shadow-premium-lg hover:scale-101"
+      }`}>
+      <div className={`absolute top-0 right-0 w-32 h-32 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 transition-colors duration-500 ${
+        highlighted 
+          ? "bg-white/10 group-hover:bg-brand-blue-500/10" 
+          : "bg-brand-blue-50 group-hover:bg-brand-blue-100"
+      }`} />
       <div className="relative z-10">
         <div className="flex items-center justify-between mb-8">
           <div className={`w-14 h-14 rounded-2xl bg-linear-to-br ${colorMap[color] || colorMap.blue} flex items-center justify-center text-white shadow-xl transition-transform group-hover:scale-110 group-hover:rotate-3 duration-500`}>
             <Icon className="w-6 h-6" />
           </div>
           {trend && (
-            <div className="flex items-center gap-1.5 text-[10px] font-black text-emerald-600 bg-emerald-50 px-3 py-1.5 rounded-full border border-emerald-100">
+            <div className={`flex items-center gap-1.5 text-[10px] font-black px-3 py-1.5 rounded-full border ${
+              highlighted
+                ? "text-emerald-400 bg-white/5 border-white/10"
+                : "text-emerald-600 bg-emerald-50 border-emerald-100"
+            }`}>
               <TrendingUp className="w-3.5 h-3.5" />
               <span className="uppercase tracking-wider">{trend}</span>
             </div>
           )}
         </div>
         <div className="mb-6 lg:mb-8">
-          <p className="text-[10px] sm:text-[11px] font-black text-brand-blue-400 uppercase tracking-[0.25em] mb-2">{label}</p>
+          <p className={`text-[10px] sm:text-[11px] font-black uppercase tracking-[0.25em] mb-2 ${
+            highlighted ? "text-brand-blue-300" : "text-brand-blue-400"
+          }`}>{label}</p>
           <div className="flex items-baseline gap-2">
-            <h3 className="text-3xl sm:text-4xl lg:text-5xl font-black text-brand-blue-900 tracking-tighter italic">{value}</h3>
-            <span className="text-xs font-bold text-brand-blue-300">Orang</span>
+            <h3 className={`text-3xl sm:text-4xl lg:text-5xl font-black tracking-tighter italic ${
+              highlighted ? "text-white" : "text-brand-blue-900"
+            }`}>{value}</h3>
+            <span className={`text-xs font-bold ${
+              highlighted ? "text-brand-blue-300" : "text-brand-blue-300"
+            }`}>Orang</span>
           </div>
         </div>
         {breakdown && (
-          <div className="grid grid-cols-2 gap-4 pt-6 border-t border-brand-blue-100">
+          <div className={`grid grid-cols-2 gap-4 pt-6 border-t ${
+            highlighted ? "border-white/10" : "border-brand-blue-100"
+          }`}>
             <div className="space-y-4">
               <div className="flex flex-col">
-                <span className="text-[9px] font-black text-brand-blue-400 uppercase tracking-widest mb-1">MTs Putra</span>
-                <span className="text-base font-black text-brand-blue-700 leading-none">{breakdown.mts_l || 0}</span>
+                <span className={`text-[9px] font-black uppercase tracking-widest mb-1 ${
+                  highlighted ? "text-brand-blue-300" : "text-brand-blue-400"
+                }`}>MTs Putra</span>
+                <span className={`text-base font-black leading-none ${
+                  highlighted ? "text-white" : "text-brand-blue-700"
+                }`}>{breakdown.mts_l || 0}</span>
               </div>
               <div className="flex flex-col">
-                <span className="text-[9px] font-black text-brand-blue-400 uppercase tracking-widest mb-1">MTs Putri</span>
-                <span className="text-base font-black text-pink-500 leading-none">{breakdown.mts_p || 0}</span>
+                <span className={`text-[9px] font-black uppercase tracking-widest mb-1 ${
+                  highlighted ? "text-brand-blue-300" : "text-brand-blue-400"
+                }`}>MTs Putri</span>
+                <span className={`text-base font-black leading-none ${
+                  highlighted ? "text-pink-300" : "text-pink-500"
+                }`}>{breakdown.mts_p || 0}</span>
               </div>
             </div>
-            <div className="space-y-4 border-l border-brand-blue-100 pl-4">
+            <div className={`space-y-4 border-l pl-4 ${
+              highlighted ? "border-white/10" : "border-brand-blue-100"
+            }`}>
               <div className="flex flex-col">
-                <span className="text-[9px] font-black text-brand-blue-400 uppercase tracking-widest mb-1">IL Putra</span>
-                <span className="text-base font-black text-brand-blue-700 leading-none">{breakdown.il_l || 0}</span>
+                <span className={`text-[9px] font-black uppercase tracking-widest mb-1 ${
+                  highlighted ? "text-brand-blue-300" : "text-brand-blue-400"
+                }`}>IL Putra</span>
+                <span className={`text-base font-black leading-none ${
+                  highlighted ? "text-white" : "text-brand-blue-700"
+                }`}>{breakdown.il_l || 0}</span>
               </div>
               <div className="flex flex-col">
-                <span className="text-[9px] font-black text-brand-blue-400 uppercase tracking-widest mb-1">IL Putri</span>
-                <span className="text-base font-black text-pink-500 leading-none">{breakdown.il_p || 0}</span>
+                <span className={`text-[9px] font-black uppercase tracking-widest mb-1 ${
+                  highlighted ? "text-brand-blue-300" : "text-brand-blue-400"
+                }`}>IL Putri</span>
+                <span className={`text-base font-black leading-none ${
+                  highlighted ? "text-pink-300" : "text-pink-500"
+                }`}>{breakdown.il_p || 0}</span>
               </div>
             </div>
           </div>
@@ -86,7 +124,7 @@ export default function AdminDashboardPage() {
   const isAdminKeuangan = role === "admin_keuangan";
   const isAdminBerkas = role === "admin_berkas";
 
-  const getBreakdown = (type: "total" | "lulus" | "ulang" | "cadangan" | "ditolak" | "berkas") => {
+  const getBreakdown = (type: "total" | "lulus" | "ulang" | "cadangan" | "ditolak" | "berkas" | "bayar" | "data") => {
     const mts = stats.stats_per_jenjang.find((j: any) => j.jenjang === "MTS") || {};
     const il = stats.stats_per_jenjang.find((j: any) => j.jenjang === "IL") || {};
     if (type === "total") return { mts_l: mts.pendaftar_putra || 0, mts_p: mts.pendaftar_putri || 0, il_l: il.pendaftar_putra || 0, il_p: il.pendaftar_putri || 0 };
@@ -95,6 +133,7 @@ export default function AdminDashboardPage() {
     if (type === "cadangan") return { mts_l: mts.cadangan_putra || 0, mts_p: mts.cadangan_putri || 0, il_l: il.cadangan_putra || 0, il_p: il.cadangan_putri || 0 };
     if (type === "ditolak") return { mts_l: mts.ditolak_putra || 0, mts_p: mts.ditolak_putri || 0, il_l: il.ditolak_putra || 0, il_p: il.ditolak_putri || 0 };
     if (type === "berkas") return { mts_l: mts.berkas_putra || 0, mts_p: mts.berkas_putri || 0, il_l: il.berkas_putra || 0, il_p: il.berkas_putri || 0 };
+    if (type === "bayar") return { mts_l: mts.bayar_putra || 0, mts_p: mts.bayar_putri || 0, il_l: il.bayar_putra || 0, il_p: il.bayar_putri || 0 };
     return null;
   };
 
@@ -153,14 +192,16 @@ export default function AdminDashboardPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
         {isAdminSuper && (<>
-          <StatWidget label="Total Pendaftar" value={stats.total_pendaftar} icon={Users} color="blue" trend="+5% minggu ini" breakdown={getBreakdown("total")} />
-          <StatWidget label="Berkas Lengkap" value={stats.berkas_lengkap} icon={ClipboardCheck} color="purple" breakdown={getBreakdown("berkas")} />
-          <StatWidget label="Lulus Seleksi" value={stats.diterima} icon={CheckCircle2} color="emerald" breakdown={getBreakdown("lulus")} />
-          <StatWidget label="Sudah Daftar Ulang" value={stats.daftar_ulang} icon={Wallet} color="amber" breakdown={getBreakdown("ulang")} />
-          <StatWidget label="Status Cadangan" value={stats.cadangan} icon={Clock} color="slate" breakdown={getBreakdown("cadangan")} />
-          <StatWidget label="Ditolak / Gugur" value={stats.ditolak} icon={Activity} color="rose" breakdown={getBreakdown("ditolak")} />
+          <StatWidget label="Total Pendaftar" value={stats.total_pendaftar} icon={Users} color="blue" trend="+5% minggu ini" breakdown={getBreakdown("total")} highlighted={true} />
+          <StatWidget label="Sudah Bayar Pendaftaran" value={stats.sudah_bayar} icon={Wallet} color="emerald" breakdown={getBreakdown("bayar")} highlighted={false} />
+          <StatWidget label="Data Lengkap" value={stats.sudah_isi_data} icon={FileCheck} color="purple" highlighted={false} />
+          <StatWidget label="Berkas Lengkap" value={stats.berkas_lengkap} icon={ClipboardCheck} color="purple" breakdown={getBreakdown("berkas")} highlighted={false} />
+          <StatWidget label="Diterima" value={stats.diterima} icon={CheckCircle2} color="emerald" breakdown={getBreakdown("lulus")} highlighted={true} />
+          <StatWidget label="Cadangan" value={stats.cadangan} icon={Clock} color="slate" breakdown={getBreakdown("cadangan")} highlighted={true} />
+          <StatWidget label="Ditolak" value={stats.ditolak} icon={Activity} color="rose" breakdown={getBreakdown("ditolak")} highlighted={false} />
+          <StatWidget label="Sudah Daftar Ulang" value={stats.daftar_ulang} icon={Wallet} color="amber" breakdown={getBreakdown("ulang")} highlighted={true} />
         </>)}
         {isAdminBerkas && (<>
           <StatWidget label="Total Pendaftar" value={stats.total_pendaftar} icon={Users} color="blue" />
