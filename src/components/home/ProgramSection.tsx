@@ -31,9 +31,9 @@ const PROGRAMS: ProgramItem[] = [
   {
     title: "Madrasah Tsanawiyah (MTs)",
     subtitle: "Tingkat Menengah · Setara SMP",
-    desc: "Memadukan tahfizh Al-Qur'an, kurikulum pendidikan nasional, kurikulum khas pesantren berbasis Kitab Turots, dan entrepreneurship. Bahasa pengantar Bahasa Arab.",
+    desc: "Memadukan tahfizh Al-Qur'an, kurikulum pendidikan nasional, kurikulum khas Al Andalus berbasis Kitab Turots, dan entrepreneurship. Bahasa pengantar Bahasa Arab.",
     features: [
-      "Target Hafalan Al-Qur'an 30 Juz",
+      "Target Hafalan Al-Qur'an minimal 12 Juz",
       "Kitab Turots & Ilmu Syar'i",
       "Bahasa Arab Aktif sebagai Pengantar",
       "Kurikulum Nasional (Diknas)",
@@ -52,12 +52,12 @@ const PROGRAMS: ProgramItem[] = [
       "3 Tahun SMA Pesantren (Setelah IL)",
       "Total: 4 Tahun Pendidikan",
       "Persiapan PTN & Universitas Timur Tengah",
-      "Tahfizh Al-Qur'an",
+      "Target Hafalan Al-Qur'an minimal 16 Juz",
     ],
     quotaLabel: "Putra 32 · Putri 30",
     icon: BookOpen,
     variant: "yellow",
-  }
+  },
 ];
 
 const containerVariants: Variants = {
