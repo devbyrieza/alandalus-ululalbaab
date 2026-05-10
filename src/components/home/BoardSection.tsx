@@ -1,6 +1,6 @@
 "use client";
 
-import { Users, User, Star } from "lucide-react";
+import { Users, User } from "lucide-react";
 import { Container } from "@/components/layout/Container";
 import { motion } from "framer-motion";
 import Image from "next/image";
@@ -74,11 +74,7 @@ function MemberCard({
         <div className="mt-2 h-[2px] w-5 rounded-full bg-brand-blue-100 group-hover:w-10 group-hover:bg-brand-blue-500 transition-all duration-500" />
       </div>
 
-      {/* Star hint */}
-      <Star
-        className="w-3.5 h-3.5 shrink-0 text-brand-yellow-400 fill-brand-yellow-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-        aria-hidden
-      />
+
     </motion.div>
   );
 }
