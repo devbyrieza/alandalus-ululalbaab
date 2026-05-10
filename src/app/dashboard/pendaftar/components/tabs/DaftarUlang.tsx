@@ -272,18 +272,29 @@ export default function DaftarUlangTab() {
           </div>
           
           <div className="mt-6 pt-6 border-t border-brand-blue-200/50">
-             <p className="text-xs font-black text-brand-blue-700 mb-3 leading-tight">
-               Butuh keringanan atau konfirmasi pembayaran?
-             </p>
-             <a
-                href="https://wa.me/6281285300800?text=Assalamualaikum%20Admin%2C%20saya%20wali%20dari%20calon%20santri%20ingin%20berkonsultasi%2Fmengajukan%20keringanan%20terkait%20biaya%20Daftar%20Ulang."
+            <p className="text-xs font-black text-brand-blue-700 mb-3 leading-tight">
+              Butuh keringanan atau konfirmasi pembayaran?
+            </p>
+            <div className="grid grid-cols-2 gap-2">
+              <a
+                href="https://wa.me/6281285300800?text=Assalamualaikum%20Admin%20Finance%2C%20saya%20wali%20dari%20calon%20santri%20ingin%20berkonsultasi%2Fmengajukan%20keringanan%20terkait%20biaya%20Daftar%20Ulang."
                 target="_blank"
                 rel="noreferrer"
-                className="w-full py-3.5 px-4 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-black flex items-center justify-center gap-2 transition-all shadow-md hover:shadow-lg active:scale-95 group"
-             >
-               <MessageCircle className="w-5 h-5 group-hover:scale-110 transition-transform" />
-               <span>Hubungi CS / Finance</span>
-             </a>
+                className="w-full py-3 px-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-black flex items-center justify-center gap-1.5 transition-all shadow-md hover:shadow-lg active:scale-95 group text-[11px]"
+              >
+                <MessageCircle className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                <span>Finance</span>
+              </a>
+              <a
+                href="https://wa.me/6281285300800?text=Assalamualaikum%20Admin%20CS%2C%20saya%20wali%20dari%20calon%20santri%20ingin%20bertanya%20terkait%20biaya%20Daftar%20Ulang."
+                target="_blank"
+                rel="noreferrer"
+                className="w-full py-3 px-2 bg-cyan-600 hover:bg-cyan-700 text-white rounded-xl font-black flex items-center justify-center gap-1.5 transition-all shadow-md hover:shadow-lg active:scale-95 group text-[11px]"
+              >
+                <MessageCircle className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                <span>Admin CS</span>
+              </a>
+            </div>
           </div>
         </div>
       </div>
