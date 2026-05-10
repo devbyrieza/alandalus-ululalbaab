@@ -323,8 +323,74 @@ export default function DaftarUlangTab() {
         </div>
 
         <form onSubmit={handleSubmit} className="p-8 space-y-8">
-          {/* Input Nominal */}
+          {/* Opsi Pembayaran Langsung */}
           <div>
+            <label className="block text-sm font-black text-slate-700 mb-3 tracking-wide uppercase">
+              Metode Pelunasan Daftar Ulang
+            </label>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <button
+                type="button"
+                onClick={() =>
+                  setNominal(new Intl.NumberFormat("id-ID").format(9800000))
+                }
+                className={`p-4 rounded-2xl border-3 transition-all text-left flex flex-col ${
+                  numericNominal === 9800000
+                    ? "border-brand-blue-500 bg-brand-blue-50/50 ring-4 ring-brand-blue-500/10 shadow-md"
+                    : "border-slate-100 bg-white hover:bg-slate-50 hover:border-slate-200"
+                }`}
+              >
+                <div className="flex items-center justify-between w-full mb-1">
+                  <span className="font-black text-brand-blue-950 text-lg">
+                    Bayar Lunas
+                  </span>
+                  {numericNominal === 9800000 ? (
+                    <CheckCircle className="w-6 h-6 text-brand-blue-600" />
+                  ) : (
+                    <div className="w-6 h-6 rounded-full border-3 border-slate-300" />
+                  )}
+                </div>
+                <span className="text-xs text-slate-500 leading-tight font-medium">
+                  Pelunasan sekaligus seluruh biaya administrasi.
+                </span>
+                <span className="text-lg font-black text-brand-blue-700 mt-3">
+                  Rp 9.800.000
+                </span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() =>
+                  setNominal(new Intl.NumberFormat("id-ID").format(4900000))
+                }
+                className={`p-4 rounded-2xl border-3 transition-all text-left flex flex-col ${
+                  numericNominal >= 4900000 && numericNominal < 9800000
+                    ? "border-brand-blue-500 bg-brand-blue-50/50 ring-4 ring-brand-blue-500/10 shadow-md"
+                    : "border-slate-100 bg-white hover:bg-slate-50 hover:border-slate-200"
+                }`}
+              >
+                <div className="flex items-center justify-between w-full mb-1">
+                  <span className="font-black text-brand-blue-950 text-lg">
+                    Bayar Dicicil
+                  </span>
+                  {numericNominal >= 4900000 && numericNominal < 9800000 ? (
+                    <CheckCircle className="w-6 h-6 text-brand-blue-600" />
+                  ) : (
+                    <div className="w-6 h-6 rounded-full border-3 border-slate-300" />
+                  )}
+                </div>
+                <span className="text-xs text-slate-500 leading-tight font-medium">
+                  Pembayaran bertahap minimal 50% di awal.
+                </span>
+                <span className="text-lg font-black text-brand-blue-700 mt-3">
+                  Min. Rp 4.900.000
+                </span>
+              </button>
+            </div>
+          </div>
+
+          {/* Input Nominal */}
+          <div className="pt-4 border-t border-slate-100">
             <label className="block text-sm font-black text-slate-700 mb-3 tracking-wide uppercase">
               Nominal Transfer
             </label>
