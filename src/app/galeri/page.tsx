@@ -20,7 +20,7 @@ const GALLERY_CATEGORIES = [
       },
       { src: "/images/gedung-kelas.webp", label: "Gedung Kelas" },
       { src: "/images/kelas-dari-dalam.webp", label: "Ruang Kelas dari Dalam" },
-      { src: "/images/luar-kelas.webp", label: "Area Luar Kelas" },
+      { src: "/images/luar-kelas.webp", label: "Koridor Kelas" },
       {
         src: "/images/lapangan-minisoccer.webp",
         label: "Lapangan Mini Soccer",

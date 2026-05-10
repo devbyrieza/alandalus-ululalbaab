@@ -154,7 +154,7 @@ export default function FasilitasPage() {
                   <div className="absolute bottom-5 left-5 z-10">
                     <div className="bg-white/95 backdrop-blur-sm px-4 py-1.5 rounded-xl shadow-lg border border-white/40 transition-transform duration-300 group-hover:translate-y-[-4px]">
                       <span className="text-ink-950 font-black text-sm md:text-[15px] tracking-tight">
-                        Masjid Jami'
+                        Masjid Jami' Ulul Albaab
                       </span>
                     </div>
                   </div>
