@@ -25,6 +25,7 @@ export default function DaftarUlangTab() {
   const [nominal, setNominal] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [pernyataan, setPernyataan] = useState(false);
+  const [keringananReason, setKeringananReason] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [message, setMessage] = useState<{
     type: "success" | "error";
@@ -73,10 +74,10 @@ export default function DaftarUlangTab() {
     if (!pernyataan || !file || !nominal) return;
 
     const amount = parseInt(nominal.replace(/\D/g, ""));
-    if (amount < 4900000) {
+    if (amount < 4900000 && !keringananReason.trim()) {
       setMessage({
         type: "error",
-        text: "Pembayaran cicilan pertama DAFTAR ULANG minimal adalah 50% dari uang pangkal (Minimal Rp 4.900.000)",
+        text: "Untuk pembayaran di bawah 50%, Anda wajib mengisi alasan/permohonan keringanan pada kolom yang tersedia.",
       });
       return;
     }
@@ -88,6 +89,7 @@ export default function DaftarUlangTab() {
     formData.append("jenis_pembayaran", "DAFTAR_ULANG");
     formData.append("jumlah", amount.toString());
     formData.append("file", file);
+    if (keringananReason) formData.append("keringanan_reason", keringananReason);
 
     try {
       const res = await fetch("/api/pembayaran/manual/upload", {
@@ -459,6 +461,32 @@ export default function DaftarUlangTab() {
                 >
                   {tipeBayar}
                 </span>
+              </motion.div>
+            )}
+
+            {/* Input Alasan Keringanan */}
+            {numericNominal > 0 && tipeBayar === "CICILAN DIBAWAH 50%" && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                className="mt-6 p-6 bg-amber-50 border-2 border-amber-200 rounded-2xl space-y-3"
+              >
+                <div className="flex items-center gap-2 text-amber-800">
+                  <AlertCircle className="w-5 h-5" />
+                  <span className="font-black text-sm uppercase tracking-wide">
+                    Permohonan Keringanan Khusus
+                  </span>
+                </div>
+                <p className="text-xs text-amber-700 leading-relaxed font-medium">
+                  Pembayaran di bawah 50% hanya diizinkan bagi wali santri yang memiliki kendala finansial mendesak. Silakan tuliskan alasan singkat Anda di bawah ini agar dapat dipertimbangkan oleh tim Finance.
+                </p>
+                <textarea
+                  value={keringananReason}
+                  onChange={(e) => setKeringananReason(e.target.value)}
+                  placeholder="Contoh: Sedang ada musibah keluarga, mohon keringanan cicilan pertama 1jt dulu..."
+                  className="w-full p-4 text-sm border-2 border-amber-200 rounded-xl focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all bg-white font-medium min-h-[100px]"
+                  required
+                />
               </motion.div>
             )}
           </div>

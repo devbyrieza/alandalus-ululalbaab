@@ -20,6 +20,8 @@ export type StatusProses =
   | "data_completed"
   | "docs_uploaded"
   | "docs_verified"
+  | "selection"
+  | "scheduled"
   | "tested"
   | "announced"
   | "enrolled";
@@ -34,6 +36,7 @@ export const STATUS_ORDER: StatusProses[] = [
   "data_completed",
   "docs_uploaded",
   "docs_verified",
+  "selection",
   "scheduled",
   "tested",
   "announced",
@@ -97,8 +100,9 @@ export function getNextStep(currentStatus: StatusProses) {
     paid: { status: "data_completed", action: "Fill Registration Data", href: "/dashboard/pendaftar/isi-data-lengkap" },
     data_completed: { status: "docs_uploaded", action: "Upload Documents", href: "/dashboard/pendaftar/upload-berkas" },
     docs_uploaded: { status: "docs_verified", action: "Waiting Admin Review", href: "/dashboard/pendaftar/upload-berkas" },
-    docs_verified: { status: "scheduled", action: "Choose Test Date", href: "/dashboard/pendaftar/undangan-seleksi" },
-    scheduled: { status: "tested", action: "Ready for Exam", href: "/dashboard/pendaftar/ujian" },
+    docs_verified: { status: "selection", action: "Start Selection & Tests", href: "/dashboard/pendaftar/undangan-seleksi" },
+    selection: { status: "tested", action: "Continue Selection", href: "/dashboard/pendaftar/undangan-seleksi" },
+    scheduled: { status: "tested", action: "Attend Entrance Exam", href: "/dashboard/pendaftar/ujian" },
     tested: { status: "announced", action: "Waiting Result", href: "/dashboard/pendaftar/pengumuman" },
     announced: { status: "accepted", action: "Check Result", href: "/dashboard/pendaftar/pengumuman" },
     accepted: { status: "enrolled", action: "Enroll Now", href: "/dashboard/pendaftar/daftar-ulang" },
@@ -120,12 +124,13 @@ export function formatStatusDisplay(status: StatusProses) {
     rejected: { label: "Documents Rejected", color: "bg-red-100 text-red-700" },
     data_completed: { label: "Phase 2: Data Info", color: "bg-teal-100 text-teal-700" },
     docs_uploaded: { label: "Admin Reviewing", color: "bg-indigo-100 text-indigo-700" },
-    docs_verified: { label: "Review Completed", color: "bg-green-100 text-green-700" },
-    scheduled: { label: "Test Scheduled", color: "bg-purple-100 text-purple-700" },
-    tested: { label: "Test Completed", color: "bg-violet-100 text-violet-700" },
-    announced: { label: "Result Released", color: "bg-cyan-100 text-cyan-700" },
-    accepted: { label: "Accepted", color: "bg-green-100 text-green-700" },
-    enrolled: { label: "Enrolled", color: "bg-emerald-100 text-emerald-700" },
+    docs_verified: { label: "Berkas Lengkap", color: "bg-green-100 text-green-700" },
+    selection: { label: "Sedang Seleksi", color: "bg-purple-100 text-purple-700" },
+    scheduled: { label: "Sedang Seleksi", color: "bg-purple-100 text-purple-700" },
+    tested: { label: "Seleksi Selesai", color: "bg-violet-100 text-violet-700" },
+    announced: { label: "Hasil Pengumuman", color: "bg-cyan-100 text-cyan-700" },
+    accepted: { label: "Diterima", color: "bg-green-100 text-green-700" },
+    enrolled: { label: "Daftar Ulang", color: "bg-emerald-100 text-emerald-700" },
   };
   return statusMap[status] || { label: status, color: "bg-stone-100 text-stone-700" };
 }
