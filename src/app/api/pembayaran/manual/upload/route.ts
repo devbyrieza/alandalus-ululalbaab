@@ -111,6 +111,7 @@ export async function POST(request: NextRequest) {
 
     // Parse Jenis Pembayaran
     const keringananReason = formData.get("keringanan_reason") as string | null;
+    const cicilanKe = formData.get("cicilan_ke") ? parseInt(formData.get("cicilan_ke") as string) : null;
     const jenisPembayaran =
       (formData.get("jenis_pembayaran") as string) || "PENDAFTARAN";
     let biaya = 0;
@@ -155,9 +156,9 @@ export async function POST(request: NextRequest) {
       biaya = inputJumlah;
 
       // Tentukan Tipe Cicilan
-      if (biaya >= 8500000) {
+      if (biaya >= 9800000) {
         tipeCicilan = "LUNAS";
-      } else if (biaya >= 4250000) {
+      } else if (biaya >= 4900000) {
         tipeCicilan = "CICIL_50_LEBIH";
       } else {
         tipeCicilan = "CICIL_DIBAWAH_50";
@@ -179,13 +180,6 @@ export async function POST(request: NextRequest) {
 
     if (existingVerified && jenisPembayaran === "PENDAFTARAN") {
       // Untuk pendaftaran, cuma boleh sekali bayar verified.
-      // Untuk Daftar Ulang, mungkin boleh nyicil berkali-kali?
-      // User request imply: "WAJIB MEMBAYAR CICILAN PERTAMA SAAT DI DAFTAR ULANG ONLINE INI".
-      // So this endpoint is for the FIRST payment/commitment.
-      // Future payments might be manual offline? Or repeated uploads?
-      // Currently assume logic handles the first upload.
-      // If existing verified daftar ulang, maybe block or allow topup?
-      // Let's block for now to keep it simple, or user can contact admin.
       return NextResponse.json(
         {
           success: false,
@@ -245,6 +239,7 @@ export async function POST(request: NextRequest) {
           jumlah: biaya,
           tipe_cicilan: tipeCicilan as any,
           keringanan_reason: keringananReason as any,
+          cicilan_ke: cicilanKe,
           bukti_transfer_path: filePath,
           bukti_transfer_filename: safeFileName,
           status_pembayaran: "pending",
@@ -254,15 +249,16 @@ export async function POST(request: NextRequest) {
       });
     } else {
       pembayaranResult = await prisma.pembayaran.create({
-        data: {
+          data: {
           pendaftar_id: session.id,
           tahun_ajaran_id: pendaftar.tahun_ajaran_id,
           metode_pembayaran: "manual",
           jenis_pembayaran: jenisPembayaran as any,
           tipe_cicilan: tipeCicilan as any,
+          cicilan_ke: cicilanKe,
           keringanan_reason: keringananReason as any,
           jumlah: biaya,
-          total_tagihan: jenisPembayaran === "DAFTAR_ULANG" ? 8500000 : biaya,
+          total_tagihan: jenisPembayaran === "DAFTAR_ULANG" ? 9800000 : biaya,
           bukti_transfer_path: filePath,
           bukti_transfer_filename: safeFileName,
           status_pembayaran: "pending",
