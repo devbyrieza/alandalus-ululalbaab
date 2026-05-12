@@ -57,10 +57,15 @@ export default function DaftarUlangTab() {
       const historyRes = await fetch(`/api/pembayaran/history?jenis=DAFTAR_ULANG`);
       if (historyRes.ok) {
         const historyData = await historyRes.json();
-        const verifiedPayments = historyData.data.filter((p: any) => p.status_pembayaran === "verified");
+        const payments = historyData.data || [];
+        const verifiedPayments = payments.filter((p: any) => p.status_pembayaran === "verified");
         const total = verifiedPayments.reduce((acc: number, p: any) => acc + Number(p.jumlah), 0);
+        
         setTotalPaid(total);
-        setPaymentHistory(historyData.data);
+        setPaymentHistory(payments);
+        
+        // Automatic installment numbering: count all attempts + 1
+        setCicilanKe((payments.length + 1).toString());
       }
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -80,10 +85,14 @@ export default function DaftarUlangTab() {
     if (!pernyataan || !file || !nominal) return;
 
     const amount = parseInt(nominal.replace(/\D/g, ""));
-    if (amount < 4900000 && !keringananReason.trim()) {
+    const hasExistingVerifiedPayment = paymentHistory.some(p => p.status_pembayaran === "verified");
+
+    // Execution 2: Flexible Amounts after first installment
+    // If they have a verified payment, they don't need keringananReason for < 50%
+    if (amount < 4900000 && !keringananReason.trim() && !hasExistingVerifiedPayment) {
       setMessage({
         type: "error",
-        text: "Untuk pembayaran di bawah 50%, Anda wajib mengisi alasan/permohonan keringanan pada kolom yang tersedia.",
+        text: "Untuk pembayaran cicilan pertama di bawah 50%, Anda wajib mengisi alasan/permohonan keringanan pada kolom yang tersedia.",
       });
       return;
     }
@@ -96,7 +105,11 @@ export default function DaftarUlangTab() {
     formData.append("jumlah", amount.toString());
     formData.append("file", file);
     if (keringananReason) formData.append("keringanan_reason", keringananReason);
-    if (numericNominal < 9800000) formData.append("cicilan_ke", cicilanKe);
+    
+    const numericNominalValue = parseInt(nominal.replace(/\D/g, "") || "0");
+    if (numericNominalValue < 9800000) {
+      formData.append("cicilan_ke", cicilanKe);
+    }
 
     try {
       const res = await fetch("/api/pembayaran/manual/upload", {
@@ -460,13 +473,14 @@ export default function DaftarUlangTab() {
               </label>
               <div className="relative w-32">
                 <input
-                  type="number"
-                  min="1"
-                  max="12"
+                  type="text"
+                  readOnly
                   value={cicilanKe}
-                  onChange={(e) => setCicilanKe(e.target.value)}
-                  className="w-full px-6 py-5 text-2xl font-black text-brand-blue-950 border-2 border-slate-100 rounded-2xl focus:ring-4 focus:ring-brand-blue-500/10 focus:border-brand-blue-500 transition-all shadow-inner bg-slate-50/30"
+                  className="w-full px-6 py-5 text-2xl font-black text-brand-blue-700 border-2 border-brand-blue-100 rounded-2xl focus:outline-none transition-all shadow-inner bg-brand-blue-50/30 text-center"
                 />
+                <p className="text-[10px] text-slate-500 mt-2 font-medium italic text-center">
+                  * Otomatis dihitung sistem
+                </p>
               </div>
             </div>
           )}
