@@ -98,8 +98,8 @@ export default function AdminSidebar({
   const rawMenuItems = userRole ? getMenuItemsForRole(userRole) : [];
   const menuItems = rawMenuItems.map((item) => {
     let badgeCount = 0;
-    if (item.name.includes("Payment")) badgeCount = 4;
-    if (item.name.includes("Documents")) badgeCount = 6;
+    if (item.name.includes("Pembayaran")) badgeCount = 4;
+    if (item.name.includes("Dokumen")) badgeCount = 6;
 
     return {
       ...item,
@@ -111,14 +111,14 @@ export default function AdminSidebar({
 
   const handleLogout = async () => {
     const result = await Swal.fire({
-      title: "Logout Now?",
-      text: "You will be redirected to the login page.",
+      title: "Keluar Sekarang?",
+      text: "Anda akan dialihkan ke halaman login.",
       icon: "question",
       showCancelButton: true,
       confirmButtonColor: "#1e3a8a", // Brand Blue
       cancelButtonColor: "#94a3b8",
-      confirmButtonText: "Yes, Logout",
-      cancelButtonText: "Cancel",
+      confirmButtonText: "Ya, Keluar",
+      cancelButtonText: "Batal",
       background: "#ffffff",
       customClass: {
         title: "font-black text-brand-blue-950",

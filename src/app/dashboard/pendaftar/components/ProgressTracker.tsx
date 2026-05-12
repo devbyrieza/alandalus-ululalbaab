@@ -33,35 +33,35 @@ export default function ProgressTracker({
   const phases = [
     {
       id: "pendaftaran",
-      label: "Registration",
-      sub: "Initial & Payment",
+      label: "Registrasi",
+      sub: "Awal & Bayar",
       icon: CreditCard,
       requiredStatus: "verified",
-      description: "Registration & Payment",
+      description: "Pendaftaran & Pembayaran",
     },
     {
       id: "dokumen",
-      label: "Documents",
-      sub: "Data & Upload",
+      label: "Berkas",
+      sub: "Isi Data & Upload",
       icon: FileText,
       requiredStatus: "docs_verified",
-      description: "Documents Completion",
+      description: "Kelengkapan Dokumen",
     },
     {
       id: "ujian",
-      label: "Selection",
-      sub: "Exam & Interview",
+      label: "Seleksi",
+      sub: "Ujian & Wawancara",
       icon: Target,
       requiredStatus: "tested",
-      description: "Entrance Examination",
+      description: "Ujian Masuk",
     },
     {
       id: "pengumuman",
-      label: "Enrollment",
-      sub: "Results & Final",
+      label: "Kelulusan",
+      sub: "Hasil & Daftar Ulang",
       icon: GraduationCap,
       requiredStatus: "enrolled",
-      description: "Results Announcement",
+      description: "Pengumuman Hasil",
     },
   ];
 
@@ -89,23 +89,22 @@ export default function ProgressTracker({
             <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-brand-blue-50 rounded-full border border-brand-blue-100 mb-2">
               <span className="w-2 h-2 rounded-full bg-brand-blue-600 animate-pulse" />
               <span className="text-[10px] font-black uppercase tracking-widest text-brand-blue-700">
-                Admission Roadmap
+                Roadmap Pendaftaran
               </span>
             </div>
             <h3 className="text-3xl md:text-4xl font-black text-brand-blue-950 tracking-tight leading-none italic">
-              Track{" "}
+              Pantau{" "}
               <span className="text-brand-blue-700 not-italic">
-                Your Progress.
+                Progres Anda.
               </span>
             </h3>
             <p className="text-stone-400 font-medium text-sm italic italic">
-              "Follow each step until your child officially joins our
-              community."
+              "Ikuti setiap langkahnya hingga Ananda resmi menjadi bagian dari kami."
             </p>
           </div>
           <div className="bg-stone-50 px-6 py-4 rounded-2xl border border-stone-100 text-right hidden lg:block">
             <p className="text-[9px] font-black uppercase text-stone-400 tracking-widest mb-1">
-              CURRENT STATUS
+              POSISI SEKARANG
             </p>
             <p className="font-black text-brand-blue-900 flex items-center gap-2 justify-end">
               <span className="w-2 h-2 rounded-full bg-emerald-500" />

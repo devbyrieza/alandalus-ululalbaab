@@ -71,16 +71,16 @@ export type TabName =
   | "profil";
 
 export const STEP_REQUIREMENTS: Record<TabName, { minimumStatus: StatusProses | null; label: string; description: string; }> = {
-  "data-pribadi": { minimumStatus: null, label: "Data Pribadi", description: "View your profile" },
-  "pembayaran-pendaftaran": { minimumStatus: null, label: "Payment", description: "Registration payment" },
-  "status-pembayaran": { minimumStatus: null, label: "Pay Status", description: "Check payment status" },
-  profil: { minimumStatus: null, label: "Profile", description: "Manage profile" },
-  "kelengkapan-berkas": { minimumStatus: "verified", label: "Complete Data", description: "Waiting for finance verification" },
-  "upload-berkas": { minimumStatus: "data_completed", label: "Upload Docs", description: "Fill data first" },
-  "download-berkas": { minimumStatus: "docs_uploaded", label: "Download Docs", description: "Upload files first" },
-  "undangan-seleksi": { minimumStatus: "docs_verified", label: "Test Schedule", description: "Waiting for doc verification" },
-  pengumuman: { minimumStatus: "tested", label: "Result", description: "Complete the test first" },
-  "daftar-ulang": { minimumStatus: "accepted", label: "Enrollment", description: "You are not accepted yet" },
+  "data-pribadi": { minimumStatus: null, label: "Data Pribadi", description: "Lihat data pendaftaran Anda" },
+  "pembayaran-pendaftaran": { minimumStatus: null, label: "Pembayaran", description: "Lakukan pembayaran pendaftaran" },
+  "status-pembayaran": { minimumStatus: null, label: "Status Bayar", description: "Cek status pembayaran" },
+  profil: { minimumStatus: null, label: "Profil", description: "Kelola profil Anda" },
+  "kelengkapan-berkas": { minimumStatus: "verified", label: "Isi Data Lengkap", description: "Menunggu verifikasi keuangan" },
+  "upload-berkas": { minimumStatus: "data_completed", label: "Upload Berkas", description: "Isi data terlebih dahulu" },
+  "download-berkas": { minimumStatus: "docs_uploaded", label: "Download Berkas", description: "Unggah berkas terlebih dahulu" },
+  "undangan-seleksi": { minimumStatus: "docs_verified", label: "Jadwal Seleksi", description: "Menunggu verifikasi dokumen" },
+  pengumuman: { minimumStatus: "tested", label: "Pengumuman", description: "Selesaikan ujian terlebih dahulu" },
+  "daftar-ulang": { minimumStatus: "accepted", label: "Daftar Ulang", description: "Anda belum dinyatakan diterima" },
 };
 
 export function canAccessTab(tabName: TabName, statusProses: StatusProses): boolean {
@@ -93,20 +93,20 @@ export function canAccessTab(tabName: TabName, statusProses: StatusProses): bool
 
 export function getNextStep(currentStatus: StatusProses) {
   const nextSteps: Record<string, { status: StatusProses; action: string; href: string }> = {
-    draft: { status: "payment_verification", action: "Pay Now", href: "/dashboard/pendaftar/pembayaran-pendaftaran" },
-    registered: { status: "payment_verification", action: "Pay Now", href: "/dashboard/pendaftar/pembayaran-pendaftaran" },
-    awaiting_payment: { status: "payment_verification", action: "Upload Proof", href: "/dashboard/pendaftar/pembayaran-pendaftaran" },
-    payment_verification: { status: "verified", action: "Waiting Verification", href: "/dashboard/pendaftar/pembayaran-pendaftaran" },
-    verified: { status: "data_completed", action: "Fill Registration Data", href: "/dashboard/pendaftar/isi-data-lengkap" },
-    paid: { status: "data_completed", action: "Fill Registration Data", href: "/dashboard/pendaftar/isi-data-lengkap" },
-    data_completed: { status: "docs_uploaded", action: "Upload Documents", href: "/dashboard/pendaftar/upload-berkas" },
-    docs_uploaded: { status: "docs_verified", action: "Waiting Admin Review", href: "/dashboard/pendaftar/upload-berkas" },
-    docs_verified: { status: "selection", action: "Start Selection & Tests", href: "/dashboard/pendaftar/undangan-seleksi" },
-    selection: { status: "tested", action: "Continue Selection", href: "/dashboard/pendaftar/undangan-seleksi" },
-    scheduled: { status: "tested", action: "Attend Entrance Exam", href: "/dashboard/pendaftar/ujian" },
-    tested: { status: "announced", action: "Waiting Result", href: "/dashboard/pendaftar/pengumuman" },
-    announced: { status: "accepted", action: "Check Result", href: "/dashboard/pendaftar/pengumuman" },
-    accepted: { status: "enrolled", action: "Enroll Now", href: "/dashboard/pendaftar/daftar-ulang" },
+    draft: { status: "payment_verification", action: "Bayar Sekarang", href: "/dashboard/pendaftar/pembayaran-pendaftaran" },
+    registered: { status: "payment_verification", action: "Bayar Sekarang", href: "/dashboard/pendaftar/pembayaran-pendaftaran" },
+    awaiting_payment: { status: "payment_verification", action: "Unggah Bukti", href: "/dashboard/pendaftar/pembayaran-pendaftaran" },
+    payment_verification: { status: "verified", action: "Menunggu Verifikasi", href: "/dashboard/pendaftar/pembayaran-pendaftaran" },
+    verified: { status: "data_completed", action: "Isi Data Pendaftaran", href: "/dashboard/pendaftar/isi-data-lengkap" },
+    paid: { status: "data_completed", action: "Isi Data Pendaftaran", href: "/dashboard/pendaftar/isi-data-lengkap" },
+    data_completed: { status: "docs_uploaded", action: "Unggah Berkas", href: "/dashboard/pendaftar/upload-berkas" },
+    docs_uploaded: { status: "docs_verified", action: "Menunggu Review Admin", href: "/dashboard/pendaftar/upload-berkas" },
+    docs_verified: { status: "selection", action: "Mulai Seleksi & Ujian", href: "/dashboard/pendaftar/undangan-seleksi" },
+    selection: { status: "tested", action: "Lanjutkan Seleksi", href: "/dashboard/pendaftar/undangan-seleksi" },
+    scheduled: { status: "tested", action: "Ikuti Ujian Masuk", href: "/dashboard/pendaftar/ujian" },
+    tested: { status: "announced", action: "Menunggu Hasil", href: "/dashboard/pendaftar/pengumuman" },
+    announced: { status: "accepted", action: "Cek Hasil", href: "/dashboard/pendaftar/pengumuman" },
+    accepted: { status: "enrolled", action: "Daftar Ulang Sekarang", href: "/dashboard/pendaftar/daftar-ulang" },
   };
   return nextSteps[currentStatus] || null;
 }
@@ -115,16 +115,16 @@ export function getNextStep(currentStatus: StatusProses) {
 
 export function formatStatusDisplay(status: StatusProses) {
   const statusMap: Record<string, { label: string; color: string }> = {
-    draft: { label: "Phase 1: Payment", color: "bg-amber-100 text-amber-700" },
-    registered: { label: "Phase 1: Payment", color: "bg-amber-100 text-amber-700" },
-    awaiting_payment: { label: "Waiting Proof", color: "bg-amber-100 text-amber-700" },
-    payment_verification: { label: "Finance Verif", color: "bg-orange-100 text-orange-700" },
-    verified: { label: "Paid & Verified", color: "bg-blue-100 text-blue-700" },
-    paid: { label: "Paid & Verified", color: "bg-blue-100 text-blue-700" },
-    payment_rejected: { label: "Payment Issue", color: "bg-red-100 text-red-700" },
-    rejected: { label: "Documents Rejected", color: "bg-red-100 text-red-700" },
-    data_completed: { label: "Phase 2: Data Info", color: "bg-teal-100 text-teal-700" },
-    docs_uploaded: { label: "Admin Reviewing", color: "bg-indigo-100 text-indigo-700" },
+    draft: { label: "Tahap 1: Pembayaran", color: "bg-amber-100 text-amber-700" },
+    registered: { label: "Tahap 1: Pembayaran", color: "bg-amber-100 text-amber-700" },
+    awaiting_payment: { label: "Menunggu Bukti", color: "bg-amber-100 text-amber-700" },
+    payment_verification: { label: "Verifikasi Keuangan", color: "bg-orange-100 text-orange-700" },
+    verified: { label: "Terbayar & Terverifikasi", color: "bg-blue-100 text-blue-700" },
+    paid: { label: "Terbayar & Terverifikasi", color: "bg-blue-100 text-blue-700" },
+    payment_rejected: { label: "Masalah Pembayaran", color: "bg-red-100 text-red-700" },
+    rejected: { label: "Berkas Ditolak", color: "bg-red-100 text-red-700" },
+    data_completed: { label: "Tahap 2: Informasi Data", color: "bg-teal-100 text-teal-700" },
+    docs_uploaded: { label: "Review Admin", color: "bg-indigo-100 text-indigo-700" },
     docs_verified: { label: "Berkas Lengkap", color: "bg-green-100 text-green-700" },
     selection: { label: "Sedang Seleksi", color: "bg-purple-100 text-purple-700" },
     scheduled: { label: "Sedang Seleksi", color: "bg-purple-100 text-purple-700" },
@@ -198,6 +198,16 @@ export function getMenuItemsForRole(role: UserRole) {
       { name: "Rekap Keuangan", href: "/dashboard/admin/keuangan", icon: "BarChart" },
     ],
     penguji: [
+      { name: "Dasbor", href: "/dashboard/penguji", icon: "LayoutDashboard" },
+      { name: "Jadwal Seleksi", href: "/dashboard/penguji/jadwal", icon: "Calendar" },
+      { name: "Input Nilai", href: "/dashboard/penguji/input-nilai", icon: "ClipboardEdit" },
+    ],
+    pewawancara_calsan: [
+      { name: "Dasbor", href: "/dashboard/penguji", icon: "LayoutDashboard" },
+      { name: "Jadwal Seleksi", href: "/dashboard/penguji/jadwal", icon: "Calendar" },
+      { name: "Input Nilai", href: "/dashboard/penguji/input-nilai", icon: "ClipboardEdit" },
+    ],
+    pewawancara_cawalsan: [
       { name: "Dasbor", href: "/dashboard/penguji", icon: "LayoutDashboard" },
       { name: "Jadwal Seleksi", href: "/dashboard/penguji/jadwal", icon: "Calendar" },
       { name: "Input Nilai", href: "/dashboard/penguji/input-nilai", icon: "ClipboardEdit" },
