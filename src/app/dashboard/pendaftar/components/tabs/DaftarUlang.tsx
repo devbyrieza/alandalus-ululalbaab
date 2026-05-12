@@ -34,6 +34,7 @@ export default function DaftarUlangTab() {
   const [cicilanKe, setCicilanKe] = useState("1");
   const [totalPaid, setTotalPaid] = useState(0);
   const [paymentHistory, setPaymentHistory] = useState<any[]>([]);
+  const hasExistingVerifiedPayment = paymentHistory.some(p => p.status_pembayaran === "verified");
 
   useEffect(() => {
     setIsMounted(true);
@@ -89,7 +90,7 @@ export default function DaftarUlangTab() {
 
     // Execution 2: Flexible Amounts after first installment
     // If they have a verified payment, they don't need keringananReason for < 50%
-    if (amount < 4900000 && !keringananReason.trim() && !hasExistingVerifiedPayment) {
+    if (amount < 4900000 && !keringananReason.trim() && !hasExistingVerifiedPayment && totalPaid < 4900000) {
       setMessage({
         type: "error",
         text: "Untuk pembayaran cicilan pertama di bawah 50%, Anda wajib mengisi alasan/permohonan keringanan pada kolom yang tersedia.",
@@ -533,7 +534,10 @@ export default function DaftarUlangTab() {
             )}
 
             {/* Input Alasan Keringanan */}
-            {numericNominal > 0 && tipeBayar === "CICILAN DIBAWAH 50%" && (
+            {numericNominal > 0 && 
+             tipeBayar === "CICILAN DIBAWAH 50%" && 
+             !hasExistingVerifiedPayment && 
+             totalPaid < 4900000 && (
               <motion.div
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: "auto" }}
