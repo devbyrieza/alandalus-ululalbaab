@@ -191,7 +191,7 @@ export default function PengumumanTab() {
               <motion.div
                 initial={{ scale: 0.95, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
-                className="group relative bg-linear-to-br from-emerald-500 via-emerald-600 to-teal-700 rounded-[3rem] p-10 md:p-12 text-white shadow-2xl shadow-emerald-500/30 overflow-hidden"
+                className="group relative bg-linear-to-br from-emerald-500 via-emerald-600 to-blue-700 rounded-[3rem] p-10 md:p-12 text-white shadow-2xl shadow-emerald-500/30 overflow-hidden"
               >
                 {/* Decorative Elements */}
                 <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-[60px] -translate-y-1/2 translate-x-1/2" />
@@ -426,3 +426,4 @@ export default function PengumumanTab() {
     </motion.div>
   );
 }
+

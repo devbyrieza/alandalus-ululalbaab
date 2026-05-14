@@ -22,9 +22,9 @@ export default function DashboardPendaftarPage() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-amber-50 via-white to-teal-50">
+    <main className="min-h-screen bg-gradient-to-br from-amber-50 via-white to-blue-50">
       {/* Header */}
-      <header className="bg-white border-b-2 border-teal-200 shadow-lg">
+      <header className="bg-white border-b-2 border-blue-200 shadow-lg">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div>
@@ -49,14 +49,14 @@ export default function DashboardPendaftarPage() {
       {/* Content */}
       <div className="max-w-7xl mx-auto px-6 py-12">
         {/* Welcome Card */}
-        <div className="bg-gradient-to-r from-teal-500 to-teal-600 rounded-2xl p-8 mb-8 text-white shadow-2xl">
+        <div className="bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl p-8 mb-8 text-white shadow-2xl">
           <div className="flex items-center gap-4 mb-4">
             <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center">
-              <User className="w-8 h-8 text-teal-600" />
+              <User className="w-8 h-8 text-blue-600" />
             </div>
             <div>
               <h2 className="text-3xl font-black">Assalamu'alaikum!</h2>
-              <p className="text-teal-100">Selamat datang di dashboard Anda</p>
+              <p className="text-blue-100">Selamat datang di dashboard Anda</p>
             </div>
           </div>
           <div className="bg-white/20 rounded-xl p-4 backdrop-blur-sm">
@@ -149,3 +149,4 @@ export default function DashboardPendaftarPage() {
     </main>
   );
 }
+

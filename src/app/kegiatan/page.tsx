@@ -302,8 +302,8 @@ const WeeklyActivityCard = ({
       <p className="text-base text-ink-600 font-medium">{activity.detail}</p>
     </div>
 
-    <div className="bg-teal-50 rounded-xl px-4 py-3 border border-teal-100">
-      <p className="text-xs font-black text-teal-800 uppercase tracking-tight">
+    <div className="bg-blue-50 rounded-xl px-4 py-3 border border-blue-100">
+      <p className="text-xs font-black text-blue-800 uppercase tracking-tight">
         {activity.benefit}
       </p>
     </div>
@@ -337,7 +337,7 @@ const EkskulCard = ({
     </p>
 
     <div className="pt-3 md:pt-4 border-t border-surface-50 mt-auto">
-      <p className="text-[10px] md:text-xs font-black text-teal-700 uppercase tracking-widest break-words">
+      <p className="text-[10px] md:text-xs font-black text-blue-700 uppercase tracking-widest break-words">
         {ekskul.benefit}
       </p>
     </div>
@@ -411,8 +411,8 @@ export default function KegiatanPage() {
       description:
         "Menyiapkan santri multitalenta yang juara di bidang olimpiade, olahraga, hingga public speaking.",
       icon: Target,
-      accentColor: "bg-teal-500",
-      bgColor: "bg-teal-600",
+      accentColor: "bg-blue-500",
+      bgColor: "bg-blue-600",
       stats: [
         { label: "Pilihan Ekskul", value: "10+" },
         { label: "Pelatih Ahli", value: "15+" },
@@ -470,8 +470,8 @@ export default function KegiatanPage() {
       detail:
         "Penyelesaian hajat mandiri, makan pagi sehat, dan mandi untuk persiapan menyambut hari dengan kebugaran fisik prima.",
       benefit: "Kesehatan tubuh & kesiapan mental.",
-      bgColor: "bg-teal-50/50",
-      iconColor: "text-teal-600",
+      bgColor: "bg-blue-50/50",
+      iconColor: "text-blue-600",
     },
     {
       icon: BookOpen,
@@ -907,3 +907,4 @@ export default function KegiatanPage() {
     </main>
   );
 }
+

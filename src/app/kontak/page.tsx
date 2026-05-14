@@ -276,13 +276,13 @@ export default function ContactPage() {
                       initial={{ opacity: 0, height: 0, marginBottom: 0 }}
                       animate={{ opacity: 1, height: "auto", marginBottom: 32 }}
                       exit={{ opacity: 0, height: 0, marginBottom: 0 }}
-                      className="bg-teal-50 border border-teal-100 p-6 rounded-[2rem] overflow-hidden"
+                      className="bg-blue-50 border border-blue-100 p-6 rounded-[2rem] overflow-hidden"
                     >
                       <div className="flex items-center gap-4">
-                        <div className="w-10 h-10 bg-teal-500 rounded-full flex items-center justify-center text-white shrink-0">
+                        <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white shrink-0">
                           <CheckCircle className="w-6 h-6" />
                         </div>
-                        <p className="text-teal-900 font-black text-lg">
+                        <p className="text-blue-900 font-black text-lg">
                           Pesan Terkirim! Syukran.
                         </p>
                       </div>
@@ -490,3 +490,4 @@ export default function ContactPage() {
     </main>
   );
 }
+

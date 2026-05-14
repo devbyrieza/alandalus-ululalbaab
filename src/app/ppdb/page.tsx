@@ -329,9 +329,9 @@ function PPDBContent() {
               </p>
 
               <div className="bg-white p-6 sm:p-8 rounded-[2rem] md:rounded-[3rem] border border-surface-100 shadow-premium-lg relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-teal-50 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
+                <div className="absolute top-0 right-0 w-32 h-32 bg-blue-50 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
                 <div className="relative z-10 flex items-center gap-5">
-                  <div className="w-14 h-14 bg-teal-500 rounded-2xl flex items-center justify-center text-white shadow-premium-md">
+                  <div className="w-14 h-14 bg-blue-500 rounded-2xl flex items-center justify-center text-white shadow-premium-md">
                     <CheckCircle className="w-7 h-7" />
                   </div>
                   <div>
@@ -457,7 +457,7 @@ function PPDBContent() {
                               className={`w-8 h-8 rounded-xl flex items-center justify-center shadow-premium-xs ${
                                 item.type === "Wajib" ||
                                 item.type === "Required"
-                                  ? "bg-teal-500 text-white"
+                                  ? "bg-blue-500 text-white"
                                   : "bg-surface-200 text-ink-400"
                               } shrink-0`}
                             >
@@ -680,3 +680,4 @@ export default function PPDBPage() {
     </Suspense>
   );
 }
+

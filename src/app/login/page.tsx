@@ -45,7 +45,7 @@ const ROLE_INFO: Record<
     label: "Admin Keuangan",
     icon: "💰",
     desc: "Verifikasi pembayaran",
-    color: "from-emerald-50 to-teal-50 border-emerald-200",
+    color: "from-emerald-50 to-blue-50 border-emerald-200",
   },
   pewawancara_cawalsan: {
     label: "Pewawancara Cawalsan",
@@ -620,3 +620,4 @@ export default function LoginPage() {
     </main>
   );
 }
+

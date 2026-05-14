@@ -1069,14 +1069,14 @@ export default function PembayaranPendaftaranTab({
                           className="h-full w-auto object-contain drop-shadow-sm transition-transform group-hover:scale-105"
                         />
                       </div>
-                      <h4 className="font-bold text-teal-700 uppercase tracking-widest text-[10px] mb-2">
+                      <h4 className="font-bold text-blue-700 uppercase tracking-widest text-[10px] mb-2">
                         Transfer Manual
                       </h4>
                       <h3 className="font-black text-2xl text-ink-900 mb-2">
                         Bank BSI
                       </h3>
 
-                      <div className="inline-block bg-teal-50 text-teal-700 text-[10px] font-bold px-3 py-1 rounded-lg mb-6 border border-teal-100">
+                      <div className="inline-block bg-blue-50 text-blue-700 text-[10px] font-bold px-3 py-1 rounded-lg mb-6 border border-blue-100">
                         Pengecekan Manual (± 24 Jam)
                       </div>
 
@@ -1091,8 +1091,8 @@ export default function PembayaranPendaftaranTab({
                             key={idx}
                             className="flex items-start gap-3 text-ink-600 text-sm font-medium"
                           >
-                            <div className="w-5 h-5 rounded-full bg-teal-50 flex items-center justify-center shrink-0 mt-0.5 border border-teal-100">
-                              <Check className="w-3 h-3 text-teal-600" />
+                            <div className="w-5 h-5 rounded-full bg-blue-50 flex items-center justify-center shrink-0 mt-0.5 border border-blue-100">
+                              <Check className="w-3 h-3 text-blue-600" />
                             </div>
                             <span>{item}</span>
                           </li>
@@ -1104,8 +1104,8 @@ export default function PembayaranPendaftaranTab({
                       <button
                         className={`w-full py-4 rounded-2xl font-black transition-all flex items-center justify-center gap-2 ${
                           activePaymentMethod === "manual"
-                            ? "bg-teal-600 text-white hover:bg-teal-700 shadow-xl shadow-teal-600/20"
-                            : "bg-surface-50 text-teal-800 hover:bg-teal-50 group-hover:bg-teal-600 group-hover:text-white"
+                            ? "bg-blue-600 text-white hover:bg-blue-700 shadow-xl shadow-blue-600/20"
+                            : "bg-surface-50 text-blue-800 hover:bg-blue-50 group-hover:bg-blue-600 group-hover:text-white"
                         }`}
                       >
                         {activePaymentMethod === "manual" ? (
@@ -1144,14 +1144,14 @@ export default function PembayaranPendaftaranTab({
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 items-stretch">
                       {/* LEFT COLUMN: BANK INFO */}
-                      <div className="bg-gradient-to-br from-teal-600 to-teal-800 border border-teal-500 rounded-[2.5rem] p-8 shadow-xl relative overflow-hidden flex flex-col justify-between text-white group/card">
+                      <div className="bg-gradient-to-br from-blue-600 to-blue-800 border border-blue-500 rounded-[2.5rem] p-8 shadow-xl relative overflow-hidden flex flex-col justify-between text-white group/card">
                         <div className="absolute top-0 right-0 w-80 h-80 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
-                        <div className="absolute bottom-0 left-0 w-40 h-40 bg-teal-400/20 rounded-full blur-2xl translate-y-1/2 -translate-x-1/2 pointer-events-none" />
+                        <div className="absolute bottom-0 left-0 w-40 h-40 bg-blue-400/20 rounded-full blur-2xl translate-y-1/2 -translate-x-1/2 pointer-events-none" />
 
                         <div className="relative z-10">
                           <div className="flex justify-between items-start mb-10">
                             <div>
-                              <p className="text-[10px] font-black text-teal-100 uppercase tracking-[0.2em] mb-3 opacity-90">
+                              <p className="text-[10px] font-black text-blue-100 uppercase tracking-[0.2em] mb-3 opacity-90">
                                 Bank Syariah Indonesia (BSI)
                               </p>
                               <div className="bg-white p-2 rounded-xl inline-flex items-center justify-center shadow-sm">
@@ -1168,14 +1168,14 @@ export default function PembayaranPendaftaranTab({
                           </div>
 
                           <div className="mb-10">
-                            <p className="text-xs font-bold text-teal-100 mb-3 opacity-80 uppercase tracking-widest">
+                            <p className="text-xs font-bold text-blue-100 mb-3 opacity-80 uppercase tracking-widest">
                               Nomor Rekening
                             </p>
                             <div className="flex flex-wrap items-center gap-4 mb-4">
                               <h4 className="font-black text-4xl sm:text-5xl text-white tracking-tighter drop-shadow-sm break-all">
                                 {BANK_INFO.nomor_rekening}
                               </h4>
-                              <div className="bg-teal-500/30 hover:bg-teal-500/50 transition-colors p-1 rounded-xl backdrop-blur-sm">
+                              <div className="bg-blue-500/30 hover:bg-blue-500/50 transition-colors p-1 rounded-xl backdrop-blur-sm">
                                 <CopyButton
                                   text={BANK_INFO.nomor_rekening}
                                   label="Salin"
@@ -1183,7 +1183,7 @@ export default function PembayaranPendaftaranTab({
                               </div>
                             </div>
                             <div className="flex flex-col gap-1">
-                              <p className="text-[10px] font-bold text-teal-100 uppercase opacity-80">
+                              <p className="text-[10px] font-bold text-blue-100 uppercase opacity-80">
                                 Atas Nama
                               </p>
                               <p className="text-xl font-bold text-white tracking-tight">
@@ -1196,9 +1196,9 @@ export default function PembayaranPendaftaranTab({
                         <div className="mt-8 relative z-10">
                           <div className="flex items-start gap-4 bg-black/10 p-5 rounded-2xl border border-white/10 backdrop-blur-md shadow-inner">
                             <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center shrink-0 border border-white/10">
-                              <Info className="w-5 h-5 text-teal-100" />
+                              <Info className="w-5 h-5 text-blue-100" />
                             </div>
-                            <p className="text-xs text-teal-50 leading-relaxed font-medium text-left w-full">
+                            <p className="text-xs text-blue-50 leading-relaxed font-medium text-left w-full">
                               <strong>Penting:</strong> Pastikan nominal
                               transfer tepat{" "}
                               <strong>{formatRupiah(biayaPendaftaran)}</strong>{" "}
@@ -1351,3 +1351,4 @@ export default function PembayaranPendaftaranTab({
     </div>
   );
 }
+

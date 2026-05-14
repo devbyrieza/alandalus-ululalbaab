@@ -160,7 +160,7 @@ export default function ProgramPage() {
                                     ? program.theme === "blue"
                                       ? "bg-blue-600 text-white border-blue-600"
                                       : program.theme === "teal"
-                                        ? "bg-teal-600 text-white border-teal-600"
+                                        ? "bg-blue-600 text-white border-blue-600"
                                         : "bg-amber-500 text-white border-amber-500"
                                     : "bg-white text-ink-500 border-blue-100 hover:border-blue-300 hover:text-blue-700"
                                 }`}
@@ -319,7 +319,7 @@ export default function ProgramPage() {
                                                   program.theme === "blue"
                                                     ? "bg-blue-700 hover:bg-blue-800"
                                                     : program.theme === "teal"
-                                                      ? "bg-teal-600 hover:bg-teal-700"
+                                                      ? "bg-blue-600 hover:bg-blue-700"
                                                       : "bg-amber-600 hover:bg-amber-700"
                                                 }
                                             `}
@@ -375,3 +375,4 @@ export default function ProgramPage() {
     </main>
   );
 }
+

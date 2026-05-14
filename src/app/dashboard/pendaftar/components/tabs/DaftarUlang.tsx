@@ -184,7 +184,7 @@ export default function DaftarUlangTab() {
         animate={{ opacity: 1, y: 0 }}
         className="max-w-3xl mx-auto space-y-8 py-12"
       >
-        <div className="bg-linear-to-br from-emerald-500 to-teal-700 rounded-[2.5rem] p-10 text-white shadow-2xl relative overflow-hidden">
+        <div className="bg-linear-to-br from-emerald-500 to-blue-700 rounded-[2.5rem] p-10 text-white shadow-2xl relative overflow-hidden">
           <div className="absolute top-0 right-0 p-8 opacity-10">
             <CheckCircle className="w-48 h-48" />
           </div>
@@ -642,3 +642,4 @@ export default function DaftarUlangTab() {
     </motion.div>
   );
 }
+

@@ -81,7 +81,7 @@ export default function StepGuard({
     return (
       <div className="flex items-center justify-center min-h-[400px]">
         <div className="text-center">
-          <Loader2 className="w-12 h-12 animate-spin text-teal-600 mx-auto mb-4" />
+          <Loader2 className="w-12 h-12 animate-spin text-blue-600 mx-auto mb-4" />
           <p className="text-stone-600">Memeriksa akses...</p>
         </div>
       </div>
@@ -121,14 +121,14 @@ export default function StepGuard({
 
           {/* Next Step */}
           {nextStep && (
-            <div className="bg-teal-50 rounded-xl p-4 border-2 border-teal-200 mb-6">
+            <div className="bg-blue-50 rounded-xl p-4 border-2 border-blue-200 mb-6">
               <div className="flex items-start gap-3">
-                <AlertCircle className="w-5 h-5 text-teal-600 flex-shrink-0 mt-0.5" />
+                <AlertCircle className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
                 <div className="text-left">
-                  <p className="text-sm font-bold text-teal-900">
+                  <p className="text-sm font-bold text-blue-900">
                     Langkah selanjutnya:
                   </p>
-                  <p className="text-sm text-teal-700">{nextStep.action}</p>
+                  <p className="text-sm text-blue-700">{nextStep.action}</p>
                 </div>
               </div>
             </div>
@@ -137,7 +137,7 @@ export default function StepGuard({
           {/* Back Button */}
           <Link
             href={redirectOnFail}
-            className="inline-flex items-center gap-2 px-6 py-3 bg-teal-600 hover:bg-teal-700 text-white font-bold rounded-xl transition-colors"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-colors"
           >
             <ArrowLeft className="w-5 h-5" />
             Kembali ke Beranda
@@ -149,3 +149,4 @@ export default function StepGuard({
 
   return <>{children}</>;
 }
+

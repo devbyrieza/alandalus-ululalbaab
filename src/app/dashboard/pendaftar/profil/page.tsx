@@ -402,7 +402,7 @@ export default function ProfilPage() {
                 !isRequesting ? (
                   <button
                     onClick={() => setIsRequesting(true)}
-                    className="w-full py-4 bg-white border border-ink-200 text-ink-700 font-bold rounded-2xl hover:bg-surface-50 hover:border-teal-300 hover:text-teal-700 transition-all shadow-sm hover:shadow-md"
+                    className="w-full py-4 bg-white border border-ink-200 text-ink-700 font-bold rounded-2xl hover:bg-surface-50 hover:border-blue-300 hover:text-blue-700 transition-all shadow-sm hover:shadow-md"
                   >
                     Ajukan Perubahan
                   </button>
@@ -470,3 +470,4 @@ export default function ProfilPage() {
     </div>
   );
 }
+

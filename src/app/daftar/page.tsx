@@ -298,16 +298,16 @@ export default function DaftarPage() {
                   initial={{ opacity: 0, height: 0, marginBottom: 0 }}
                   animate={{ opacity: 1, height: "auto", marginBottom: 40 }}
                   exit={{ opacity: 0, height: 0, marginBottom: 0 }}
-                  className="bg-teal-50 border border-teal-100/50 rounded-3xl p-6 flex items-start gap-4 relative z-10 overflow-hidden"
+                  className="bg-blue-50 border border-blue-100/50 rounded-3xl p-6 flex items-start gap-4 relative z-10 overflow-hidden"
                 >
-                  <div className="w-10 h-10 bg-teal-500 rounded-full flex items-center justify-center text-white shrink-0 shadow-premium-xs">
+                  <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white shrink-0 shadow-premium-xs">
                     <CheckCircle className="w-6 h-6" />
                   </div>
                   <div className="flex-1">
-                    <p className="text-lg font-display font-black text-teal-900 leading-none mb-1">
+                    <p className="text-lg font-display font-black text-blue-900 leading-none mb-1">
                       Melanjutkan Draft Pendaftaran
                     </p>
-                    <p className="text-sm text-teal-600 font-medium">
+                    <p className="text-sm text-blue-600 font-medium">
                       Data yang anda masukkan sebelumnya telah tersimpan
                       otomatis dalam sesi ini.
                     </p>
@@ -337,7 +337,7 @@ export default function DaftarPage() {
                           setFieldErrors({});
                         }
                       }}
-                      className="mt-3 flex items-center gap-1.5 text-xs font-black uppercase tracking-widest text-teal-800 hover:text-teal-950 transition-colors"
+                      className="mt-3 flex items-center gap-1.5 text-xs font-black uppercase tracking-widest text-blue-800 hover:text-blue-950 transition-colors"
                     >
                       <RefreshCw className="w-3 h-3" /> Mulai dari Awal
                     </button>
@@ -671,3 +671,4 @@ export default function DaftarPage() {
     </main>
   );
 }
+

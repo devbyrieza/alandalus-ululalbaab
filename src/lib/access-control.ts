@@ -123,7 +123,7 @@ export function formatStatusDisplay(status: StatusProses) {
     paid: { label: "Terbayar & Terverifikasi", color: "bg-blue-100 text-blue-700" },
     payment_rejected: { label: "Masalah Pembayaran", color: "bg-red-100 text-red-700" },
     rejected: { label: "Berkas Ditolak", color: "bg-red-100 text-red-700" },
-    data_completed: { label: "Tahap 2: Informasi Data", color: "bg-teal-100 text-teal-700" },
+    data_completed: { label: "Tahap 2: Informasi Data", color: "bg-blue-100 text-blue-700" },
     docs_uploaded: { label: "Review Admin", color: "bg-indigo-100 text-indigo-700" },
     docs_verified: { label: "Berkas Lengkap", color: "bg-green-100 text-green-700" },
     selection: { label: "Sedang Seleksi", color: "bg-purple-100 text-purple-700" },
@@ -132,7 +132,7 @@ export function formatStatusDisplay(status: StatusProses) {
     announced: { label: "Hasil Pengumuman", color: "bg-cyan-100 text-cyan-700" },
     accepted: { label: "Diterima", color: "bg-green-100 text-green-700" },
     enrolled: { label: "Sedang Daftar Ulang", color: "bg-emerald-100 text-emerald-700" },
-    enrolled_full: { label: "Selesai", color: "bg-teal-100 text-teal-700" },
+    enrolled_full: { label: "Selesai", color: "bg-blue-100 text-blue-700" },
   };
   return statusMap[status] || { label: status, color: "bg-stone-100 text-stone-700" };
 }
@@ -261,3 +261,4 @@ export function getUnlockMessage(tabName: TabName): string {
     "Selesaikan tahap sebelumnya untuk membuka akses."
   );
 }
+
