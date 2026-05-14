@@ -12,9 +12,10 @@ import {
   TrendingUp,
   ShieldCheck,
 } from "lucide-react";
+import { BRANDING } from "@/config/branding";
 
 // ─── Types ───────────────────────────────────────────
-type StatColor = "blue" | "yellow";
+type StatColor = "blue" | "amber";
 
 interface Stat {
   id: string;
@@ -31,50 +32,44 @@ interface Stat {
 const STATS: Stat[] = [
   {
     id: "batch",
-    label: "Angkatan Ke-4",
-    value: 4,
+    label: "Angkatan Pertama",
+    value: 1,
     icon: Calendar,
     color: "blue",
     suffix: "",
-    sublabel: "Managed by Al Andalus",
-    description: "Rekam jejak terbukti & terstruktur",
+    sublabel: "Tahun Ajaran 2026/2027",
+    description: "Momen bersejarah pembukaan",
   },
   {
     id: "quality",
-    label: "Standar Global",
+    label: "Kurikulum Terintegrasi",
     value: 100,
     icon: Award,
-    color: "yellow",
+    color: "amber",
     suffix: "%",
-    sublabel: "Kurikulum Unggulan",
-    description: "Kurikulum terintegrasi penuh",
+    sublabel: "Tahfidz, Syar'i & Akademik",
+    description: "Tiga pilar pendidikan utama",
   },
   {
     id: "levels",
-    label: "Jenjang Tersedia",
-    value: 3,
+    label: "Jenjang Pendidikan",
+    value: 2,
     icon: GraduationCap,
     color: "blue",
     suffix: "",
-    sublabel: "MTs · IL · SMA",
+    sublabel: "MTs · IL",
     description: "Pendidikan menengah lengkap",
   },
   {
     id: "quota",
-    label: "Kuota Tersedia",
-    value: 124,
+    label: "Kuota Terbatas",
+    value: 25,
     icon: Users,
-    color: "yellow",
+    color: "amber",
     suffix: "",
-    sublabel: "Santri Putra & Putri",
-    description: "Terbuka untuk semua",
+    sublabel: "Per Jenjang (Eksklusif)",
+    description: "Seleksi ketat, kualitas terjaga",
   },
-];
-
-const TRUST_BADGES = [
-  { icon: null, label: "Pendaftaran Dibuka", pulse: true },
-  { icon: ShieldCheck, label: "Resmi Kemendikdasmen", pulse: false },
-  { icon: TrendingUp, label: "Kurikulum Terintegrasi", pulse: false },
 ];
 
 // ─── Animated Counter ────────────────────────────────
@@ -122,7 +117,7 @@ function StatCard({
 }) {
   const Icon = stat.icon;
   const isBlue = stat.color === "blue";
-  const isYellow = stat.color === "yellow";
+  const isAmber = stat.color === "amber";
 
   return (
     <motion.div
@@ -134,10 +129,10 @@ function StatCard({
         duration: 0.6,
         ease: [0.16, 1, 0.3, 1],
       }}
-      className="group relative h-full"
+      className="group relative h-full hover-lift-sm"
     >
-      <div className="relative flex flex-col items-center text-center px-6 py-8 md:px-8 md:py-10 bg-white rounded-2xl border border-brand-blue-100 shadow-premium-sm transition-all duration-500 ease-spring hover:-translate-y-1.5 hover:shadow-premium-md hover:border-brand-blue-200 overflow-hidden h-full">
-        {/* Hover radial bg — biru untuk blue, kuning untuk yellow */}
+      <div className="glass-panel relative flex flex-col items-center text-center px-6 py-8 md:px-8 md:py-10 rounded-2xl overflow-hidden h-full">
+        {/* Hover radial bg */}
         <div
           className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
           style={{
@@ -152,25 +147,16 @@ function StatCard({
           className={[
             "relative mb-6 w-13 h-13 md:w-14 md:h-14 flex items-center justify-center rounded-xl shadow-xs",
             "transition-all duration-500 group-hover:scale-110",
-            isBlue
-              ? "bg-brand-blue-50 text-brand-blue-600 group-hover:bg-brand-blue-100"
-              : "",
-            isYellow
-              ? "bg-brand-yellow-50 text-brand-yellow-600 group-hover:bg-brand-yellow-100"
-              : "",
+            isBlue ? "bg-brand-blue-50 text-brand-blue-700 group-hover:bg-brand-blue-100" : "",
+            isAmber ? "bg-brand-yellow-100 text-brand-blue-700 group-hover:bg-brand-yellow-200" : "",
           ].join(" ")}
         >
           <Icon className="w-5 h-5 md:w-6 md:h-6" strokeWidth={1.75} />
-          {/* Ring accent on hover */}
           <div
             className={[
               "absolute inset-0 rounded-xl ring-0 transition-all duration-500",
-              isBlue
-                ? "group-hover:ring-2 group-hover:ring-brand-blue-200"
-                : "",
-              isYellow
-                ? "group-hover:ring-2 group-hover:ring-brand-yellow-300"
-                : "",
+              isBlue ? "group-hover:ring-2 group-hover:ring-brand-blue-200" : "",
+              isAmber ? "group-hover:ring-2 group-hover:ring-brand-yellow-300" : "",
             ].join(" ")}
           />
         </div>
@@ -181,7 +167,7 @@ function StatCard({
             className={[
               "text-[2.625rem] md:text-[3.25rem] font-black leading-none tracking-[-0.04em]",
               isBlue ? "text-brand-blue-700" : "",
-              isYellow ? "text-brand-yellow-700" : "",
+              isAmber ? "text-brand-blue-800" : "",
             ].join(" ")}
           >
             <AnimatedCounter
@@ -195,7 +181,7 @@ function StatCard({
               className={[
                 "text-2xl md:text-3xl font-black leading-none tracking-[-0.03em]",
                 isBlue ? "text-brand-blue-500" : "",
-                isYellow ? "text-brand-yellow-500" : "",
+                isAmber ? "text-brand-yellow-600" : "",
               ].join(" ")}
             >
               {stat.suffix}
@@ -212,8 +198,8 @@ function StatCard({
         <p
           className={[
             "text-[0.6rem] md:text-[0.65rem] font-semibold tracking-wide mt-0.5",
-            isBlue ? "text-brand-blue-400" : "",
-            isYellow ? "text-brand-yellow-500" : "",
+            isBlue ? "text-brand-blue-500" : "",
+            isAmber ? "text-brand-yellow-500" : "",
           ].join(" ")}
         >
           {stat.sublabel}
@@ -231,10 +217,8 @@ function StatCard({
         <div
           className={[
             "mt-5 h-[2px] w-6 rounded-full transition-all duration-500 group-hover:w-10",
-            isBlue ? "bg-brand-blue-200 group-hover:bg-brand-blue-500" : "",
-            isYellow
-              ? "bg-brand-yellow-200 group-hover:bg-brand-yellow-500"
-              : "",
+            isBlue ? "bg-brand-blue-100 group-hover:bg-brand-blue-500" : "",
+            isAmber ? "bg-brand-yellow-200 group-hover:bg-brand-blue-300" : "",
           ].join(" ")}
         />
       </div>
@@ -249,23 +233,11 @@ export default function StatsSection() {
   return (
     <section
       ref={ref}
-      className="relative py-16 md:py-24 bg-white border-b border-brand-blue-100 overflow-hidden"
+      className="relative py-16 md:py-24 bg-white border-b border-surface-200 overflow-hidden"
     >
-      {/* Background glows — biru kanan atas, kuning kiri bawah */}
-      <div
-        className="absolute -top-1/4 right-0 w-[600px] h-[600px] translate-x-1/2 pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(circle, rgba(220,237,255,0.65) 0%, transparent 65%)",
-        }}
-      />
-      <div
-        className="absolute -bottom-1/4 left-0 w-[500px] h-[500px] -translate-x-1/2 pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(circle, rgba(254,243,199,0.5) 0%, transparent 65%)",
-        }}
-      />
+      {/* CiroAI Background glows */}
+      <div className="glow-blob glow-blob-blue w-[600px] h-[600px] -top-[25%] right-0 translate-x-[20%]" aria-hidden="true" />
+      <div className="glow-blob glow-blob-amber w-[500px] h-[500px] -bottom-[25%] left-0 -translate-x-[20%]" aria-hidden="true" />
 
       <Container className="relative z-10">
         <div className="max-w-5xl mx-auto space-y-12 md:space-y-14">
@@ -284,27 +256,27 @@ export default function StatsSection() {
             transition={{ delay: 0.55, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             className="flex flex-wrap justify-center items-center gap-2.5 md:gap-3"
           >
-            {TRUST_BADGES.map(({ icon: BadgeIcon, label, pulse }) => (
-              <div
-                key={label}
-                className="inline-flex items-center gap-2 px-3.5 py-2 bg-surface-50 rounded-full border border-brand-blue-100 hover:border-brand-blue-300 hover:bg-brand-blue-50 transition-all duration-300 cursor-default"
-              >
-                {pulse ? (
-                  <span className="relative flex h-2 w-2 shrink-0">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500" />
-                  </span>
-                ) : BadgeIcon ? (
-                  <BadgeIcon
-                    className="w-3 h-3 shrink-0 text-brand-blue-500"
-                    strokeWidth={2}
-                  />
-                ) : null}
-                <span className="text-[0.6rem] md:text-[0.65rem] font-bold text-ink-700 uppercase tracking-[0.1em] whitespace-nowrap">
-                  {label}
-                </span>
-              </div>
-            ))}
+            {/* CiroAI-style badges */}
+            {/* Badge 1 — Pulse */}
+            <div className="section-label section-label-blue hover:bg-brand-blue-50/50 cursor-default">
+              <span className="relative flex h-2 w-2 shrink-0">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-blue-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-blue-500" />
+              </span>
+              <span>Pendaftaran Dibuka</span>
+            </div>
+
+            {/* Badge 2 — Akreditasi */}
+            <div className="section-label section-label-white border-brand-yellow-200 text-ink-700 bg-brand-yellow-50/50 hover:bg-brand-yellow-100/50 cursor-default">
+              <ShieldCheck className="w-3 h-3 shrink-0 text-brand-blue-600" strokeWidth={2} />
+              <span>Terakreditasi A — BAN-PDM</span>
+            </div>
+
+            {/* Badge 3 — School Network */}
+            <div className="section-label section-label-blue hover:bg-brand-blue-50/50 cursor-default">
+              <TrendingUp className="w-3 h-3 shrink-0 text-brand-blue-600" strokeWidth={2} />
+              <span>{BRANDING.schoolNetwork}</span>
+            </div>
           </motion.div>
         </div>
       </Container>

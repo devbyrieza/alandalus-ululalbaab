@@ -3,6 +3,11 @@ export const BRANDING = {
     process.env.NEXT_PUBLIC_SCHOOL_NAME || "Pesantren Al Andalus Ulul Albaab",
   schoolShortName:
     process.env.NEXT_PUBLIC_SCHOOL_SHORT_NAME || "PPDB Ulul Albaab",
+  schoolTagline:
+    process.env.NEXT_PUBLIC_SCHOOL_TAGLINE ||
+    "Mencetak Generasi Rabbani, Unggul, dan Berintegritas",
+  schoolNetwork:
+    process.env.NEXT_PUBLIC_SCHOOL_NETWORK || "Jaringan Al Andalus",
   primaryColor: process.env.NEXT_PUBLIC_PRIMARY_COLOR || "#0284c7", // Default Blue Ulul Albaab
   secondaryColor: process.env.NEXT_PUBLIC_SECONDARY_COLOR || "#f59e0b", // Default Yellow Ulul Albaab
   logoPath: process.env.NEXT_PUBLIC_LOGO_PATH || "/images/logo.jpg",

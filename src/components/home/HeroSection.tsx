@@ -1,5 +1,5 @@
-// src/components/home/HeroSection.tsx — alandalus-ululalbaab
-// FIXED: reduced motion badge, tablet breakpoint, touch hover, consistent
+// src/components/home/HeroSection.tsx — alfath-template-demo
+// FIXED: reduced motion badge, tablet breakpoint, touch hover, explicit font sizing
 "use client";
 
 import Link from "next/link";
@@ -46,7 +46,7 @@ export default function HeroSection() {
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.08 });
   const animate = inView ? "visible" : "hidden";
 
-  // FIX #4: Badge respects reduced motion — no scale pop on initial entry
+  // FIX #4: Badge animate computed correctly — no scale jump when reduced motion is on
   const badgeAnimate = inView
     ? { opacity: 1, scale: 1, rotate: -6 }
     : { opacity: 0, scale: shouldReduceMotion ? 1 : 0.5, rotate: -25 };
@@ -54,51 +54,28 @@ export default function HeroSection() {
   return (
     <section
       ref={ref}
-      aria-label="Hero — Beranda Ulul Albaab"
+      aria-label={`Hero — Beranda ${BRANDING.schoolName}`}
       className="relative min-h-[96vh] flex items-center pt-24 pb-20 md:pt-28 lg:pt-32 lg:pb-28 overflow-hidden"
       style={{
         background:
-          "linear-gradient(160deg, var(--color-surface-50) 0%, var(--color-white) 55%, var(--color-brand-blue-50) 100%)",
+          "linear-gradient(160deg, var(--color-surface-50) 0%, var(--color-white) 55%, var(--color-blue-50) 100%)",
       }}
     >
-      {/* Atmospheric Background */}
-      <div
-        className="absolute inset-0 pointer-events-none overflow-hidden"
-        aria-hidden="true"
-      >
+      {/* CiroAI Atmospheric Background Blobs */}
+      <div className="glow-blob glow-blob-blue w-[60%] h-[70%] -top-[20%] -left-[10%] opacity-15" aria-hidden="true" />
+      <div className="glow-blob glow-blob-gold w-[50%] h-[60%] top-[10%] -right-[10%] opacity-15" aria-hidden="true" />
+      <div className="glow-blob glow-blob-blue w-[40%] h-[40%] bottom-[-10%] left-[20%] opacity-10" aria-hidden="true" />
+      
+      <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
         <div
-          className="absolute -top-[20%] -left-[10%] w-[55%] h-[65%] rounded-full opacity-35"
+          className="absolute inset-0 opacity-[0.015]"
           style={{
-            background:
-              "radial-gradient(ellipse, var(--color-brand-blue-200) 0%, transparent 70%)",
-            filter: "blur(90px)",
-          }}
-        />
-        <div
-          className="absolute top-[10%] -right-[8%] w-[40%] h-[50%] rounded-full opacity-30"
-          style={{
-            background:
-              "radial-gradient(ellipse, var(--color-brand-yellow-300) 0%, transparent 70%)",
-            filter: "blur(100px)",
-          }}
-        />
-        <div
-          className="absolute bottom-[-5%] left-[20%] w-[45%] h-[40%] rounded-full opacity-20"
-          style={{
-            background:
-              "radial-gradient(ellipse, var(--color-brand-blue-100) 0%, transparent 70%)",
-            filter: "blur(80px)",
-          }}
-        />
-        <div
-          className="absolute inset-0 opacity-[0.022]"
-          style={{
-            backgroundImage: `linear-gradient(var(--color-brand-blue-400) 1px, transparent 1px), linear-gradient(90deg, var(--color-brand-blue-400) 1px, transparent 1px)`,
+            backgroundImage: `linear-gradient(var(--color-blue-500) 1px, transparent 1px), linear-gradient(90deg, var(--color-blue-500) 1px, transparent 1px)`,
             backgroundSize: "64px 64px",
           }}
         />
         <div
-          className="absolute inset-0 opacity-[0.018]"
+          className="absolute inset-0 opacity-[0.012]"
           style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
           }}
@@ -117,20 +94,12 @@ export default function HeroSection() {
               transition={{ delay: 0.1 }}
               className="flex justify-center lg:justify-start"
             >
-              <span
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-[11px] lg:text-[12px] font-bold tracking-[0.05em]"
-                style={{
-                  background: "var(--color-surface-50)",
-                  border: "1px solid var(--color-brand-blue-200)",
-                  color: "var(--color-brand-blue-800)",
-                  boxShadow: "var(--shadow-sm)",
-                }}
-              >
-                <span>Selamat Datang di {BRANDING.schoolShortName}</span>
+              <span className="section-label section-label-blue">
+                Selamat Datang di {BRANDING.schoolShortName}
               </span>
             </motion.div>
 
-            {/* Headline — FIX #1: explicit clamp */}
+            {/* Headline — FIX #1: explicit clamp for 360px safety */}
             <motion.div
               variants={fadeUp}
               initial="hidden"
@@ -141,24 +110,14 @@ export default function HeroSection() {
               <h1
                 className="leading-[1.06] tracking-[-0.03em] mx-auto lg:mx-0 max-w-2xl lg:max-w-none font-black text-balance"
                 style={{
-                  color: "var(--color-brand-blue-700)",
+                  color: "var(--color-blue-700)",
                   fontSize: "clamp(2rem, 5vw + 0.75rem, 5rem)",
                 }}
               >
-                <span className="block">Kaderisasi Ummat</span>
-                <span
-                  className="block mt-1"
-                  style={{
-                    background:
-                      "linear-gradient(135deg, var(--color-brand-blue-500) 0%, var(--color-brand-yellow-300) 35%, var(--color-brand-yellow-400) 55%, var(--color-brand-blue-600) 100%)",
-                    WebkitBackgroundClip: "text",
-                    backgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    paddingBottom: "0.15em",
-                  }}
-                >
-                  Rabbani, Cendekia, <br className="hidden sm:block" />
-                  dan Mandiri
+                <span className="block">Mencetak Generasi</span>
+                <span className="gradient-text-blue block mt-1">
+                  Unggul, Cerdas, <br className="hidden sm:block" />
+                  dan Berintegritas
                 </span>
               </h1>
             </motion.div>
@@ -172,14 +131,15 @@ export default function HeroSection() {
               className="text-base lg:text-[1.075rem] leading-[1.85] max-w-[38rem] mx-auto lg:mx-0 text-center lg:text-left text-pretty"
               style={{ color: "var(--color-ink-600)", fontWeight: 450 }}
             >
-              Pesantren Ulul Albaab Sukabumi — pendidikan berbasis{" "}
+              Bukan sekadar tempat belajar — sebuah sistem pembentukan karakter
+              yang memadukan{" "}
               <strong
                 className="font-bold"
-                style={{ color: "var(--color-brand-blue-800)" }}
+                style={{ color: "var(--color-blue-700)" }}
               >
-                Kitab Turots, Tahfizh Al-Qur'an, dan Entrepreneurship
+                Intensitas Tahfidz Al-Qur'an, Ilmu Syar'i, dan Kepemimpinan
               </strong>{" "}
-              dengan bahasa pengantar Bahasa Arab.
+              dalam satu lingkungan pesantren modern.
             </motion.p>
 
             {/* Tagline Divider */}
@@ -192,21 +152,17 @@ export default function HeroSection() {
             >
               <div
                 className="h-px flex-1 max-w-[3rem]"
-                style={{ background: "var(--color-brand-blue-200)" }}
+                style={{ background: "var(--color-blue-200)" }}
               />
               <p
                 className="text-sm font-semibold italic"
-                style={{ color: "var(--color-brand-blue-700)" }}
+                style={{ color: "var(--color-blue-700)" }}
               >
-                "Pendidikan Berkualitas, Diperkuat Sistem{" "}
-                {BRANDING.schoolName.toLowerCase().includes("al andalus")
-                  ? "Al Andalus"
-                  : BRANDING.schoolShortName}
-                "
+                "{BRANDING.schoolTagline}"
               </p>
               <div
                 className="h-px flex-1 max-w-[3rem]"
-                style={{ background: "var(--color-brand-blue-200)" }}
+                style={{ background: "var(--color-blue-200)" }}
               />
             </motion.div>
 
@@ -221,15 +177,15 @@ export default function HeroSection() {
               <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
                 <Link href="/ppdb" className="w-full sm:w-auto">
                   <button
-                    className="btn-primary w-full sm:w-auto px-8 lg:px-10 py-4 lg:py-[1.125rem] min-h-[56px] text-[0.9375rem]"
+                    className="btn-primary-blue w-full sm:w-auto px-8 lg:px-10 py-4 lg:py-[1.125rem] min-h-[56px] text-[0.9375rem]"
                     style={{ boxShadow: "var(--shadow-blue-lg)" }}
                   >
                     Daftar PPDB Sekarang
                   </button>
                 </Link>
                 <Link href="/program" className="w-full sm:w-auto">
-                  <button className="btn-secondary w-full sm:w-auto px-8 lg:px-10 py-4 lg:py-[1.125rem] min-h-[56px] text-[0.9375rem]">
-                    Lihat Program Studi
+                  <button className="btn-secondary-blue w-full sm:w-auto px-8 lg:px-10 py-4 lg:py-[1.125rem] min-h-[56px] text-[0.9375rem]">
+                    Lihat Program Kami
                   </button>
                 </Link>
               </div>
@@ -237,10 +193,10 @@ export default function HeroSection() {
               <div className="flex items-center gap-3 mt-1">
                 <div className="flex -space-x-2.5">
                   {[
-                    { bg: "var(--color-brand-blue-200)" },
-                    { bg: "var(--color-brand-yellow-200)" },
-                    { bg: "var(--color-brand-blue-300)" },
-                    { bg: "var(--color-brand-yellow-300)" },
+                    { bg: "var(--color-blue-200)" },
+                    { bg: "var(--color-amber-300)" },
+                    { bg: "var(--color-blue-300)" },
+                    { bg: "var(--color-amber-200)" },
                   ].map((item, i) => (
                     <div
                       key={i}
@@ -260,19 +216,19 @@ export default function HeroSection() {
                 >
                   <span
                     className="font-bold uppercase tracking-wide"
-                    style={{ color: "var(--color-brand-blue-600)" }}
+                    style={{ color: "var(--color-blue-700)" }}
                   >
-                    Angkatan ke-4
+                    Angkatan Pertama
                   </span>
-                  {" • "}Dikelola oleh Al Andalus IIBS
+                  {" • "} {BRANDING.schoolName}
                 </p>
               </div>
 
               <div className="flex flex-wrap gap-x-5 gap-y-2 justify-center lg:justify-start mt-1">
                 {[
-                  "Putra 32 • Putri 30 Kuota",
-                  "Bahasa Arab aktif",
-                  "Tahfizh + Entrepreneurship",
+                  "MTs & IL tersedia",
+                  "Proses cepat & transparan",
+                  BRANDING.schoolNetwork,
                 ].map((point) => (
                   <span
                     key={point}
@@ -281,7 +237,7 @@ export default function HeroSection() {
                   >
                     <CheckCircle2
                       className="w-3.5 h-3.5 flex-shrink-0"
-                      style={{ color: "var(--color-brand-blue-500)" }}
+                      style={{ color: "var(--color-blue-500)" }}
                       aria-hidden="true"
                     />
                     {point}
@@ -291,7 +247,7 @@ export default function HeroSection() {
             </motion.div>
           </div>
 
-          {/* VISUAL SIDE — FIX #2: overflow visible, md breakpoints on cards */}
+          {/* VISUAL SIDE — FIX #2: overflow visible + md breakpoints */}
           <motion.div
             variants={fadeIn}
             initial="hidden"
@@ -307,15 +263,17 @@ export default function HeroSection() {
                 borderRadius: "2rem",
                 border: "10px solid var(--color-white)",
                 boxShadow:
-                  "var(--shadow-premium-2xl), 0 0 0 1px var(--color-brand-blue-100)",
+                  "var(--shadow-premium-2xl), 0 0 0 1px var(--color-blue-100)",
                 overflow: "hidden",
               }}
             >
               <Image
                 src="/images/hero.jpg"
-                alt={`${BRANDING.schoolName} — Pesantren Modern`}
+                alt={`${BRANDING.schoolName}`}
                 width={800}
                 height={600}
+                priority
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 800px"
                 className="w-full h-auto object-cover aspect-[4/3]"
                 style={{
                   transition: "transform 0.7s cubic-bezier(0.16, 1, 0.3, 1)",
@@ -327,70 +285,41 @@ export default function HeroSection() {
                 onMouseLeave={(e) => {
                   e.currentTarget.style.transform = "scale(1)";
                 }}
-                priority
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 800px"
               />
               <div
                 className="absolute inset-0 pointer-events-none"
                 style={{
                   background:
-                    "linear-gradient(to top, rgba(1,30,66,0.50) 0%, transparent 55%)",
+                    "linear-gradient(to top, rgba(10, 22, 16, 0.50) 0%, transparent 55%)",
                 }}
                 aria-hidden="true"
               />
             </div>
 
-            {/* Floating Card: Tersedia — FIX #2: md breakpoint added */}
+            {/* Floating Card: Tersedia — FIX #2 md breakpoint */}
             <motion.div
               animate={shouldReduceMotion ? {} : { y: [0, -10, 0] }}
               transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
               className="absolute -top-4 md:-top-5 lg:-top-6 -right-2 md:-right-4 lg:-right-6 z-20"
               style={{ transformOrigin: "right center" }}
             >
-              <div
-                className="flex items-center gap-3 px-4 py-3 rounded-2xl"
-                style={{
-                  background: "rgba(255,255,255,0.95)",
-                  backdropFilter: "blur(20px) saturate(1.8)",
-                  WebkitBackdropFilter: "blur(20px) saturate(1.8)",
-                  border: "1px solid rgba(255,255,255,0.7)",
-                  boxShadow: "var(--shadow-premium-md)",
-                }}
-              >
-                <div
-                  className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0"
-                  style={{ background: "var(--color-brand-blue-50)" }}
-                >
-                  <GraduationCap
-                    className="w-5 h-5"
-                    style={{ color: "var(--color-brand-blue-600)" }}
-                    aria-hidden="true"
-                  />
+              <div className="glass-panel flex items-center gap-3 px-4 py-3 rounded-2xl">
+                <div className="icon-box icon-box-blue w-11 h-11 rounded-xl">
+                  <GraduationCap className="w-5 h-5" />
                 </div>
                 <div>
-                  <p
-                    className="text-[9px] font-bold uppercase tracking-[0.08em] leading-none mb-1"
-                    style={{ color: "var(--color-ink-400)" }}
-                  >
-                    Tersedia
-                  </p>
-                  <p
-                    className="text-sm font-black leading-tight"
-                    style={{ color: "var(--color-brand-blue-900)" }}
-                  >
+                  <p className="stat-label mb-1">Tersedia</p>
+                  <p className="text-sm font-black leading-tight text-[var(--color-blue-900)]">
                     MTs &amp; IL
                   </p>
-                  <p
-                    className="text-[10px] font-semibold mt-0.5"
-                    style={{ color: "var(--color-ink-500)" }}
-                  >
-                    Putra 32 · Putri 30
+                  <p className="text-[10px] font-semibold mt-0.5 text-[var(--color-ink-500)]">
+                    Kuota terbatas
                   </p>
                 </div>
               </div>
             </motion.div>
 
-            {/* Floating Card: Jaringan Global — FIX #2 */}
+            {/* Floating Card: Jaringan Global — FIX #2 md breakpoint */}
             <motion.div
               animate={shouldReduceMotion ? {} : { y: [0, 10, 0] }}
               transition={{
@@ -402,44 +331,22 @@ export default function HeroSection() {
               className="absolute -bottom-5 md:-bottom-6 lg:-bottom-8 -left-2 md:-left-4 lg:-left-6 z-20"
               style={{ transformOrigin: "left center" }}
             >
-              <div
-                className="flex items-center gap-3 px-4 py-3 rounded-2xl"
-                style={{
-                  background: "rgba(255,255,255,0.95)",
-                  backdropFilter: "blur(20px) saturate(1.8)",
-                  WebkitBackdropFilter: "blur(20px) saturate(1.8)",
-                  border: "1px solid rgba(255,255,255,0.7)",
-                  boxShadow: "var(--shadow-premium-md)",
-                }}
-              >
-                <div
-                  className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0"
-                  style={{ background: "var(--color-brand-blue-50)" }}
-                >
-                  <Globe
-                    className="w-5 h-5"
-                    style={{ color: "var(--color-brand-blue-600)" }}
-                    aria-hidden="true"
-                  />
+              <div className="glass-panel flex items-center gap-3 px-4 py-3 rounded-2xl">
+                <div className="icon-box icon-box-blue w-11 h-11 rounded-xl">
+                  <Globe className="w-5 h-5" />
                 </div>
                 <div>
-                  <p
-                    className="text-sm font-black leading-tight"
-                    style={{ color: "var(--color-brand-blue-900)" }}
-                  >
+                  <p className="text-sm font-black leading-tight text-[var(--color-blue-900)]">
                     Jaringan Global
                   </p>
-                  <p
-                    className="text-[10px] font-semibold mt-0.5"
-                    style={{ color: "var(--color-ink-500)" }}
-                  >
-                    Timur Tengah
+                  <p className="text-[10px] font-semibold mt-0.5 text-[var(--color-ink-500)]">
+                    {BRANDING.schoolShortName}
                   </p>
                 </div>
               </div>
             </motion.div>
 
-            {/* Yellow Accent Badge — FIX #4: proper reduced motion */}
+            {/* Info Badge — FIX #4: proper reduced motion, FIX #2: md position */}
             <motion.div
               initial={{
                 opacity: 0,
@@ -456,7 +363,7 @@ export default function HeroSection() {
               className="absolute -bottom-3 -right-3 md:bottom-6 md:-right-6 lg:bottom-10 lg:-right-10 z-30 cursor-default"
               style={{
                 background:
-                  "linear-gradient(135deg, var(--color-brand-yellow-400) 0%, var(--color-brand-yellow-600) 100%)",
+                  "linear-gradient(135deg, var(--color-amber-300) 0%, var(--color-amber-500) 100%)",
                 padding: "1rem 1.125rem",
                 borderRadius: "1.5rem",
                 border: "4px solid var(--color-white)",
@@ -467,13 +374,13 @@ export default function HeroSection() {
               <div className="text-center min-w-[80px]">
                 <p
                   className="text-[9px] font-black uppercase tracking-[0.1em] leading-none mb-1.5"
-                  style={{ color: "var(--color-brand-blue-950)" }}
+                  style={{ color: "var(--color-blue-950)" }}
                 >
-                  Info PPDB
+                  Info Penting
                 </p>
                 <p
                   className="text-base font-black leading-tight"
-                  style={{ color: "var(--color-brand-blue-900)" }}
+                  style={{ color: "var(--color-blue-900)" }}
                 >
                   Pendaftaran
                   <br />
@@ -481,11 +388,11 @@ export default function HeroSection() {
                 </p>
                 <div
                   className="mt-2 py-1 px-2.5 rounded-full"
-                  style={{ background: "rgba(1, 30, 66, 0.12)" }}
+                  style={{ background: "rgba(10, 22, 16, 0.12)" }}
                 >
                   <p
                     className="text-[9px] font-bold"
-                    style={{ color: "var(--color-brand-blue-900)" }}
+                    style={{ color: "var(--color-blue-900)" }}
                   >
                     Kuota Terbatas
                   </p>
@@ -493,27 +400,9 @@ export default function HeroSection() {
               </div>
             </motion.div>
 
-            {/* Decorative blobs */}
-            <div
-              className="absolute -z-10 -bottom-14 -right-14 w-64 h-64 rounded-full pointer-events-none"
-              style={{
-                background:
-                  "radial-gradient(ellipse, var(--color-brand-blue-300) 0%, transparent 70%)",
-                filter: "blur(40px)",
-                opacity: 0.18,
-              }}
-              aria-hidden="true"
-            />
-            <div
-              className="absolute -z-10 -top-10 -left-10 w-48 h-48 rounded-full pointer-events-none"
-              style={{
-                background:
-                  "radial-gradient(ellipse, var(--color-brand-yellow-300) 0%, transparent 70%)",
-                filter: "blur(36px)",
-                opacity: 0.22,
-              }}
-              aria-hidden="true"
-            />
+            {/* Decorative glows */}
+            <div className="glow-blob glow-blob-blue w-64 h-64 -bottom-14 -right-14 opacity-15" aria-hidden="true" />
+            <div className="glow-blob glow-blob-gold w-48 h-48 -top-10 -left-10 opacity-20" aria-hidden="true" />
           </motion.div>
         </div>
       </Container>

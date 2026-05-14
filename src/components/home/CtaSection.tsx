@@ -4,33 +4,34 @@ import Link from "next/link";
 import { Send, ShieldCheck, Award, BookOpen } from "lucide-react";
 import { Container } from "@/components/layout/Container";
 import { motion } from "framer-motion";
+import { BRANDING } from "@/config/branding";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 export default function CtaSection() {
   return (
-    <section className="py-16 md:py-24 lg:py-28 bg-white relative overflow-hidden border-t border-brand-yellow-100">
+    <section className="py-16 md:py-24 lg:py-28 bg-white relative overflow-hidden border-t border-brand-yellow-200">
       <Container>
         <motion.div
           initial={{ opacity: 0, scale: 0.97, y: 20 }}
           whileInView={{ opacity: 1, scale: 1, y: 0 }}
           viewport={{ once: true, margin: "-40px" }}
           transition={{ duration: 0.7, ease: EASE }}
-          className="bg-brand-blue-900 rounded-[2rem] md:rounded-[2.5rem] lg:rounded-[3rem] p-8 sm:p-12 md:p-16 lg:p-20 relative overflow-hidden text-center shadow-premium-lg border border-brand-blue-800"
+          className="glass-panel-dark rounded-[2rem] md:rounded-[2.5rem] lg:rounded-[3rem] p-8 sm:p-12 md:p-16 lg:p-20 relative overflow-hidden text-center shine-top"
+          style={{ background: "linear-gradient(135deg, var(--color-blue-800) 0%, var(--color-blue-950) 100%)" }}
         >
-          <div className="absolute inset-0 bg-gradient-to-br from-brand-blue-800 to-brand-blue-950 opacity-90" />
-          <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-[0.05] mix-blend-overlay pointer-events-none" />
-          <div className="hidden sm:block absolute -top-32 -right-32 w-[400px] h-[400px] bg-brand-yellow-400/10 rounded-full blur-[80px] pointer-events-none" />
-          <div className="hidden sm:block absolute -bottom-32 -left-32 w-[400px] h-[400px] bg-brand-blue-500/30 rounded-full blur-[80px] pointer-events-none" />
+          <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-[0.08] mix-blend-overlay pointer-events-none" />
+          <div className="hidden sm:block glow-blob glow-blob-blue w-[600px] h-[600px] -top-32 -right-32 opacity-30" />
+          <div className="hidden sm:block glow-blob glow-blob-amber w-[500px] h-[500px] -bottom-32 -left-32 opacity-20" />
 
           <div className="relative z-10 max-w-3xl mx-auto flex flex-col items-center">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/10 text-white text-[0.65rem] font-bold uppercase tracking-[0.12em] mb-6 shadow-xs">
-              <span className="text-brand-yellow-400">✦</span> Pendaftaran
-              Dibuka
+            <div className="section-label section-label-white mb-6">
+              <span className="text-brand-yellow-300">✦</span> Pendaftaran Dibuka
             </div>
 
-            <h3 className="text-[2rem] sm:text-[2.5rem] md:text-[3rem] lg:text-[3.5rem] font-display font-black text-white mb-5 tracking-tight leading-[1.1]">
-              Mulai Langkah Pertama <br /> Masa Depan Qur'ani
+            <h3 className="text-[2rem] sm:text-[2.5rem] md:text-[3rem] lg:text-[3.5rem] font-display font-black mb-5 tracking-tight leading-[1.1]">
+              <span className="gradient-text-white">Mulai Langkah Pertama</span> <br /> 
+              <span className="text-white">Menuju Generasi Unggul</span>
             </h3>
 
             <p className="text-[0.9375rem] md:text-[1.0625rem] text-brand-yellow-50/90 mb-10 leading-relaxed font-[450] text-center max-w-2xl mx-auto">
@@ -39,14 +40,14 @@ export default function CtaSection() {
               secara optimal.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-3.5 justify-center px-4 max-w-xl mx-auto w-full">
-              <Link href="/ppdb" className="w-full sm:w-auto flex-1">
-                <button className="w-full px-8 py-3.5 rounded-full bg-white text-brand-blue-900 font-bold hover:bg-brand-blue-50 transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5 text-[0.9375rem] flex items-center justify-center gap-2">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center px-4 max-w-xl mx-auto w-full">
+              <Link href="/ppdb" className="w-full sm:w-auto flex-1 hover-lift">
+                <button className="w-full px-8 py-4 rounded-full bg-brand-yellow-300 text-brand-blue-950 font-bold hover:bg-brand-yellow-400 transition-all duration-300 text-[0.9375rem] flex items-center justify-center gap-2 glow-ring-blue">
                   Daftar Sekarang
                 </button>
               </Link>
-              <Link href="/kontak" className="w-full sm:w-auto flex-1">
-                <button className="w-full px-8 py-3.5 rounded-full text-white font-bold border border-white/20 hover:bg-white/10 transition-all duration-300 text-[0.9375rem] flex items-center justify-center gap-2 backdrop-blur-sm group/btn">
+              <Link href="/kontak" className="w-full sm:w-auto flex-1 hover-lift">
+                <button className="w-full px-8 py-4 rounded-full text-white font-bold border border-white/20 hover:bg-white/10 transition-all duration-300 text-[0.9375rem] flex items-center justify-center gap-2 glass-panel-dark group/btn">
                   Konsultasi WhatsApp
                   <Send className="w-4 h-4 ml-1 group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform" />
                 </button>
@@ -55,22 +56,22 @@ export default function CtaSection() {
 
             {/* ── Legalitas Badges ── */}
             <div className="mt-12 pt-8 border-t border-white/10 flex flex-wrap items-center justify-center gap-x-8 gap-y-4 w-full max-w-2xl">
-              <div className="flex items-center gap-2 text-brand-yellow-50/70">
+              <div className="flex items-center gap-2 text-amber-50/70">
                 <ShieldCheck className="w-4 h-4 text-emerald-400" />
                 <span className="text-[0.6rem] font-bold uppercase tracking-[0.1em]">
                   Terakreditasi A — BAN-PDM
                 </span>
               </div>
-              <div className="flex items-center gap-2 text-brand-yellow-50/70">
-                <BookOpen className="w-4 h-4 text-brand-yellow-400" />
+              <div className="flex items-center gap-2 text-amber-50/70">
+                <BookOpen className="w-4 h-4 text-amber-400" />
                 <span className="text-[0.6rem] font-bold uppercase tracking-[0.1em]">
-                  Sejak 1995 • 30+ Tahun
+                  Kurikulum Terpadu
                 </span>
               </div>
-              <div className="flex items-center gap-2 text-brand-yellow-50/70">
-                <Award className="w-4 h-4 text-blue-300" />
+              <div className="flex items-center gap-2 text-amber-50/70">
+                <Award className="w-4 h-4 text-amber-300" />
                 <span className="text-[0.6rem] font-bold uppercase tracking-[0.1em]">
-                  Resmi Kemendikdasmen
+                  {BRANDING.schoolNetwork}
                 </span>
               </div>
             </div>
