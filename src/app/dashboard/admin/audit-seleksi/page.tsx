@@ -149,7 +149,7 @@ export default function AuditSeleksiPage() {
     const parsedScore = toNum(score);
     if (parsedScore == null) return { label: "-", color: "text-ink-300" };
     let grade = "C";
-    let color = "bg-amber-400";
+    let color = "bg-secondary-400";
 
     if (type === "quran") {
       grade = parsedScore >= 80 ? "A" : parsedScore >= 65 ? "B" : "C";
@@ -231,10 +231,10 @@ export default function AuditSeleksiPage() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h1 className="text-3xl font-black text-ink-900 tracking-tight flex items-center gap-3">
-            <div className="p-2.5 bg-blue-600 rounded-2xl shadow-lg shadow-blue-600/20">
+            <div className="p-2.5 bg-primary-600 rounded-2xl shadow-lg shadow-primary-600/20">
               <Activity className="w-6 h-6 text-white" />
             </div>
-            Audit <span className="text-blue-700">Hasil Seleksi</span>
+            Audit <span className="text-primary-700">Hasil Seleksi</span>
           </h1>
           <p className="text-ink-500 font-medium mt-1">
             Review mendalam seluruh komponen nilai sebelum publikasi resmi.
@@ -269,7 +269,7 @@ export default function AuditSeleksiPage() {
               placeholder="Cari nama/NP..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-ink-50 border border-ink-100 rounded-xl pl-10 pr-4 py-2.5 text-sm font-medium outline-none focus:ring-4 focus:ring-blue-500/5 transition-all"
+              className="w-full bg-ink-50 border border-ink-100 rounded-xl pl-10 pr-4 py-2.5 text-sm font-medium outline-none focus:ring-4 focus:ring-primary-500/5 transition-all"
             />
           </div>
 
@@ -314,7 +314,7 @@ export default function AuditSeleksiPage() {
           <Button
             onClick={() => handleBatchPublish("cadangan")}
             disabled={selectedIds.length === 0 || isPublishing}
-            className="flex-1 lg:flex-none bg-amber-500 hover:bg-amber-600 text-white rounded-xl font-black text-[11px] px-6 py-2.5 shadow-lg shadow-amber-200 transition-all active:scale-95"
+            className="flex-1 lg:flex-none bg-secondary-500 hover:bg-secondary-600 text-white rounded-xl font-black text-[11px] px-6 py-2.5 shadow-lg shadow-secondary-200 transition-all active:scale-95"
           >
             CADANGAN
           </Button>
@@ -337,7 +337,7 @@ export default function AuditSeleksiPage() {
                 <th className="px-6 py-5 text-center w-12">
                   <input
                     type="checkbox"
-                    className="w-5 h-5 rounded-lg border-ink-200 text-blue-600 focus:ring-blue-500"
+                    className="w-5 h-5 rounded-lg border-ink-200 text-primary-600 focus:ring-primary-500"
                     onChange={handleSelectAll}
                     checked={candidates.length > 0 && selectedIds.length === candidates.length}
                   />
@@ -363,7 +363,7 @@ export default function AuditSeleksiPage() {
                 <th className="px-3 py-5 text-center text-[10px] font-black text-ink-400 uppercase tracking-widest">
                   Kesiapan
                 </th>
-                <th className="px-6 py-5 text-center text-[10px] font-black text-blue-700 uppercase tracking-widest bg-blue-50/30">
+                <th className="px-6 py-5 text-center text-[10px] font-black text-primary-700 uppercase tracking-widest bg-primary-50/30">
                   Total Skor
                 </th>
                 <th className="px-6 py-5 text-center text-[10px] font-black text-ink-400 uppercase tracking-widest">
@@ -375,7 +375,7 @@ export default function AuditSeleksiPage() {
               {loading ? (
                 <tr>
                   <td colSpan={10} className="px-6 py-20 text-center">
-                    <Loader2 className="w-10 h-10 animate-spin mx-auto text-blue-600 mb-4" />
+                    <Loader2 className="w-10 h-10 animate-spin mx-auto text-primary-600 mb-4" />
                     <p className="text-ink-400 font-bold">Mempersiapkan data audit...</p>
                   </td>
                 </tr>
@@ -398,19 +398,19 @@ export default function AuditSeleksiPage() {
                   return (
                     <tr
                       key={c.id}
-                      className={`hover:bg-blue-50/20 transition-colors group ${selectedIds.includes(c.id) ? "bg-blue-50/40" : ""}`}
+                      className={`hover:bg-primary-50/20 transition-colors group ${selectedIds.includes(c.id) ? "bg-primary-50/40" : ""}`}
                     >
                       <td className="px-6 py-4 text-center">
                         <input
                           type="checkbox"
-                          className="w-5 h-5 rounded-lg border-ink-200 text-blue-600 focus:ring-blue-500"
+                          className="w-5 h-5 rounded-lg border-ink-200 text-primary-600 focus:ring-primary-500"
                           checked={selectedIds.includes(c.id)}
                           onChange={() => handleSelectOne(c.id)}
                         />
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex flex-col">
-                          <span className="text-[14px] font-black text-ink-900 uppercase leading-none mb-1 group-hover:text-blue-700 transition-colors">
+                          <span className="text-[14px] font-black text-ink-900 uppercase leading-none mb-1 group-hover:text-primary-700 transition-colors">
                             {c.nama_lengkap}
                           </span>
                           <span className="text-[10px] font-mono font-bold text-ink-400 tracking-tight">
@@ -447,12 +447,12 @@ export default function AuditSeleksiPage() {
                         );
                       })}
 
-                      <td className="px-6 py-4 text-center bg-blue-50/20">
+                      <td className="px-6 py-4 text-center bg-primary-50/20">
                         <div className="flex flex-col items-center">
-                          <span className="text-lg font-black text-blue-700 leading-none">
+                          <span className="text-lg font-black text-primary-700 leading-none">
                             {(nu?.nilai_total != null ? Number(nu.nilai_total).toFixed(2) : undefined) || "-"}
                           </span>
-                          <span className="text-[8px] font-black text-blue-400 uppercase tracking-widest mt-1">
+                          <span className="text-[8px] font-black text-primary-400 uppercase tracking-widest mt-1">
                             Final Score
                           </span>
                         </div>
@@ -465,7 +465,7 @@ export default function AuditSeleksiPage() {
                             accepted: { l: "DITERIMA", c: "text-emerald-700 bg-emerald-100 border-emerald-200" },
                             announced: { l: "PUBLISHED", c: "text-sky-700 bg-sky-100 border-sky-200" },
                             rejected: { l: "DITOLAK", c: "text-rose-700 bg-rose-100 border-rose-200" },
-                            cadangan: { l: "CADANGAN", c: "text-amber-700 bg-amber-100 border-amber-200" },
+                            cadangan: { l: "CADANGAN", c: "text-secondary-700 bg-secondary-100 border-secondary-200" },
                             tested: { l: "SIAP AUDIT", c: "text-ink-600 bg-ink-100 border-ink-200" },
                           };
                           const meta = labels[s] || { l: s.toUpperCase() || "UNKNOWN", c: "text-ink-400 bg-ink-50 border-ink-100" };
@@ -487,13 +487,13 @@ export default function AuditSeleksiPage() {
       
       {/* Legend & Help */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-        <div className="bg-maroon-950 rounded-3xl p-8 text-white relative overflow-hidden group shadow-xl shadow-maroon-900/20">
+        <div className="bg-primary-950 rounded-3xl p-8 text-white relative overflow-hidden group shadow-xl shadow-primary-900/20">
           <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:rotate-12 transition-transform duration-700">
             <Activity className="w-40 h-40 text-white" />
           </div>
           <div className="relative z-10">
             <h3 className="text-xl font-black mb-4 flex items-center gap-3 text-white">
-              <AlertCircle className="text-amber-400" /> Matriks Keputusan Otomatis
+              <AlertCircle className="text-secondary-400" /> Matriks Keputusan Otomatis
             </h3>
             <div className="space-y-3 text-sm font-medium leading-relaxed">
               <p className="flex items-start gap-2 !text-white">
@@ -501,8 +501,8 @@ export default function AuditSeleksiPage() {
                 <span><b className="font-extrabold text-emerald-400">DITERIMA:</b> Quran Grade A, maksimal satu Grade C di komponen pendukung.</span>
               </p>
               <p className="flex items-start gap-2 !text-white">
-                <div className="w-1.5 h-1.5 rounded-full bg-amber-400 mt-1.5 shrink-0 shadow-sm shadow-amber-900/50" />
-                <span><b className="font-extrabold text-amber-400">CADANGAN:</b> Quran Grade B, atau Wawancara Santri Grade B.</span>
+                <div className="w-1.5 h-1.5 rounded-full bg-secondary-400 mt-1.5 shrink-0 shadow-sm shadow-secondary-900/50" />
+                <span><b className="font-extrabold text-secondary-400">CADANGAN:</b> Quran Grade B, atau Wawancara Santri Grade B.</span>
               </p>
               <p className="flex items-start gap-2 !text-white">
                 <div className="w-1.5 h-1.5 rounded-full bg-rose-400 mt-1.5 shrink-0 shadow-sm shadow-rose-900/50" />
@@ -525,11 +525,11 @@ export default function AuditSeleksiPage() {
               Sistem akan secara otomatis memperbarui dashboard santri dan mengirimkan notifikasi resmi via WhatsApp.
             </p>
           </div>
-          <div className="mt-8 flex items-center gap-4 p-4 bg-blue-50 rounded-2xl border border-blue-100">
+          <div className="mt-8 flex items-center gap-4 p-4 bg-primary-50 rounded-2xl border border-primary-100">
              <div className="p-3 bg-white rounded-xl shadow-sm">
-                <RefreshCcw className="w-5 h-5 text-blue-600" />
+                <RefreshCcw className="w-5 h-5 text-primary-600" />
              </div>
-             <p className="text-[11px] font-bold text-blue-800 leading-snug">
+             <p className="text-[11px] font-bold text-primary-800 leading-snug">
                Gunakan fitur <b>Hitung Ulang</b> di menu Penilaian jika skor total belum muncul atau tidak sinkron.
              </p>
           </div>

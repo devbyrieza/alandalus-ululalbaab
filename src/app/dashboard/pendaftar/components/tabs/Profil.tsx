@@ -85,12 +85,12 @@ export default function ProfilTab() {
       draft: { label: "Draft", color: "bg-stone-100 text-stone-700" },
       awaiting_payment: {
         label: "Menunggu Pembayaran",
-        color: "bg-amber-100 text-amber-700",
+        color: "bg-secondary-100 text-secondary-700",
       },
-      paid: { label: "Sudah Bayar", color: "bg-blue-100 text-blue-700" },
+      paid: { label: "Sudah Bayar", color: "bg-primary-100 text-primary-700" },
       data_completed: {
         label: "Data Lengkap",
-        color: "bg-amber-100 text-blue-800",
+        color: "bg-secondary-100 text-primary-800",
       },
       docs_uploaded: {
         label: "Dokumen Terupload",
@@ -134,7 +134,7 @@ export default function ProfilTab() {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
         <div className="text-center">
-          <Loader2 className="w-12 h-12 animate-spin text-blue-700 mx-auto mb-4" />
+          <Loader2 className="w-12 h-12 animate-spin text-primary-700 mx-auto mb-4" />
           <p className="text-stone-600">Memuat profil...</p>
         </div>
       </div>
@@ -152,11 +152,11 @@ export default function ProfilTab() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl p-6 text-white">
+      <div className="bg-gradient-to-r from-primary-600 to-primary-700 rounded-2xl p-6 text-white">
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-black mb-2">Profil Saya</h1>
-            <p className="text-cream-100">
+            <p className="text-secondary-100">
               Informasi pribadi dan status pendaftaran Anda
             </p>
           </div>
@@ -167,13 +167,13 @@ export default function ProfilTab() {
       </div>
 
       {/* Nomor Pendaftaran Card */}
-      <div className="bg-gradient-to-r from-amber-500 to-orange-500 rounded-xl p-6 text-white shadow-lg">
+      <div className="bg-gradient-to-r from-secondary-500 to-orange-500 rounded-xl p-6 text-white shadow-lg">
         <div className="flex items-center gap-4">
           <div className="p-3 bg-white bg-opacity-20 rounded-xl">
             <CheckCircle className="w-8 h-8" />
           </div>
           <div>
-            <p className="text-amber-100 text-sm">Nomor Pendaftaran Anda</p>
+            <p className="text-secondary-100 text-sm">Nomor Pendaftaran Anda</p>
             <p className="text-3xl font-black tracking-wider">
               {profile.nomor_pendaftaran}
             </p>
@@ -183,10 +183,10 @@ export default function ProfilTab() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Data Pribadi */}
-        <div className="bg-white rounded-xl shadow-lg p-6 border-2 border-cream-100">
+        <div className="bg-white rounded-xl shadow-lg p-6 border-2 border-secondary-100">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 bg-cream-100 rounded-lg">
-              <User className="w-6 h-6 text-blue-700" />
+            <div className="p-2 bg-secondary-100 rounded-lg">
+              <User className="w-6 h-6 text-primary-700" />
             </div>
             <h3 className="text-lg font-bold text-stone-900">Data Pribadi</h3>
           </div>
@@ -224,10 +224,10 @@ export default function ProfilTab() {
         </div>
 
         {/* Kontak */}
-        <div className="bg-white rounded-xl shadow-lg p-6 border-2 border-blue-100">
+        <div className="bg-white rounded-xl shadow-lg p-6 border-2 border-primary-100">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 bg-blue-100 rounded-lg">
-              <Phone className="w-6 h-6 text-blue-600" />
+            <div className="p-2 bg-primary-100 rounded-lg">
+              <Phone className="w-6 h-6 text-primary-600" />
             </div>
             <h3 className="text-lg font-bold text-stone-900">
               Informasi Kontak
@@ -238,12 +238,12 @@ export default function ProfilTab() {
             <InfoItem
               label="No. HP"
               value={profile.no_hp}
-              icon={<Phone className="w-4 h-4 text-blue-600" />}
+              icon={<Phone className="w-4 h-4 text-primary-600" />}
             />
             <InfoItem
               label="Email"
               value={profile.email}
-              icon={<Mail className="w-4 h-4 text-blue-600" />}
+              icon={<Mail className="w-4 h-4 text-primary-600" />}
             />
           </div>
         </div>
@@ -296,16 +296,16 @@ export default function ProfilTab() {
       </div>
 
       {/* Info Box */}
-      <div className="bg-blue-50 border-2 border-blue-200 rounded-xl p-6">
+      <div className="bg-primary-50 border-2 border-primary-200 rounded-xl p-6">
         <div className="flex gap-4">
           <div className="flex-shrink-0">
-            <div className="p-2 bg-blue-200 rounded-lg">
-              <User className="w-6 h-6 text-blue-700" />
+            <div className="p-2 bg-primary-200 rounded-lg">
+              <User className="w-6 h-6 text-primary-700" />
             </div>
           </div>
           <div>
-            <h4 className="font-bold text-blue-900 mb-2">Informasi Penting</h4>
-            <ul className="text-sm text-blue-800 space-y-1">
+            <h4 className="font-bold text-primary-900 mb-2">Informasi Penting</h4>
+            <ul className="text-sm text-primary-800 space-y-1">
               <li>
                 • Pastikan data Anda sudah benar dan sesuai dengan dokumen resmi
               </li>

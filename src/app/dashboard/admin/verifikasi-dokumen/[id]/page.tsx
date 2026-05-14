@@ -454,7 +454,7 @@ export default function VerifikasiDokumenDetailPage() {
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[400px]">
-        <Loader2 className="w-12 h-12 animate-spin text-blue-600 mb-4" />
+        <Loader2 className="w-12 h-12 animate-spin text-primary-600 mb-4" />
         <p className="text-ink-300 font-bold tracking-wide">
           Memuat berkas pendaftar...
         </p>
@@ -464,9 +464,9 @@ export default function VerifikasiDokumenDetailPage() {
 
   if (!pendaftar && !loading) {
     return (
-      <div className="bg-white rounded-3xl shadow-sm p-10 border border-amber-200 text-center">
-        <AlertCircle className="w-16 h-16 text-blue-500 mx-auto mb-4" />
-        <h2 className="text-2xl font-black text-blue-950 mb-2">
+      <div className="bg-white rounded-3xl shadow-sm p-10 border border-secondary-200 text-center">
+        <AlertCircle className="w-16 h-16 text-primary-500 mx-auto mb-4" />
+        <h2 className="text-2xl font-black text-primary-950 mb-2">
           Data Tidak Ditemukan
         </h2>
         <p className="text-ink-300 font-medium mb-6">
@@ -474,7 +474,7 @@ export default function VerifikasiDokumenDetailPage() {
         </p>
         <button
           onClick={() => router.back()}
-          className="px-6 py-3 bg-blue-700 hover:bg-blue-800 text-white rounded-xl font-bold transition-all shadow-lg shadow-blue-700/20 active:scale-95"
+          className="px-6 py-3 bg-primary-700 hover:bg-primary-800 text-white rounded-xl font-bold transition-all shadow-lg shadow-primary-700/20 active:scale-95"
         >
           Kembali ke Daftar
         </button>
@@ -492,28 +492,28 @@ export default function VerifikasiDokumenDetailPage() {
         accept="image/jpeg, image/png, application/pdf"
       />
       {/* Header */}
-      <div className="bg-white rounded-3xl shadow-sm p-6 border border-amber-100">
+      <div className="bg-white rounded-3xl shadow-sm p-6 border border-secondary-100">
         <div className="flex items-center justify-between flex-wrap gap-4">
           <div className="flex items-center gap-4">
             <button
               onClick={() => router.back()}
-              className="p-2 hover:bg-amber-50 rounded-lg text-ink-300 transition-colors"
+              className="p-2 hover:bg-secondary-50 rounded-lg text-ink-300 transition-colors"
               title="Kembali"
             >
               <ChevronLeft className="w-6 h-6" />
             </button>
-            <div className="p-4 bg-linear-to-br from-blue-600 to-blue-900 rounded-2xl shadow-xl shadow-blue-900/20">
-              <User className="w-8 h-8 text-amber-300" />
+            <div className="p-4 bg-linear-to-br from-primary-600 to-primary-900 rounded-2xl shadow-xl shadow-primary-900/20">
+              <User className="w-8 h-8 text-secondary-300" />
             </div>
             <div>
-              <h2 className="text-3xl font-black text-blue-950 leading-none mb-1">
+              <h2 className="text-3xl font-black text-primary-950 leading-none mb-1">
                 {toTitleCase(pendaftar?.nama_lengkap || "")}
               </h2>
               <div className="flex items-center gap-3 text-ink-300">
-                <span className="font-mono bg-blue-50 px-2.5 py-1 rounded-lg text-sm font-black text-blue-600 border border-blue-100">
+                <span className="font-mono bg-primary-50 px-2.5 py-1 rounded-lg text-sm font-black text-primary-600 border border-primary-100">
                   {pendaftar?.nomor_pendaftaran}
                 </span>
-                <span className="px-2.5 py-1 bg-amber-400 text-blue-900 rounded-lg text-[10px] font-black uppercase shadow-xs">
+                <span className="px-2.5 py-1 bg-secondary-400 text-primary-900 rounded-lg text-[10px] font-black uppercase shadow-xs">
                   {pendaftar?.jenjang}
                 </span>
               </div>
@@ -521,7 +521,7 @@ export default function VerifikasiDokumenDetailPage() {
           </div>
           <button
             onClick={fetchData}
-            className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
+            className="flex items-center gap-2 px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg transition-colors"
           >
             <RefreshCw className="w-4 h-4" />
             Muat Ulang
@@ -534,12 +534,12 @@ export default function VerifikasiDokumenDetailPage() {
         {dokumenList.map((dok) => (
           <div
             key={dok.id}
-            className={`bg-white border rounded-3xl overflow-hidden transition-all shadow-xs hover:shadow-xl hover:shadow-blue-900/5 ${
+            className={`bg-white border rounded-3xl overflow-hidden transition-all shadow-xs hover:shadow-xl hover:shadow-primary-900/5 ${
               dok.status_verifikasi === "verified"
                 ? "border-emerald-200"
                 : dok.status_verifikasi === "rejected"
                   ? "border-rose-200"
-                  : "border-amber-200"
+                  : "border-secondary-200"
             }`}
           >
             {/* Document Preview */}
@@ -593,7 +593,7 @@ export default function VerifikasiDokumenDetailPage() {
 
             <div className="p-5">
               <div className="flex items-start justify-between mb-2">
-                <h3 className="font-black text-blue-950 capitalize tracking-tight leading-tight">
+                <h3 className="font-black text-primary-950 capitalize tracking-tight leading-tight">
                   {dok.jenis_dokumen.replace(/_/g, " ")}
                 </h3>
                 {dok.status_verifikasi === "verified" ? (
@@ -612,7 +612,7 @@ export default function VerifikasiDokumenDetailPage() {
                     Belum Ada
                   </div>
                 ) : dok.status_verifikasi === "pending" ? (
-                  <div className="flex items-center gap-1 text-amber-600 bg-amber-50 px-2 py-1 rounded-lg text-[10px] font-black uppercase border border-amber-200">
+                  <div className="flex items-center gap-1 text-secondary-600 bg-secondary-50 px-2 py-1 rounded-lg text-[10px] font-black uppercase border border-secondary-200">
                     <RefreshCw className="w-3 h-3 animate-spin" />
                     Menunggu
                   </div>
@@ -630,7 +630,7 @@ export default function VerifikasiDokumenDetailPage() {
                 <button
                   onClick={() => handleReplaceClick(dok.id, dok.jenis_dokumen)}
                   disabled={uploadingDoc === dok.id}
-                  className="flex items-center gap-1 text-[10px] font-black text-blue-600 hover:text-blue-800 transition-colors uppercase disabled:opacity-50 italic"
+                  className="flex items-center gap-1 text-[10px] font-black text-primary-600 hover:text-primary-800 transition-colors uppercase disabled:opacity-50 italic"
                 >
                   {uploadingDoc === dok.id ? (
                     <Loader2 className="w-3 h-3 animate-spin" />
@@ -680,7 +680,7 @@ export default function VerifikasiDokumenDetailPage() {
                   className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs font-black transition-all active:scale-95 disabled:opacity-50 ${
                     dok.status_verifikasi === "rejected"
                       ? "bg-rose-100 text-rose-700 border border-rose-200"
-                      : "bg-white border-2 border-amber-100 hover:border-rose-400 hover:text-rose-600 text-ink-300"
+                      : "bg-white border-2 border-secondary-100 hover:border-rose-400 hover:text-rose-600 text-ink-300"
                   }`}
                 >
                   {processingDocs.has(dok.id) ? (

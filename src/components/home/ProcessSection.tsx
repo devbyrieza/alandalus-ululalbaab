@@ -63,14 +63,14 @@ const EASE = [0.16, 1, 0.3, 1] as const;
 
 const ACCENT_MAP = {
   blue: {
-    icon: "bg-blue-50 text-blue-600 border-blue-100 group-hover:bg-blue-100 group-hover:border-blue-200",
-    badge: "bg-blue-600 text-white",
-    title: "group-hover:text-blue-700",
+    icon: "bg-primary-50 text-primary-600 border-primary-100 group-hover:bg-primary-100 group-hover:border-primary-200",
+    badge: "bg-primary-600 text-white",
+    title: "group-hover:text-primary-700",
   },
   amber: {
-    icon: "bg-amber-50 text-amber-700 border-amber-100 group-hover:bg-amber-100 group-hover:border-amber-200",
-    badge: "bg-amber-500 text-white",
-    title: "group-hover:text-amber-700",
+    icon: "bg-secondary-50 text-secondary-700 border-secondary-100 group-hover:bg-secondary-100 group-hover:border-secondary-200",
+    badge: "bg-secondary-500 text-white",
+    title: "group-hover:text-secondary-700",
   },
 };
 
@@ -124,12 +124,12 @@ function StepCard({
 
       {/* Connector line desktop */}
       {!isLast && (
-        <div className="hidden lg:block absolute top-[28px] left-[calc(50%+44px)] right-[calc(-50%+44px)] h-px bg-gradient-to-r from-amber-200 to-blue-100 z-0" />
+        <div className="hidden lg:block absolute top-[28px] left-[calc(50%+44px)] right-[calc(-50%+44px)] h-px bg-gradient-to-r from-secondary-200 to-primary-100 z-0" />
       )}
 
       {/* Mobile vertical connector */}
       {!isLast && (
-        <div className="lg:hidden mt-6 mb-2 w-px h-8 bg-gradient-to-b from-blue-200 to-transparent rounded-full" />
+        <div className="lg:hidden mt-6 mb-2 w-px h-8 bg-gradient-to-b from-primary-200 to-transparent rounded-full" />
       )}
     </div>
   );
@@ -140,7 +140,7 @@ export default function ProcessSection() {
   return (
     <section
       id="alur"
-      className="section-alt relative border-y border-amber-100/60 overflow-hidden"
+      className="section-alt relative border-y border-secondary-100/60 overflow-hidden"
     >
       <div
         className="absolute -top-32 right-0 translate-x-1/3 w-[500px] h-[500px] pointer-events-none"
@@ -164,7 +164,7 @@ export default function ProcessSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, ease: EASE }}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-amber-200 text-blue-700 text-[0.65rem] font-bold uppercase tracking-[0.12em] mb-5 shadow-xs"
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-secondary-200 text-primary-700 text-[0.65rem] font-bold uppercase tracking-[0.12em] mb-5 shadow-xs"
           >
             <CheckCircle2 className="w-3 h-3 shrink-0" strokeWidth={2} />
             <span>Prosedur PPDB</span>
@@ -177,7 +177,7 @@ export default function ProcessSection() {
             transition={{ delay: 0.08, duration: 0.6, ease: EASE }}
             className="section-title mb-4"
           >
-            Alur <span className="text-gradient-blue">Pendaftaran</span>
+            Alur <span className="text-gradient-primary">Pendaftaran</span>
           </motion.h2>
 
           <motion.p

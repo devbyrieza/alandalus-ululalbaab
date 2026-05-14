@@ -92,7 +92,7 @@ export default function ProgressStepper({
               {idx < STEPS.length - 1 && (
                 <div className="absolute top-5 left-[50%] right-[-50%] h-0.5 bg-stone-100 z-0">
                   <div
-                    className={`h-full bg-blue-600 transition-all duration-700 ${idx < activeIndex ? "w-full" : "w-0"}`}
+                    className={`h-full bg-primary-600 transition-all duration-700 ${idx < activeIndex ? "w-full" : "w-0"}`}
                   />
                 </div>
               )}
@@ -101,9 +101,9 @@ export default function ProgressStepper({
               <div
                 className={`w-10 h-10 rounded-full flex items-center justify-center relative z-10 transition-all duration-500 border-2 ${
                   isCompleted
-                    ? "bg-blue-600 border-blue-600 text-white shadow-blue-200 shadow-lg"
+                    ? "bg-primary-600 border-primary-600 text-white shadow-primary-200 shadow-lg"
                     : isActive
-                      ? "bg-white border-blue-600 text-blue-600 shadow-blue-100 shadow-lg scale-110 font-bold"
+                      ? "bg-white border-primary-600 text-primary-600 shadow-primary-100 shadow-lg scale-110 font-bold"
                       : "bg-white border-stone-200 text-stone-300"
                 }`}
               >
@@ -118,7 +118,7 @@ export default function ProgressStepper({
               <span
                 className={`mt-3 text-[10px] sm:text-xs font-black uppercase tracking-wider transition-colors duration-500 ${
                   isActive
-                    ? "text-blue-800"
+                    ? "text-primary-800"
                     : isCompleted
                       ? "text-stone-600"
                       : "text-stone-400"
@@ -129,7 +129,7 @@ export default function ProgressStepper({
 
               {/* Status Indicator Bar */}
               {isActive && (
-                <div className="mt-1 h-1 w-8 bg-amber-400 rounded-full animate-pulse" />
+                <div className="mt-1 h-1 w-8 bg-secondary-400 rounded-full animate-pulse" />
               )}
             </div>
           );

@@ -43,7 +43,7 @@ export default function DownloadBerkasTab() {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
         <div className="text-center">
-          <Loader2 className="w-12 h-12 animate-spin text-blue-600 mx-auto mb-4" />
+          <Loader2 className="w-12 h-12 animate-spin text-primary-600 mx-auto mb-4" />
           <p className="text-ink-600 font-medium">Menyiapkan dokumen...</p>
         </div>
       </div>
@@ -105,17 +105,17 @@ export default function DownloadBerkasTab() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="relative overflow-hidden rounded-[2rem] bg-linear-to-br from-blue-700 to-blue-900 border border-blue-600 p-8 md:p-10 text-white shadow-lg app-card">
-        <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-amber-50/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+      <div className="relative overflow-hidden rounded-[2rem] bg-linear-to-br from-primary-700 to-primary-900 border border-primary-600 p-8 md:p-10 text-white shadow-lg app-card">
+        <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-secondary-50/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
         <div className="relative z-10 flex items-start md:items-center gap-6">
           <div className="w-16 h-16 rounded-[1.5rem] bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 shadow-sm shrink-0">
-            <Download className="w-8 h-8 text-amber-100" />
+            <Download className="w-8 h-8 text-secondary-100" />
           </div>
           <div>
             <h1 className="text-2xl md:text-3xl font-black mb-2 tracking-tight text-white font-display">
               Download Berkas
             </h1>
-            <p className="text-amber-100/90 font-medium max-w-xl text-sm md:text-base">
+            <p className="text-secondary-100/90 font-medium max-w-xl text-sm md:text-base">
               Unduh dokumen penting untuk proses pendaftaran Anda.
             </p>
           </div>
@@ -127,12 +127,12 @@ export default function DownloadBerkasTab() {
         {documents.map((doc, index) => (
           <div
             key={index}
-            className="bg-white rounded-[2rem] shadow-sm p-6 border border-amber-200 hover:border-blue-300 transition-all duration-300 group app-card"
+            className="bg-white rounded-[2rem] shadow-sm p-6 border border-secondary-200 hover:border-primary-300 transition-all duration-300 group app-card"
           >
             <div className="flex items-start justify-between mb-4">
               <div className="flex items-center gap-3">
-                <div className="p-3 bg-blue-50 rounded-2xl group-hover:bg-blue-100 transition-colors">
-                  <FileText className="w-6 h-6 text-blue-600" />
+                <div className="p-3 bg-primary-50 rounded-2xl group-hover:bg-primary-100 transition-colors">
+                  <FileText className="w-6 h-6 text-primary-600" />
                 </div>
                 <div>
                   <h3 className="font-bold text-stone-900">{doc.name}</h3>
@@ -142,14 +142,14 @@ export default function DownloadBerkasTab() {
               {doc.status === "available" ? (
                 <CheckCircle className="w-5 h-5 text-green-600" />
               ) : (
-                <AlertCircle className="w-5 h-5 text-amber-600" />
+                <AlertCircle className="w-5 h-5 text-secondary-600" />
               )}
             </div>
 
             {doc.status === "available" ? (
               <button
                 onClick={doc.action}
-                className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors"
+                className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-lg font-medium transition-colors"
               >
                 <Download className="w-5 h-5" />
                 Download PDF
@@ -176,41 +176,41 @@ export default function DownloadBerkasTab() {
       </div>
 
       {/* Info Box */}
-      <div className="bg-blue-50 border border-blue-100 rounded-[2rem] p-8">
+      <div className="bg-primary-50 border border-primary-100 rounded-[2rem] p-8">
         <div className="flex gap-6">
           <div className="flex-shrink-0">
-            <div className="p-3 bg-white rounded-2xl shadow-sm border border-blue-100">
-              <AlertCircle className="w-6 h-6 text-blue-600" />
+            <div className="p-3 bg-white rounded-2xl shadow-sm border border-primary-100">
+              <AlertCircle className="w-6 h-6 text-primary-600" />
             </div>
           </div>
           <div>
-            <h4 className="font-black text-blue-900 mb-3 text-lg">
+            <h4 className="font-black text-primary-900 mb-3 text-lg">
               Informasi Penting
             </h4>
-            <ul className="text-sm text-blue-800 space-y-2 font-medium">
+            <ul className="text-sm text-primary-800 space-y-2 font-medium">
               <li className="flex items-start gap-2">
-                <span className="text-blue-400 mt-1">●</span>
+                <span className="text-primary-400 mt-1">●</span>
                 <span>
                   Bukti pendaftaran tersedia setelah data diri santri dilengkapi
                   sepenuhnya.
                 </span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-blue-400 mt-1">●</span>
+                <span className="text-primary-400 mt-1">●</span>
                 <span>
                   Kartu Peserta Ujian akan muncul otomatis setelah jadwal
                   seleksi dikonfirmasi oleh panitia.
                 </span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-blue-400 mt-1">●</span>
+                <span className="text-primary-400 mt-1">●</span>
                 <span>
                   Pastikan browser Anda mengizinkan pop-up untuk mengunduh file
                   PDF secara otomatis.
                 </span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-blue-400 mt-1">●</span>
+                <span className="text-primary-400 mt-1">●</span>
                 <span>
                   Simpan semua dokumen yang diunduh dengan baik atau segera
                   cetak untuk keperluan fisik.

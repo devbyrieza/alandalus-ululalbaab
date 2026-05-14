@@ -92,30 +92,30 @@ function getTokens(variant: ProgramVariant) {
     case "blue":
       return {
         accentBar:
-          "bg-gradient-to-r from-blue-700 via-blue-500 to-blue-300",
-        corner: "bg-blue-50",
-        icon: "bg-blue-600 text-white ring-1 ring-blue-200",
-        subtitleText: "text-blue-500",
-        dividerLine: "bg-blue-200",
-        checkBg: "bg-blue-50 border-blue-200",
+          "bg-gradient-to-r from-primary-700 via-primary-500 to-primary-300",
+        corner: "bg-primary-50",
+        icon: "bg-primary-600 text-white ring-1 ring-primary-200",
+        subtitleText: "text-primary-500",
+        dividerLine: "bg-primary-200",
+        checkBg: "bg-primary-50 border-primary-200",
         checkHover:
-          "group-hover/item:bg-blue-600 group-hover/item:border-blue-600",
-        checkIcon: "text-blue-600 group-hover/item:text-white",
+          "group-hover/item:bg-primary-600 group-hover/item:border-primary-600",
+        checkIcon: "text-primary-600 group-hover/item:text-white",
         ctaBtn:
-          "bg-white border-blue-200 text-blue-800 hover:bg-blue-700 hover:border-blue-700 hover:text-white shadow-sm hover:shadow-md",
+          "bg-white border-primary-200 text-primary-800 hover:bg-primary-700 hover:border-primary-700 hover:text-white shadow-sm hover:shadow-md",
       };
     case "amber":
       return {
-        accentBar: "bg-gradient-to-r from-amber-600 via-amber-400 to-amber-200",
-        corner: "bg-amber-50",
-        icon: "bg-amber-500 text-white ring-1 ring-amber-100",
-        subtitleText: "text-amber-600",
-        dividerLine: "bg-amber-100",
-        checkBg: "bg-amber-50 border-amber-200",
+        accentBar: "bg-gradient-to-r from-secondary-600 via-secondary-400 to-secondary-200",
+        corner: "bg-secondary-50",
+        icon: "bg-secondary-500 text-white ring-1 ring-secondary-100",
+        subtitleText: "text-secondary-600",
+        dividerLine: "bg-secondary-100",
+        checkBg: "bg-secondary-50 border-secondary-200",
         checkHover:
-          "group-hover/item:bg-amber-500 group-hover/item:border-amber-500",
-        checkIcon: "text-amber-600 group-hover/item:text-white",
-        ctaBtn: "bg-white border-amber-200 text-blue-800 hover:bg-amber-500 hover:border-amber-500 hover:text-white shadow-sm hover:shadow-md",
+          "group-hover/item:bg-secondary-500 group-hover/item:border-secondary-500",
+        checkIcon: "text-secondary-600 group-hover/item:text-white",
+        ctaBtn: "bg-white border-secondary-200 text-primary-800 hover:bg-secondary-500 hover:border-secondary-500 hover:text-white shadow-sm hover:shadow-md",
       };
   }
 }
@@ -124,15 +124,15 @@ export default function ProgramSection() {
   return (
     <section
       id="program"
-      className="section-alt relative overflow-hidden border-y border-blue-100"
+      className="section-alt relative overflow-hidden border-y border-primary-100"
     >
       <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-[0.02] pointer-events-none" />
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 overflow-hidden"
       >
-        <div className="absolute -top-40 -right-40 w-[500px] h-[500px] rounded-full bg-blue-50/70 blur-[100px]" />
-        <div className="absolute -bottom-32 -left-32 w-[400px] h-[400px] rounded-full bg-amber-100/40 blur-[80px]" />
+        <div className="absolute -top-40 -right-40 w-[500px] h-[500px] rounded-full bg-primary-50/70 blur-[100px]" />
+        <div className="absolute -bottom-32 -left-32 w-[400px] h-[400px] rounded-full bg-secondary-100/40 blur-[80px]" />
       </div>
 
       <Container className="relative z-10">
@@ -142,7 +142,7 @@ export default function ProgramSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-40px" }}
             transition={{ duration: 0.5, ease: EASE }}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-amber-200 text-blue-700 text-[0.65rem] font-bold uppercase tracking-[0.12em] shadow-xs mb-5"
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-secondary-200 text-primary-700 text-[0.65rem] font-bold uppercase tracking-[0.12em] shadow-xs mb-5"
           >
             <GraduationCap className="w-3 h-3" strokeWidth={2} />
             <span>Jenjang Pendidikan</span>
@@ -156,7 +156,7 @@ export default function ProgramSection() {
             className="section-title mb-4"
           >
             Program Studi{" "}
-            <span className="text-gradient-blue">Unggulan</span>
+            <span className="text-gradient-primary">Unggulan</span>
           </motion.h2>
 
           <motion.p
@@ -190,7 +190,7 @@ export default function ProgramSection() {
                 }}
                 className="group h-full"
               >
-                <div className="relative h-full flex flex-col bg-white rounded-[1.5rem] border border-blue-100 overflow-hidden shadow-premium-sm group-hover:shadow-premium-md group-hover:border-blue-200 transition-all duration-400">
+                <div className="relative h-full flex flex-col bg-white rounded-[1.5rem] border border-primary-100 overflow-hidden shadow-premium-sm group-hover:shadow-premium-md group-hover:border-primary-200 transition-all duration-400">
                   <div
                     className={`absolute top-0 left-0 right-0 h-[3px] ${tokens.accentBar}`}
                   />
@@ -223,7 +223,7 @@ export default function ProgramSection() {
                           <span className="text-[0.6rem] font-bold text-ink-400 uppercase tracking-[0.15em]">
                             Syarat Khusus
                           </span>
-                          <div className="flex items-center gap-1.5 bg-amber-400 text-blue-950 px-2.5 py-1 rounded-[8px] shadow-sm">
+                          <div className="flex items-center gap-1.5 bg-secondary-400 text-primary-950 px-2.5 py-1 rounded-[8px] shadow-sm">
                             <span className="text-[0.65rem] font-black">
                               Seleksi
                             </span>
@@ -233,7 +233,7 @@ export default function ProgramSection() {
                     </div>
 
                     <div className="mb-7">
-                      <h3 className="font-display font-black text-[1.35rem] text-ink-950 tracking-tight leading-[1.1] mb-2 group-hover:text-blue-800 transition-colors duration-300">
+                      <h3 className="font-display font-black text-[1.35rem] text-ink-950 tracking-tight leading-[1.1] mb-2 group-hover:text-primary-800 transition-colors duration-300">
                         {program.title}
                       </h3>
                       <p

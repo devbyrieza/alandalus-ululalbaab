@@ -106,10 +106,10 @@ function ActivityCard({
         duration: 0.6,
         ease: [0.16, 1, 0.3, 1],
       }}
-      className="group flex flex-col bg-white rounded-2xl border border-blue-100 shadow-premium-sm overflow-hidden transition-all duration-500 ease-spring hover:-translate-y-2 hover:shadow-premium-md hover:border-blue-200"
+      className="group flex flex-col bg-white rounded-2xl border border-primary-100 shadow-premium-sm overflow-hidden transition-all duration-500 ease-spring hover:-translate-y-2 hover:shadow-premium-md hover:border-primary-200"
     >
       {/* Image */}
-      <div className="relative h-52 overflow-hidden shrink-0 bg-blue-50">
+      <div className="relative h-52 overflow-hidden shrink-0 bg-primary-50">
         <Image
           src={activity.image}
           alt={activity.name}
@@ -119,11 +119,11 @@ function ActivityCard({
           className="object-cover transition-transform duration-700 group-hover:scale-105"
         />
         {/* Gradient overlay — biru untuk ululalbaab */}
-        <div className="absolute inset-0 bg-gradient-to-t from-blue-950/50 via-blue-950/10 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-primary-950/50 via-primary-950/10 to-transparent" />
 
         {/* Badge */}
         <div className="absolute top-3 left-3">
-          <span className="inline-flex items-center px-2.5 py-1 rounded-full bg-white/90 backdrop-blur-sm text-[0.6rem] font-bold text-blue-700 uppercase tracking-widest border border-blue-100/50 shadow-sm">
+          <span className="inline-flex items-center px-2.5 py-1 rounded-full bg-white/90 backdrop-blur-sm text-[0.6rem] font-bold text-primary-700 uppercase tracking-widest border border-primary-100/50 shadow-sm">
             {activity.badge}
           </span>
         </div>
@@ -131,7 +131,7 @@ function ActivityCard({
 
       {/* Content */}
       <div className="flex flex-col grow p-6 md:p-7">
-        <h3 className="text-base md:text-lg font-bold text-ink-900 mb-2.5 tracking-tight leading-snug group-hover:text-blue-700 transition-colors duration-300">
+        <h3 className="text-base md:text-lg font-bold text-ink-900 mb-2.5 tracking-tight leading-snug group-hover:text-primary-700 transition-colors duration-300">
           {activity.name}
         </h3>
         <p className="text-[0.8125rem] md:text-sm text-ink-500 leading-relaxed grow font-[450]">
@@ -139,9 +139,9 @@ function ActivityCard({
         </p>
 
         {/* Bottom accent — biru */}
-        <div className="mt-5 pt-4 border-t border-blue-50 flex items-center justify-between">
-          <div className="h-[2px] w-5 rounded-full bg-blue-200 group-hover:w-10 group-hover:bg-blue-500 transition-all duration-500" />
-          <span className="text-[0.65rem] font-bold text-blue-300 uppercase tracking-widest group-hover:text-blue-500 transition-colors duration-300">
+        <div className="mt-5 pt-4 border-t border-primary-50 flex items-center justify-between">
+          <div className="h-[2px] w-5 rounded-full bg-primary-200 group-hover:w-10 group-hover:bg-primary-500 transition-all duration-500" />
+          <span className="text-[0.65rem] font-bold text-primary-300 uppercase tracking-widest group-hover:text-primary-500 transition-colors duration-300">
             Selengkapnya
           </span>
         </div>
@@ -155,13 +155,13 @@ function ExtraChip({ item, index }: { item: ExtraActivity; index: number }) {
   const Icon = item.icon;
 
   const colorMap = {
-    blue: "bg-blue-50 text-blue-600 group-hover:bg-blue-100 ring-blue-200",
-    amber: "bg-amber-50 text-amber-600 group-hover:bg-amber-100 ring-amber-300",
+    blue: "bg-primary-50 text-primary-600 group-hover:bg-primary-100 ring-primary-200",
+    amber: "bg-secondary-50 text-secondary-600 group-hover:bg-secondary-100 ring-secondary-300",
   };
 
   const textHoverMap = {
-    blue: "group-hover:text-blue-800",
-    amber: "group-hover:text-amber-700",
+    blue: "group-hover:text-primary-800",
+    amber: "group-hover:text-secondary-700",
   };
 
   return (
@@ -174,7 +174,7 @@ function ExtraChip({ item, index }: { item: ExtraActivity; index: number }) {
         duration: 0.4,
         ease: [0.16, 1, 0.3, 1],
       }}
-      className="group flex flex-col items-center justify-center gap-3 p-5 md:p-6 bg-white rounded-2xl border border-blue-100 hover:border-blue-200 hover:shadow-premium-sm hover:bg-surface-50 transition-all duration-400 cursor-default"
+      className="group flex flex-col items-center justify-center gap-3 p-5 md:p-6 bg-white rounded-2xl border border-primary-100 hover:border-primary-200 hover:shadow-premium-sm hover:bg-surface-50 transition-all duration-400 cursor-default"
     >
       <div
         className={[
@@ -203,7 +203,7 @@ export default function ActivitiesSection() {
   return (
     <section
       id="kegiatan"
-      className="section-alt relative border-y border-blue-100/60"
+      className="section-alt relative border-y border-primary-100/60"
     >
       {/* Subtle background texture — biru */}
       <div
@@ -237,7 +237,7 @@ export default function ActivitiesSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-blue-100 text-blue-700 text-[0.65rem] font-bold uppercase tracking-[0.12em] mb-6 shadow-xs"
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-primary-100 text-primary-700 text-[0.65rem] font-bold uppercase tracking-[0.12em] mb-6 shadow-xs"
           >
             <Users className="w-3 h-3 shrink-0" strokeWidth={2} />
             <span>Kegiatan Santri</span>
@@ -251,7 +251,7 @@ export default function ActivitiesSection() {
             className="section-title mb-5 text-balance"
           >
             Kegiatan{" "}
-            <span className="text-gradient-blue">Bervariasi & Edukatif</span>
+            <span className="text-gradient-primary">Bervariasi & Edukatif</span>
           </motion.h2>
 
           <motion.p
@@ -283,14 +283,14 @@ export default function ActivitiesSection() {
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             className="text-center mb-10 md:mb-12"
           >
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-[0.65rem] font-bold uppercase tracking-[0.12em] mb-5 shadow-xs">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary-50 border border-primary-100 text-primary-700 text-[0.65rem] font-bold uppercase tracking-[0.12em] mb-5 shadow-xs">
               <Sparkles className="w-3 h-3 shrink-0" strokeWidth={2} />
               <span>Minat & Bakat</span>
             </div>
 
             <h3 className="text-2xl md:text-3xl font-bold text-ink-900 tracking-tight mb-3">
               Ekstrakurikuler{" "}
-              <span className="text-gradient-blue">Terpadu</span>
+              <span className="text-gradient-primary">Terpadu</span>
             </h3>
 
             <p className="text-sm md:text-[0.9375rem] text-ink-500 font-[450] max-w-xl mx-auto leading-relaxed">
@@ -311,9 +311,9 @@ export default function ActivitiesSection() {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.1 + idx * 0.05 }}
-                  className="flex flex-col items-center gap-3 p-4 bg-white rounded-2xl border border-blue-50 shadow-sm hover:border-blue-100 hover:shadow-md transition-all group text-center"
+                  className="flex flex-col items-center gap-3 p-4 bg-white rounded-2xl border border-primary-50 shadow-sm hover:border-primary-100 hover:shadow-md transition-all group text-center"
                 >
-                  <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                  <div className="w-10 h-10 rounded-xl bg-primary-50 flex items-center justify-center text-primary-600 group-hover:bg-primary-600 group-hover:text-white transition-colors">
                     <Icon className="w-5 h-5" />
                   </div>
                   <span className="text-[11px] font-bold text-ink-950 uppercase tracking-wider">
@@ -332,16 +332,16 @@ export default function ActivitiesSection() {
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="w-full"
           >
-            <div className="relative p-10 md:p-12 rounded-[2.5rem] bg-blue-900 overflow-hidden shadow-2xl">
+            <div className="relative p-10 md:p-12 rounded-[2.5rem] bg-primary-900 overflow-hidden shadow-2xl">
               <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10" />
-              <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-amber-500/10 rounded-full blur-[60px] -translate-y-1/2 translate-x-1/4" />
+              <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-secondary-500/10 rounded-full blur-[60px] -translate-y-1/2 translate-x-1/4" />
 
               <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left">
                 <div className="max-w-md">
                   <h4 className="text-2xl md:text-3xl font-black text-white mb-4 tracking-tight">
                     Lihat Jadwal Harian Lengkap Santri
                   </h4>
-                  <p className="text-blue-100/70 font-medium text-sm leading-relaxed">
+                  <p className="text-primary-100/70 font-medium text-sm leading-relaxed">
                     Kedisiplinan adalah kunci kesuksesan. Pelajari jadwal harian
                     lengkap untuk mengetahui rutinitas santri Ulul Albaab.
                   </p>
@@ -349,10 +349,10 @@ export default function ActivitiesSection() {
 
                 <div className="shrink-0">
                   <Link href="/kegiatan">
-                    <button className="group relative inline-flex items-center gap-3 px-8 py-4 bg-amber-500 text-blue-950 font-black text-sm uppercase tracking-widest rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-xl hover:scale-105 active:scale-95">
+                    <button className="group relative inline-flex items-center gap-3 px-8 py-4 bg-secondary-500 text-primary-950 font-black text-sm uppercase tracking-widest rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-xl hover:scale-105 active:scale-95">
                       <span className="relative z-10">Eksplorasi Seluruh Kegiatan</span>
                       <CalendarIcon className="relative z-10 w-5 h-5 transition-transform duration-300 group-hover:rotate-12" />
-                      <div className="absolute inset-0 bg-amber-400 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                      <div className="absolute inset-0 bg-secondary-400 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
                     </button>
                   </Link>
                 </div>

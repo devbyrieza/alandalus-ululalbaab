@@ -81,11 +81,11 @@ const FACILITY_IMAGES = [
 
 /* ── Icon colour mapping — blue/amber branding ── */
 const iconClasses: Record<string, string> = {
-  blue: "bg-blue-50 text-blue-600 ring-blue-100",
+  blue: "bg-primary-50 text-primary-600 ring-primary-100",
   red: "bg-red-50 text-red-600 ring-red-100",
   orange: "bg-orange-50 text-orange-600 ring-orange-100",
   indigo: "bg-indigo-50 text-indigo-600 ring-indigo-100",
-  amber: "bg-amber-50 text-amber-600 ring-amber-100",
+  amber: "bg-secondary-50 text-secondary-600 ring-secondary-100",
   emerald: "bg-emerald-50 text-emerald-600 ring-emerald-100",
   cyan: "bg-cyan-50 text-cyan-600 ring-cyan-100",
   ink: "bg-slate-50 text-ink-600 ring-slate-200",
@@ -134,16 +134,16 @@ export default function FacilitiesSection() {
   return (
     <section
       id="fasilitas"
-      className="section-std relative overflow-hidden border-b border-blue-100"
+      className="section-std relative overflow-hidden border-b border-primary-100"
     >
       {/* ── Decorative blobs ── */}
       <div
         aria-hidden
-        className="pointer-events-none absolute -bottom-24 -right-24 w-[480px] h-[480px] rounded-full bg-amber-100 blur-[120px] opacity-60"
+        className="pointer-events-none absolute -bottom-24 -right-24 w-[480px] h-[480px] rounded-full bg-secondary-100 blur-[120px] opacity-60"
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute -top-16 -left-16 w-[320px] h-[320px] rounded-full bg-blue-50 blur-[100px] opacity-50"
+        className="pointer-events-none absolute -top-16 -left-16 w-[320px] h-[320px] rounded-full bg-primary-50 blur-[100px] opacity-50"
       />
       <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-[0.02] pointer-events-none" />
 
@@ -155,7 +155,7 @@ export default function FacilitiesSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-40px" }}
             transition={{ duration: 0.4, ease: SPRING_EASE }}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-amber-200 text-blue-700 text-[0.65rem] font-bold uppercase tracking-[0.12em] mb-5 shadow-xs"
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-secondary-200 text-primary-700 text-[0.65rem] font-bold uppercase tracking-[0.12em] mb-5 shadow-xs"
           >
             <MapPin className="w-3.5 h-3.5 shrink-0" strokeWidth={2} />
             <span>Lingkungan Pesantren</span>
@@ -169,7 +169,7 @@ export default function FacilitiesSection() {
             className="section-title mb-4"
           >
             Fasilitas{" "}
-            <span className="text-gradient-blue">Terpadu & Lengkap</span>
+            <span className="text-gradient-primary">Terpadu & Lengkap</span>
           </motion.h2>
 
           <motion.p
@@ -198,7 +198,7 @@ export default function FacilitiesSection() {
                 delay: idx * 0.08,
                 ease: SPRING_EASE,
               }}
-              className={`${img.span} relative rounded-[1.5rem] overflow-hidden group shadow-premium-sm ring-1 ring-blue-100`}
+              className={`${img.span} relative rounded-[1.5rem] overflow-hidden group shadow-premium-sm ring-1 ring-primary-100`}
             >
               <Image
                 src={img.src}
@@ -210,10 +210,10 @@ export default function FacilitiesSection() {
                     ? "(max-width:768px) 100vw, 50vw"
                     : "(max-width:768px) 50vw, 25vw"
                 }
-                className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04] bg-blue-50"
+                className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04] bg-primary-50"
               />
 
-              <div className="absolute inset-0 bg-gradient-to-t from-blue-950/70 via-blue-950/15 to-transparent opacity-65 group-hover:opacity-85 transition-opacity duration-400" />
+              <div className="absolute inset-0 bg-gradient-to-t from-primary-950/70 via-primary-950/15 to-transparent opacity-65 group-hover:opacity-85 transition-opacity duration-400" />
 
               <div className="absolute bottom-0 left-0 right-0 p-5 md:p-6 translate-y-2 group-hover:translate-y-0 transition-transform duration-400">
                 <p className="text-white font-bold text-[0.9375rem] md:text-[1.0625rem] leading-snug drop-shadow-sm mb-1 tracking-tight">
@@ -235,11 +235,11 @@ export default function FacilitiesSection() {
           transition={{ duration: 0.5 }}
           className="flex items-center gap-4 mb-10"
         >
-          <div className="flex-1 h-px bg-gradient-to-r from-transparent via-blue-100 to-transparent" />
+          <div className="flex-1 h-px bg-gradient-to-r from-transparent via-primary-100 to-transparent" />
           <span className="text-[0.65rem] font-bold uppercase tracking-[0.15em] text-ink-400 px-2">
             Fasilitas Penunjang
           </span>
-          <div className="flex-1 h-px bg-gradient-to-r from-transparent via-blue-100 to-transparent" />
+          <div className="flex-1 h-px bg-gradient-to-r from-transparent via-primary-100 to-transparent" />
         </motion.div>
 
         {/* ── Facilities list ── */}
@@ -254,7 +254,7 @@ export default function FacilitiesSection() {
             <motion.div
               key={idx}
               variants={itemVariants}
-              className="group flex items-center gap-3.5 p-3.5 rounded-2xl bg-white border border-blue-100 hover:border-blue-200 shadow-premium-sm hover:shadow-premium-md transition-all duration-300 ease-out cursor-default"
+              className="group flex items-center gap-3.5 p-3.5 rounded-2xl bg-white border border-primary-100 hover:border-primary-200 shadow-premium-sm hover:shadow-premium-md transition-all duration-300 ease-out cursor-default"
             >
               <div
                 className={`w-10 h-10 rounded-[10px] flex items-center justify-center shrink-0 ring-1 shadow-xs transition-transform duration-300 group-hover:scale-105 ${iconClasses[facility.color] ?? iconClasses.ink}`}
@@ -262,11 +262,11 @@ export default function FacilitiesSection() {
                 <facility.icon className="w-4 h-4" strokeWidth={2} />
               </div>
 
-              <span className="font-bold text-ink-900 text-[0.875rem] leading-snug group-hover:text-blue-800 transition-colors duration-200">
+              <span className="font-bold text-ink-900 text-[0.875rem] leading-snug group-hover:text-primary-800 transition-colors duration-200">
                 {facility.name}
               </span>
 
-              <ChevronRight className="w-3.5 h-3.5 text-blue-300 ml-auto shrink-0 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200" />
+              <ChevronRight className="w-3.5 h-3.5 text-primary-300 ml-auto shrink-0 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200" />
             </motion.div>
           ))}
         </motion.div>
@@ -280,7 +280,7 @@ export default function FacilitiesSection() {
           className="flex justify-center"
         >
           <Link href="/fasilitas">
-            <button className="btn-secondary group inline-flex items-center gap-2 px-8 py-3 bg-white border border-blue-200 shadow-sm hover:shadow-md transition-all">
+            <button className="btn-secondary group inline-flex items-center gap-2 px-8 py-3 bg-white border border-primary-200 shadow-sm hover:shadow-md transition-all">
               <span className="text-[0.875rem] font-bold">
                 Lihat Semua Fasilitas
               </span>

@@ -87,21 +87,21 @@ const variantConfig = {
   // info → menggunakan blue Ulul Albaab (bukan info-500 generik)
   info: {
     container:
-      "bg-[var(--color-blue-50)] border-[var(--color-blue-100)]",
+      "bg-[var(--color-primary-50)] border-[var(--color-primary-100)]",
     containerFilled:
-      "bg-[var(--color-blue-600)] border-transparent text-white",
-    accent: "border-l-[var(--color-blue-500)]",
-    iconWrapper: "bg-[var(--color-blue-100)]",
+      "bg-[var(--color-primary-600)] border-transparent text-white",
+    accent: "border-l-[var(--color-primary-500)]",
+    iconWrapper: "bg-[var(--color-primary-100)]",
     iconWrapperFilled: "bg-white/20",
     icon: Info,
-    iconColor: "text-[var(--color-blue-600)]",
+    iconColor: "text-[var(--color-primary-600)]",
     iconColorFilled: "text-white",
-    titleColor: "text-[var(--color-blue-700)]",
+    titleColor: "text-[var(--color-primary-700)]",
     titleColorFilled: "text-white",
-    bodyColor: "text-[var(--color-blue-600)]/80",
+    bodyColor: "text-[var(--color-primary-600)]/80",
     bodyColorFilled: "text-white/90",
     dismissColor:
-      "text-[var(--color-blue-500)]/50 hover:text-[var(--color-blue-600)] hover:bg-[var(--color-blue-100)]",
+      "text-[var(--color-primary-500)]/50 hover:text-[var(--color-primary-600)] hover:bg-[var(--color-primary-100)]",
     dismissColorFilled: "text-white/60 hover:text-white hover:bg-white/20",
   },
 } as const;
