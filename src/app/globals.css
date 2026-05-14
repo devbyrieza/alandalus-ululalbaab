@@ -1900,44 +1900,6 @@
     border: none;
   }
 
-  /* ── Icon Box (CiroAI feature icon container) ── */
-  .icon-box {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: var(--radius-md);
-    transition: all var(--duration-base) var(--ease-spring);
-    flex-shrink: 0;
-
-    &:hover, .group:hover & {
-      transform: scale(1.10) rotate(3deg);
-    }
-  }
-
-  .icon-box-blue {
-    background: linear-gradient(135deg, var(--color-blue-500), var(--color-blue-800));
-    color: var(--color-white);
-    box-shadow: 0 4px 14px rgba(3, 105, 199, 0.35);
-  }
-
-  .icon-box-maroon {
-    background: linear-gradient(135deg, var(--color-maroon-700), var(--color-maroon-950));
-    color: var(--color-cream-100);
-    box-shadow: 0 4px 14px rgba(128, 0, 0, 0.35);
-  }
-
-  .icon-box-gold {
-    background: linear-gradient(135deg, var(--color-gold-400), var(--color-gold-600));
-    color: var(--color-ink-900);
-    box-shadow: 0 4px 14px rgba(212, 175, 55, 0.35);
-  }
-
-  .icon-box-amber {
-    background: linear-gradient(135deg, var(--color-amber-400), var(--color-amber-600));
-    color: var(--color-ink-900);
-    box-shadow: 0 4px 14px rgba(245, 158, 11, 0.30);
-  }
-
   /* ── Hover Lift (standard micro-interaction) ── */
   .hover-lift {
     transition: transform var(--duration-base) var(--ease-spring), box-shadow var(--duration-base) var(--ease-spring);
@@ -1965,4 +1927,32 @@
     }
   }
 }
+
+
+
+  /* ── Icon Box (CiroAI feature icon container) ── */
+  .icon-box {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-md);
+    transition: all var(--duration-base) var(--ease-spring);
+    flex-shrink: 0;
+
+    &:hover, .group:hover & {
+      transform: scale(1.10) rotate(3deg);
+    }
+  }
+
+  .icon-box-primary {
+    background: linear-gradient(135deg, var(--color-primary-600), var(--color-primary-800));
+    color: var(--color-white);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .icon-box-secondary {
+    background: linear-gradient(135deg, var(--color-secondary-400), var(--color-secondary-600));
+    color: var(--color-primary-950);
+    box-shadow: var(--shadow-sm);
+  }
 
