@@ -1898,111 +1898,73 @@
 @layer utilities {
 
   /* ─── Text Gradients — semua brand ─── */
-  .text-gradient-teal {
-    background: linear-gradient(135deg,
-        var(--color-teal-500) 0%,
-        var(--color-teal-900) 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  .text-gradient-teal-sand {
-    background: linear-gradient(135deg,
-        var(--color-teal-700) 0%,
-        var(--color-sand-500) 60%,
-        var(--color-teal-900) 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
+  /* ─── Text Gradients — semua brand ─── */
   .text-gradient-blue {
-    background: linear-gradient(135deg,
-        var(--color-teal-500) 0%,
-        var(--color-teal-900) 100%);
+    background: linear-gradient(135deg, var(--color-blue-500) 0%, var(--color-amber-400) 55%, var(--color-blue-700) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
   }
 
   .text-gradient-teal {
-    background: linear-gradient(135deg,
-        var(--color-teal-600) 0%,
-        var(--color-teal-900) 100%);
+    background: linear-gradient(135deg, var(--color-teal-500) 0%, var(--color-sand-400) 55%, var(--color-teal-700) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
   }
 
   .text-gradient-maroon {
-    background: linear-gradient(135deg,
-        var(--color-maroon-600) 0%,
-        var(--color-maroon-950) 100%);
+    background: linear-gradient(135deg, var(--color-maroon-600) 0%, var(--color-cream-400) 55%, var(--color-maroon-800) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
   }
 
   .text-gradient-gold {
-    background: linear-gradient(135deg,
-        var(--color-gold-400) 0%,
-        var(--color-gold-600) 100%);
+    background: linear-gradient(135deg, var(--color-gold-400) 0%, var(--color-gold-600) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
   }
 
-  .text-gradient-cream {
-    background: linear-gradient(135deg,
-        var(--color-cream-300) 0%,
-        var(--color-cream-500) 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  .text-gradient-sky {
-    background: linear-gradient(135deg,
-        var(--color-teal-300) 0%,
-        var(--color-teal-600) 100%);
+  .text-gradient-amber {
+    background: linear-gradient(135deg, var(--color-amber-400) 0%, var(--color-amber-600) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
   }
 
   /* ─── Backgrounds — semua brand ─── */
-  .bg-teal-gradient {
-    background: linear-gradient(135deg,
-        var(--color-primary) 0%,
-        var(--color-teal-900) 100%);
-  }
-
-  .bg-teal-subtle {
-    background: linear-gradient(160deg,
-        var(--color-teal-50) 0%,
-        var(--color-white) 60%,
-        var(--color-sand-50) 100%);
-  }
-
-  .bg-sand-gradient {
-    background: linear-gradient(160deg,
-        var(--color-sand-50) 0%,
-        var(--color-white) 50%,
-        var(--color-sand-100) 100%);
-  }
-
   .bg-blue-gradient {
-    background: linear-gradient(135deg,
-        var(--color-teal-600) 0%,
-        var(--color-teal-900) 100%);
+    background: linear-gradient(135deg, var(--color-blue-600) 0%, var(--color-blue-900) 100%);
   }
 
   .bg-blue-subtle {
-    background: linear-gradient(160deg,
-        var(--color-teal-50) 0%,
-        var(--color-white) 60%,
-        var(--color-surface-100) 100%);
+    background: linear-gradient(160deg, var(--color-blue-50) 0%, var(--color-white) 60%, var(--color-surface-50) 100%);
+  }
+
+  .bg-amber-gradient {
+    background: linear-gradient(135deg, var(--color-amber-400) 0%, var(--color-amber-600) 100%);
+  }
+
+  .bg-amber-subtle {
+    background: linear-gradient(160deg, var(--color-amber-50) 0%, var(--color-white) 60%, var(--color-surface-50) 100%);
+  }
+
+  .bg-maroon-gradient {
+    background: linear-gradient(135deg, var(--color-maroon-600) 0%, var(--color-maroon-900) 100%);
+  }
+
+  .bg-maroon-subtle {
+    background: linear-gradient(160deg, var(--color-maroon-50) 0%, var(--color-white) 60%, var(--color-surface-50) 100%);
+  }
+
+  .bg-teal-gradient {
+    background: linear-gradient(135deg, var(--color-teal-600) 0%, var(--color-teal-900) 100%);
+  }
+
+  .bg-teal-subtle {
+    background: linear-gradient(160deg, var(--color-teal-50) 0%, var(--color-white) 60%, var(--color-sand-50) 100%);
   }
 
   .bg-yellow-gradient {
