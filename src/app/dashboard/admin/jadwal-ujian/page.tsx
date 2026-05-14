@@ -918,7 +918,7 @@ export default function JadwalUjianPage() {
   return (
     <Suspense
       fallback={
-        <div className="flex flex-col items-center justify-center p-20 bg-white rounded-3xl border border-brand-yellow-100">
+        <div className="flex flex-col items-center justify-center p-20 bg-white rounded-3xl border border-amber-100">
           <Loader2 className="w-12 h-12 animate-spin text-purple-600 mb-4" />
           <p className="text-ink-400 font-bold tracking-wide">
             Memuat halaman...

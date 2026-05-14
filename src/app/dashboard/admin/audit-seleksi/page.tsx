@@ -231,10 +231,10 @@ export default function AuditSeleksiPage() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h1 className="text-3xl font-black text-ink-900 tracking-tight flex items-center gap-3">
-            <div className="p-2.5 bg-brand-blue-600 rounded-2xl shadow-lg shadow-brand-blue-600/20">
+            <div className="p-2.5 bg-blue-600 rounded-2xl shadow-lg shadow-blue-600/20">
               <Activity className="w-6 h-6 text-white" />
             </div>
-            Audit <span className="text-brand-blue-700">Hasil Seleksi</span>
+            Audit <span className="text-blue-700">Hasil Seleksi</span>
           </h1>
           <p className="text-ink-500 font-medium mt-1">
             Review mendalam seluruh komponen nilai sebelum publikasi resmi.
@@ -269,7 +269,7 @@ export default function AuditSeleksiPage() {
               placeholder="Cari nama/NP..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-ink-50 border border-ink-100 rounded-xl pl-10 pr-4 py-2.5 text-sm font-medium outline-none focus:ring-4 focus:ring-brand-blue-500/5 transition-all"
+              className="w-full bg-ink-50 border border-ink-100 rounded-xl pl-10 pr-4 py-2.5 text-sm font-medium outline-none focus:ring-4 focus:ring-blue-500/5 transition-all"
             />
           </div>
 
@@ -337,7 +337,7 @@ export default function AuditSeleksiPage() {
                 <th className="px-6 py-5 text-center w-12">
                   <input
                     type="checkbox"
-                    className="w-5 h-5 rounded-lg border-ink-200 text-brand-blue-600 focus:ring-brand-blue-500"
+                    className="w-5 h-5 rounded-lg border-ink-200 text-blue-600 focus:ring-blue-500"
                     onChange={handleSelectAll}
                     checked={candidates.length > 0 && selectedIds.length === candidates.length}
                   />
@@ -363,7 +363,7 @@ export default function AuditSeleksiPage() {
                 <th className="px-3 py-5 text-center text-[10px] font-black text-ink-400 uppercase tracking-widest">
                   Kesiapan
                 </th>
-                <th className="px-6 py-5 text-center text-[10px] font-black text-brand-blue-700 uppercase tracking-widest bg-brand-blue-50/30">
+                <th className="px-6 py-5 text-center text-[10px] font-black text-blue-700 uppercase tracking-widest bg-blue-50/30">
                   Total Skor
                 </th>
                 <th className="px-6 py-5 text-center text-[10px] font-black text-ink-400 uppercase tracking-widest">
@@ -375,7 +375,7 @@ export default function AuditSeleksiPage() {
               {loading ? (
                 <tr>
                   <td colSpan={10} className="px-6 py-20 text-center">
-                    <Loader2 className="w-10 h-10 animate-spin mx-auto text-brand-blue-600 mb-4" />
+                    <Loader2 className="w-10 h-10 animate-spin mx-auto text-blue-600 mb-4" />
                     <p className="text-ink-400 font-bold">Mempersiapkan data audit...</p>
                   </td>
                 </tr>
@@ -398,19 +398,19 @@ export default function AuditSeleksiPage() {
                   return (
                     <tr
                       key={c.id}
-                      className={`hover:bg-brand-blue-50/20 transition-colors group ${selectedIds.includes(c.id) ? "bg-brand-blue-50/40" : ""}`}
+                      className={`hover:bg-blue-50/20 transition-colors group ${selectedIds.includes(c.id) ? "bg-blue-50/40" : ""}`}
                     >
                       <td className="px-6 py-4 text-center">
                         <input
                           type="checkbox"
-                          className="w-5 h-5 rounded-lg border-ink-200 text-brand-blue-600 focus:ring-brand-blue-500"
+                          className="w-5 h-5 rounded-lg border-ink-200 text-blue-600 focus:ring-blue-500"
                           checked={selectedIds.includes(c.id)}
                           onChange={() => handleSelectOne(c.id)}
                         />
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex flex-col">
-                          <span className="text-[14px] font-black text-ink-900 uppercase leading-none mb-1 group-hover:text-brand-blue-700 transition-colors">
+                          <span className="text-[14px] font-black text-ink-900 uppercase leading-none mb-1 group-hover:text-blue-700 transition-colors">
                             {c.nama_lengkap}
                           </span>
                           <span className="text-[10px] font-mono font-bold text-ink-400 tracking-tight">
@@ -447,12 +447,12 @@ export default function AuditSeleksiPage() {
                         );
                       })}
 
-                      <td className="px-6 py-4 text-center bg-brand-blue-50/20">
+                      <td className="px-6 py-4 text-center bg-blue-50/20">
                         <div className="flex flex-col items-center">
-                          <span className="text-lg font-black text-brand-blue-700 leading-none">
+                          <span className="text-lg font-black text-blue-700 leading-none">
                             {(nu?.nilai_total != null ? Number(nu.nilai_total).toFixed(2) : undefined) || "-"}
                           </span>
-                          <span className="text-[8px] font-black text-brand-blue-400 uppercase tracking-widest mt-1">
+                          <span className="text-[8px] font-black text-blue-400 uppercase tracking-widest mt-1">
                             Final Score
                           </span>
                         </div>
@@ -525,11 +525,11 @@ export default function AuditSeleksiPage() {
               Sistem akan secara otomatis memperbarui dashboard santri dan mengirimkan notifikasi resmi via WhatsApp.
             </p>
           </div>
-          <div className="mt-8 flex items-center gap-4 p-4 bg-brand-blue-50 rounded-2xl border border-brand-blue-100">
+          <div className="mt-8 flex items-center gap-4 p-4 bg-blue-50 rounded-2xl border border-blue-100">
              <div className="p-3 bg-white rounded-xl shadow-sm">
-                <RefreshCcw className="w-5 h-5 text-brand-blue-600" />
+                <RefreshCcw className="w-5 h-5 text-blue-600" />
              </div>
-             <p className="text-[11px] font-bold text-brand-blue-800 leading-snug">
+             <p className="text-[11px] font-bold text-blue-800 leading-snug">
                Gunakan fitur <b>Hitung Ulang</b> di menu Penilaian jika skor total belum muncul atau tidak sinkron.
              </p>
           </div>

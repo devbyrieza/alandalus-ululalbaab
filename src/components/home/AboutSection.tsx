@@ -67,9 +67,9 @@ export default function AboutSection() {
         aria-hidden
         className="pointer-events-none absolute inset-0 overflow-hidden"
       >
-        <div className="absolute -top-32 -left-32 w-[480px] h-[480px] rounded-full bg-brand-blue-100/25 blur-3xl" />
-        <div className="absolute -bottom-24 -right-24 w-[360px] h-[360px] rounded-full bg-brand-yellow-100/30 blur-3xl" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] rounded-full bg-brand-blue-50/30 blur-3xl" />
+        <div className="absolute -top-32 -left-32 w-[480px] h-[480px] rounded-full bg-blue-100/25 blur-3xl" />
+        <div className="absolute -bottom-24 -right-24 w-[360px] h-[360px] rounded-full bg-amber-100/30 blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] rounded-full bg-blue-50/30 blur-3xl" />
       </div>
 
       <Container className="relative z-10">
@@ -83,7 +83,7 @@ export default function AboutSection() {
             variants={containerVariants}
           >
             <motion.div variants={itemVariants} className="inline-flex mb-6">
-              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-brand-blue-100 text-brand-blue-700 text-[11px] font-bold uppercase tracking-[0.12em] shadow-xs">
+              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-blue-100 text-blue-700 text-[11px] font-bold uppercase tracking-[0.12em] shadow-xs">
                 <Sparkles className="w-3 h-3" />
                 Profil Pesantren
               </span>
@@ -103,7 +103,7 @@ export default function AboutSection() {
               variants={itemVariants}
               className="section-subtitle text-justify md:text-center"
             >
-              <span className="font-semibold text-brand-blue-800">
+              <span className="font-semibold text-blue-800">
                 Pesantren Ulul Albaab Sukabumi.
               </span>{" "}
               Lembaga pendidikan Islam berbasis pesantren modern yang mengusung
@@ -121,34 +121,34 @@ export default function AboutSection() {
               viewport={{ once: true, margin: "-40px" }}
               transition={{ type: "tween", duration: 0.6, ease: SPRING }}
             >
-              <div className="relative overflow-hidden rounded-2xl border border-brand-blue-100 bg-white shadow-premium-sm group">
+              <div className="relative overflow-hidden rounded-2xl border border-blue-100 bg-white shadow-premium-sm group">
                 {/* Card top accent bar — biru ke kuning */}
-                <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-brand-blue-600 via-brand-blue-400 to-brand-yellow-400 rounded-t-2xl" />
+                <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-blue-600 via-blue-400 to-amber-400 rounded-t-2xl" />
 
                 <div className="flex flex-col items-center text-center px-8 py-12 md:px-16 md:py-16">
                   {/* Icon */}
-                  <div className="mb-7 w-14 h-14 rounded-xl bg-brand-blue-50 border border-brand-blue-100 flex items-center justify-center shadow-xs group-hover:shadow-sm transition-shadow duration-300">
+                  <div className="mb-7 w-14 h-14 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center shadow-xs group-hover:shadow-sm transition-shadow duration-300">
                     <Target
-                      className="w-6 h-6 text-brand-blue-600"
+                      className="w-6 h-6 text-blue-600"
                       strokeWidth={1.75}
                     />
                   </div>
 
-                  <span className="badge badge-brand-blue mb-5 text-[11px] tracking-wider uppercase">
+                  <span className="badge badge-blue mb-5 text-[11px] tracking-wider uppercase">
                     Visi Utama
                   </span>
 
                   <blockquote className="max-w-2xl mx-auto">
-                    <p className="font-display font-black text-2xl md:text-[2.15rem] leading-[1.2] tracking-tight text-brand-blue-900 italic">
+                    <p className="font-display font-black text-2xl md:text-[2.15rem] leading-[1.2] tracking-tight text-blue-900 italic">
                       &ldquo;Kaderisasi Ummat Rabbani, Cendekia, dan
                       Mandiri&rdquo;
                     </p>
                   </blockquote>
 
                   <div className="mt-8 flex items-center gap-3">
-                    <div className="h-px w-10 bg-gradient-to-r from-transparent to-brand-blue-200" />
-                    <div className="w-1.5 h-1.5 rounded-full bg-brand-yellow-400" />
-                    <div className="h-px w-10 bg-gradient-to-l from-transparent to-brand-blue-200" />
+                    <div className="h-px w-10 bg-gradient-to-r from-transparent to-blue-200" />
+                    <div className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+                    <div className="h-px w-10 bg-gradient-to-l from-transparent to-blue-200" />
                   </div>
                 </div>
               </div>
@@ -166,17 +166,17 @@ export default function AboutSection() {
                 delay: 0.08,
               }}
             >
-              <div className="rounded-2xl border border-brand-blue-100 bg-white shadow-premium-sm overflow-hidden">
+              <div className="rounded-2xl border border-blue-100 bg-white shadow-premium-sm overflow-hidden">
                 {/* Header */}
-                <div className="flex items-center gap-4 px-8 py-7 md:px-10 border-b border-brand-blue-50">
-                  <div className="w-11 h-11 rounded-xl bg-brand-blue-50 border border-brand-blue-100 flex items-center justify-center shrink-0">
+                <div className="flex items-center gap-4 px-8 py-7 md:px-10 border-b border-blue-50">
+                  <div className="w-11 h-11 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center shrink-0">
                     <Rocket
-                      className="w-5 h-5 text-brand-blue-600"
+                      className="w-5 h-5 text-blue-600"
                       strokeWidth={1.75}
                     />
                   </div>
                   <div>
-                    <h3 className="font-display font-bold text-xl text-brand-blue-900 tracking-tight leading-tight">
+                    <h3 className="font-display font-bold text-xl text-blue-900 tracking-tight leading-tight">
                       Misi Kami
                     </h3>
                     <p className="text-[13px] text-ink-400 mt-0.5">
@@ -184,7 +184,7 @@ export default function AboutSection() {
                     </p>
                   </div>
                   <div className="ml-auto hidden sm:block">
-                    <span className="badge badge-brand-yellow text-[11px] tracking-wider uppercase">
+                    <span className="badge badge-amber text-[11px] tracking-wider uppercase">
                       Langkah Strategis
                     </span>
                   </div>
@@ -192,7 +192,7 @@ export default function AboutSection() {
 
                 {/* Misi list */}
                 <motion.ul
-                  className="grid md:grid-cols-2 divide-y divide-brand-blue-50 md:divide-y-0 md:divide-x md:divide-brand-blue-50"
+                  className="grid md:grid-cols-2 divide-y divide-blue-50 md:divide-y-0 md:divide-x md:divide-blue-50"
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: true, margin: "-40px" }}
@@ -202,18 +202,18 @@ export default function AboutSection() {
                     <motion.li
                       key={i}
                       variants={itemVariants}
-                      className="flex gap-4 items-start p-6 md:p-8 group/item hover:bg-brand-blue-50/50 transition-colors duration-200"
+                      className="flex gap-4 items-start p-6 md:p-8 group/item hover:bg-blue-50/50 transition-colors duration-200"
                     >
                       <div className="mt-0.5 shrink-0">
-                        <div className="w-7 h-7 rounded-full bg-brand-blue-50 border border-brand-blue-100 flex items-center justify-center group-hover/item:bg-brand-blue-100 transition-colors duration-200">
+                        <div className="w-7 h-7 rounded-full bg-blue-50 border border-blue-100 flex items-center justify-center group-hover/item:bg-blue-100 transition-colors duration-200">
                           <CheckCircle
-                            className="w-3.5 h-3.5 text-brand-blue-600"
+                            className="w-3.5 h-3.5 text-blue-600"
                             strokeWidth={2.25}
                           />
                         </div>
                       </div>
                       <div>
-                        <span className="block text-[11px] font-bold uppercase tracking-[0.1em] text-brand-blue-500 mb-1.5">
+                        <span className="block text-[11px] font-bold uppercase tracking-[0.1em] text-blue-500 mb-1.5">
                           {item.label}
                         </span>
                         <p className="text-[14.5px] text-ink-600 leading-relaxed font-[450]">

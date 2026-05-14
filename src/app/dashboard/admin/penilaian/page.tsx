@@ -384,10 +384,10 @@ export default function ExaminerDashboard() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h1 className="text-3xl font-black text-ink-900 tracking-tight flex items-center gap-3">
-            <div className="p-2 bg-brand-blue-600 rounded-xl shadow-lg shadow-brand-blue-600/20">
+            <div className="p-2 bg-blue-600 rounded-xl shadow-lg shadow-blue-600/20">
               <ClipboardEdit className="w-6 h-6 text-white" />
             </div>
-            Pusat <span className="text-brand-blue-700">Penilaian</span>
+            Pusat <span className="text-blue-700">Penilaian</span>
           </h1>
           <p className="text-ink-500 font-medium mt-1">
             Kelola skor ujian dan monitoring notifikasi pendaftar.
@@ -399,7 +399,7 @@ export default function ExaminerDashboard() {
             onClick={() => setActiveTab("data")}
             className={`flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-bold transition-all ${
               activeTab === "data"
-                ? "bg-white text-brand-blue-700 shadow-clay-sm"
+                ? "bg-white text-blue-700 shadow-clay-sm"
                 : "text-ink-500 hover:text-ink-800"
             }`}
           >
@@ -410,7 +410,7 @@ export default function ExaminerDashboard() {
             onClick={() => setActiveTab("system")}
             className={`flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-bold transition-all ${
               activeTab === "system"
-                ? "bg-white text-brand-blue-700 shadow-clay-sm"
+                ? "bg-white text-blue-700 shadow-clay-sm"
                 : "text-ink-500 hover:text-ink-800"
             }`}
           >
@@ -439,7 +439,7 @@ export default function ExaminerDashboard() {
                   placeholder="Cari nama atau no. pendaftaran..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full bg-white border border-ink-100 rounded-xl pl-9 pr-4 py-2 text-sm focus:ring-2 focus:ring-brand-blue-600/10 outline-none shadow-inner"
+                  className="w-full bg-white border border-ink-100 rounded-xl pl-9 pr-4 py-2 text-sm focus:ring-2 focus:ring-blue-600/10 outline-none shadow-inner"
                 />
               </div>
 
@@ -516,7 +516,7 @@ export default function ExaminerDashboard() {
                     <th className="px-3 py-4 text-center text-[10px] font-black text-ink-400 uppercase tracking-widest">
                       Siap
                     </th>
-                    <th className="px-3 py-4 text-center text-[10px] font-black text-brand-blue-700 uppercase tracking-widest bg-brand-blue-50/30">
+                    <th className="px-3 py-4 text-center text-[10px] font-black text-blue-700 uppercase tracking-widest bg-blue-50/30">
                       Total
                     </th>
                     <th className="px-6 py-4 text-center text-[10px] font-black text-ink-400 uppercase tracking-widest">
@@ -547,7 +547,7 @@ export default function ExaminerDashboard() {
                     filteredStudents.map((s) => (
                       <tr
                         key={s.id}
-                        className="hover:bg-brand-blue-50/30 transition-colors group"
+                        className="hover:bg-blue-50/30 transition-colors group"
                       >
                         <td className="px-6 py-4 whitespace-nowrap text-xs font-mono font-bold text-ink-400">
                           {s.nomor_pendaftaran || "-"}
@@ -715,8 +715,8 @@ export default function ExaminerDashboard() {
                           })()}
                         </td>
                         {/* Total */}
-                        <td className="px-3 py-4 text-center whitespace-nowrap bg-brand-blue-50/20">
-                          <span className="text-base font-black text-brand-blue-700">
+                        <td className="px-3 py-4 text-center whitespace-nowrap bg-blue-50/20">
+                          <span className="text-base font-black text-blue-700">
                             {s.nilai_ujian?.nilai_total != null ? (
                               Number(s.nilai_ujian.nilai_total).toFixed(1)
                             ) : (
@@ -728,7 +728,7 @@ export default function ExaminerDashboard() {
                           <div className="flex justify-center items-center gap-1">
                             <button
                               onClick={() => handleOpenInput(s, "quran")}
-                              className="flex items-center gap-1.5 bg-ink-900 text-white px-3 py-1.5 rounded-xl text-[10px] font-black hover:bg-brand-blue-600 transition-all shadow-md group-hover:scale-105"
+                              className="flex items-center gap-1.5 bg-ink-900 text-white px-3 py-1.5 rounded-xl text-[10px] font-black hover:bg-blue-600 transition-all shadow-md group-hover:scale-105"
                             >
                               <Zap className="w-3 h-3" /> QUR&apos;AN
                             </button>
@@ -736,7 +736,7 @@ export default function ExaminerDashboard() {
                               onClick={() =>
                                 handleOpenInput(s, "wawancara_santri")
                               }
-                              className="flex items-center gap-1.5 bg-white border border-ink-200 text-ink-700 px-3 py-1.5 rounded-xl text-[10px] font-black hover:border-brand-blue-600 transition-all shadow-sm group-hover:scale-105"
+                              className="flex items-center gap-1.5 bg-white border border-ink-200 text-ink-700 px-3 py-1.5 rounded-xl text-[10px] font-black hover:border-blue-600 transition-all shadow-sm group-hover:scale-105"
                             >
                               <MessageSquare className="w-3 h-3" /> W.SANTRI
                             </button>
@@ -744,7 +744,7 @@ export default function ExaminerDashboard() {
                               onClick={() =>
                                 handleOpenInput(s, "wawancara_ortu")
                               }
-                              className="flex items-center gap-1.5 bg-brand-yellow-50 border border-brand-yellow-200 text-brand-yellow-800 px-3 py-1.5 rounded-xl text-[10px] font-black hover:border-brand-yellow-400 transition-all shadow-sm group-hover:scale-105"
+                              className="flex items-center gap-1.5 bg-amber-50 border border-amber-200 text-amber-800 px-3 py-1.5 rounded-xl text-[10px] font-black hover:border-amber-400 transition-all shadow-sm group-hover:scale-105"
                             >
                               <MessageSquare className="w-3 h-3" /> W.ORTU
                             </button>
@@ -780,7 +780,7 @@ export default function ExaminerDashboard() {
                           <span className="text-[10px] font-mono font-bold text-ink-400 tracking-tight">
                             {s.nomor_pendaftaran || "-"}
                           </span>
-                          <span className="text-[9px] font-black text-brand-blue-700 bg-brand-blue-50 px-2 py-0.5 rounded-lg uppercase">
+                          <span className="text-[9px] font-black text-blue-700 bg-blue-50 px-2 py-0.5 rounded-lg uppercase">
                             {s.jenjang}
                           </span>
                         </div>
@@ -799,7 +799,7 @@ export default function ExaminerDashboard() {
                         </p>
                       </div>
                       {/* Total Badge */}
-                      <div className="bg-brand-blue-600 px-4 py-2.5 rounded-2xl text-white text-center shrink-0">
+                      <div className="bg-blue-600 px-4 py-2.5 rounded-2xl text-white text-center shrink-0">
                         <p className="text-[8px] font-black opacity-70 uppercase">
                           Total
                         </p>
@@ -893,7 +893,7 @@ export default function ExaminerDashboard() {
                       </button>
                       <button
                         onClick={() => handleOpenInput(s, "wawancara_santri")}
-                        className="flex flex-col items-center justify-center bg-brand-yellow-400 text-brand-blue-900 py-2 rounded-2xl text-[10px] sm:text-[11px] font-black shadow-lg shadow-brand-yellow-400/20 active:scale-95 transition-all"
+                        className="flex flex-col items-center justify-center bg-amber-400 text-blue-900 py-2 rounded-2xl text-[10px] sm:text-[11px] font-black shadow-lg shadow-amber-400/20 active:scale-95 transition-all"
                       >
                         <span className="flex items-center gap-1">
                           <MessageSquare className="w-3 h-3" /> SANTRI
@@ -901,7 +901,7 @@ export default function ExaminerDashboard() {
                       </button>
                       <button
                         onClick={() => handleOpenInput(s, "wawancara_ortu")}
-                        className="flex flex-col items-center justify-center bg-brand-yellow-200 text-brand-yellow-900 py-2 rounded-2xl text-[10px] sm:text-[11px] font-black shadow-lg shadow-brand-yellow-200/20 active:scale-95 transition-all"
+                        className="flex flex-col items-center justify-center bg-amber-200 text-amber-900 py-2 rounded-2xl text-[10px] sm:text-[11px] font-black shadow-lg shadow-amber-200/20 active:scale-95 transition-all"
                       >
                         <span className="flex items-center gap-1">
                           <MessageSquare className="w-3 h-3" /> ORTU
@@ -919,7 +919,7 @@ export default function ExaminerDashboard() {
         <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-500">
           {/* Progress Monitor if Processing */}
           {isProcessingQueue && (
-            <div className="bg-brand-blue-600 rounded-3xl p-6 text-white shadow-xl shadow-brand-blue-600/20 overflow-hidden relative">
+            <div className="bg-blue-600 rounded-3xl p-6 text-white shadow-xl shadow-blue-600/20 overflow-hidden relative">
               <div className="absolute top-0 right-0 p-8 opacity-10">
                 <Send className="w-32 h-32 rotate-12" />
               </div>
@@ -1002,11 +1002,11 @@ export default function ExaminerDashboard() {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-4">
-                <div className="p-6 bg-brand-blue-50/30 rounded-3xl border border-brand-blue-100/50 hover:bg-brand-blue-50 transition-colors">
-                  <h4 className="font-black text-brand-blue-900 mb-2">
+                <div className="p-6 bg-blue-50/30 rounded-3xl border border-blue-100/50 hover:bg-blue-50 transition-colors">
+                  <h4 className="font-black text-blue-900 mb-2">
                     Broadcast Jadwal Seleksi
                   </h4>
-                  <p className="text-xs text-brand-blue-700/70 mb-6 font-medium leading-relaxed">
+                  <p className="text-xs text-blue-700/70 mb-6 font-medium leading-relaxed">
                     Sistem akan memindai pendaftar yang sudah terverifikasi
                     berkasnya tapi belum memiliki jadwal, lalu memasukkannya ke
                     antrean notifikasi.
@@ -1054,7 +1054,7 @@ export default function ExaminerDashboard() {
                       }
                     }}
                     disabled={isBroadcasting}
-                    className="w-full bg-brand-blue-600 hover:bg-brand-blue-700 text-white rounded-2xl py-6 font-black text-base shadow-lg shadow-brand-blue-600/20"
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-2xl py-6 font-black text-base shadow-lg shadow-blue-600/20"
                   >
                     {isBroadcasting
                       ? "Memproses..."
@@ -1109,7 +1109,7 @@ export default function ExaminerDashboard() {
             <div className="inline-block align-bottom bg-white rounded-3xl text-left overflow-hidden shadow-2xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full border border-white/20">
               <div className="bg-white px-6 pt-8 pb-6 sm:p-8">
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="p-3 bg-brand-blue-50 text-brand-blue-600 rounded-2xl">
+                  <div className="p-3 bg-blue-50 text-blue-600 rounded-2xl">
                     <Zap className="w-5 h-5 font-black" />
                   </div>
                   <h3
@@ -1160,7 +1160,7 @@ export default function ExaminerDashboard() {
                             })
                           }
                           placeholder="0-100"
-                          className="w-full bg-ink-50 border border-ink-100 rounded-xl px-4 py-3 text-sm font-bold text-ink-900 focus:ring-2 focus:ring-brand-blue-600/10 outline-none"
+                          className="w-full bg-ink-50 border border-ink-100 rounded-xl px-4 py-3 text-sm font-bold text-ink-900 focus:ring-2 focus:ring-blue-600/10 outline-none"
                         />
                       </div>
                       <div className="flex-1">
@@ -1177,7 +1177,7 @@ export default function ExaminerDashboard() {
                             })
                           }
                           placeholder="0-100"
-                          className="w-full bg-ink-50 border border-ink-100 rounded-xl px-4 py-3 text-sm font-bold text-ink-900 focus:ring-2 focus:ring-brand-blue-600/10 outline-none"
+                          className="w-full bg-ink-50 border border-ink-100 rounded-xl px-4 py-3 text-sm font-bold text-ink-900 focus:ring-2 focus:ring-blue-600/10 outline-none"
                         />
                       </div>
                     </div>
@@ -1203,7 +1203,7 @@ export default function ExaminerDashboard() {
                             onChange={(e) =>
                               setWsForm({ ...wsForm, [f.k]: e.target.value })
                             }
-                            className="w-full bg-ink-50 border border-ink-100 rounded-xl px-3 py-2 text-sm font-bold text-ink-900 focus:ring-2 focus:ring-brand-blue-600/10 outline-none"
+                            className="w-full bg-ink-50 border border-ink-100 rounded-xl px-3 py-2 text-sm font-bold text-ink-900 focus:ring-2 focus:ring-blue-600/10 outline-none"
                           >
                             <option value="">Pilih...</option>
                             <option value="1">1</option>
@@ -1235,7 +1235,7 @@ export default function ExaminerDashboard() {
                                 [`q${idx + 1}`]: e.target.value,
                               })
                             }
-                            className="w-full bg-ink-50 border border-ink-100 rounded-xl px-3 py-2 text-sm font-bold text-ink-900 focus:ring-2 focus:ring-brand-blue-600/10 outline-none"
+                            className="w-full bg-ink-50 border border-ink-100 rounded-xl px-3 py-2 text-sm font-bold text-ink-900 focus:ring-2 focus:ring-blue-600/10 outline-none"
                           >
                             <option value="">Pilih...</option>
                             <option value="A">
@@ -1258,7 +1258,7 @@ export default function ExaminerDashboard() {
                       onChange={(e) => setCatatan(e.target.value)}
                       rows={3}
                       placeholder="Tambahkan catatan jika diperlukan..."
-                      className="w-full bg-ink-50 border border-ink-100 rounded-xl px-4 py-3 text-sm font-bold text-ink-900 focus:ring-2 focus:ring-brand-blue-600/10 outline-none"
+                      className="w-full bg-ink-50 border border-ink-100 rounded-xl px-4 py-3 text-sm font-bold text-ink-900 focus:ring-2 focus:ring-blue-600/10 outline-none"
                     ></textarea>
                   </div>
                 </div>
@@ -1267,7 +1267,7 @@ export default function ExaminerDashboard() {
                 <Button
                   onClick={handleSubmitScore}
                   disabled={isSubmitting}
-                  className="w-full sm:w-auto bg-brand-blue-600 hover:bg-brand-blue-700 text-white rounded-2xl px-8 py-3 font-black shadow-lg shadow-brand-blue-600/20 disabled:opacity-50"
+                  className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white rounded-2xl px-8 py-3 font-black shadow-lg shadow-blue-600/20 disabled:opacity-50"
                 >
                   {isSubmitting ? "Menyimpan..." : "Simpan Nilai"}
                 </Button>

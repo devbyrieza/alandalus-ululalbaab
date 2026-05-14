@@ -147,16 +147,16 @@ function StatCard({
           className={[
             "relative mb-6 w-13 h-13 md:w-14 md:h-14 flex items-center justify-center rounded-xl shadow-xs",
             "transition-all duration-500 group-hover:scale-110",
-            isBlue ? "bg-brand-blue-50 text-brand-blue-700 group-hover:bg-brand-blue-100" : "",
-            isAmber ? "bg-brand-yellow-100 text-brand-blue-700 group-hover:bg-brand-yellow-200" : "",
+            isBlue ? "bg-blue-50 text-blue-700 group-hover:bg-blue-100" : "",
+            isAmber ? "bg-amber-100 text-blue-700 group-hover:bg-amber-200" : "",
           ].join(" ")}
         >
           <Icon className="w-5 h-5 md:w-6 md:h-6" strokeWidth={1.75} />
           <div
             className={[
               "absolute inset-0 rounded-xl ring-0 transition-all duration-500",
-              isBlue ? "group-hover:ring-2 group-hover:ring-brand-blue-200" : "",
-              isAmber ? "group-hover:ring-2 group-hover:ring-brand-yellow-300" : "",
+              isBlue ? "group-hover:ring-2 group-hover:ring-blue-200" : "",
+              isAmber ? "group-hover:ring-2 group-hover:ring-amber-300" : "",
             ].join(" ")}
           />
         </div>
@@ -166,8 +166,8 @@ function StatCard({
           <span
             className={[
               "text-[2.625rem] md:text-[3.25rem] font-black leading-none tracking-[-0.04em]",
-              isBlue ? "text-brand-blue-700" : "",
-              isAmber ? "text-brand-blue-800" : "",
+              isBlue ? "text-blue-700" : "",
+              isAmber ? "text-blue-800" : "",
             ].join(" ")}
           >
             <AnimatedCounter
@@ -180,8 +180,8 @@ function StatCard({
             <span
               className={[
                 "text-2xl md:text-3xl font-black leading-none tracking-[-0.03em]",
-                isBlue ? "text-brand-blue-500" : "",
-                isAmber ? "text-brand-yellow-600" : "",
+                isBlue ? "text-blue-500" : "",
+                isAmber ? "text-amber-600" : "",
               ].join(" ")}
             >
               {stat.suffix}
@@ -198,8 +198,8 @@ function StatCard({
         <p
           className={[
             "text-[0.6rem] md:text-[0.65rem] font-semibold tracking-wide mt-0.5",
-            isBlue ? "text-brand-blue-500" : "",
-            isAmber ? "text-brand-yellow-500" : "",
+            isBlue ? "text-blue-500" : "",
+            isAmber ? "text-amber-500" : "",
           ].join(" ")}
         >
           {stat.sublabel}
@@ -217,8 +217,8 @@ function StatCard({
         <div
           className={[
             "mt-5 h-[2px] w-6 rounded-full transition-all duration-500 group-hover:w-10",
-            isBlue ? "bg-brand-blue-100 group-hover:bg-brand-blue-500" : "",
-            isAmber ? "bg-brand-yellow-200 group-hover:bg-brand-blue-300" : "",
+            isBlue ? "bg-blue-100 group-hover:bg-blue-500" : "",
+            isAmber ? "bg-amber-200 group-hover:bg-blue-300" : "",
           ].join(" ")}
         />
       </div>
@@ -258,23 +258,23 @@ export default function StatsSection() {
           >
             {/* CiroAI-style badges */}
             {/* Badge 1 — Pulse */}
-            <div className="section-label section-label-blue hover:bg-brand-blue-50/50 cursor-default">
+            <div className="section-label section-label-blue hover:bg-blue-50/50 cursor-default">
               <span className="relative flex h-2 w-2 shrink-0">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-blue-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-blue-500" />
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500" />
               </span>
               <span>Pendaftaran Dibuka</span>
             </div>
 
             {/* Badge 2 — Akreditasi */}
-            <div className="section-label section-label-white border-brand-yellow-200 text-ink-700 bg-brand-yellow-50/50 hover:bg-brand-yellow-100/50 cursor-default">
-              <ShieldCheck className="w-3 h-3 shrink-0 text-brand-blue-600" strokeWidth={2} />
+            <div className="section-label section-label-white border-amber-200 text-ink-700 bg-amber-50/50 hover:bg-amber-100/50 cursor-default">
+              <ShieldCheck className="w-3 h-3 shrink-0 text-blue-600" strokeWidth={2} />
               <span>Terakreditasi A — BAN-PDM</span>
             </div>
 
             {/* Badge 3 — School Network */}
-            <div className="section-label section-label-blue hover:bg-brand-blue-50/50 cursor-default">
-              <TrendingUp className="w-3 h-3 shrink-0 text-brand-blue-600" strokeWidth={2} />
+            <div className="section-label section-label-blue hover:bg-blue-50/50 cursor-default">
+              <TrendingUp className="w-3 h-3 shrink-0 text-blue-600" strokeWidth={2} />
               <span>{BRANDING.schoolNetwork}</span>
             </div>
           </motion.div>

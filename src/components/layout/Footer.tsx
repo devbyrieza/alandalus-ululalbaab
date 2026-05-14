@@ -45,7 +45,7 @@ export default function Footer() {
       className="relative overflow-hidden pt-20 pb-28 md:pb-14"
       style={{
         background:
-          "linear-gradient(160deg, var(--color-brand-blue-900) 0%, var(--color-brand-blue-950) 55%, #010E28 100%)",
+          "linear-gradient(160deg, var(--color-blue-900) 0%, var(--color-blue-950) 55%, #010E28 100%)",
         borderTop: "1px solid rgba(255,255,255,0.05)",
       }}
     >
@@ -92,7 +92,7 @@ export default function Footer() {
                 className="w-12 h-12 rounded-2xl flex items-center justify-center overflow-hidden flex-shrink-0 transition-all duration-500 group-hover:scale-105 group-hover:-rotate-3"
                 style={{
                   background:
-                    "linear-gradient(135deg, var(--color-brand-yellow-200) 0%, var(--color-brand-yellow-400) 100%)",
+                    "linear-gradient(135deg, var(--color-amber-200) 0%, var(--color-amber-400) 100%)",
                   boxShadow: "0 4px 20px rgba(251,191,36,0.30)",
                 }}
               >
@@ -110,7 +110,7 @@ export default function Footer() {
                 </h3>
                 <p
                   className="text-[10px] font-bold uppercase tracking-widest mt-1.5"
-                  style={{ color: "var(--color-brand-yellow-400)" }}
+                  style={{ color: "var(--color-amber-400)" }}
                 >
                   Pesantren Modern International
                 </p>
@@ -140,9 +140,9 @@ export default function Footer() {
                   }}
                   onMouseEnter={(e) => {
                     const el = e.currentTarget as HTMLElement;
-                    el.style.background = "var(--color-brand-yellow-400)";
-                    el.style.borderColor = "var(--color-brand-yellow-400)";
-                    el.style.color = "var(--color-brand-blue-950)";
+                    el.style.background = "var(--color-amber-400)";
+                    el.style.borderColor = "var(--color-amber-400)";
+                    el.style.color = "var(--color-blue-950)";
                     el.style.transform = "translateY(-2px)";
                     el.style.boxShadow = "0 6px 16px rgba(251,191,36,0.35)";
                   }}
@@ -165,7 +165,7 @@ export default function Footer() {
           <div className="space-y-6">
             <h4
               className="text-xs font-black uppercase tracking-[0.12em]"
-              style={{ color: "var(--color-brand-yellow-400)" }}
+              style={{ color: "var(--color-amber-400)" }}
             >
               Lembaga
             </h4>
@@ -187,7 +187,7 @@ export default function Footer() {
                     {item}
                     <ArrowUpRight
                       className="w-3.5 h-3.5 opacity-0 -translate-y-0.5 translate-x-0.5 group-hover/link:opacity-100 group-hover/link:translate-y-0 group-hover/link:translate-x-0 transition-all duration-200 flex-shrink-0"
-                      style={{ color: "var(--color-brand-yellow-400)" }}
+                      style={{ color: "var(--color-amber-400)" }}
                     />
                   </Link>
                 </li>
@@ -199,7 +199,7 @@ export default function Footer() {
           <div className="space-y-6">
             <h4
               className="text-xs font-black uppercase tracking-[0.12em]"
-              style={{ color: "var(--color-brand-yellow-400)" }}
+              style={{ color: "var(--color-amber-400)" }}
             >
               Informasi
             </h4>
@@ -229,7 +229,7 @@ export default function Footer() {
           <div className="space-y-6">
             <h4
               className="text-xs font-black uppercase tracking-[0.12em]"
-              style={{ color: "var(--color-brand-yellow-400)" }}
+              style={{ color: "var(--color-amber-400)" }}
             >
               Kontak Kami
             </h4>
@@ -241,7 +241,7 @@ export default function Footer() {
                   style={{
                     background: "rgba(255,255,255,0.06)",
                     border: "1px solid rgba(255,255,255,0.10)",
-                    color: "var(--color-brand-yellow-400)",
+                    color: "var(--color-amber-400)",
                   }}
                 >
                   <MapPin className="w-4 h-4" />
@@ -262,7 +262,7 @@ export default function Footer() {
                   style={{
                     background: "rgba(255,255,255,0.06)",
                     border: "1px solid rgba(255,255,255,0.10)",
-                    color: "var(--color-brand-yellow-400)",
+                    color: "var(--color-amber-400)",
                   }}
                 >
                   <Phone className="w-4 h-4" />
@@ -287,7 +287,7 @@ export default function Footer() {
                   style={{
                     background: "rgba(255,255,255,0.06)",
                     border: "1px solid rgba(255,255,255,0.10)",
-                    color: "var(--color-brand-yellow-400)",
+                    color: "var(--color-amber-400)",
                   }}
                 >
                   <Mail className="w-4 h-4" />
@@ -339,7 +339,7 @@ export default function Footer() {
               style={{
                 background: "rgba(251,191,36,0.08)",
                 border: "1px solid rgba(251,191,36,0.18)",
-                color: "var(--color-brand-yellow-400)",
+                color: "var(--color-amber-400)",
               }}
             >
               <Globe className="w-3.5 h-3.5" />

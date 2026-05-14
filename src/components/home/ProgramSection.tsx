@@ -15,7 +15,7 @@ import { motion, Variants } from "framer-motion";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
-type ProgramVariant = "blue" | "yellow" | "teal";
+type ProgramVariant = "blue" | "amber";
 
 interface ProgramItem {
   title: string;
@@ -57,7 +57,7 @@ const PROGRAMS: ProgramItem[] = [
     ],
     quotaLabel: "Putra 32 · Putri 30",
     icon: BookOpen,
-    variant: "yellow",
+    variant: "amber",
   },
 ];
 
@@ -92,47 +92,30 @@ function getTokens(variant: ProgramVariant) {
     case "blue":
       return {
         accentBar:
-          "bg-gradient-to-r from-brand-blue-700 via-brand-blue-500 to-brand-blue-300",
-        corner: "bg-brand-blue-50",
-        icon: "bg-brand-blue-600 text-white ring-1 ring-brand-blue-200",
-        subtitleText: "text-brand-blue-500",
-        dividerLine: "bg-brand-blue-200",
-        checkBg: "bg-brand-blue-50 border-brand-blue-200",
+          "bg-gradient-to-r from-blue-700 via-blue-500 to-blue-300",
+        corner: "bg-blue-50",
+        icon: "bg-blue-600 text-white ring-1 ring-blue-200",
+        subtitleText: "text-blue-500",
+        dividerLine: "bg-blue-200",
+        checkBg: "bg-blue-50 border-blue-200",
         checkHover:
-          "group-hover/item:bg-brand-blue-600 group-hover/item:border-brand-blue-600",
-        checkIcon: "text-brand-blue-600 group-hover/item:text-white",
+          "group-hover/item:bg-blue-600 group-hover/item:border-blue-600",
+        checkIcon: "text-blue-600 group-hover/item:text-white",
         ctaBtn:
-          "bg-white border-brand-blue-200 text-brand-blue-800 hover:bg-brand-blue-700 hover:border-brand-blue-700 hover:text-white shadow-sm hover:shadow-md",
+          "bg-white border-blue-200 text-blue-800 hover:bg-blue-700 hover:border-blue-700 hover:text-white shadow-sm hover:shadow-md",
       };
-    case "yellow":
+    case "amber":
       return {
-        accentBar:
-          "bg-gradient-to-r from-brand-yellow-500 via-brand-yellow-400 to-brand-yellow-200",
-        corner: "bg-brand-yellow-50",
-        icon: "bg-brand-yellow-400 text-brand-blue-950 ring-1 ring-brand-yellow-200",
-        subtitleText: "text-brand-yellow-600",
-        dividerLine: "bg-brand-yellow-300",
-        checkBg: "bg-brand-yellow-50 border-brand-yellow-200",
+        accentBar: "bg-gradient-to-r from-amber-600 via-amber-400 to-amber-200",
+        corner: "bg-amber-50",
+        icon: "bg-amber-500 text-white ring-1 ring-amber-100",
+        subtitleText: "text-amber-600",
+        dividerLine: "bg-amber-100",
+        checkBg: "bg-amber-50 border-amber-200",
         checkHover:
-          "group-hover/item:bg-brand-yellow-500 group-hover/item:border-brand-yellow-500",
-        checkIcon: "text-brand-yellow-600 group-hover/item:text-white",
-        ctaBtn:
-          "bg-white border-brand-yellow-300 text-brand-blue-800 hover:bg-brand-yellow-400 hover:border-brand-yellow-400 hover:text-brand-blue-950 shadow-sm hover:shadow-md",
-      };
-    case "teal":
-      return {
-        accentBar:
-          "bg-gradient-to-r from-brand-blue-400 via-brand-yellow-400 to-brand-blue-300",
-        corner: "bg-brand-blue-50",
-        icon: "bg-brand-blue-800 text-brand-yellow-300 ring-1 ring-brand-blue-200",
-        subtitleText: "text-brand-blue-400",
-        dividerLine: "bg-brand-blue-200",
-        checkBg: "bg-brand-blue-50 border-brand-blue-200",
-        checkHover:
-          "group-hover/item:bg-brand-blue-800 group-hover/item:border-brand-blue-800",
-        checkIcon: "text-brand-blue-600 group-hover/item:text-brand-yellow-300",
-        ctaBtn:
-          "bg-white border-brand-blue-200 text-brand-blue-800 hover:bg-brand-blue-800 hover:border-brand-blue-800 hover:text-white shadow-sm hover:shadow-md",
+          "group-hover/item:bg-amber-500 group-hover/item:border-amber-500",
+        checkIcon: "text-amber-600 group-hover/item:text-white",
+        ctaBtn: "bg-white border-amber-200 text-blue-800 hover:bg-amber-500 hover:border-amber-500 hover:text-white shadow-sm hover:shadow-md",
       };
   }
 }
@@ -141,15 +124,15 @@ export default function ProgramSection() {
   return (
     <section
       id="program"
-      className="section-alt relative overflow-hidden border-y border-brand-blue-100"
+      className="section-alt relative overflow-hidden border-y border-blue-100"
     >
       <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-[0.02] pointer-events-none" />
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 overflow-hidden"
       >
-        <div className="absolute -top-40 -right-40 w-[500px] h-[500px] rounded-full bg-brand-blue-50/70 blur-[100px]" />
-        <div className="absolute -bottom-32 -left-32 w-[400px] h-[400px] rounded-full bg-brand-yellow-100/40 blur-[80px]" />
+        <div className="absolute -top-40 -right-40 w-[500px] h-[500px] rounded-full bg-blue-50/70 blur-[100px]" />
+        <div className="absolute -bottom-32 -left-32 w-[400px] h-[400px] rounded-full bg-amber-100/40 blur-[80px]" />
       </div>
 
       <Container className="relative z-10">
@@ -159,7 +142,7 @@ export default function ProgramSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-40px" }}
             transition={{ duration: 0.5, ease: EASE }}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-brand-yellow-200 text-brand-blue-700 text-[0.65rem] font-bold uppercase tracking-[0.12em] shadow-xs mb-5"
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-amber-200 text-blue-700 text-[0.65rem] font-bold uppercase tracking-[0.12em] shadow-xs mb-5"
           >
             <GraduationCap className="w-3 h-3" strokeWidth={2} />
             <span>Jenjang Pendidikan</span>
@@ -207,7 +190,7 @@ export default function ProgramSection() {
                 }}
                 className="group h-full"
               >
-                <div className="relative h-full flex flex-col bg-white rounded-[1.5rem] border border-brand-blue-100 overflow-hidden shadow-premium-sm group-hover:shadow-premium-md group-hover:border-brand-blue-200 transition-all duration-400">
+                <div className="relative h-full flex flex-col bg-white rounded-[1.5rem] border border-blue-100 overflow-hidden shadow-premium-sm group-hover:shadow-premium-md group-hover:border-blue-200 transition-all duration-400">
                   <div
                     className={`absolute top-0 left-0 right-0 h-[3px] ${tokens.accentBar}`}
                   />
@@ -240,7 +223,7 @@ export default function ProgramSection() {
                           <span className="text-[0.6rem] font-bold text-ink-400 uppercase tracking-[0.15em]">
                             Syarat Khusus
                           </span>
-                          <div className="flex items-center gap-1.5 bg-brand-yellow-400 text-brand-blue-950 px-2.5 py-1 rounded-[8px] shadow-sm">
+                          <div className="flex items-center gap-1.5 bg-amber-400 text-blue-950 px-2.5 py-1 rounded-[8px] shadow-sm">
                             <span className="text-[0.65rem] font-black">
                               Seleksi
                             </span>
@@ -250,7 +233,7 @@ export default function ProgramSection() {
                     </div>
 
                     <div className="mb-7">
-                      <h3 className="font-display font-black text-[1.35rem] text-ink-950 tracking-tight leading-[1.1] mb-2 group-hover:text-brand-blue-800 transition-colors duration-300">
+                      <h3 className="font-display font-black text-[1.35rem] text-ink-950 tracking-tight leading-[1.1] mb-2 group-hover:text-blue-800 transition-colors duration-300">
                         {program.title}
                       </h3>
                       <p

@@ -119,7 +119,7 @@ export default function PengumumanTab() {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
         <div className="text-center">
-          <Loader2 className="w-12 h-12 animate-spin text-brand-blue-700 mx-auto mb-4" />
+          <Loader2 className="w-12 h-12 animate-spin text-blue-700 mx-auto mb-4" />
           <p className="text-ink-600">Memuat pengumuman...</p>
         </div>
       </div>
@@ -135,9 +135,9 @@ export default function PengumumanTab() {
       className="space-y-8 pb-12"
     >
       {/* Premium Header */}
-      <div className="relative overflow-hidden rounded-[2.5rem] bg-linear-to-br from-brand-blue-800 via-brand-blue-900 to-brand-blue-950 p-10 text-white shadow-2xl border border-white/10">
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-yellow-400/10 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-brand-blue-400/10 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2 pointer-events-none" />
+      <div className="relative overflow-hidden rounded-[2.5rem] bg-linear-to-br from-blue-800 via-blue-900 to-blue-950 p-10 text-white shadow-2xl border border-white/10">
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-amber-400/10 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-blue-400/10 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2 pointer-events-none" />
 
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-8">
           <div className="flex items-center gap-6">
@@ -145,15 +145,15 @@ export default function PengumumanTab() {
               initial={{ scale: 0.8, rotate: -10 }}
               animate={{ scale: 1, rotate: 0 }}
               transition={{ type: "spring", stiffness: 200 }}
-              className="w-20 h-20 rounded-3xl bg-linear-to-br from-brand-yellow-400 to-brand-yellow-600 flex items-center justify-center shadow-lg border border-white/20 shrink-0"
+              className="w-20 h-20 rounded-3xl bg-linear-to-br from-amber-400 to-amber-600 flex items-center justify-center shadow-lg border border-white/20 shrink-0"
             >
-              <Trophy className="w-10 h-10 text-brand-blue-950" />
+              <Trophy className="w-10 h-10 text-blue-950" />
             </motion.div>
             <div>
               <h1 className="text-3xl md:text-4xl font-black mb-2 tracking-tight text-white font-display">
                 Hasil Seleksi
               </h1>
-              <p className="text-brand-yellow-100/80 font-medium text-lg">
+              <p className="text-amber-100/80 font-medium text-lg">
                 Penerimaan Santri Baru TP 2026/2027
               </p>
             </div>
@@ -166,10 +166,10 @@ export default function PengumumanTab() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
-          className="bg-white/70 backdrop-blur-xl rounded-[2.5rem] p-16 shadow-xl border border-brand-blue-100 text-center"
+          className="bg-white/70 backdrop-blur-xl rounded-[2.5rem] p-16 shadow-xl border border-blue-100 text-center"
         >
-          <div className="w-24 h-24 bg-brand-blue-50 rounded-full flex items-center justify-center mx-auto mb-8 shadow-inner ring-8 ring-brand-blue-50/50">
-            <Calendar className="w-10 h-10 text-brand-blue-600" />
+          <div className="w-24 h-24 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-8 shadow-inner ring-8 ring-blue-50/50">
+            <Calendar className="w-10 h-10 text-blue-600" />
           </div>
           <h3 className="text-2xl font-black text-ink-900 mb-4 font-display">
             Menunggu Pengumuman
@@ -178,8 +178,8 @@ export default function PengumumanTab() {
             Hasil seleksi akan segera diumumkan secara resmi melalui halaman
             ini. Pastikan Anda terus memantau dashboard untuk informasi terbaru.
           </p>
-          <div className="inline-flex items-center gap-3 px-6 py-3 bg-brand-blue-50 text-brand-blue-800 rounded-full font-bold border border-brand-blue-200">
-            <Loader2 className="w-5 h-5 animate-spin text-brand-blue-600" />
+          <div className="inline-flex items-center gap-3 px-6 py-3 bg-blue-50 text-blue-800 rounded-full font-bold border border-blue-200">
+            <Loader2 className="w-5 h-5 animate-spin text-blue-600" />
             <span>Proses Rekapitulasi Data...</span>
           </div>
         </motion.div>
@@ -199,7 +199,7 @@ export default function PengumumanTab() {
 
                 <div className="relative z-10">
                   <div className="inline-flex items-center gap-3 px-5 py-2 bg-white/20 backdrop-blur-md rounded-full border border-white/30 mb-8">
-                    <div className="w-2 h-2 rounded-full bg-brand-yellow-400 animate-pulse" />
+                    <div className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
                     <span className="text-xs font-black tracking-widest uppercase text-emerald-50">
                       Alhamdulillah
                     </span>
@@ -214,7 +214,7 @@ export default function PengumumanTab() {
                   <p className="text-emerald-50/90 mb-12 max-w-xl text-xl leading-relaxed font-medium">
                     Kami dengan bangga mengumumkan bahwa berdasarkan hasil
                     seleksi, Anda dinyatakan{" "}
-                    <span className="text-brand-yellow-300 font-black underline decoration-brand-yellow-400/50 underline-offset-4">
+                    <span className="text-amber-300 font-black underline decoration-amber-400/50 underline-offset-4">
                       DITERIMA
                     </span>{" "}
                     sebagai santri baru di PP Al Andalus Ulul Albaab.
@@ -224,7 +224,7 @@ export default function PengumumanTab() {
                     <button
                       onClick={handleDownloadSurat}
                       disabled={isGenerating}
-                      className="inline-flex items-center justify-center gap-3 px-10 py-5 bg-white text-brand-blue-950 rounded-2xl font-black hover:bg-brand-yellow-400 transition-all shadow-xl active:scale-95 disabled:opacity-50 group/btn"
+                      className="inline-flex items-center justify-center gap-3 px-10 py-5 bg-white text-blue-950 rounded-2xl font-black hover:bg-amber-400 transition-all shadow-xl active:scale-95 disabled:opacity-50 group/btn"
                     >
                       {isGenerating ? (
                         <Loader2 className="w-6 h-6 animate-spin" />
@@ -260,7 +260,7 @@ export default function PengumumanTab() {
 
                   <p className="text-amber-50/90 mb-12 max-w-xl text-xl leading-relaxed font-medium">
                     Berdasarkan hasil seleksi, Anda menempati posisi{" "}
-                    <span className="text-brand-blue-950 font-black">
+                    <span className="text-blue-950 font-black">
                       CADANGAN
                     </span>
                     . Anda akan dihubungi oleh panitia jika terdapat kuota yang
@@ -270,7 +270,7 @@ export default function PengumumanTab() {
                   <button
                     onClick={handleDownloadSurat}
                     disabled={isGenerating}
-                    className="inline-flex items-center justify-center gap-3 px-10 py-5 bg-brand-blue-950 text-white rounded-2xl font-black hover:bg-brand-blue-900 transition-all shadow-xl active:scale-95 disabled:opacity-50"
+                    className="inline-flex items-center justify-center gap-3 px-10 py-5 bg-blue-950 text-white rounded-2xl font-black hover:bg-blue-900 transition-all shadow-xl active:scale-95 disabled:opacity-50"
                   >
                     {isGenerating ? (
                       <Loader2 className="w-6 h-6 animate-spin" />
@@ -317,14 +317,14 @@ export default function PengumumanTab() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
-              className="bg-white rounded-[2.5rem] p-10 shadow-xl border border-brand-blue-100"
+              className="bg-white rounded-[2.5rem] p-10 shadow-xl border border-blue-100"
             >
               <div className="flex items-start gap-6">
-                <div className="p-4 bg-brand-blue-50 rounded-2xl">
+                <div className="p-4 bg-blue-50 rounded-2xl">
                   {pengumuman.status_kelulusan === "diterima" ? (
-                    <CheckCircle className="w-8 h-8 text-brand-blue-700" />
+                    <CheckCircle className="w-8 h-8 text-blue-700" />
                   ) : (
-                    <AlertCircle className="w-8 h-8 text-brand-blue-700" />
+                    <AlertCircle className="w-8 h-8 text-blue-700" />
                   )}
                 </div>
                 <div>
@@ -369,11 +369,11 @@ export default function PengumumanTab() {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.5 }}
-              className="bg-white/80 backdrop-blur-md rounded-[2.5rem] p-8 shadow-xl border border-brand-blue-100 sticky top-8"
+              className="bg-white/80 backdrop-blur-md rounded-[2.5rem] p-8 shadow-xl border border-blue-100 sticky top-8"
             >
               <div className="flex items-center gap-4 mb-8">
-                <div className="p-3 bg-brand-blue-50 rounded-xl">
-                  <FileText className="w-6 h-6 text-brand-blue-700" />
+                <div className="p-3 bg-blue-50 rounded-xl">
+                  <FileText className="w-6 h-6 text-blue-700" />
                 </div>
                 <h3 className="text-xl font-black text-ink-900 font-display">
                   Detail Data
@@ -382,22 +382,22 @@ export default function PengumumanTab() {
 
               <div className="space-y-6">
                 <div>
-                  <label className="text-xs font-black text-brand-blue-400 uppercase tracking-widest block mb-2">
+                  <label className="text-xs font-black text-blue-400 uppercase tracking-widest block mb-2">
                     Tanggal Rilis
                   </label>
                   <p className="text-lg font-bold text-ink-900 flex items-center gap-2">
-                    <Calendar className="w-5 h-5 text-brand-blue-600" />
+                    <Calendar className="w-5 h-5 text-blue-600" />
                     {formatDate(pengumuman.tanggal_pengumuman)}
                   </p>
                 </div>
 
-                <div className="h-px bg-linear-to-r from-transparent via-brand-blue-100 to-transparent" />
+                <div className="h-px bg-linear-to-r from-transparent via-blue-100 to-transparent" />
 
                 <div>
-                  <label className="text-xs font-black text-brand-blue-400 uppercase tracking-widest block mb-3">
+                  <label className="text-xs font-black text-blue-400 uppercase tracking-widest block mb-3">
                     Catatan Panitia
                   </label>
-                  <div className="bg-brand-blue-50/50 rounded-2xl p-5 border border-brand-blue-100 italic text-brand-blue-900 leading-relaxed font-medium">
+                  <div className="bg-blue-50/50 rounded-2xl p-5 border border-blue-100 italic text-blue-900 leading-relaxed font-medium">
                     "{pengumuman.catatan || "Tidak ada catatan tambahan."}"
                   </div>
                 </div>

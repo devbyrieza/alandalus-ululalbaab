@@ -43,10 +43,10 @@ function MemberCard({
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: true, margin: "-40px" }}
       transition={{ delay: index * 0.07, duration: 0.6, ease: EASE }}
-      className="group flex items-center gap-5 p-4 md:p-5 bg-white rounded-2xl border border-brand-blue-100 shadow-premium-sm hover:shadow-premium-md hover:border-brand-blue-300 transition-all duration-400"
+      className="group flex items-center gap-5 p-4 md:p-5 bg-white rounded-2xl border border-blue-100 shadow-premium-sm hover:shadow-premium-md hover:border-blue-300 transition-all duration-400"
     >
       {/* Avatar */}
-      <div className="relative w-[72px] h-[72px] md:w-20 md:h-20 rounded-xl overflow-hidden shrink-0 bg-brand-blue-50 border border-brand-blue-100 shadow-xs transition-transform duration-500 group-hover:scale-[1.04]">
+      <div className="relative w-[72px] h-[72px] md:w-20 md:h-20 rounded-xl overflow-hidden shrink-0 bg-blue-50 border border-blue-100 shadow-xs transition-transform duration-500 group-hover:scale-[1.04]">
         {image ? (
           <Image
             src={image}
@@ -57,21 +57,21 @@ function MemberCard({
             className="object-cover"
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center bg-brand-blue-50 group-hover:bg-brand-blue-100 transition-colors duration-400">
-            <User className="w-7 h-7 text-brand-blue-300" />
+          <div className="w-full h-full flex items-center justify-center bg-blue-50 group-hover:bg-blue-100 transition-colors duration-400">
+            <User className="w-7 h-7 text-blue-300" />
           </div>
         )}
         {/* Hover tint */}
-        <div className="absolute inset-0 bg-brand-blue-900/0 group-hover:bg-brand-blue-900/8 transition-colors duration-400" />
+        <div className="absolute inset-0 bg-blue-900/0 group-hover:bg-blue-900/8 transition-colors duration-400" />
       </div>
 
       {/* Name */}
       <div className="min-w-0 flex-1">
-        <h4 className="font-bold text-[0.9rem] md:text-[0.9375rem] text-ink-900 leading-snug tracking-tight group-hover:text-brand-blue-700 transition-colors duration-300">
+        <h4 className="font-bold text-[0.9rem] md:text-[0.9375rem] text-ink-900 leading-snug tracking-tight group-hover:text-blue-700 transition-colors duration-300">
           {name}
         </h4>
         {/* Brand accent bar */}
-        <div className="mt-2 h-[2px] w-5 rounded-full bg-brand-blue-100 group-hover:w-10 group-hover:bg-brand-blue-500 transition-all duration-500" />
+        <div className="mt-2 h-[2px] w-5 rounded-full bg-blue-100 group-hover:w-10 group-hover:bg-blue-500 transition-all duration-500" />
       </div>
 
 
@@ -107,7 +107,7 @@ export default function BoardSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, ease: EASE }}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-blue-50 border border-brand-blue-100 text-brand-blue-700 text-[0.65rem] font-bold uppercase tracking-[0.12em] mb-5 shadow-xs"
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-[0.65rem] font-bold uppercase tracking-[0.12em] mb-5 shadow-xs"
           >
             <Users className="w-3 h-3 shrink-0" strokeWidth={2} />
             <span>Struktur Organisasi</span>

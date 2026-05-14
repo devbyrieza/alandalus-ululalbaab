@@ -9,7 +9,7 @@ export const BRANDING = {
   schoolNetwork:
     process.env.NEXT_PUBLIC_SCHOOL_NETWORK || "Jaringan Al Andalus",
   primaryColor: process.env.NEXT_PUBLIC_PRIMARY_COLOR || "#0284c7", // Default Blue Ulul Albaab
-  secondaryColor: process.env.NEXT_PUBLIC_SECONDARY_COLOR || "#f59e0b", // Default Yellow Ulul Albaab
+  secondaryColor: process.env.NEXT_PUBLIC_SECONDARY_COLOR || "#f59e0b", // Default Amber Ulul Albaab
   logoPath: process.env.NEXT_PUBLIC_LOGO_PATH || "/images/logo.jpg",
   faviconPath: process.env.NEXT_PUBLIC_FAVICON_PATH || "/favicon.ico",
   websiteUrl:

@@ -2689,7 +2689,7 @@
     border: none;
   }
 
-  .divider-gradient-brand-blue {
+  .divider-gradient-blue {
     height: 1px;
     background: linear-gradient(90deg, transparent, var(--color-blue-200) 30%, var(--color-blue-200) 70%, transparent);
     border: none;

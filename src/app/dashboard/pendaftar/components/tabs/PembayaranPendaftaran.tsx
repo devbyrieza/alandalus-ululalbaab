@@ -271,7 +271,7 @@ function PaymentTimeline({ paymentStatus }: { paymentStatus: PaymentStatus }) {
               "bg-emerald-500 border-emerald-500 text-white shadow-emerald-500/30";
           if (step.status === "current")
             statusColor =
-              "bg-white border-brand-blue-600 text-brand-blue-700 shadow-lg shadow-brand-blue-600/20";
+              "bg-white border-blue-600 text-blue-700 shadow-lg shadow-blue-600/20";
 
           return (
             <div key={step.id} className="flex flex-col items-center">
@@ -394,9 +394,9 @@ function UploadArea({
     <div className="space-y-6">
       {/* Current file info (Always show existing file if available and NOT currently selecting a NEW file) */}
       {currentFile && !selectedFile && !isRejected && (
-        <div className="p-4 bg-brand-yellow-50 border border-brand-yellow-100 rounded-2xl flex items-center gap-4">
-          <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center border border-brand-yellow-100 shadow-sm transition-transform hover:scale-110">
-            <FileText className="w-6 h-6 text-brand-yellow-500" />
+        <div className="p-4 bg-amber-50 border border-amber-100 rounded-2xl flex items-center gap-4">
+          <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center border border-amber-100 shadow-sm transition-transform hover:scale-110">
+            <FileText className="w-6 h-6 text-amber-500" />
           </div>
           <div className="flex-1 min-w-0">
             <p className="text-xs font-bold text-blue-500 uppercase tracking-wide mb-0.5">
@@ -406,8 +406,8 @@ function UploadArea({
               {currentFile.name}
             </p>
           </div>
-          <div className="w-8 h-8 rounded-full bg-brand-yellow-100 flex items-center justify-center">
-            <Check className="w-4 h-4 text-brand-blue-600" />
+          <div className="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center">
+            <Check className="w-4 h-4 text-blue-600" />
           </div>
         </div>
       )}
@@ -416,12 +416,12 @@ function UploadArea({
       <div
         className={`relative overflow-hidden group border-2 border-dashed rounded-[2rem] transition-all ${
           isDragging
-            ? "border-brand-blue-600 bg-brand-yellow-50/50 scale-[1.01]"
+            ? "border-blue-600 bg-amber-50/50 scale-[1.01]"
             : isRejected && !selectedFile
               ? "border-red-300 bg-red-50 hover:border-red-400"
               : selectedFile
-                ? "border-brand-blue-600 bg-white" // Solid border when file selected
-                : "border-ink-200 hover:border-brand-blue-400 hover:bg-surface-50 cursor-pointer"
+                ? "border-blue-600 bg-white" // Solid border when file selected
+                : "border-ink-200 hover:border-blue-400 hover:bg-surface-50 cursor-pointer"
         } ${isUploading ? "pointer-events-none opacity-80" : ""}`}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
@@ -488,7 +488,7 @@ function UploadArea({
                 <button
                   onClick={handleUploadClick}
                   disabled={isUploading}
-                  className="flex-1 sm:flex-none px-8 py-3 bg-brand-yellow-400 text-brand-blue-950 font-black rounded-xl hover:bg-brand-yellow-300 transition-colors shadow-lg shadow-brand-yellow-400/30 flex items-center justify-center gap-2"
+                  className="flex-1 sm:flex-none px-8 py-3 bg-amber-400 text-blue-950 font-black rounded-xl hover:bg-amber-300 transition-colors shadow-lg shadow-amber-400/30 flex items-center justify-center gap-2"
                 >
                   {isUploading ? (
                     <Loader2 className="w-5 h-5 animate-spin" />
@@ -525,11 +525,11 @@ function UploadArea({
                         strokeWidth="4"
                       />
                     </svg>
-                    <div className="absolute inset-0 flex items-center justify-center font-bold text-brand-blue-800 text-sm">
+                    <div className="absolute inset-0 flex items-center justify-center font-bold text-blue-800 text-sm">
                       {uploadProgress}%
                     </div>
                   </div>
-                  <p className="font-bold text-brand-blue-900">Mengupload...</p>
+                  <p className="font-bold text-blue-900">Mengupload...</p>
                 </div>
               </div>
             )}
@@ -541,7 +541,7 @@ function UploadArea({
               className={`w-20 h-20 rounded-3xl flex items-center justify-center transition-transform duration-300 group-hover:scale-110 shadow-sm ${
                 isRejected && !currentFile
                   ? "bg-red-100 text-red-600"
-                  : "bg-brand-yellow-50 text-brand-blue-700"
+                  : "bg-amber-50 text-blue-700"
               }`}
             >
               <Upload className="w-10 h-10" />
@@ -801,15 +801,15 @@ export default function PembayaranPendaftaranTab({
       )}
 
       {/* Header Banner */}
-      <div className="relative overflow-hidden rounded-[2rem] bg-linear-to-br from-brand-blue-700 to-brand-blue-900 border border-brand-blue-600 p-8 md:p-10 text-white shadow-lg app-card">
-        <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-brand-yellow-50/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+      <div className="relative overflow-hidden rounded-[2rem] bg-linear-to-br from-blue-700 to-blue-900 border border-blue-600 p-8 md:p-10 text-white shadow-lg app-card">
+        <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-amber-50/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="flex items-start gap-5">
             <div className="w-16 h-16 rounded-[1.5rem] bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 shadow-sm shrink-0">
               {isStatusOnly ? (
-                <Shield className="w-8 h-8 text-brand-yellow-100" />
+                <Shield className="w-8 h-8 text-amber-100" />
               ) : (
-                <CreditCard className="w-8 h-8 text-brand-yellow-100" />
+                <CreditCard className="w-8 h-8 text-amber-100" />
               )}
             </div>
             <div>
@@ -837,7 +837,7 @@ export default function PembayaranPendaftaranTab({
         {/* Main Content Column */}
         <div className="lg:col-span-2 space-y-8">
           {/* Status Card */}
-          <div className="glass-panel p-8 rounded-[2rem] shadow-sm border border-brand-yellow-200 app-card relative overflow-hidden">
+          <div className="glass-panel p-8 rounded-[2rem] shadow-sm border border-amber-200 app-card relative overflow-hidden">
             <div
               className={`absolute top-0 left-0 w-2 h-full ${statusConfig.bgColor}`}
             />{" "}
@@ -961,11 +961,11 @@ export default function PembayaranPendaftaranTab({
           {!isStatusOnly && canMakePayment && (
             <div className="space-y-8">
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 px-2">
-                <h3 className="text-2xl font-black text-brand-blue-950 tracking-tight">
+                <h3 className="text-2xl font-black text-blue-950 tracking-tight">
                   Pilih Metode Pembayaran
                 </h3>
                 {/* Total Price Tag */}
-                <div className="bg-brand-blue-50 text-brand-blue-700 px-5 py-3 md:px-7 md:py-4 rounded-[1.5rem] font-black text-xl md:text-2xl border border-brand-blue-100 shadow-sm flex items-center justify-between sm:justify-center gap-4">
+                <div className="bg-blue-50 text-blue-700 px-5 py-3 md:px-7 md:py-4 rounded-[1.5rem] font-black text-xl md:text-2xl border border-blue-100 shadow-sm flex items-center justify-between sm:justify-center gap-4">
                   <span className="text-sm md:text-base uppercase tracking-widest opacity-70">
                     Total:
                   </span>
@@ -980,7 +980,7 @@ export default function PembayaranPendaftaranTab({
                 {/* CARD 1: MIDTRANS (DEV) */}
                 <div className="relative group bg-white rounded-[2.5rem] p-8 border border-surface-200 shadow-sm transition-all hover:shadow-lg overflow-visible opacity-80 grayscale-[0.5] hover:grayscale-0">
                   {/* Background Decor */}
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-brand-yellow-50 rounded-bl-[4rem] -z-0" />
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-amber-50 rounded-bl-[4rem] -z-0" />
 
                   <div className="relative z-10 flex flex-col h-full">
                     <div className="mb-6">
@@ -1033,30 +1033,30 @@ export default function PembayaranPendaftaranTab({
                   onClick={() => setActivePaymentMethod("manual")}
                   className={`relative group bg-white rounded-[2.5rem] p-8 border-2 transition-all cursor-pointer shadow-lg md:hover:-translate-y-2 md:hover:shadow-2xl overflow-visible ${
                     activePaymentMethod === "manual"
-                      ? "border-brand-blue-600 ring-4 ring-brand-blue-600/10 shadow-brand-blue-600/10"
-                      : "border-white hover:border-brand-blue-300 shadow-sm"
+                      ? "border-blue-600 ring-4 ring-blue-600/10 shadow-blue-600/10"
+                      : "border-white hover:border-blue-300 shadow-sm"
                   }`}
                 >
                   {/* Background Decor - Blue Blur */}
                   <div
                     className={`absolute -top-10 -right-10 w-40 h-40 rounded-full transition-all duration-500 blur-2xl -z-0 ${
                       activePaymentMethod === "manual"
-                        ? "bg-brand-blue-100/60 scale-125"
-                        : "bg-brand-blue-50/50 group-hover:bg-brand-blue-100/40"
+                        ? "bg-blue-100/60 scale-125"
+                        : "bg-blue-50/50 group-hover:bg-blue-100/40"
                     }`}
                   />
 
                   {activePaymentMethod === "manual" && (
                     <div className="absolute top-6 right-6 lg:right-8 z-20">
-                      <div className="w-8 h-8 bg-brand-blue-600 rounded-full flex items-center justify-center animate-in zoom-in shadow-lg shadow-brand-blue-600/30">
+                      <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center animate-in zoom-in shadow-lg shadow-blue-600/30">
                         <Check className="w-5 h-5 text-white" />
                       </div>
                     </div>
                   )}
 
                   {/* Recommendation Badge */}
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-linear-to-r from-brand-blue-700 to-brand-blue-500 text-white text-[10px] sm:text-xs font-black px-6 py-2 rounded-full shadow-lg shadow-brand-blue-600/30 z-20 flex items-center gap-2 uppercase tracking-widest whitespace-nowrap">
-                    <StarIcon className="w-3.5 h-3.5 fill-brand-yellow-300 text-brand-yellow-300" />
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-linear-to-r from-blue-700 to-blue-500 text-white text-[10px] sm:text-xs font-black px-6 py-2 rounded-full shadow-lg shadow-blue-600/30 z-20 flex items-center gap-2 uppercase tracking-widest whitespace-nowrap">
+                    <StarIcon className="w-3.5 h-3.5 fill-amber-300 text-amber-300" />
                     Rekomendasi
                   </div>
 
@@ -1210,10 +1210,10 @@ export default function PembayaranPendaftaranTab({
                       </div>
 
                       {/* RIGHT COLUMN: UPLOAD AREA */}
-                      <div className="bg-white rounded-[2.5rem] border-2 border-dashed border-surface-200 p-8 flex flex-col justify-center relative group hover:border-brand-blue-300 transition-colors">
+                      <div className="bg-white rounded-[2.5rem] border-2 border-dashed border-surface-200 p-8 flex flex-col justify-center relative group hover:border-blue-300 transition-colors">
                         <div className="text-center mb-8">
                           <h5 className="font-bold text-ink-900 text-lg flex items-center justify-center gap-2 mb-2">
-                            <Upload className="w-5 h-5 text-brand-blue-700" />
+                            <Upload className="w-5 h-5 text-blue-700" />
                             Upload Bukti Transfer
                           </h5>
                           <p className="text-sm text-ink-400">
@@ -1282,7 +1282,7 @@ export default function PembayaranPendaftaranTab({
               </div>
               <a
                 href="/dashboard/pendaftar/pembayaran-pendaftaran"
-                className="px-6 py-3 bg-brand-yellow-400 hover:bg-brand-yellow-300 text-brand-blue-950 rounded-xl font-black shadow-lg shadow-brand-yellow-400/20 transition-all hover:scale-105 flex items-center gap-2 border border-brand-yellow-500"
+                className="px-6 py-3 bg-amber-400 hover:bg-amber-300 text-blue-950 rounded-xl font-black shadow-lg shadow-amber-400/20 transition-all hover:scale-105 flex items-center gap-2 border border-amber-500"
               >
                 <span>Ke Halaman Pembayaran</span>
               </a>
@@ -1292,9 +1292,9 @@ export default function PembayaranPendaftaranTab({
 
         {/* Sidebar Column */}
         <div className="space-y-6">
-          <div className="glass-panel p-6 rounded-[2.5rem] shadow-sm border border-brand-yellow-200 app-card">
+          <div className="glass-panel p-6 rounded-[2.5rem] shadow-sm border border-amber-200 app-card">
             <h3 className="text-lg font-bold text-ink-900 mb-4 flex items-center gap-2">
-              <Info className="w-5 h-5 text-brand-blue-700" />
+              <Info className="w-5 h-5 text-blue-700" />
               Rincian Biaya
             </h3>
             <div className="space-y-3">
@@ -1313,7 +1313,7 @@ export default function PembayaranPendaftaranTab({
               <div className="h-px bg-ink-100 my-2" />
               <div className="flex justify-between items-center">
                 <span className="text-ink-900 font-bold">Total Pembayaran</span>
-                <span className="text-xl font-black text-brand-blue-700">
+                <span className="text-xl font-black text-blue-700">
                   {formatRupiah(biayaPendaftaran)}
                 </span>
               </div>

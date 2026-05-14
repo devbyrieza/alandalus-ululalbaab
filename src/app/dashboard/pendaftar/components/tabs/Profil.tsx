@@ -90,7 +90,7 @@ export default function ProfilTab() {
       paid: { label: "Sudah Bayar", color: "bg-blue-100 text-blue-700" },
       data_completed: {
         label: "Data Lengkap",
-        color: "bg-brand-yellow-100 text-brand-blue-800",
+        color: "bg-amber-100 text-blue-800",
       },
       docs_uploaded: {
         label: "Dokumen Terupload",
@@ -134,7 +134,7 @@ export default function ProfilTab() {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
         <div className="text-center">
-          <Loader2 className="w-12 h-12 animate-spin text-brand-blue-700 mx-auto mb-4" />
+          <Loader2 className="w-12 h-12 animate-spin text-blue-700 mx-auto mb-4" />
           <p className="text-stone-600">Memuat profil...</p>
         </div>
       </div>
@@ -152,7 +152,7 @@ export default function ProfilTab() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-gradient-to-r from-brand-blue-600 to-brand-blue-700 rounded-2xl p-6 text-white">
+      <div className="bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl p-6 text-white">
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-black mb-2">Profil Saya</h1>
@@ -186,7 +186,7 @@ export default function ProfilTab() {
         <div className="bg-white rounded-xl shadow-lg p-6 border-2 border-cream-100">
           <div className="flex items-center gap-3 mb-4">
             <div className="p-2 bg-cream-100 rounded-lg">
-              <User className="w-6 h-6 text-brand-blue-700" />
+              <User className="w-6 h-6 text-blue-700" />
             </div>
             <h3 className="text-lg font-bold text-stone-900">Data Pribadi</h3>
           </div>

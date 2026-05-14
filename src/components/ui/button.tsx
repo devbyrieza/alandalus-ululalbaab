@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
    BUTTON — Ulul Albaab Edition
    Token-aligned dengan globals.css ululalbaab:
-   · Warna   : brand-blue, brand-yellow, gold, ink
+   · Warna   : blue, amber, gold, ink
    · Shadow  : --shadow-blue, --shadow-blue-lg, --shadow-yellow, --shadow-yellow-lg
    · Radius  : --radius-full (pill), --radius-md, --radius-lg
    · Easing  : --ease-spring, --ease-smooth
@@ -26,7 +26,7 @@ const buttonVariants = cva(
     /* Focus ring — branded blue */
     "focus-visible:outline-none",
     "focus-visible:ring-2",
-    "focus-visible:ring-[var(--color-brand-blue-500)]",
+    "focus-visible:ring-[var(--color-blue-500)]",
     "focus-visible:ring-offset-2",
     "focus-visible:ring-offset-[var(--color-surface-50)]",
     /* Disabled */
@@ -40,7 +40,7 @@ const buttonVariants = cva(
         /* ─── PRIMARY — Blue gradient utama ─── */
         primary: [
           "relative overflow-hidden",
-          "bg-gradient-to-br from-[var(--color-brand-blue-500)] to-[var(--color-brand-blue-800)]",
+          "bg-gradient-to-br from-[var(--color-blue-500)] to-[var(--color-blue-800)]",
           "text-white",
           "[box-shadow:var(--shadow-blue)]",
           /* Shine overlay */
@@ -56,11 +56,11 @@ const buttonVariants = cva(
         /* ─── SECONDARY — Putih + border blue ─── */
         secondary: [
           "bg-[var(--color-white)]",
-          "text-[var(--color-brand-blue-700)]",
-          "border border-[var(--color-brand-blue-200)]",
+          "text-[var(--color-blue-700)]",
+          "border border-[var(--color-blue-200)]",
           "[box-shadow:var(--shadow-xs)]",
-          "hover:bg-[var(--color-brand-blue-50)]",
-          "hover:border-[var(--color-brand-blue-400)]",
+          "hover:bg-[var(--color-blue-50)]",
+          "hover:border-[var(--color-blue-400)]",
           "hover:[box-shadow:var(--shadow-sm)]",
           "hover:-translate-y-[1px]",
           "active:translate-y-0",
@@ -69,8 +69,8 @@ const buttonVariants = cva(
         /* ─── YELLOW — Kuning energik, aksen identitas ─── */
         yellow: [
           "relative overflow-hidden",
-          "bg-gradient-to-br from-[var(--color-brand-yellow-300)] to-[var(--color-brand-yellow-500)]",
-          "text-[var(--color-brand-blue-900)]",
+          "bg-gradient-to-br from-[var(--color-amber-300)] to-[var(--color-amber-500)]",
+          "text-[var(--color-blue-900)]",
           "[box-shadow:var(--shadow-yellow)]",
           "before:absolute before:inset-0 before:rounded-[inherit]",
           "before:bg-gradient-to-br before:from-white/20 before:to-transparent",
@@ -85,7 +85,7 @@ const buttonVariants = cva(
         gold: [
           "relative overflow-hidden",
           "bg-gradient-to-br from-[var(--color-gold-300)] to-[var(--color-gold-500)]",
-          "text-[var(--color-brand-blue-950)]",
+          "text-[var(--color-blue-950)]",
           "[box-shadow:var(--shadow-gold)]",
           "before:absolute before:inset-0 before:rounded-[inherit]",
           "before:bg-gradient-to-br before:from-white/20 before:to-transparent",
@@ -99,11 +99,11 @@ const buttonVariants = cva(
         /* ─── OUTLINE — Border blue, fill on hover ─── */
         outline: [
           "bg-transparent",
-          "text-[var(--color-brand-blue-600)]",
-          "border-[1.5px] border-[var(--color-brand-blue-300)]",
-          "hover:bg-[var(--color-brand-blue-800)]",
+          "text-[var(--color-blue-600)]",
+          "border-[1.5px] border-[var(--color-blue-300)]",
+          "hover:bg-[var(--color-blue-800)]",
           "hover:text-white",
-          "hover:border-[var(--color-brand-blue-800)]",
+          "hover:border-[var(--color-blue-800)]",
           "hover:[box-shadow:var(--shadow-blue)]",
           "hover:-translate-y-[1px]",
           "active:translate-y-0",
@@ -114,9 +114,9 @@ const buttonVariants = cva(
           "bg-transparent",
           "text-[var(--color-ink-600)]",
           "border border-transparent",
-          "hover:bg-[var(--color-brand-blue-50)]",
-          "hover:text-[var(--color-brand-blue-700)]",
-          "hover:border-[var(--color-brand-blue-100)]",
+          "hover:bg-[var(--color-blue-50)]",
+          "hover:text-[var(--color-blue-700)]",
+          "hover:border-[var(--color-blue-100)]",
           "[transition-timing-function:var(--ease-smooth)]",
           "duration-[var(--duration-fast)]",
         ].join(" "),
@@ -135,9 +135,9 @@ const buttonVariants = cva(
         /* ─── LINK — Inline text link, minimal ─── */
         link: [
           "bg-transparent p-0 h-auto",
-          "text-[var(--color-brand-blue-600)]",
+          "text-[var(--color-blue-600)]",
           "font-medium underline-offset-4",
-          "hover:underline hover:text-[var(--color-brand-blue-900)]",
+          "hover:underline hover:text-[var(--color-blue-900)]",
           "[transition-timing-function:var(--ease-smooth)]",
           "duration-[var(--duration-fast)]",
           "active:scale-100",

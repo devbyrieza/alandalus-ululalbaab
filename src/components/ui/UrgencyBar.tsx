@@ -37,7 +37,7 @@ export default function UrgencyBar() {
   if (!visible || !countdown) return null;
 
   return (
-    <div className="relative w-full bg-brand-blue-950 text-white overflow-hidden">
+    <div className="relative w-full bg-blue-950 text-white overflow-hidden">
       {/* On mobile: 2-row layout. On sm+: single row */}
       <div className="flex flex-col sm:flex-row items-center justify-center gap-y-1 gap-x-3 px-3 sm:px-8 py-1.5 sm:py-2">
         {/* Row 1 (mobile) / Left section (desktop): Badge + Countdown */}
@@ -45,20 +45,20 @@ export default function UrgencyBar() {
           {/* Badge */}
           <div className="flex items-center gap-1.5 shrink-0">
             <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse shrink-0" />
-            <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-brand-blue-200 whitespace-nowrap">
+            <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-blue-200 whitespace-nowrap">
               PPDB 2026/2027 Dibuka
             </span>
           </div>
 
           {/* Countdown */}
           <div className="flex items-center gap-1 sm:gap-1.5">
-            <Clock className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-brand-yellow-400 shrink-0" />
+            <Clock className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-amber-400 shrink-0" />
             <div className="flex items-center gap-0.5 font-display font-black text-[11px] sm:text-sm">
               <div className="flex items-center gap-0.5">
                 <span className="bg-white/10 rounded px-1.5 py-0.5 tabular-nums">
                   {String(countdown.days).padStart(2, "0")}
                 </span>
-                <span className="text-brand-yellow-200 text-[9px] sm:text-[10px]">
+                <span className="text-amber-200 text-[9px] sm:text-[10px]">
                   h
                 </span>
               </div>
@@ -66,7 +66,7 @@ export default function UrgencyBar() {
                 <span className="bg-white/10 rounded px-1.5 py-0.5 tabular-nums">
                   {String(countdown.hours).padStart(2, "0")}
                 </span>
-                <span className="text-brand-yellow-200 text-[9px] sm:text-[10px]">
+                <span className="text-amber-200 text-[9px] sm:text-[10px]">
                   j
                 </span>
               </div>
@@ -74,7 +74,7 @@ export default function UrgencyBar() {
                 <span className="bg-white/10 rounded px-1.5 py-0.5 tabular-nums">
                   {String(countdown.minutes).padStart(2, "0")}
                 </span>
-                <span className="text-brand-yellow-200 text-[9px] sm:text-[10px]">
+                <span className="text-amber-200 text-[9px] sm:text-[10px]">
                   m
                 </span>
               </div>
@@ -82,7 +82,7 @@ export default function UrgencyBar() {
                 <span className="bg-white/10 rounded px-1.5 py-0.5 tabular-nums">
                   {String(countdown.seconds).padStart(2, "0")}
                 </span>
-                <span className="text-brand-yellow-200 text-[9px] sm:text-[10px]">
+                <span className="text-amber-200 text-[9px] sm:text-[10px]">
                   d
                 </span>
               </div>
@@ -99,7 +99,7 @@ export default function UrgencyBar() {
           {/* CTA Button */}
           <Link
             href="/ppdb"
-            className="inline-flex items-center gap-1 sm:gap-1.5 px-3 py-1 rounded-full bg-brand-yellow-400 text-brand-blue-950 text-[10px] sm:text-[11px] font-black uppercase tracking-widest hover:bg-white transition-colors whitespace-nowrap shrink-0 shadow-sm"
+            className="inline-flex items-center gap-1 sm:gap-1.5 px-3 py-1 rounded-full bg-amber-400 text-blue-950 text-[10px] sm:text-[11px] font-black uppercase tracking-widest hover:bg-white transition-colors whitespace-nowrap shrink-0 shadow-sm"
           >
             <Zap className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
             Daftar Sekarang

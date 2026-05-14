@@ -10,7 +10,7 @@ import { BRANDING } from "@/config/branding";
 
 const StatWidget = ({ label, value, icon: Icon, color, trend, breakdown, highlighted, onDownload, isDownloading, onPromote, isPromoting }: any) => {
   const colorMap: any = {
-    blue: "from-brand-blue-600 to-brand-blue-800",
+    blue: "from-blue-600 to-blue-800",
     emerald: "from-emerald-600 to-emerald-700",
     amber: "from-amber-500 to-amber-600",
     purple: "from-purple-600 to-purple-700",
@@ -23,12 +23,12 @@ const StatWidget = ({ label, value, icon: Icon, color, trend, breakdown, highlig
       animate={{ opacity: 1, y: 0 }}
       className={`glass-panel p-5 sm:p-6 lg:p-8 rounded-[2rem] border transition-all group relative overflow-hidden duration-300 hover-lift ${
         highlighted 
-          ? "glass-panel-dark text-white border-brand-blue-800 shadow-premium-lg" 
-          : "text-brand-blue-950 border-brand-blue-100 shadow-premium-sm"
+          ? "glass-panel-dark text-white border-blue-800 shadow-premium-lg" 
+          : "text-blue-950 border-blue-100 shadow-premium-sm"
       }`}
     >
       <div className={`glow-blob w-32 h-32 opacity-10 transition-colors duration-500 -top-10 -right-10 ${
-        highlighted ? "glow-blob-blue" : "glow-blob-gold"
+        highlighted ? "glow-blob-blue" : "glow-blob-amber"
       }`} aria-hidden="true" />
       <div className="relative z-10">
         <div className="flex items-center justify-between mb-8">
@@ -48,15 +48,15 @@ const StatWidget = ({ label, value, icon: Icon, color, trend, breakdown, highlig
         </div>
         <div className="mb-6 lg:mb-8">
           <p className={`stat-label uppercase tracking-[0.25em] mb-2 ${
-            highlighted ? "text-brand-blue-300" : "text-brand-blue-400"
+            highlighted ? "text-blue-300" : "text-blue-400"
           }`}>{label}</p>
           <div className="flex items-baseline justify-between gap-2">
             <div className="flex items-baseline gap-2">
               <h3 className={`text-3xl sm:text-4xl lg:text-5xl font-black tracking-tighter italic ${
-                highlighted ? "text-white" : "text-brand-blue-900"
+                highlighted ? "text-white" : "text-blue-900"
               }`}>{value}</h3>
               <span className={`text-xs font-bold ${
-                highlighted ? "text-brand-blue-300" : "text-brand-blue-300"
+                highlighted ? "text-blue-300" : "text-blue-300"
               }`}>Orang</span>
             </div>
 
@@ -123,20 +123,20 @@ const StatWidget = ({ label, value, icon: Icon, color, trend, breakdown, highlig
 
         {breakdown && (
           <div className={`grid grid-cols-2 gap-4 pt-6 border-t ${
-            highlighted ? "border-white/10" : "border-brand-blue-100"
+            highlighted ? "border-white/10" : "border-blue-100"
           }`}>
             <div className="space-y-4">
               <div className="flex flex-col">
                 <span className={`text-[9px] font-black uppercase tracking-widest mb-1 ${
-                  highlighted ? "text-brand-blue-300" : "text-brand-blue-400"
+                  highlighted ? "text-blue-300" : "text-blue-400"
                 }`}>MTs Putra</span>
                 <span className={`text-base font-black leading-none ${
-                  highlighted ? "text-white" : "text-brand-blue-700"
+                  highlighted ? "text-white" : "text-blue-700"
                 }`}>{breakdown.mts_l || 0}</span>
               </div>
               <div className="flex flex-col">
                 <span className={`text-[9px] font-black uppercase tracking-widest mb-1 ${
-                  highlighted ? "text-brand-blue-300" : "text-brand-blue-400"
+                  highlighted ? "text-blue-300" : "text-blue-400"
                 }`}>MTs Putri</span>
                 <span className={`text-base font-black leading-none ${
                   highlighted ? "text-pink-300" : "text-pink-500"
@@ -144,19 +144,19 @@ const StatWidget = ({ label, value, icon: Icon, color, trend, breakdown, highlig
               </div>
             </div>
             <div className={`space-y-4 border-l pl-4 ${
-              highlighted ? "border-white/10" : "border-brand-blue-100"
+              highlighted ? "border-white/10" : "border-blue-100"
             }`}>
               <div className="flex flex-col">
                 <span className={`text-[9px] font-black uppercase tracking-widest mb-1 ${
-                  highlighted ? "text-brand-blue-300" : "text-brand-blue-400"
+                  highlighted ? "text-blue-300" : "text-blue-400"
                 }`}>IL Putra</span>
                 <span className={`text-base font-black leading-none ${
-                  highlighted ? "text-white" : "text-brand-blue-700"
+                  highlighted ? "text-white" : "text-blue-700"
                 }`}>{breakdown.il_l || 0}</span>
               </div>
               <div className="flex flex-col">
                 <span className={`text-[9px] font-black uppercase tracking-widest mb-1 ${
-                  highlighted ? "text-brand-blue-300" : "text-brand-blue-400"
+                  highlighted ? "text-blue-300" : "text-blue-400"
                 }`}>IL Putri</span>
                 <span className={`text-base font-black leading-none ${
                   highlighted ? "text-pink-300" : "text-pink-500"
@@ -379,7 +379,7 @@ export default function AdminDashboardPage() {
     <div className="relative max-w-[1400px] mx-auto space-y-6 sm:space-y-8 pb-20 px-1">
       {/* Background Ambience */}
       <div className="glow-blob glow-blob-blue w-[50%] h-[40%] -top-[10%] -left-[10%] opacity-[0.03] fixed" aria-hidden="true" />
-      <div className="glow-blob glow-blob-gold w-[40%] h-[50%] top-[20%] -right-[10%] opacity-[0.02] fixed" aria-hidden="true" />
+      <div className="glow-blob glow-blob-amber w-[40%] h-[50%] top-[20%] -right-[10%] opacity-[0.02] fixed" aria-hidden="true" />
 
       <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
@@ -467,7 +467,7 @@ export default function AdminDashboardPage() {
             </div>
             <div className="relative z-10">
               <h3 className="text-xl sm:text-2xl font-black mb-6 sm:mb-8 tracking-tight flex items-center gap-3 italic text-white">
-                <div className="w-2 h-8 bg-brand-yellow-400 rounded-full" />
+                <div className="w-2 h-8 bg-amber-400 rounded-full" />
                 Statistik Pendaftaran
               </h3>
               <div className="grid grid-cols-2 gap-4 sm:gap-8">

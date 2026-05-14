@@ -19,7 +19,7 @@ const IMPORTANT_DATES = [
     title: "Seleksi",
     description:
       "Ujian lisan dan tertulis dilaksanakan setelah verifikasi berkas.",
-    accent: "yellow" as const,
+    accent: "amber" as const,
   },
   {
     date: "15 Juli 2026",
@@ -33,15 +33,15 @@ const EASE = [0.16, 1, 0.3, 1] as const;
 
 const ACCENT_MAP = {
   blue: {
-    number: "bg-brand-blue-600 text-white",
-    badge: "bg-brand-blue-50 text-brand-blue-700 border-brand-blue-100",
-    title: "group-hover:text-brand-blue-700",
+    number: "bg-blue-600 text-white",
+    badge: "bg-blue-50 text-blue-700 border-blue-100",
+    title: "group-hover:text-blue-700",
   },
-  yellow: {
+  amber: {
     number:
-      "bg-brand-yellow-50 text-brand-yellow-700 border border-brand-yellow-200",
-    badge: "bg-brand-yellow-50 text-brand-yellow-700 border-brand-yellow-200",
-    title: "group-hover:text-brand-yellow-700",
+      "bg-amber-50 text-amber-700 border border-amber-200",
+    badge: "bg-amber-50 text-amber-700 border-amber-200",
+    title: "group-hover:text-amber-700",
   },
 };
 
@@ -50,7 +50,7 @@ export default function CalendarSection() {
   return (
     <section
       id="kalender"
-      className="section-std relative border-y border-brand-blue-100 overflow-hidden"
+      className="section-std relative border-y border-blue-100 overflow-hidden"
     >
       <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-[0.02] pointer-events-none" />
 
@@ -63,7 +63,7 @@ export default function CalendarSection() {
               viewport={{ once: true, margin: "-40px" }}
               transition={{ duration: 0.6, ease: EASE }}
             >
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-blue-50 border border-brand-blue-100 text-brand-blue-700 text-[0.65rem] font-bold uppercase tracking-[0.12em] mb-5 shadow-xs">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-[0.65rem] font-bold uppercase tracking-[0.12em] mb-5 shadow-xs">
                 <Calendar className="w-3 h-3 shrink-0" strokeWidth={2} />
                 <span>Agenda Penting</span>
               </div>
@@ -73,7 +73,7 @@ export default function CalendarSection() {
               </h2>
 
               <div className="space-y-6 relative pl-3">
-                <div className="absolute left-[35px] top-6 bottom-6 w-px bg-gradient-to-b from-brand-blue-200 via-brand-yellow-200 to-transparent" />
+                <div className="absolute left-[35px] top-6 bottom-6 w-px bg-gradient-to-b from-blue-200 via-amber-200 to-transparent" />
 
                 {IMPORTANT_DATES.map((item, idx) => {
                   const colors = ACCENT_MAP[item.accent];
@@ -102,8 +102,8 @@ export default function CalendarSection() {
                         </span>
                       </div>
 
-                      <div className="bg-white p-6 md:p-7 rounded-2xl border border-brand-blue-100 shadow-premium-sm hover:shadow-premium-md hover:border-brand-blue-200 transition-all duration-400 flex-grow relative overflow-hidden">
-                        <div className="absolute inset-0 bg-gradient-to-br from-brand-blue-50/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
+                      <div className="bg-white p-6 md:p-7 rounded-2xl border border-blue-100 shadow-premium-sm hover:shadow-premium-md hover:border-blue-200 transition-all duration-400 flex-grow relative overflow-hidden">
+                        <div className="absolute inset-0 bg-gradient-to-br from-blue-50/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
 
                         <div className="relative z-10">
                           <span
@@ -137,20 +137,20 @@ export default function CalendarSection() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-40px" }}
               transition={{ duration: 0.6, ease: EASE }}
-              className="bg-white rounded-[2.5rem] p-8 sm:p-10 md:p-12 flex flex-col justify-center items-center text-center relative overflow-hidden shadow-premium-lg border border-brand-blue-100 group hover:border-brand-blue-200 transition-all duration-500"
+              className="bg-white rounded-[2.5rem] p-8 sm:p-10 md:p-12 flex flex-col justify-center items-center text-center relative overflow-hidden shadow-premium-lg border border-blue-100 group hover:border-blue-200 transition-all duration-500"
             >
-              <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-brand-yellow-100/50 rounded-full blur-[60px] pointer-events-none transition-transform duration-700 group-hover:scale-110" />
-              <div className="absolute -top-24 -left-24 w-64 h-64 bg-brand-blue-50/80 rounded-full blur-[60px] pointer-events-none transition-transform duration-700 group-hover:scale-110" />
+              <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-amber-100/50 rounded-full blur-[60px] pointer-events-none transition-transform duration-700 group-hover:scale-110" />
+              <div className="absolute -top-24 -left-24 w-64 h-64 bg-blue-50/80 rounded-full blur-[60px] pointer-events-none transition-transform duration-700 group-hover:scale-110" />
 
               <div className="relative z-10 flex flex-col items-center">
-                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-brand-blue-50 rounded-2xl flex items-center justify-center mb-6 shadow-sm border border-brand-blue-100 group-hover:scale-105 group-hover:border-brand-blue-200 transition-all duration-400">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-blue-50 rounded-2xl flex items-center justify-center mb-6 shadow-sm border border-blue-100 group-hover:scale-105 group-hover:border-blue-200 transition-all duration-400">
                   <Clock
-                    className="w-8 h-8 sm:w-10 sm:h-10 text-brand-blue-600"
+                    className="w-8 h-8 sm:w-10 sm:h-10 text-blue-600"
                     strokeWidth={1.5}
                   />
                 </div>
 
-                <h3 className="text-[1.35rem] sm:text-[1.75rem] font-display font-black text-ink-900 mb-4 tracking-tight leading-snug group-hover:text-brand-blue-800 transition-colors duration-300">
+                <h3 className="text-[1.35rem] sm:text-[1.75rem] font-display font-black text-ink-900 mb-4 tracking-tight leading-snug group-hover:text-blue-800 transition-colors duration-300">
                   Manajemen Waktu <br /> yang Barokah
                 </h3>
 
@@ -167,7 +167,7 @@ export default function CalendarSection() {
                     </button>
                   </Link>
                   <Link href="#" className="block w-full">
-                    <button className="btn-secondary w-full justify-center py-3 bg-white hover:bg-brand-blue-50 border-brand-blue-100 group/btn">
+                    <button className="btn-secondary w-full justify-center py-3 bg-white hover:bg-blue-50 border-blue-100 group/btn">
                       <Download className="w-4 h-4 mr-2 group-hover/btn:-translate-y-0.5 transition-transform" />
                       <span className="text-[0.8125rem]">Unduh PDF</span>
                     </button>

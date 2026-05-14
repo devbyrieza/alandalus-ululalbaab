@@ -121,8 +121,8 @@ function WilayahSelect({
               transition-colors duration-300
               ${
                 isFilled
-                  ? "bg-brand-blue-600 text-white"
-                  : "bg-brand-blue-100 text-brand-blue-500"
+                  ? "bg-blue-600 text-white"
+                  : "bg-blue-100 text-blue-500"
               }
             `}
           >
@@ -132,7 +132,7 @@ function WilayahSelect({
         <label
           className={`
             text-sm font-semibold tracking-tight transition-colors duration-200
-            ${isFilled ? "text-brand-blue-700" : "text-ink-700"}
+            ${isFilled ? "text-blue-700" : "text-ink-700"}
           `}
         >
           {label}
@@ -151,19 +151,19 @@ function WilayahSelect({
           w-full flex items-center gap-3 px-4 py-3
           rounded-xl border-2 text-left text-sm font-medium
           transition-all duration-200 outline-none
-          focus-visible:ring-2 focus-visible:ring-brand-blue-400/50 focus-visible:ring-offset-1
+          focus-visible:ring-2 focus-visible:ring-blue-400/50 focus-visible:ring-offset-1
           ${
             isDisabled && !disabled
-              ? "bg-surface-100 border-brand-blue-100 text-ink-300 cursor-not-allowed opacity-60"
+              ? "bg-surface-100 border-blue-100 text-ink-300 cursor-not-allowed opacity-60"
               : isFilled
-                ? "bg-white border-brand-blue-400 text-ink-900 shadow-[var(--shadow-premium-sm)] cursor-pointer"
+                ? "bg-white border-blue-400 text-ink-900 shadow-[var(--shadow-premium-sm)] cursor-pointer"
                 : open
-                  ? "bg-white border-brand-blue-500 text-ink-900 shadow-[0_0_0_3px_rgba(3,105,199,0.10)] cursor-pointer"
-                  : "bg-white border-brand-blue-100 text-ink-400 hover:border-brand-blue-300 hover:bg-brand-blue-50/40 cursor-pointer"
+                  ? "bg-white border-blue-500 text-ink-900 shadow-[0_0_0_3px_rgba(3,105,199,0.10)] cursor-pointer"
+                  : "bg-white border-blue-100 text-ink-400 hover:border-blue-300 hover:bg-blue-50/40 cursor-pointer"
           }
           ${
             disabled
-              ? "!bg-surface-100 !border-brand-blue-100 !text-ink-300 !cursor-not-allowed !opacity-60"
+              ? "!bg-surface-100 !border-blue-100 !text-ink-300 !cursor-not-allowed !opacity-60"
               : ""
           }
         `}
@@ -172,7 +172,7 @@ function WilayahSelect({
         <span
           className={`
             flex-shrink-0 transition-colors duration-200
-            ${isFilled ? "text-brand-blue-500" : "text-ink-300"}
+            ${isFilled ? "text-blue-500" : "text-ink-300"}
           `}
         >
           {icon ?? <MapPin className="w-4 h-4" />}
@@ -199,7 +199,7 @@ function WilayahSelect({
         {/* Loading / Chevron */}
         <span className="flex-shrink-0 flex items-center gap-1.5">
           {loading && (
-            <Loader2 className="w-3.5 h-3.5 animate-spin text-brand-blue-500" />
+            <Loader2 className="w-3.5 h-3.5 animate-spin text-blue-500" />
           )}
           <motion.span
             animate={{ rotate: open ? 180 : 0 }}
@@ -209,7 +209,7 @@ function WilayahSelect({
             <ChevronDown
               className={`
                 w-4 h-4 transition-colors
-                ${isFilled ? "text-brand-blue-400" : "text-ink-300"}
+                ${isFilled ? "text-blue-400" : "text-ink-300"}
               `}
             />
           </motion.span>
@@ -226,7 +226,7 @@ function WilayahSelect({
             transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
             className="
               absolute z-50 top-[calc(100%+6px)] left-0 right-0
-              bg-white border border-brand-blue-200 rounded-xl
+              bg-white border border-blue-200 rounded-xl
               shadow-[var(--shadow-premium-lg)]
               overflow-hidden
             "
@@ -234,7 +234,7 @@ function WilayahSelect({
           >
             {/* Search — hanya tampil jika opsi banyak */}
             {options.length > 8 && (
-              <div className="p-2 border-b border-brand-blue-100">
+              <div className="p-2 border-b border-blue-100">
                 <div className="relative">
                   <input
                     ref={searchRef}
@@ -244,9 +244,9 @@ function WilayahSelect({
                     placeholder={`Cari ${label.toLowerCase()}...`}
                     className="
                       w-full pl-8 pr-3 py-2 text-sm rounded-lg
-                      bg-brand-blue-50/60 border border-brand-blue-100
+                      bg-blue-50/60 border border-blue-100
                       text-ink-900 placeholder:text-ink-400
-                      focus:outline-none focus:border-brand-blue-400
+                      focus:outline-none focus:border-blue-400
                       focus:bg-white focus:shadow-[0_0_0_3px_rgba(3,105,199,0.08)]
                       transition-all duration-150 font-medium
                     "
@@ -288,13 +288,13 @@ function WilayahSelect({
                           text-sm text-left transition-colors duration-100
                           ${
                             isSelected
-                              ? "bg-brand-blue-50 text-brand-blue-900 font-semibold"
-                              : "text-ink-700 hover:bg-brand-blue-50/60 hover:text-brand-blue-800 font-medium"
+                              ? "bg-blue-50 text-blue-900 font-semibold"
+                              : "text-ink-700 hover:bg-blue-50/60 hover:text-blue-800 font-medium"
                           }
                         `}
                       >
                         {isSelected && (
-                          <Check className="w-3.5 h-3.5 text-brand-blue-600 flex-shrink-0" />
+                          <Check className="w-3.5 h-3.5 text-blue-600 flex-shrink-0" />
                         )}
                         <span
                           className={`${isSelected ? "" : "ml-[1.375rem]"} truncate`}
@@ -310,7 +310,7 @@ function WilayahSelect({
 
             {/* Footer count */}
             {options.length > 0 && (
-              <div className="px-4 py-2 border-t border-brand-blue-100 bg-brand-blue-50/40">
+              <div className="px-4 py-2 border-t border-blue-100 bg-blue-50/40">
                 <span className="text-[11px] text-ink-400 font-medium tracking-wide">
                   {filtered.length} dari {options.length} wilayah
                 </span>
@@ -470,15 +470,15 @@ export default function WilayahSelector({
     <div className="space-y-5">
       {/* ── Progress bar — biru ke kuning (khas Ulul Albaab) ── */}
       <div className="flex items-center gap-3">
-        <div className="flex-1 h-1 bg-brand-blue-100 rounded-full overflow-hidden">
+        <div className="flex-1 h-1 bg-blue-100 rounded-full overflow-hidden">
           <motion.div
-            className="h-full rounded-full bg-gradient-to-r from-brand-blue-500 to-brand-yellow-500"
+            className="h-full rounded-full bg-gradient-to-r from-blue-500 to-amber-500"
             initial={{ width: 0 }}
             animate={{ width: `${progressPct}%` }}
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           />
         </div>
-        <span className="text-xs font-semibold text-brand-blue-600 tabular-nums min-w-[2.5rem] text-right">
+        <span className="text-xs font-semibold text-blue-600 tabular-nums min-w-[2.5rem] text-right">
           {filledCount}/5
         </span>
       </div>
@@ -559,8 +559,8 @@ export default function WilayahSelector({
                 transition-colors duration-300
                 ${
                   value.kode_pos
-                    ? "bg-brand-blue-600 text-white"
-                    : "bg-brand-blue-100 text-brand-blue-500"
+                    ? "bg-blue-600 text-white"
+                    : "bg-blue-100 text-blue-500"
                 }
               `}
             >
@@ -570,7 +570,7 @@ export default function WilayahSelector({
               htmlFor="kode_pos"
               className={`
                 text-sm font-semibold tracking-tight transition-colors duration-200
-                ${value.kode_pos ? "text-brand-blue-700" : "text-ink-700"}
+                ${value.kode_pos ? "text-blue-700" : "text-ink-700"}
               `}
             >
               Kode Pos <span className="text-red-500 font-bold">*</span>
@@ -583,7 +583,7 @@ export default function WilayahSelector({
               <svg
                 className={`
                   w-4 h-4 transition-colors duration-200
-                  ${value.kode_pos ? "text-brand-blue-500" : "text-ink-300"}
+                  ${value.kode_pos ? "text-blue-500" : "text-ink-300"}
                 `}
                 fill="none"
                 viewBox="0 0 24 24"
@@ -617,13 +617,13 @@ export default function WilayahSelector({
                 rounded-xl border-2 text-sm font-medium
                 transition-all duration-200 outline-none
                 placeholder:text-ink-400 text-ink-900
-                focus-visible:ring-2 focus-visible:ring-brand-blue-400/50 focus-visible:ring-offset-1
+                focus-visible:ring-2 focus-visible:ring-blue-400/50 focus-visible:ring-offset-1
                 ${
                   disabled
-                    ? "bg-surface-100 border-brand-blue-100 text-ink-300 cursor-not-allowed opacity-60"
+                    ? "bg-surface-100 border-blue-100 text-ink-300 cursor-not-allowed opacity-60"
                     : value.kode_pos
-                      ? "bg-white border-brand-blue-400 shadow-[var(--shadow-premium-sm)]"
-                      : "bg-white border-brand-blue-100 hover:border-brand-blue-300 hover:bg-brand-blue-50/40 focus:border-brand-blue-500 focus:shadow-[0_0_0_3px_rgba(3,105,199,0.10)]"
+                      ? "bg-white border-blue-400 shadow-[var(--shadow-premium-sm)]"
+                      : "bg-white border-blue-100 hover:border-blue-300 hover:bg-blue-50/40 focus:border-blue-500 focus:shadow-[0_0_0_3px_rgba(3,105,199,0.10)]"
                 }
               `}
             />
@@ -636,7 +636,7 @@ export default function WilayahSelector({
                   text-xs font-bold tabular-nums
                   ${
                     value.kode_pos.length === 5
-                      ? "text-brand-blue-600"
+                      ? "text-blue-600"
                       : "text-ink-400"
                   }
                 `}
@@ -658,19 +658,19 @@ export default function WilayahSelector({
             transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
             className="
               flex items-center gap-3 px-4 py-3
-              bg-brand-blue-50 border border-brand-blue-200
+              bg-blue-50 border border-blue-200
               rounded-xl text-sm
             "
           >
             {/* Icon dengan aksen kuning — signature Ulul Albaab */}
-            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-brand-blue-600 flex items-center justify-center ring-2 ring-brand-yellow-400/60">
+            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-blue-600 flex items-center justify-center ring-2 ring-amber-400/60">
               <Check className="w-3.5 h-3.5 text-white" />
             </span>
             <div>
-              <p className="font-semibold text-brand-blue-900 leading-tight">
+              <p className="font-semibold text-blue-900 leading-tight">
                 Alamat lengkap tersimpan
               </p>
-              <p className="text-xs text-brand-blue-600 mt-0.5 font-medium">
+              <p className="text-xs text-blue-600 mt-0.5 font-medium">
                 {value.kelurahan}, {value.kecamatan}, {value.kabupaten}
               </p>
             </div>

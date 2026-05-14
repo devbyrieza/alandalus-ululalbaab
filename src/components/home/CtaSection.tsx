@@ -10,7 +10,7 @@ const EASE = [0.16, 1, 0.3, 1] as const;
 
 export default function CtaSection() {
   return (
-    <section className="py-16 md:py-24 lg:py-28 bg-white relative overflow-hidden border-t border-brand-yellow-200">
+    <section className="py-16 md:py-24 lg:py-28 bg-white relative overflow-hidden border-t border-amber-200">
       <Container>
         <motion.div
           initial={{ opacity: 0, scale: 0.97, y: 20 }}
@@ -26,7 +26,7 @@ export default function CtaSection() {
 
           <div className="relative z-10 max-w-3xl mx-auto flex flex-col items-center">
             <div className="section-label section-label-white mb-6">
-              <span className="text-brand-yellow-300">✦</span> Pendaftaran Dibuka
+              <span className="text-amber-300">✦</span> Pendaftaran Dibuka
             </div>
 
             <h3 className="text-[2rem] sm:text-[2.5rem] md:text-[3rem] lg:text-[3.5rem] font-display font-black mb-5 tracking-tight leading-[1.1]">
@@ -34,7 +34,7 @@ export default function CtaSection() {
               <span className="text-white">Menuju Generasi Unggul</span>
             </h3>
 
-            <p className="text-[0.9375rem] md:text-[1.0625rem] text-brand-yellow-50/90 mb-10 leading-relaxed font-[450] text-center max-w-2xl mx-auto">
+            <p className="text-[0.9375rem] md:text-[1.0625rem] text-amber-50/90 mb-10 leading-relaxed font-[450] text-center max-w-2xl mx-auto">
               Telah dibuka Pendaftaran Santri Baru (PPDB) Tahun Ajaran
               2026/2027. Kuota sangat terbatas untuk menjaga kualitas pendidikan
               secara optimal.
@@ -42,7 +42,7 @@ export default function CtaSection() {
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center px-4 max-w-xl mx-auto w-full">
               <Link href="/ppdb" className="w-full sm:w-auto flex-1 hover-lift">
-                <button className="w-full px-8 py-4 rounded-full bg-brand-yellow-300 text-brand-blue-950 font-bold hover:bg-brand-yellow-400 transition-all duration-300 text-[0.9375rem] flex items-center justify-center gap-2 glow-ring-blue">
+                <button className="w-full px-8 py-4 rounded-full bg-amber-300 text-blue-950 font-bold hover:bg-amber-400 transition-all duration-300 text-[0.9375rem] flex items-center justify-center gap-2 glow-ring-blue">
                   Daftar Sekarang
                 </button>
               </Link>

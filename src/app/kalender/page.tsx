@@ -14,8 +14,8 @@ export default function CalendarPage() {
     <main className="bg-surface-50 min-h-screen flex items-center justify-center">
       <Container>
         <div className="max-w-2xl mx-auto text-center">
-          <div className="w-24 h-24 bg-brand-blue-50 rounded-full flex items-center justify-center mx-auto mb-8 animate-pulse border border-brand-blue-100 shadow-sm">
-            <Construction className="w-12 h-12 text-brand-blue-700" />
+          <div className="w-24 h-24 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-8 animate-pulse border border-blue-100 shadow-sm">
+            <Construction className="w-12 h-12 text-blue-700" />
           </div>
 
           <h1 className="text-4xl md:text-5xl font-display font-black text-ink-950 mb-4 tracking-tight">
@@ -32,7 +32,7 @@ export default function CalendarPage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/"
-              className="inline-flex items-center justify-center px-10 py-4 rounded-pill bg-brand-blue-900 text-white font-black text-lg hover:bg-brand-blue-800 shadow-premium-lg transition-all"
+              className="inline-flex items-center justify-center px-10 py-4 rounded-pill bg-blue-900 text-white font-black text-lg hover:bg-blue-800 shadow-premium-lg transition-all"
             >
               Kembali ke Beranda
             </Link>
