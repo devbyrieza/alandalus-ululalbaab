@@ -38,7 +38,7 @@ const STATS: Stat[] = [
     color: "blue",
     suffix: "",
     sublabel: "Tahun Ajaran 2026/2027",
-    description: "Tahun ke-4 pengabdian",
+    description: "Tahun ke-4 Membangun Generasi",
   },
   {
     id: "quality",
