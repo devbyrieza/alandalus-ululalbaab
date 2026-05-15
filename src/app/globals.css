@@ -1577,14 +1577,14 @@
 @layer utilities {
 
   .text-gradient-blue {
-    background: linear-gradient(135deg, var(--color-blue-500) 0%, var(--color-amber-400) 55%, var(--color-blue-700) 100%);
+    background: linear-gradient(135deg, var(--color-blue-600) 0%, var(--color-blue-900) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
   }
 
   .text-gradient-maroon {
-    background: linear-gradient(135deg, var(--color-maroon-600) 0%, var(--color-cream-400) 55%, var(--color-maroon-800) 100%);
+    background: linear-gradient(135deg, var(--color-maroon-600) 0%, var(--color-maroon-900) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -1784,7 +1784,7 @@
      Contoh: <span class="gradient-text-blue">Penerimaan Santri</span>
   */
   .gradient-text-blue {
-    background: linear-gradient(135deg, var(--color-blue-500) 0%, var(--color-amber-400) 55%, var(--color-blue-700) 100%);
+    background: linear-gradient(135deg, var(--color-blue-600) 0%, var(--color-blue-900) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -1794,7 +1794,7 @@
 
 
   .gradient-text-maroon {
-    background: linear-gradient(135deg, var(--color-maroon-600) 0%, var(--color-cream-400) 55%, var(--color-maroon-800) 100%);
+    background: linear-gradient(135deg, var(--color-maroon-600) 0%, var(--color-maroon-900) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
