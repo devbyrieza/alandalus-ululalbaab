@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { prisma } from "@/lib/prisma";
 import { Prisma } from "@prisma/client";
 import { getAdminWhereClause } from "@/lib/utils/admin";
+import { getCache, setCache } from "@/lib/redis";
 
 export async function GET(request: NextRequest) {
   try {
@@ -140,20 +141,18 @@ export async function GET(request: NextRequest) {
     if (kelurahan) where.kelurahan = kelurahan;
 
     // Execute query with transaction for count and data
-    console.log("--- API pendaftar/list ---");
-    console.log("Params:", {
-      page,
-      limit,
-      search,
-      status,
-      jenjang,
-      jenisKelamin,
-      tahunAjaran,
-    });
-    console.log("Generated Where:", JSON.stringify(where, null, 2));
+    // Execute query with transaction for count and data
+
+    // === REDIS CACHE CHECK ===
+    const cacheKey = `admin_pendaftar_list_${tahunAjaran}_${page}_${limit}_${search}_${status}_${jenjang}_${jenisKelamin}_${provinsi}_${kabupaten}_${kecamatan}_${kelurahan}`;
+    const cachedData = await getCache<any>(cacheKey);
+    if (cachedData) {
+      console.log(`⚡ [API Pendaftar List] Mengembalikan data dari Redis Cache!`);
+      return NextResponse.json(cachedData);
+    }
+    // =========================
 
     const total = await prisma.pendaftar.count({ where });
-    console.log("Total Count:", total);
 
     const data = await prisma.pendaftar.findMany({
       where,
@@ -298,11 +297,9 @@ export async function GET(request: NextRequest) {
       };
     });
 
-    console.log(
-      `[API] Pendaftar List: Role=${session.role}, Count=${total}, Limit=${limit}, Where=${JSON.stringify(where)}`,
-    );
+    // Hapus console.log verbose di sini
 
-    return NextResponse.json({
+    const responseData = {
       data: transformedData || [],
       pagination: {
         page,
@@ -310,7 +307,12 @@ export async function GET(request: NextRequest) {
         total,
         totalPages: Math.ceil(total / limit),
       },
-    });
+    };
+
+    // Simpan ke Redis selama 60 detik
+    await setCache(cacheKey, responseData, 60);
+
+    return NextResponse.json(responseData);
   } catch (error) {
     console.error("Error in admin pendaftar list API:", error);
     return NextResponse.json(

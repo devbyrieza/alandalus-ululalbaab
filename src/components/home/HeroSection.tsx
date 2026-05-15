@@ -135,10 +135,10 @@ export default function HeroSection() {
                   fontSize: "clamp(2rem, 5vw + 0.75rem, 5rem)",
                 }}
               >
-                <span className="block">Mencetak Generasi</span>
+                <span className="block">Kaderisasi Ummat</span>
                 <span className="gradient-text-blue block mt-1">
-                  Unggul, Cerdas, <br className="hidden sm:block" />
-                  dan Berintegritas
+                  Rabbani, Cendekia, <br className="hidden sm:block" />
+                  dan Mandiri
                 </span>
               </h1>
             </motion.div>
@@ -158,9 +158,9 @@ export default function HeroSection() {
                 className="font-bold"
                 style={{ color: "var(--color-primary-700)" }}
               >
-                Intensitas Tahfidz Al-Qur'an, Ilmu Syar'i, dan Kepemimpinan
+                Intensitas Tahfidz Al-Qur'an, Ilmu Syar'i, dan Enterpreneurship
               </strong>{" "}
-              dalam satu lingkungan pesantren modern.
+              dalam lingkungan {BRANDING.schoolName}.
             </motion.p>
 
             {/* Tagline Divider */}
