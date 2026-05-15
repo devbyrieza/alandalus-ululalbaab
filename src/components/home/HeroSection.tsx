@@ -131,12 +131,13 @@ export default function HeroSection() {
               <h1
                 className="leading-[1.06] tracking-[-0.03em] mx-auto lg:mx-0 max-w-2xl lg:max-w-none font-black text-balance"
                 style={{
-                  color: "var(--color-primary-700)",
                   fontSize: "clamp(2rem, 5vw + 0.75rem, 5rem)",
                 }}
               >
-                <span className="block">Kaderisasi Ummat</span>
-                <span className="gradient-text-blue block mt-1">
+                <span className="block" style={{ color: "var(--color-blue-700)" }}>
+                  Kaderisasi Ummat
+                </span>
+                <span className="block mt-1" style={{ color: "var(--color-amber-500)" }}>
                   Rabbani, Cendekia, <br className="hidden sm:block" />
                   dan Mandiri
                 </span>
