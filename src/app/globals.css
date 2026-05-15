@@ -1717,7 +1717,7 @@
   }
 
   .glass-panel-dark {
-    background: rgba(0, 0, 0, 0.25);
+    background: linear-gradient(165deg, rgba(15, 23, 42, 0.9) 0%, rgba(2, 6, 23, 0.98) 100%);
     backdrop-filter: blur(28px) saturate(1.6);
     -webkit-backdrop-filter: blur(28px) saturate(1.6);
     border: 1px solid rgba(255, 255, 255, 0.10);
@@ -1725,7 +1725,7 @@
     transition: all var(--duration-slow) var(--ease-spring);
 
     &:hover {
-      background: rgba(0, 0, 0, 0.32);
+      background: linear-gradient(165deg, rgba(15, 23, 42, 0.95) 0%, rgba(2, 6, 23, 1) 100%);
       border-color: rgba(255, 255, 255, 0.16);
     }
   }
