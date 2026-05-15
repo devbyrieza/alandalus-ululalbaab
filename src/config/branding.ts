@@ -5,7 +5,7 @@ export const BRANDING = {
     process.env.NEXT_PUBLIC_SCHOOL_SHORT_NAME || "PPDB Ulul Albaab",
   schoolTagline:
     process.env.NEXT_PUBLIC_SCHOOL_TAGLINE ||
-    "Mencetak Generasi Rabbani, Unggul, dan Berintegritas",
+    "Kaderisasi Ummat Rabbani, Cendekia, dan Mandiri",
   schoolNetwork:
     process.env.NEXT_PUBLIC_SCHOOL_NETWORK || "Perpaduan Kurikulum Nasional dan Khas Andalus",
   primaryColor: process.env.NEXT_PUBLIC_PRIMARY_COLOR || "#0284c7", // Default Blue Ulul Albaab
