@@ -542,10 +542,11 @@ export default function JadwalPengujiPage() {
   };
 
   const toggleSelectAll = () => {
-    if (selectedSlotIds.size === slots.length) {
+    const availableSlots = slots.filter((s) => (s._count?.bookings || 0) === 0);
+    if (selectedSlotIds.size === availableSlots.length) {
       setSelectedSlotIds(new Set());
     } else {
-      setSelectedSlotIds(new Set(slots.map((s) => s.id)));
+      setSelectedSlotIds(new Set(availableSlots.map((s) => s.id)));
     }
   };
 
@@ -577,6 +578,7 @@ export default function JadwalPengujiPage() {
   // Dapatkan daftar jam unik dari slots untuk quick-select chips
   const uniqueTimesForChips = Array.from(
     slots
+      .filter((s) => (s._count?.bookings || 0) === 0)
       .reduce((map, slot) => {
         const start = new Date(slot.start_time);
         const end = new Date(slot.end_time);
@@ -1270,6 +1272,7 @@ export default function JadwalPengujiPage() {
               </span>
               {uniqueTimesForChips.map(({ hhmm, label, count }) => {
                 const matchingIds = slots
+                  .filter((s) => (s._count?.bookings || 0) === 0)
                   .filter((s) => {
                     const d = new Date(s.start_time);
                     return (
@@ -1278,7 +1281,7 @@ export default function JadwalPengujiPage() {
                     );
                   })
                   .map((s) => s.id);
-                const allSelected = matchingIds.every((id) =>
+                const allSelected = matchingIds.length > 0 && matchingIds.every((id) =>
                   selectedSlotIds.has(id),
                 );
                 return (
@@ -1310,7 +1313,7 @@ export default function JadwalPengujiPage() {
                 );
               })}
               <div className="ml-auto text-[10px] text-ink-300 font-bold">
-                {selectedSlotIds.size} / {slots.length} dipilih
+                {selectedSlotIds.size} / {slots.filter(s => (s._count?.bookings || 0) === 0).length} dipilih
               </div>
             </div>
           )}
@@ -1319,13 +1322,13 @@ export default function JadwalPengujiPage() {
             <div className="text-center py-12">
               <Loader2 className="w-8 h-8 animate-spin mx-auto text-primary-500" />
             </div>
-          ) : slots.length === 0 ? (
+          ) : slots.filter(s => (s._count?.bookings || 0) === 0).length === 0 ? (
             <div className="text-center py-12 text-secondary-500">
-              <p>Belum ada sesi waktu yang dibuat.</p>
+              <p>Belum ada sesi waktu tersedia yang dibuat.</p>
             </div>
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {slots.map((slot) => (
+              {slots.filter(s => (s._count?.bookings || 0) === 0).map((slot) => (
                 <div
                   key={slot.id}
                   onClick={
