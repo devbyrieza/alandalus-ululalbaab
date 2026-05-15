@@ -32,13 +32,13 @@ interface Stat {
 const STATS: Stat[] = [
   {
     id: "batch",
-    label: "Angkatan Pertama",
-    value: 1,
+    label: "Angkatan Ke-4",
+    value: 4,
     icon: Calendar,
     color: "blue",
     suffix: "",
     sublabel: "Tahun Ajaran 2026/2027",
-    description: "Momen bersejarah pembukaan",
+    description: "Tahun ke-4 pengabdian",
   },
   {
     id: "quality",

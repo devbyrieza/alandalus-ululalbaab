@@ -138,10 +138,10 @@ export default function FeaturesSection() {
                   </p>
                   <div className="space-y-1">
                     <p className="text-sm font-bold text-ink-700 uppercase tracking-wider">
-                      Angkatan Pertama
+                      Angkatan Ke-4
                     </p>
                     <p className="text-xs leading-tight text-ink-500 font-medium">
-                      Dimulainya Sejarah Baru <br />
+                      Meneruskan Tradisi Kebaikan <br />
                       <span className="text-primary-700 font-bold block mt-1">
                         Pesantren Ulul Albaab
                       </span>

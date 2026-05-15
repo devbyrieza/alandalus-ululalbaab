@@ -258,7 +258,7 @@ export default function HeroSection() {
                     className="font-bold uppercase tracking-wide"
                     style={{ color: "var(--color-primary-700)" }}
                   >
-                    Angkatan Pertama
+                    Angkatan Ke-4
                   </span>
                   {" • "} {BRANDING.schoolName}
                 </p>
