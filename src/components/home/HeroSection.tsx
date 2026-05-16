@@ -339,7 +339,7 @@ export default function HeroSection() {
             <motion.div
               animate={shouldReduceMotion ? {} : { y: [0, -10, 0] }}
               transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute -top-4 md:-top-5 lg:-top-6 -right-2 md:-right-4 lg:-right-6 z-20"
+              className="absolute -top-8 -right-6 md:-top-5 lg:-top-6 md:-right-4 lg:-right-6 z-20 scale-[0.8] md:scale-100"
               style={{ transformOrigin: "right center" }}
             >
               <div className="glass-panel flex items-center gap-3 px-4 py-3 rounded-2xl">
@@ -367,7 +367,7 @@ export default function HeroSection() {
                 ease: "easeInOut",
                 delay: 1,
               }}
-              className="absolute -bottom-5 md:-bottom-6 lg:-bottom-8 -left-2 md:-left-4 lg:-left-6 z-20"
+              className="absolute -bottom-8 -left-6 md:-bottom-6 lg:-bottom-8 md:-left-4 lg:-left-6 z-20 scale-[0.8] md:scale-100"
               style={{ transformOrigin: "left center" }}
             >
               <div className="glass-panel flex items-center gap-3 px-4 py-3 rounded-2xl">
@@ -399,7 +399,7 @@ export default function HeroSection() {
                 ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
               }}
               whileHover={shouldReduceMotion ? {} : { rotate: 0, scale: 1.05 }}
-              className="absolute -bottom-10 -right-2 md:bottom-6 md:-right-6 lg:bottom-10 lg:-right-10 z-30 cursor-default scale-90 md:scale-100"
+              className="absolute -bottom-16 -right-4 md:bottom-6 md:-right-6 lg:bottom-10 lg:-right-10 z-30 cursor-default scale-[0.85] md:scale-100"
               style={{
                 background:
                   "linear-gradient(135deg, var(--color-secondary-300) 0%, var(--color-secondary-500) 100%)",
