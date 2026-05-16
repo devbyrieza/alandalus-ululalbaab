@@ -143,7 +143,7 @@ export default function FeaturesSection() {
                     <p className="text-xs leading-tight text-ink-500 font-medium">
                       Meneruskan Tradisi Kebaikan <br />
                       <span className="text-primary-700 font-bold block mt-1">
-                        Pesantren Ulul Albaab
+                        Pesantren Al Andalus Ulul Albaab
                       </span>
                     </p>
                   </div>

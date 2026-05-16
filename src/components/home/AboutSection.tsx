@@ -104,7 +104,7 @@ export default function AboutSection() {
               className="section-subtitle text-justify md:text-center"
             >
               <span className="font-semibold text-primary-800">
-                Pesantren Ulul Albaab Sukabumi.
+                Pesantren Al Andalus Ulul Albaab Sukabumi.
               </span>{" "}
               Lembaga pendidikan Islam yang mengedepankan keteladanan para pendidik serta mendidik tanpa kekerasan dan luka pengasuhan — mengusung visi Kaderisasi Ummat Rabbani, Cendekia, dan Mandiri.
             </motion.p>

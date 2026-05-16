@@ -2,7 +2,7 @@ export const BRANDING = {
   schoolName:
     process.env.NEXT_PUBLIC_SCHOOL_NAME || "Pesantren Al Andalus Ulul Albaab",
   schoolShortName:
-    process.env.NEXT_PUBLIC_SCHOOL_SHORT_NAME || "PPDB Ulul Albaab",
+    process.env.NEXT_PUBLIC_SCHOOL_SHORT_NAME || "Ulul Albaab",
   schoolTagline:
     process.env.NEXT_PUBLIC_SCHOOL_TAGLINE ||
     "Kaderisasi Ummat Rabbani, Cendekia, dan Mandiri",

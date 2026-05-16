@@ -67,7 +67,7 @@ export default function ChatSystem() {
   const openWhatsApp = () => {
     const waNumber = "6281285300800";
     const waMessage = encodeURIComponent(
-      "Halo Panitia PPDB Pesantren Ulul Albaab, saya ingin bertanya...",
+      "Halo Panitia PPDB Pesantren Al Andalus Ulul Albaab, saya ingin bertanya...",
     );
     window.open(`https://wa.me/${waNumber}?text=${waMessage}`, "_blank");
     setIsMenuOpen(false);

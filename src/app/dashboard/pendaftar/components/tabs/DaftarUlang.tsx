@@ -286,7 +286,7 @@ export default function DaftarUlangTab() {
             Rp 9.800.000
           </div>
           <p className="text-sm text-ink-500 mt-2 relative z-10 font-medium">
-            Uang Pangkal Pesantren Ulul Albaab
+            Uang Pangkal Pesantren Al Andalus Ulul Albaab
           </p>
         </div>
 

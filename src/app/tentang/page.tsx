@@ -61,10 +61,9 @@ export default function TentangPage() {
             transition={{ delay: 0.2 }}
             className="text-base sm:text-lg md:text-xl text-ink-600 max-w-3xl mx-auto leading-relaxed font-medium mb-12 px-4"
           >
-            Pesantren Ulul Albaab Sukabumi, cabang dari Pesantren Islam
-            Internasional Al Andalus (Jonggol, Bogor) yang bekerjasama dengan
+            Pesantren Al Andalus Ulul Albaab Sukabumi, cabang dari Al Andalus International Islamic Boarding School (IIBS) Jonggol, Bogor yang bekerjasama dengan
             Universitas Islam ternama di 3 Benua. Tahun Ajaran 2026/2027 adalah
-            Angkatan ke-4 sejak dikelola AL-Andalus.
+            Angkatan ke-4 sejak dikelola Al Andalus IIBS.
           </motion.p>
         </Container>
       </section>
@@ -197,10 +196,10 @@ export default function TentangPage() {
                     adalah lembaga pendidikan Islam berbasis pesantren modern
                     yang berdiri dan dikelola oleh{" "}
                     <span className="text-primary-700 italic font-bold">
-                      Pesantren Islam Internasional Al Andalus
+                      Al Andalus International Islamic Boarding School (IIBS)
                     </span>{" "}
                     (Jonggol, Bogor). Tahun pelajaran 2026/2027 merupakan
-                    angkatan ke-4 sejak resmi dikelola Al Andalus.
+                    angkatan ke-4 sejak resmi dikelola Al Andalus IIBS.
                   </p>
                   <p>
                     Al Andalus telah bekerjasama dengan kampus-kampus Islam
@@ -210,7 +209,7 @@ export default function TentangPage() {
                     universitas-universitas tersebut.
                   </p>
                   <p>
-                    Pesantren Ulul Albaab memadukan tahfizh Al-Qur'an, kurikulum
+                    Pesantren Al Andalus Ulul Albaab memadukan tahfizh Al-Qur'an, kurikulum
                     pendidikan nasional (diknas), kurikulum khas pesantren
                     berbasis Kitab Turots, dan entrepreneurship — semua dengan
                     bahasa pengantar Bahasa Arab.
