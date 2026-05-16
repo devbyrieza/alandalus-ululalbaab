@@ -344,7 +344,7 @@ Alhamdulillah, kami dengan senang hati mengumumkan bahwa Anda *DITERIMA* di Pesa
 
 Dashboard: {{dashboard_url}}
 
-Selamat bergabung di keluarga besar Ulul Albaab! 🎓
+Selamat bergabung di keluarga besar Al Andalus Ulul Albaab! 🎓
 
 Jazakumullahu khairan,
 Panitia PPDB Al Andalus Ulul Albaab`,

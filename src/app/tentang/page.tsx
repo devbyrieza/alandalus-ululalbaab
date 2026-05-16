@@ -39,7 +39,7 @@ export default function TentangPage() {
           >
             <Sparkles className="w-3.5 h-3.5" />
             <span>
-              Mengenal Ulul Albaab • Angkatan ke-4 Managed by Al Andalus IIBS
+              Mengenal Al Andalus Ulul Albaab • Angkatan ke-4 Managed by Al Andalus IIBS
             </span>
           </motion.div>
 
@@ -399,7 +399,7 @@ export default function TentangPage() {
               <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-6 md:mb-8 text-white tracking-tight leading-[1.1]">
                 Mari Menjadi Bagian <br />
                 Keluarga{" "}
-                <span className="text-secondary-300">Ulul Albaab</span>
+                <span className="text-secondary-300">Al Andalus Ulul Albaab</span>
               </h2>
               <p className="text-base md:text-lg lg:text-xl text-white/90 mb-8 md:mb-10 lg:mb-12 max-w-2xl mx-auto leading-relaxed font-medium px-2">
                 Daftarkan putra Anda sekarang dan persiapkan masa depan gemilang

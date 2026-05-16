@@ -111,7 +111,7 @@ const drawFooter = (doc: jsPDF) => {
   doc.setFontSize(8);
   doc.setTextColor(150, 150, 150);
   doc.text(
-    `Dicetak secara sistem melalui website PPDB Al Imam pada: ${new Date().toLocaleString("id-ID")}`,
+    `Dicetak secara sistem melalui website PPDB Al Andalus Ulul Albaab pada: ${new Date().toLocaleString("id-ID")}`,
     pageWidth / 2,
     pageHeight - 10,
     { align: "center" },
@@ -244,7 +244,7 @@ export const generateKartuUjian = async (data: PendaftarPdfData) => {
     ["NIK", `: ${data.nik}`],
     ["Jenjang", `: ${data.jenjang}`],
     ["Jadwal Seleksi", `: ${data.jadwal_ujian || "Menunggu Konfirmasi"}`],
-    ["Lokasi", `: ${data.lokasi_ujian || "Kampus Al Imam"}`],
+    ["Lokasi", `: ${data.lokasi_ujian || "Kampus Al Andalus Ulul Albaab"}`],
   ];
 
   autoTable(doc, {
@@ -370,7 +370,7 @@ export const generateSuratKelulusan = async (data: PendaftarPdfData) => {
   doc.setFontSize(11);
 
   let closing =
-    "Selamat bergabung menjadi keluarga besar Pesantren Al Andalus Al Imam. Silakan segera melakukan proses daftar ulang sesuai jadwal yang ditentukan.";
+    "Selamat bergabung menjadi keluarga besar Pesantren Al Andalus Ulul Albaab. Silakan segera melakukan proses daftar ulang sesuai jadwal yang ditentukan.";
   if (statusText === "CADANGAN")
     closing =
       "Anda masuk dalam daftar cadangan. Panitia akan menghubungi Anda jika terdapat kuota yang kosong.";
@@ -955,7 +955,7 @@ export const generatePaktaIntegritas = async (data: PendaftarPdfData) => {
 
   y += 5;
   const preamble1 =
-    "Dengan sungguh-sungguh dan penuh kesadaran, selama saya menjadi santri di Pesantren Al Andalus Al Imam, menyatakan bahwa saya akan:";
+    "Dengan sungguh-sungguh dan penuh kesadaran, selama saya menjadi santri di Pesantren Al Andalus Ulul Albaab, menyatakan bahwa saya akan:";
   doc.text(doc.splitTextToSize(preamble1, contentW), margin, y);
   y += 13;
 
@@ -1069,7 +1069,7 @@ export const generatePaktaIntegritas = async (data: PendaftarPdfData) => {
     "Berupaya menjadi teladan yang baik sesuai ketentuan syariat Islam.",
     "Berperan aktif dalam membimbing dan mengawasi putra/putri kami agar menaati semua peraturan dan tata tertib Pesantren.",
     "Membiayai pendidikan putra/putri kami selama masa pendidikan dengan penuh rasa tanggung jawab.",
-    "Tidak mengajukan tuntutan hukum kepada pihak Pesantren Al Andalus Al Imam Sukabumi atau tenaga pendidik Pesantren terkait tindakan edukatif yang dilakukan kepada putra/putri kami, sebagaimana diatur dalam PP No. 74 Tahun 2008 sebagaimana telah diubah dengan PP No. 19 Tahun 2017 tentang Guru, serta Permendikbud No. 10 Tahun 2017 tentang Perlindungan Bagi Pendidik dan Tenaga Kependidikan.",
+    "Tidak mengajukan tuntutan hukum kepada pihak Pesantren Al Andalus Ulul Albaab Sukabumi atau tenaga pendidik Pesantren terkait tindakan edukatif yang dilakukan kepada putra/putri kami, sebagaimana diatur dalam PP No. 74 Tahun 2008 sebagaimana telah diubah dengan PP No. 19 Tahun 2017 tentang Guru, serta Permendikbud No. 10 Tahun 2017 tentang Perlindungan Bagi Pendidik dan Tenaga Kependidikan.",
     "Bersedia mengikuti mekanisme dan aturan yang telah ditetapkan oleh Pesantren, baik dalam penyelenggaraan pendidikan di dalam kelas, pendidikan di luar kelas, maupun dalam hal-hal yang berkaitan dengan administrasi.",
     "Apabila kami dan putra/putri kami melanggar ketentuan yang telah ditetapkan oleh Pesantren, maka kami bersedia menerima sanksi yang berlaku, sesuai dengan Buku Pedoman Tata Tertib Santri.",
   ];
