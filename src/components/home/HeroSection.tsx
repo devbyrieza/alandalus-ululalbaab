@@ -400,12 +400,12 @@ export default function HeroSection() {
                 ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
               }}
               whileHover={shouldReduceMotion ? {} : { rotate: 0, scale: 1.05 }}
-              className="absolute -bottom-3 -right-3 md:bottom-6 md:-right-6 lg:bottom-10 lg:-right-10 z-30 cursor-default"
+              className="absolute -bottom-10 -right-2 md:bottom-6 md:-right-6 lg:bottom-10 lg:-right-10 z-30 cursor-default scale-90 md:scale-100"
               style={{
                 background:
                   "linear-gradient(135deg, var(--color-secondary-300) 0%, var(--color-secondary-500) 100%)",
-                padding: "1rem 1.125rem",
-                borderRadius: "1.5rem",
+                padding: "0.85rem 1rem",
+                borderRadius: "1.25rem",
                 border: "4px solid var(--color-white)",
                 boxShadow: "var(--shadow-premium-lg)",
                 transition: "transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)",
