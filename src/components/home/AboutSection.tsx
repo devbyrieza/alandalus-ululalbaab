@@ -28,8 +28,8 @@ const misi = [
     text: "Mendidik pribadi yang mampu mengambil keputusan dan menyelesaikan tugas secara mandiri.",
   },
   {
-    label: "TICE",
-    text: "Menyelenggarakan pendidikan berbasis Tahfizh, Islamic Curriculum, dan Entrepreneurship.",
+    label: "Dakwah",
+    text: "Menanamkan jiwa dakwah melalui keteladanan para pendidik serta bimbingan tanpa kekerasan dan luka pengasuhan.",
   },
 ];
 
@@ -106,9 +106,7 @@ export default function AboutSection() {
               <span className="font-semibold text-primary-800">
                 Pesantren Ulul Albaab Sukabumi.
               </span>{" "}
-              Lembaga pendidikan Islam berbasis pesantren modern yang mengusung
-              visi Kaderisasi Ummat Rabbani, Cendekia, dan Mandiri — terafiliasi
-              dengan Pesantren Islam Internasional Al Andalus.
+              Lembaga pendidikan Islam yang mengedepankan keteladanan para pendidik serta mendidik tanpa kekerasan dan luka pengasuhan — mengusung visi Kaderisasi Ummat Rabbani, Cendekia, dan Mandiri.
             </motion.p>
           </motion.div>
 
