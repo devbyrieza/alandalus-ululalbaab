@@ -900,23 +900,20 @@ Jazakumullahu khairan
 }
 
 export function buildMessageHasilTes(nama: string): string {
-    return `📢 *Pengumuman Hasil Seleksi*
+    const cleanSchoolName = BRANDING.schoolShortName === "Al Andalus Al Imam" ? "Al-Andalus Al-Imam" : "Al-Andalus Ulul Albaab";
+    return `Assalamu'alaikum, Abu/Ummu *${nama}*.
 
-Assalamu'alaikum Abu/Ummu,
+Alhamdulillah, hasil tes seleksi Ananda sudah tersedia.
 
-Alhamdulillah, hasil seleksi Ananda *${nama}* sudah tersedia dan dapat dilihat di dashboard PPDB.
+Silakan login ke dashboard untuk melihat hasilnya dan mengunduh surat resmi dalam format PDF.
 
-🔗 *Lihat Hasil Seleksi:*
+🔗 *Dashboard & Unduh Surat:*
 ${BRANDING.websiteUrl}/dashboard/pendaftar/pengumuman
 
-*Panduan Daftar Ulang (bagi yang Diterima):*
-Silakan lakukan pembayaran Daftar Ulang minimal 50% paling lambat 7 hari setelah pengumuman ini.
-Untuk informasi lebih lanjut, hubungi kami di ${BRANDING.phone}.
-
-Jazakumullahu khairan
+Jazakumullahu khairan.
 
 ---
-*Panitia PPDB ${BRANDING.schoolName}*`;
+*Panitia PPDB ${cleanSchoolName}*`;
 }
 
 /** Alias baru — sama dengan buildMessageHasilTes */
@@ -1138,41 +1135,7 @@ export function buildMessageCombinedFinal(
     status: 'DITERIMA' | 'CADANGAN' | 'DITOLAK',
     jenjang: string
 ): string {
-    let msg = `✅ *Hasil Seleksi PPDB ${BRANDING.schoolName}*
-
-Assalamu'alaikum Abu/Ummu,
-
-Alhamdulillah, rangkaian Seleksi Ananda *${nama}* telah selesai dan hasil evaluasi telah diputuskan.
-
-📢 *HASIL SELEKSI:*
-Status: *${status}*
-Jenjang: ${jenjang}
-
-`;
-
-    if (status === 'DITERIMA') {
-        msg += `📝 *Langkah Selanjutnya:*
-Silakan login ke dashboard untuk melakukan *Daftar Ulang* dan melengkapi administrasi.
-Batas waktu daftar ulang adalah 7 hari setelah pengumuman ini.
-
-Dashboard: ${BRANDING.websiteUrl}/dashboard/pendaftar/daftar-ulang`;
-    } else if (status === 'CADANGAN') {
-        msg += `📝 *Informasi:*
-Ananda berada dalam daftar cadangan. Kami akan menghubungi Abu/Ummu jika ada kuota yang tersedia di kemudian hari. Terus pantau dashboard.
-
-Dashboard: ${BRANDING.websiteUrl}/dashboard/pendaftar/pengumuman`;
-    } else {
-        msg += `Kami mengapresiasi semangat dan usaha Ananda. Semoga dimudahkan jalannya untuk menuntut ilmu di manapun berada.`;
-    }
-
-    msg += `
-
-Jazakumullahu khairan
-
----
-*Panitia PPDB ${BRANDING.schoolName}*`;
-
-    return msg;
+    return buildMessageHasilTes(nama);
 }
 
 export function buildMessagePembatalanJadwal(
