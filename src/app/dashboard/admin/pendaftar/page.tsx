@@ -1492,23 +1492,30 @@ function AdminPendaftarContent() {
                 )}
               </button>
 
-              <button
-                onClick={() => handlePromoteCadangan(selectedIds)}
-                disabled={isPromotingCadangan}
-                className="flex items-center justify-center gap-2 px-8 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-black transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-emerald-600/20 active:scale-95 text-sm"
-              >
-                {isPromotingCadangan ? (
-                  <>
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                    Memproses...
-                  </>
-                ) : (
-                  <>
-                    <CheckSquare className="w-4 h-4" />
-                    Promosikan Semua → Diterima
-                  </>
-                )}
-              </button>
+              {pendaftar
+                .filter((p) => selectedIds.includes(p.id))
+                .some((p) => p.status_pendaftaran === "announced" || p.status_pendaftaran === "cadangan") && (
+                <button
+                  onClick={() => handlePromoteCadangan(selectedIds.filter(id => {
+                    const p = pendaftar.find(item => item.id === id);
+                    return p && (p.status_pendaftaran === "announced" || p.status_pendaftaran === "cadangan");
+                  }))}
+                  disabled={isPromotingCadangan}
+                  className="flex items-center justify-center gap-2 px-8 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-black transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-emerald-600/20 active:scale-95 text-sm"
+                >
+                  {isPromotingCadangan ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      Memproses...
+                    </>
+                  ) : (
+                    <>
+                      <CheckSquare className="w-4 h-4" />
+                      Promosikan Cadangan Terpilih → Diterima
+                    </>
+                  )}
+                </button>
+              )}
             </div>
           </div>
         </div>
