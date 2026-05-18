@@ -170,16 +170,23 @@ export async function recalculateNilaiUjian(pendaftarId: string) {
       // 7. Kirim Notifikasi WhatsApp Otomatis
       try {
         const { notifyCombinedFinalResult } = await import("./wablas");
+        const { processWhatsappQueue } = await import("./whatsapp-queue");
         const phone = pendaftar.no_hp || pendaftar.orang_tua?.no_hp_ayah || pendaftar.orang_tua?.no_hp_ibu;
         if (phone) {
           await notifyCombinedFinalResult({
             pendaftarId, phone, nama: pendaftar.nama_lengkap,
             status: status as any, jenjang: pendaftar.jenjang
           });
+
+          // Jalankan proses antrean secara asinkron (fail-safe jika cron delay/mati)
+          processWhatsappQueue().catch((err) =>
+            console.error("Failed to run processWhatsappQueue asynchronously:", err)
+          );
         }
       } catch (err) {
         console.error("WhatsApp Notification Error:", err);
       }
+
     }
   } else {
     // If not all graded, but some are, update status to 'tested' (Sedang Seleksi) 
