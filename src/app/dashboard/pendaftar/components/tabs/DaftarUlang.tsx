@@ -65,8 +65,9 @@ export default function DaftarUlangTab() {
         setTotalPaid(total);
         setPaymentHistory(payments);
         
-        // Automatic installment numbering: count all attempts + 1
-        setCicilanKe((payments.length + 1).toString());
+        // Automatic installment numbering: count all non-rejected attempts + 1
+        const activePaymentsCount = payments.filter((p: any) => p.status_pembayaran !== "rejected").length;
+        setCicilanKe((activePaymentsCount + 1).toString());
       }
     } catch (error) {
       console.error("Error fetching data:", error);
