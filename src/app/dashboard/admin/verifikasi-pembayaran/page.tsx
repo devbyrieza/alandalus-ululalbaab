@@ -311,12 +311,8 @@ function VerifikasiPembayaranContent() {
     
     // Automatic installment suggest for Admin
     if (activeTab === "DAFTAR_ULANG") {
-      if (pay.cicilan_ke) {
-        setEditCicilanKe(pay.cicilan_ke);
-      } else {
-        // If not set by pendaftar, suggest next sequence
-        setEditCicilanKe((pay.verified_count || 0) + 1);
-      }
+      // Suggest next sequence automatically for verification
+      setEditCicilanKe((pay.verified_count || 0) + 1);
     } else {
       setEditCicilanKe(pay.cicilan_ke || 1);
     }
@@ -778,7 +774,12 @@ function VerifikasiPembayaranContent() {
                         LUNAS
                       </button>
                       <button
-                        onClick={() => setEditTipeCicilan("CICILAN")}
+                        onClick={() => {
+                          setEditTipeCicilan("CICILAN");
+                          if (selectedPembayaran) {
+                            setEditCicilanKe((selectedPembayaran.verified_count || 0) + 1);
+                          }
+                        }}
                         className={`flex-1 py-2 rounded-xl text-xs font-black transition-all ${
                           editTipeCicilan === "CICILAN"
                             ? "bg-violet-600 text-white shadow-md"
