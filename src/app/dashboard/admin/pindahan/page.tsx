@@ -51,7 +51,7 @@ function PindahanContent() {
   const [statusFilter, setStatusFilter] = useState("all");
   const [tahunAjaranList, setTahunAjaranList] = useState<{id:string;nama:string}[]>([]);
   const [form, setForm] = useState({
-    nama_lengkap: "", nik: "", jenis_kelamin: "L", jenjang: "MTs",
+    nama_lengkap: "", nik: "", jenis_kelamin: "P", jenjang: "MTs",
     kelas_masuk: "8", asal_institusi: "", nomor_induk_lama: "",
     catatan_pindahan: "", no_hp: "", email: "", tahun_ajaran_id: "",
     status_pendaftaran: "submitted",
@@ -93,7 +93,7 @@ function PindahanContent() {
       if (!res.ok) { Swal.fire("Gagal", json.error || "Terjadi kesalahan", "error"); return; }
       Swal.fire("Berhasil!", json.message, "success");
       setShowModal(false);
-      setForm({ nama_lengkap:"",nik:"",jenis_kelamin:"L",jenjang:"MTs",kelas_masuk:"8",asal_institusi:"",nomor_induk_lama:"",catatan_pindahan:"",no_hp:"",email:"",tahun_ajaran_id:"",status_pendaftaran:"submitted" });
+      setForm({ nama_lengkap:"",nik:"",jenis_kelamin:"P",jenjang:"MTs",kelas_masuk:"8",asal_institusi:"",nomor_induk_lama:"",catatan_pindahan:"",no_hp:"",email:"",tahun_ajaran_id:"",status_pendaftaran:"submitted" });
       fetchData();
     } catch (e) { Swal.fire("Error", "Terjadi kesalahan", "error"); }
     finally { setSubmitting(false); }
