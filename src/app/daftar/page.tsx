@@ -167,9 +167,9 @@ export default function DaftarPage() {
     } else if (formData.jenis_kelamin === "L" && formData.jenjang === "MTs") {
       errors.jenis_kelamin =
         "Mohon maaf, pendaftaran MTs Putra sudah ditutup.";
-    } else if (formData.jenis_kelamin === "P" && formData.jenjang === "IL") {
+    } else if (formData.jenis_kelamin === "L" && formData.jenjang === "IL") {
       errors.jenis_kelamin =
-        "Mohon maaf, pendaftaran I'dad Lughowi Putri belum dibuka.";
+        "Mohon maaf, pendaftaran I'dad Lughowi Putra sudah ditutup.";
     }
 
     if (!formData.jenjang) {
