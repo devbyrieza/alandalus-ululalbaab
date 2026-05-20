@@ -2,29 +2,32 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function findPendaftar() {
-    console.log("🔍 Searching for 'Ahmad Tes'...");
+    const phoneToSearch = '85111524441';
+    console.log(`🔍 Searching for phone/NIK containing ${phoneToSearch}...`);
+    
+    // Find all pendaftar where phone contains or NIK contains
     const pendaftars = await prisma.pendaftar.findMany({
         where: {
-            nama_lengkap: {
-                contains: 'Ahmad Tes',
-                mode: 'insensitive'
-            }
+            OR: [
+                { no_hp: { contains: phoneToSearch } },
+                { nik: { contains: phoneToSearch } }
+            ]
         },
         orderBy: { created_at: 'desc' }
     });
 
-    if (pendaftars.length === 0) {
-        console.log("ℹ️ No pendaftar found with that name.");
-    } else {
-        pendaftars.forEach(p => {
-            console.log(`- ID: ${p.id}`);
-            console.log(`  Nomor: ${p.nomor_pendaftaran}`);
-            console.log(`  Nama: ${p.nama_lengkap}`);
-            console.log(`  Time: ${p.created_at.toISOString()}`);
-            console.log(`  Status: ${p.status_pendaftaran}`);
-            console.log("-------------------");
-        });
-    }
+    console.log(`📊 Found ${pendaftars.length} records in pendaftar table:`);
+    pendaftars.forEach(p => {
+        console.log(`- ID: ${p.id}`);
+        console.log(`  Nomor: ${p.nomor_pendaftaran}`);
+        console.log(`  Nama: ${p.nama_lengkap}`);
+        console.log(`  NIK: ${p.nik}`);
+        console.log(`  Phone: ${p.no_hp}`);
+        console.log(`  Type: ${p.tipe_pendaftaran}`);
+        console.log(`  Status: ${p.status_pendaftaran}`);
+        console.log(`  Deleted At: ${p.deleted_at}`);
+        console.log("-------------------");
+    });
 }
 
 findPendaftar()
