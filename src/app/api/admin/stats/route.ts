@@ -57,6 +57,7 @@ export async function GET(request: Request) {
 
     // 2. Build where clause
     const where = getAdminWhereClause(finalTAId);
+    where.tipe_pendaftaran = { not: "PINDAHAN" };
     console.log(`📊 [API Stats] Fetching for TA: ${finalTAId}`);
 
     // === REDIS CACHE CHECK ===
