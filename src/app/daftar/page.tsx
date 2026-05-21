@@ -170,9 +170,6 @@ export default function DaftarPage() {
     } else if (formData.jenis_kelamin === "L" && formData.jenjang === "IL") {
       errors.jenis_kelamin =
         "Mohon maaf, pendaftaran I'dad Lughowi Putra sudah ditutup.";
-    } else if (formData.jenis_kelamin === "L" && formData.jenjang === "MA") {
-      errors.jenis_kelamin =
-        "Mohon maaf, pendaftaran MA Langsung Putra sudah ditutup.";
     }
 
     if (!formData.jenjang) {
@@ -393,8 +390,8 @@ export default function DaftarPage() {
                   ].map((option) => {
                     const isPutra = formData.jenis_kelamin === "L";
                     const isPutri = formData.jenis_kelamin === "P";
-                    // Saat ini: MTs Putri & IL Putri & MA Putri BUKA, MTs Putra & IL Putra & MA Putra DITUTUP
-                    const isClosed = isPutra;
+                    // Saat ini: MTs Putri & IL Putri & MA Putri BUKA, MA Putra BUKA, MTs Putra & IL Putra DITUTUP
+                    const isClosed = isPutra && (option.value === "MTs" || option.value === "IL");
                     const closedLabel = "Pendaftaran Putra Sudah Ditutup";
 
                     return (

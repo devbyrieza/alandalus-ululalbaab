@@ -126,9 +126,11 @@ export function generatePrefix(jenjang: string, jenis_kelamin: string): string {
   // Gender suffix
   if (jenis_kelamin === "P") {
     prefix += "I"; // Putri
+  } else if (jenis_kelamin === "L" && jenjang === "MA") {
+    prefix += "A"; // Putra
   } else {
     throw new Error(
-      `Jenis kelamin tidak valid untuk Al Andalus Ulul Albaab (Hanya Putri): ${jenis_kelamin}`,
+      `Jenis kelamin tidak valid untuk Al Andalus Ulul Albaab (Hanya Putri, kecuali MA Putra): ${jenis_kelamin}`,
     );
   }
 
@@ -153,7 +155,7 @@ export function validateNomorPendaftaranFormat(
   if (nomorPendaftaran.length !== 10) return false;
 
   // Check format: Valid prefix + 2 digits + 5 digits
-  const regex = /^(MTI|ILI|MAI)\d{7}$/;
+  const regex = /^(MTI|ILI|MAI|MAA)\d{7}$/;
   return regex.test(nomorPendaftaran);
 }
 
@@ -324,6 +326,7 @@ export function getPrefixLabel(prefix: string): string {
     MTI: "MTs Putri (Perempuan)",
     ILI: "I'dad Lughowi Putri (Perempuan)",
     MAI: "MA Langsung Putri (Perempuan)",
+    MAA: "MA Langsung Putra (Laki-laki)",
   };
 
   return labels[prefix] || prefix;
