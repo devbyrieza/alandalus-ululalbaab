@@ -77,8 +77,8 @@ export default function DaftarUlangTab() {
   };
 
   const calculateTipe = (amount: number) => {
-    if (amount >= 9800000) return "LUNAS";
-    if (amount >= 4900000) return "CICILAN 50% ATAU LEBIH";
+    if (amount >= 10900000) return "LUNAS";
+    if (amount >= 5450000) return "CICILAN 50% ATAU LEBIH";
     return "CICILAN DIBAWAH 50%";
   };
 
@@ -91,7 +91,7 @@ export default function DaftarUlangTab() {
 
     // Execution 2: Flexible Amounts after first installment
     // If they have a verified payment, they don't need keringananReason for < 50%
-    if (amount < 4900000 && !keringananReason.trim() && !hasExistingVerifiedPayment && totalPaid < 4900000) {
+    if (amount < 5450000 && !keringananReason.trim() && !hasExistingVerifiedPayment && totalPaid < 5450000) {
       setMessage({
         type: "error",
         text: "Untuk pembayaran cicilan pertama di bawah 50%, Anda wajib mengisi alasan/permohonan keringanan pada kolom yang tersedia.",
@@ -109,7 +109,7 @@ export default function DaftarUlangTab() {
     if (keringananReason) formData.append("keringanan_reason", keringananReason);
     
     const numericNominalValue = parseInt(nominal.replace(/\D/g, "") || "0");
-    if (numericNominalValue < 9800000) {
+    if (numericNominalValue < 10900000) {
       formData.append("cicilan_ke", cicilanKe);
     }
 
@@ -176,7 +176,7 @@ export default function DaftarUlangTab() {
   }
 
   // ENROLLED / LUNAS STATE (Full paid 9.8M)
-  const isLunas = totalPaid >= 9800000;
+  const isLunas = totalPaid >= 10900000;
 
   if (isLunas) {
     return (
@@ -520,10 +520,10 @@ export default function DaftarUlangTab() {
               <button
                 type="button"
                 onClick={() =>
-                  setNominal(new Intl.NumberFormat("id-ID").format(9800000))
+                  setNominal(new Intl.NumberFormat("id-ID").format(10900000))
                 }
                 className={`p-4 rounded-2xl border-3 transition-all text-left flex flex-col ${
-                  numericNominal === 9800000
+                  numericNominal === 10900000
                     ? "border-primary-500 bg-primary-50/50 ring-4 ring-primary-500/10 shadow-md"
                     : "border-slate-100 bg-white hover:bg-slate-50 hover:border-slate-200"
                 }`}
@@ -532,7 +532,7 @@ export default function DaftarUlangTab() {
                   <span className="font-black text-primary-950 text-lg">
                     Bayar Lunas
                   </span>
-                  {numericNominal === 9800000 ? (
+                  {numericNominal === 10900000 ? (
                     <CheckCircle className="w-6 h-6 text-primary-600" />
                   ) : (
                     <div className="w-6 h-6 rounded-full border-3 border-slate-300" />
@@ -549,10 +549,10 @@ export default function DaftarUlangTab() {
               <button
                 type="button"
                 onClick={() =>
-                  setNominal(new Intl.NumberFormat("id-ID").format(4900000))
+                  setNominal(new Intl.NumberFormat("id-ID").format(5450000))
                 }
                 className={`p-4 rounded-2xl border-3 transition-all text-left flex flex-col ${
-                  numericNominal >= 4900000 && numericNominal < 9800000
+                  numericNominal >= 5450000 && numericNominal < 10900000
                     ? "border-primary-500 bg-primary-50/50 ring-4 ring-primary-500/10 shadow-md"
                     : "border-slate-100 bg-white hover:bg-slate-50 hover:border-slate-200"
                 }`}
@@ -561,7 +561,7 @@ export default function DaftarUlangTab() {
                   <span className="font-black text-primary-950 text-lg">
                     Bayar Dicicil
                   </span>
-                  {numericNominal >= 4900000 && numericNominal < 9800000 ? (
+                  {numericNominal >= 5450000 && numericNominal < 10900000 ? (
                     <CheckCircle className="w-6 h-6 text-primary-600" />
                   ) : (
                     <div className="w-6 h-6 rounded-full border-3 border-slate-300" />
@@ -578,7 +578,7 @@ export default function DaftarUlangTab() {
           </div>
 
           {/* Input Cicilan Ke (Hanya jika dicicil) */}
-          {numericNominal > 0 && numericNominal < 9800000 && (
+          {numericNominal > 0 && numericNominal < 10900000 && (
             <div className="pt-4 border-t border-slate-100 animate-in fade-in slide-in-from-top-1">
               <label className="block text-sm font-black text-slate-700 mb-3 tracking-wide uppercase">
                 Ini adalah Pembayaran Cicilan ke-
@@ -648,7 +648,7 @@ export default function DaftarUlangTab() {
             {numericNominal > 0 && 
              tipeBayar === "CICILAN DIBAWAH 50%" && 
              !hasExistingVerifiedPayment && 
-             totalPaid < 4900000 && (
+             totalPaid < 5450000 && (
               <motion.div
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: "auto" }}

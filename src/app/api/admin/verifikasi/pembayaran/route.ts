@@ -208,7 +208,7 @@ export async function PATCH(request: NextRequest) {
           (acc, p) => acc + Number(p.jumlah),
           0,
         );
-        const threshold = 9800000;
+        const threshold = 10900000;
         if (totalPaid >= threshold) {
           newPendaftarStatus = "enrolled_full";
         } else {

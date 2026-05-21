@@ -156,9 +156,9 @@ export async function POST(request: NextRequest) {
       biaya = inputJumlah;
 
       // Tentukan Tipe Cicilan
-      if (biaya >= 9800000) {
+      if (biaya >= 10900000) {
         tipeCicilan = "LUNAS";
-      } else if (biaya >= 4900000) {
+      } else if (biaya >= 5450000) {
         tipeCicilan = "CICIL_50_LEBIH";
       } else {
         tipeCicilan = "CICIL_DIBAWAH_50";
@@ -258,7 +258,7 @@ export async function POST(request: NextRequest) {
           cicilan_ke: cicilanKe,
           keringanan_reason: keringananReason as any,
           jumlah: biaya,
-          total_tagihan: jenisPembayaran === "DAFTAR_ULANG" ? 9800000 : biaya,
+          total_tagihan: jenisPembayaran === "DAFTAR_ULANG" ? 10900000 : biaya,
           bukti_transfer_path: filePath,
           bukti_transfer_filename: safeFileName,
           status_pembayaran: "pending",

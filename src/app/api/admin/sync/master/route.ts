@@ -269,7 +269,7 @@ export async function POST(request: NextRequest) {
               pendaftar_id: studentId!,
               tahun_ajaran_id: activeTA.id,
               metode_pembayaran: "manual",
-              jumlah: total || 9800000,
+              jumlah: total || 10900000,
               status_pembayaran: "verified",
               jenis_pembayaran: JenisPembayaran.DAFTAR_ULANG,
               tipe_cicilan: TipeCicilan.LUNAS,
