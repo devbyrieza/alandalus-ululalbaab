@@ -159,7 +159,7 @@ export default function HeroSection() {
                 style={{ color: "var(--color-primary-700)" }}
               >
                 mengedepankan keteladanan para pendidik serta mendidik tanpa kekerasan dan luka pengasuhan
-              </strong>, memadukan Intensitas Tahfidz Al-Qur'an, Ilmu Syar'i, dan Enterpreneurship.
+              </strong>, memadukan Intensitas Tahfidz Al-Qur'an, Ilmu Syar'i, dan Entrepreneurship.
             </motion.p>
 
             {/* Tagline Divider */}

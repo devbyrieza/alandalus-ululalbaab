@@ -47,8 +47,8 @@ const STATS: Stat[] = [
     icon: Award,
     color: "amber",
     suffix: "%",
-    sublabel: "Tahfidz, Syar'i & Akademik",
-    description: "Tiga pilar pendidikan utama",
+    sublabel: "Tahfidz, Syar'i, Akademik & Entrepreneurship",
+    description: "Empat pilar pendidikan utama",
   },
   {
     id: "levels",
