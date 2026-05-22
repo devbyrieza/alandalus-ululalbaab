@@ -32,6 +32,7 @@ interface PendaftarSummary {
   nama_lengkap: string;
   jenjang: string;
   no_hp: string | null;
+  tipe_pendaftaran?: string;
   dokumen: DokumenSummary[];
 }
 
@@ -109,6 +110,7 @@ function VerifikasiDokumenContent() {
             nama_lengkap: dok.pendaftar.nama_lengkap,
             jenjang: dok.pendaftar.jenjang,
             no_hp: dok.pendaftar.no_hp,
+            tipe_pendaftaran: dok.pendaftar.tipe_pendaftaran,
             dokumen: [],
           };
         }
@@ -146,6 +148,7 @@ function VerifikasiDokumenContent() {
             nama_lengkap: string;
             nomor_pendaftaran: string;
             jenjang: string;
+            tipe_pendaftaran?: string;
           };
           jenis_dokumen: string;
           is_verified: boolean;
@@ -155,6 +158,7 @@ function VerifikasiDokumenContent() {
           "Nama Pendaftar": item.pendaftar?.nama_lengkap
             ? toTitleCase(item.pendaftar.nama_lengkap)
             : "-",
+          "Jalur / Tipe": item.pendaftar?.tipe_pendaftaran === "PINDAHAN" ? "Pindahan" : "Reguler",
           "No Pendaftaran": item.pendaftar?.nomor_pendaftaran || "-",
           Jenjang: item.pendaftar?.jenjang || "-",
           "Jenis Dokumen": item.jenis_dokumen || "-",
@@ -349,6 +353,11 @@ function VerifikasiDokumenContent() {
                         <div className="flex-1 min-w-0">
                           <h3 className="font-black text-primary-950 truncate group-hover:text-primary-700 transition-colors leading-tight mb-1">
                             {toTitleCase(pendaftar.nama_lengkap)}
+                            {pendaftar.tipe_pendaftaran === "PINDAHAN" && (
+                              <span className="ml-2 px-2 py-0.5 bg-violet-100 text-violet-700 rounded-full text-[10px] font-black uppercase tracking-wider border border-violet-200 align-middle">
+                                PINDAHAN
+                              </span>
+                            )}
                           </h3>
                           <div className="flex items-center gap-2">
                             <span className="text-xs font-mono font-black text-primary-400 bg-primary-50 px-2 py-0.5 rounded">
