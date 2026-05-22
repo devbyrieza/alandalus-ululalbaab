@@ -260,8 +260,6 @@ function PindahanContent() {
           </div>
         )}
       </div>
-
-      </div>
     </div>
   );
 }
