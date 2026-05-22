@@ -88,7 +88,10 @@ export async function POST() {
         await tx.pembayaran.updateMany({
           where: {
             jenis_pembayaran: "PENDAFTARAN",
-            jumlah: { lte: 200000 },
+            OR: [
+              { jumlah: { lte: 200000 } },
+              { total_tagihan: { lte: 200000 } },
+            ],
           },
           data: {
             jumlah: 250000,
@@ -156,7 +159,10 @@ export async function POST() {
       await tx.pembayaran.updateMany({
         where: {
           jenis_pembayaran: "PENDAFTARAN",
-          jumlah: { lte: 200000 },
+          OR: [
+            { jumlah: { lte: 200000 } },
+            { total_tagihan: { lte: 200000 } },
+          ],
         },
         data: {
           jumlah: 250000,
@@ -252,9 +258,10 @@ export async function GET(request: Request) {
     const updateCount = await prisma.pembayaran.updateMany({
       where: {
         jenis_pembayaran: "PENDAFTARAN",
-        jumlah: {
-          lte: 200000, // Fix anything 200k or less just in case
-        },
+        OR: [
+          { jumlah: { lte: 200000 } },
+          { total_tagihan: { lte: 200000 } },
+        ],
       },
       data: {
         jumlah: 250000,
