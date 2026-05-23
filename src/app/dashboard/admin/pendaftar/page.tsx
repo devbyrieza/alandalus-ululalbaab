@@ -858,7 +858,8 @@ function AdminPendaftarContent() {
           if (s.includes("accepted") || s.includes("diterima")) return "Diterima";
           if (s.includes("announced") || s.includes("cadangan")) return "Cadangan";
           if (s.includes("rejected") || s.includes("ditolak")) return "Ditolak";
-          if (s.includes("enrolled") || s.includes("daftar ulang") || s.includes("ulang")) return "Daftar Ulang";
+          if (s.includes("enrolled_full") || s.includes("selesai")) return "Selesai";
+          if (s.includes("enrolled") || s.includes("daftar ulang") || s.includes("ulang")) return "Sedang Daftar Ulang";
           return status;
         };
 
@@ -968,8 +969,12 @@ function AdminPendaftarContent() {
       accepted: { label: "Diterima", color: "bg-emerald-600 text-white" },
       rejected: { label: "Ditolak", color: "bg-rose-600 text-white" },
       enrolled: {
-        label: "Daftar Ulang",
+        label: "Sedang Daftar Ulang",
         color: "bg-emerald-100 text-emerald-800",
+      },
+      enrolled_full: {
+        label: "Selesai",
+        color: "bg-primary-100 text-primary-800 border border-primary-200",
       },
       pindah_keluar: {
         label: "Pindah Keluar",
@@ -1259,7 +1264,8 @@ function AdminPendaftarContent() {
                 <option value="cadangan">Cadangan</option>
                 <option value="accepted">Diterima</option>
                 <option value="rejected">Ditolak</option>
-                <option value="enrolled">Daftar Ulang</option>
+                <option value="enrolled">Sedang Daftar Ulang</option>
+                <option value="enrolled_full">Selesai</option>
               </optgroup>
             </select>
           </div>
@@ -1523,7 +1529,8 @@ function AdminPendaftarContent() {
                 <option value="announced">Diumumkan</option>
                 <option value="accepted">Diterima</option>
                 <option value="rejected">Ditolak</option>
-                <option value="enrolled">Terdaftar</option>
+                <option value="enrolled">Sedang Daftar Ulang</option>
+                <option value="enrolled_full">Selesai</option>
               </select>
 
               <button
@@ -2235,3 +2242,4 @@ export default function AdminPendaftarPage() {
     </Suspense>
   );
 }
+
