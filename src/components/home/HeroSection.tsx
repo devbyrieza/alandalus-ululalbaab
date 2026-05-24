@@ -136,7 +136,11 @@ export default function HeroSection() {
                 <span className="block" style={{ color: "var(--color-blue-700)" }}>
                   Kaderisasi Ummat
                 </span>
-                <span className="block mt-1" style={{ color: "var(--color-secondary-400)" }}>
+                <span className="block mt-1 drop-shadow-sm" style={{ 
+                  backgroundImage: "linear-gradient(135deg, var(--color-secondary-300) 0%, var(--color-secondary-500) 100%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent"
+                }}>
                   Rabbani, Cendekia, <br className="hidden sm:block" />
                   dan Mandiri
                 </span>
