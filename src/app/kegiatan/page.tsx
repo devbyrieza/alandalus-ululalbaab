@@ -701,8 +701,8 @@ export default function KegiatanPage() {
             transition={{ delay: 0.2 }}
             className="text-lg md:text-xl lg:text-2xl text-ink-600 max-w-3xl mx-auto leading-relaxed font-medium mb-12 md:mb-16"
           >
-            Sinergi Kurikulum Nasional & Pesantren yang terintegrasi secara
-            komprehensif untuk mencetak generasi yang berilmu, beradab, dan
+            Sinergi Kurikulum Nasional & Kurikulum Khas Andalus yang terintegrasi secara
+            komprehensif untuk Kaderisasi Ummat yang berilmu, beradab, dan
             adaptif.
           </motion.p>
 
