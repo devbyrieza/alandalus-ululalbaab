@@ -31,7 +31,7 @@ const PROGRAMS: ProgramItem[] = [
   {
     title: "Madrasah Tsanawiyah (MTs)",
     subtitle: "Tingkat Menengah · Setara SMP",
-    desc: "Memadukan tahfizh Al-Qur'an, kurikulum pendidikan nasional, kurikulum khas Al Andalus berbasis Kitab Turots, dan entrepreneurship. Bahasa pengantar Bahasa Arab.",
+    desc: "Memadukan tahfizh Al-Qur'an, kurikulum pendidikan nasional, kurikulum khas Andalus berbasis Kitab Turots, dan entrepreneurship. Bahasa pengantar Bahasa Arab.",
     features: [
       "Target Hafalan Al-Qur'an Minimal 12 Juz",
       "Kitab Turots & Ilmu Syar'i",

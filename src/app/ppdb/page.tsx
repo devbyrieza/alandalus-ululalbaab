@@ -503,7 +503,7 @@ function PPDBContent() {
                       {
                         icon: BookOpen,
                         title: "Kurikulum Mutakhir",
-                        desc: "Perpaduan kurikulum Nasional & kurikulum khas Al Andalus.",
+                        desc: "Perpaduan kurikulum Nasional & kurikulum khas Andalus.",
                       },
                       {
                         icon: GraduationCap,

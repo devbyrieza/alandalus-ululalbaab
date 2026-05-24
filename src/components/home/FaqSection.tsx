@@ -21,7 +21,7 @@ const FAQS = [
     question:
       "Kurikulum apa yang diterapkan di Pesantren Al Andalus Ulul Albaab?",
     answer:
-      "Kami menerapkan Kurikulum Terpadu yang menggabungkan kurikulum Nasional dengan kurikulum khas Al Andalus yang berfokus pada penguasaan Bahasa Arab, Tahfidz Al-Qur'an, dan Kitab Turots.",
+      "Kami menerapkan Kurikulum Terpadu yang menggabungkan kurikulum Nasional dengan kurikulum khas Andalus yang berfokus pada penguasaan Bahasa Arab, Tahfidz Al-Qur'an, dan Kitab Turots.",
   },
   {
     question: "Apa saja berkas persyaratan yang harus disiapkan?",
