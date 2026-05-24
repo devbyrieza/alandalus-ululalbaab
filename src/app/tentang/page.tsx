@@ -63,8 +63,8 @@ export default function TentangPage() {
           >
             Pesantren Al Andalus Ulul Albaab Sukabumi, cabang resmi dari Al Andalus
             International Islamic Boarding School (IIBS) Jonggol, Bogor. Memadukan intensitas
-            Tahfidz Al-Qur'an dengan pengembangan jiwa Leadership untuk Kaderisasi Ummat Rabbani,
-            Cendekia, dan Mandiri. Tahun Ajaran 2026/2027 adalah Angkatan ke-4 sejak dikelola Al Andalus IIBS.
+            Tahfidz Al-Qur'an dengan kurikulum TICE (Tahfizh, Islamic, & Entrepreneurship) untuk
+            Kaderisasi Ummat Rabbani, Cendekia, dan Mandiri. Tahun Ajaran 2026/2027 adalah Angkatan ke-4 sejak dikelola Al Andalus IIBS.
           </motion.p>
         </Container>
       </section>
