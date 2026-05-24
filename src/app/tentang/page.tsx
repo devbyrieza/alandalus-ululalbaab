@@ -209,7 +209,7 @@ export default function TentangPage() {
                   </p>
                   <p>
                     Pesantren Al Andalus Ulul Albaab memadukan tahfizh Al-Qur'an, kurikulum
-                    pendidikan nasional (diknas), kurikulum khas pesantren
+                    pendidikan nasional (diknas), kurikulum khas Andalus
                     berbasis Kitab Turots, dan entrepreneurship — semua dengan
                     bahasa pengantar Bahasa Arab.
                   </p>

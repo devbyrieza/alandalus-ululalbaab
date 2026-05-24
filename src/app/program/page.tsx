@@ -29,7 +29,7 @@ const PROGRAMS = [
     buttonLabel: "Daftar MTs",
     fullName: "Program Madrasah Tsanawiyah (SMP)",
     description:
-      "Memadukan tahfizh Al-Qur'an, kurikulum pendidikan nasional, kurikulum khas pesantren berbasis Kitab Turots, dan entrepreneurship. Semua dengan bahasa pengantar Bahasa Arab.",
+      "Memadukan tahfizh Al-Qur'an, kurikulum pendidikan nasional, kurikulum khas Andalus berbasis Kitab Turots, dan entrepreneurship. Semua dengan bahasa pengantar Bahasa Arab.",
     stats: [
       { label: "Durasi", value: "3 Tahun", icon: Clock },
       { label: "Kuota Putra", value: "32", icon: Users },
