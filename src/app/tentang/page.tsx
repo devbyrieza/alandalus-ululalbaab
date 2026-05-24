@@ -61,9 +61,10 @@ export default function TentangPage() {
             transition={{ delay: 0.2 }}
             className="text-base sm:text-lg md:text-xl text-ink-600 max-w-3xl mx-auto leading-relaxed font-medium mb-12 px-4"
           >
-            Pesantren Al Andalus Ulul Albaab Sukabumi, cabang dari Al Andalus International Islamic Boarding School (IIBS) Jonggol, Bogor yang bekerjasama dengan
-            Universitas Islam ternama di 3 Benua. Tahun Ajaran 2026/2027 adalah
-            Angkatan ke-4 sejak dikelola Al Andalus IIBS.
+            Pesantren Al Andalus Ulul Albaab Sukabumi, cabang resmi dari Al Andalus
+            International Islamic Boarding School (IIBS) Jonggol, Bogor. Memadukan intensitas
+            Tahfidz Al-Qur'an dengan pengembangan jiwa Leadership untuk Kaderisasi Ummat Rabbani,
+            Cendekia, dan Mandiri. Tahun Ajaran 2026/2027 adalah Angkatan ke-4 sejak dikelola Al Andalus IIBS.
           </motion.p>
         </Container>
       </section>
