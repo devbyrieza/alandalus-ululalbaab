@@ -9,8 +9,8 @@ const CONTACT_INFO = [
   {
     icon: MapPin,
     title: "Lokasi Pesantren",
-    content: "Jl. KH Mama Oyon Cihaur RT/RW 04/04",
-    detail: "Cicantayan, Sukabumi 43155",
+    content: "Jl. KH Mama Oyon, Cihaur",
+    detail: "Kec. Cicantayan, Sukabumi 43155",
     accent: "blue" as const,
   },
   {

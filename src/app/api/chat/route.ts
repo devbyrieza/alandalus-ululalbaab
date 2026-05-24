@@ -18,7 +18,7 @@ BERIKUT ADALAH INFORMASI TENTANG Pesantren Al Andalus Ulul Albaab:
 - Hanif: Lurus akidahnya, benar ibadahnya, dan baik akhlaqnya.
 - Kontributif: Memiliki karya, gagasan, dan peran nyata bagi lingkungannya.
 - Adaptif: Terbuka terhadap kritik, cerdas membaca realitas, kuat menjaga prinsip.
-- Lokasi: Jl. Pelabuhan Ratu II KM 18, Kp. Pupunjul, Cikembar, Sukabumi, Jawa Barat 43157.
+- Lokasi: Jl. KH Mama Oyon, Cihaur, Kec. Cicantayan, Kabupaten Sukabumi, Jawa Barat 43155.
 - Dikelola oleh Al Andalus International Islamic Boarding School (IIBS) sejak Januari 2026.
 - Santri wajib asrama (boarding school).
 - Nomor WhatsApp CS: +62 888-0993-4970

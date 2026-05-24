@@ -11,7 +11,7 @@ export const PDF_BRANDING = {
     committee: "PANITIA PENERIMAAN SANTRI BARU",
     academic_year: "2026-2027",
     address:
-      "Jl. KH Mama Oyon Cihaur RT/RW 04/04, Cicantayan, Kabupaten Sukabumi, Jawa Barat 43155",
+      "Jl. KH Mama Oyon, Cihaur, Kec. Cicantayan, Kabupaten Sukabumi, Jawa Barat 43155",
     contact:
       "Website: https://ppdb.alandalus-ululalbaab.com | Email: alandalusululalbaab2@gmail.com",
     phones: "WhatsApp: 0812-8530-0800", // Base phone

@@ -19,7 +19,7 @@ export const BRANDING = {
     process.env.NEXT_PUBLIC_DASHBOARD_TITLE || "Panel Admin PPDB Ulul Albaab",
   address:
     process.env.NEXT_PUBLIC_ADDRESS ||
-    "Jl. KH Mama Oyon Cihaur RT/RW 04/04, Cicantayan, Kabupaten Sukabumi, Jawa Barat 43155",
+    "Jl. KH Mama Oyon, Cihaur, Kec. Cicantayan, Kabupaten Sukabumi, Jawa Barat 43155",
   phone: process.env.NEXT_PUBLIC_PHONE || "+62 812-8530-0800",
   email: process.env.NEXT_PUBLIC_EMAIL || "alandalusululalbaab2@gmail.com",
   igUrl:

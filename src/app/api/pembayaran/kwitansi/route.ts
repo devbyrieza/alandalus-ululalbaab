@@ -256,7 +256,7 @@ export async function GET(request: NextRequest) {
   <div class="container">
     <div class="header">
       <h1>Ponpes Al Andalus Ulul Albaab</h1>
-      <p>Jl. Pelabuhan Ratu II KM 18, Cikembar, Sukabumi, Jawa Barat 43157</p>
+      <p>Jl. KH Mama Oyon, Cihaur, Kec. Cicantayan, Kabupaten Sukabumi, Jawa Barat 43155</p>
       <p>Telp: +62 812-8530-0800 | Email: alandalusululalbaab2@gmail.com</p>
     </div>
 
