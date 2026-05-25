@@ -397,24 +397,25 @@ function PPDBContent() {
             })}
           </div>
 
-          <div className="mt-10 max-w-4xl mx-auto bg-primary-50 border border-primary-100 rounded-[2rem] p-6 md:p-8">
-            <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6 text-center md:text-left">
-              <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-primary-600 shrink-0">
-                <HelpCircle className="w-6 h-6" />
-              </div>
-              <div>
-                <p className="text-base text-primary-900 font-bold leading-relaxed">
-                  💰 <strong>SPP All In Rp 13.200.000/Tahun</strong> mencakup:
-                  biaya makan, asrama, listrik, dan seluruh kegiatan pesantren.
-                  Dapat dicicil <strong>Rp 1.100.000/Bulan</strong>.
-                </p>
-                <p className="text-sm text-primary-700 font-medium mt-2">
-                  Catatan: Biaya pendaftaran dan uang pangkal bersifat
-                  non-refundable.
-                </p>
-              </div>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="mt-16 max-w-4xl mx-auto bg-primary-50 border border-primary-100 rounded-[2.5rem] p-8 md:p-10 flex flex-col md:flex-row items-center gap-8 text-center md:text-left"
+          >
+            <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-primary-600 shadow-premium-sm shrink-0">
+              <HelpCircle className="w-8 h-8" />
             </div>
-          </div>
+            <div>
+              <p className="text-lg text-primary-900 font-bold leading-relaxed">
+                Catatan Penting: Biaya pendaftaran dan uang pangkal bersifat
+                non-refundable. Uang pangkal (daftar ulang) dapat dicicil
+                maksimal 3x pembayaran, dengan{" "}
+                <strong>syarat pembayaran pertama minimal 50%</strong>, dan
+                wajib dilunasi sebelum Juli 2026.
+              </p>
+            </div>
+          </motion.div>
         </Container>
       </section>
 
