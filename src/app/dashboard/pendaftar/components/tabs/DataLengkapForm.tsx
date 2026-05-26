@@ -1205,7 +1205,7 @@ export default function DataLengkapForm({
                     required
                   />
                   <InputField
-                    label="NISN"
+                    label="NISN (Nomor Induk Siswa Nasional)"
                     name="nisn"
                     value={formData.santri.nisn}
                     onChange={(v) => updateSantri("nisn", v)}
