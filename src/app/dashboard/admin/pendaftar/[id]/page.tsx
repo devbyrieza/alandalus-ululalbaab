@@ -29,6 +29,7 @@ import {
 import Link from "next/link";
 import Swal from "sweetalert2";
 import EditPendaftarModal from "./EditPendaftarModal";
+import InputNilaiManualModal from "./InputNilaiManualModal";
 
 interface PendaftarDetail {
   id: string;
@@ -222,6 +223,9 @@ export default function PendaftarDetailPage() {
     userRole === "penguji" ||
     userRole === "pewawancara_calsan" ||
     userRole === "pewawancara_cawalsan";
+  const isSuperAdmin = userRole === "admin_super";
+
+  const [isInputManualOpen, setIsInputManualOpen] = useState(false);
 
   useEffect(() => {
     fetchPendaftarDetail();
@@ -726,14 +730,23 @@ export default function PendaftarDetailPage() {
 
           {/* Quick Actions */}
           <div className="flex items-center gap-2">
-            {userRole === "admin_super" && (
-              <button
-                onClick={handleOpenEditModal}
-                className="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-stone-900 border border-amber-400 rounded-xl text-xs font-black transition-all flex items-center gap-1 shadow-sm active:scale-95 animate-pulse"
-              >
-                <Edit className="w-3.5 h-3.5" />
-                Edit Biodata & Ortu
-              </button>
+            {isSuperAdmin && (
+              <>
+                <button
+                  onClick={() => setIsInputManualOpen(true)}
+                  className="px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-white rounded-xl text-xs font-black transition-all flex items-center gap-1 shadow-sm active:scale-95"
+                >
+                  <Trophy className="w-3.5 h-3.5" />
+                  Input Nilai Manual
+                </button>
+                <button
+                  onClick={handleOpenEditModal}
+                  className="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-stone-900 border border-amber-400 rounded-xl text-xs font-black transition-all flex items-center gap-1 shadow-sm active:scale-95 animate-pulse"
+                >
+                  <Edit className="w-3.5 h-3.5" />
+                  Edit Biodata & Ortu
+                </button>
+              </>
             )}
             <button
               onClick={() => {
@@ -1744,6 +1757,23 @@ export default function PendaftarDetailPage() {
           onSaveSuccess={async () => {
             setIsEditModalOpen(false);
             await fetchPendaftarDetail();
+          }}
+        />
+      )}
+
+      {isInputManualOpen && pendaftar && (
+        <InputNilaiManualModal
+          isOpen={isInputManualOpen}
+          onClose={() => setIsInputManualOpen(false)}
+          pendaftarId={params.id as string}
+          onSuccess={async () => {
+            setIsInputManualOpen(false);
+            await fetchPendaftarDetail();
+            Swal.fire(
+              "Sukses",
+              "Nilai berhasil disimpan & dikalkulasi ulang.",
+              "success"
+            );
           }}
         />
       )}
