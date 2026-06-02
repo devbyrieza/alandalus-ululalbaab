@@ -67,6 +67,10 @@ export default function Navbar() {
     e: React.MouseEvent<HTMLAnchorElement>,
     href: string,
   ) => {
+    if (href === "/") {
+      handleBerandaClick(e);
+      return;
+    }
     if (href.startsWith("#") && pathname === "/") {
       e.preventDefault();
       scrollToSection(href, 100);
