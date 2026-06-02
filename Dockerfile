@@ -1,5 +1,5 @@
 # ========================================
-# DOCKERFILE PRODUCTION - ULUL ALBAAB
+# DOCKERFILE PRODUCTION - AL-IMAM
 # ========================================
 
 FROM node:20-slim AS base
@@ -54,15 +54,14 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/package.json ./package.json
 
-# Buat direktori penyimpanan lokal
-RUN mkdir -p /app/storage_data
+# Buat direktori penyimpanan lokal dan atur CHOWN agar user nextjs bisa menulis file
+RUN mkdir -p /app/storage_data && chown -R nextjs:nodejs /app/storage_data
 
-# Jalankan sebagai root untuk mengatasi masalah permission pada mounted volumes di Coolify
-# USER nextjs
+USER nextjs
 
-EXPOSE 80
+EXPOSE 3000
 
-ENV PORT=80
+ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 
-CMD ["node", "server.js"]
+CMD npx prisma db push --accept-data-loss && node server.js
