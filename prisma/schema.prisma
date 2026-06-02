@@ -47,7 +47,7 @@ model TahunAjaran {
   is_active                 Boolean        @default(false)
   tanggal_buka_pendaftaran  DateTime       @db.Date
   tanggal_tutup_pendaftaran DateTime       @db.Date
-  biaya_pendaftaran         Decimal        @default(250000.00) @db.Decimal
+  biaya_pendaftaran         Decimal        @default(200000.00) @db.Decimal
   link_tes_tertulis         String?
   deskripsi_tes_tertulis    String?
   created_at                DateTime       @default(now()) @db.Timestamptz(6)
@@ -131,6 +131,8 @@ model Pendaftar {
   tahun_ajaran                   TahunAjaran            @relation(fields: [tahun_ajaran_id], references: [id])
   user                           Profile?               @relation(fields: [user_id], references: [id])
   pengumuman                     Pengumuman?
+  ukuran_seragam_baju            String?
+  ukuran_seragam_celana          String?
   reservasi                      ReservasiPSB[]
   whatsapp_logs                  WhatsappLog[]
 
