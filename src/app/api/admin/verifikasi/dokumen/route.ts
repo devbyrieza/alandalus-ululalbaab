@@ -289,9 +289,13 @@ export async function PATCH(request: NextRequest) {
           verifiedTypes.has(type),
         );
 
+        const { getStatusIndex } = await import("@/lib/access-control");
+        const currentStatusIndex = getStatusIndex(currentPendaftar?.status_pendaftaran || "draft");
+        const targetIndex = getStatusIndex("docs_verified");
+
         if (
           allRequiredVerified &&
-          currentPendaftar?.status_pendaftaran === "docs_uploaded"
+          currentStatusIndex < targetIndex
         ) {
           await prisma.pendaftar.update({
             where: { id: dokumen.pendaftar_id },
