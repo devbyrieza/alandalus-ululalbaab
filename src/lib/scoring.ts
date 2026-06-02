@@ -56,7 +56,7 @@ export function calculateOrangTuaScore(detail: any): number {
  * FUNGSI INTI: Menghitung total nilai akhir santri.
  * Menggabungkan semua data ujian (Al-Quran, Akademik, Wawancara) menjadi satu kesimpulan.
  */
-export async function recalculateNilaiUjian(pendaftarId: string) {
+export async function recalculateNilaiUjian(pendaftarId: string, overrideStatus?: string) {
   // 1. Ambil semua rekaman nilai untuk pendaftar ini (bisa lebih dari satu jika diinput bertahap)
   const allNilai = await prisma.nilaiUjian.findMany({
     where: { pendaftar_id: pendaftarId },
@@ -136,7 +136,7 @@ export async function recalculateNilaiUjian(pendaftarId: string) {
   const allGraded = ak != null && quran != null && kp != null && ks != null && ws != null && wo != null;
   let status: string = "BELUM LENGKAP";
 
-  if (allGraded) {
+  if (allGraded || overrideStatus) {
     const grades = {
       quran: master.detail_quran?.rekomendasi ? evaluateStatusGrade(master.detail_quran.rekomendasi) : evaluateQuranGrade(quran || 0),
       akademik: evaluateAkademikGrade(ak || 0),
@@ -146,7 +146,7 @@ export async function recalculateNilaiUjian(pendaftarId: string) {
       wawancaraOrangTua: evaluateWawancaraGrade(wo || 0),
     };
 
-    status = determineFinalDecision(grades);
+    status = overrideStatus || determineFinalDecision(grades);
 
     // 6. Sinkronisasi ke Tabel Pendaftar & Pengumuman
     const pendaftar = await prisma.pendaftar.findUnique({
