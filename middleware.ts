@@ -50,12 +50,16 @@ export async function middleware(request: NextRequest) {
       if (isPpdbDomain && !isPpdbPath && pathname !== "/") {
         // If on PPDB domain but trying to access non-PPDB path (like /tentang), redirect to main domain
         const mainDomain = host.replace("ppdb.", "");
-        return NextResponse.redirect(new URL(pathname, `https://${mainDomain}`));
+        const redirectUrl = new URL(pathname, `https://${mainDomain}`);
+        redirectUrl.search = request.nextUrl.search;
+        return NextResponse.redirect(redirectUrl);
       }
       
       if (!isPpdbDomain && isPpdbPath) {
         // If on main domain but trying to access PPDB path, redirect to PPDB domain
-        return NextResponse.redirect(new URL(pathname, `https://ppdb.${host}`));
+        const redirectUrl = new URL(pathname, `https://ppdb.${host}`);
+        redirectUrl.search = request.nextUrl.search;
+        return NextResponse.redirect(redirectUrl);
       }
       
       if (isPpdbDomain && pathname === "/") {
