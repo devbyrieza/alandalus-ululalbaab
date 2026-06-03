@@ -9,6 +9,8 @@ try {
   execSync('npx prisma db push --accept-data-loss --skip-generate', { stdio: 'inherit', env: process.env });
   console.log('Prisma db push successful.');
 } catch (error) {
-  console.error('Prisma db push failed.');
-  process.exit(1);
+  // PENTING: Jangan matikan container jika db push gagal.
+  // Server tetap berjalan agar bisa debug via logs.
+  console.error('⚠️  Prisma db push failed — server will still start.');
+  console.error('    Check DATABASE_URL and DB connectivity if schema is out of sync.');
 }
