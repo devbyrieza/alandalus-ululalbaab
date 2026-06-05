@@ -730,35 +730,61 @@ function AdminPendaftarContent() {
     }
   };
 
-  const handleBulkUpdate = async () => {
+    const handleBulkUpdate = async () => {
     if (!bulkStatus || selectedIds.length === 0) {
       Swal.fire("Perhatian", "Pilih status dan minimal 1 pendaftar", "warning");
       return;
     }
 
-    const result = await Swal.fire({
-      title: "Update Massal",
-      text: `Yakin ingin update status ${selectedIds.length} pendaftar menjadi "${bulkStatus}"?`,
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#2563eb", // Blue 600
-      cancelButtonColor: "#57534e", // Stone 600
-      confirmButtonText: "Ya, Update Semua",
-      cancelButtonText: "Batal",
-      reverseButtons: true,
-    });
+    let alasan = "";
 
-    if (!result.isConfirmed) return;
+    if (bulkStatus === "mengundurkan_diri") {
+      const result = await Swal.fire({
+        title: "Alasan Mengundurkan Diri",
+        text: `Masukkan alasan mundurnya ${selectedIds.length} pendaftar ini (Opsional. Kosongkan jika tidak ada)`,
+        input: "textarea",
+        inputPlaceholder: "Contoh: Diterima di sekolah negeri...",
+        showCancelButton: true,
+        confirmButtonColor: "#2563eb",
+        cancelButtonColor: "#57534e",
+        confirmButtonText: "Ya, Update Semua",
+        cancelButtonText: "Batal",
+        reverseButtons: true,
+      });
+
+      if (!result.isConfirmed) return;
+      alasan = result.value || "";
+    } else {
+      const result = await Swal.fire({
+        title: "Update Massal",
+        text: `Yakin ingin update status ${selectedIds.length} pendaftar menjadi "${bulkStatus}"?`,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#2563eb",
+        cancelButtonColor: "#57534e",
+        confirmButtonText: "Ya, Update Semua",
+        cancelButtonText: "Batal",
+        reverseButtons: true,
+      });
+
+      if (!result.isConfirmed) return;
+    }
 
     try {
       setBulkUpdating(true);
+      
+      const payload: any = {
+        ids: selectedIds,
+        status_pendaftaran: bulkStatus,
+      };
+      if (alasan) {
+        payload.alasan = alasan;
+      }
+
       const response = await fetch("/api/admin/pendaftar/bulk-update", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ids: selectedIds,
-          status_pendaftaran: bulkStatus,
-        }),
+        body: JSON.stringify(payload),
       });
 
       if (!response.ok) throw new Error("Failed to update");
