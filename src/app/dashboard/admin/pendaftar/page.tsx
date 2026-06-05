@@ -730,7 +730,7 @@ function AdminPendaftarContent() {
     }
   };
 
-    const handleBulkUpdate = async () => {
+      const handleBulkUpdate = async () => {
     if (!bulkStatus || selectedIds.length === 0) {
       Swal.fire("Perhatian", "Pilih status dan minimal 1 pendaftar", "warning");
       return;
@@ -739,21 +739,75 @@ function AdminPendaftarContent() {
     let alasan = "";
 
     if (bulkStatus === "mengundurkan_diri") {
-      const result = await Swal.fire({
+      const { value: selectedReason } = await Swal.fire({
         title: "Alasan Mengundurkan Diri",
-        text: `Masukkan alasan mundurnya ${selectedIds.length} pendaftar ini (Opsional. Kosongkan jika tidak ada)`,
-        input: "textarea",
-        inputPlaceholder: "Contoh: Diterima di sekolah negeri...",
+        text: `Pilih alasan mundurnya ${selectedIds.length} pendaftar ini (Opsional):`,
+        input: "select",
+        inputOptions: {
+          "": "-- Tidak Diketahui / Kosongi --",
+          "Masalah/Kendala Biaya": "Masalah / Kendala Biaya",
+          "Sakit/Penyakit/Alergi": "Kesehatan (Sakit/Alergi)",
+          "Ingin Sekolah Umum": "Berubah pikiran ingin sekolah umum",
+          "Diterima di Sekolah/Pondok Lain": "Diterima di pondok/sekolah swasta lain",
+          "Kendala Jarak/Lokasi": "Kendala Jarak / Lokasi",
+          "Lainnya": "Lainnya (Ketik Manual)..."
+        },
         showCancelButton: true,
         confirmButtonColor: "#2563eb",
         cancelButtonColor: "#57534e",
-        confirmButtonText: "Ya, Update Semua",
+        confirmButtonText: "Lanjut",
         cancelButtonText: "Batal",
         reverseButtons: true,
       });
 
-      if (!result.isConfirmed) return;
-      alasan = result.value || "";
+      if (selectedReason === undefined) return;
+
+      if (selectedReason === "Lainnya") {
+        const { value: customReason } = await Swal.fire({
+          title: "Alasan Lainnya",
+          input: "text",
+          inputPlaceholder: "Ketik alasan pengunduran diri secara spesifik...",
+          showCancelButton: true,
+          confirmButtonColor: "#2563eb",
+          cancelButtonColor: "#57534e",
+          confirmButtonText: "Ya, Update Semua",
+          cancelButtonText: "Batal",
+          reverseButtons: true,
+        });
+        if (customReason === undefined) return;
+        alasan = customReason;
+      } else {
+        alasan = selectedReason;
+        
+        // If not empty, confirm again just in case
+        if (alasan) {
+            const confirmResult = await Swal.fire({
+                title: "Konfirmasi Update",
+                text: `Yakin ingin update ${selectedIds.length} pendaftar dengan alasan "${alasan}"?`,
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#2563eb",
+                cancelButtonColor: "#57534e",
+                confirmButtonText: "Ya, Update Semua",
+                cancelButtonText: "Batal",
+                reverseButtons: true,
+            });
+            if (!confirmResult.isConfirmed) return;
+        } else {
+            const confirmResult = await Swal.fire({
+                title: "Konfirmasi Update",
+                text: `Yakin ingin update status ${selectedIds.length} pendaftar menjadi Mengundurkan Diri (Tanpa Alasan)?`,
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#2563eb",
+                cancelButtonColor: "#57534e",
+                confirmButtonText: "Ya, Update Semua",
+                cancelButtonText: "Batal",
+                reverseButtons: true,
+            });
+            if (!confirmResult.isConfirmed) return;
+        }
+      }
     } else {
       const result = await Swal.fire({
         title: "Update Massal",
