@@ -991,26 +991,17 @@ function AdminPendaftarContent() {
       },
       payment_verification: {
         label: "Verifikasi Bayar",
-        color:
-          "bg-primary-50 text-primary-700 border border-primary-100",
+        color: "bg-primary-50 text-primary-700 border border-primary-100",
       },
-      paid: {
-        label: "Terdaftar",
-        color: "bg-primary-100 text-primary-800",
-      },
-      verified: {
-        label: "Terdaftar",
-        color: "bg-primary-100 text-primary-800",
-      },
+      paid: { label: "Terdaftar", color: "bg-primary-100 text-primary-800" },
+      verified: { label: "Terdaftar", color: "bg-primary-100 text-primary-800" },
       data_completed: {
         label: "Data Lengkap",
-        color:
-          "bg-secondary-50 text-secondary-800 border border-secondary-100",
+        color: "bg-gold-50 text-gold-800 border border-gold-100",
       },
       docs_uploaded: {
         label: "Data Lengkap",
-        color:
-          "bg-secondary-50 text-secondary-800 border border-secondary-100",
+        color: "bg-gold-50 text-gold-800 border border-gold-100",
       },
       docs_verified: {
         label: "Berkas Lengkap",
@@ -1038,13 +1029,11 @@ function AdminPendaftarContent() {
       },
       announced: {
         label: "Cadangan",
-        color:
-          "bg-secondary-100 text-secondary-800 border border-secondary-200",
+        color: "bg-gold-100 text-gold-800 border border-gold-200",
       },
       cadangan: {
         label: "Cadangan",
-        color:
-          "bg-secondary-100 text-secondary-800 border border-secondary-200",
+        color: "bg-gold-100 text-gold-800 border border-gold-200",
       },
       accepted: { label: "Diterima", color: "bg-emerald-600 text-white" },
       rejected: { label: "Ditolak", color: "bg-rose-600 text-white" },
@@ -1126,11 +1115,11 @@ function AdminPendaftarContent() {
       )}
 
       {/* Header */}
-      <div className="bg-white rounded-3xl shadow-sm p-4 md:p-8 border border-secondary-100">
+      <div className="bg-white rounded-3xl shadow-sm p-4 md:p-8 border border-gold-100">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center gap-3 md:gap-5 min-w-0">
             <div className="p-2.5 md:p-4 bg-linear-to-br from-primary-600 to-primary-900 rounded-2xl shadow-xl shadow-primary-900/20 flex-shrink-0">
-              <Users className="w-6 h-6 md:w-8 md:h-8 text-secondary-300" />
+              <Users className="w-6 h-6 md:w-8 md:h-8 text-gold-300" />
             </div>
             <div className="min-w-0">
               <h2 className="text-lg md:text-3xl font-black text-primary-950 tracking-tight leading-none truncate">
@@ -1220,7 +1209,7 @@ function AdminPendaftarContent() {
       </div>
 
       {/* Filters */}
-      <div className="bg-white rounded-2xl shadow-sm p-6 border border-secondary-100">
+      <div className="bg-white rounded-2xl shadow-sm p-6 border border-gold-100">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {/* Search */}
           <div className="md:col-span-2">
@@ -1235,7 +1224,7 @@ function AdminPendaftarContent() {
                 onChange={(e) => setSearchInput(e.target.value)}
                 onKeyPress={(e) => e.key === "Enter" && handleSearch()}
                 placeholder="Cari nama, NIK, atau nomor pendaftaran..."
-                className="flex-1 w-full px-4 py-3 bg-secondary-50/50 border border-secondary-100 rounded-xl focus:border-primary-500 focus:bg-white focus:outline-none text-sm md:text-base font-bold text-primary-950 placeholder:text-ink-400"
+                className="flex-1 w-full px-4 py-3 bg-gold-50/50 border border-gold-100 rounded-xl focus:border-primary-500 focus:bg-white focus:outline-none text-sm md:text-base font-bold text-primary-950 placeholder:text-ink-400"
               />
               <button
                 onClick={handleSearch}
@@ -1255,7 +1244,7 @@ function AdminPendaftarContent() {
             <select
               value={statusFilter}
               onChange={(e) => updateFilter(e.target.value)}
-              className="w-full px-4 py-3 bg-secondary-50/50 border border-secondary-100 rounded-xl focus:border-primary-500 focus:bg-white focus:outline-none font-bold text-primary-950"
+              className="w-full px-4 py-3 bg-gold-50/50 border border-gold-100 rounded-xl focus:border-primary-500 focus:bg-white focus:outline-none font-bold text-primary-950"
             >
               <option value="">Semua Status</option>
 
@@ -1361,7 +1350,7 @@ function AdminPendaftarContent() {
                 setJenisKelaminFilter(e.target.value);
                 setPagination((prev) => ({ ...prev, page: 1 }));
               }}
-              className="w-full px-4 py-3 bg-secondary-50/50 border border-secondary-100 rounded-xl focus:border-primary-500 focus:bg-white focus:outline-none font-bold text-primary-950"
+              className="w-full px-4 py-3 bg-gold-50/50 border border-gold-100 rounded-xl focus:border-primary-500 focus:bg-white focus:outline-none font-bold text-primary-950"
             >
               <option value="">Semua (Putra & Putri)</option>
               <option value="L">Putra (Laki-laki)</option>
@@ -1380,7 +1369,7 @@ function AdminPendaftarContent() {
                 setJenjangFilter(e.target.value);
                 setPagination((prev) => ({ ...prev, page: 1 }));
               }}
-              className="w-full px-4 py-3 bg-secondary-50/50 border border-secondary-100 rounded-xl focus:border-primary-500 focus:bg-white focus:outline-none font-bold text-primary-950"
+              className="w-full px-4 py-3 bg-gold-50/50 border border-gold-100 rounded-xl focus:border-primary-500 focus:bg-white focus:outline-none font-bold text-primary-950"
             >
               <option value="">Semua Jenjang</option>
               <option value="MTs">MTs (Madrasah Tsanawiyah)</option>
@@ -1399,7 +1388,7 @@ function AdminPendaftarContent() {
                 setTahunAjaranFilter(e.target.value);
                 setPagination((prev) => ({ ...prev, page: 1 }));
               }}
-              className="w-full px-4 py-3 bg-secondary-50/50 border border-secondary-100 rounded-xl focus:border-primary-500 focus:bg-white focus:outline-none font-bold text-primary-950"
+              className="w-full px-4 py-3 bg-gold-50/50 border border-gold-100 rounded-xl focus:border-primary-500 focus:bg-white focus:outline-none font-bold text-primary-950"
             >
               <option value="">Semua Tahun Ajaran</option>
               {tahunAjaranList.map((ta) => (
@@ -1445,6 +1434,7 @@ function AdminPendaftarContent() {
                   setJenjangFilter("");
                   setJenisKelaminFilter("");
                   setTahunAjaranFilter("");
+                  setTipePendaftaranFilter("");
                   // Clear location filters
                   setProvinsiFilter("");
                   setKabupatenFilter("");
@@ -1476,7 +1466,7 @@ function AdminPendaftarContent() {
               onChange={(e) => setProvinsiFilter(e.target.value)}
               aria-label="Filter provinsi"
               aria-busy={provinsiLoading}
-              className="w-full px-4 py-3 bg-secondary-50/50 border border-secondary-100 rounded-xl focus:border-primary-500 focus:bg-white focus:outline-none font-bold text-primary-950"
+              className="w-full px-4 py-3 bg-gold-50/50 border border-gold-100 rounded-xl focus:border-primary-500 focus:bg-white focus:outline-none font-bold text-primary-950"
             >
               <option value="">Semua Provinsi</option>
               {provinsiList.map((p) => (
@@ -1502,7 +1492,7 @@ function AdminPendaftarContent() {
               disabled={kabupatenList.length === 0 || kabupatenLoading}
               aria-label="Filter kabupaten atau kota"
               aria-busy={kabupatenLoading}
-              className="w-full px-4 py-3 bg-secondary-50/50 border border-secondary-100 rounded-xl focus:border-primary-500 focus:bg-white focus:outline-none font-bold text-primary-950 disabled:opacity-50"
+              className="w-full px-4 py-3 bg-gold-50/50 border border-gold-100 rounded-xl focus:border-primary-500 focus:bg-white focus:outline-none font-bold text-primary-950 disabled:opacity-50"
             >
               <option value="">Semua Kabupaten / Kota</option>
               {kabupatenList.map((k) => (
@@ -1528,7 +1518,7 @@ function AdminPendaftarContent() {
               disabled={kecamatanList.length === 0 || kecamatanLoading}
               aria-label="Filter kecamatan"
               aria-busy={kecamatanLoading}
-              className="w-full px-4 py-3 bg-secondary-50/50 border border-secondary-100 rounded-xl focus:border-primary-500 focus:bg-white focus:outline-none font-bold text-primary-950 disabled:opacity-50"
+              className="w-full px-4 py-3 bg-gold-50/50 border border-gold-100 rounded-xl focus:border-primary-500 focus:bg-white focus:outline-none font-bold text-primary-950 disabled:opacity-50"
             >
               <option value="">Semua Kecamatan</option>
               {kecamatanList.map((c) => (
@@ -1554,7 +1544,7 @@ function AdminPendaftarContent() {
               disabled={kelurahanList.length === 0 || kelurahanLoading}
               aria-label="Filter kelurahan"
               aria-busy={kelurahanLoading}
-              className="w-full px-4 py-3 bg-secondary-50/50 border border-secondary-100 rounded-xl focus:border-primary-500 focus:bg-white focus:outline-none font-bold text-primary-950 disabled:opacity-50"
+              className="w-full px-4 py-3 bg-gold-50/50 border border-gold-100 rounded-xl focus:border-primary-500 focus:bg-white focus:outline-none font-bold text-primary-950 disabled:opacity-50"
             >
               <option value="">Semua Kelurahan</option>
               {kelurahanList.map((k) => (
@@ -1609,6 +1599,7 @@ function AdminPendaftarContent() {
                 <option value="rejected">Ditolak</option>
                 <option value="enrolled">Sedang Daftar Ulang</option>
                 <option value="enrolled_full">Selesai</option>
+                <option value="mengundurkan_diri">Mengundurkan Diri</option>
               </select>
 
               <button
@@ -1659,7 +1650,7 @@ function AdminPendaftarContent() {
       )}
 
       {/* Table */}
-      <div className="bg-white rounded-3xl shadow-sm border border-secondary-100 overflow-hidden">
+      <div className="bg-white rounded-3xl shadow-sm border border-gold-100 overflow-hidden">
         {loading ? (
           <div className="flex items-center justify-center py-20">
             <div className="text-center">
@@ -1680,7 +1671,7 @@ function AdminPendaftarContent() {
         ) : (
           <>
             {/* Mobile Card View — hanya tampil di layar kecil */}
-            <div className="md:hidden divide-y divide-secondary-50">
+            <div className="md:hidden divide-y divide-gold-50">
               {pendaftar.map((item) => (
                 <div
                   key={item.id}
@@ -1770,7 +1761,7 @@ function AdminPendaftarContent() {
                                   100,
                                 );
                               }}
-                              className="px-2 py-1 bg-secondary-50 text-secondary-700 rounded-lg text-[9px] font-black uppercase flex items-center gap-1 border border-secondary-100"
+                              className="px-2 py-1 bg-gold-50 text-gold-700 rounded-lg text-[9px] font-black uppercase flex items-center gap-1 border border-gold-100"
                             >
                               <CreditCard className="w-3 h-3" /> Bayar
                             </button>
@@ -1818,7 +1809,7 @@ function AdminPendaftarContent() {
             {/* Desktop Table View — disembunyikan di mobile */}
             <div className="hidden md:block overflow-x-auto">
               <table className="w-full">
-                <thead className="bg-linear-to-r from-primary-50 to-secondary-50 border-b border-secondary-100">
+                <thead className="bg-linear-to-r from-primary-50 to-primary-100 border-b border-primary-200">
                   <tr>
                     <th className="px-4 py-4 text-center">
                       <button
