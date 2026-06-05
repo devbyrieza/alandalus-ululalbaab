@@ -31,6 +31,20 @@ export async function middleware(request: NextRequest) {
   const host = request.headers.get("host") || "";
 
   // ═══════════════════════════════════════════
+  // HANDLE CORS PREFLIGHT (OPTIONS)
+  // ═══════════════════════════════════════════
+  if (request.method === "OPTIONS") {
+    return new NextResponse(null, {
+      status: 200,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization, x-rsc, rsc, next-router-prefetch, next-router-state-tree",
+      },
+    });
+  }
+
+  // ═══════════════════════════════════════════
   // DOMAIN ROUTING (Main Domain vs PPDB Subdomain)
   // ═══════════════════════════════════════════
   const isLocalhost = host.includes("localhost") || host.includes("127.0.0.1") || host.includes("192.168.");
@@ -52,14 +66,18 @@ export async function middleware(request: NextRequest) {
         const mainDomain = host.replace("ppdb.", "");
         const redirectUrl = new URL(pathname, `https://${mainDomain}`);
         redirectUrl.search = request.nextUrl.search;
-        return NextResponse.redirect(redirectUrl);
+        const res = NextResponse.redirect(redirectUrl);
+        res.headers.set("Access-Control-Allow-Origin", "*");
+        return res;
       }
       
       if (!isPpdbDomain && isPpdbPath) {
         // If on main domain but trying to access PPDB path, redirect to PPDB domain
         const redirectUrl = new URL(pathname, `https://ppdb.${host}`);
         redirectUrl.search = request.nextUrl.search;
-        return NextResponse.redirect(redirectUrl);
+        const res = NextResponse.redirect(redirectUrl);
+        res.headers.set("Access-Control-Allow-Origin", "*");
+        return res;
       }
       
       if (isPpdbDomain && pathname === "/") {
@@ -157,6 +175,7 @@ export async function middleware(request: NextRequest) {
     });
   }
 
+  response.headers.set("Access-Control-Allow-Origin", "*");
   return response;
 }
 
