@@ -139,7 +139,7 @@ export default function DaftarUlangTab() {
 
   if (loading) {
     return (
-      <div className="flex justify-center p-12">
+      <div className="flex justify-center p-6 md:p-12">
         <Loader2 className="w-8 h-8 animate-spin text-primary-600" />
       </div>
     );
@@ -185,15 +185,15 @@ export default function DaftarUlangTab() {
         animate={{ opacity: 1, y: 0 }}
         className="max-w-3xl mx-auto space-y-8 py-12"
       >
-        <div className="bg-linear-to-br from-emerald-500 to-primary-700 rounded-[2.5rem] p-10 text-white shadow-2xl relative overflow-hidden">
-          <div className="absolute top-0 right-0 p-8 opacity-10">
+        <div className="bg-linear-to-br from-emerald-500 to-primary-700 rounded-[2.5rem] p-6 md:p-10 text-white shadow-2xl relative overflow-hidden">
+          <div className="absolute top-0 right-0 p-5 md:p-8 opacity-10">
             <CheckCircle className="w-48 h-48" />
           </div>
           <div className="relative z-10 flex flex-col items-center text-center">
             <div className="w-20 h-20 bg-white/20 backdrop-blur-md rounded-3xl flex items-center justify-center mb-6 border border-white/30">
               <CheckCircle className="w-10 h-10 text-white" />
             </div>
-            <h2 className="text-4xl font-black mb-4 font-display">
+            <h2 className="text-2xl md:text-4xl font-black mb-4 font-display">
               ADMINISTRASI LUNAS
             </h2>
             <p className="text-emerald-50 text-xl max-w-lg leading-relaxed font-medium">
@@ -202,7 +202,7 @@ export default function DaftarUlangTab() {
           </div>
         </div>
 
-        <div className="bg-white rounded-[2rem] p-10 shadow-xl border border-emerald-100">
+        <div className="bg-white rounded-[2rem] p-6 md:p-10 shadow-xl border border-emerald-100">
           <div className="flex items-start gap-6 mb-8">
             <div className="p-4 bg-emerald-50 rounded-2xl">
               <History className="w-8 h-8 text-emerald-600" />
@@ -262,12 +262,12 @@ export default function DaftarUlangTab() {
       className="space-y-8 max-w-4xl mx-auto pb-12"
     >
       {/* Header */}
-      <div className="bg-linear-to-br from-primary-800 to-primary-950 rounded-[2.5rem] p-10 text-white shadow-2xl relative overflow-hidden border border-white/10">
+      <div className="bg-linear-to-br from-primary-800 to-primary-950 rounded-[2.5rem] p-6 md:p-10 text-white shadow-2xl relative overflow-hidden border border-white/10">
         <div className="absolute top-0 right-0 p-4 opacity-10">
           <CheckCircle className="w-48 h-48" />
         </div>
         <div className="relative z-10">
-          <h1 className="text-4xl font-black mb-2 tracking-tight font-display">
+          <h1 className="text-2xl md:text-4xl font-black mb-2 tracking-tight font-display">
             Daftar Ulang
           </h1>
           <p className="text-secondary-300 text-xl font-medium">
@@ -277,7 +277,7 @@ export default function DaftarUlangTab() {
       </div>
 
       {/* Dashboard Status Daftar Ulang */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {/* Card 1: Status */}
         <div className="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm flex flex-col justify-between">
           <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-1">
@@ -388,12 +388,12 @@ export default function DaftarUlangTab() {
 
       {/* Info Tagihan */}
       <div className="grid md:grid-cols-2 gap-8">
-        <div className="bg-white p-8 rounded-[2rem] border border-primary-100 shadow-xl relative overflow-hidden group">
+        <div className="bg-white p-5 md:p-8 rounded-[2rem] border border-primary-100 shadow-xl relative overflow-hidden group">
           <div className="absolute -top-4 -right-4 w-24 h-24 bg-primary-50 rounded-full group-hover:scale-150 transition-transform duration-700" />
           <h3 className="text-xs font-black text-primary-400 uppercase tracking-[0.2em] mb-4 relative z-10">
             Total Biaya Masuk
           </h3>
-          <div className="text-4xl font-black text-primary-950 relative z-10 font-display">
+          <div className="text-2xl md:text-4xl font-black text-primary-950 relative z-10 font-display">
             Rp 9.800.000
           </div>
           <p className="text-sm text-ink-500 mt-2 relative z-10 font-medium">
@@ -401,7 +401,7 @@ export default function DaftarUlangTab() {
           </p>
         </div>
 
-        <div className="bg-primary-50 p-8 rounded-[2rem] border border-primary-100 shadow-inner">
+        <div className="bg-primary-50 p-5 md:p-8 rounded-[2rem] border border-primary-100 shadow-inner">
           <h3 className="text-sm font-black text-primary-800 mb-4 flex items-center gap-2">
             <AlertCircle className="w-5 h-5 text-primary-600" /> Rekening
             Pembayaran
@@ -437,7 +437,7 @@ export default function DaftarUlangTab() {
             <p className="text-xs font-black text-primary-700 mb-3 leading-tight">
               Butuh keringanan atau konfirmasi pembayaran?
             </p>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
               <a
                 href="https://wa.me/6281285300800?text=Assalamualaikum%20Admin%20Finance%2C%20saya%20wali%20dari%20calon%20santri%20ingin%20berkonsultasi%2Fmengajukan%20keringanan%20terkait%20biaya%20Daftar%20Ulang."
                 target="_blank"
@@ -501,7 +501,7 @@ export default function DaftarUlangTab() {
 
       {/* Form Upload */}
       <div className="bg-white rounded-[2.5rem] shadow-2xl border border-slate-100 overflow-hidden">
-        <div className="p-8 border-b border-slate-50 bg-slate-50/50 flex justify-between items-center">
+        <div className="p-5 md:p-8 border-b border-slate-50 bg-slate-50/50 flex justify-between items-center">
           <h3 className="font-black text-xl text-primary-950 flex items-center gap-3 font-display">
             <div className="p-2 bg-primary-100 rounded-xl">
               <FileText className="w-6 h-6 text-primary-700" />
@@ -510,7 +510,7 @@ export default function DaftarUlangTab() {
           </h3>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-8 space-y-8">
+        <form onSubmit={handleSubmit} className="p-5 md:p-8 space-y-8">
           {/* Opsi Pembayaran Langsung */}
           <div>
             <label className="block text-sm font-black text-slate-700 mb-3 tracking-wide uppercase">
@@ -679,7 +679,7 @@ export default function DaftarUlangTab() {
             <label className="block text-sm font-black text-slate-700 mb-3 tracking-wide uppercase">
               Bukti Transfer
             </label>
-            <div className="group border-3 border-dashed border-slate-200 rounded-3xl p-10 text-center hover:border-primary-400 hover:bg-primary-50/30 transition-all cursor-pointer relative overflow-hidden">
+            <div className="group border-3 border-dashed border-slate-200 rounded-3xl p-6 md:p-10 text-center hover:border-primary-400 hover:bg-primary-50/30 transition-all cursor-pointer relative overflow-hidden">
               <input
                 type="file"
                 accept="image/*,application/pdf"

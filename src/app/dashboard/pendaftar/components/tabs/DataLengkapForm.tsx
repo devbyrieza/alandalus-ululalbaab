@@ -1157,7 +1157,7 @@ export default function DataLengkapForm({
                       required
                     />
                   </div>
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <InputField
                       label="RT"
                       name="rt"
@@ -1415,7 +1415,7 @@ export default function DataLengkapForm({
                           required
                         />
                       </div>
-                      <div className="grid grid-cols-2 gap-4">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <InputField
                           label="RT"
                           name="rt_ayah"
@@ -1620,7 +1620,7 @@ export default function DataLengkapForm({
                           required
                         />
                       </div>
-                      <div className="grid grid-cols-2 gap-4">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <InputField
                           label="RT"
                           name="rt_ibu"
@@ -1817,7 +1817,7 @@ export default function DataLengkapForm({
                         required={isWaliRequired}
                       />
                     </div>
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <InputField
                         label="RT"
                         name="rt_wali"
@@ -1873,7 +1873,7 @@ export default function DataLengkapForm({
           <button
             type="submit"
             disabled={saving}
-            className="flex items-center gap-2 px-8 py-4 rounded-xl bg-linear-to-r from-primary-600 to-primary-800 text-white font-bold text-lg shadow-lg shadow-primary-600/30 hover:shadow-primary-600/40 hover:-translate-y-1 transition-all disabled:opacity-50 disabled:transform-none"
+            className="flex items-center gap-2 px-5 md:px-8 py-4 rounded-xl bg-linear-to-r from-primary-600 to-primary-800 text-white font-bold text-lg shadow-lg shadow-primary-600/30 hover:shadow-primary-600/40 hover:-translate-y-1 transition-all disabled:opacity-50 disabled:transform-none"
           >
             {saving ? (
               <Loader2 className="w-6 h-6 animate-spin" />

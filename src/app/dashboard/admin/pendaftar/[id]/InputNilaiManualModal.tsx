@@ -82,7 +82,7 @@ export default function InputNilaiManualModal({
   };
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-primary-950/40 backdrop-blur-sm p-4">
+    <div className="fixed inset-0 z-[100] flex items-start md:items-center pt-10 md:pt-0 pb-20 md:pb-0 justify-center bg-primary-950/40 backdrop-blur-sm p-4 overflow-y-auto overflow-x-hidden">
       <div className="bg-white w-full max-w-4xl rounded-[2rem] shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
         {/* Header */}
         <div className="p-6 border-b border-ink-100 flex items-center justify-between bg-primary-50">
@@ -130,7 +130,7 @@ export default function InputNilaiManualModal({
                     <h3 className="text-sm font-black text-ink-900">Ujian CBT</h3>
                   </div>
                   
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-1.5">
                       <label className="text-[10px] font-black text-ink-500 uppercase tracking-widest">Akademik (0-100)</label>
                       <input type="number" step="0.01" min="0" max="100" name="score_akademik" value={formData.score_akademik} onChange={handleChange} className="w-full bg-ink-50 border border-ink-200 px-3 py-2.5 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none text-sm font-bold" required />
@@ -170,7 +170,7 @@ export default function InputNilaiManualModal({
                     <h3 className="text-sm font-black text-ink-900">Wawancara</h3>
                   </div>
                   
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-1.5">
                       <label className="text-[10px] font-black text-ink-500 uppercase tracking-widest">Santri (Skala 1-5)</label>
                       <input type="number" step="0.01" min="0" max="5" name="score_wawancara_santri" value={formData.score_wawancara_santri} onChange={handleChange} className="w-full bg-ink-50 border border-ink-200 px-3 py-2.5 rounded-lg focus:ring-2 focus:ring-orange-500 outline-none text-sm font-bold" required />
@@ -246,7 +246,7 @@ export default function InputNilaiManualModal({
             type="submit"
             form="form-input-manual"
             disabled={loading}
-            className="flex items-center gap-2 px-8 py-3 bg-primary-700 text-white rounded-xl font-black text-sm shadow-lg shadow-primary-200 hover:bg-primary-800 disabled:opacity-50"
+            className="flex items-center gap-2 px-5 md:px-8 py-3 bg-primary-700 text-white rounded-xl font-black text-sm shadow-lg shadow-primary-200 hover:bg-primary-800 disabled:opacity-50"
           >
             {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Save className="w-5 h-5" />}
             {loading ? "Menyimpan..." : "Simpan & Proses"}
