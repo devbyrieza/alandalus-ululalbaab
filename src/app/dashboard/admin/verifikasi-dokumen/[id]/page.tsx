@@ -290,6 +290,7 @@ export default function VerifikasiDokumenDetailPage() {
       });
 
       setDokumenList(processedDocs);
+      }
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
