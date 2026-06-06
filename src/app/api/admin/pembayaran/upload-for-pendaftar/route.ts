@@ -244,10 +244,10 @@ export async function POST(request: NextRequest) {
           cicilan_ke: cicilanKe,
           bukti_transfer_path: filePath,
           bukti_transfer_filename: safeFileName,
-          status_pembayaran: "pending",
+          status_pembayaran: "verified",
           catatan_verifikasi: catatan
-            ? `Admin upload: ${catatan}`
-            : "Diupload oleh Admin atas nama pendaftar",
+            ? `Admin upload (Auto-Verified): ${catatan}`
+            : "Diunggah dan diverifikasi otomatis oleh Admin",
           updated_at: new Date(),
         } as any,
       });
@@ -268,35 +268,107 @@ export async function POST(request: NextRequest) {
           cicilan_ke: cicilanKe,
           jumlah: jumlah,
           total_tagihan: totalTagihan,
-          bukti_transfer_path: filePath,
           bukti_transfer_filename: safeFileName,
-          status_pembayaran: "pending",
+          status_pembayaran: "verified",
           catatan_verifikasi: catatan
-            ? `Admin upload: ${catatan}`
-            : "Diupload oleh Admin atas nama pendaftar",
+            ? `Admin upload (Auto-Verified): ${catatan}`
+            : "Diunggah dan diverifikasi otomatis oleh Admin",
         } as any,
       });
     }
 
-    // 12. Update status pendaftar jika perlu
-    if (jenisPembayaran === "PENDAFTARAN") {
-      const allowedStatusForUpload = [
-        "draft",
-        "waiting_payment",
-        "rejected",
-        "payment_rejected",
-      ];
+    // 12. Update status pendaftar
+    const { getStatusIndex } = await import("@/lib/access-control");
+    let newPendaftarStatus = pendaftar.status_pendaftaran;
+
+    if (jenisPembayaran === "DAFTAR_ULANG") {
+      const allVerified = await prisma.pembayaran.findMany({
+        where: {
+          pendaftar_id: pendaftarId,
+          jenis_pembayaran: "DAFTAR_ULANG",
+          status_pembayaran: "verified",
+          id: { not: pembayaranResult.id } // Exclude the one we just updated/created to avoid double counting if it was already in DB
+        },
+      });
+      const totalPaid = allVerified.reduce((acc, p) => acc + Number(p.jumlah), 0) + jumlah;
+      const threshold = 8500000;
+      if (totalPaid >= threshold) {
+        newPendaftarStatus = "enrolled_full";
+      } else {
+        newPendaftarStatus = "enrolled";
+      }
+    } else {
       if (
-        allowedStatusForUpload.includes(pendaftar.status_pendaftaran ?? "")
+        getStatusIndex(newPendaftarStatus as any) <
+        getStatusIndex("verified" as any)
       ) {
-        await prisma.pendaftar.update({
-          where: { id: pendaftarId },
-          data: {
-            status_pendaftaran: "payment_verification",
-            updated_at: new Date(),
-          },
+        newPendaftarStatus = "verified";
+      }
+    }
+
+    if (newPendaftarStatus !== pendaftar.status_pendaftaran) {
+      await prisma.pendaftar.update({
+        where: { id: pendaftarId },
+        data: {
+          status_pendaftaran: newPendaftarStatus,
+          updated_at: new Date(),
+        },
+      });
+    }
+
+    // 12b. Kirim Notifikasi WhatsApp
+    try {
+      if (pendaftar.no_hp) {
+        const isDaftarUlang = jenisPembayaran === "DAFTAR_ULANG";
+        const activeJenisNotif = isDaftarUlang ? "daftar_ulang_verified" : "payment_verified";
+
+        const formattedAmount = `Rp ${jumlah.toLocaleString("id-ID")}`;
+        const paymentDate = new Date().toLocaleDateString("id-ID");
+        const metodePembayaran = "Transfer (Admin)";
+
+        let finalMessage = "";
+        if (isDaftarUlang) {
+          const { createHmac } = await import("crypto");
+          const MAGIC_LINK_SECRET = process.env.MAGIC_LINK_SECRET || "fallback-secret-for-dev";
+          const nomorPendaftaran = pendaftar.nomor_pendaftaran || "";
+          const expectedHash = createHmac("sha256", MAGIC_LINK_SECRET)
+            .update(nomorPendaftaran)
+            .digest("hex")
+            .slice(0, 8);
+          const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+          const longUrl = `${baseUrl}/s/${nomorPendaftaran}-${expectedHash}?t=seragam`;
+          
+          const { generateTinyUrl } = await import("@/lib/utils/magic-link");
+          const shortUrl = await generateTinyUrl(longUrl);
+
+          const { buildMessageDaftarUlangVerified } = await import("@/lib/whatsapp-queue");
+          finalMessage = buildMessageDaftarUlangVerified(
+            pendaftar.nama_lengkap,
+            formattedAmount,
+            metodePembayaran,
+            paymentDate,
+            shortUrl,
+          );
+        } else {
+          const { buildMessagePaymentVerified } = await import("@/lib/whatsapp-queue");
+          finalMessage = buildMessagePaymentVerified(
+            pendaftar.nama_lengkap,
+            formattedAmount,
+            metodePembayaran,
+            paymentDate,
+          );
+        }
+
+        const { enqueueWhatsapp } = await import("@/lib/whatsapp-queue");
+        await enqueueWhatsapp({
+          pendaftarId: pendaftarId,
+          phone: pendaftar.no_hp,
+          jenisNotif: activeJenisNotif as any,
+          messageContent: finalMessage,
         });
       }
+    } catch (waError) {
+      console.error("WhatsApp notification error:", waError);
     }
 
     // 13. Audit log
@@ -317,13 +389,13 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      message: `Bukti pembayaran ${jenisPembayaran === "DAFTAR_ULANG" ? "Daftar Ulang" : "Pendaftaran"} untuk ${pendaftar.nama_lengkap} berhasil diupload! Status: Menunggu Verifikasi.`,
+      message: `Bukti pembayaran ${jenisPembayaran === "DAFTAR_ULANG" ? "Daftar Ulang" : "Pendaftaran"} untuk ${pendaftar.nama_lengkap} berhasil diupload dan otomatis Terverifikasi.`,
       data: {
         pembayaran_id: pembayaranResult.id,
         pendaftar_nama: pendaftar.nama_lengkap,
         nomor_pendaftaran: pendaftar.nomor_pendaftaran,
         file_path: filePath,
-        status: "pending",
+        status: "verified",
       },
     });
   } catch (error: any) {
