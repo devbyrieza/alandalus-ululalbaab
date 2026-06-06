@@ -162,9 +162,8 @@ export async function middleware(request: NextRequest) {
   // ═══════════════════════════════════════════
   const rawSessionCookie = request.cookies.get("app_session");
   if (rawSessionCookie && userRole) {
-    const maxAge = userRole === "pendaftar"
-      ? 60 * 60 * 24 * 30  // 30 Days
-      : 60 * 60 * 24 * 90; // 90 Days
+    const maxAge = 60 * 60 * 24 * 90; // 90 Days
+    const expires = new Date(Date.now() + maxAge * 1000);
       
     response.cookies.set("app_session", rawSessionCookie.value, {
       path: "/",
@@ -172,6 +171,7 @@ export async function middleware(request: NextRequest) {
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
       maxAge,
+      expires,
     });
   }
 
