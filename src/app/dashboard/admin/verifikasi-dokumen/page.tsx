@@ -15,10 +15,12 @@ import {
   CheckCircle,
   Clock,
   AlertCircle,
+  UploadCloud,
 } from "lucide-react";
 import { exportToExcel, exportToPDF } from "@/lib/utils/export";
 import Link from "next/link";
 import Swal from "sweetalert2";
+import AdminSearchPendaftarModal from "./AdminSearchPendaftarModal";
 
 interface DokumenSummary {
   id: string;
@@ -50,6 +52,12 @@ function VerifikasiDokumenContent() {
   const [searchTerm, setSearchTerm] = useState(urlSearch);
   const [exporting, setExporting] = useState(false);
   const [userRole, setUserRole] = useState<string | null>(null);
+  const [showSearchModal, setShowSearchModal] = useState(false);
+
+  const canVerify =
+    userRole === "admin_super" ||
+    userRole === "admin" ||
+    userRole === "admin_berkas";
 
   useEffect(() => {
     const fetchSession = async () => {
@@ -229,6 +237,15 @@ function VerifikasiDokumenContent() {
             </div>
           </div>
           <div className="flex items-center gap-2 flex-shrink-0">
+            {canVerify && (
+              <button
+                onClick={() => setShowSearchModal(true)}
+                className="flex items-center gap-2 px-3 md:px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-xl text-sm font-bold transition-all shadow-lg shadow-primary-600/20 whitespace-nowrap"
+              >
+                <UploadCloud className="w-4 h-4" />
+                <span className="hidden sm:inline">Upload Atas Nama</span>
+              </button>
+            )}
             <button
               onClick={() => handleExport("excel")}
               disabled={exporting}
@@ -420,6 +437,11 @@ function VerifikasiDokumenContent() {
           )}
         </>
       )}
+
+      <AdminSearchPendaftarModal
+        isOpen={showSearchModal}
+        onClose={() => setShowSearchModal(false)}
+      />
     </div>
   );
 }

@@ -23,6 +23,7 @@ import {
 import Link from "next/link";
 import { exportToExcel, exportToPDF } from "@/lib/utils/export";
 import Swal from "sweetalert2";
+import AdminUploadPaymentModal from "./AdminUploadPaymentModal";
 
 interface Pembayaran {
   id: string;
@@ -66,6 +67,7 @@ function VerifikasiPembayaranContent() {
   const [dataLoaded, setDataLoaded] = useState(false);
   const [counts, setCounts] = useState({ PENDAFTARAN: 0, DAFTAR_ULANG: 0 });
   const [showModal, setShowModal] = useState(false);
+  const [showUploadAtasNamaModal, setShowUploadAtasNamaModal] = useState(false);
   const [catatan, setCatatan] = useState("");
   const [editJumlah, setEditJumlah] = useState("");
   const [processing, setProcessing] = useState(false);
@@ -449,6 +451,16 @@ function VerifikasiPembayaranContent() {
               </p>
             </div>
           </div>
+          
+          {canVerify && (
+            <button
+              onClick={() => setShowUploadAtasNamaModal(true)}
+              className="flex items-center gap-2 px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-xl text-sm font-bold transition-all shadow-lg shadow-primary-600/20 whitespace-nowrap"
+            >
+              <UploadCloud className="w-4 h-4" />
+              Upload Atas Nama
+            </button>
+          )}
 
           <div className="flex bg-stone-100 p-1.5 rounded-[1.25rem] w-fit shadow-inner ring-1 ring-stone-200/50">
             <button
@@ -1073,6 +1085,14 @@ function VerifikasiPembayaranContent() {
           </div>
         </div>
       )}
+
+      {/* Modal Upload Atas Nama Pendaftar */}
+      <AdminUploadPaymentModal
+        isOpen={showUploadAtasNamaModal}
+        onClose={() => setShowUploadAtasNamaModal(false)}
+        onSuccess={() => fetchPembayaran(true)}
+        activeTab={activeTab}
+      />
     </div>
   );
 }

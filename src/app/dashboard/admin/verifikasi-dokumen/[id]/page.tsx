@@ -110,19 +110,16 @@ export default function VerifikasiDokumenDetailPage() {
       const result = await response.json();
 
       // Separate fetching pendaftar info if result.data is empty
-      if (result.data && result.data.length > 0) {
-        setPendaftar(result.data[0].pendaftar);
-      } else {
-        // Fetch pendaftar info specifically if no documents exist yet
-        const pResp = await fetch(`/api/admin/pendaftar/${id}`);
-        if (pResp.ok) {
-          const pData = await pResp.json();
-          setPendaftar(pData.data);
-        }
+      if (result.pendaftar) {
+        setPendaftar(result.pendaftar);
+      } else if (result.data && result.data.length > 0) {
+        const firstDoc = result.data[0];
+        setPendaftar(firstDoc.pendaftar);
       }
 
-      // Process uploaded documents
-      const docsData = result.data || [];
+      if (result.data) {
+        // Process uploaded documents
+        const docsData = result.data || [];
 
       // 1. Sort by date descending to prefer newest files if duplicates exist
       const sortedDocs = [...docsData].sort(
