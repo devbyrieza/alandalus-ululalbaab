@@ -1,0 +1,1 @@
+const { PrismaClient } = require('@prisma/client'); const prisma = new PrismaClient(); async function main() { const docs = await prisma.dokumen.findMany({ where: { pendaftar_id: 11 } }); console.log(docs); } main();

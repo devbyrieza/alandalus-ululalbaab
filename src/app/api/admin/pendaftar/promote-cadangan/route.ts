@@ -37,8 +37,8 @@ export async function POST(req: NextRequest) {
 
     // Tentukan where clause
     const whereClause = promoteAll
-      ? { status_pendaftaran: "announced" }
-      : { id: { in: ids }, status_pendaftaran: "announced" };
+      ? { status_pendaftaran: { in: ["announced", "cadangan"] } }
+      : { id: { in: ids }, status_pendaftaran: { in: ["announced", "cadangan"] } };
 
     // Ambil list pendaftar yang akan dipromosikan (untuk audit log & upsert pengumuman & kirim notifikasi)
     const candidates = await prisma.pendaftar.findMany({

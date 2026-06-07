@@ -68,8 +68,11 @@ function formatFileSize(bytes: number): string {
 }
 
 async function compressImage(file: File): Promise<File> {
-  // Hanya kompres jika file adalah gambar
-  if (!file.type.startsWith("image/")) return file;
+  // Pengecekan apakah file adalah gambar
+  const isImageByType = file.type.startsWith("image/");
+  const isImageByExt = /\\.(jpe?g|png|webp|heic)$/i.test(file.name);
+  
+  if (!isImageByType && !isImageByExt) return file;
 
   return new Promise((resolve) => {
     const reader = new FileReader();
