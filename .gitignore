@@ -121,6 +121,15 @@ testDb.js
 extract_formulas*.js
 search_bobot.js
 tmp_read_excel.js
+check_*.js
+generate_*.js
+count_*.js
+extract_*.js
+fix_*.js
+patch_*.js
+all_old_*.json
+old_*.json
+mismatch.txt
 
 # Debug output files
 tmp_excel_output*.txt
