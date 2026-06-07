@@ -16,6 +16,7 @@ import {
   Clock,
   AlertCircle,
   UploadCloud,
+  Download,
 } from "lucide-react";
 import { exportToExcel, exportToPDF } from "@/lib/utils/export";
 import Link from "next/link";
@@ -262,6 +263,15 @@ function VerifikasiDokumenContent() {
               <FileText className="w-4 h-4" />
               PDF
             </button>
+            <a
+              href="/api/admin/export/foto"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-3 md:px-4 py-2 bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white rounded-xl font-bold transition-all text-sm"
+            >
+              <Download className="w-4 h-4" />
+              <span className="hidden sm:inline">Foto ZIP</span>
+            </a>
             <button
               onClick={fetchData}
               disabled={refreshing}
