@@ -52,10 +52,10 @@ jobs:
         run: |
           if [ -n "${{ secrets.COOLIFY_WEBHOOK }}" ] && [ -n "${{ secrets.COOLIFY_TOKEN }}" ]; then
             echo "🚀 Triggering Coolify deployment..."
-            curl -s -X GET "${{ secrets.COOLIFY_WEBHOOK }}" -H "Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}"
+            curl -s --max-time 30 -X GET "${{ secrets.COOLIFY_WEBHOOK }}" -H "Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}" || echo "⚠️ Coolify webhook timed out or failed, but build succeeded."
           elif [ -n "${{ secrets.COOLIFY_WEBHOOK }}" ]; then
             echo "🚀 Triggering Coolify deployment without token (fallback)..."
-            curl -s -X GET "${{ secrets.COOLIFY_WEBHOOK }}"
+            curl -s --max-time 30 -X GET "${{ secrets.COOLIFY_WEBHOOK }}" || echo "⚠️ Coolify webhook timed out or failed, but build succeeded."
           else
             echo "⚠️ COOLIFY_WEBHOOK secret not found. To auto-deploy, add it to GitHub Secrets."
           fi
