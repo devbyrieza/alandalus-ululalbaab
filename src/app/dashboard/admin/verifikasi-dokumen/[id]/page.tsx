@@ -544,18 +544,18 @@ export default function VerifikasiDokumenDetailPage() {
             <div className="relative aspect-[4/3] bg-stone-100">
               {dok.file_url ? (
                 isImageFile(dok) ? (
-                  <img
-                    src={dok.file_url}
-                    alt={dok.jenis_dokumen}
-                    className="absolute inset-0 w-full h-full object-cover cursor-pointer"
-                    onClick={() =>
-                      openPreview(
-                        dok.file_url!,
-                        dok.file_type,
-                        dok.jenis_dokumen,
-                      )
-                    }
-                  />
+                    <img
+                      src={dok.file_url}
+                      alt={dok.jenis_dokumen}
+                      className="absolute inset-0 w-full h-full object-contain bg-stone-100 cursor-pointer p-2"
+                      onClick={() =>
+                        openPreview(
+                          dok.file_url!,
+                          dok.file_type,
+                          dok.jenis_dokumen,
+                        )
+                      }
+                    />
                 ) : (
                   <div 
                     className="absolute inset-0 w-full h-full overflow-hidden cursor-pointer group bg-white"
@@ -815,7 +815,7 @@ export default function VerifikasiDokumenDetailPage() {
                   <img
                     src={previewDoc.url}
                     alt="Preview"
-                    className="max-w-none origin-center drop-shadow-2xl rounded-lg transition-transform duration-200 ease-out"
+                    className="max-w-full max-h-[90vh] object-contain origin-center drop-shadow-2xl rounded-lg transition-transform duration-200 ease-out"
                     style={{ transform: `scale(${zoomLevel})` }}
                   />
                 </div>
