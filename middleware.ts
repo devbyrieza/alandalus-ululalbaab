@@ -73,7 +73,8 @@ export async function middleware(request: NextRequest) {
       
       if (!isPpdbDomain && isPpdbPath) {
         // If on main domain but trying to access PPDB path, redirect to PPDB domain
-        const redirectUrl = new URL(pathname, `https://ppdb.${host}`);
+        const baseHost = host.replace(/^www\./, "");
+        const redirectUrl = new URL(pathname, `https://ppdb.${baseHost}`);
         redirectUrl.search = request.nextUrl.search;
         const res = NextResponse.redirect(redirectUrl);
         res.headers.set("Access-Control-Allow-Origin", "*");
