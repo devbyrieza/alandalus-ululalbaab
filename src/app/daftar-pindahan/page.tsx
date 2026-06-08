@@ -191,9 +191,6 @@ export default function DaftarPindahanPage() {
     } else if (formData.jenis_kelamin === "L" && formData.jenjang === "MTs") {
       errors.jenis_kelamin =
         "Mohon maaf, pendaftaran MTs Putra sudah ditutup.";
-    } else if (formData.jenis_kelamin === "L" && formData.jenjang === "MA") {
-      errors.jenis_kelamin =
-        "Mohon maaf, pendaftaran Madrasah Aliyah Putra sudah ditutup.";
     }
 
     if (!formData.jenjang) {
@@ -420,7 +417,9 @@ export default function DaftarPindahanPage() {
                       subtitle: "Pindahan tingkat SMA/MA",
                     },
                   ].map((option) => {
-                    const isClosed = false;
+                    const isPutra = formData.jenis_kelamin === "L";
+                    const isClosed = isPutra && option.value === "MTs";
+                    const closedLabel = "Pendaftaran MTs Putra Sudah Ditutup";
 
                     return (
                       <motion.div
@@ -442,6 +441,11 @@ export default function DaftarPindahanPage() {
                               : "border-secondary-200 bg-white hover:border-primary-200 hover:shadow-sm"
                         }`}
                       >
+                        {isClosed && (
+                          <div className="absolute top-4 right-4 bg-red-600 text-white text-[10px] font-black px-2 py-1 rounded-full uppercase tracking-tighter shadow-sm z-10">
+                            {closedLabel}
+                          </div>
+                        )}
                         <div className="flex items-center gap-4 relative z-0">
                           <div
                             className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-colors ${
