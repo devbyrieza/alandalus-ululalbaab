@@ -34,9 +34,9 @@ export default function Footer() {
   ];
 
   const infoLinks = [
-    { label: "Pendaftaran PPDB", href: "/ppdb" },
-    { label: "Biaya Pendidikan", href: "/ppdb#biaya" },
-    { label: "Beasiswa Tahfidz", href: "/ppdb#beasiswa" },
+    { label: "Pendaftaran PPDB", href: "https://ppdb.alandalus-ululalbaab.com" },
+    { label: "Biaya Pendidikan", href: "https://ppdb.alandalus-ululalbaab.com#biaya" },
+    { label: "Beasiswa Tahfidz", href: "https://ppdb.alandalus-ululalbaab.com#beasiswa" },
     { label: "Kalender Akademik", href: "/kalender" },
   ];
 

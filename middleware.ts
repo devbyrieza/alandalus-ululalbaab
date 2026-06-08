@@ -74,16 +74,27 @@ export async function middleware(request: NextRequest) {
       if (!isPpdbDomain && isPpdbPath) {
         // If on main domain but trying to access PPDB path, redirect to PPDB domain
         const baseHost = host.replace(/^www\./, "");
-        const redirectUrl = new URL(pathname, `https://ppdb.${baseHost}`);
+        const newPathname = pathname === "/ppdb" ? "/" : pathname;
+        const redirectUrl = new URL(newPathname, `https://ppdb.${baseHost}`);
         redirectUrl.search = request.nextUrl.search;
         const res = NextResponse.redirect(redirectUrl);
         res.headers.set("Access-Control-Allow-Origin", "*");
         return res;
       }
       
-      if (isPpdbDomain && pathname === "/") {
-        // Rewrite root of PPDB domain to /ppdb
-        return NextResponse.rewrite(new URL("/ppdb", request.url));
+      if (isPpdbDomain) {
+        if (pathname === "/ppdb") {
+          const redirectUrl = new URL("/", request.url);
+          redirectUrl.search = request.nextUrl.search;
+          const res = NextResponse.redirect(redirectUrl);
+          res.headers.set("Access-Control-Allow-Origin", "*");
+          return res;
+        }
+
+        if (pathname === "/") {
+          // Rewrite root of PPDB domain to /ppdb
+          return NextResponse.rewrite(new URL("/ppdb", request.url));
+        }
       }
     }
   }
