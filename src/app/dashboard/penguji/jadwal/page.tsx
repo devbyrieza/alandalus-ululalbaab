@@ -485,6 +485,10 @@ export default function JadwalPengujiPage() {
 
   const addTimeSlot = () => {
     const currentSlots = bulkForm.daySlots[activeDay] || [];
+    let newStart = "08:00";
+    if (currentSlots.length > 0) {
+      newStart = currentSlots[currentSlots.length - 1].end;
+    }
     setBulkForm({
       ...bulkForm,
       daySlots: {
@@ -492,8 +496,8 @@ export default function JadwalPengujiPage() {
         [activeDay]: [
           ...currentSlots,
           {
-            start: "16:00",
-            end: calculateEndTime("16:00", bulkForm.title),
+            start: newStart,
+            end: calculateEndTime(newStart, bulkForm.title),
           },
         ],
       },
