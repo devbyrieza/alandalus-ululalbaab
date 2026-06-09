@@ -688,12 +688,16 @@ function AdminPendaftarContent() {
     );
   };
 
-  const handlePromoteCadangan = async (ids: string[]) => {
-    if (ids.length === 0) return;
+  const handlePromoteCadangan = async (ids?: string[]) => {
+    const isPromoteAll = !ids || ids.length === 0;
+
+    if (ids && ids.length === 0 && !isPromoteAll) return;
 
     const result = await Swal.fire({
       title: "Promosikan Cadangan",
-      text: `Yakin ingin memindahkan ${ids.length} pendaftar cadangan ke status Diterima?`,
+      text: isPromoteAll
+        ? "Yakin ingin memindahkan SEMUA pendaftar cadangan ke status Diterima?"
+        : `Yakin ingin memindahkan ${ids.length} pendaftar cadangan ke status Diterima?`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#059669",
@@ -710,7 +714,7 @@ function AdminPendaftarContent() {
       const response = await fetch("/api/admin/pendaftar/promote-cadangan", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ids }),
+        body: JSON.stringify(isPromoteAll ? {} : { ids }),
       });
 
       const data = await response.json();
