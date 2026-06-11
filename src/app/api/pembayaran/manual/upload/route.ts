@@ -156,9 +156,9 @@ export async function POST(request: NextRequest) {
       biaya = inputJumlah;
 
       // Tentukan Tipe Cicilan
-      if (biaya >= 10900000) {
+      if (biaya >= 9800000) {
         tipeCicilan = "LUNAS";
-      } else if (biaya >= 5450000) {
+      } else if (biaya >= 4900000) {
         tipeCicilan = "CICIL_50_LEBIH";
       } else {
         tipeCicilan = "CICIL_DIBAWAH_50";
@@ -180,6 +180,13 @@ export async function POST(request: NextRequest) {
 
     if (existingVerified && jenisPembayaran === "PENDAFTARAN") {
       // Untuk pendaftaran, cuma boleh sekali bayar verified.
+      // Untuk Daftar Ulang, mungkin boleh nyicil berkali-kali?
+      // User request imply: "WAJIB MEMBAYAR CICILAN PERTAMA SAAT DI DAFTAR ULANG ONLINE INI".
+      // So this endpoint is for the FIRST payment/commitment.
+      // Future payments might be manual offline? Or repeated uploads?
+      // Currently assume logic handles the first upload.
+      // If existing verified daftar ulang, maybe block or allow topup?
+      // Let's block for now to keep it simple, or user can contact admin.
       return NextResponse.json(
         {
           success: false,
@@ -230,6 +237,9 @@ export async function POST(request: NextRequest) {
       fileName,
     );
 
+    const isVercel = process.env.VERCEL === "1" || process.env.NEXT_PUBLIC_VERCEL_ENV !== undefined;
+    const midtransJson = isVercel ? { base64_image: buffer.toString('base64'), mime_type: detectedType } : null;
+
     // 12. Simpan atau update record pembayaran
     let pembayaranResult;
     if (existingPending) {
@@ -244,6 +254,7 @@ export async function POST(request: NextRequest) {
           bukti_transfer_filename: safeFileName,
           status_pembayaran: "pending",
           catatan_verifikasi: null,
+          midtrans_response_json: midtransJson !== null ? midtransJson : undefined,
           updated_at: new Date(),
         } as any,
       });
@@ -258,10 +269,11 @@ export async function POST(request: NextRequest) {
           cicilan_ke: cicilanKe,
           keringanan_reason: keringananReason as any,
           jumlah: biaya,
-          total_tagihan: jenisPembayaran === "DAFTAR_ULANG" ? 10900000 : biaya,
+          total_tagihan: jenisPembayaran === "DAFTAR_ULANG" ? 9800000 : biaya,
           bukti_transfer_path: filePath,
           bukti_transfer_filename: safeFileName,
           status_pembayaran: "pending",
+          midtrans_response_json: midtransJson !== null ? midtransJson : undefined,
         } as any,
       });
     }
@@ -301,9 +313,9 @@ export async function POST(request: NextRequest) {
   } catch (error: any) {
     console.error("Error in POST /api/pembayaran/manual/upload:", error);
     return NextResponse.json(
-      { 
-        success: false, 
-        error: "Terjadi kesalahan sistem saat mengupload bukti: " + (error instanceof Error ? error.message : String(error)) 
+      {
+        success: false,
+        error: "Terjadi kesalahan sistem saat mengupload bukti pembayaran",
       },
       { status: 500 },
     );
