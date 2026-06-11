@@ -113,27 +113,11 @@ export async function POST(request: NextRequest) {
     });
 
     if (!otpResult.success) {
-      // Graceful fallback: jika Wablas gagal, tetap simpan OTP ke DB
-      // supaya flow tidak putus; log error untuk debugging
-      console.error("❌ OTP send failed, storing to DB anyway:", otpResult.message);
-
-      await prisma.otpVerification.create({
-        data: {
-          phone: normalizedPhone,
-          otp_hash: hashedOTP,
-          expires_at: expiresAt,
-          otp_channel: otp_channel,
-          registration_data: body,
-        },
-      });
-
-      updateRateLimit(normalizedPhone);
-
+      console.error("❌ OTP send failed:", otpResult.message);
       return NextResponse.json({
-        success: true,
-        message: "OTP disimpan (pengiriman WA tertunda, coba verifikasi manual)",
-        fallback: true,
-      });
+        success: false,
+        error: "Gagal mengirim WhatsApp. Pastikan nomor Anda terdaftar di WhatsApp dan coba lagi nanti."
+      }, { status: 500 });
     }
 
     // D. Simpan ke Database (Tabel Sementara)
