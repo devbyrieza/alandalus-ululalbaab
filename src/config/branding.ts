@@ -14,7 +14,7 @@ export const BRANDING = {
   faviconPath: process.env.NEXT_PUBLIC_FAVICON_PATH || "/favicon.ico",
   websiteUrl:
     process.env.NEXT_PUBLIC_WEBSITE_URL ||
-    "/daftar",
+    "https://ppdb.pesantren-ululalbaab.com",
   dashboardTitle:
     process.env.NEXT_PUBLIC_DASHBOARD_TITLE || "Panel Admin PPDB Ulul Albaab",
   address:
