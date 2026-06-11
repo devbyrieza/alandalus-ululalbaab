@@ -310,7 +310,7 @@ export async function POST(request: Request) {
             72,
             redirectPathPath,
           );
-          const magicLink = `${process.env.NEXT_PUBLIC_APP_URL || "https://ppdb.alandalus-ululalbaab.com"}/api/auth/magic?token=${token}`;
+          const magicLink = `${process.env.NEXT_PUBLIC_APP_URL || "/daftar"}/api/auth/magic?token=${token}`;
 
           const { getManualTinyUrl, generateTinyUrl } = await import("@/lib/utils/magic-link");
           const manualTinyUrl = getManualTinyUrl(interviewer.full_name);
@@ -424,7 +424,7 @@ export async function POST(request: Request) {
               48, // 2 days
               redirectPathH1,
             );
-            const magicLinkRem4h = `${process.env.NEXT_PUBLIC_APP_URL || "https://ppdb.alandalus-ululalbaab.com"}/api/auth/magic?token=${tokenH1}`;
+            const magicLinkRem4h = `${process.env.NEXT_PUBLIC_APP_URL || "/daftar"}/api/auth/magic?token=${tokenH1}`;
 
             // Use manual tinyurl if available for this user, otherwise generate automatic
             const { getManualTinyUrl, generateTinyUrl } =

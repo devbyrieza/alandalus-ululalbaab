@@ -76,7 +76,7 @@ export async function POST(request: NextRequest) {
     // Create full URL wrapper
     const baseUrl =
       process.env.NEXT_PUBLIC_APP_URL ||
-      "https://ppdb.alandalus-ululalbaab.com";
+      "/daftar";
     const magicLinkUrl = `${baseUrl}/api/auth/magic?token=${token}`;
 
     // Generate automatic tinyurl for the magic link
@@ -139,7 +139,7 @@ export async function GET(request: NextRequest) {
 
     const baseUrl =
       process.env.NEXT_PUBLIC_APP_URL ||
-      "https://ppdb.alandalus-ululalbaab.com";
+      "/daftar";
 
     const results = await Promise.all(
       examiners.map(async (user) => {

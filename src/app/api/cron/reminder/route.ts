@@ -169,7 +169,7 @@ export async function GET(request: Request) {
                         48, // 48 hours expiry
                         redirectPath
                     );
-                    const magicLink = `${process.env.NEXT_PUBLIC_APP_URL || 'https://ppdb.alandalus-ululalbaab.com'}/api/auth/magic?token=${token}`;
+                    const magicLink = `${process.env.NEXT_PUBLIC_APP_URL || '/daftar'}/api/auth/magic?token=${token}`;
 
                     // Use intelligent shortlink system:
                     // 1. Get the permanent slug for the examiner

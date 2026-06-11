@@ -16,7 +16,7 @@ export async function GET(request: NextRequest) {
     const verification = verifyMagicToken(token);
     const baseUrl =
       process.env.NEXT_PUBLIC_APP_URL ||
-      "https://ppdb.alandalus-ululalbaab.com";
+      "/daftar";
 
     if (!verification.valid || !verification.data) {
       // Decode URI components for safe passage

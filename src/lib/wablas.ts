@@ -28,7 +28,7 @@ const WABLAS_DOMAIN = process.env.WABLAS_DOMAIN || "";
 const WABLAS_TOKEN = process.env.WABLAS_TOKEN || "";
 const WABLAS_SECRET_KEY = process.env.WABLAS_SECRET_KEY || "";
 
-const DEFAULT_APP_URL = "https://ppdb.alandalus-ululalbaab.com";
+const DEFAULT_APP_URL = "/daftar";
 const DEFAULT_CONTACT = "0851-1152-4441";
 
 if (!WABLAS_DOMAIN || !WABLAS_TOKEN) {
@@ -587,7 +587,7 @@ export async function notifyTestSchedule(data: {
     tanggal: data.tanggal,
     waktu: data.waktu,
     tempat: data.tempat,
-    dashboard_url: `${process.env.NEXT_PUBLIC_APP_URL || "https://ppdb.alandalus-ululalbaab.com"}/dashboard/pendaftar/undangan-seleksi`,
+    dashboard_url: `${process.env.NEXT_PUBLIC_APP_URL || "/daftar"}/dashboard/pendaftar/undangan-seleksi`,
   };
 
   Object.entries(variables).forEach(([key, value]) => {

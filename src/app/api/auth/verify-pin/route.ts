@@ -57,7 +57,7 @@ export async function POST(request: NextRequest) {
     const targetUrl = redirect || "/dashboard/penguji/input-nilai";
     const baseUrl =
       process.env.NEXT_PUBLIC_APP_URL ||
-      "https://ppdb.alandalus-ululalbaab.com";
+      "/daftar";
     const response = NextResponse.json({
       success: true,
       redirect: new URL(targetUrl, baseUrl).toString(),

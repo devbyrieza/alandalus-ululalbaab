@@ -157,7 +157,7 @@ export function getPermanentAuthUrl(
   pendaftarNomor?: string,
 ): string {
   const baseUrl =
-    process.env.NEXT_PUBLIC_APP_URL || "https://ppdb.alandalus-ululalbaab.com";
+    process.env.NEXT_PUBLIC_APP_URL || "/daftar";
   let url = `${baseUrl}/api/auth/short/${slug}`;
   if (pendaftarNomor) {
     url += `?p=${encodeURIComponent(pendaftarNomor)}`;

@@ -210,7 +210,7 @@ export default function ProcessSection() {
           transition={{ delay: 0.2, duration: 0.6, ease: EASE }}
           className="mt-14 md:mt-18 flex justify-center"
         >
-          <a href="https://ppdb.alandalus-ululalbaab.com">
+          <a href="/daftar">
             <button className="btn-primary inline-flex items-center gap-2.5 px-10 group/btn">
               <span>Daftar Sebagai Santri</span>
               <ArrowRight

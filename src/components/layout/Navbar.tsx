@@ -234,7 +234,7 @@ export default function Navbar() {
                     Masuk
                   </Link>
                   <a
-                    href="https://ppdb.alandalus-ululalbaab.com"
+                    href="/daftar"
                     className="btn-primary flex items-center gap-2 group text-sm px-5 py-2.5 glow-ring-primary"
                   >
                     Daftar PPDB

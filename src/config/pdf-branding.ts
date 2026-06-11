@@ -13,7 +13,7 @@ export const PDF_BRANDING = {
     address:
       "Jl. KH Mama Oyon, Cihaur, Kec. Cicantayan, Kabupaten Sukabumi, Jawa Barat 43155",
     contact:
-      "Website: https://ppdb.alandalus-ululalbaab.com | Email: alandalusululalbaab2@gmail.com",
+      "Website: /daftar | Email: alandalusululalbaab2@gmail.com",
     phones: "WhatsApp: 0812-8530-0800", // Base phone
   },
 
