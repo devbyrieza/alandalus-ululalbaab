@@ -11,13 +11,7 @@ import crypto from "crypto";
  * Fitur Keamanan: Rate Limiting & Hashed OTP Storage.
  */
 
-// ─── 0. DEMO MODE CHECK ───
-/** Demo mode: aktif jika SKIP_WHATSAPP_OTP=true ATAU jika ini environment vercel.app */
-const isDemoMode = () => {
-  if (process.env.SKIP_WHATSAPP_OTP === "true") return true;
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL || process.env.NEXTAUTH_URL || "";
-  return appUrl.includes("vercel.app");
-};
+
 
 // ─── 1. SECURITY CONFIG ───
 const RATE_LIMIT_WINDOW = 60 * 60 * 1000; // Jeda 1 jam
@@ -80,29 +74,7 @@ export async function POST(request: NextRequest) {
     const hashedOTP = hashOTP(otp);
     const expiresAt = new Date(Date.now() + 5 * 60 * 1000); // Kode hangus dalam 5 menit
 
-    // ── Demo mode: simpan OTP ke DB langsung tanpa kirim WA ──
-    if (isDemoMode()) {
-      console.log(`📱 [DEMO MODE] OTP untuk ${nama_lengkap} (${normalizedPhone}): ${otp}`);
 
-      await prisma.otpVerification.create({
-        data: {
-          phone: normalizedPhone,
-          otp_hash: hashedOTP,
-          expires_at: expiresAt,
-          otp_channel: otp_channel,
-          registration_data: body,
-        },
-      });
-
-      updateRateLimit(normalizedPhone);
-
-      return NextResponse.json({
-        success: true,
-        message: "OTP Sent Successfully",
-        demo: true,
-        otp, // hanya muncul di demo mode untuk kemudahan testing
-      });
-    }
 
     // ── Production mode: kirim via Wablas ──
     const otpResult = await sendOTP({
