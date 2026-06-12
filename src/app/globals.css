@@ -33,22 +33,22 @@
   --color-blue-100: #dcedff;
   --color-blue-200: #b3d7ff;
   --color-blue-300: #7dbeff;
-  --color-blue-400: #3d9ef8;
-  --color-blue-500: #0e86e8;
-  --color-blue-600: #0369c7;
-  --color-blue-700: #0255a3;
-  --color-blue-800: #024282;
-  --color-blue-900: #013062;
-  --color-blue-950: #011e42;
+  --color-blue-400: #38bdf8;  /* Biru cerah lebih segar */
+  --color-blue-500: #0ea5e9;  /* Biru primary vibrant */
+  --color-blue-600: #0284c7;  /* Biru medium strong */
+  --color-blue-700: #0369a1;  /* Biru agak gelap */
+  --color-blue-800: #075985;  /* Biru dalam */
+  --color-blue-900: #0c4a6e;  /* Biru very deep */
+  --color-blue-950: #082f49;  /* Biru gelap pekat */
 
   /* ─── Kuning (Ulul Albaab Secondary) ─── */
   --color-amber-50: #fffbeb;
   --color-amber-100: #fef3c7;
   --color-amber-200: #fde68a;
-  --color-amber-300: #fcd34d;
-  --color-amber-400: #fbbf24;
-  --color-amber-500: #f59e0b;
-  --color-amber-600: #d97706;
+  --color-amber-300: #fcd34d;  /* Kuning cerah */
+  --color-amber-400: #fbbf24;  /* Amber vibrant — sama dengan pai-next */
+  --color-amber-500: #f59e0b;  /* Amber warm — sama pai-next */
+  --color-amber-600: #d97706;  /* Amber medium */
   --color-amber-700: #b45309;
   --color-amber-800: #92400e;
   --color-amber-900: #713b12;
@@ -90,6 +90,8 @@
   --color-surface-50: #F8FAFC;
   --color-surface-100: #F1F5F9;
   --color-surface-200: #e5e7eb;
+  --color-surface-blue: #f0f9ff;  /* Sky-50 equivalent */
+  --color-surface-amber: #fffbeb; /* Amber-50 */
 
   /* ─── Ink (Text — neutral gray, fresh & clean) ─── */
   --color-ink-950: #111827;
@@ -117,7 +119,7 @@
   --color-primary-800: var(--color-blue-800);
   --color-primary-900: var(--color-blue-900);
   --color-primary-950: var(--color-blue-950);
-  --color-primary: var(--color-blue-600);
+  --color-primary: var(--color-blue-500);     /* Lebih cerah */
   --color-primary-light: var(--color-blue-50);
   --color-primary-dark: var(--color-blue-800);
 
@@ -132,7 +134,7 @@
   --color-secondary-800: var(--color-amber-800);
   --color-secondary-900: var(--color-amber-900);
   --color-secondary-950: var(--color-amber-950);
-  --color-secondary: var(--color-amber-600);
+  --color-secondary: var(--color-amber-500);  /* Lebih warm vibrant */
   --color-secondary-light: var(--color-amber-50);
   --color-secondary-dark: var(--color-amber-800);
 
@@ -158,14 +160,14 @@
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 
   /* ─── Islamic Color Palette — Semantic Tokens ─── */
-  --color-primary: var(--color-blue-600);
-  /* Blue utama */
+  --color-primary: var(--color-blue-500);
+  /* Blue utama — vibrant */
   --color-primary-light: var(--color-blue-50);
   /* Blue muda / background aksen */
-  --color-secondary: var(--color-amber-400);
-  /* Amber Secondary */
-  --color-background: #FFFFFF;
-  /* Background utama */
+  --color-secondary: var(--color-amber-500);
+  /* Amber Secondary — warm vibrant */
+  --color-background: #f0f9ff;
+  /* Background utama — Sky-50 fresh blue hint */
   --color-text: #374151;
   /* Teks utama */
 
@@ -392,7 +394,7 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    background: var(--color-ink-300);
+    background: var(--color-blue-300);
     border-radius: 9999px;
     border: 1.5px solid var(--color-surface-100);
     background-clip: content-box;
@@ -1419,9 +1421,16 @@
   .section-blue {
     padding-top: var(--space-section-y);
     padding-bottom: var(--space-section-y);
-    background: linear-gradient(180deg,
-        var(--color-blue-50) 0%,
-        var(--color-surface-50) 100%);
+    background: linear-gradient(180deg, var(--color-blue-50) 0%, #f0f9ff 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Alt section — fresh sky tint */
+  .section-alt {
+    padding-top: var(--space-section-y);
+    padding-bottom: var(--space-section-y);
+    background: linear-gradient(180deg, #f0f9ff 0%, var(--color-blue-50) 100%);
     position: relative;
     overflow: hidden;
   }
@@ -1616,7 +1625,7 @@
   }
 
   .bg-blue-subtle {
-    background: linear-gradient(160deg, var(--color-blue-50) 0%, var(--color-white) 60%, var(--color-amber-50) 100%);
+    background: linear-gradient(160deg, #f0f9ff 0%, var(--color-white) 60%, var(--color-blue-50) 100%);
   }
 
   .bg-maroon-gradient {
@@ -1692,9 +1701,16 @@
   }
 
   .section-label-blue {
-    background: rgba(3, 105, 199, 0.08);
+    background: rgba(14, 165, 233, 0.10);
     color: var(--color-blue-700);
-    border-color: rgba(3, 105, 199, 0.18);
+    border-color: rgba(14, 165, 233, 0.22);
+  }
+
+  /* Primary alias for section-label-blue */
+  .section-label-primary {
+    background: rgba(14, 165, 233, 0.10);
+    color: var(--color-blue-700);
+    border-color: rgba(14, 165, 233, 0.22);
   }
 
   .section-label-maroon {
@@ -1766,12 +1782,22 @@
     position: absolute;
     border-radius: 50%;
     pointer-events: none;
-    filter: blur(80px);
-    opacity: 0.18;
+    filter: blur(60px);
+    opacity: 0.28;
   }
 
   .glow-blob-blue {
     background: radial-gradient(ellipse, var(--color-blue-400) 0%, transparent 70%);
+  }
+
+  /* Primary alias (Ulul Albaab) */
+  .glow-blob-primary {
+    background: radial-gradient(ellipse, var(--color-blue-400) 0%, transparent 70%);
+  }
+
+  /* Secondary alias (Ulul Albaab) */
+  .glow-blob-secondary {
+    background: radial-gradient(ellipse, var(--color-amber-400) 0%, transparent 70%);
   }
 
   .glow-blob-maroon {
@@ -1798,6 +1824,32 @@
     display: inline;
   }
 
+  /* Blue-Amber gradient (pai-next teal-amber style, versi Ulul Albaab) */
+  .gradient-text-blue-amber {
+    background: linear-gradient(135deg, var(--color-blue-600) 0%, var(--color-amber-500) 60%, var(--color-blue-700) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline;
+  }
+
+  /* Amber warm (untuk hero secondary text) */
+  .gradient-text-amber-warm {
+    background: linear-gradient(135deg, var(--color-amber-400) 0%, var(--color-amber-600) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline;
+  }
+
+  /* Biru fresh */
+  .gradient-text-blue-fresh {
+    background: linear-gradient(135deg, var(--color-blue-500) 0%, var(--color-blue-700) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline;
+  }
 
 
   .gradient-text-maroon {
