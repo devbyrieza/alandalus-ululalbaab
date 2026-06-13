@@ -37,6 +37,8 @@ const ROLE_OPTIONS = [
   { value: "penguji", label: "Penguji Al-Qur'an" },
   { value: "pewawancara_calsan", label: "Pewawancara Calsan" },
   { value: "pewawancara_cawalsan", label: "Pewawancara Cawalsan" },
+  { value: "penguji_hafalan", label: "Penguji Hafalan Al-Qur'an" },
+  { value: "penguji_bahasa_arab", label: "Penguji Lisan B. Arab" },
 ];
 
 export default function UserManagementPage() {
