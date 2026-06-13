@@ -72,7 +72,6 @@ function VerifikasiPembayaranContent() {
   const [editJumlah, setEditJumlah] = useState("");
   const [processing, setProcessing] = useState(false);
   const [exporting, setExporting] = useState(false);
-  const [uploadingProof, setUploadingProof] = useState<string | null>(null);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [activeTab, setActiveTab] = useState<"PENDAFTARAN" | "DAFTAR_ULANG">(
     urlJenis as any,
@@ -82,6 +81,7 @@ function VerifikasiPembayaranContent() {
   >("ALL");
   const [editTipeCicilan, setEditTipeCicilan] = useState("LUNAS");
   const [editCicilanKe, setEditCicilanKe] = useState(1);
+  const [uploadingProof, setUploadingProof] = useState<string | null>(null);
   const [userRole, setUserRole] = useState<string | null>(null);
 
   useEffect(() => {
@@ -90,9 +90,11 @@ function VerifikasiPembayaranContent() {
         const res = await fetch("/api/auth/session");
         if (res.ok) {
           const data = await res.json();
-          if (data.session?.role) setUserRole(data.session.role);
-          else if (data.user?.user_metadata?.role)
+          if (data.session?.role) {
+            setUserRole(data.session.role);
+          } else if (data.user?.user_metadata?.role) {
             setUserRole(data.user.user_metadata.role);
+          }
         }
       } catch (e) {
         console.error("Failed to fetch session", e);
@@ -107,8 +109,12 @@ function VerifikasiPembayaranContent() {
     userRole === "admin_keuangan";
 
   useEffect(() => {
-    if (urlStatus && urlStatus !== statusFilter) setStatusFilter(urlStatus);
-    if (urlJenis && urlJenis !== activeTab) setActiveTab(urlJenis as any);
+    if (urlStatus && urlStatus !== statusFilter) {
+      setStatusFilter(urlStatus);
+    }
+    if (urlJenis && urlJenis !== activeTab) {
+      setActiveTab(urlJenis as any);
+    }
   }, [urlStatus, urlJenis]);
 
   const updateFilters = (newStatus?: string, newJenis?: string) => {
@@ -128,7 +134,6 @@ function VerifikasiPembayaranContent() {
     try {
       if (!silent) setLoading(true);
       else setIsRefreshing(true);
-
       const response = await fetch(
         `/api/admin/verifikasi/pembayaran?status=${statusFilter}&jenis=${activeTab}`,
       );
@@ -199,7 +204,7 @@ function VerifikasiPembayaranContent() {
         
         let cleanMetode = item.metode_pembayaran || "-";
         if (cleanMetode.toLowerCase() === "manual") {
-          cleanMetode = "Transfer Manual BSI Ulul Albaab";
+          cleanMetode = "Transfer Manual BSI Al Imam";
         }
 
         const tglText = item.tanggal_pembayaran
@@ -250,7 +255,9 @@ function VerifikasiPembayaranContent() {
         Catatan: g.catatan_details.join("; "),
       }));
 
-      const filename = `data-pembayaran-${activeTab.toLowerCase()}-${new Date().toISOString().split("T")[0]}`;
+      const filename = `data-pembayaran-${activeTab.toLowerCase()}-${
+        new Date().toISOString().split("T")[0]
+      }`;
 
       if (type === "excel") {
         exportToExcel(
@@ -298,17 +305,7 @@ function VerifikasiPembayaranContent() {
 
       if (!response.ok) throw new Error("Failed to verify");
 
-      Swal.fire({
-        title: "Berhasil!",
-        text: `Pembayaran berhasil ${
-          status === "verified" ? "diverifikasi" : "ditolak"
-        }.`,
-        icon: "success",
-        timer: 2000,
-        showConfirmButton: false,
-      });
-
-      await fetchPembayaran(true);
+      await fetchPembayaran(true); // Silent refresh
       setShowModal(false);
       setSelectedPembayaran(null);
       setCatatan("");
@@ -345,14 +342,13 @@ function VerifikasiPembayaranContent() {
       const data = await response.json();
 
       if (data.success) {
-        Swal.fire({
-          title: "Berhasil!",
-          text: "Bukti pembayaran berhasil diganti dan otomatis diverifikasi",
-          icon: "success",
-          confirmButtonColor: "#1e40af",
-        });
-        fetchPembayaran(true);
-        setShowModal(false);
+        Swal.fire(
+          "Berhasil!",
+          "Bukti pembayaran berhasil diganti dan otomatis diverifikasi",
+          "success",
+        );
+        fetchPembayaran(true); // Refresh the list
+        setShowModal(false); // Close modal
       } else {
         Swal.fire(
           "Gagal!",
@@ -365,7 +361,7 @@ function VerifikasiPembayaranContent() {
       Swal.fire("Error!", "Terjadi kesalahan saat mengunggah", "error");
     } finally {
       setUploadingProof(null);
-      if (fileInputRef.current) fileInputRef.current.value = "";
+      if (fileInputRef.current) fileInputRef.current.value = ""; // Reset input
     }
   };
 
@@ -434,7 +430,6 @@ function VerifikasiPembayaranContent() {
         className="hidden"
         accept="image/jpeg, image/png, application/pdf"
       />
-
       {/* Header */}
       <div className="bg-white rounded-[2rem] shadow-sm p-5 md:p-8 border border-stone-100">
         <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:justify-between">
@@ -453,13 +448,16 @@ function VerifikasiPembayaranContent() {
           </div>
           
           {canVerify && (
-            <button
-              onClick={() => setShowUploadAtasNamaModal(true)}
-              className="flex items-center gap-2 px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-xl text-sm font-bold transition-all shadow-lg shadow-primary-600/20 whitespace-nowrap"
-            >
-              <UploadCloud className="w-4 h-4" />
-              Upload Atas Nama
-            </button>
+            <div className="relative z-20 flex-shrink-0">
+              <button
+                type="button"
+                onClick={() => setShowUploadAtasNamaModal(true)}
+                className="flex items-center gap-2 px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-xl text-sm font-bold transition-all shadow-lg shadow-primary-600/20 whitespace-nowrap"
+              >
+                <UploadCloud className="w-4 h-4" />
+                Upload Atas Nama
+              </button>
+            </div>
           )}
 
           <div className="flex bg-stone-100 p-1.5 rounded-[1.25rem] w-fit shadow-inner ring-1 ring-stone-200/50">
@@ -524,101 +522,97 @@ function VerifikasiPembayaranContent() {
             </button>
             <button
               onClick={() => fetchPembayaran(true)}
-              disabled={isRefreshing}
-              className="flex items-center gap-2 px-3 md:px-6 py-2.5 bg-white hover:bg-stone-50 border border-stone-200 text-stone-700 rounded-xl font-bold transition-all shadow-sm hover:shadow-md text-sm disabled:opacity-50"
+              className="flex items-center gap-2 px-3 md:px-6 py-2.5 bg-white hover:bg-stone-50 border border-stone-200 text-stone-700 rounded-xl font-bold transition-all shadow-sm hover:shadow-md text-sm"
             >
-              <RefreshCw
-                className={`w-4 h-4 ${isRefreshing ? "animate-spin" : ""}`}
-              />
+              <RefreshCw className="w-4 h-4" />
               <span className="hidden sm:inline">Refresh</span>
             </button>
           </div>
         </div>
-
-        {/* Search Bar */}
-        <div className="mt-5 relative group">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-stone-400 group-focus-within:text-primary-600 transition-colors" />
-          <input
-            type="text"
-            placeholder="Cari nama atau nomor pendaftaran..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-12 pr-4 py-4 bg-white border border-stone-200 rounded-2xl focus:border-primary-500 focus:ring-4 focus:ring-primary-500/5 focus:outline-none transition-all text-sm md:text-base font-bold text-stone-800 placeholder:text-stone-400 shadow-sm"
-          />
-        </div>
-
-        {/* Stats / Filter Bar */}
-        <div className="mt-5 md:mt-8 flex flex-wrap items-center gap-3 border-t border-stone-100 pt-5 md:pt-6">
-          <div className="px-4 py-2 bg-stone-100 rounded-lg text-sm font-bold text-stone-600">
-            Total: {filteredPembayaran.length}
-          </div>
-
-          <div className="h-8 w-px bg-stone-200 mx-1 hidden sm:block"></div>
-
-          <div className="flex items-center gap-2">
-            <Filter className="w-4 h-4 text-stone-400" />
-            <div className="flex flex-wrap gap-2">
-              <button
-                onClick={() => updateFilters("pending")}
-                className={`px-3 md:px-4 py-2 rounded-lg text-sm font-bold transition-all ${
-                  statusFilter === "pending"
-                    ? "bg-secondary-100 text-secondary-700 ring-2 ring-secondary-500/20"
-                    : "hover:bg-stone-50 text-stone-500"
-                }`}
-              >
-                Pending
-              </button>
-              <button
-                onClick={() => updateFilters("verified")}
-                className={`px-3 md:px-4 py-2 rounded-lg text-sm font-bold transition-all ${
-                  statusFilter === "verified"
-                    ? "bg-emerald-100 text-emerald-700 ring-2 ring-emerald-500/20"
-                    : "hover:bg-stone-50 text-stone-500"
-                }`}
-              >
-                Terverifikasi
-              </button>
-              <button
-                onClick={() => updateFilters("rejected")}
-                className={`px-3 md:px-4 py-2 rounded-lg text-sm font-bold transition-all ${
-                  statusFilter === "rejected"
-                    ? "bg-red-100 text-red-700 ring-2 ring-red-500/20"
-                    : "hover:bg-stone-50 text-stone-500"
-                }`}
-              >
-                Ditolak
-              </button>
-            </div>
-          </div>
-
-          {activeTab === "DAFTAR_ULANG" && (
-            <>
-              <div className="h-8 w-px bg-stone-200 mx-1 hidden sm:block"></div>
-              <div className="flex items-center gap-2">
-                <span className="text-xs font-bold text-stone-400 uppercase tracking-widest">
-                  Tipe:
-                </span>
-                <div className="flex gap-1">
-                  {["ALL", "LUNAS", "CICILAN"].map((tipe) => (
-                    <button
-                      key={tipe}
-                      onClick={() => setTipeCicilanFilter(tipe as any)}
-                      className={`px-3 py-1.5 rounded-lg text-xs font-black uppercase tracking-wider transition-all ${
-                        tipeCicilanFilter === tipe
-                          ? "bg-primary-700 text-white shadow-sm shadow-primary-700/20"
-                          : "bg-white text-stone-500 border border-stone-200 hover:bg-stone-50"
-                      }`}
-                    >
-                      {tipe}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </>
-          )}
-        </div>
       </div>
 
+      {/* Search Bar */}
+      <div className="relative group">
+        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-stone-400 group-focus-within:text-primary-600 transition-colors" />
+        <input
+          type="text"
+          placeholder="Cari nama atau nomor pendaftaran..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="w-full pl-12 pr-4 py-4 bg-white border border-stone-200 rounded-2xl focus:border-primary-500 focus:ring-4 focus:ring-primary-500/5 focus:outline-none transition-all text-sm md:text-base font-bold text-stone-800 placeholder:text-stone-400 shadow-sm"
+        />
+      </div>
+
+      {/* Stats / Filter Bar */}
+      <div className="flex flex-wrap items-center gap-3 bg-white p-4 rounded-2xl shadow-sm border border-stone-100">
+        <div className="px-4 py-2 bg-stone-100 rounded-lg text-sm font-bold text-stone-600">
+          Total: {filteredPembayaran.length}
+        </div>
+
+        <div className="h-8 w-px bg-stone-200 mx-1 hidden sm:block"></div>
+
+        <div className="flex items-center gap-2">
+          <Filter className="w-4 h-4 text-stone-400" />
+          <div className="flex flex-wrap gap-2">
+            <button
+              onClick={() => updateFilters("pending")}
+              className={`px-3 md:px-4 py-2 rounded-lg text-sm font-bold transition-all ${
+                statusFilter === "pending"
+                  ? "bg-secondary-100 text-secondary-700 ring-2 ring-secondary-500/20"
+                  : "hover:bg-stone-50 text-stone-500"
+              }`}
+            >
+              Pending
+            </button>
+            <button
+              onClick={() => updateFilters("verified")}
+              className={`px-3 md:px-4 py-2 rounded-lg text-sm font-bold transition-all ${
+                statusFilter === "verified"
+                  ? "bg-emerald-100 text-emerald-700 ring-2 ring-emerald-500/20"
+                  : "hover:bg-stone-50 text-stone-500"
+              }`}
+            >
+              Terverifikasi
+            </button>
+            <button
+              onClick={() => updateFilters("rejected")}
+              className={`px-3 md:px-4 py-2 rounded-lg text-sm font-bold transition-all ${
+                statusFilter === "rejected"
+                  ? "bg-red-100 text-red-700 ring-2 ring-red-500/20"
+                  : "hover:bg-stone-50 text-stone-500"
+              }`}
+            >
+              Ditolak
+            </button>
+          </div>
+        </div>
+
+        {activeTab === "DAFTAR_ULANG" && (
+          <>
+            <div className="h-8 w-px bg-stone-200 mx-1 hidden sm:block"></div>
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-bold text-stone-400 uppercase tracking-widest">
+                Tipe:
+              </span>
+              <div className="flex gap-1">
+                {["ALL", "LUNAS", "CICILAN"].map((tipe) => (
+                  <button
+                    key={tipe}
+                    onClick={() => setTipeCicilanFilter(tipe as any)}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-black uppercase tracking-wider transition-all ${
+                      tipeCicilanFilter === tipe
+                        ? "bg-primary-700 text-white shadow-sm shadow-primary-700/20"
+                        : "bg-white text-stone-500 border border-stone-200 hover:bg-stone-50"
+                    }`}
+                  >
+                    {tipe}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </>
+        )}
+      </div>
       {/* List */}
       <div className="bg-white rounded-[2rem] shadow-sm border border-stone-100 overflow-hidden min-h-[400px]">
         {loading ? (
@@ -645,7 +639,6 @@ function VerifikasiPembayaranContent() {
             </p>
           </div>
         ) : (
-          // ✅ PERBAIKAN: Hanya 1 div wrapper, tidak ada div ekstra
           <div className="divide-y divide-stone-100">
             {filteredPembayaran.map((pay) => (
               <div
@@ -746,17 +739,13 @@ function VerifikasiPembayaranContent() {
 
                   {/* Actions Column */}
                   <div className="flex sm:flex-col gap-3 sm:w-48 shrink-0">
-                    {pay.bukti_transfer_url && (
-                      <a
-                        href={pay.bukti_transfer_url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2.5 bg-white border-2 border-dashed border-stone-300 hover:border-primary-500 hover:bg-primary-50 text-stone-600 hover:text-primary-800 rounded-xl text-sm font-bold transition-all"
-                      >
-                        <Eye className="w-4 h-4" />
-                        Lihat Bukti
-                      </a>
-                    )}
+                    <button
+                      onClick={() => openModal(pay)}
+                      className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2.5 bg-white border-2 border-dashed border-stone-300 hover:border-primary-500 hover:bg-primary-50 text-stone-600 hover:text-primary-800 rounded-xl text-sm font-bold transition-all"
+                    >
+                      <Eye className="w-4 h-4" />
+                      Detail & Bukti
+                    </button>
 
                     {statusFilter === "pending" && (
                       <button
@@ -777,7 +766,6 @@ function VerifikasiPembayaranContent() {
                         Terverifikasi
                       </button>
                     )}
-
                     {statusFilter === "rejected" && (
                       <button
                         onClick={() => openModal(pay)}
@@ -792,7 +780,6 @@ function VerifikasiPembayaranContent() {
               </div>
             ))}
           </div>
-          // ✅ PERBAIKAN: Tidak ada </div> ekstra di sini
         )}
       </div>
 
@@ -847,11 +834,6 @@ function VerifikasiPembayaranContent() {
                     Anda dapat mengubah nominal jika tidak sesuai dengan bukti
                     transfer.
                   </p>
-                  {!canVerify && (
-                    <p className="text-[10px] text-rose-600 font-bold mt-1 uppercase tracking-tighter">
-                      * Anda tidak memiliki izin untuk mengubah data
-                    </p>
-                  )}
                 </div>
               </div>
 
@@ -950,7 +932,6 @@ function VerifikasiPembayaranContent() {
                       Ubah Bukti
                     </button>
                   </div>
-
                   <div className="border-2 border-stone-100 rounded-2xl overflow-hidden bg-stone-50 relative group">
                     {selectedPembayaran.bukti_transfer_url
                       ?.toLowerCase()
@@ -1016,70 +997,54 @@ function VerifikasiPembayaranContent() {
 
             {/* Footer with Actions - Fixed */}
             <div className="p-6 border-t border-stone-100 bg-stone-50/50 flex flex-col sm:flex-row gap-3">
-              {canVerify ? (
-                <>
-                  <div className="flex-1 flex gap-3">
-                    <button
-                      onClick={() =>
-                        handleVerify(selectedPembayaran.id, "verified")
-                      }
-                      disabled={processing}
-                      className="flex-1 flex items-center justify-center gap-2 px-4 py-4 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl font-bold transition-all hover:shadow-lg hover:shadow-emerald-500/20 disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                      {processing ? (
-                        <Loader2 className="w-5 h-5 animate-spin" />
-                      ) : (
-                        <>
-                          <CheckCircle className="w-5 h-5" />
-                          Terima
-                        </>
-                      )}
-                    </button>
-
-                    <button
-                      onClick={() =>
-                        handleVerify(selectedPembayaran.id, "rejected")
-                      }
-                      disabled={processing}
-                      className="flex-1 flex items-center justify-center gap-2 px-4 py-4 bg-rose-500 hover:bg-rose-600 text-white rounded-xl font-bold transition-all hover:shadow-lg hover:shadow-rose-500/20 disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                      {processing ? (
-                        <Loader2 className="w-5 h-5 animate-spin" />
-                      ) : (
-                        <>
-                          <XCircle className="w-5 h-5" />
-                          Tolak
-                        </>
-                      )}
-                    </button>
-                  </div>
-
-                  {selectedPembayaran.status_pembayaran !== "pending" && (
-                    <button
-                      onClick={() =>
-                        handleVerify(selectedPembayaran.id, "pending")
-                      }
-                      disabled={processing}
-                      className="px-6 py-4 bg-stone-100 hover:bg-stone-200 text-stone-600 rounded-xl font-bold transition-all disabled:opacity-50 border border-stone-200"
-                    >
-                      {processing ? (
-                        <Loader2 className="w-5 h-5 animate-spin mx-auto" />
-                      ) : (
-                        "Batalkan Verifikasi"
-                      )}
-                    </button>
+              <div className="flex-1 flex gap-3">
+                <button
+                  onClick={() =>
+                    handleVerify(selectedPembayaran.id, "verified")
+                  }
+                  disabled={processing}
+                  className="flex-1 flex items-center justify-center gap-2 px-4 py-4 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl font-bold transition-all hover:shadow-lg hover:shadow-emerald-500/20 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {processing ? (
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                  ) : (
+                    <>
+                      <CheckCircle className="w-5 h-5" />
+                      Terima
+                    </>
                   )}
-                </>
-              ) : (
-                <div className="flex-1 py-4 px-6 bg-rose-50 border border-rose-100 rounded-2xl text-center">
-                  <p className="text-rose-700 font-bold text-sm">
-                    Anda hanya memiliki akses melihat data (Read-Only).
-                  </p>
-                  <p className="text-rose-600 text-xs mt-1 italic">
-                    Hanya Admin Keuangan atau Super Admin yang dapat
-                    memverifikasi pembayaran.
-                  </p>
-                </div>
+                </button>
+
+                <button
+                  onClick={() =>
+                    handleVerify(selectedPembayaran.id, "rejected")
+                  }
+                  disabled={processing}
+                  className="flex-1 flex items-center justify-center gap-2 px-4 py-4 bg-rose-500 hover:bg-rose-600 text-white rounded-xl font-bold transition-all hover:shadow-lg hover:shadow-rose-500/20 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {processing ? (
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                  ) : (
+                    <>
+                      <XCircle className="w-5 h-5" />
+                      Tolak
+                    </>
+                  )}
+                </button>
+              </div>
+
+              {selectedPembayaran.status_pembayaran !== "pending" && (
+                <button
+                  onClick={() => handleVerify(selectedPembayaran.id, "pending")}
+                  disabled={processing}
+                  className="px-6 py-4 bg-stone-100 hover:bg-stone-200 text-stone-600 rounded-xl font-bold transition-all disabled:opacity-50 border border-stone-200"
+                >
+                  {processing ? (
+                    <Loader2 className="w-5 h-5 animate-spin mx-auto" />
+                  ) : (
+                    "Batalkan Verifikasi"
+                  )}
+                </button>
               )}
             </div>
           </div>
@@ -1101,11 +1066,8 @@ export default function VerifikasiPembayaranPage() {
   return (
     <Suspense
       fallback={
-        <div className="flex items-center justify-center min-h-[400px]">
-          <div className="text-center">
-            <Loader2 className="w-12 h-12 animate-spin text-primary-700 mx-auto mb-4" />
-            <p className="text-stone-500 font-medium">Memuat halaman...</p>
-          </div>
+        <div className="flex items-center justify-center min-h-screen">
+          <Loader2 className="w-10 h-10 animate-spin text-primary-600" />
         </div>
       }
     >
