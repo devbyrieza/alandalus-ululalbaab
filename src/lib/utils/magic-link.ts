@@ -166,12 +166,43 @@ export function getPermanentAuthUrl(
 }
 
 /**
- * Generate automatic TinyURL for any long URL
- * Uses TinyURL API for short link generation
+ * Generate automatic short URL for any long URL
+ * If it's an internal magic link, it converts it to /x/[id] locally.
+ * Otherwise, it tries is.gd/TinyURL as a fallback.
  */
 export async function generateTinyUrl(longUrl: string): Promise<string> {
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://pesantren-ululalbaab.com";
+
   try {
-    // 1. Try is.gd (very fast & clean redirects)
+    // 1. Check if it's an internal magic link
+    const urlObj = new URL(longUrl);
+    const token = urlObj.searchParams.get("token");
+    if (token) {
+      const verified = verifyMagicToken(token);
+      if (verified.valid && verified.data) {
+        const id = verified.data.id;
+        
+        let customUrl = `${baseUrl}/x/${id}`;
+        
+        // If there's a redirect that contains a search parameter (like pendaftarNomor)
+        if (verified.data.redirect) {
+          const redirectObj = new URL(verified.data.redirect, baseUrl);
+          const searchParam = redirectObj.searchParams.get("search");
+          if (searchParam) {
+            customUrl += `?p=${encodeURIComponent(searchParam)}`;
+          }
+        }
+        
+        // Return instantly, zero loading time!
+        return customUrl;
+      }
+    }
+  } catch (e) {
+    // Fall back if parsing fails
+  }
+
+  try {
+    // 2. Try is.gd (very fast & clean redirects) for non-magic links
     const response = await fetch(
       `https://is.gd/create.php?format=simple&url=${encodeURIComponent(longUrl)}`,
       { signal: AbortSignal.timeout(3000) }
@@ -187,7 +218,7 @@ export async function generateTinyUrl(longUrl: string): Promise<string> {
   }
 
   try {
-    // 2. Try TinyURL as fallback
+    // 3. Try TinyURL as fallback
     const response = await fetch(
       `https://tinyurl.com/api-create.php?url=${encodeURIComponent(longUrl)}`,
       { signal: AbortSignal.timeout(3000) }
@@ -202,6 +233,6 @@ export async function generateTinyUrl(longUrl: string): Promise<string> {
     console.error("Failed to generate TinyURL:", error);
   }
 
-  // Fallback to original URL if both fail
+  // Fallback to original URL if everything fails
   return longUrl;
 }
