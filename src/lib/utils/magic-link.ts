@@ -112,41 +112,7 @@ export function getSlugByName(fullName: string): string | null {
   return entry ? entry[0] : null;
 }
 
-// ============================================================================
-// MANUAL TINYURL MAPPING (Name -> Short URL)
-// ============================================================================
-
-// Manual tinyurls for specific examiners/interviewers (pointing to correct production URLs)
-export const MANUAL_TINYURLS: Record<string, string> = {
-  "Agus Cahyono": "https://tinyurl.com/alandalus-ululalbaab-agus",
-  Jusman: "https://tinyurl.com/alandalus-ululalbaab-jusman",
-  "Fuad Khomsatun": "https://tinyurl.com/alandalus-ululalbaab-fuad",
-  "Andi Fatimah Azzahra Rahman":
-    "https://tinyurl.com/alandalus-ululalbaab-fatimah",
-  "Muhammad Syauqi Al Faruq": "https://tinyurl.com/alandalus-ululalbaab-syauqi",
-  Muhajir: "https://tinyurl.com/alandalus-ululalbaab-muhajir",
-  "Rima Maryani Putri Utami": "https://tinyurl.com/alandalus-ululalbaab-rima",
-  "Halimah Fauziah": "https://tinyurl.com/alandalus-ululalbaab-halimah",
-  "Maulidin Bachtiar": "https://tinyurl.com/alandalus-ululalbaab-bachtiar",
-  "Muhammad Adib Achsan": "https://tinyurl.com/alandalus-ululalbaab-adib",
-};
-
-/**
- * Get manual tinyurl for a specific user (if exists)
- */
-export function getManualTinyUrl(fullName: string): string | null {
-  if (!fullName) return null;
-
-  // Normalize input: trim, lowercase, and collapse multiple spaces to one
-  const normalizedInput = fullName.trim().toLowerCase().replace(/\s+/g, " ");
-
-  // Find match in MANUAL_TINYURLS (also normalized)
-  const matchKey = Object.keys(MANUAL_TINYURLS).find(
-    (key) => key.trim().toLowerCase().replace(/\s+/g, " ") === normalizedInput,
-  );
-
-  return matchKey ? MANUAL_TINYURLS[matchKey] : null;
-}
+// ==================================
 
 /**
  * Get internal short link (permanent) for a slug
@@ -170,7 +136,7 @@ export function getPermanentAuthUrl(
  * If it's an internal magic link, it converts it to /x/[id] locally.
  * Otherwise, it tries is.gd/TinyURL as a fallback.
  */
-export async function generateTinyUrl(longUrl: string): Promise<string> {
+export async function generateShortLink(longUrl: string): Promise<string> {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://alandalus-ululalbaab.com";
 
   try {
