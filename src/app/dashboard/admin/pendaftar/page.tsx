@@ -925,6 +925,41 @@ function AdminPendaftarContent() {
     }
   };
 
+  const handleExportKeringanan = async () => {
+    try {
+      setExporting(true);
+      const res = await fetch("/api/admin/laporan/keringanan");
+      const json = await res.json();
+      if (!res.ok || !json.success) throw new Error(json.error || "Gagal mengambil data");
+      
+      const data = json.data;
+      if (!data || data.length === 0) {
+        Swal.fire("Info", "Tidak ada data keringanan/beasiswa untuk diexport.", "info");
+        return;
+      }
+
+      const header = Object.keys(data[0]);
+      const sheets = [
+        {
+          name: "Laporan Keringanan",
+          title: "LAPORAN KERINGANAN & BEASISWA PENDAFTAR",
+          subTitle: `Tanggal Export: ${new Date().toLocaleDateString("id-ID")}`,
+          header,
+          data: data.map((d: any) => Object.values(d))
+        }
+      ];
+
+      await exportToExcelProfessional({
+        fileName: `Laporan_Keringanan_${new Date().toISOString().slice(0, 10)}`,
+        sheets,
+      });
+    } catch (e: any) {
+      Swal.fire("Gagal", e.message, "error");
+    } finally {
+      setExporting(false);
+    }
+  };
+
   const handleExport = async (type: "excel" | "pdf") => {
     try {
       setExporting(true);
@@ -2405,4 +2440,5 @@ export default function AdminPendaftarPage() {
     </Suspense>
   );
 }
+
 

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
 import {
   CheckCircle,
   AlertCircle,
@@ -10,6 +9,9 @@ import {
   Loader2,
   Lock,
   History,
+  Copy,
+  Building2,
+  CreditCard as CreditCardIcon,
   MessageCircle,
 } from "lucide-react";
 import { Alert } from "@/components/ui";
@@ -19,7 +21,6 @@ export default function DaftarUlangTab() {
   const [loading, setLoading] = useState(true);
   const [dataUser, setDataUser] = useState<any>(null);
   const [historyResult, setHistoryResult] = useState<any[]>([]);
-  const [isMounted, setIsMounted] = useState(false);
 
   // Form states
   const [nominal, setNominal] = useState("");
@@ -35,9 +36,18 @@ export default function DaftarUlangTab() {
   const [totalPaid, setTotalPaid] = useState(0);
   const [paymentHistory, setPaymentHistory] = useState<any[]>([]);
   const hasExistingVerifiedPayment = paymentHistory.some(p => p.status_pembayaran === "verified");
+  const [paymentMethod, setPaymentMethod] = useState<"transfer" | "va">(
+    "transfer",
+  );
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = (text: string) => {
+    navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   useEffect(() => {
-    setIsMounted(true);
     fetchData();
   }, []);
 
@@ -76,9 +86,21 @@ export default function DaftarUlangTab() {
     }
   };
 
+  // Cek Keringanan
+  let expectedTagihan = 10900000;
+  let dataLengkap = dataUser?.data_lengkap;
+  if (typeof dataLengkap === 'string') {
+    try { dataLengkap = JSON.parse(dataLengkap); } catch(e) {}
+  }
+  const keringanan = dataLengkap?.keringanan_daftar_ulang;
+  if (keringanan && typeof keringanan.nominal_potongan === 'number') {
+    expectedTagihan -= keringanan.nominal_potongan;
+  }
+  const halfTagihan = expectedTagihan / 2;
+
   const calculateTipe = (amount: number) => {
-    if (amount >= 10900000) return "LUNAS";
-    if (amount >= 5450000) return "CICILAN 50% ATAU LEBIH";
+    if (amount >= expectedTagihan) return "LUNAS";
+    if (amount >= halfTagihan) return "CICILAN 50% ATAU LEBIH";
     return "CICILAN DIBAWAH 50%";
   };
 
@@ -91,7 +113,7 @@ export default function DaftarUlangTab() {
 
     // Execution 2: Flexible Amounts after first installment
     // If they have a verified payment, they don't need keringananReason for < 50%
-    if (amount < 5450000 && !keringananReason.trim() && !hasExistingVerifiedPayment && totalPaid < 5450000) {
+    if (amount < halfTagihan && !keringananReason.trim() && !hasExistingVerifiedPayment && totalPaid < halfTagihan) {
       setMessage({
         type: "error",
         text: "Untuk pembayaran cicilan pertama di bawah 50%, Anda wajib mengisi alasan/permohonan keringanan pada kolom yang tersedia.",
@@ -109,7 +131,7 @@ export default function DaftarUlangTab() {
     if (keringananReason) formData.append("keringanan_reason", keringananReason);
     
     const numericNominalValue = parseInt(nominal.replace(/\D/g, "") || "0");
-    if (numericNominalValue < 10900000) {
+    if (numericNominalValue < expectedTagihan) {
       formData.append("cicilan_ke", cicilanKe);
     }
 
@@ -145,47 +167,40 @@ export default function DaftarUlangTab() {
     );
   }
 
-  if (!isMounted) return null;
-
-  // Cek Status Kelulusan
-  const statusKelulusan = dataUser?.hasil_kelulusan?.status;
+  // Cek Status Kelulusan untuk Akses Daftar Ulang
+  const statusProses = dataUser?.status_proses;
   const isTestingAccount = dataUser?.nomor_pendaftaran === "ILI2600007";
-  const isEnrolled = dataUser?.status_pendaftaran === "enrolled";
+  const canAccess =
+    statusProses === "accepted" ||
+    statusProses === "enrolled" ||
+    isTestingAccount;
 
-  if (statusKelulusan !== "LULUS" && !isTestingAccount) {
+  if (!canAccess) {
     return (
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        className="max-w-xl mx-auto text-center py-20 px-4"
-      >
-        <div className="bg-slate-100 rounded-full p-6 w-24 h-24 mx-auto mb-8 flex items-center justify-center ring-8 ring-slate-50">
+      <div className="max-w-xl mx-auto text-center py-12 px-4">
+        <div className="bg-slate-100 rounded-full p-4 w-20 h-20 mx-auto mb-6 flex items-center justify-center">
           <Lock className="w-10 h-10 text-slate-400" />
         </div>
-        <h2 className="text-3xl font-black text-primary-950 mb-4 font-display">
-          Fitur Terkunci
+        <h2 className="text-2xl font-black text-primary-950 mb-2">
+          Belum Tersedia
         </h2>
-        <p className="text-ink-500 text-lg leading-relaxed">
+        <p className="text-ink-500">
           Menu Daftar Ulang hanya tersedia bagi santri yang dinyatakan{" "}
-          <span className="text-emerald-600 font-bold">LULUS</span> seleksi.
+          <strong>LULUS</strong> seleksi.
           <br />
           Silakan cek menu <strong>Pengumuman</strong> terlebih dahulu.
         </p>
-      </motion.div>
+      </div>
     );
   }
 
-  // ENROLLED / LUNAS STATE (Full paid 9.8M)
-  const isLunas = totalPaid >= 10900000;
+  // ENROLLED STATE (Already Paid Full)
+    const isLunas = totalPaid >= expectedTagihan;
 
   if (isLunas) {
     return (
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="max-w-3xl mx-auto space-y-8 py-12"
-      >
-        <div className="bg-linear-to-br from-emerald-500 to-primary-700 rounded-[2.5rem] p-6 md:p-10 text-white shadow-2xl relative overflow-hidden">
+      <div className="max-w-3xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500 py-12">
+        <div className="bg-linear-to-br from-emerald-600 to-emerald-800 rounded-[2rem] p-6 md:p-10 text-white shadow-2xl relative overflow-hidden">
           <div className="absolute top-0 right-0 p-5 md:p-8 opacity-10">
             <CheckCircle className="w-48 h-48" />
           </div>
@@ -193,31 +208,29 @@ export default function DaftarUlangTab() {
             <div className="w-20 h-20 bg-white/20 backdrop-blur-md rounded-3xl flex items-center justify-center mb-6 border border-white/30">
               <CheckCircle className="w-10 h-10 text-white" />
             </div>
-            <h2 className="text-2xl md:text-4xl font-black mb-4 font-display">
+            <h2 className="text-3xl font-black mb-4 uppercase tracking-wide text-white">
               ADMINISTRASI LUNAS
             </h2>
-            <p className="text-emerald-50 text-xl max-w-lg leading-relaxed font-medium">
-              Alhamdulillah! Seluruh biaya Daftar Ulang Ananda telah <strong>Lunas</strong> dan diverifikasi sepenuhnya.
+            <p className="text-emerald-50 text-lg max-w-lg leading-relaxed font-medium">
+              Alhamdulillah! Seluruh biaya Daftar Ulang Ananda telah <strong>Lunas</strong> dan diverifikasi.
             </p>
           </div>
         </div>
 
         <div className="bg-white rounded-[2rem] p-6 md:p-10 shadow-xl border border-emerald-100">
-          <div className="flex items-start gap-6 mb-8">
+           <div className="flex items-start gap-6 mb-8">
             <div className="p-4 bg-emerald-50 rounded-2xl">
               <History className="w-8 h-8 text-emerald-600" />
             </div>
             <div>
-              <h3 className="text-2xl font-black text-ink-900 mb-3 font-display">
+              <h3 className="text-xl font-black text-slate-900 mb-3">
                 Langkah Selanjutnya
               </h3>
-              <p className="text-ink-600 text-lg leading-relaxed mb-6">
-                Status Ananda kini resmi sebagai santri baru di PP Al Andalus Ulul
-                Albaab. Silakan lengkapi berkas fisik dan pantau grup WhatsApp
-                resmi untuk informasi jadwal kedatangan.
+              <p className="text-slate-600 leading-relaxed mb-6">
+                Selamat! Anda kini resmi tercatat sebagai Santri Baru. Silakan pantau grup WhatsApp resmi atau dashboard untuk informasi jadwal kedatangan santri.
               </p>
               <div className="flex gap-4">
-                <div className="px-5 py-2.5 bg-emerald-50 text-emerald-700 rounded-full text-sm font-black border border-emerald-200 uppercase tracking-widest">
+                <div className="px-5 py-2.5 bg-emerald-600 text-white rounded-full text-xs font-black shadow-md uppercase tracking-wider">
                   STATUS: LUNAS & ENROLLED
                 </div>
               </div>
@@ -225,12 +238,12 @@ export default function DaftarUlangTab() {
           </div>
 
           <div className="pt-8 border-t border-slate-100">
-            <h4 className="font-black text-slate-900 mb-4 flex items-center gap-2 font-display">
+            <h4 className="font-black text-slate-900 mb-4 flex items-center gap-2">
               <History className="w-4 h-4 text-slate-400" /> Riwayat Pembayaran Daftar Ulang
             </h4>
             <div className="space-y-3">
               {paymentHistory.filter(p => p.status_pembayaran === 'verified').map((p, i) => (
-                <div key={i} className="flex items-center justify-between p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                <div key={i} className="flex items-center justify-between p-4 bg-slate-50 rounded-xl border border-slate-100">
                   <div>
                     <p className="text-xs font-bold text-slate-500 uppercase tracking-widest">
                       {p.tipe_cicilan === 'LUNAS' ? 'Pelunasan' : `Cicilan ke-${p.cicilan_ke || '?'}`}
@@ -248,7 +261,7 @@ export default function DaftarUlangTab() {
             </div>
           </div>
         </div>
-      </motion.div>
+      </div>
     );
   }
 
@@ -256,24 +269,18 @@ export default function DaftarUlangTab() {
   const tipeBayar = calculateTipe(numericNominal);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="space-y-8 max-w-4xl mx-auto pb-12"
-    >
+    <div className="space-y-8 max-w-4xl mx-auto pb-12">
       {/* Header */}
-      <div className="bg-linear-to-br from-primary-800 to-primary-950 rounded-[2.5rem] p-6 md:p-10 text-white shadow-2xl relative overflow-hidden border border-white/10">
+      <div className="bg-linear-to-br from-primary-700 to-primary-900 rounded-2xl p-5 md:p-8 text-white shadow-lg relative overflow-hidden">
         <div className="absolute top-0 right-0 p-4 opacity-10">
-          <CheckCircle className="w-48 h-48" />
+          <CheckCircle className="w-32 h-32" />
         </div>
-        <div className="relative z-10">
-          <h1 className="text-2xl md:text-4xl font-black mb-2 tracking-tight font-display">
-            Daftar Ulang
-          </h1>
-          <p className="text-secondary-300 text-xl font-medium">
-            Tahap akhir administrasi penerimaan santri baru
-          </p>
-        </div>
+        <h1 className="text-3xl font-black mb-2 relative z-10 text-white">
+          Daftar Ulang Santri Baru
+        </h1>
+        <p className="text-gold-100 relative z-10 text-lg font-medium">
+          Tahap akhir administrasi penerimaan santri baru
+        </p>
       </div>
 
       {/* Dashboard Status Daftar Ulang */}
@@ -308,7 +315,7 @@ export default function DaftarUlangTab() {
             {formatCurrency(totalPaid)}
           </span>
           <p className="text-[10px] text-slate-400 mt-3 font-medium">
-            Biaya Masuk: Rp 8.500.000
+            Total Biaya Masuk: {formatCurrency(expectedTagihan)}
           </p>
         </div>
 
@@ -318,7 +325,7 @@ export default function DaftarUlangTab() {
             Sisa Tagihan
           </span>
           <span className="text-2xl font-black text-rose-600 mt-2">
-            {formatCurrency(8500000 - totalPaid)}
+            {formatCurrency(expectedTagihan - totalPaid)}
           </span>
           <p className="text-[10px] text-slate-400 mt-3 font-medium">
             Wajib lunas sebelum Juli 2026
@@ -341,7 +348,7 @@ export default function DaftarUlangTab() {
                 <div>
                   <div className="flex items-center gap-2">
                     <p className="text-xs font-bold text-slate-500 uppercase tracking-widest">
-                      {p.jumlah >= 8500000 ? 'Pelunasan' : `Cicilan ke-${p.cicilan_ke || '?'}`}
+                      {p.jumlah >= expectedTagihan ? 'Pelunasan' : `Cicilan ke-${p.cicilan_ke || '?'}`}
                     </p>
                     {p.keringanan_reason && (
                       <span className="text-[9px] bg-secondary-100 text-secondary-700 border border-secondary-200 px-1.5 py-0.5 rounded-full font-black">
@@ -387,71 +394,138 @@ export default function DaftarUlangTab() {
       )}
 
       {/* Info Tagihan */}
-      <div className="grid md:grid-cols-2 gap-8">
-        <div className="bg-white p-5 md:p-8 rounded-[2rem] border border-primary-100 shadow-xl relative overflow-hidden group">
-          <div className="absolute -top-4 -right-4 w-24 h-24 bg-primary-50 rounded-full group-hover:scale-150 transition-transform duration-700" />
-          <h3 className="text-xs font-black text-primary-400 uppercase tracking-[0.2em] mb-4 relative z-10">
-            Total Biaya Masuk
-          </h3>
-          <div className="text-2xl md:text-4xl font-black text-primary-950 relative z-10 font-display">
-            Rp 9.800.000
+      <div className="grid md:grid-cols-2 gap-6">
+        <div className="bg-white p-6 rounded-xl border border-primary-100 shadow-sm space-y-4">
+          <div>
+            <h3 className="text-sm font-black text-primary-900 uppercase tracking-wider mb-2">
+              Total Biaya Masuk
+            </h3>
+            <div className="text-3xl font-black text-primary-600">
+              {formatCurrency(expectedTagihan)}
+            </div>
           </div>
-          <p className="text-sm text-ink-500 mt-2 relative z-10 font-medium">
-            Uang Pangkal Pesantren Al Andalus Ulul Albaab
-          </p>
+          <div className="space-y-1">
+            <div className="flex justify-between text-sm">
+              <span className="text-ink-500">Uang Pangkal:</span>
+              <span className="font-bold text-ink-800">Rp 9.800.000</span>
+            </div>
+            <div className="flex justify-between text-sm">
+              <span className="text-ink-500">SPP Bulan Pertama:</span>
+              <span className="font-bold text-ink-800">Rp 1.100.000</span>
+            </div>
+          </div>
         </div>
 
-        <div className="bg-primary-50 p-5 md:p-8 rounded-[2rem] border border-primary-100 shadow-inner">
-          <h3 className="text-sm font-black text-primary-800 mb-4 flex items-center gap-2">
-            <AlertCircle className="w-5 h-5 text-primary-600" /> Rekening
-            Pembayaran
-          </h3>
-          <div className="space-y-3">
-            <div className="flex justify-between items-center">
-              <span className="text-sm text-primary-700 font-medium">
-                Bank
-              </span>
-              <span className="text-sm font-black text-primary-900">
-                BSI (Bank Syariah Indonesia)
-              </span>
+        <div className="bg-primary-50 p-6 rounded-xl border border-primary-100 flex flex-col justify-between">
+          <div>
+            <h3 className="text-sm font-black text-primary-800 mb-3 flex items-center gap-2">
+              <AlertCircle className="w-4 h-4" /> Info Pembayaran & Metode
+            </h3>
+
+            {/* Opsi Metode Pembayaran */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mb-4 bg-white p-1 rounded-xl shadow-sm border border-primary-100">
+              <button
+                onClick={() => setPaymentMethod("transfer")}
+                className={`py-2 px-2 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-2 ${
+                  paymentMethod === "transfer"
+                    ? "bg-primary-600 text-white shadow-md"
+                    : "text-slate-500 hover:bg-slate-50"
+                }`}
+              >
+                <Building2 className="w-4 h-4" /> Transfer Bank
+              </button>
+              <div className="py-2 px-2 rounded-lg text-xs font-bold transition-all flex flex-col items-center justify-center gap-0.5 bg-slate-50 border border-slate-100 text-slate-400 opacity-70 cursor-not-allowed relative overflow-hidden">
+                <div className="flex items-center gap-1.5">
+                  <CreditCardIcon className="w-4 h-4" /> Virtual Account
+                </div>
+                <span className="text-[9px] bg-secondary-100 text-secondary-700 px-1.5 py-0.5 rounded-full leading-none mt-0.5">
+                  Segera Hadir
+                </span>
+              </div>
             </div>
-            <div className="flex justify-between items-center">
-              <span className="text-sm text-primary-700 font-medium">
-                No. Rekening
-              </span>
-              <span className="text-sm font-black text-primary-950 bg-white px-3 py-1 rounded-lg border border-primary-200 shadow-sm">
-                7253701263
-              </span>
-            </div>
-            <div className="flex justify-between items-center">
-              <span className="text-sm text-primary-700 font-medium">
-                Atas Nama
-              </span>
-              <span className="text-sm font-black text-primary-900">
-                Al Andalus Ulul Albaab 1
-              </span>
-            </div>
+
+            {paymentMethod === "transfer" && (
+              <div className="mb-4 p-3 bg-white border border-primary-100 rounded-lg animate-in fade-in slide-in-from-top-1">
+                <div className="flex items-start justify-between">
+                  <div>
+                    <p className="text-[10px] font-bold text-ink-400 uppercase tracking-widest mb-2 text-left">
+                      Rekening Tujuan
+                    </p>
+                    <div className="flex items-center gap-2 mb-1.5">
+                      <div className="bg-[#009B9B] px-2 py-1 rounded text-[10px] text-white font-black leading-none flex items-center justify-center shadow-sm">
+                        BSI
+                      </div>
+                      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-tight">
+                        Bank Syariah Indonesia
+                      </span>
+                    </div>
+                    <p className="font-black text-primary-950 text-2xl tracking-tight leading-none mb-2">
+                      8308306000
+                    </p>
+                    <p className="text-xs font-bold text-primary-700/70 text-left italic">
+                      a.n Mts Persis Al-Andalus Ulul Albaab
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => handleCopy("8308306000")}
+                    className="p-2 hover:bg-primary-50 text-primary-600 rounded-lg transition-colors flex flex-col items-center gap-1 group"
+                  >
+                    {copied ? (
+                      <CheckCircle className="w-5 h-5 text-emerald-500" />
+                    ) : (
+                      <Copy className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                    )}
+                    <span className="text-[9px] font-bold">
+                      {copied ? "Tersalin!" : "Salin"}
+                    </span>
+                  </button>
+                </div>
+              </div>
+            )}
+
+            <ul className="text-sm text-primary-700 space-y-1.5 list-disc list-inside font-medium mb-4">
+              <li>
+                Dapat dibayar <strong>Lunas</strong> atau{" "}
+                <strong>Dicicil</strong>.
+              </li>
+              <li>
+                Opsi cicil tahap pertama minimal{" "}
+                <strong>50% ({formatCurrency(halfTagihan)})</strong>.
+              </li>
+              <li>
+                Sisa cicilan bebas nominal dan bebas berapa kali namun wajib
+                lunas sebelum <strong>Juli 2026</strong>.
+              </li>
+              <li className="text-emerald-700 font-bold">
+                Tersedia kebijakan <strong>Keringanan Khusus</strong> bagi wali santri yang membutuhkan.
+              </li>
+            </ul>
           </div>
-          
-          <div className="mt-6 pt-6 border-t border-primary-200/50">
-            <p className="text-xs font-black text-primary-700 mb-3 leading-tight">
-              Butuh keringanan atau konfirmasi pembayaran?
-            </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+          <div className="pt-4 border-t border-primary-200">
+            <span className="text-xs text-primary-600 block mb-2 leading-tight">
+              Butuh bantuan, keringanan, atau konfirmasi biaya?
+            </span>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mt-2">
               <a
-                href="https://wa.me/6281285300800?text=Assalamualaikum%20Admin%20Finance%2C%20saya%20wali%20dari%20calon%20santri%20ingin%20berkonsultasi%2Fmengajukan%20keringanan%20terkait%20biaya%20Daftar%20Ulang."
+                href="https://wa.me/6281220636945?text=Assalamualaikum%20Admin%20Finance%2C%20saya%20wali%20dari%20calon%20santri%20ingin%20berkonsultasi%2Fmengajukan%20keringanan%20terkait%20biaya%20Daftar%20Ulang."
                 target="_blank"
                 rel="noreferrer"
-                className="w-full py-3 px-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-black flex items-center justify-center gap-1.5 transition-all shadow-md hover:shadow-lg active:scale-95 group text-[11px]"
+                className="inline-flex items-center justify-center gap-1.5 py-2.5 px-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold text-[11px] sm:text-xs transition-all shadow-md hover:shadow-lg active:scale-95 group"
               >
-                <MessageCircle className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                <svg
+                  viewBox="0 0 24 24"
+                  className="w-4 h-4 fill-current group-hover:scale-110 transition-transform"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z" />
+                </svg>
                 <span>Finance</span>
               </a>
               <a
-                href="https://wa.me/6281285300800?text=Assalamualaikum%20Admin%20CS%2C%20saya%20wali%20dari%20calon%20santri%20ingin%20bertanya%20terkait%20biaya%20Daftar%20Ulang."
+                href="https://wa.me/6285111524441?text=Assalamualaikum%20Admin%20CS%2C%20saya%20wali%20dari%20calon%20santri%20ingin%20bertanya%20terkait%20biaya%20Daftar%20Ulang."
                 target="_blank"
                 rel="noreferrer"
-                className="w-full py-3 px-2 bg-cyan-600 hover:bg-cyan-700 text-white rounded-xl font-black flex items-center justify-center gap-1.5 transition-all shadow-md hover:shadow-lg active:scale-95 group text-[11px]"
+                className="inline-flex items-center justify-center gap-1.5 py-2.5 px-3 bg-cyan-600 hover:bg-cyan-700 text-white rounded-xl font-bold text-[11px] sm:text-xs transition-all shadow-md hover:shadow-lg active:scale-95 group"
               >
                 <MessageCircle className="w-4 h-4 group-hover:scale-110 transition-transform" />
                 <span>Admin CS</span>
@@ -462,125 +536,120 @@ export default function DaftarUlangTab() {
       </div>
 
       {message && (
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
+        <Alert
+          type={message.type}
+          title={message.type === "success" ? "Berhasil" : "Gagal"}
         >
-          <Alert
-            type={message.type}
-            title={message.type === "success" ? "Berhasil" : "Gagal"}
-          >
-            {message.text}
-          </Alert>
-          {message.type === "success" && (
-            <div className="mt-4 p-5 bg-emerald-50 border border-emerald-200 rounded-2xl flex items-start gap-4">
-              <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center shrink-0 mt-0.5">
-                <MessageCircle className="w-6 h-6 text-emerald-600" />
-              </div>
-              <div>
-                <h4 className="font-black text-emerald-900 mb-1 text-base">
-                  Ingin Verifikasi Lebih Cepat?
-                </h4>
-                <p className="text-emerald-700 text-sm leading-relaxed">
-                  Anda bisa menghubungi CS di nomor{" "}
-                  <a
-                    href="https://wa.me/6281285300800"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="font-black underline hover:text-emerald-900"
-                  >
-                    0812-8530-0800
-                  </a>{" "}
-                  jika ingin cepat diverifikasi.
-                </p>
-              </div>
-            </div>
-          )}
-        </motion.div>
+          {message.text}
+        </Alert>
+      )}
+
+      {message && message.type === "success" && (
+        <div className="p-5 bg-emerald-50 border border-emerald-200 rounded-xl flex flex-col sm:flex-row items-center sm:items-start gap-4 shadow-sm">
+          <div className="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center shrink-0 mt-0.5">
+            <MessageCircle className="w-6 h-6 text-emerald-600" />
+          </div>
+          <div className="text-center sm:text-left flex-1">
+            <h4 className="font-black text-emerald-900 mb-1 text-base">
+              Ingin Verifikasi Lebih Cepat?
+            </h4>
+            <p className="text-emerald-700 text-sm leading-relaxed">
+              Anda bisa menghubungi CS di nomor{" "}
+              <a
+                href="https://wa.me/6285111524441"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-black underline hover:text-emerald-900 transition-colors"
+              >
+                0851-1152-4441
+              </a>{" "}
+              jika ingin cepat diverifikasi.
+            </p>
+          </div>
+        </div>
       )}
 
       {/* Form Upload */}
-      <div className="bg-white rounded-[2.5rem] shadow-2xl border border-slate-100 overflow-hidden">
-        <div className="p-5 md:p-8 border-b border-slate-50 bg-slate-50/50 flex justify-between items-center">
-          <h3 className="font-black text-xl text-primary-950 flex items-center gap-3 font-display">
-            <div className="p-2 bg-primary-100 rounded-xl">
-              <FileText className="w-6 h-6 text-primary-700" />
-            </div>
-            Form Konfirmasi Pembayaran
+      <div className="bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden">
+        <div className="p-6 border-b border-ink-100 bg-surface-50 flex justify-between items-center">
+          <h3 className="font-black text-lg text-ink-900 flex items-center gap-2">
+            <FileText className="w-5 h-5 text-primary-600" />
+            Form Pembayaran & Konfirmasi
           </h3>
+          {/* Badge Status Pembayaran User bisa ditaruh sini jika fetch history */}
         </div>
 
-        <form onSubmit={handleSubmit} className="p-5 md:p-8 space-y-8">
+        <form onSubmit={handleSubmit} className="p-6 space-y-6">
           {/* Opsi Pembayaran Langsung */}
           <div>
-            <label className="block text-sm font-black text-slate-700 mb-3 tracking-wide uppercase">
+            <label className="block text-sm font-bold text-slate-700 mb-3">
               Metode Pelunasan Daftar Ulang
             </label>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <button
                 type="button"
                 onClick={() =>
-                  setNominal(new Intl.NumberFormat("id-ID").format(10900000))
+                  setNominal(new Intl.NumberFormat("id-ID").format(expectedTagihan))
                 }
-                className={`p-4 rounded-2xl border-3 transition-all text-left flex flex-col ${
-                  numericNominal === 10900000
-                    ? "border-primary-500 bg-primary-50/50 ring-4 ring-primary-500/10 shadow-md"
-                    : "border-slate-100 bg-white hover:bg-slate-50 hover:border-slate-200"
+                className={`p-4 rounded-xl border-2 transition-all text-left flex flex-col ${
+                  numericNominal === expectedTagihan
+                    ? "border-primary-500 bg-primary-50/50 ring-2 ring-primary-500/20 shadow-md"
+                    : "border-slate-200 bg-white hover:bg-slate-50"
                 }`}
               >
                 <div className="flex items-center justify-between w-full mb-1">
-                  <span className="font-black text-primary-950 text-lg">
+                  <span className="font-black text-slate-900">
                     Bayar Lunas
                   </span>
-                  {numericNominal === 10900000 ? (
-                    <CheckCircle className="w-6 h-6 text-primary-600" />
+                  {numericNominal === expectedTagihan ? (
+                    <CheckCircle className="w-5 h-5 text-primary-600" />
                   ) : (
-                    <div className="w-6 h-6 rounded-full border-3 border-slate-300" />
+                    <div className="w-5 h-5 rounded-full border-2 border-slate-300" />
                   )}
                 </div>
-                <span className="text-xs text-slate-500 leading-tight font-medium">
+                <span className="text-[11px] text-slate-500 leading-tight">
                   Pelunasan sekaligus seluruh biaya administrasi.
                 </span>
-                <span className="text-lg font-black text-primary-700 mt-3">
-                  Rp 9.800.000
+                <span className="text-sm font-black text-primary-600 mt-2">
+                  {formatCurrency(expectedTagihan)}
                 </span>
               </button>
 
               <button
                 type="button"
                 onClick={() =>
-                  setNominal(new Intl.NumberFormat("id-ID").format(5450000))
+                  setNominal(new Intl.NumberFormat("id-ID").format(halfTagihan))
                 }
-                className={`p-4 rounded-2xl border-3 transition-all text-left flex flex-col ${
-                  numericNominal >= 5450000 && numericNominal < 10900000
-                    ? "border-primary-500 bg-primary-50/50 ring-4 ring-primary-500/10 shadow-md"
-                    : "border-slate-100 bg-white hover:bg-slate-50 hover:border-slate-200"
+                className={`p-4 rounded-xl border-2 transition-all text-left flex flex-col ${
+                  numericNominal >= halfTagihan && numericNominal < expectedTagihan
+                    ? "border-primary-500 bg-primary-50/50 ring-2 ring-primary-500/20 shadow-md"
+                    : "border-slate-200 bg-white hover:bg-slate-50"
                 }`}
               >
                 <div className="flex items-center justify-between w-full mb-1">
-                  <span className="font-black text-primary-950 text-lg">
+                  <span className="font-black text-slate-900">
                     Bayar Dicicil
                   </span>
-                  {numericNominal >= 5450000 && numericNominal < 10900000 ? (
-                    <CheckCircle className="w-6 h-6 text-primary-600" />
+                  {numericNominal >= halfTagihan && numericNominal < expectedTagihan ? (
+                    <CheckCircle className="w-5 h-5 text-primary-600" />
                   ) : (
-                    <div className="w-6 h-6 rounded-full border-3 border-slate-300" />
+                    <div className="w-5 h-5 rounded-full border-2 border-slate-300" />
                   )}
                 </div>
-                <span className="text-xs text-slate-500 leading-tight font-medium">
+                <span className="text-[11px] text-slate-500 leading-tight">
                   Pembayaran bertahap minimal 50% di awal.
                 </span>
-                <span className="text-lg font-black text-primary-700 mt-3">
-                  Min. Rp 4.900.000
+                <span className="text-sm font-black text-primary-600 mt-2">
+                  Min. {formatCurrency(halfTagihan)}
                 </span>
               </button>
             </div>
           </div>
 
           {/* Input Cicilan Ke (Hanya jika dicicil) */}
-          {numericNominal > 0 && numericNominal < 10900000 && (
-            <div className="pt-4 border-t border-slate-100 animate-in fade-in slide-in-from-top-1">
-              <label className="block text-sm font-black text-slate-700 mb-3 tracking-wide uppercase">
+          {numericNominal > 0 && numericNominal < expectedTagihan && (
+            <div className="pt-2 border-t border-slate-100 animate-in fade-in slide-in-from-top-1">
+              <label className="block text-sm font-bold text-slate-700 mb-2">
                 Ini adalah Pembayaran Cicilan ke-
               </label>
               <div className="relative w-32">
@@ -588,9 +657,9 @@ export default function DaftarUlangTab() {
                   type="text"
                   readOnly
                   value={cicilanKe}
-                  className="w-full px-6 py-5 text-2xl font-black text-primary-700 border-2 border-primary-100 rounded-2xl focus:outline-none transition-all shadow-inner bg-primary-50/30 text-center"
+                  className="w-full px-4 py-3 text-lg font-black text-primary-700 border border-primary-200 bg-primary-50 rounded-xl focus:outline-none transition-all shadow-inner text-center"
                 />
-                <p className="text-[10px] text-slate-500 mt-2 font-medium italic text-center">
+                <p className="text-[10px] text-slate-500 mt-1 font-medium italic">
                   * Otomatis dihitung sistem
                 </p>
               </div>
@@ -598,12 +667,12 @@ export default function DaftarUlangTab() {
           )}
 
           {/* Input Nominal */}
-          <div className="pt-4 border-t border-slate-100">
-            <label className="block text-sm font-black text-slate-700 mb-3 tracking-wide uppercase">
-              Nominal Transfer
+          <div className="pt-2 border-t border-slate-100">
+            <label className="block text-sm font-bold text-slate-700 mb-2">
+              Nominal yang Dibayarkan (Rp)
             </label>
             <div className="relative">
-              <span className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 text-xl font-black">
+              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">
                 Rp
               </span>
               <input
@@ -615,100 +684,88 @@ export default function DaftarUlangTab() {
                     new Intl.NumberFormat("id-ID").format(parseInt(val || "0")),
                   );
                 }}
-                className="w-full pl-16 pr-8 py-5 text-2xl font-black text-primary-950 border-2 border-slate-100 rounded-2xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 transition-all shadow-inner bg-slate-50/30"
+                className="w-full pl-12 pr-4 py-3 text-lg font-black text-ink-900 border border-ink-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all shadow-inner"
                 placeholder="0"
               />
             </div>
 
             {/* Dynamic Status Badge */}
             {numericNominal > 0 && (
-              <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="mt-4 flex items-center gap-3"
-              >
-                <span className="text-xs text-slate-500 font-bold uppercase tracking-wider">
-                  Status:
+              <div className="mt-3 flex items-center gap-2 animate-in fade-in slide-in-from-top-1">
+                <span className="text-xs text-ink-500 font-medium">
+                  Status Pembayaran Anda akan tercatat sebagai:
                 </span>
                 <span
-                  className={`px-4 py-1.5 rounded-full text-xs font-black border-2 ${
+                  className={`px-3 py-1 rounded-full text-xs font-black border ${
                     tipeBayar === "LUNAS"
-                      ? "bg-emerald-50 text-emerald-700 border-emerald-200"
+                      ? "bg-emerald-100 text-emerald-700 border-emerald-200"
                       : tipeBayar.includes("50% ATAU LEBIH")
-                        ? "bg-primary-50 text-primary-700 border-primary-200"
-                        : "bg-secondary-50 text-secondary-700 border-secondary-200"
+                        ? "bg-primary-100 text-primary-700 border-primary-200"
+                        : "bg-secondary-100 text-secondary-700 border-secondary-200"
                   }`}
                 >
                   {tipeBayar}
                 </span>
-              </motion.div>
+              </div>
             )}
 
             {/* Input Alasan Keringanan */}
             {numericNominal > 0 && 
              tipeBayar === "CICILAN DIBAWAH 50%" && 
              !hasExistingVerifiedPayment && 
-             totalPaid < 5450000 && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
-                className="mt-6 p-6 bg-secondary-50 border-2 border-secondary-200 rounded-2xl space-y-3"
-              >
+             totalPaid < halfTagihan && (
+              <div className="mt-4 p-4 bg-secondary-50 border border-secondary-200 rounded-xl space-y-3 animate-in fade-in slide-in-from-top-1">
                 <div className="flex items-center gap-2 text-secondary-800">
-                  <AlertCircle className="w-5 h-5" />
-                  <span className="font-black text-sm uppercase tracking-wide">
+                  <AlertCircle className="w-4 h-4" />
+                  <span className="font-black text-xs uppercase tracking-wider">
                     Permohonan Keringanan Khusus
                   </span>
                 </div>
-                <p className="text-xs text-secondary-700 leading-relaxed font-medium">
+                <p className="text-[11px] text-secondary-700 leading-relaxed font-medium">
                   Pembayaran di bawah 50% hanya diizinkan bagi wali santri yang memiliki kendala finansial mendesak. Silakan tuliskan alasan singkat Anda di bawah ini agar dapat dipertimbangkan oleh tim Finance.
                 </p>
                 <textarea
                   value={keringananReason}
                   onChange={(e) => setKeringananReason(e.target.value)}
                   placeholder="Contoh: Sedang ada musibah keluarga, mohon keringanan cicilan pertama 1jt dulu..."
-                  className="w-full p-4 text-sm border-2 border-secondary-200 rounded-xl focus:ring-4 focus:ring-secondary-500/10 focus:border-secondary-500 transition-all bg-white font-medium min-h-[100px]"
+                  className="w-full p-3 text-xs border border-secondary-300 rounded-lg focus:ring-2 focus:ring-secondary-500 focus:border-secondary-500 transition-all bg-white font-medium min-h-[80px]"
                   required
                 />
-              </motion.div>
+              </div>
             )}
           </div>
 
           {/* Upload File */}
           <div>
-            <label className="block text-sm font-black text-slate-700 mb-3 tracking-wide uppercase">
-              Bukti Transfer
+            <label className="block text-sm font-bold text-slate-700 mb-2">
+              Upload Bukti Transfer
             </label>
-            <div className="group border-3 border-dashed border-slate-200 rounded-3xl p-6 md:p-10 text-center hover:border-primary-400 hover:bg-primary-50/30 transition-all cursor-pointer relative overflow-hidden">
+            <div className="border-2 border-dashed border-slate-300 rounded-xl p-6 text-center hover:bg-slate-50 transition-colors cursor-pointer relative">
               <input
                 type="file"
                 accept="image/*,application/pdf"
                 onChange={(e) => setFile(e.target.files?.[0] || null)}
-                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
               />
-              <div className="flex flex-col items-center gap-4 relative z-0">
+              <div className="flex flex-col items-center gap-2 pointer-events-none">
                 {file ? (
                   <>
-                    <div className="p-4 bg-primary-100 rounded-2xl">
-                      <FileText className="w-10 h-10 text-primary-700" />
-                    </div>
-                    <span className="font-black text-xl text-primary-900">
+                    <FileText className="w-8 h-8 text-primary-600" />
+                    <span className="font-black text-primary-700">
                       {file.name}
                     </span>
-                    <span className="text-xs text-primary-400 font-bold">
-                      GANTI FILE
+                    <span className="text-xs text-ink-400">
+                      Klik untuk ganti file
                     </span>
                   </>
                 ) : (
                   <>
-                    <div className="p-4 bg-slate-100 rounded-2xl group-hover:bg-primary-100 transition-colors">
-                      <Send className="w-10 h-10 text-slate-400 group-hover:text-primary-600" />
-                    </div>
-                    <span className="font-bold text-slate-600 text-lg">
-                      Klik untuk unggah berkas
+                    <Send className="w-8 h-8 text-slate-400" />
+                    <span className="font-medium text-slate-600">
+                      Klik atau tarik file ke sini
                     </span>
-                    <span className="text-xs text-slate-400 uppercase tracking-widest font-black">
-                      JPG, PNG, PDF (Max 5MB)
+                    <span className="text-xs text-slate-400">
+                      Format: JPG, PNG, PDF (Max 5MB)
                     </span>
                   </>
                 )}
@@ -716,41 +773,44 @@ export default function DaftarUlangTab() {
             </div>
           </div>
 
-          <div className="h-px bg-slate-100" />
+          <hr className="border-slate-100" />
 
           {/* Pernyataan */}
-          <label className="flex items-start gap-5 p-6 rounded-[1.5rem] border-2 border-slate-100 bg-slate-50/50 cursor-pointer hover:border-primary-200 transition-all group">
+          <label className="flex items-start gap-4 p-4 rounded-xl border border-slate-200 bg-slate-50 cursor-pointer hover:bg-slate-100 transition-colors">
             <input
               type="checkbox"
               checked={pernyataan}
               onChange={(e) => setPernyataan(e.target.checked)}
-              className="mt-1.5 w-6 h-6 text-primary-600 rounded-lg border-slate-300 focus:ring-primary-500"
+              className="mt-1 w-5 h-5 text-primary-600 rounded border-ink-300 focus:ring-primary-500"
             />
-            <div className="text-sm text-slate-600 leading-relaxed">
-              <span className="font-black text-primary-950 block mb-1 text-lg">
-                Konfirmasi Pembayaran
+            <div className="text-sm text-slate-600">
+              <span className="font-bold text-slate-800 block mb-1">
+                Konfirmasi Kebenaran Data
               </span>
-              Saya menyatakan bahwa bukti transfer yang saya unggah adalah asli
-              dan nominal yang saya inputkan sudah sesuai. Saya memahami bahwa
-              data ini akan diverifikasi oleh panitia.
+              Saya menyatakan bukti transfer yang saya unggah adalah benar dan
+              nominal sesuai dengan yang saya inputkan. Saya bersedia mengikuti
+              aturan pembayaran yang berlaku.
             </div>
           </label>
 
           <button
             type="submit"
             disabled={submitting || !pernyataan || !file || !nominal}
-            className="w-full py-5 bg-secondary-400 hover:bg-secondary-300 text-primary-950 font-black text-xl rounded-2xl shadow-2xl shadow-secondary-400/30 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3 border-2 border-secondary-500 active:scale-95"
+            className="w-full py-4 bg-gold-400 hover:bg-gold-300 text-primary-950 font-black rounded-xl shadow-xl shadow-gold-400/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 border border-gold-500"
           >
             {submitting ? (
-              <Loader2 className="w-7 h-7 animate-spin" />
+              <Loader2 className="animate-spin" />
             ) : (
-              <Send className="w-6 h-6" />
+              <Send className="w-5 h-5" />
             )}
-            {submitting ? "MEMPROSES..." : "KIRIM KONFIRMASI"}
+            {submitting ? "Mengirim Data..." : "Kirim Konfirmasi Daftar Ulang"}
           </button>
         </form>
       </div>
-    </motion.div>
+    </div>
   );
 }
+
+
+
 
