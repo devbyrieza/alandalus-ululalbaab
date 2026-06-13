@@ -58,6 +58,16 @@ interface Peserta {
   input_at_hafalan: string | null;
   input_at_arab: string | null;
   created_at: string | null;
+    nilai_tes_hafalan?: number | null;
+    nilai_tes_lisan_arab?: number | null;
+    catatan_hafalan?: string | null;
+    catatan_lisan_arab?: string | null;
+    detail_hafalan?: any;
+    detail_lisan_arab?: any;
+    score_hafalan?: number | null;
+    score_lisan_arab?: number | null;
+    input_at_hafalan?: string | null;
+    input_at_lisan_arab?: string | null;
 }
 
 // ============================================================================
@@ -407,7 +417,7 @@ function InputNilaiContent() {
     setArabForm({});
   };
 
-  const saveForm = async (p: Peserta, formType: "quran" | "wawancara" | "ortu" | "hafalan" | "arab") => {
+  const saveForm = async (p: Peserta, formType: "quran" | "wawancara" | "ortu" | "hafalan" | "lisan_arab" | "hafalan" | "lisan_arab" | "hafalan" | "arab") => {
     setSaving(p.id + formType);
     setMessage(null);
 
@@ -1257,7 +1267,7 @@ function InputNilaiContent() {
         {p.roles.includes("wawancara") && visibleFormTypes.includes("wawancara") && renderSantriForm(p)}
         {p.roles.includes("ortu") && visibleFormTypes.includes("ortu") && renderOrangTuaForm(p)}
         {p.roles.includes("hafalan") && visibleFormTypes.includes("hafalan") && renderHafalanForm(p)}
-        {p.roles.includes("lisan_arab") && visibleFormTypes.includes("lisan_arab") && renderLisanArabForm(p)}
+        {p.roles.includes("lisan_arab") && visibleFormTypes.includes("lisan_arab") && renderArabForm(p)}
       </div>
     </div>
   );
