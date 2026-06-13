@@ -263,8 +263,10 @@ const ROLE_TO_FORM_TYPES: Record<string, string[]> = {
   pewawancara_calsan: ['wawancara'],
   pewawancara_cawalsan: ['ortu'],
   // Admin roles see all forms
-  admin: ['quran', 'wawancara', 'ortu'],
-  admin_super: ['quran', 'wawancara', 'ortu'],
+  penguji_hafalan: ['hafalan'],
+    penguji_bahasa_arab: ['lisan_arab'],
+    admin: ['quran', 'wawancara', 'ortu', 'hafalan', 'lisan_arab'],
+  admin_super: ['quran', 'wawancara', 'ortu', 'hafalan', 'lisan_arab'],
 };
 
 export default function InputNilaiPage() {
@@ -550,6 +552,12 @@ function InputNilaiContent() {
       if (type === 'ortu') {
         return !!p.input_at_ortu || p.nilai_wawancara_ortu != null || !!(p.detail_cawalsan?.q1);
       }
+        if (type === 'hafalan') {
+          return !!(p.input_at_hafalan || p.score_hafalan || (p.detail_hafalan && Object.keys(p.detail_hafalan).length > 0));
+        }
+        if (type === 'lisan_arab') {
+          return !!(p.input_at_lisan_arab || p.score_lisan_arab || (p.detail_lisan_arab && Object.keys(p.detail_lisan_arab).length > 0));
+        }
       return true;
     });
   };
@@ -1248,6 +1256,8 @@ function InputNilaiContent() {
         {p.roles.includes("quran") && visibleFormTypes.includes("quran") && renderQuranForm(p)}
         {p.roles.includes("wawancara") && visibleFormTypes.includes("wawancara") && renderSantriForm(p)}
         {p.roles.includes("ortu") && visibleFormTypes.includes("ortu") && renderOrangTuaForm(p)}
+        {p.roles.includes("hafalan") && visibleFormTypes.includes("hafalan") && renderHafalanForm(p)}
+        {p.roles.includes("lisan_arab") && visibleFormTypes.includes("lisan_arab") && renderLisanArabForm(p)}
       </div>
     </div>
   );
