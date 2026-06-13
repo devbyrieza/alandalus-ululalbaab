@@ -40,6 +40,8 @@ export async function PATCH(
           { penguji_santri_id: userId },
           { penguji_quran_id: userId },
           { penguji_ortu_id: userId },
+          { penguji_hafalan_id: userId },
+          { penguji_arab_id: userId },
           { exam_session: { created_by: userId } },
         ],
       },
@@ -52,6 +54,8 @@ export async function PATCH(
     const isWawancara = assignment?.penguji_santri_id === userId;
     const isQuran = assignment?.penguji_quran_id === userId;
     const isOrtu = assignment?.penguji_ortu_id === userId;
+    const isHafalan = assignment?.penguji_hafalan_id === userId;
+    const isArab = assignment?.penguji_arab_id === userId;
 
     // Fetch user profile to see if they're actually an admin who switched roles
     const userProfile = await prisma.profile.findUnique({
@@ -77,11 +81,15 @@ export async function PATCH(
     let isWawancaraFallback = false;
     let isQuranFallback = false;
     let isOrtuFallback = false;
+    let isHafalanFallback = false;
+    let isArabFallback = false;
 
     if (
       !isWawancara &&
       !isQuran &&
       !isOrtu &&
+      !isHafalan &&
+      !isArab &&
       assignment &&
       assignment.exam_session &&
       assignment.exam_session.created_by === userId
@@ -96,16 +104,22 @@ export async function PATCH(
         title.includes("cawalsan") ||
         title.includes("ortu") ||
         title.includes("orang");
+      const hasHafalanMatch = title.includes("hafalan");
+      const hasArabMatch = title.includes("arab");
 
       // If the title is generic (e.g. "Tes PPDB 1"), grant access to all forms (matches frontend behavior roles: [])
-      if (!hasQuranMatch && !hasWawancaraMatch && !hasOrtuMatch) {
+      if (!hasQuranMatch && !hasWawancaraMatch && !hasOrtuMatch && !hasHafalanMatch && !hasArabMatch) {
         isQuranFallback = true;
         isWawancaraFallback = true;
         isOrtuFallback = true;
+        isHafalanFallback = true;
+        isArabFallback = true;
       } else {
         isQuranFallback = hasQuranMatch;
         isWawancaraFallback = hasWawancaraMatch;
         isOrtuFallback = hasOrtuMatch;
+        isHafalanFallback = hasHafalanMatch;
+        isArabFallback = hasArabMatch;
       }
     }
 
@@ -129,6 +143,18 @@ export async function PATCH(
       isOrtuFallback ||
       baseRole.includes("cawalsan") ||
       baseRole === "pewawancara_cawalsan";
+    const canEditHafalan =
+      isAdmin ||
+      isHafalan ||
+      isHafalanFallback ||
+      baseRole.includes("hafalan") ||
+      baseRole === "penguji_hafalan";
+    const canEditArab =
+      isAdmin ||
+      isArab ||
+      isArabFallback ||
+      baseRole.includes("arab") ||
+      baseRole === "penguji_bahasa_arab";
 
     // 0. Pre-fetch existing record to check timestamps
     const existing = await prisma.nilaiUjian.findFirst({
@@ -236,6 +262,38 @@ export async function PATCH(
       }
     }
 
+    // 4. Hafalan Update
+    if (canEditHafalan && body.detail_hafalan !== undefined) {
+      if (existing?.input_at_hafalan && !isAdmin) {
+        const diff = now.getTime() - new Date(existing.input_at_hafalan).getTime();
+        if (diff > LOCK_TIME) {
+          return NextResponse.json({ error: "Masa edit untuk Tes Hafalan sudah habis." }, { status: 403 });
+        }
+      }
+      if (body.nilai_hafalan_total !== undefined) updateData.nilai_hafalan_total = body.nilai_hafalan_total;
+      if (body.score_hafalan !== undefined) updateData.score_hafalan = body.score_hafalan;
+      if (body.catatan_hafalan !== undefined) updateData.catatan_hafalan = body.catatan_hafalan;
+      if (body.detail_hafalan !== undefined) updateData.detail_hafalan = body.detail_hafalan;
+      updateData.input_by_hafalan = userId;
+      if (!existing?.input_at_hafalan) updateData.input_at_hafalan = now;
+    }
+
+    // 5. Arab Update
+    if (canEditArab && body.detail_arab !== undefined) {
+      if (existing?.input_at_arab && !isAdmin) {
+        const diff = now.getTime() - new Date(existing.input_at_arab).getTime();
+        if (diff > LOCK_TIME) {
+          return NextResponse.json({ error: "Masa edit untuk Tes Bahasa Arab sudah habis." }, { status: 403 });
+        }
+      }
+      if (body.nilai_arab_total !== undefined) updateData.nilai_arab_total = body.nilai_arab_total;
+      if (body.score_arab !== undefined) updateData.score_arab = body.score_arab;
+      if (body.catatan_arab !== undefined) updateData.catatan_arab = body.catatan_arab;
+      if (body.detail_arab !== undefined) updateData.detail_arab = body.detail_arab;
+      updateData.input_by_arab = userId;
+      if (!existing?.input_at_arab) updateData.input_at_arab = now;
+    }
+
     // 4. Upsert Score - Link to the schedule being graded
     if (existing) {
       await prisma.nilaiUjian.update({
@@ -262,10 +320,12 @@ export async function PATCH(
     // 5. AUTOMATION: Mark as finished if assignment exists
     if (assignment) {
       try {
-        let componentType: "santri" | "quran" | "ortu" | undefined = undefined;
+        let componentType: "santri" | "quran" | "ortu" | "hafalan" | "arab" | undefined = undefined;
         if (body.detail_quran) componentType = "quran";
         else if (body.detail_wawancara) componentType = "santri";
         else if (body.detail_cawalsan) componentType = "ortu";
+        else if (body.detail_hafalan) componentType = "hafalan";
+        else if (body.detail_arab) componentType = "arab";
 
         if (componentType) {
           await markExamComponentAsComplete({

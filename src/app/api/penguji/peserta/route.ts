@@ -46,6 +46,8 @@ export async function GET() {
           { penguji_santri_id: userId }, // Seleksi Wawancara Calon Santri (or general Interview)
           { penguji_quran_id: userId }, // Tes Quran
           { penguji_ortu_id: userId }, // Seleksi Wawancara Orang Tua
+          { penguji_hafalan_id: userId }, // Tes Hafalan
+          { penguji_arab_id: userId }, // Tes Bahasa Arab
           { exam_session: { created_by: userId } }, // Sessions created by this penguji
         ],
       };
@@ -113,11 +115,13 @@ export async function GET() {
       // Determine roles for this jadwal record
       const roles: string[] = [];
       if (isAdmin) {
-        roles.push("wawancara", "quran", "ortu");
+        roles.push("wawancara", "quran", "ortu", "hafalan", "arab");
       } else {
         if (item.penguji_santri_id === userId) roles.push("wawancara");
         if (item.penguji_quran_id === userId) roles.push("quran");
         if (item.penguji_ortu_id === userId) roles.push("ortu");
+        if (item.penguji_hafalan_id === userId) roles.push("hafalan");
+        if (item.penguji_arab_id === userId) roles.push("arab");
 
         if (roles.length === 0 && item.exam_session?.created_by === userId) {
           const title = (item.exam_session?.title || "").toLowerCase();
@@ -131,10 +135,14 @@ export async function GET() {
             title.includes("cawalsan") ||
             title.includes("ortu") ||
             title.includes("orang");
+          const hasHafalanMatch = title.includes("hafalan");
+          const hasArabMatch = title.includes("arab");
 
-          if (hasQuranMatch) roles.push("quran");
+          if (hasQuranMatch && !hasHafalanMatch) roles.push("quran");
           if (hasWawancaraMatch) roles.push("wawancara");
           if (hasOrtuMatch) roles.push("ortu");
+          if (hasHafalanMatch) roles.push("hafalan");
+          if (hasArabMatch) roles.push("arab");
         }
       }
 
@@ -163,6 +171,18 @@ export async function GET() {
         "nilai_tes_tertulis",
         "nilai_tes_tertulis_total",
         "detail_akademik",
+        "nilai_hafalan_total",
+        "catatan_hafalan",
+        "detail_hafalan",
+        "input_at_hafalan",
+        "input_by_hafalan",
+        "score_hafalan",
+        "nilai_arab_total",
+        "catatan_arab",
+        "detail_arab",
+        "input_at_arab",
+        "input_by_arab",
+        "score_arab",
       ];
 
       // Merge all scores found, but apply session-aware logic
@@ -232,6 +252,16 @@ export async function GET() {
           input_at_quran: scoreData.input_at_quran,
           input_at_santri: scoreData.input_at_santri,
           input_at_ortu: scoreData.input_at_ortu,
+          nilai_hafalan_total: scoreData.nilai_hafalan_total,
+          catatan_hafalan: scoreData.catatan_hafalan,
+          detail_hafalan: scoreData.detail_hafalan,
+          input_at_hafalan: scoreData.input_at_hafalan,
+          score_hafalan: scoreData.score_hafalan,
+          nilai_arab_total: scoreData.nilai_arab_total,
+          catatan_arab: scoreData.catatan_arab,
+          detail_arab: scoreData.detail_arab,
+          input_at_arab: scoreData.input_at_arab,
+          score_arab: scoreData.score_arab,
           created_at: item.pendaftar.created_at,
         });
       }

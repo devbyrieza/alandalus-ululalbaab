@@ -10,7 +10,7 @@ export async function markExamComponentAsComplete({
 }: {
   jadwalId: string;
   userId: string;
-  componentType?: "santri" | "quran" | "ortu";
+  componentType?: "santri" | "quran" | "ortu" | "hafalan" | "arab";
 }) {
   // 1. Get Jadwal
   const jadwal = await prisma.jadwalUjian.findUnique({
@@ -44,6 +44,12 @@ export async function markExamComponentAsComplete({
     } else if (componentType === "ortu") {
       updates.status_ortu = "completed";
       updatedField = "Seleksi Wawancara Orang Tua";
+    } else if (componentType === "hafalan") {
+      updates.status_hafalan = "completed";
+      updatedField = "Tes Hafalan Al-Qur'an";
+    } else if (componentType === "arab") {
+      updates.status_arab = "completed";
+      updatedField = "Tes Lisan Bahasa Arab";
     }
   } else {
     // Fallback to manual check (logic from original /complete endpoint)
@@ -56,6 +62,12 @@ export async function markExamComponentAsComplete({
     } else if (jadwal.penguji_ortu_id === userId) {
       updates.status_ortu = "completed";
       updatedField = "Seleksi Wawancara Orang Tua";
+    } else if (jadwal.penguji_hafalan_id === userId) {
+      updates.status_hafalan = "completed";
+      updatedField = "Tes Hafalan Al-Qur'an";
+    } else if (jadwal.penguji_arab_id === userId) {
+      updates.status_arab = "completed";
+      updatedField = "Tes Lisan Bahasa Arab";
     } else {
       // Check session creator fallback
       const sess = await prisma.examSession.findFirst({
@@ -80,6 +92,14 @@ export async function markExamComponentAsComplete({
           updates.status_ortu = "completed";
           updates.penguji_ortu_id = userId;
           updatedField = "Seleksi Wawancara Orang Tua";
+        } else if (title.includes("hafalan")) {
+          updates.status_hafalan = "completed";
+          updates.penguji_hafalan_id = userId;
+          updatedField = "Tes Hafalan Al-Qur'an";
+        } else if (title.includes("arab")) {
+          updates.status_arab = "completed";
+          updates.penguji_arab_id = userId;
+          updatedField = "Tes Lisan Bahasa Arab";
         }
       }
     }
@@ -106,8 +126,12 @@ export async function markExamComponentAsComplete({
     updatedJadwal.status_quran === "completed";
   const isOrtuDone =
     !updatedJadwal.penguji_ortu_id || updatedJadwal.status_ortu === "completed";
+  const isHafalanDone =
+    !updatedJadwal.penguji_hafalan_id || updatedJadwal.status_hafalan === "completed";
+  const isArabDone =
+    !updatedJadwal.penguji_arab_id || updatedJadwal.status_arab === "completed";
 
-  const isAllDone = isSantriDone && isQuranDone && isOrtuDone;
+  const isAllDone = isSantriDone && isQuranDone && isOrtuDone && isHafalanDone && isArabDone;
 
   if (isAllDone) {
     // Recalculate scores — this will set status_pendaftaran to 'tested' only if ALL 6 score components are present

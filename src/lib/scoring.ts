@@ -79,7 +79,7 @@ export async function recalculateNilaiUjian(pendaftarId: string, overrideStatus?
 
   // 2. MASTER MERGE: Gabungkan semua field dari catatan lama ke yang baru jika ada yang kosong
   const master: any = {};
-  const jsonFields = ["nilai_tes_tertulis", "detail_akademik", "detail_kepribadian", "detail_kesiapan", "detail_quran", "detail_wawancara", "detail_cawalsan"];
+  const jsonFields = ["nilai_tes_tertulis", "detail_akademik", "detail_kepribadian", "detail_kesiapan", "detail_quran", "detail_wawancara", "detail_cawalsan", "detail_hafalan", "detail_arab"];
 
   allNilai.forEach((record) => {
     Object.entries(record).forEach(([key, val]) => {
@@ -107,6 +107,8 @@ export async function recalculateNilaiUjian(pendaftarId: string, overrideStatus?
   const quran = (master.score_quran != null ? Number(master.score_quran) : (master.nilai_tes_quran != null ? Number(master.nilai_tes_quran) : null));
   const kp = master.score_kepribadian != null ? Number(master.score_kepribadian) : null;
   const ks = master.score_kesiapan != null ? Number(master.score_kesiapan) : null;
+  const hafalan = master.score_hafalan != null ? Number(master.score_hafalan) : (master.nilai_hafalan_total != null ? Number(master.nilai_hafalan_total) : null);
+  const arab = master.score_arab != null ? Number(master.score_arab) : (master.nilai_arab_total != null ? Number(master.nilai_arab_total) : null);
 
   let ws = master.nilai_wawancara_santri != null ? Number(master.nilai_wawancara_santri) : null;
   
@@ -133,7 +135,11 @@ export async function recalculateNilaiUjian(pendaftarId: string, overrideStatus?
   const totalScore = calculateFinalScore(ak || 0, quran || 0, wawancaraTotal || 0, kp || 0, ks || 0);
 
   // 5. Tentukan Status Kelulusan (Matriks A/B/C)
-  const allGraded = ak != null && quran != null && kp != null && ks != null && ws != null && wo != null;
+  const isMA = pendaftarId && await prisma.pendaftar.findUnique({ where: { id: pendaftarId }, select: { jenjang: true } }).then(p => p?.jenjang?.toUpperCase().includes('MA'));
+  let allGraded = ak != null && quran != null && kp != null && ks != null && ws != null && wo != null;
+  if (isMA) {
+    allGraded = ak != null && quran != null && kp != null && ks != null && ws != null && wo != null && hafalan != null && arab != null;
+  }
   let status: string = "BELUM LENGKAP";
 
   if (allGraded || overrideStatus) {
@@ -215,6 +221,10 @@ export async function recalculateNilaiUjian(pendaftarId: string, overrideStatus?
       nilai_wawancara_santri: ws, // Override Decimal field
       nilai_wawancara_ortu: wo, // Override Decimal field
       score_wawancara: wawancaraTotal,
+      score_hafalan: hafalan,
+      nilai_hafalan_total: hafalan,
+      score_arab: arab,
+      nilai_arab_total: arab,
       total_score: totalScore, 
       nilai_total: totalScore, // Override Decimal field
       status_kelulusan: status, 
