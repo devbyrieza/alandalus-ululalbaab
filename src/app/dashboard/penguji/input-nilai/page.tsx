@@ -60,13 +60,9 @@ interface Peserta {
   created_at: string | null;
     nilai_tes_hafalan?: number | null;
     nilai_tes_lisan_arab?: number | null;
-    catatan_hafalan?: string | null;
     catatan_lisan_arab?: string | null;
-    detail_hafalan?: any;
     detail_lisan_arab?: any;
-    score_hafalan?: number | null;
     score_lisan_arab?: number | null;
-    input_at_hafalan?: string | null;
     input_at_lisan_arab?: string | null;
 }
 
