@@ -136,9 +136,15 @@ export async function recalculateNilaiUjian(pendaftarId: string, overrideStatus?
 
   // 5. Tentukan Status Kelulusan (Matriks A/B/C)
   const isMA = pendaftarId && await prisma.pendaftar.findUnique({ where: { id: pendaftarId }, select: { jenjang: true } }).then(p => p?.jenjang?.toUpperCase().includes('MA'));
-  let allGraded = ak != null && quran != null && kp != null && ks != null && ws != null && wo != null;
+  const isSD = pendaftarId && await prisma.pendaftar.findUnique({ where: { id: pendaftarId }, select: { jenjang: true } }).then(p => p?.jenjang?.toUpperCase().includes('SD') || p?.jenjang?.toUpperCase().includes('TK'));
+  
+  let allGraded = false;
   if (isMA) {
     allGraded = ak != null && quran != null && kp != null && ks != null && ws != null && wo != null && hafalan != null && arab != null;
+  } else if (isSD) {
+    allGraded = quran != null && ws != null && wo != null;
+  } else {
+    allGraded = ak != null && quran != null && kp != null && ks != null && ws != null && wo != null;
   }
   let status: string = "BELUM LENGKAP";
 
