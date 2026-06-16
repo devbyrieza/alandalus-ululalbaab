@@ -55,7 +55,7 @@ export async function GET(req: Request, { params }: { params: Promise<{ code: st
     );
 
     // Redirect to the internal magic auth handler
-    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://pesantren-ululalbaab.com";
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://ppdb.alandalus-ululalbaab.com";
     return NextResponse.redirect(new URL(`/api/auth/magic?token=${token}`, baseUrl));
   } catch (error) {
     console.error("Short Link Error:", error);
