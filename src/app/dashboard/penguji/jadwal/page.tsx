@@ -81,23 +81,25 @@ interface ExamSession {
 
 const ROLE_TO_JADWAL_TYPES: Record<string, string[]> = {
   penguji: ["Seleksi Al Qur'an"],
-  penguji_hafalan: ["Seleksi Hafalan Al-Qur'an"],
-  penguji_bahasa_arab: ["Seleksi Lisan Bahasa Arab"],
+  penguji_hafalan: ["Tes Hafalan Al-Qur'an", "Seleksi Hafalan Al-Qur'an"],
+  penguji_bahasa_arab: ["Tes Lisan Bahasa Arab", "Seleksi Lisan Bahasa Arab"],
   pewawancara_calsan: ["Seleksi Wawancara Calon Santri"],
-  pewawancara_cawalsan: ["Seleksi Wawancara Orang Tua"],
+  pewawancara_cawalsan: ["Seleksi Wawancara Orang Tua", "Seleksi Wawancara Calon Orangtua/Wali Santri"],
   admin: [
-    "Seleksi Hafalan Al-Qur'an",
-    "Seleksi Lisan Bahasa Arab",
+    "Tes Hafalan Al-Qur'an",
+    "Tes Lisan Bahasa Arab",
     "Seleksi Al Qur'an",
     "Seleksi Wawancara Calon Santri",
-    "Seleksi Wawancara Orang Tua/Wali",
+    "Seleksi Wawancara Orang Tua",
+    "Seleksi Wawancara Calon Orangtua/Wali Santri",
   ],
   admin_super: [
-    "Seleksi Hafalan Al-Qur'an",
-    "Seleksi Lisan Bahasa Arab",
+    "Tes Hafalan Al-Qur'an",
+    "Tes Lisan Bahasa Arab",
     "Seleksi Al Qur'an",
     "Seleksi Wawancara Calon Santri",
-    "Seleksi Wawancara Orang Tua/Wali",
+    "Seleksi Wawancara Orang Tua",
+    "Seleksi Wawancara Calon Orangtua/Wali Santri",
   ],
 };
 
@@ -496,7 +498,7 @@ export default function JadwalPengujiPage() {
         return;
       }
 
-      const payload = {
+      const payload: any = {
         title: slotForm.title,
         start_time: startDateTime.toISOString(),
         end_time: endDateTime.toISOString(),
@@ -504,6 +506,10 @@ export default function JadwalPengujiPage() {
         location: "Online",
         notes: slotForm.notes,
       };
+
+      if (["admin_super", "admin"].includes(activeRole) && selectedCreatorId) {
+        payload.creator_id = selectedCreatorId;
+      }
 
       const response = await fetch("/api/exam-sessions", {
         method: "POST",
@@ -2039,6 +2045,50 @@ export default function JadwalPengujiPage() {
             </div>
 
             <form onSubmit={handleCreateSlot} className="p-5 md:p-8 space-y-6">
+              {/* Select Penguji (Admin Super / Admin Only) */}
+              {["admin_super", "admin"].includes(activeRole) && (
+                <div>
+                  <label className="block text-xs font-black text-ink-400 uppercase tracking-widest mb-2">
+                    Buat Atas Nama Penguji
+                  </label>
+                  <select
+                    className="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-xl focus:ring-2 focus:ring-primary-500 outline-none font-bold text-primary-950 transition-all"
+                    value={selectedCreatorId}
+                    onChange={(e) => {
+                      setSelectedCreatorId(e.target.value);
+                      const selectedPenguji = pengujiList.find((p) => p.id === e.target.value);
+                      if (selectedPenguji) {
+                        const autoTitle = ROLE_TO_SESSION_TITLE[selectedPenguji.role] || "Sesi Ujian";
+                        setSlotForm((prev) => ({ ...prev, title: autoTitle }));
+                      } else {
+                        setSlotForm((prev) => ({ ...prev, title: ROLE_TO_SESSION_TITLE[activeRole] || "Sesi Ujian" }));
+                      }
+                    }}
+                  >
+                    <option value="">Pilih Penguji (Opsional)</option>
+                    {pengujiList.map((p) => {
+                      const exRoles = ["penguji", "pewawancara_calsan", "pewawancara_cawalsan", "penguji_hafalan", "penguji_bahasa_arab"];
+                      let displayRole = p.role;
+                      let secRoles: string[] = [];
+                      if (Array.isArray(p.secondary_roles)) {
+                        secRoles = p.secondary_roles;
+                      } else if (typeof p.secondary_roles === 'string') {
+                        try { secRoles = JSON.parse(p.secondary_roles); } catch (e) {}
+                      }
+                      if (!exRoles.includes(p.role) && Array.isArray(secRoles)) {
+                        const secRole = secRoles.find((r: string) => exRoles.includes(r));
+                        if (secRole) displayRole = secRole;
+                      }
+                      return (
+                        <option key={p.id} value={p.id}>
+                          {p.full_name} ({displayRole.replace(/_/g, " ").toUpperCase()})
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+              )}
+
               {/* Jenis Ujian */}
               {ADMIN_ROLES.includes(activeRole) ? (
                 <div>
