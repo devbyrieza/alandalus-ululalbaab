@@ -1454,7 +1454,8 @@ export default function ExaminerDashboard() {
       {/* Custom Modal for Assign Examiner (PLOT) */}
       {assignStudent && (
         <div
-          className="fixed inset-0 z-[9999] overflow-y-auto p-4"
+          className="fixed inset-0 overflow-y-auto p-4"
+          style={{ zIndex: 99999 }}
           aria-labelledby="modal-title"
           role="dialog"
           aria-modal="true"
@@ -1561,7 +1562,8 @@ export default function ExaminerDashboard() {
       {/* Custom Modal for Input Nilai */}
       {selectedStudent && (
         <div
-          className="fixed inset-0 z-[9999] overflow-y-auto p-4"
+          className="fixed inset-0 overflow-y-auto p-4"
+          style={{ zIndex: 99999 }}
           aria-labelledby="modal-title"
           role="dialog"
           aria-modal="true"
