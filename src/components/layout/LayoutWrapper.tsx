@@ -11,6 +11,7 @@ import PageTransition from "@/components/ui/PageTransition";
 import UrgencyBar from "@/components/ui/UrgencyBar";
 import FloatingWhatsApp from "@/components/ui/FloatingWhatsApp";
 import LiveActivityToast from "@/components/ui/LiveActivityToast";
+import ScrollProgressBar from "@/components/ui/ScrollProgressBar";
 
 export default function LayoutWrapper({
   children,
@@ -20,7 +21,6 @@ export default function LayoutWrapper({
   const pathname = usePathname();
   useScrollRestoration();
 
-  // Tentukan apakah perlu tampilkan navbar dan footer
   const hideNavbarFooter =
     pathname.startsWith("/login") ||
     pathname.startsWith("/dashboard") ||
@@ -28,25 +28,28 @@ export default function LayoutWrapper({
 
   return (
     <div className="relative min-h-screen flex flex-col font-sans">
-      {/* ✅ NAVBAR - Hanya tampil di halaman utama (tidak di login/dashboard) */}
+      {/* ✅ SCROLL PROGRESS BAR */}
+      {!hideNavbarFooter && <ScrollProgressBar height={3} />}
+
+      {/* ✅ NAVBAR */}
       {!hideNavbarFooter && <Navbar />}
 
-      {/* ✅ MAIN CONTENT - Page content dengan conditional offset */}
+      {/* ✅ MAIN CONTENT */}
       <main className={hideNavbarFooter ? "flex-1" : "flex-1 pt-20 md:pt-24"}>
-        {/* URGENCY BAR - Banner PPDB di bawah Navbar, scrolls naturally */}
         {!hideNavbarFooter && <UrgencyBar />}
         <PageTransition>{children}</PageTransition>
       </main>
 
-      {/* ✅ FOOTER - Hanya tampil di halaman utama (tidak di login/dashboard) */}
+      {/* ✅ FOOTER */}
       {!hideNavbarFooter && <Footer />}
 
-      {/* ✅ FLOATING WIDGETS - Always visible on public pages */}
+      {/* ✅ FLOATING WIDGETS */}
       {!hideNavbarFooter && (
         <>
           {/* <TawkToScript /> */}
           <ChatSystem />
           <ScrollToTop />
+          <FloatingWhatsApp />
           <LiveActivityToast />
         </>
       )}
