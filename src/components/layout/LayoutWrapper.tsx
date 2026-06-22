@@ -37,7 +37,11 @@ export default function LayoutWrapper({
       {/* ✅ MAIN CONTENT */}
       <main className={hideNavbarFooter ? "flex-1" : "flex-1 pt-20 md:pt-24"}>
         {!hideNavbarFooter && <UrgencyBar />}
-        <PageTransition>{children}</PageTransition>
+        {hideNavbarFooter ? (
+          children
+        ) : (
+          <PageTransition>{children}</PageTransition>
+        )}
       </main>
 
       {/* ✅ FOOTER */}
