@@ -83,20 +83,20 @@ export default function DownloadBerkasTab() {
       action: async () => await generateKartuUjian(data),
     },
     {
-      name: "Surat Keterangan Sehat",
-      description: "Format surat keterangan sehat (Belum Ready)",
+      name: "Template Surat Sehat",
+      description: "Format kosong surat keterangan sehat (Belum Tersedia)",
       status: "locked",
       action: () => {},
     },
     {
       name: "Pakta Integritas",
-      description: "Format pakta integritas santri (Belum Ready)",
+      description: "Format kosong pakta integritas santri (Belum Tersedia)",
       status: "locked",
       action: () => {},
     },
     {
       name: "Surat Pernyataan",
-      description: "Format pernyataan bebas perilaku negatif (Belum Ready)",
+      description: "Format kosong pernyataan bebas perilaku negatif (Belum Tersedia)",
       status: "locked",
       action: () => {},
     },
@@ -119,6 +119,17 @@ export default function DownloadBerkasTab() {
               Unduh dokumen penting untuk proses pendaftaran Anda.
             </p>
           </div>
+        </div>
+      </div>
+
+      {/* Helper Banner */}
+      <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4 flex gap-4 items-start shadow-sm mb-6">
+        <AlertCircle className="w-6 h-6 text-amber-600 shrink-0" />
+        <div>
+          <h3 className="font-bold text-amber-900 mb-1 text-sm md:text-base">Mencari Dokumen yang Sudah Diupload?</h3>
+          <p className="text-amber-800 text-sm">
+            Jika Anda ingin mengunduh berkas yang <strong>sudah Anda upload sebelumnya</strong> (seperti Surat Sehat, KK, Akte, dll), silakan buka menu <span className="font-bold">Upload Berkas</span> lalu klik ikon <span className="font-bold inline-flex items-center gap-1 mx-1"><Download className="w-3.5 h-3.5" /> Download</span> di sebelah dokumen Anda.
+          </p>
         </div>
       </div>
 
