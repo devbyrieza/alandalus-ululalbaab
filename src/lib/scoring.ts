@@ -79,7 +79,7 @@ export async function recalculateNilaiUjian(pendaftarId: string, overrideStatus?
 
   // 2. MASTER MERGE: Gabungkan semua field dari catatan lama ke yang baru jika ada yang kosong
   const master: any = {};
-  const jsonFields = ["nilai_tes_tertulis", "detail_akademik", "detail_kepribadian", "detail_kesiapan", "detail_quran", "detail_wawancara", "detail_cawalsan", "detail_hafalan", "detail_arab"];
+  const jsonFields = ["nilai_tes_tertulis", "detail_akademik", "detail_kepribadian", "detail_kesiapan", "detail_quran", "detail_wawancara", "detail_cawalsan"];
 
   allNilai.forEach((record) => {
     Object.entries(record).forEach(([key, val]) => {
@@ -107,13 +107,8 @@ export async function recalculateNilaiUjian(pendaftarId: string, overrideStatus?
   const quran = (master.score_quran != null ? Number(master.score_quran) : (master.nilai_tes_quran != null ? Number(master.nilai_tes_quran) : null));
   const kp = master.score_kepribadian != null ? Number(master.score_kepribadian) : null;
   const ks = master.score_kesiapan != null ? Number(master.score_kesiapan) : null;
-  const hafalan = master.score_hafalan != null ? Number(master.score_hafalan) : (master.nilai_hafalan_total != null ? Number(master.nilai_hafalan_total) : null);
-  const arab = master.score_arab != null ? Number(master.score_arab) : (master.nilai_arab_total != null ? Number(master.nilai_arab_total) : null);
 
-  let ws = master.nilai_wawancara_santri != null ? Number(master.nilai_wawancara_santri) : null;
-  
-  // Fallback dihapus untuk mencegah circular dependency antara ws dan score_wawancara
-
+  let ws = master.score_wawancara != null ? Number(master.score_wawancara) : (master.nilai_wawancara_santri != null ? Number(master.nilai_wawancara_santri) : null);
   
   if (ws != null && ws <= 10 && ws > 0) ws = normalizeSantriScore(ws);
 
@@ -177,26 +172,15 @@ export async function recalculateNilaiUjian(pendaftarId: string, overrideStatus?
   const totalScore = totalWeight > 0 ? (totalWeighted / totalWeight) : 0;
 
   // 5. Tentukan Status Kelulusan (Matriks A/B/C)
-  const isMA = pendaftarId && await prisma.pendaftar.findUnique({ where: { id: pendaftarId }, select: { jenjang: true } }).then(p => p?.jenjang?.toUpperCase().includes('MA'));
-  const isSD = pendaftarId && await prisma.pendaftar.findUnique({ where: { id: pendaftarId }, select: { jenjang: true } }).then(p => p?.jenjang?.toUpperCase().includes('SD') || p?.jenjang?.toUpperCase().includes('TK'));
-  
+  // Suatu tes dianggap "selesai" jika nilainya ada ATAU jika tes tersebut di-skip
   const isAkGraded = ak != null || skippedStages.includes("AKADEMIK");
   const isQuranGraded = quran != null || skippedStages.includes("QURAN");
   const isKpGraded = kp != null || skippedStages.includes("KEPRIBADIAN");
   const isKsGraded = ks != null || skippedStages.includes("KESIAPAN");
   const isWsGraded = ws != null || skippedStages.includes("WAWANCARA_SANTRI");
   const isWoGraded = wo != null || skippedStages.includes("WAWANCARA_ORTU");
-  const isHafalanGraded = hafalan != null || skippedStages.includes("HAFALAN");
-  const isArabGraded = arab != null || skippedStages.includes("BAHASA_ARAB");
 
-  let allGraded = false;
-  if (isMA) {
-    allGraded = isAkGraded && isQuranGraded && isKpGraded && isKsGraded && isWsGraded && isWoGraded && isHafalanGraded && isArabGraded;
-  } else if (isSD) {
-    allGraded = isQuranGraded && isWsGraded && isWoGraded;
-  } else {
-    allGraded = isAkGraded && isQuranGraded && isKpGraded && isKsGraded && isWsGraded && isWoGraded;
-  }
+  const allGraded = isAkGraded && isQuranGraded && isKpGraded && isKsGraded && isWsGraded && isWoGraded;
   let status: string = "BELUM LENGKAP";
 
   if (allGraded || overrideStatus) {
@@ -275,15 +259,11 @@ export async function recalculateNilaiUjian(pendaftarId: string, overrideStatus?
       nilai_tes_quran: quran, // Override Decimal field
       score_kepribadian: kp, 
       score_kesiapan: ks,
-      nilai_wawancara_santri: ws, // Override Decimal field
-      nilai_wawancara_ortu: wo, // Override Decimal field
-      score_wawancara: wawancaraTotal,
-      score_hafalan: hafalan,
-      nilai_hafalan_total: hafalan,
-      score_arab: arab,
-      nilai_arab_total: arab,
+      score_wawancara: ws, // Simpan Wawancara Santri (sebelumnya menyimpan wawancaraTotal yang merusak data manual Calsan)
+      nilai_wawancara_santri: ws, 
+      nilai_wawancara_ortu: wo, 
       total_score: totalScore, 
-      nilai_total: totalScore, // Override Decimal field
+      nilai_total: totalScore,
       status_kelulusan: status, 
       updated_at: new Date(),
     },
