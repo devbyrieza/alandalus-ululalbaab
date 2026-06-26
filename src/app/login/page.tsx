@@ -168,19 +168,22 @@ export default function LoginPage() {
     setError("");
     setIsLoading(true);
 
-    if (!nikPendaftar || !nomorPendaftaran) {
+    const nik = (nikPendaftar || "").trim();
+    const no = (nomorPendaftaran || "").trim().toUpperCase();
+
+    if (!nik || !no) {
       setError("NIK dan Nomor Pendaftaran wajib diisi");
       setIsLoading(false);
       return;
     }
 
-    if (!/^\d{16}$/.test(nikPendaftar)) {
+    if (!/^\d{16}$/.test(nik)) {
       setError("NIK harus 16 digit angka");
       setIsLoading(false);
       return;
     }
 
-    if (!/^(MTI|MTA|ILI|ILA|MAI|MAA)\d{6,8}[A-Z]?$/.test(nomorPendaftaran)) {
+    if (!/^(MTI|MTA|ILI|ILA|MAI|MAA)\d{6,8}[A-Z]?$/.test(no)) {
       setError(
         "Format nomor pendaftaran tidak valid (contoh: MTI2600001 atau MAA2600001)",
       );
@@ -194,8 +197,8 @@ export default function LoginPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           login_type: "pendaftar",
-          nik: nikPendaftar,
-          nomor_pendaftaran: nomorPendaftaran,
+          nik: nik,
+          nomor_pendaftaran: no,
         }),
       });
 
