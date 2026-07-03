@@ -802,7 +802,7 @@ export const generateSuratKesehatan = async (data: PendaftarPdfData) => {
   let finalY2 = (doc as any).lastAutoTable.finalY + 8; // Memberikan jarak nafas yang lebih lega antara tabel dan teks
   const pageHeight = doc.internal.pageSize.getHeight();
   
-  if (finalY2 + 50 > pageHeight - margin) {
+  if (finalY2 + 60 > pageHeight - 40) {
     doc.addPage();
     drawHeaderSync(doc);
     finalY2 = getContentStartY() + 8;
@@ -951,7 +951,7 @@ export const generateSuratPernyataan = async (data: PendaftarPdfData) => {
   y += healthNoteLines.length * 5.5 + 8;
 
   const pageHeight = doc.internal.pageSize.getHeight();
-  if (y + 50 > pageHeight - margin) {
+  if (y + 60 > pageHeight - 40) {
     doc.addPage();
     drawHeaderSync(doc);
     y = getContentStartY();
@@ -1062,7 +1062,7 @@ export const generatePaktaIntegritas = async (data: PendaftarPdfData) => {
   y += 12;
 
   const pageHeight2 = doc.internal.pageSize.getHeight();
-  if (y + 50 > pageHeight2 - margin) {
+  if (y + 60 > pageHeight2 - 40) {
     doc.addPage();
     drawHeaderSync(doc);
     y = getContentStartY();
@@ -1174,7 +1174,7 @@ export const generatePaktaIntegritas = async (data: PendaftarPdfData) => {
   y += 12;
 
   const pageHeight3 = doc.internal.pageSize.getHeight();
-  if (y + 50 > pageHeight3 - margin) {
+  if (y + 60 > pageHeight3 - 40) {
     doc.addPage();
     drawHeaderSync(doc);
     y = getContentStartY();
