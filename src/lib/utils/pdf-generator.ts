@@ -949,6 +949,15 @@ export const generateSuratPernyataan = async (data: PendaftarPdfData) => {
   doc.text(healthNoteLines, margin, y);
   y += healthNoteLines.length * 5.5 + 8;
 
+  const pageHeight = doc.internal.pageSize.getHeight();
+  if (y + 50 > pageHeight - margin) {
+    doc.addPage();
+    // Re-draw header if needed, but since it's an auto-break for signature, maybe just a simple header or none.
+    // Actually, drawHeader is async, so we can't easily await it here unless we make it clean.
+    // Let's just use startY = 30 for the new page.
+    y = 30;
+  }
+
   // TTD Orangtua (kiri) bermaterai
   const dateStr = `${authority.city}, ......................... 2026`;
   doc.setFontSize(10.5);
@@ -1052,6 +1061,12 @@ export const generatePaktaIntegritas = async (data: PendaftarPdfData) => {
     "Surat pernyataan ini saya buat dengan sebenar-benarnya dan atas persetujuan orangtua/wali.";
   doc.text(doc.splitTextToSize(closing2, contentW), margin, y);
   y += 12;
+
+  const pageHeight2 = doc.internal.pageSize.getHeight();
+  if (y + 50 > pageHeight2 - margin) {
+    doc.addPage();
+    y = 30;
+  }
 
   // TTD Santri (kiri) bermaterai
   const sigDateStr = `${authority.city}, ......................... 2026`;
@@ -1157,6 +1172,12 @@ export const generatePaktaIntegritas = async (data: PendaftarPdfData) => {
     "Surat pernyataan ini kami buat dengan sebenar-benarnya dan tanpa ada paksaan dari pihak mana pun.";
   doc.text(doc.splitTextToSize(closing3, contentW), margin, y);
   y += 12;
+
+  const pageHeight3 = doc.internal.pageSize.getHeight();
+  if (y + 50 > pageHeight3 - margin) {
+    doc.addPage();
+    y = 30;
+  }
 
   // TTD Orangtua (kiri) bermaterai
   doc.setFontSize(10.5);
