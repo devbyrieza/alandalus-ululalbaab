@@ -347,8 +347,20 @@ function DokumenCard({
             </div>
           </div>
           <div className="flex items-center gap-2">
+            {dokumen.key === "surat_kesehatan" && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  window.open("/api/dokumen/download/surat-kesehatan", "_blank");
+                }}
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-primary-100 hover:bg-primary-600 text-primary-700 hover:text-white rounded-lg text-[10px] font-black border border-primary-200 transition-colors shadow-sm"
+                title="Download Format Surat Kesehatan"
+              >
+                <Download className="w-3.5 h-3.5" />
+                Download Format
+              </button>
+            )}
             {[
-              "surat_kesehatan",
               "pakta_integritas_santri",
               "pakta_integritas_ortu",
               "pernyataan_bebas_negatif",

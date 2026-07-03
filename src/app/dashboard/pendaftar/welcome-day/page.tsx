@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-
+import Image from "next/image";
 import {
   Loader2,
   Calendar,
@@ -180,6 +180,7 @@ export default function WelcomeDayPage() {
 
   const fetchData = async () => {
     try {
+      // Fetch welcome day data
       const res = await fetch(`/api/pendaftar/welcome-day?t=${Date.now()}`);
       if (res.ok) {
         const result = await res.json();
@@ -197,6 +198,7 @@ export default function WelcomeDayPage() {
         }
       }
 
+      // Fetch seragam status
       const sessionRes = await fetch("/api/auth/session");
       if (sessionRes.ok) {
         const sessionData = await sessionRes.json();
@@ -259,6 +261,7 @@ export default function WelcomeDayPage() {
 
       {/* ─── HERO BANNER ─── */}
       <div className="relative bg-gradient-to-br from-primary-800 via-primary-900 to-primary-950 p-6 md:p-8 rounded-3xl overflow-hidden text-white shadow-xl">
+        {/* Decorative circles */}
         <div className="absolute -top-8 -right-8 w-48 h-48 bg-white/5 rounded-full" />
         <div className="absolute -bottom-12 -left-12 w-64 h-64 bg-white/5 rounded-full" />
         <div className="absolute top-4 right-4 w-16 h-16 bg-gold-400/20 rounded-2xl rotate-12" />
@@ -296,11 +299,43 @@ export default function WelcomeDayPage() {
               <MapPin className="w-5 h-5 text-gold-300 flex-shrink-0" />
               <div>
                 <p className="text-[10px] text-white/60 uppercase tracking-wider font-bold">Lokasi</p>
-                <p className="text-sm font-black text-white">Area Pesantren Ulul Albaab</p>
+                <p className="text-sm font-black text-white">Area Pesantren Al-Imam</p>
               </div>
             </div>
           </div>
         </div>
+      </div>
+
+      {/* ─── DOKUMEN RESMI (DOWNLOAD) ─── */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <a
+          href="/documents/Surat_Undangan_Welcome_Day.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-3 bg-white hover:bg-primary-50 rounded-2xl p-4 border border-ink-100 hover:border-primary-200 transition-all shadow-sm group"
+        >
+          <div className="w-10 h-10 rounded-xl bg-primary-100 text-primary-600 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+            <Download className="w-5 h-5" />
+          </div>
+          <div>
+            <p className="font-black text-ink-900 text-sm group-hover:text-primary-800 transition-colors">Undangan Welcome Day</p>
+            <p className="text-xs text-ink-500 font-medium">Download surat undangan resmi</p>
+          </div>
+        </a>
+        <a
+          href="/documents/Surat_Pemberitahuan_Kedatangan.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-3 bg-white hover:bg-emerald-50 rounded-2xl p-4 border border-ink-100 hover:border-emerald-200 transition-all shadow-sm group"
+        >
+          <div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+            <Download className="w-5 h-5" />
+          </div>
+          <div>
+            <p className="font-black text-ink-900 text-sm group-hover:text-emerald-800 transition-colors">Surat Pemberitahuan</p>
+            <p className="text-xs text-ink-500 font-medium">Informasi & tata tertib kedatangan</p>
+          </div>
+        </a>
       </div>
 
       {/* ─── PESAN SUKSES/ERROR ─── */}
@@ -317,7 +352,7 @@ export default function WelcomeDayPage() {
         </div>
       )}
 
-      {/* ─── REMINDER SERAGAM ─── */}
+      {/* ─── REMINDER SERAGAM (jika belum isi) ─── */}
       {!seragamStatus.sudahIsi && (
         <div className="flex items-start gap-3 bg-orange-50 border border-orange-300 rounded-2xl px-4 py-4 shadow-sm">
           <div className="w-9 h-9 rounded-xl bg-orange-500 flex items-center justify-center flex-shrink-0 shadow-sm mt-0.5">
@@ -339,6 +374,7 @@ export default function WelcomeDayPage() {
         </div>
       )}
 
+      {/* ─── STATUS SERAGAM (jika sudah isi) ─── */}
       {seragamStatus.sudahIsi && (
         <div className="flex items-center gap-3 bg-green-50 border border-green-200 rounded-2xl px-4 py-3">
           <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0" />
@@ -348,7 +384,12 @@ export default function WelcomeDayPage() {
               Baju: <strong>{seragamStatus.baju}</strong> · Celana/Rok: <strong>{seragamStatus.celana}</strong> · Almamater: <strong>{seragamStatus.almamater}</strong>
             </p>
           </div>
-          <Link href="/dashboard/pendaftar/seragam" className="text-xs text-green-700 font-black hover:underline flex-shrink-0">Ubah</Link>
+          <Link
+            href="/dashboard/pendaftar/seragam"
+            className="text-xs text-green-700 font-black hover:underline flex-shrink-0"
+          >
+            Ubah
+          </Link>
         </div>
       )}
 
@@ -362,6 +403,8 @@ export default function WelcomeDayPage() {
             <h2 className="font-black text-ink-950 text-base">Form Konfirmasi Kehadiran</h2>
             <p className="text-xs text-ink-500 font-bold">Wajib diisi oleh setiap orang tua/wali santri</p>
           </div>
+
+          {/* Status badge jika sudah submit */}
           {!isEditing && (
             <div className="ml-auto flex items-center gap-1.5 bg-green-100 text-green-700 text-xs font-black px-3 py-1.5 rounded-full border border-green-200">
               <CheckCircle2 className="w-3.5 h-3.5" />
@@ -385,7 +428,9 @@ export default function WelcomeDayPage() {
                 <label className="text-xs font-black text-ink-500 uppercase tracking-widest block">
                   1. Apakah Anda akan hadir pada Welcome Day? *
                 </label>
-                <p className="text-xs text-ink-400 font-medium -mt-1 mb-2">Pilih salah satu tombol di bawah ini:</p>
+                <p className="text-xs text-ink-400 font-medium -mt-1 mb-2">
+                  Pilih salah satu tombol di bawah ini:
+                </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <button
                     type="button"
@@ -399,7 +444,9 @@ export default function WelcomeDayPage() {
                     <CheckCircle2 className={`w-8 h-8 ${formData.statusKehadiran === "HADIR" ? "text-green-400" : "text-ink-400"}`} />
                     <div>
                       <p className={`font-black ${formData.statusKehadiran === "HADIR" ? "text-white" : "text-ink-900"}`}>Ya, Kami Akan Hadir</p>
-                      <p className={`text-xs font-medium mt-0.5 ${formData.statusKehadiran === "HADIR" ? "text-white/80" : "text-ink-400"}`}>Kami siap hadir pada 18 Juli 2026</p>
+                      <p className={`text-xs font-medium mt-0.5 ${formData.statusKehadiran === "HADIR" ? "text-white/80" : "text-ink-400"}`}>
+                        Kami siap hadir pada 18 Juli 2026
+                      </p>
                     </div>
                   </button>
                   <button
@@ -414,7 +461,9 @@ export default function WelcomeDayPage() {
                     <XCircle className={`w-8 h-8 ${formData.statusKehadiran === "TIDAK_HADIR" ? "text-red-400" : "text-ink-400"}`} />
                     <div>
                       <p className={`font-black ${formData.statusKehadiran === "TIDAK_HADIR" ? "text-white" : "text-ink-900"}`}>Berhalangan Hadir</p>
-                      <p className={`text-xs font-medium mt-0.5 ${formData.statusKehadiran === "TIDAK_HADIR" ? "text-white/80" : "text-ink-400"}`}>Ada halangan & tidak bisa hadir</p>
+                      <p className={`text-xs font-medium mt-0.5 ${formData.statusKehadiran === "TIDAK_HADIR" ? "text-white/80" : "text-ink-400"}`}>
+                        Ada halangan & tidak bisa hadir
+                      </p>
                     </div>
                   </button>
                 </div>
@@ -422,11 +471,14 @@ export default function WelcomeDayPage() {
 
               {formData.statusKehadiran === "HADIR" && (
                 <>
+                  {/* Jumlah Pendamping di Acara Utama */}
                   <div className="space-y-2">
                     <label className="text-xs font-black text-ink-500 uppercase tracking-widest block">
                       2. Berapa Wali yang Masuk ke Ruang Sarasehan & Menerima Kupon Makan? *
                     </label>
-                    <p className="text-xs text-ink-400 font-medium -mt-1 mb-2">Maksimal 2 orang selain santri.</p>
+                    <p className="text-xs text-ink-400 font-medium -mt-1 mb-2">
+                      Pilih jumlah wali/pendamping yang akan duduk di ruang sarasehan (selain santri). Maksimal 2 orang.
+                    </p>
                     <select
                       value={formData.jumlahPendamping}
                       onChange={(e) => setFormData({ ...formData, jumlahPendamping: Number(e.target.value) })}
@@ -438,23 +490,28 @@ export default function WelcomeDayPage() {
                     </select>
                     <div className="flex items-start gap-2 mt-2 bg-ink-50 rounded-xl px-3 py-2 border border-ink-100">
                       <Info className="w-3.5 h-3.5 text-ink-400 flex-shrink-0 mt-0.5" />
-                      <p className="text-xs text-ink-500 font-medium">Kursi sarasehan dan kupon makan siang/snack akan disiapkan sesuai pilihan ini.</p>
+                      <p className="text-xs text-ink-500 font-medium">
+                        Kursi sarasehan dan kupon makan siang/snack akan disiapkan sesuai pilihan ini. Harap diisi dengan benar.
+                      </p>
                     </div>
                   </div>
 
+                  {/* Total Pengantar ke Area Pesantren */}
                   <div className="space-y-2">
                     <label className="text-xs font-black text-ink-500 uppercase tracking-widest block">
                       3. Total Seluruh Rombongan yang Ikut ke Pesantren? *
                     </label>
                     <p className="text-xs text-ink-400 font-medium -mt-1 mb-2">
-                      Termasuk santri, wali, dan pengantar lain yang tidak masuk sarasehan.
+                      Isi dengan jumlah total semua orang dalam rombongan keluarga (termasuk santri, wali, dan pengantar lain yang tidak masuk sarasehan).
                     </p>
                     <div className="flex items-center gap-3">
                       <button
                         type="button"
                         onClick={() => setFormData({ ...formData, totalPengantar: Math.max(formData.jumlahPendamping + 1, formData.totalPengantar - 1) })}
                         className="w-12 h-12 rounded-xl bg-ink-100 hover:bg-ink-200 text-ink-700 font-black text-xl flex items-center justify-center transition-colors"
-                      >−</button>
+                      >
+                        −
+                      </button>
                       <div className="flex-1 relative">
                         <input
                           type="number"
@@ -470,17 +527,25 @@ export default function WelcomeDayPage() {
                         type="button"
                         onClick={() => setFormData({ ...formData, totalPengantar: formData.totalPengantar + 1 })}
                         className="w-12 h-12 rounded-xl bg-primary-100 hover:bg-primary-200 text-primary-700 font-black text-xl flex items-center justify-center transition-colors"
-                      >+</button>
+                      >
+                        +
+                      </button>
                     </div>
-                    <p className="text-xs text-ink-400 font-medium">Contoh: Jika datang bersama ayah, ibu, dan 2 adik → isi angka 5.</p>
+                    <p className="text-xs text-ink-400 font-medium">
+                      Contoh: Jika datang bersama ayah, ibu, dan 2 adik → isi angka 5 (1 santri + 4 pengantar).
+                    </p>
                   </div>
                 </>
               )}
 
+              {/* Catatan Tambahan */}
               <div className="space-y-2">
                 <label className="text-xs font-black text-ink-500 uppercase tracking-widest block">
                   {formData.statusKehadiran === "HADIR" ? "4." : "2."} Catatan Tambahan (Opsional)
                 </label>
+                <p className="text-xs text-ink-400 font-medium -mt-1 mb-2">
+                  Tuliskan informasi tambahan jika ada (misal: rombongan bus, rencana terlambat, kebutuhan khusus, dll.).
+                </p>
                 <textarea
                   value={formData.catatanTambahan}
                   onChange={(e) => setFormData({ ...formData, catatanTambahan: e.target.value })}
@@ -489,6 +554,7 @@ export default function WelcomeDayPage() {
                 />
               </div>
 
+              {/* Submit Button */}
               <div className="pt-2">
                 <button
                   type="submit"
@@ -496,16 +562,25 @@ export default function WelcomeDayPage() {
                   className="w-full bg-primary-900 hover:bg-primary-950 text-white font-black px-6 py-4 rounded-xl transition-all shadow-lg shadow-primary-900/20 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 text-sm"
                 >
                   {saving ? (
-                    <><Loader2 className="w-5 h-5 animate-spin" /><span>Menyimpan Konfirmasi...</span></>
+                    <>
+                      <Loader2 className="w-5 h-5 animate-spin" />
+                      <span>Menyimpan Konfirmasi...</span>
+                    </>
                   ) : (
-                    <><Save className="w-5 h-5" /><span>Simpan Konfirmasi Kehadiran</span></>
+                    <>
+                      <Save className="w-5 h-5" />
+                      <span>Simpan Konfirmasi Kehadiran</span>
+                    </>
                   )}
                 </button>
-                <p className="text-xs text-ink-400 font-medium text-center mt-2">Data Anda akan tersimpan dan dapat diubah kembali sebelum hari-H.</p>
+                <p className="text-xs text-ink-400 font-medium text-center mt-2">
+                  Data Anda akan tersimpan dan dapat diubah kembali sebelum hari-H.
+                </p>
               </div>
             </form>
           </div>
         ) : (
+          /* ─── SUMMARY CARD SETELAH KONFIRMASI ─── */
           <div className="p-6 space-y-5">
             <div className="flex items-start gap-4 p-4 bg-green-50 border border-green-200 rounded-2xl">
               <div className="w-12 h-12 bg-green-100 rounded-2xl flex items-center justify-center flex-shrink-0">
@@ -513,7 +588,9 @@ export default function WelcomeDayPage() {
               </div>
               <div>
                 <p className="font-black text-green-900 text-base">Konfirmasi Berhasil Terkirim!</p>
-                <p className="text-xs text-green-700 font-medium mt-1">Terima kasih. Data kehadiran Anda telah kami terima dan tersimpan. Tim panitia akan mempersiapkan sesuai konfirmasi ini.</p>
+                <p className="text-xs text-green-700 font-medium mt-1">
+                  Terima kasih. Data kehadiran Anda telah kami terima dan tersimpan. Tim panitia akan mempersiapkan sesuai konfirmasi ini.
+                </p>
               </div>
             </div>
 
@@ -522,7 +599,9 @@ export default function WelcomeDayPage() {
                 <p className="text-[10px] uppercase tracking-widest font-black text-ink-400 mb-2">Status Kehadiran</p>
                 <div className={`flex items-center gap-2 ${formData.statusKehadiran === "HADIR" ? "text-green-700" : "text-red-700"}`}>
                   {formData.statusKehadiran === "HADIR" ? <CheckCircle2 className="w-6 h-6" /> : <XCircle className="w-6 h-6" />}
-                  <p className="font-black text-sm">{formData.statusKehadiran === "HADIR" ? "YA, KAMI AKAN HADIR" : "BERHALANGAN HADIR"}</p>
+                  <p className="font-black text-sm">
+                    {formData.statusKehadiran === "HADIR" ? "YA, KAMI AKAN HADIR" : "BERHALANGAN HADIR"}
+                  </p>
                 </div>
               </div>
 
@@ -530,9 +609,14 @@ export default function WelcomeDayPage() {
                 <>
                   <div className="p-4 bg-ink-50 rounded-2xl border border-ink-100">
                     <p className="text-[10px] uppercase tracking-widest font-black text-ink-400 mb-2">Wali di Ruang Sarasehan</p>
-                    <p className="font-black text-sm text-ink-900">{formData.jumlahPendamping} Pendamping</p>
-                    <p className="text-xs text-ink-500 font-medium">Total {Number(formData.jumlahPendamping) + 1} orang mendapat kursi & kupon</p>
+                    <p className="font-black text-sm text-ink-900">
+                      {formData.jumlahPendamping} Pendamping
+                    </p>
+                    <p className="text-xs text-ink-500 font-medium">
+                      Total {Number(formData.jumlahPendamping) + 1} orang mendapat kursi & kupon
+                    </p>
                   </div>
+
                   <div className="p-4 bg-ink-50 rounded-2xl border border-ink-100">
                     <p className="text-[10px] uppercase tracking-widest font-black text-ink-400 mb-2">Total Rombongan</p>
                     <p className="font-black text-sm text-ink-900">{formData.totalPengantar} Orang</p>
@@ -624,6 +708,7 @@ export default function WelcomeDayPage() {
           <div className="space-y-2">
             {JADWAL_ACARA.map((item, idx) => (
               <div key={idx} className="flex gap-4 items-start group">
+                {/* Timeline line */}
                 <div className="flex flex-col items-center flex-shrink-0">
                   <div className="w-16 text-center">
                     <span className="text-xs font-black text-primary-700 bg-primary-50 border border-primary-200 px-2 py-1 rounded-lg block">
@@ -634,6 +719,7 @@ export default function WelcomeDayPage() {
                     <div className="w-0.5 h-6 bg-ink-200 mt-1" />
                   )}
                 </div>
+                {/* Content */}
                 <div className="flex-1 pb-4">
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-2xl bg-white border border-primary-100 flex items-center justify-center flex-shrink-0 shadow-sm text-primary-600">
@@ -765,6 +851,61 @@ export default function WelcomeDayPage() {
         </div>
       </div>
 
+      {/* ─── VISUAL GALLERY & INFOGRAFIS ─── */}
+      <div className="bg-white rounded-3xl border border-ink-100 shadow-sm overflow-hidden">
+        <div className="px-6 py-4 border-b border-ink-100 bg-emerald-50 flex items-center gap-3">
+          <div className="w-9 h-9 bg-emerald-100 rounded-xl flex items-center justify-center">
+            <Calendar className="w-5 h-5 text-emerald-700" />
+          </div>
+          <div>
+            <h2 className="font-black text-emerald-950 text-base">Infografis & Panduan Visual</h2>
+            <p className="text-xs text-emerald-600 font-bold">Panduan lengkap pelaksanaan Welcome Day</p>
+          </div>
+        </div>
+        <div className="p-6 space-y-6">
+          <div className="space-y-3">
+            <h3 className="font-black text-ink-900 text-lg flex items-center gap-2">
+              <span className="w-6 h-6 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center text-xs">1</span>
+              Rundown Acara
+            </h3>
+            <div className="rounded-2xl overflow-hidden border-2 border-ink-100 shadow-sm relative w-full" style={{ aspectRatio: "16/9" }}>
+              <Image 
+                src="/images/welcome-day/rundown.png"
+                alt="Rundown Acara Welcome Day"
+                fill
+                className="object-contain bg-ink-50"
+              />
+            </div>
+          </div>
+          
+          <div className="space-y-3 pt-4 border-t border-ink-100">
+            <h3 className="font-black text-ink-900 text-lg flex items-center gap-2">
+              <span className="w-6 h-6 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center text-xs">2</span>
+              Alur Kedatangan
+            </h3>
+            <div className="rounded-2xl overflow-hidden border-2 border-ink-100 shadow-sm relative w-full" style={{ aspectRatio: "16/9" }}>
+              <Image 
+                src="/images/welcome-day/alur_kedatangan.png"
+                alt="Alur Kedatangan Welcome Day"
+                fill
+                className="object-contain bg-ink-50"
+              />
+            </div>
+            <div className="flex justify-center mt-3">
+              <a 
+                href="/images/welcome-day/alur_kedatangan_banner.png" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-xs font-bold text-emerald-600 hover:text-emerald-700 hover:underline"
+              >
+                <Download className="w-3.5 h-3.5" />
+                Lihat Resolusi Penuh (Banner)
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* ─── FAQ ─── */}
       <div className="bg-white rounded-3xl border border-ink-100 shadow-sm overflow-hidden">
         <div className="px-6 py-4 border-b border-ink-100 bg-blue-50 flex items-center gap-3">
@@ -841,8 +982,8 @@ export default function WelcomeDayPage() {
       <div className="bg-primary-50 border border-primary-100 rounded-2xl px-5 py-4 flex items-start gap-3">
         <Heart className="w-5 h-5 text-primary-500 flex-shrink-0 mt-0.5" />
         <p className="text-xs text-primary-700 font-medium leading-relaxed">
-          Kami sangat antusias menyambut kehadiran putra/putri terbaik Anda di Pesantren kami.
-          Semoga proses adaptasi berjalan lancar dan santri baru dapat segera nyaman di lingkungan pesantren.
+          Kami sangat antusias menyambut kehadiran putra/putri terbaik Anda di Pesantren kami. 
+          Semoga proses adaptasi berjalan lancar dan santri baru dapat segera nyaman di lingkungan pesantren. 
           Jika ada kendala atau pertanyaan, jangan ragu untuk menghubungi panitia kami.
         </p>
       </div>
