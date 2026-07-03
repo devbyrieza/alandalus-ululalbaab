@@ -56,8 +56,8 @@ const BERKAS_PERSYARATAN = [
   { item: "Foto setengah badan (latar merah, 4x6 cm)", qty: "4 lembar" },
   { item: "Fotokopi Kartu Keluarga (KK)", qty: "1 lembar" },
   { item: "Fotokopi Akta Kelahiran", qty: "1 lembar" },
-  { item: "Fotokopi rapor semester ganjil terakhir (Dilegalisir)", qty: "1 lembar" },
-  { item: "Fotokopi rapor semester genap terakhir (Dilegalisir)", qty: "1 lembar" },
+  { item: "Fotokopi rapor semester ganjil terakhir", qty: "1 lembar" },
+  { item: "Fotokopi rapor semester genap terakhir", qty: "1 lembar" },
   { item: "Print-out bukti NISN", qty: "1 lembar" },
   { item: "Surat Keterangan Sehat (Format Panitia)", qty: "ASLI" },
   { item: "Surat Pernyataan Bebas dari Perilaku Buruk", qty: "ASLI" },
@@ -982,7 +982,7 @@ export default function WelcomeDayPage() {
       <div className="bg-primary-50 border border-primary-100 rounded-2xl px-5 py-4 flex items-start gap-3">
         <Heart className="w-5 h-5 text-primary-500 flex-shrink-0 mt-0.5" />
         <p className="text-xs text-primary-700 font-medium leading-relaxed">
-          Kami sangat antusias menyambut kehadiran putra/putri terbaik Anda di Pesantren kami. 
+          Kami sangat antusias menyambut kehadiran putra terbaik Anda di Pesantren kami. 
           Semoga proses adaptasi berjalan lancar dan santri baru dapat segera nyaman di lingkungan pesantren. 
           Jika ada kendala atau pertanyaan, jangan ragu untuk menghubungi panitia kami.
         </p>
