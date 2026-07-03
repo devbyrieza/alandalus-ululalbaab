@@ -1055,17 +1055,18 @@ export const generatePaktaIntegritas = async (data: PendaftarPdfData) => {
   }
 
   y += 5;
-  const closing2 =
-    "Surat pernyataan ini saya buat dengan sebenar-benarnya dan atas persetujuan orangtua/wali.";
-  doc.text(doc.splitTextToSize(closing2, contentW), margin, y);
-  y += 12;
 
   const pageHeight2 = doc.internal.pageSize.getHeight();
-  if (y + 60 > pageHeight2 - 40) {
+  if (y + 70 > pageHeight2 - 40) { // Increased threshold slightly to account for the closing text
     doc.addPage();
     drawHeaderSync(doc);
     y = getContentStartY();
   }
+
+  const closing2 =
+    "Surat pernyataan ini saya buat dengan sebenar-benarnya dan atas persetujuan orangtua/wali.";
+  doc.text(doc.splitTextToSize(closing2, contentW), margin, y);
+  y += 12;
 
   // TTD Santri (Kanan) bermaterai
   const sigDateStr = `${authority.city}, ......................... 2026`;
@@ -1169,17 +1170,18 @@ export const generatePaktaIntegritas = async (data: PendaftarPdfData) => {
   }
 
   y += 5;
-  const closing3 =
-    "Surat pernyataan ini kami buat dengan sebenar-benarnya dan tanpa ada paksaan dari pihak mana pun.";
-  doc.text(doc.splitTextToSize(closing3, contentW), margin, y);
-  y += 12;
 
   const pageHeight3 = doc.internal.pageSize.getHeight();
-  if (y + 60 > pageHeight3 - 40) {
+  if (y + 70 > pageHeight3 - 40) { // Increased threshold slightly to account for the closing text
     doc.addPage();
     drawHeaderSync(doc);
     y = getContentStartY();
   }
+
+  const closing3 =
+    "Surat pernyataan ini kami buat dengan sebenar-benarnya dan tanpa ada paksaan dari pihak mana pun.";
+  doc.text(doc.splitTextToSize(closing3, contentW), margin, y);
+  y += 12;
 
   // TTD Orangtua (Kanan) bermaterai
   doc.setFontSize(10.5);
