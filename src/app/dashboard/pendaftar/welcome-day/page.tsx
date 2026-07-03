@@ -169,6 +169,8 @@ export default function WelcomeDayPage() {
     jumlahPendamping: 2,
     totalPengantar: 3,
     catatanTambahan: "",
+    jumlahMobil: 0,
+    jumlahMotor: 0,
   });
   const [message, setMessage] = useState({ type: "", text: "" });
   const [openFaq, setOpenFaq] = useState<number | null>(null);
@@ -192,6 +194,8 @@ export default function WelcomeDayPage() {
               jumlahPendamping: dataJson.jumlahPendamping !== undefined ? Number(dataJson.jumlahPendamping) : 2,
               totalPengantar: dataJson.totalPengantar !== undefined ? Number(dataJson.totalPengantar) : 3,
               catatanTambahan: dataJson.catatanTambahan || "",
+              jumlahMobil: dataJson.jumlahMobil !== undefined ? Number(dataJson.jumlahMobil) : 0,
+              jumlahMotor: dataJson.jumlahMotor !== undefined ? Number(dataJson.jumlahMotor) : 0,
             });
             setIsEditing(false);
           }
@@ -535,13 +539,87 @@ export default function WelcomeDayPage() {
                       Contoh: Jika datang bersama ayah, ibu, dan 2 adik → isi angka 5 (1 santri + 4 pengantar).
                     </p>
                   </div>
+                  {/* Kendaraan (Mobil & Motor) */}
+                  <div className="space-y-4 pt-2">
+                    <label className="text-xs font-black text-ink-500 uppercase tracking-widest block">
+                      4. Informasi Kendaraan (Untuk Manajemen Parkir) *
+                    </label>
+                    <p className="text-xs text-ink-400 font-medium -mt-3 mb-2">
+                      Sebutkan jumlah kendaraan yang dibawa rombongan agar kami dapat mengatur area parkir.
+                    </p>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      {/* Mobil */}
+                      <div className="bg-ink-50 border border-ink-200 rounded-xl p-4 relative flex items-center justify-between">
+                        <div>
+                          <p className="font-bold text-ink-900 text-sm">Jumlah Mobil</p>
+                          <p className="text-xs text-ink-500">Yang akan diparkir</p>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <button
+                            type="button"
+                            onClick={() => setFormData({ ...formData, jumlahMobil: Math.max(0, formData.jumlahMobil - 1) })}
+                            className="w-8 h-8 rounded-lg bg-ink-200 hover:bg-ink-300 text-ink-700 font-black flex items-center justify-center transition-colors"
+                          >
+                            −
+                          </button>
+                          <input
+                            type="number"
+                            min="0"
+                            value={formData.jumlahMobil}
+                            onChange={(e) => setFormData({ ...formData, jumlahMobil: Math.max(0, Number(e.target.value)) })}
+                            className="w-12 bg-transparent border-none text-center font-black text-ink-900 text-lg outline-none"
+                            required
+                          />
+                          <button
+                            type="button"
+                            onClick={() => setFormData({ ...formData, jumlahMobil: formData.jumlahMobil + 1 })}
+                            className="w-8 h-8 rounded-lg bg-ink-200 hover:bg-ink-300 text-ink-700 font-black flex items-center justify-center transition-colors"
+                          >
+                            +
+                          </button>
+                        </div>
+                      </div>
+                      
+                      {/* Motor */}
+                      <div className="bg-ink-50 border border-ink-200 rounded-xl p-4 relative flex items-center justify-between">
+                        <div>
+                          <p className="font-bold text-ink-900 text-sm">Jumlah Motor</p>
+                          <p className="text-xs text-ink-500">Yang akan diparkir</p>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <button
+                            type="button"
+                            onClick={() => setFormData({ ...formData, jumlahMotor: Math.max(0, formData.jumlahMotor - 1) })}
+                            className="w-8 h-8 rounded-lg bg-ink-200 hover:bg-ink-300 text-ink-700 font-black flex items-center justify-center transition-colors"
+                          >
+                            −
+                          </button>
+                          <input
+                            type="number"
+                            min="0"
+                            value={formData.jumlahMotor}
+                            onChange={(e) => setFormData({ ...formData, jumlahMotor: Math.max(0, Number(e.target.value)) })}
+                            className="w-12 bg-transparent border-none text-center font-black text-ink-900 text-lg outline-none"
+                            required
+                          />
+                          <button
+                            type="button"
+                            onClick={() => setFormData({ ...formData, jumlahMotor: formData.jumlahMotor + 1 })}
+                            className="w-8 h-8 rounded-lg bg-ink-200 hover:bg-ink-300 text-ink-700 font-black flex items-center justify-center transition-colors"
+                          >
+                            +
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </>
               )}
 
               {/* Catatan Tambahan */}
               <div className="space-y-2">
                 <label className="text-xs font-black text-ink-500 uppercase tracking-widest block">
-                  {formData.statusKehadiran === "HADIR" ? "4." : "2."} Catatan Tambahan (Opsional)
+                  {formData.statusKehadiran === "HADIR" ? "5." : "2."} Catatan Tambahan (Opsional)
                 </label>
                 <p className="text-xs text-ink-400 font-medium -mt-1 mb-2">
                   Tuliskan informasi tambahan jika ada (misal: rombongan bus, rencana terlambat, kebutuhan khusus, dll.).
@@ -598,10 +676,8 @@ export default function WelcomeDayPage() {
               <div className="p-4 bg-ink-50 rounded-2xl border border-ink-100">
                 <p className="text-[10px] uppercase tracking-widest font-black text-ink-400 mb-2">Status Kehadiran</p>
                 <div className={`flex items-center gap-2 ${formData.statusKehadiran === "HADIR" ? "text-green-700" : "text-red-700"}`}>
-                  {formData.statusKehadiran === "HADIR" ? <CheckCircle2 className="w-6 h-6" /> : <XCircle className="w-6 h-6" />}
-                  <p className="font-black text-sm">
-                    {formData.statusKehadiran === "HADIR" ? "YA, KAMI AKAN HADIR" : "BERHALANGAN HADIR"}
-                  </p>
+                  {formData.statusKehadiran === "HADIR" ? <CheckCircle2 className="w-5 h-5" /> : <XCircle className="w-5 h-5" />}
+                  <span className="font-black">{formData.statusKehadiran === "HADIR" ? "Hadir" : "Berhalangan"}</span>
                 </div>
               </div>
 
@@ -622,6 +698,14 @@ export default function WelcomeDayPage() {
                     <p className="font-black text-sm text-ink-900">{formData.totalPengantar} Orang</p>
                     <p className="text-xs text-ink-500 font-medium">Termasuk santri & seluruh pengantar</p>
                   </div>
+
+                  <div className="p-4 bg-ink-50 rounded-2xl border border-ink-100">
+                    <p className="text-[10px] uppercase tracking-widest font-black text-ink-400 mb-2">Kendaraan</p>
+                    <p className="font-black text-sm text-ink-900">
+                      {formData.jumlahMobil} Mobil, {formData.jumlahMotor} Motor
+                    </p>
+                    <p className="text-xs text-ink-500 font-medium">Info area parkir</p>
+                  </div>
                 </>
               )}
 
@@ -633,7 +717,21 @@ export default function WelcomeDayPage() {
               )}
             </div>
 
-            <div className="flex justify-end pt-2">
+            {/* Warning Banner for Users who haven't updated vehicles */}
+            {formData.statusKehadiran === "HADIR" && formData.jumlahMobil === 0 && formData.jumlahMotor === 0 && (
+              <div className="p-4 bg-orange-50 border border-orange-200 rounded-2xl flex items-start gap-3 mt-4">
+                <AlertCircle className="w-5 h-5 text-orange-600 flex-shrink-0 mt-0.5" />
+                <div>
+                  <p className="text-sm font-black text-orange-800">Mohon Update Jumlah Kendaraan Anda</p>
+                  <p className="text-xs text-orange-700 mt-1">
+                    Kami membutuhkan data jumlah mobil atau motor yang Anda bawa untuk keperluan manajemen area parkir. 
+                    Silakan klik tombol <strong>Ubah Konfirmasi</strong> di bawah ini untuk memperbarui data Anda.
+                  </p>
+                </div>
+              </div>
+            )}
+
+            <div className="flex justify-end pt-4">
               <button
                 onClick={() => setIsEditing(true)}
                 className="flex items-center gap-2 bg-white hover:bg-ink-50 text-ink-700 border border-ink-200 font-bold px-5 py-2.5 rounded-xl transition-all shadow-sm cursor-pointer text-sm"

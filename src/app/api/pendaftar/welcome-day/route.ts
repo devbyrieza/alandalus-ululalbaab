@@ -16,6 +16,7 @@ export async function GET(req: Request) {
 
     const pendaftarId = session.id;
 
+    // Ambil data reservasi welcome day (kita asumsikan tanggal_kedatangan = 2026-07-18)
     const reservasi = await prisma.reservasiPSB.findFirst({
       where: {
         pendaftar_id: pendaftarId,
@@ -47,12 +48,12 @@ export async function POST(req: Request) {
 
     const pendaftarId = session.id;
     const body = await req.json();
-    const { statusKehadiran, jumlahPendamping, totalPengantar, catatanTambahan } = body;
+    const { statusKehadiran, jumlahPendamping, totalPengantar, catatanTambahan, jumlahMobil = 0, jumlahMotor = 0 } = body;
 
     // Pastikan pendaftar ada dan sudah diterima/daftar ulang
     const pendaftar = await prisma.pendaftar.findUnique({
       where: { id: pendaftarId },
-      select: {
+      select: { 
         status_pendaftaran: true,
         tahun_ajaran_id: true
       }
@@ -81,20 +82,24 @@ export async function POST(req: Request) {
       jumlahPendamping,
       totalPengantar,
       catatanTambahan,
+      jumlahMobil,
+      jumlahMotor,
       confirmedAt: new Date().toISOString()
     };
 
     if (existing) {
+      // Update data yang ada
       await prisma.reservasiPSB.update({
         where: { id: existing.id },
         data: {
-          jumlah_penginap: jumlahPendamping,
+          jumlah_penginap: jumlahPendamping, // Kita gunakan ini untuk jumlah pendamping di acara inti
           data_penginap: dataJson,
           status: "confirmed",
           catatan: "Konfirmasi Kehadiran Welcome Day"
         }
       });
     } else {
+      // Buat baru
       await prisma.reservasiPSB.create({
         data: {
           pendaftar_id: pendaftarId,
