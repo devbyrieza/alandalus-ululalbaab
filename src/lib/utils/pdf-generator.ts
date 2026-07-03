@@ -1040,7 +1040,7 @@ export const generatePaktaIntegritas = async (data: PendaftarPdfData) => {
   y += 13;
 
   const santriCommitments = [
-    "Melaksanakan tuntunan syariat Islam.",
+    "Berupaya dengan sungguh-sungguh untuk senantiasa melaksanakan tuntunan syariat Islam dalam kehidupan sehari-hari.",
     "Belajar dengan tekun dan penuh semangat, disertai rasa tanggung jawab sebagai santri.",
     "Menjaga nama baik diri sendiri dan Pesantren.",
     "Menaati semua peraturan dan tata tertib Pesantren.",
