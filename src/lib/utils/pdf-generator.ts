@@ -804,6 +804,7 @@ export const generateSuratKesehatan = async (data: PendaftarPdfData) => {
   
   if (finalY2 + 50 > pageHeight - margin) {
     doc.addPage();
+    drawHeaderSync(doc);
     finalY2 = getContentStartY() + 8;
   }
 
@@ -952,10 +953,8 @@ export const generateSuratPernyataan = async (data: PendaftarPdfData) => {
   const pageHeight = doc.internal.pageSize.getHeight();
   if (y + 50 > pageHeight - margin) {
     doc.addPage();
-    // Re-draw header if needed, but since it's an auto-break for signature, maybe just a simple header or none.
-    // Actually, drawHeader is async, so we can't easily await it here unless we make it clean.
-    // Let's just use startY = 30 for the new page.
-    y = 30;
+    drawHeaderSync(doc);
+    y = getContentStartY();
   }
 
   // TTD Orangtua (kiri) bermaterai
@@ -1065,7 +1064,8 @@ export const generatePaktaIntegritas = async (data: PendaftarPdfData) => {
   const pageHeight2 = doc.internal.pageSize.getHeight();
   if (y + 50 > pageHeight2 - margin) {
     doc.addPage();
-    y = 30;
+    drawHeaderSync(doc);
+    y = getContentStartY();
   }
 
   // TTD Santri (kiri) bermaterai
@@ -1176,7 +1176,8 @@ export const generatePaktaIntegritas = async (data: PendaftarPdfData) => {
   const pageHeight3 = doc.internal.pageSize.getHeight();
   if (y + 50 > pageHeight3 - margin) {
     doc.addPage();
-    y = 30;
+    drawHeaderSync(doc);
+    y = getContentStartY();
   }
 
   // TTD Orangtua (kiri) bermaterai
