@@ -955,22 +955,23 @@ export const generateSuratPernyataan = async (data: PendaftarPdfData) => {
   doc.text(healthNoteLines, margin, y);
   y += healthNoteLines.length * 5.5 + 8;
 
-  // TTD Orangtua (kiri) bermaterai
+  // TTD Orangtua (Kanan) bermaterai
   const dateStr = `${authority.city}, ......................... 2026`;
   doc.setFontSize(10.5);
-  doc.text(dateStr, margin, y);
-  doc.text("Pembuat Pernyataan,", margin, y + 7);
+  const sigX = pageWidth - margin - 70;
+  doc.text(dateStr, sigX, y);
+  doc.text("Pembuat Pernyataan,", sigX, y + 7);
   doc.setDrawColor(100, 100, 100);
   doc.setLineWidth(0.3);
-  doc.rect(margin, y + 10, 35, 22);
+  doc.rect(sigX, y + 10, 35, 22);
   doc.setFontSize(8);
   doc.setTextColor(100, 100, 100);
-  doc.text("Materai Rp10.000,-", margin + 2, y + 22);
+  doc.text("Materai Rp10.000,-", sigX + 2, y + 22);
   doc.setTextColor(0, 0, 0);
   doc.setFontSize(10.5);
   doc.setLineWidth(0.2);
-  doc.line(margin, y + 40, margin + 70, y + 40);
-  doc.text("(Orangtua/Wali)", margin + 10, y + 46);
+  doc.line(sigX, y + 40, sigX + 70, y + 40);
+  doc.text("(Orangtua/Wali)", sigX + 15, y + 46);
 
   drawFooter(doc);
   if (typeof window !== "undefined") {
@@ -1066,22 +1067,23 @@ export const generatePaktaIntegritas = async (data: PendaftarPdfData) => {
     y = getContentStartY();
   }
 
-  // TTD Santri (kiri) bermaterai
+  // TTD Santri (Kanan) bermaterai
   const sigDateStr = `${authority.city}, ......................... 2026`;
   doc.setFontSize(10.5);
-  doc.text(sigDateStr, margin, y);
-  doc.text("Pembuat Pernyataan,", margin, y + 7);
+  const sigX1 = pageWidth - margin - 70;
+  doc.text(sigDateStr, sigX1, y);
+  doc.text("Pembuat Pernyataan,", sigX1, y + 7);
   doc.setDrawColor(100, 100, 100);
   doc.setLineWidth(0.3);
-  doc.rect(margin, y + 10, 35, 22);
+  doc.rect(sigX1, y + 10, 35, 22);
   doc.setFontSize(8);
   doc.setTextColor(100, 100, 100);
-  doc.text("Materai Rp10.000,-", margin + 2, y + 22);
+  doc.text("Materai Rp10.000,-", sigX1 + 2, y + 22);
   doc.setTextColor(0, 0, 0);
   doc.setFontSize(10.5);
   doc.setLineWidth(0.2);
-  doc.line(margin, y + 40, margin + 75, y + 40);
-  doc.text("(Santri/Ananda)", margin + 12, y + 46);
+  doc.line(sigX1, y + 40, sigX1 + 70, y + 40);
+  doc.text("(Santri/Ananda)", sigX1 + 15, y + 46);
 
   drawFooter(doc);
 
@@ -1178,21 +1180,22 @@ export const generatePaktaIntegritas = async (data: PendaftarPdfData) => {
     y = getContentStartY();
   }
 
-  // TTD Orangtua (kiri) bermaterai
+  // TTD Orangtua (Kanan) bermaterai
   doc.setFontSize(10.5);
-  doc.text(sigDateStr, margin, y);
-  doc.text("Pembuat Pernyataan,", margin, y + 7);
+  const sigX2 = pageWidth - margin - 70;
+  doc.text(sigDateStr, sigX2, y);
+  doc.text("Pembuat Pernyataan,", sigX2, y + 7);
   doc.setDrawColor(100, 100, 100);
   doc.setLineWidth(0.3);
-  doc.rect(margin, y + 10, 35, 22);
+  doc.rect(sigX2, y + 10, 35, 22);
   doc.setFontSize(8);
   doc.setTextColor(100, 100, 100);
-  doc.text("Materai Rp10.000,-", margin + 2, y + 22);
+  doc.text("Materai Rp10.000,-", sigX2 + 2, y + 22);
   doc.setTextColor(0, 0, 0);
   doc.setFontSize(10.5);
   doc.setLineWidth(0.2);
-  doc.line(margin, y + 40, margin + 75, y + 40);
-  doc.text("(Orangtua/Wali)", margin + 12, y + 46);
+  doc.line(sigX2, y + 40, sigX2 + 70, y + 40);
+  doc.text("(Orangtua/Wali)", sigX2 + 15, y + 46);
 
   drawFooter(doc);
   if (typeof window !== "undefined") {
