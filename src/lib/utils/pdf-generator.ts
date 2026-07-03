@@ -890,7 +890,7 @@ export const generateSuratPernyataan = async (data: PendaftarPdfData) => {
 
   // Data santri
   const santriFields: [string, string][] = [
-    ["Nama", data.nama_lengkap ? toTitleCase(data.nama_lengkap) : ""],
+    ["Nama", ""],
     ["Jenjang", "MTs / I'dad Lughawiy / SMA  *) coret yang tidak perlu"],
   ];
   for (const [label, value] of santriFields) {
@@ -940,6 +940,11 @@ export const generateSuratPernyataan = async (data: PendaftarPdfData) => {
   doc.text(consequenceLines, margin, y);
   y += consequenceLines.length * 5.5 + 6;
 
+  // Memaksa pindah ke halaman kedua untuk Catatan Kesehatan dan Tanda Tangan
+  doc.addPage();
+  drawHeaderSync(doc);
+  y = getContentStartY();
+
   doc.setFont("helvetica", "bold");
   doc.text("Catatan mengenai kondisi kesehatan:", margin, y);
   doc.setFont("helvetica", "normal");
@@ -949,13 +954,6 @@ export const generateSuratPernyataan = async (data: PendaftarPdfData) => {
   const healthNoteLines = doc.splitTextToSize(healthNote, contentW);
   doc.text(healthNoteLines, margin, y);
   y += healthNoteLines.length * 5.5 + 8;
-
-  const pageHeight = doc.internal.pageSize.getHeight();
-  if (y + 60 > pageHeight - 40) {
-    doc.addPage();
-    drawHeaderSync(doc);
-    y = getContentStartY();
-  }
 
   // TTD Orangtua (kiri) bermaterai
   const dateStr = `${authority.city}, ......................... 2026`;
