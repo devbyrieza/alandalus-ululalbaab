@@ -1013,7 +1013,7 @@ export const generatePaktaIntegritas = async (data: PendaftarPdfData) => {
   y += 8;
 
   const santriFields2: [string, string][] = [
-    ["Nama Lengkap", data.nama_lengkap ? toTitleCase(data.nama_lengkap) : ""],
+    ["Nama Lengkap", ""],
     ["Jenjang", "MTs / I'dad Lughawiy / SMA  *) coret yang tidak perlu"],
     ["Tahun Pelajaran", "2026/2027"],
     ["Alamat Lengkap", ""],
@@ -1128,12 +1128,7 @@ export const generatePaktaIntegritas = async (data: PendaftarPdfData) => {
   y += 7;
 
   const santriDataOrtu: [string, string][] = [
-    [
-      "Nama Santri",
-      data.nama_lengkap
-        ? toTitleCase(data.nama_lengkap)
-        : ".................................",
-    ],
+    ["Nama Santri", ""],
     ["Jenjang", "MTs / I'dad Lughawiy / SMA  *) coret yang tidak perlu"],
   ];
   for (const [label, value] of santriDataOrtu) {
@@ -1141,7 +1136,13 @@ export const generatePaktaIntegritas = async (data: PendaftarPdfData) => {
     doc.text(label, margin + 5, y);
     doc.setFont("helvetica", "normal");
     doc.text(":", margin + 50, y);
-    doc.text(value, margin + 53, y);
+    if (value) {
+      doc.text(value, margin + 53, y);
+    } else {
+      doc.setDrawColor(100, 100, 100);
+      doc.setLineWidth(0.2);
+      doc.line(margin + 53, y + 1, pageWidth - margin, y + 1);
+    }
     y += 7;
   }
   y += 5;
