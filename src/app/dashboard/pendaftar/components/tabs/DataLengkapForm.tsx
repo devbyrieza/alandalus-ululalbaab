@@ -840,6 +840,7 @@ export default function DataLengkapForm({
   );
 
   // Form is locked if status is NOT in these open states
+  const isFormComplete = Boolean(isSantriComplete && isAyahComplete && isIbuComplete && isWaliComplete);
   const isLocked = ![
     "draft",
     "awaiting_payment",
@@ -847,7 +848,7 @@ export default function DataLengkapForm({
     "verified",
     "rejected",
     "data_completed",
-  ].includes(statusPendaftaran);
+  ].includes(statusPendaftaran) && isFormComplete;
   const isEditMode = requestStatus?.status === "approved_to_edit";
   const canEdit = !isLocked || isEditMode;
 
