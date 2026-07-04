@@ -3,6 +3,7 @@ import { getAdminWhereClause } from "@/lib/utils/admin";
 import { Map, MapPin, Users, PieChart as PieChartIcon } from "lucide-react";
 import { getServerSession } from "@/lib/session";
 import { redirect } from "next/navigation";
+import TerjauhCard from "./components/TerjauhCard";
 
 export const metadata = {
   title: "Statistik Wilayah | Admin Dashboard",
@@ -13,6 +14,19 @@ export default async function StatistikWilayahPage() {
   if (!session || !["admin_super"].includes(session.role)) {
     redirect("/login");
   }
+
+  // Fetch filter options for TerjauhCard
+  const tahunAjaranData = await prisma.tahunAjaran.findMany({
+    select: { nama: true },
+    orderBy: { nama: 'desc' }
+  });
+  const tahunAjaranList = tahunAjaranData.map((t) => t.nama);
+
+  const jenjangData = await prisma.pendaftar.findMany({
+    select: { jenjang: true },
+    distinct: ['jenjang'],
+  });
+  const jenjangList = jenjangData.map((j) => j.jenjang).filter(Boolean) as string[];
 
   // Ambil data wilayah dari pendaftar
   const pendaftarList = await prisma.pendaftar.findMany({
@@ -76,7 +90,7 @@ export default async function StatistikWilayahPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Provinsi */}
         <div className="bg-white rounded-3xl p-6 shadow-sm border border-ink-100">
           <div className="flex items-center gap-3 mb-6">
@@ -125,11 +139,11 @@ export default async function StatistikWilayahPage() {
         <div className="bg-white rounded-3xl p-6 shadow-sm border border-ink-100">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center">
-              <PieChartIcon className="w-5 h-5" />
+              <MapPin className="w-5 h-5" />
             </div>
             <div>
               <h2 className="text-lg font-black text-primary-950">Top 20 Kabupaten/Kota</h2>
-              <p className="text-xs text-ink-500 font-medium">Distribusi kota asal terbanyak</p>
+              <p className="text-xs text-ink-500 font-medium">Asal daerah pendaftar</p>
             </div>
           </div>
 
@@ -165,6 +179,8 @@ export default async function StatistikWilayahPage() {
           </div>
         </div>
       </div>
+      
+      <TerjauhCard tahunAjaranList={tahunAjaranList} jenjangList={jenjangList} />
     </div>
   );
 }
