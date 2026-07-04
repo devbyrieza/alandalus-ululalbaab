@@ -4,16 +4,23 @@ import { Map, MapPin, Users, PieChart as PieChartIcon } from "lucide-react";
 import { getServerSession } from "@/lib/session";
 import { redirect } from "next/navigation";
 import TerjauhCard from "./components/TerjauhCard";
+import GlobalFilter from "./components/GlobalFilter";
 
 export const metadata = {
   title: "Statistik Wilayah | Admin Dashboard",
 };
 
-export default async function StatistikWilayahPage() {
+export default async function StatistikWilayahPage(props: {
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
   const session = (await getServerSession()) as any;
   if (!session || !["admin_super"].includes(session.role)) {
     redirect("/login");
   }
+
+  const searchParams = await props.searchParams;
+  const filterTahun = (searchParams?.tahun_ajaran as string) || undefined;
+  const filterJenjang = (searchParams?.jenjang as string) || undefined;
 
   // Fetch filter options for TerjauhCard
   const tahunAjaranData = await prisma.tahunAjaran.findMany({
@@ -30,7 +37,11 @@ export default async function StatistikWilayahPage() {
 
   // Ambil data wilayah dari pendaftar
   const pendaftarList = await prisma.pendaftar.findMany({
-    where: getAdminWhereClause(),
+    where: {
+      ...getAdminWhereClause(),
+      ...(filterTahun ? { tahun_ajaran: { nama: filterTahun } } : {}),
+      ...(filterJenjang ? { jenjang: filterJenjang } : {}),
+    },
     select: {
       data_lengkap: true,
       jenjang: true,
@@ -89,6 +100,8 @@ export default async function StatistikWilayahPage() {
           </div>
         </div>
       </div>
+
+      <GlobalFilter tahunAjaranList={tahunAjaranList} jenjangList={jenjangList} />
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Provinsi */}
