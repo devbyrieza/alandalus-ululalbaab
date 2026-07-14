@@ -2,29 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { User,
-  CreditCard,
-  FileCheck,
-  Calendar,
-  Trophy,
-  CheckCircle,
-  Settings,
-  LogOut,
-  Menu,
-  X,
-  Home,
-  Lock,
-  Loader2,
-  Download,
-  Upload,
-  ClipboardList,
-  ChevronRight,
-  ShieldCheck,
-  Bell,
-  Search,
-  Shirt,
-  HandCoins,
-  PartyPopper } from "lucide-react";
+import { User, CreditCard, FileCheck, Calendar, Trophy, CheckCircle, Settings, LogOut, Menu, X, Home, Lock, Loader2, Download, Upload, ClipboardList, ChevronRight, ShieldCheck, Bell, Search, Shirt, HandCoins, PartyPopper, CheckCircle2, AlertTriangle } from "lucide-react";
 import { BRANDING } from "@/config/branding";
 import Link from "next/link";
 import IdleTimeoutTracker from "@/components/auth/IdleTimeoutTracker";
@@ -84,7 +62,7 @@ export default function DashboardLayout({
 
         // 2. Validate pendaftar_id
         if (!sessionData.pendaftar_id) {
-          console.warn("⚠️ [Layout] No pendaftar_id found in session");
+          console.warn("<AlertTriangle size={20} className='inline-block mr-2' /> [Layout] No pendaftar_id found in session");
           setNamaLengkap(fallbackName);
           setStatusProses("draft");
           setLoading(false);
@@ -109,7 +87,7 @@ export default function DashboardLayout({
         // 4. Update state with fresh data
         const currentStatus = (userData.status_proses ||
           "draft") as StatusProses;
-        console.log(`✅ [Layout] Current Status: ${currentStatus}`);
+        console.log(`<CheckCircle2 size={20} className="inline-block mr-2" /> [Layout] Current Status: ${currentStatus}`);
 
         setStatusProses(currentStatus);
         setNomorPendaftaran(userData.nomor_pendaftaran || "-");
@@ -340,9 +318,9 @@ export default function DashboardLayout({
   return (
     <>
       <IdleTimeoutTracker />
-      <div className="app-layout">
+      <div className="min-h-screen bg-surface-50 font-sans selection:bg-primary-100 selection:text-primary-900">
         {/* Mobile Header (Fintech Style) */}
-        <div className="lg:hidden mobile-header" style={{ display: "none", position: "fixed", top: 0, left: 0, right: 0, height: 56, background: "var(--primary-dark)", zIndex: 50, padding: "0 16px", alignItems: "center", justifyContent: "space-between" }}>
+        <div className="lg:hidden bg-white/90 backdrop-blur-xl sticky top-0 z-40 px-4 sm:px-5 py-3 sm:py-4 flex items-center justify-between border-b border-gold-200 shadow-sm">
           <div className="flex items-center gap-2 sm:gap-3">
             {/* Tombol MENU yang jelas - bukan hanya ikon hamburger */}
             <button
@@ -383,8 +361,8 @@ export default function DashboardLayout({
 
         <div className="flex relative">
           {/* Desktop Sidebar */}
-          <aside className="app-sidebar">
-            <div>
+          <aside className="hidden lg:flex lg:w-72 lg:flex-col lg:fixed lg:top-0 lg:left-0 lg:h-screen z-50">
+            <div className="flex flex-col h-full bg-white/70 backdrop-blur-xl border-r border-white/50 shadow-clay-lg">
               {/* Brand */}
               <div className="px-6 pt-8 pb-6 border-b border-gold-100/50 mb-2">
                 <div className="flex items-center gap-3 mb-6">
@@ -534,7 +512,7 @@ export default function DashboardLayout({
           </div>
 
           {/* Main Content Area */}
-          <main className="app-content">
+          <main className="flex-1 lg:pl-72 w-full transition-all duration-300 flex flex-col min-h-screen relative pb-24 lg:pb-0">
             {/* Desktop Topbar - Glass Effect */}
             <header className="hidden lg:flex sticky top-4 z-30 mx-8 mt-4 rounded-[1.5rem] bg-white/70 backdrop-blur-xl px-6 py-4 items-center justify-between shadow-sm border border-gold-100">
               <div>
@@ -583,7 +561,7 @@ export default function DashboardLayout({
                       <Shirt className="w-5 h-5 text-white" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-black text-orange-900">⚠️ Data Ukuran Seragam Belum Diisi!</p>
+                      <p className="text-sm font-black text-orange-900"><AlertTriangle size={20} className="inline-block mr-2" /> Data Ukuran Seragam Belum Diisi!</p>
                       <p className="text-xs text-orange-700 leading-snug mt-0.5">Harap segera isi ukuran seragam ananda agar dapat diproses tepat waktu.</p>
                     </div>
                     <Link
@@ -605,7 +583,7 @@ export default function DashboardLayout({
                       <Calendar className="w-5 h-5 text-white" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-black text-primary-900">📅 Konfirmasi Welcome Day Belum Diisi!</p>
+                      <p className="text-sm font-black text-primary-900"><Calendar size={20} className="inline-block mr-2" /> Konfirmasi Welcome Day Belum Diisi!</p>
                       <p className="text-xs text-primary-700 leading-snug mt-0.5">Harap konfirmasi kehadiran Welcome Day (18 Juli 2026) segera.</p>
                     </div>
                     <Link
