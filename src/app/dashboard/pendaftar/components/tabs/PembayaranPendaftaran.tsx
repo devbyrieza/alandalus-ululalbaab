@@ -965,7 +965,7 @@ export default function PembayaranPendaftaranTab({
                   Pilih Metode Pembayaran
                 </h3>
                 {/* Total Price Tag */}
-                <div className="bg-primary-50 text-primary-700 px-5 py-3 md:px-7 md:py-4 rounded-[1.5rem] font-black text-xl md:text-2xl border border-primary-100 shadow-sm flex items-center justify-between sm:justify-center gap-4">
+                <div className="bg-primary-50 text-primary-700 px-5 py-3 md:px-7 md:py-4 rounded-[1.5rem] font-black text-xl md:text-2xl border border-primary-100 shadow-sm flex items-center justify-between sm:justify-center gap-4 flex-wrap">
                   <span className="text-sm md:text-base uppercase tracking-widest opacity-70">
                     Total:
                   </span>
