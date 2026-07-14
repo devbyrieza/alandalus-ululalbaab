@@ -191,7 +191,9 @@ export async function PATCH(
         updateData.detail_quran = body.detail_quran;
       if (body.score_quran !== undefined)
         updateData.score_quran = body.score_quran;
-      updateData.input_by_quran = userId;
+      if (!existing?.input_by_quran || !isAdmin) {
+        updateData.input_by_quran = userId;
+      }
 
       // Only set input_at if it's the first time
       if (!existing?.input_at_quran) {
@@ -224,7 +226,9 @@ export async function PATCH(
         updateData.detail_wawancara = body.detail_wawancara;
       if (body.score_wawancara !== undefined)
         updateData.score_wawancara = body.score_wawancara;
-      updateData.input_by_santri = userId;
+      if (!existing?.input_by_santri || !isAdmin) {
+        updateData.input_by_santri = userId;
+      }
 
       // Only set input_at if it's the first time
       if (!existing?.input_at_santri) {
@@ -254,7 +258,9 @@ export async function PATCH(
         updateData.catatan_ortu = body.catatan_ortu;
       if (body.detail_cawalsan !== undefined)
         updateData.detail_cawalsan = body.detail_cawalsan;
-      updateData.input_by_ortu = userId;
+      if (!existing?.input_by_ortu || !isAdmin) {
+        updateData.input_by_ortu = userId;
+      }
 
       // Only set input_at if it's the first time
       if (!existing?.input_at_ortu) {
@@ -274,8 +280,12 @@ export async function PATCH(
       if (body.score_hafalan !== undefined) updateData.score_hafalan = body.score_hafalan;
       if (body.catatan_hafalan !== undefined) updateData.catatan_hafalan = body.catatan_hafalan;
       if (body.detail_hafalan !== undefined) updateData.detail_hafalan = body.detail_hafalan;
-      updateData.input_by_hafalan = userId;
-      if (!existing?.input_at_hafalan) updateData.input_at_hafalan = now;
+      if (!existing?.input_by_hafalan || !isAdmin) {
+        updateData.input_by_hafalan = userId;
+      }
+      if (!existing?.input_at_hafalan) {
+        updateData.input_at_hafalan = now;
+      }
     }
 
     // 5. Arab Update
@@ -290,8 +300,12 @@ export async function PATCH(
       if (body.score_arab !== undefined) updateData.score_arab = body.score_arab;
       if (body.catatan_arab !== undefined) updateData.catatan_arab = body.catatan_arab;
       if (body.detail_arab !== undefined) updateData.detail_arab = body.detail_arab;
-      updateData.input_by_arab = userId;
-      if (!existing?.input_at_arab) updateData.input_at_arab = now;
+      if (!existing?.input_by_arab || !isAdmin) {
+        updateData.input_by_arab = userId;
+      }
+      if (!existing?.input_at_arab) {
+        updateData.input_at_arab = now;
+      }
     }
 
     // 4. Upsert Score - Link to the schedule being graded
