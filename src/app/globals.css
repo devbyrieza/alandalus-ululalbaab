@@ -255,10 +255,10 @@
   :root {
   /* Dashboard Gold Standard Vars */
   --primary:        #550000;
-  --primary-dark:   #330000;
-  --primary-light:  #880000;
+  --primary-dark:   #0369a1;
+  --primary-light:  #38bdf8;
   --secondary:          #ddc192;
-  --secondary-light:    #e8d4b3;
+  --secondary-light: #fbbf24;
   --secondary-pale:     #f9f5ed;
   --bg:            #f8f7f4;
   --bg-card:       #ffffff;
