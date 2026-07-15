@@ -1,3 +1,4 @@
+import { BRANDING } from "@/config/branding";
 /**
  * Wablas WhatsApp API Service
  *
@@ -1081,3 +1082,4 @@ Jazakumullahu khairan.
 
   return sendMessage({ phone: data.phone, message });
 }
+
