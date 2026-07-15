@@ -35,8 +35,8 @@ export type NotifType =
     | "document_verified"
     | "document_rejected"
     | "payment_verified"
-    | "daftar_ulang_verified"
     | "payment_rejected"
+    | "daftar_ulang_verified"
     | "broadcast"
     | "pembatalan_jadwal";
 
@@ -47,6 +47,7 @@ export interface EnqueueParams {
     messageContent: string;
     scheduledAt?: Date;
     force?: boolean;
+    sendNow?: boolean;
 }
 
 // ============================================================================
@@ -373,18 +374,42 @@ export async function enqueueWhatsapp(
     );
 
     // Trigger auto-flush in the background using Next.js after() to survive Vercel serverless freeze
-    try {
-        const { after } = require("next/server");
-        after(() => {
+    if (params.sendNow) {
+        try {
+            console.log(`🚀 [Enqueue] sendNow is true. Sending ${jenisNotif} immediately to ${phone}`);
+            const sendResult = await sendMessage({ phone, message: messageContent });
+            
+            if (sendResult.status) {
+                await prisma.whatsappLog.update({
+                    where: { id: log.id },
+                    data: {
+                        status: "sent",
+                        sent_at: new Date(),
+                        response_data: JSON.stringify(sendResult)
+                    }
+                });
+                console.log(`✅ [Enqueue] sent successfully: ${log.id}`);
+            } else {
+                console.warn(`⚠️ [Enqueue] sendNow returned false status, leaving as pending. Result:`, sendResult);
+            }
+        } catch (err: any) {
+            console.error(`❌ [Enqueue] sendNow error:`, err);
+            // Will fallback to the queue naturally
+        }
+    } else {
+        try {
+            const { after } = require("next/server");
+            after(() => {
+                autoFlushWhatsappQueue().catch((err) =>
+                    console.error("Failed to run autoFlushWhatsappQueue asynchronously:", err)
+                );
+            });
+        } catch (e) {
+            // Fallback if after is not available
             autoFlushWhatsappQueue().catch((err) =>
                 console.error("Failed to run autoFlushWhatsappQueue asynchronously:", err)
             );
-        });
-    } catch (e) {
-        // Fallback if after is not available
-        autoFlushWhatsappQueue().catch((err) =>
-            console.error("Failed to run autoFlushWhatsappQueue asynchronously:", err)
-        );
+        }
     }
 
     return { queued: true, logId: log.id };
@@ -1020,20 +1045,23 @@ Jazakumullahu khairan
 }
 
 export function buildMessageHasilTes(nama: string): string {
-    const cleanSchoolName = BRANDING.schoolShortName === "Al Andalus Al Imam" ? "Al-Andalus Al-Imam" : "Al-Andalus Ulul Albaab";
-    return `Assalamu'alaikum, Abu/Ummu *${nama}*.
+    return `📢 *Pengumuman Hasil Seleksi*
 
-Alhamdulillah, hasil tes seleksi Ananda sudah tersedia.
+Assalamu'alaikum Abu/Ummu,
 
-Silakan login ke dashboard untuk melihat hasilnya dan mengunduh surat resmi dalam format PDF.
+Alhamdulillah, hasil seleksi Ananda *${nama}* sudah tersedia dan dapat dilihat di dashboard PPDB.
 
-🔗 *Dashboard & Unduh Surat:*
+🔗 *Lihat Hasil Seleksi:*
 ${BRANDING.websiteUrl}/dashboard/pendaftar/pengumuman
 
-Jazakumullahu khairan.
+*Panduan Daftar Ulang (bagi yang Diterima):*
+Silakan lakukan pembayaran Daftar Ulang minimal 50% paling lambat 7 hari setelah pengumuman ini.
+Untuk informasi lebih lanjut, hubungi kami di ${BRANDING.phone}.
+
+Jazakumullahu khairan
 
 ---
-*Panitia PPDB ${cleanSchoolName}*`;
+*Panitia PPDB ${BRANDING.schoolName}*`;
 }
 
 /** Alias baru — sama dengan buildMessageHasilTes */
@@ -1255,7 +1283,41 @@ export function buildMessageCombinedFinal(
     status: 'DITERIMA' | 'CADANGAN' | 'DITOLAK',
     jenjang: string
 ): string {
-    return buildMessageHasilTes(nama);
+    let msg = `✅ *Hasil Seleksi PPDB ${BRANDING.schoolName}*
+
+Assalamu'alaikum Abu/Ummu,
+
+Alhamdulillah, rangkaian Seleksi Ananda *${nama}* telah selesai dan hasil evaluasi telah diputuskan.
+
+📢 *HASIL SELEKSI:*
+Status: *${status}*
+Jenjang: ${jenjang}
+
+`;
+
+    if (status === 'DITERIMA') {
+        msg += `📝 *Langkah Selanjutnya:*
+Silakan login ke dashboard untuk melakukan *Daftar Ulang* dan melengkapi administrasi.
+Batas waktu daftar ulang adalah 7 hari setelah pengumuman ini.
+
+Dashboard: ${BRANDING.websiteUrl}/dashboard/pendaftar/daftar-ulang`;
+    } else if (status === 'CADANGAN') {
+        msg += `📝 *Informasi:*
+Ananda berada dalam daftar cadangan. Kami akan menghubungi Abu/Ummu jika ada kuota yang tersedia di kemudian hari. Terus pantau dashboard.
+
+Dashboard: ${BRANDING.websiteUrl}/dashboard/pendaftar/pengumuman`;
+    } else {
+        msg += `Kami mengapresiasi semangat dan usaha Ananda. Semoga dimudahkan jalannya untuk menuntut ilmu di manapun berada.`;
+    }
+
+    msg += `
+
+Jazakumullahu khairan
+
+---
+*Panitia PPDB ${BRANDING.schoolName}*`;
+
+    return msg;
 }
 
 export function buildMessagePembatalanJadwal(
