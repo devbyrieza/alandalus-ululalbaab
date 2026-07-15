@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ketentuan Kerja Sama - Pembuatan Website PPDB Pesantren</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Merriweather:wght@400;700;900&family=Open+Sans:wght@400;600;700&display=swap');
+        
+        body {
+            background-color: #f0f2f5;
+            font-family: 'Open Sans', sans-serif;
+            color: #2d3748;
+            line-height: 1.6;
+            margin: 0;
+            padding: 40px 20px;
+        }
+        .a4-page {
+            background: white;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px 80px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-top: 8px solid #1E3A8A; /* Navy Blue theme to match Andalus Pusat */
+        }
+        .arabic {
+            font-family: 'Amiri', serif;
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 25px;
+            color: #1a202c;
+            direction: rtl;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 2px solid #edf2f7;
+            padding-bottom: 25px;
+        }
+        .header h1 {
+            font-family: 'Merriweather', serif;
+            font-weight: 900;
+            color: #1E3A8A;
+            font-size: 22px;
+            margin: 0 0 10px 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            line-height: 1.4;
+        }
+        .header h2 {
+            font-family: 'Merriweather', serif;
+            font-weight: 700;
+            color: #2d3748;
+            font-size: 16px;
+            margin: 0 0 15px 0;
+            text-transform: uppercase;
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        .header .meta-info {
+            display: inline-block;
+            text-align: left;
+            font-size: 13px;
+            color: #4a5568;
+            background: #f7fafc;
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            margin-top: 5px;
+        }
+        .header .meta-info p {
+            margin: 3px 0;
+            text-align: left;
+        }
+        .salutation {
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+        .salutation p {
+            margin: 4px 0;
+        }
+        h2 {
+            font-family: 'Merriweather', serif;
+            color: #1a365d;
+            font-size: 16px;
+            border-bottom: 2px solid #edf2f7;
+            padding-bottom: 6px;
+            margin-top: 35px;
+            margin-bottom: 15px;
+            line-height: 1.4;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        h3 {
+            font-family: 'Merriweather', serif;
+            color: #2d3748;
+            font-size: 14px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+            font-size: 14px;
+        }
+        ul {
+            margin-top: 0;
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+        li {
+            margin-bottom: 8px;
+            font-size: 14px;
+            text-align: justify;
+        }
+        
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 13px;
+        }
+        th {
+            background-color: #1E3A8A;
+            color: white;
+            font-weight: 700;
+            text-align: left;
+            padding: 10px 12px;
+            border: 1px solid #1E3A8A;
+        }
+        td {
+            padding: 10px 12px;
+            border: 1px solid #e2e8f0;
+            vertical-align: top;
+            line-height: 1.5;
+        }
+        tr:nth-child(even) {
+            background-color: #f7fafc;
+        }
+        .total-row {
+            background-color: #fffaf0 !important;
+            font-weight: 700;
+            border-top: 2px solid #1E3A8A;
+            border-bottom: 2px solid #1E3A8A;
+        }
+        .total-row td {
+            color: #1E3A8A;
+            font-size: 14px;
+        }
+        .price {
+            font-weight: 700;
+            color: #2d3748;
+            white-space: nowrap;
+        }
+        .free {
+            color: #0f766e;
+            font-weight: 700;
+            text-align: center;
+        }
+        
+        /* Identity Grid */
+        .identity-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0 25px 0;
+        }
+        .identity-table td {
+            padding: 6px 0;
+            border: none;
+            background: transparent !important;
+        }
+        .identity-table td:first-child {
+            width: 150px;
+            font-weight: 600;
+            color: #4a5568;
+        }
+        
+        .highlight-box {
+            background-color: #f7fafc;
+            border-left: 4px solid #D4AF37; /* Gold theme for highlight box */
+            padding: 15px 20px;
+            margin: 20px 0;
+            font-size: 13px;
+            border-radius: 0 8px 8px 0;
+        }
+        .highlight-box ul {
+            margin-bottom: 0;
+            padding-left: 15px;
+        }
+        .agreement-box {
+            background-color: #fffaf0;
+            border: 1px solid #feebc8;
+            padding: 20px;
+            margin: 30px 0;
+            font-size: 14px;
+            text-align: justify;
+            border-radius: 8px;
+            line-height: 1.6;
+        }
+        
+        .signature-section {
+            margin-top: 50px;
+            width: 100%;
+        }
+        .signature-table {
+            width: 100%;
+            border-collapse: collapse;
+            border: none;
+            margin-top: 30px;
+        }
+        .signature-table td {
+            border: none;
+            background: transparent !important;
+            width: 50%;
+            padding: 0 20px 0 0;
+        }
+        .signature-table .sig-space {
+            height: 80px;
+        }
+        .signature-table p {
+            margin: 4px 0;
+            text-align: left;
+        }
+        .signature-table .name-title {
+            font-weight: 700;
+            text-decoration: underline;
+            color: #2d3748;
+        }
+        .signature-table .role-title {
+            font-size: 13px;
+            color: #718096;
+        }
+
+        /* Mobile Responsive Styles */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+                background-color: white;
+            }
+            .a4-page {
+                padding: 25px 15px;
+                box-shadow: none;
+                border-top: 6px solid #1E3A8A;
+            }
+            p, li {
+                text-align: left;
+            }
+            .header h1 {
+                font-size: 18px;
+            }
+            .header h2 {
+                font-size: 14px;
+            }
+            .identity-table td:first-child {
+                width: 120px;
+            }
+            table {
+                font-size: 12px;
+            }
+            table:not(.identity-table):not(.signature-table) {
+                display: block;
+                width: 100%;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            table:not(.identity-table):not(.signature-table) th, 
+            table:not(.identity-table):not(.signature-table) td {
+                min-width: 140px; /* Mencegah kolom tergencet pada HP */
+            }
+            th, td {
+                padding: 8px;
+            }
+            .signature-table td {
+                padding: 0;
+                display: block;
+                width: 100%;
+                margin-bottom: 40px;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .a4-page {
+                box-shadow: none;
+                padding: 0;
+                max-width: 100%;
+                border-top: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="a4-page">
+        <div class="arabic">Ø¨ÙØ³Ù’Ù…Ù Ø§Ù„Ù„Ù‡Ù Ø§Ù„Ø±ÙŽÙ‘Ø­Ù’Ù…Ù°Ù†Ù Ø§Ù„Ø±ÙŽÙ‘Ø­ÙÙŠÙ’Ù…Ù</div>
+        
+        <div class="header">
+            <h1>KETENTUAN KERJA SAMA</h1>
+            <h2>PEMBUATAN WEBSITE PPDB PESANTREN</h2>
+            <div class="meta-info">
+                <p><strong>Nomor</strong> : &nbsp;&nbsp;.......... / KKS / .......... / 2026</p>
+                <p><strong>Tanggal</strong> : &nbsp;&nbsp;................................................................</p>
+            </div>
+        </div>
+
+        <div class="salutation">
+            <p>Assalamu'alaikum Warahmatullahi Wabarakatuh</p>
+        </div>
+
+        <p>Dengan menyebut nama Allah Yang Maha Pengasih lagi Maha Penyayang, dokumen ini hadir sebagai wujud nyata dari itikad baik, amanah, dan komitmen bersama untuk membawa pengelolaan Penerimaan Peserta Didik Baru (PPDB) di pesantren ini ke standar yang lebih modern, tertib, dan bermartabat â€” insyaAllah penuh keberkahan bagi kemajuan pendidikan Islam.</p>
+        <p>Kami percaya bahwa pesantren yang mulia bukan hanya diukur dari kualitas ilmu yang diajarkan, tetapi juga dari profesionalitas dalam menyambut calon santri baru. Maka, dokumen ini hadir sebagai pegangan resmi dan transparan bagi kedua belah pihak â€” agar kerja sama ini berjalan dengan jelas, saling menjaga amanah, dan membawa manfaat jangka panjang bagi pesantren.</p>
+
+        <h2>PASAL 1 â€” IDENTITAS PARA PIHAK</h2>
+        
+        <h3>1.1 Pihak Pertama (Pengembang)</h3>
+        <table class="identity-table">
+            <tr>
+                <td>Nama</td>
+                <td>: Abu Aidil</td>
+            </tr>
+            <tr>
+                <td>Profesi</td>
+                <td>: Pengembang Web &amp; Sistem Digital</td>
+            </tr>
+            <tr>
+                <td>Kontak</td>
+                <td>: ................................................................</td>
+            </tr>
+        </table>
+
+        <h3>1.2 Pihak Kedua (Klien / Pesantren)</h3>
+        <table class="identity-table">
+            <tr>
+                <td>Nama Pesantren</td>
+                <td>: ................................................................</td>
+            </tr>
+            <tr>
+                <td>Penanggung Jawab</td>
+                <td>: ................................................................</td>
+            </tr>
+            <tr>
+                <td>Jabatan</td>
+                <td>: ................................................................</td>
+            </tr>
+            <tr>
+                <td>Alamat</td>
+                <td>: ................................................................</td>
+            </tr>
+            <tr>
+                <td>No. Telp / WhatsApp</td>
+                <td>: ................................................................</td>
+            </tr>
+        </table>
+
+        <h2>PASAL 2 â€” PAKET &amp; HARGA</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Komponen Biaya</th>
+                    <th style="width: 280px;">Ketentuan Investasi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Jasa Pembuatan Website PPDB</strong><br><span style="font-size: 11px; font-weight: normal; color: #718096;">Biaya jasa pembuatan yang dibayar sekali seumur hidup. Mencakup seluruh proses pembangunan sistem dari nol hingga siap digunakan, termasuk semua fitur dan pelatihan bagi panitia pesantren.</span></td>
+                    <td class="price">Rp 6.000.000<br><span style="font-size: 11px; font-weight: normal; color: #718096;">Dibayar Sekali (Seumur Hidup)</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Biaya Pemeliharaan Tahunan (Paket Lengkap)</strong><br><span style="font-size: 11px; font-weight: normal; color: #718096;">Tagihan tahunan yang sudah mencakup <em>semua</em> kebutuhan teknis website: sewa server, nama domain pesantren, notifikasi WhatsApp otomatis, keamanan data, pencadangan data, dan pemeliharaan rutin. Cukup satu tagihan, tidak ada biaya lain ke manapun.</span></td>
+                    <td class="price">Rp 1.800.000 / tahun<br><span style="font-size: 11px; font-weight: normal; color: #718096;">(Setara Rp 150.000 / bulan)</span></td>
+                </tr>
+                <tr class="total-row">
+                    <td>TOTAL INVESTASI AWAL (TAHUN PERTAMA)</td>
+                    <td class="price">Rp 7.800.000</td>
+                </tr>
+                <tr class="total-row" style="background-color: #f7fafc !important;">
+                    <td style="color: #4a5568;">BIAYA PERPANJANGAN TAHUN BERIKUTNYA</td>
+                    <td class="price" style="color: #4a5568;">Rp 1.800.000 / tahun</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div class="highlight-box">
+            <strong>Catatan Penting:</strong> Biaya Pemeliharaan Tahunan sebesar Rp 1.800.000/tahun dibayarkan langsung kepada Pengembang setiap tahun. Biaya ini sudah mencakup <em>semua</em> kebutuhan teknis: sewa server, perpanjangan nama domain pesantren, layanan notifikasi WhatsApp, keamanan data, pencadangan data otomatis, dan pemeliharaan sistem. <strong>Tidak ada tagihan tersembunyi atau tagihan dari pihak lain manapun.</strong> Selengkapnya diatur pada Pasal 3.
+        </div>
+
+        <h2>PASAL 2A â€” PILIHAN PAKET PENGELOLAAN WEBSITE</h2>
+        <p>Untuk memenuhi kebutuhan pesantren yang beragam, Pengembang menyediakan dua pilihan paket pengelolaan. Pesantren cukup memilih salah satu yang paling sesuai dengan kondisi dan kenyamanan pesantren, kemudian membubuhkan tanda <strong>(âœ“)</strong> dan <strong>paraf</strong> pada kotak pilihan di bawah:</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 40px; text-align: center;">Pilih</th>
+                    <th style="width: 200px;">Opsi Paket</th>
+                    <th>Cakupan &amp; Ketentuan</th>
+                    <th style="width: 200px;">Rincian Biaya</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="background-color: #f0fff4;">
+                    <td style="text-align: center; font-size: 22px; color: #1E3A8A;">â˜</td>
+                    <td>
+                        <strong style="color: #1E3A8A;">OPSI A â€” Paket Kelola Penuh</strong><br>
+                        <span style="font-size: 11px; color: #718096;">â­ Direkomendasikan â€” Paling Praktis</span>
+                    </td>
+                    <td>
+                        Semua urusan teknis (server, nama domain pesantren, notifikasi WhatsApp otomatis, keamanan data, dan pencadangan data) dikelola sepenuhnya oleh Pengembang. <strong>Pesantren tidak perlu mendaftar atau berurusan dengan penyedia layanan manapun.</strong> Cukup satu tagihan tahunan ke Pengembang â€” semua beres.
+                    </td>
+                    <td class="price">
+                        Rp 1.800.000 / tahun<br>
+                        <span style="font-size: 11px; font-weight: normal; color: #718096;">(Setara Rp 150.000/bulan)<br>âœ… All-in: server + domain + WA notif sudah termasuk</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: center; font-size: 22px; color: #4a5568;">â˜</td>
+                    <td>
+                        <strong>OPSI B â€” Paket Server Mandiri Pesantren</strong><br>
+                        <span style="font-size: 11px; color: #718096;">(Server, domain &amp; layanan WA dikelola sendiri oleh pesantren)</span>
+                    </td>
+                    <td>
+                        Pesantren membeli dan mengurus sendiri akun server, nama domain, dan layanan notifikasi WhatsApp (misal: Wablas atau sejenis) atas nama pesantren. Pesantren bertanggung jawab penuh atas perpanjangan ketiga layanan tersebut setiap tahun langsung kepada penyedia layanan masing-masing.<br><br>
+                        <strong>Tahun Pertama (Biaya ke Pengembang):</strong> Pesantren dikenakan Biaya Pemasangan &amp; Aktivasi sebesar <strong>Rp 1.500.000</strong> (sekali bayar, di luar biaya jasa pembuatan) agar Pengembang dapat menyetel dan mengaktifkan sistem di server milik pesantren.<br><br>
+                        <strong>Tahun Kedua dan Seterusnya (Biaya ke Pengembang):</strong> Pesantren membayar Jasa Perawatan Sistem sebesar <strong>Rp 1.000.000/tahun</strong> kepada Pengembang.<br><br>
+                        <strong style="color: #c05621;">âš  Penting:</strong> <em>Di luar pembayaran kepada Pengembang di atas, pesantren juga wajib memperpanjang sendiri setiap tahun:</em> sewa server, perpanjangan nama domain, dan biaya berlangganan layanan notifikasi WhatsApp (Wablas/sejenis) â€” langsung ke penyedia layanan masing-masing.
+                    </td>
+                    <td>
+                        <strong style="font-size: 12px; color: #2d3748;">Biaya ke Pengembang:</strong><br><br>
+                        <span class="price">Rp 1.500.000</span><br>
+                        <span style="font-size: 11px; color: #718096;">(Sekali bayar â€” pemasangan awal)</span><br><br>
+                        <span class="price">Rp 1.000.000 / tahun</span><br>
+                        <span style="font-size: 11px; color: #718096;">(Jasa perawatan, mulai tahun kedua)</span><br><br>
+                        <hr style="border: none; border-top: 1px dashed #e2e8f0; margin: 8px 0;">
+                        <strong style="font-size: 12px; color: #c05621;">Biaya Mandiri ke Pihak Ketiga<br>(dibayar pesantren langsung, setiap tahun):</strong><br><br>
+                        <span style="font-size: 11px; color: #4a5568; line-height: 1.8;">
+                            ðŸ–¥ Sewa Server / Hosting<br>
+                            ðŸŒ Perpanjangan Nama Domain<br>
+                            ðŸ“± Berlangganan Notifikasi WA (Wablas/sejenis)
+                        </span><br>
+                        <span style="font-size: 10px; color: #a0aec0; font-style: italic; margin-top: 4px; display: block;">(Estimasi total ketiga layanan: Rp 700.000 â€“ Rp 1.500.000 / tahun, tergantung pilihan paket penyedia)</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="highlight-box">
+            <strong>Pilihan Pesantren:</strong> &nbsp;&nbsp;
+            â˜ <strong>Opsi A â€” Paket Kelola Penuh</strong> &nbsp;&nbsp;&nbsp;&nbsp;
+            â˜ <strong>Opsi B â€” Paket Server Mandiri Pesantren</strong>
+            <br><br>
+            <span style="font-size: 12px; color: #718096;">Paraf / Inisial Penanggung Jawab Pesantren di atas pilihan yang dipilih: _______________</span>
+            <br><br>
+            <span style="font-size: 12px; color: #c05621; font-weight: 600;">âš  Catatan khusus apabila memilih Opsi B:</span>
+            <span style="font-size: 12px; color: #718096;"> Pesantren menyatakan telah memahami bahwa selain biaya kepada Pengembang, pesantren juga berkewajiban untuk memperpanjang sendiri setiap tahun kepada pihak ketiga: <strong>(1) sewa server/hosting</strong>, <strong>(2) perpanjangan nama domain</strong>, dan <strong>(3) berlangganan layanan notifikasi WhatsApp (Wablas atau sejenis)</strong>. Kegagalan perpanjangan salah satu layanan tersebut dapat menyebabkan gangguan atau ketidaktersediaan fitur pada website PPDB pesantren.</span>
+        </div>
+
+        <h2>PASAL 3 â€” DETAIL PEMELIHARAAN &amp; WHATSAPP GATEWAY</h2>
+        <p style="font-size: 13px; color: #718096; font-style: italic;">Pasal ini berlaku sepenuhnya apabila Pesantren memilih <strong>Opsi A (Paket Kelola Penuh)</strong> pada Pasal 2A. Apabila Pesantren memilih Opsi B (Paket Server Mandiri), maka Pasal 3.1 dan 3.2 tidak berlaku, dan Pengembang hanya terikat pada Pasal 3.3.</p>
+        
+        <h3>3.1 Cakupan Layanan Tahunan</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 30px; text-align: center;">No</th>
+                    <th style="width: 180px;">Komponen</th>
+                    <th style="width: 180px;">Biaya Masuk Paket</th>
+                    <th>Spesifikasi &amp; Keterangan</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="text-align: center;">1</td>
+                    <td><strong>Sewa Server Website (Jakarta)</strong></td>
+                    <td class="price">SUDAH TERMASUK</td>
+                    <td>Website pesantren berjalan di server berkecepatan tinggi yang berlokasi di Jakarta. Artinya, website tetap cepat dan stabil meskipun ratusan wali santri mengakses serentak di hari-hari puncak pendaftaran.</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;">2</td>
+                    <td><strong>Nama Domain Resmi Pesantren (.com)</strong></td>
+                    <td class="price">SUDAH TERMASUK</td>
+                    <td>Pendaftaran dan perpanjangan alamat website resmi pesantren (contoh: ppdb.namapesantren.com) dikelola sepenuhnya oleh Pengembang setiap tahun. Hak kepemilikan nama domain tetap atas nama pesantren.</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;">3</td>
+                    <td><strong>Notifikasi WhatsApp Otomatis</strong></td>
+                    <td class="price">SUDAH TERMASUK</td>
+                    <td>Sistem secara otomatis mengirimkan pesan WhatsApp kepada calon santri dan wali untuk: konfirmasi pendaftaran, tagihan, jadwal ujian, hingga pengumuman kelulusan â€” tanpa panitia harus mengirim satu per satu secara manual.</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;">4</td>
+                    <td><strong>Keamanan Data Website</strong></td>
+                    <td class="price">SUDAH TERMASUK (GRATIS)</td>
+                    <td>Website dilengkapi sistem keamanan standar internasional (ditandai dengan ikon gembok ðŸ”’ di browser). Seluruh data calon santri yang dimasukkan ke website terlindungi dan tidak dapat disadap oleh pihak luar.</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;">5</td>
+                    <td><strong>Pencadangan Data &amp; Pemeliharaan Rutin</strong></td>
+                    <td class="price">SUDAH TERMASUK</td>
+                    <td>Data seluruh pendaftar dicadangkan secara otomatis setiap hari. Jika sewaktu-waktu terjadi gangguan teknis, seluruh data pesantren dapat dipulihkan kembali dalam waktu singkat tanpa kehilangan informasi apapun.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>3.2 Keamanan, Privasi Data &amp; Kemudahan Pembayaran</h3>
+        <ul>
+            <li><strong>Server Berlokasi di Indonesia:</strong> Website pesantren berjalan di server yang berlokasi di Jakarta, sehingga dapat diakses dengan cepat dari seluruh penjuru Indonesia â€” termasuk dari daerah-daerah dengan kecepatan internet yang lebih terbatas.</li>
+            <li><strong>Data Pesantren Tersimpan Terpisah &amp; Aman:</strong> Data pendaftar setiap pesantren disimpan secara eksklusif dan tidak akan pernah bercampur dengan data pesantren lain. Ibarat setiap pesantren memiliki lemari arsip sendiri yang dikunci dengan kunci berbeda â€” tidak ada pesantren lain yang bisa membuka lemari Antum, begitu pula sebaliknya.</li>
+            <li><strong>Cukup Satu Tagihan Tahunan:</strong> Pesantren tidak akan pernah menerima tagihan dari penyedia layanan lain manapun. Semua urusan perpanjangan server, nama domain, dan layanan WhatsApp ditangani sepenuhnya oleh Pengembang. Pesantren cukup bayar ke satu tempat, setiap tahun.</li>
+        </ul>
+
+        <h3>3.3 Mekanisme Pembayaran Tahunan</h3>
+        <p>Agar pesantren tidak perlu pusing dengan urusan perpanjangan layanan teknis, berikut mekanisme yang berlaku:</p>
+        <ul>
+            <li>Klien tidak perlu melakukan pembayaran terpisah kepada berbagai vendor pihak ketiga.</li>
+            <li>Seluruh biaya pemeliharaan tahunan sebesar <strong>Rp 1.800.000 / tahun</strong> dibayarkan dalam satu pintu melalui Pengembang sebelum masa aktif habis setiap tahunnya.</li>
+            <li>Pengembang akan mengirimkan <strong>tagihan/pemberitahuan perpanjangan minimal 30 (tiga puluh) hari sebelum masa aktif layanan habis</strong>, sehingga pesantren memiliki cukup waktu untuk mempersiapkan pembayaran.</li>
+            <li>Pengembang bertanggung jawab penuh melakukan perpanjangan seluruh layanan (server, nama domain, dan notifikasi WhatsApp) secara tepat waktu demi menjaga website PPDB tetap aktif tanpa gangguan.</li>
+        <p>Seluruh kemampuan dan fasilitas berikut sudah termasuk dalam biaya jasa pembuatan, <strong>tanpa biaya tambahan apapun</strong>:</p>
+        
+        <h3>4.1 Pendaftaran Online &amp; Pengelolaan Data Pendaftar</h3>
+        <ul>
+            <li>Halaman pendaftaran online yang rapi dan mudah diisi dari HP maupun komputer â€” tanpa calon santri perlu datang ke pesantren hanya untuk mendaftar.</li>
+            <li>Setiap calon santri/wali memiliki akun pribadi untuk memantau proses pendaftarannya sendiri kapan saja dan di mana saja.</li>
+            <li>Calon santri dapat mengunggah dokumen persyaratan secara online (Foto, Kartu Keluarga, Akta Kelahiran, Ijazah, dan lain-lain) langsung dari HP.</li>
+            <li>Bukti pendaftaran otomatis tercetak dalam format PDF â€” tidak perlu datang ke kantor hanya untuk mengambil bukti daftar.</li>
+            <li>Calon santri dan wali dapat memantau status pendaftarannya secara langsung: berkas sudah diverifikasi atau belum, pembayaran sudah diterima atau belum.</li>
+            <li>Panitia dapat mengatur kuota dan periode gelombang pendaftaran dengan mudah sesuai kebutuhan pesantren.</li>
+        </ul>
+
+        <h3>4.2 Sistem Seleksi &amp; Ujian Online</h3>
+        <ul>
+            <li>Ujian seleksi dapat dilakukan secara online langsung melalui website â€” calon santri mengerjakan soal dari mana saja tanpa perlu datang ke lokasi pada hari ujian tulis.</li>
+            <li>Kartu Peserta Ujian otomatis tercetak dalam format PDF untuk setiap calon santri yang telah mendaftar.</li>
+            <li>Penguji memiliki halaman khusus untuk memasukkan nilai ujian lisan seperti: tes Al-Qur'an, wawancara santri, dan wawancara orang tua.</li>
+            <li>Sistem secara otomatis menghitung total nilai dari semua komponen ujian dan memberikan rekomendasi status: <strong>DITERIMA / CADANGAN / TIDAK DITERIMA</strong> â€” membantu panitia mengambil keputusan secara adil, transparan, dan cepat.</li>
+        </ul>
+
+        <h3>4.3 Hak Akses Berbeda untuk Setiap Panitia</h3>
+        <ul>
+            <li><strong>Ketua Panitia / Admin Utama:</strong> Dapat melihat dan mengatur seluruh sistem, termasuk data statistik pendaftar dan semua pengaturan website.</li>
+            <li><strong>Panitia Keuangan:</strong> Hanya dapat melihat dan memvalidasi bukti pembayaran uang pendaftaran dan daftar ulang â€” tidak dapat mengubah data lainnya.</li>
+            <li><strong>Panitia Berkas/Dokumen:</strong> Hanya dapat memeriksa dan memverifikasi kelengkapan dokumen yang diunggah oleh calon santri.</li>
+            <li><strong>Penguji / Pewawancara:</strong> Hanya dapat memasukkan nilai ujian â€” tidak dapat melihat atau mengubah data keuangan maupun berkas pendaftar.</li>
+        </ul>
+
+        <h3>4.4 Notifikasi WhatsApp Otomatis</h3>
+        <ul>
+            <li>Calon santri dan wali secara otomatis menerima pesan WhatsApp untuk: konfirmasi pendaftaran berhasil, tagihan uang pendaftaran, jadwal ujian, dan pengumuman kelulusan â€” tanpa panitia perlu mengirim satu per satu secara manual.</li>
+            <li>Panitia juga mendapat notifikasi WhatsApp setiap kali ada pendaftar baru atau pembayaran masuk â€” sehingga tidak ada pendaftaran yang terlewat.</li>
+            <li>Admin dapat mengirim pesan WhatsApp serentak kepada seluruh pendaftar hanya dengan satu klik â€” sangat berguna untuk pengumuman penting atau perubahan jadwal mendadak.</li>
+        </ul>
+
+        <h3>4.5 Laporan Data &amp; Keuangan PPDB</h3>
+        <ul>
+            <li>Panitia dapat melihat ringkasan data pendaftar dan laporan keuangan secara lengkap kapan saja, langsung dari layar HP atau komputer â€” tanpa perlu rekap manual.</li>
+            <li>Rekap hasil seleksi dan ujian tersedia secara transparan dan dapat ditelusuri, memudahkan pertanggungjawaban kepada pimpinan pesantren.</li>
+            <li>Seluruh data pendaftar dapat diunduh ke dalam file Excel untuk keperluan arsip, rapat, atau laporan â€” hanya dengan satu klik.</li>
+            <li>Tersedia grafik visual pendaftar berdasarkan asal daerah, jenjang pendidikan, dan lain-lain â€” sangat berguna untuk evaluasi program PPDB setiap tahunnya.</li>
+        </ul>
+
+        <h3>4.6 Keamanan, Tampilan &amp; Layanan Pendampingan</h3>
+        <ul>
+            <li>Website berjalan di server berkecepatan tinggi yang berlokasi di Indonesia â€” data setiap pesantren tersimpan secara eksklusif dan tidak bercampur dengan data pesantren lain.</li>
+            <li>Website dilengkapi sistem keamanan standar internasional, sehingga data calon santri terlindungi dari ancaman pihak luar (ditandai gembok ðŸ”’ di browser).</li>
+            <li>Data seluruh pendaftar dicadangkan secara otomatis setiap hari â€” tidak perlu khawatir data hilang akibat gangguan teknis.</li>
+            <li>Tampilan website dirancang elegan dan dapat diakses dengan nyaman dari HP, tablet, maupun komputer.</li>
+            <li>Pengembang akan melakukan pelatihan penggunaan sistem kepada seluruh panitia PPDB secara daring (online), sehingga panitia siap mengoperasikan sistem secara mandiri.</li>
+            <li>Tersedia buku panduan tertulis penggunaan sistem untuk panitia sebagai referensi sehari-hari.</li>
+            <li>Pendampingan teknis gratis selama 30 hari pertama setelah website diluncurkan.</li>
+        </ul>
+
+        <h2>PASAL 5 â€” ESTIMASI WAKTU &amp; TERMIN PEMBAYARAN</h2>
+        
+        <h3>5.1 Estimasi Waktu Pengerjaan</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 40px; text-align: center;">No</th>
+                    <th style="width: 100px;">Hari</th>
+                    <th style="width: 250px;">Kegiatan</th>
+                    <th>Keterangan</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="text-align: center;">1</td>
+                    <td>Hari 1</td>
+                    <td><strong>Penandatanganan &amp; Pembayaran DP</strong></td>
+                    <td>Pengerjaan dimulai setelah DP diterima oleh Pengembang.</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;">2</td>
+                    <td>Hari 1â€“2</td>
+                    <td><strong>Pengumpulan Data &amp; Kebutuhan Pesantren</strong></td>
+                    <td>Pesantren mengisi formulir kebutuhan dan menyiapkan aset yang diperlukan, seperti logo, informasi profil, dan konten website.</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;">3</td>
+                    <td>Hari 3â€“13</td>
+                    <td><strong>Pembangunan Sistem &amp; Penyesuaian Tampilan</strong></td>
+                    <td>Tahap pembuatan website, pemasangan seluruh fitur, dan penyesuaian tampilan sesuai identitas visual pesantren.</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;">4</td>
+                    <td>Hari 14â€“15</td>
+                    <td><strong>Pengujian Menyeluruh &amp; Pemeriksaan Kualitas</strong></td>
+                    <td>Seluruh fitur diuji secara menyeluruh oleh Pengembang untuk memastikan semuanya berjalan sempurna sebelum diperlihatkan kepada pesantren.</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;">5</td>
+                    <td>Hari 16-17</td>
+                    <td><strong>Demo kepada Klien &amp; Revisi</strong></td>
+                    <td>Presentasi demo kepada klien dengan kuota maksimal 2 (dua) kali revisi gratis setelah penyerahan.</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;">6</td>
+                    <td>Hari 18</td>
+                    <td><strong>Peluncuran Resmi &amp; Serah Terima</strong></td>
+                    <td>Website PPDB pesantren diluncurkan secara resmi dan seluruh hak akses pengelolaan diserahkan kepada panitia. Pengembang mendampingi proses peluncuran.</td>
+                </tr>
+            </tbody>
+        </table>
+        <p><em>Catatan: Total perkiraan waktu pengerjaan adalah 12â€“18 hari kerja terhitung sejak pembayaran pertama (Uang Muka) diterima. Waktu ini dapat menyesuaikan apabila pesantren membutuhkan waktu lebih lama untuk menyiapkan materi (logo, foto, dll).</em></p>
+
+        <h3>5.2 Termin Pembayaran</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Termin</th>
+                    <th style="width: 80px; text-align: center;">%</th>
+                    <th style="width: 180px;">Nominal</th>
+                    <th>Waktu Pembayaran</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>DP (Uang Muka)</strong></td>
+                    <td style="text-align: center;">50%</td>
+                    <td class="price">Rp 3.000.000<br><span style="font-size: 11px; font-weight: normal; color: #718096;">(50% dari biaya jasa)</span></td>
+                    <td>Sebelum pengerjaan sistem dimulai.</td>
+                </tr>
+                <tr>
+                    <td><strong>Pembayaran Kedua</strong></td>
+                    <td style="text-align: center;">30%</td>
+                    <td class="price">Rp 1.800.000<br><span style="font-size: 11px; font-weight: normal; color: #718096;">(30% dari biaya jasa)</span></td>
+                    <td>Setelah sistem selesai dibuat dan diperlihatkan kepada pesantren.</td>
+                </tr>
+                <tr>
+                    <td><strong>Pelunasan</strong></td>
+                    <td style="text-align: center;">20%</td>
+                    <td class="price">Rp 1.200.000<br><span style="font-size: 11px; font-weight: normal; color: #718096;">(20% dari biaya jasa)</span></td>
+                    <td>Sebelum website diluncurkan secara resmi (Go-Live).</td>
+                </tr>
+                <tr>
+                    <td><strong>Biaya Pemeliharaan Tahunan</strong></td>
+                    <td style="text-align: center;">â€”</td>
+                    <td class="price">Rp 1.800.000 / tahun<br><span style="font-size: 11px; font-weight: normal; color: #718096;">(dibayar terpisah, bukan dari biaya jasa)</span></td>
+                    <td>Dibayarkan di tahun pertama bersamaan dengan Pelunasan, dan setiap tahun berikutnya sesuai Pasal 3.</td>
+                </tr>
+            </tbody>
+        </table>
+        <p><em>Catatan: Biaya pemeliharaan &amp; WhatsApp Gateway tahunan sebesar Rp 1.800.000 adalah biaya terpisah dari biaya jasa pembuatan, dan bukan merupakan bagian dari cicilan 50-30-20. Detail cakupan layanan diatur pada Pasal 3.</em></p>
+
+        <h2>PASAL 6 â€” REVISI &amp; GARANSI</h2>
+        
+        <h3>6.1 Revisi Selama Pengerjaan</h3>
+        <p>Pesantren berhak mendapatkan <strong>2 (dua) kali revisi gratis</strong> setelah penyerahan pertama sistem. Dengan demikian, total putaran pengerjaan keseluruhan adalah 3 (tiga) putaran, yaitu:</p>
+        <ul>
+            <li><strong>Putaran 1 â€” Penyerahan Pertama:</strong> Pengembang menyerahkan hasil sistem yang telah selesai dibangun untuk pertama kali kepada pesantren.</li>
+            <li><strong>Putaran 2 â€” Revisi Pertama (Gratis):</strong> Pesantren menyampaikan masukan dan permintaan penyesuaian setelah melihat penyerahan pertama.</li>
+            <li><strong>Putaran 3 â€” Revisi Kedua &amp; Final (Gratis):</strong> Pesantren menyampaikan masukan penyesuaian terakhir sebelum website diluncurkan secara resmi.</li>
+        </ul>
+        <ul>
+            <li>Revisi gratis mencakup penyesuaian warna, tata letak, teks, dan fitur-fitur ringan agar sesuai dengan kesepakatan awal.</li>
+            <li>Apabila pesantren meminta penambahan fitur baru yang besar dan belum disepakati di awal, maka akan didiskusikan secara terpisah terkait tambahan biayanya.</li>
+            <li>Revisi di luar 2 (dua) kali ketentuan di atas akan dikenakan biaya sebesar Rp 400.000 per sesi revisi tambahan.</li>
+        </ul>
+
+        <h3>6.2 Garansi Setelah Peluncuran (30 Hari)</h3>
+        <ul>
+            <li>Pengembang memberikan garansi teknis selama 30 (tiga puluh) hari sejak tanggal peluncuran resmi website.</li>
+            <li>Apabila dalam masa garansi ditemukan gangguan atau masalah pada sistem yang disebabkan oleh kesalahan Pengembang, maka akan diperbaiki secepatnya tanpa biaya tambahan apapun.</li>
+            <li>Garansi tidak mencakup gangguan yang disebabkan oleh: kesalahan pengelola pesantren saat menggunakan sistem, perubahan pengaturan teknis oleh pesantren tanpa sepengetahuan Pengembang, atau serangan dari pihak luar yang tidak bertanggung jawab.</li>
+        </ul>
+
+        <h3>6.3 Layanan di Luar Masa Garansi</h3>
+        <ul>
+            <li>Biaya revisi atau perbaikan besar pascagaransi ditetapkan sebesar Rp 400.000 per sesi penanganan.</li>
+            <li>Revisi kecil (seperti penyesuaian teks pendek, penggantian gambar, atau konten ringan) dapat didiskusikan secara kekeluargaan.</li>
+        </ul>
+
+        <h2>PASAL 7 â€” HAK KEPEMILIKAN SISTEM</h2>
+        <p>Seluruh sistem, desain tampilan, dan kode pemrograman yang dibangun oleh Pengembang tetap menjadi hak milik intelektual Pengembang. Pesantren diberikan <strong>hak pakai seumur hidup</strong> atas sistem ini â€” artinya pesantren bebas menggunakan dan mengelola website selama menjadi mitra, bahkan mengubah tampilan atau isi kontennya sesuai kebutuhan internal pesantren.</p>
+        <p>Pesantren tidak diperkenankan untuk: menjual, menyalin, atau memberikan akses sistem ini kepada pesantren atau institusi lain manapun. Apabila pesantren di kemudian hari menginginkan kepemilikan penuh atas sistem ini (termasuk hak untuk mendistribusikannya), hal ini dapat dibicarakan kembali dengan biaya tambahan yang akan disepakati bersama secara kekeluargaan.</p>
+        <p><em>Catatan: Beberapa komponen pendukung yang digunakan dalam sistem ini merupakan program terbuka milik umum yang tetap mengikuti aturan dari masing-masing pembuat aslinya.</em></p>
+
+        <h2>PASAL 8 â€” KERAHASIAAN DATA &amp; KETENTUAN LAIN</h2>
+        
+        <h3>8.1 Kerahasiaan Data</h3>
+        <ul>
+            <li>Kedua pihak sepakat menjaga kerahasiaan seluruh informasi dan dokumen dalam kerja sama ini.</li>
+            <li>Data pendaftar santri bersifat sangat rahasia dan tidak akan diakses atau disebarkan oleh Pengembang kepada pihak manapun.</li>
+            <li>Pengembang hanya mengakses sistem database pesantren semata-mata untuk keperluan perbaikan atau pemeliharaan teknis, dan itu pun atas seizin pesantren.</li>
+            <li>Kewajiban menjaga kerahasiaan data ini tetap berlaku selamanya, meskipun kerja sama ini telah berakhir di kemudian hari.</li>
+        </ul>
+
+        <h3>8.2 Ketentuan Pembatalan Kerja Sama</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Kondisi Pembatalan</th>
+                    <th style="width: 320px;">Ketentuan Pengembalian DP</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Dibatalkan oleh pesantren dalam 1Ã—24 jam setelah penandatanganan kesepakatan</td>
+                    <td>Uang Muka dikembalikan 75%</td>
+                </tr>
+                <tr>
+                    <td>Dibatalkan oleh pesantren setelah 1Ã—24 jam, namun sebelum proses pengerjaan dimulai</td>
+                    <td>Uang Muka dikembalikan 50%</td>
+                </tr>
+                <tr>
+                    <td>Dibatalkan oleh pesantren setelah proses pembuatan website sudah berjalan</td>
+                    <td>Uang Muka tidak dapat dikembalikan</td>
+                </tr>
+                <tr>
+                    <td>Dibatalkan oleh Pengembang tanpa alasan yang dapat dipertanggungjawabkan</td>
+                    <td style="color: #0f766e; font-weight: 700;">Uang Muka dikembalikan 100% penuh kepada pesantren</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>8.3 Keadaan Darurat di Luar Kendali</h3>
+        <ul>
+            <li>Apabila terjadi keadaan darurat di luar kemampuan manusia â€” seperti bencana alam, pemadaman internet nasional, gangguan listrik berskala besar, atau wabah â€” yang menghambat proses pengerjaan, maka kedua belah pihak sepakat untuk menyelesaikannya melalui musyawarah dengan penuh pengertian.</li>
+            <li>Keterlambatan pengerjaan yang diakibatkan oleh kondisi darurat tersebut tidak dapat dijadikan alasan bagi salah satu pihak untuk menuntut ganti rugi.</li>
+        </ul>
+
+        <h3>8.4 Penyelesaian Sengketa</h3>
+        <ul>
+            <li>Setiap perbedaan pendapat atau sengketa diselesaikan melalui musyawarah mufakat dengan semangat ukhuwah Islamiyah.</li>
+            <li>Apabila tidak tercapai mufakat secara kekeluargaan, kedua pihak sepakat meminta mediasi dari pihak ketiga yang netral dan disepakati bersama.</li>
+        </ul>
+
+        <h3>8.5 Pembaruan Ketentuan</h3>
+        <p>Apabila di kemudian hari diperlukan perubahan atau penambahan kesepakatan, hal tersebut dapat dilakukan atas persetujuan tertulis dari kedua belah pihak, dan akan menjadi dokumen tambahan resmi yang tidak terpisahkan dari surat ini.</p>
+
+        <div class="agreement-box">
+            <strong>PERNYATAAN KESEPAKATAN:</strong><br><br>
+            Dengan penuh kesadaran dan keikhlasan, kedua belah pihak menyatakan telah membaca, memahami, dan menyetujui seluruh ketentuan dalam dokumen kerja sama ini. Semoga Allah Subhanahu Wa Ta'ala meridhoi kerja sama ini dan menjadikannya amal jariyah yang bermanfaat serta membawa keberkahan bagi kemajuan pendidikan Islam. Aamiin.
+        </div>
+
+        <div class="signature-section">
+            <table class="signature-table">
+                <tr>
+                    <td>
+                        <p><strong>Pihak Pertama (Pengembang)</strong></p>
+                        <div class="sig-space"></div>
+                        <p class="name-title">Abu Aidil</p>
+                        <p class="role-title">Pengembang Web &amp; Sistem Digital</p>
+                        <p style="font-size: 12px; color: #718096; margin-top: 10px;">Tanggal: .......................................</p>
+                    </td>
+                    <td>
+                        <p><strong>Pihak Kedua (Klien / Pesantren)</strong></p>
+                        <div class="sig-space"></div>
+                        <p class="name-title">.......................................................</p>
+                        <p class="role-title">Perwakilan Resmi Pesantren</p>
+                        <p style="font-size: 12px; color: #718096; margin-top: 10px;">Tanggal: .......................................</p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        
+        <div style="text-align: center; margin-top: 50px; border-top: 1px solid #edf2f7; padding-top: 20px;">
+            <p style="text-align: center; font-size: 13px; color: #718096;">Wassalamu'alaikum Warahmatullahi Wabarakaatuh</p>
+            <div class="arabic" style="font-size: 20px; margin-bottom: 0;">ÙˆÙŽØ§Ù„Ø³ÙŽÙ‘Ù„ÙŽØ§Ù…Ù Ø¹ÙŽÙ„ÙŽÙŠÙ’ÙƒÙÙ…Ù’ ÙˆÙŽØ±ÙŽØ­Ù’Ù…ÙŽØ©Ù Ø§Ù„Ù„Ù‡Ù ÙˆÙŽØ¨ÙŽØ±ÙŽÙƒÙŽØ§ØªÙÙ‡Ù</div>
+        </div>
+    </div>
+
+</body>
+</html>
