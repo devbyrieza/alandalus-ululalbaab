@@ -11,6 +11,7 @@ import {
   GraduationCap,
   Globe,
   CheckCircle2,
+  Gift,
 } from "lucide-react";
 import { Container } from "@/components/layout/Container";
 import { motion, useReducedMotion } from "framer-motion";
@@ -74,7 +75,7 @@ export default function HeroSection() {
   return (
     <section
       ref={ref}
-      aria-label={`Hero — Beranda ${BRANDING.schoolName}`}
+      aria-label="Hero — Beranda Al Fath"
       className="relative min-h-[100vh] md:min-h-[90vh] lg:min-h-[85vh] flex items-center pt-24 pb-20 md:pt-28 lg:pt-24 lg:pb-20 overflow-hidden"
       style={{
         background:
@@ -82,8 +83,8 @@ export default function HeroSection() {
       }}
     >
       {/* CiroAI Atmospheric Background Blobs */}
-      <div className="glow-blob glow-blob-primary w-[60%] h-[70%] -top-[20%] -left-[10%] opacity-15" aria-hidden="true" />
-      <div className="glow-blob glow-blob-secondary w-[50%] h-[60%] top-[10%] -right-[10%] opacity-15" aria-hidden="true" />
+      <div className="glow-blob glow-blob-primary w-[60%] h-[70%] -top-[20%] -left-[10%] opacity-20" aria-hidden="true" />
+      <div className="glow-blob glow-blob-gold w-[50%] h-[60%] top-[10%] -right-[10%] opacity-15" aria-hidden="true" />
       <div className="glow-blob glow-blob-primary w-[40%] h-[40%] bottom-[-10%] left-[20%] opacity-10" aria-hidden="true" />
       
       <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
@@ -130,15 +131,20 @@ export default function HeroSection() {
               <h1
                 className="leading-[1.06] tracking-[-0.03em] mx-auto lg:mx-0 max-w-2xl lg:max-w-none font-black text-balance"
                 style={{
-                  fontSize: "clamp(2rem, 5vw + 0.75rem, 5rem)",
+                  fontSize: "clamp(2.5rem, 5vw + 1rem, 5rem)",
                 }}
               >
                 <span className="block text-ink-950">
                   Kaderisasi Ummat
                 </span>
-                <span className="block mt-1 gradient-text-blue">
-                  Rabbani, Cendekia, <br className="hidden sm:block" />
-                  dan Mandiri
+                <span className="block mt-1 text-[var(--color-primary-700)]">
+                  <span className="bg-gradient-to-r from-[var(--color-primary-700)] to-[var(--color-secondary-600)] text-transparent bg-clip-text">
+                    Unggul, Cerdas, 
+                  </span>
+                  <br className="hidden sm:block" />
+                  <span className="bg-gradient-to-r from-[var(--color-primary-700)] to-[var(--color-secondary-600)] text-transparent bg-clip-text">
+                    dan Berintegritas
+                  </span>
                 </span>
               </h1>
             </motion.div>
@@ -159,7 +165,7 @@ export default function HeroSection() {
                 style={{ color: "var(--color-primary-700)" }}
               >
                 mengedepankan keteladanan para pendidik serta mendidik tanpa kekerasan dan luka pengasuhan
-              </strong>, memadukan Intensitas Tahfidz Al-Qur'an, Ilmu Syar'i, Akademik, dan Entrepreneurship.
+              </strong>, memadukan Intensitas Tahfidz Al-Qur'an, Ilmu Syar'i, Akademik, Leadership, dan Enterpreneurship.
             </motion.p>
 
             {/* Tagline Divider */}
@@ -198,12 +204,12 @@ export default function HeroSection() {
                 {session ? (
                   <Link href="/dashboard" className="w-full sm:w-auto">
                     <button
-                      className="btn-primary-blue w-full sm:w-auto px-10 lg:px-12 py-4 lg:py-[1.125rem] min-h-[56px] text-[0.9375rem] flex items-center justify-center gap-3 hover:scale-[1.02] active:scale-98 transition-all relative overflow-hidden group font-bold"
+                      className="btn-primary w-full sm:w-auto px-10 lg:px-12 py-4 lg:py-[1.125rem] min-h-[56px] text-[0.9375rem] flex items-center justify-center gap-3 hover:scale-[1.02] active:scale-98 transition-all relative overflow-hidden group font-bold"
                       style={{ boxShadow: "var(--shadow-primary-lg)" }}
                     >
                       <span className="flex h-2.5 w-2.5 relative">
-                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-300 opacity-75"></span>
-                        <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-blue-400"></span>
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-300 opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-400"></span>
                       </span>
                       <span>Lanjutkan Ke Dashboard</span>
                       <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
@@ -211,17 +217,17 @@ export default function HeroSection() {
                   </Link>
                 ) : (
                   <>
-                    <a href="/daftar" className="w-full sm:w-auto">
+                    <Link href="/ppdb" className="w-full sm:w-auto">
                       <button
-                        className="btn-primary-blue shine-hover w-full sm:w-auto px-8 lg:px-10 py-4 lg:py-[1.125rem] min-h-[56px] text-[0.9375rem] flex items-center justify-center gap-2.5 group font-bold"
+                        className="btn-primary shine-hover w-full sm:w-auto px-8 lg:px-10 py-4 lg:py-[1.125rem] min-h-[56px] text-[0.9375rem] flex items-center justify-center gap-2.5 group font-bold"
                         style={{ boxShadow: "var(--shadow-primary-lg)" }}
                       >
                         Daftar PPDB Sekarang
                         <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
                       </button>
-                    </a>
+                    </Link>
                     <Link href="/program" className="w-full sm:w-auto">
-                      <button className="btn-secondary-blue w-full sm:w-auto px-8 lg:px-10 py-4 lg:py-[1.125rem] min-h-[56px] text-[0.9375rem] flex items-center justify-center gap-2 group">
+                      <button className="btn-secondary w-full sm:w-auto px-8 lg:px-10 py-4 lg:py-[1.125rem] min-h-[56px] text-[0.9375rem] flex items-center justify-center gap-2 group">
                         Lihat Program Kami
                         <ArrowRight className="w-4 h-4 opacity-50 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0.5" />
                       </button>
@@ -259,9 +265,9 @@ export default function HeroSection() {
                     className="font-bold uppercase tracking-wide"
                     style={{ color: "var(--color-primary-700)" }}
                   >
-                    Angkatan Ke-4
+                    Angkatan Pertama
                   </span>
-                  {" • "} {BRANDING.schoolName}
+                  {" • "}Pesantren Al Fath
                 </p>
               </div>
 
@@ -310,7 +316,7 @@ export default function HeroSection() {
             >
               <Image
                 src="/images/hero.jpg"
-                alt={`${BRANDING.schoolName}`}
+                alt={`${BRANDING.schoolName} — Pesantren Al Fath`}
                 width={800}
                 height={600}
                 priority
@@ -336,6 +342,29 @@ export default function HeroSection() {
                 aria-hidden="true"
               />
             </div>
+
+            {/* Floating Card: Beasiswa — NEW highlight */}
+            <motion.div
+              animate={shouldReduceMotion ? {} : { y: [0, -12, 0] }}
+              transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+              className="absolute top-[-2%] -left-6 md:top-[5%] md:-left-20 lg:-left-28 z-20 scale-[0.8] md:scale-100"
+              style={{ transformOrigin: "left center" }}
+            >
+              <div className="glass-panel flex items-center gap-2 md:gap-3 px-3 md:px-4 py-2 md:py-3 rounded-xl md:rounded-2xl shadow-premium-lg border-amber-100">
+                <div className="icon-box w-9 h-9 md:w-11 md:h-11 rounded-lg md:rounded-xl bg-amber-500 text-white flex items-center justify-center shrink-0">
+                  <Gift className="w-4 h-4 md:w-5 md:h-5" />
+                </div>
+                <div>
+                  <p className="text-[9px] md:text-[10px] font-black uppercase tracking-wider mb-0.5 text-amber-600">Beasiswa</p>
+                  <p className="text-xs md:text-sm font-black leading-tight text-[var(--color-primary-900)]">
+                    Dhuafa Berprestasi
+                  </p>
+                  <p className="text-[9px] md:text-[10px] font-semibold mt-0.5 text-[var(--color-ink-500)]">
+                    Tersedia 10 Kuota
+                  </p>
+                </div>
+              </div>
+            </motion.div>
 
             {/* Floating Card: Tersedia — FIX #2 md breakpoint */}
             <motion.div
@@ -443,7 +472,7 @@ export default function HeroSection() {
 
             {/* Decorative glows */}
             <div className="glow-blob glow-blob-primary w-64 h-64 -bottom-14 -right-14 opacity-15" aria-hidden="true" />
-            <div className="glow-blob glow-blob-secondary w-48 h-48 -top-10 -left-10 opacity-20" aria-hidden="true" />
+            <div className="glow-blob glow-blob-gold w-48 h-48 -top-10 -left-10 opacity-20" aria-hidden="true" />
           </motion.div>
         </div>
       </Container>

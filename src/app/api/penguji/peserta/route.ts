@@ -20,7 +20,7 @@ export async function GET() {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const userId = session.id || session.user_id || session.sub;
+  const userId = session.user_id || session.id;
   const full_name = session.full_name || session.name || "Reviewer";
   console.log(
     `🔍 [API /penguji/peserta] userId: ${userId} | name: ${full_name}`,
@@ -35,9 +35,7 @@ export async function GET() {
     const allRoles = userProfile
       ? [userProfile.role, ...(userProfile.secondary_roles || [])]
       : [];
-    const isAdmin = allRoles.some((r) =>
-      ["admin_super", "admin", "head_of_it"].includes(r),
-    );
+    const isAdmin = allRoles.some((r) => ["admin_super", "admin"].includes(r));
 
     let whereClause: any = {};
     if (!isAdmin) {
@@ -46,8 +44,8 @@ export async function GET() {
           { penguji_santri_id: userId }, // Seleksi Wawancara Calon Santri (or general Interview)
           { penguji_quran_id: userId }, // Tes Quran
           { penguji_ortu_id: userId }, // Seleksi Wawancara Orang Tua
-          { penguji_hafalan_id: userId }, // Tes Hafalan
-          { penguji_arab_id: userId }, // Tes Bahasa Arab
+          { penguji_hafalan_id: userId }, // Tes Hafalan (MA)
+          { penguji_arab_id: userId }, // Tes Bahasa Arab (MA)
           { exam_session: { created_by: userId } }, // Sessions created by this penguji
         ],
       };
@@ -70,7 +68,6 @@ export async function GET() {
       },
       orderBy: { tanggal_ujian: "asc" },
     });
-    console.log(`🔍 [API /penguji/peserta] assigned count: ${assigned.length}`);
 
     // Fetch ALL jadwal records for the exam sessions we're dealing with
     // This is needed to properly match scores to their jadwal records
@@ -115,34 +112,48 @@ export async function GET() {
       // Determine roles for this jadwal record
       const roles: string[] = [];
       if (isAdmin) {
-        roles.push("wawancara", "quran", "ortu", "hafalan", "arab");
+        roles.push("wawancara", "quran", "ortu", "hafalan", "lisan_arab");
       } else {
         if (item.penguji_santri_id === userId) roles.push("wawancara");
-        if (item.penguji_quran_id === userId) roles.push("quran");
         if (item.penguji_ortu_id === userId) roles.push("ortu");
-        if (item.penguji_hafalan_id === userId) roles.push("hafalan");
-        if (item.penguji_arab_id === userId) roles.push("arab");
+        
+        // Handle MA specific logic where penguji_quran_id might be reused for hafalan & arab
+        if (item.penguji_quran_id === userId) {
+          const jenjang = (item.pendaftar.jenjang || "").toUpperCase();
+          if (jenjang.includes("MA")) {
+            roles.push("hafalan", "lisan_arab");
+          } else {
+            roles.push("quran");
+          }
+        }
+        
+        // Handle explicit hafalan & arab assignees (if used in future)
+        if ((item as any).penguji_hafalan_id === userId) roles.push("hafalan");
+        if ((item as any).penguji_arab_id === userId) roles.push("lisan_arab");
 
         if (roles.length === 0 && item.exam_session?.created_by === userId) {
           const title = (item.exam_session?.title || "").toLowerCase();
-          const hasQuranMatch =
-            title.includes("qur") || title.includes("quran");
-          const hasWawancaraMatch =
-            title.includes("calsan") ||
-            title.includes("santri") ||
-            title.includes("wawancara");
-          const hasOrtuMatch =
-            title.includes("cawalsan") ||
-            title.includes("ortu") ||
-            title.includes("orang");
+          const hasQuranMatch = title.includes("qur") || title.includes("quran");
+          const hasWawancaraMatch = title.includes("calsan") || title.includes("santri") || title.includes("wawancara");
+          const hasOrtuMatch = title.includes("cawalsan") || title.includes("ortu") || title.includes("orang");
           const hasHafalanMatch = title.includes("hafalan");
-          const hasArabMatch = title.includes("arab");
+          const hasLisanArabMatch = title.includes("arab") || title.includes("lisan");
 
-          if (hasQuranMatch && !hasHafalanMatch) roles.push("quran");
+          if (hasQuranMatch) roles.push("quran");
           if (hasWawancaraMatch) roles.push("wawancara");
           if (hasOrtuMatch) roles.push("ortu");
           if (hasHafalanMatch) roles.push("hafalan");
-          if (hasArabMatch) roles.push("arab");
+          if (hasLisanArabMatch) roles.push("lisan_arab");
+
+          // Fallback if title is generic like "Tes PPDB", just push based on jenjang so the card isn't blank
+          if (roles.length === 0) {
+            const jenjang = (item.pendaftar.jenjang || "").toUpperCase();
+            if (jenjang.includes("MA")) {
+              roles.push("hafalan", "lisan_arab");
+            } else {
+              roles.push("quran");
+            }
+          }
         }
       }
 
@@ -173,18 +184,6 @@ export async function GET() {
         "nilai_tes_tertulis",
         "nilai_tes_tertulis_total",
         "detail_akademik",
-        "nilai_hafalan_total",
-        "catatan_hafalan",
-        "detail_hafalan",
-        "input_at_hafalan",
-        "input_by_hafalan",
-        "score_hafalan",
-        "nilai_arab_total",
-        "catatan_arab",
-        "detail_arab",
-        "input_at_arab",
-        "input_by_arab",
-        "score_arab",
       ];
 
       // Merge all scores found, but apply session-aware logic
@@ -260,18 +259,8 @@ export async function GET() {
           input_at_quran: scoreData.input_at_quran,
           input_at_santri: scoreData.input_at_santri,
           input_at_ortu: scoreData.input_at_ortu,
-          nilai_hafalan_total: scoreData.nilai_hafalan_total,
-          catatan_hafalan: scoreData.catatan_hafalan,
-          detail_hafalan: scoreData.detail_hafalan,
           input_at_hafalan: scoreData.input_at_hafalan,
           input_at_arab: scoreData.input_at_arab,
-          input_at_hafalan: scoreData.input_at_hafalan,
-          score_hafalan: scoreData.score_hafalan,
-          nilai_arab_total: scoreData.nilai_arab_total,
-          catatan_arab: scoreData.catatan_arab,
-          detail_arab: scoreData.detail_arab,
-          input_at_arab: scoreData.input_at_arab,
-          score_arab: scoreData.score_arab,
           created_at: item.pendaftar.created_at,
         });
       }
@@ -383,22 +372,14 @@ export async function GET() {
           input_at_quran: scoreData.input_at_quran,
           input_at_santri: scoreData.input_at_santri,
           input_at_ortu: scoreData.input_at_ortu,
-          nilai_hafalan_total: scoreData.nilai_hafalan_total,
-          catatan_hafalan: scoreData.catatan_hafalan,
-          detail_hafalan: scoreData.detail_hafalan,
           input_at_hafalan: scoreData.input_at_hafalan,
-          score_hafalan: scoreData.score_hafalan,
-          nilai_arab_total: scoreData.nilai_arab_total,
-          catatan_arab: scoreData.catatan_arab,
-          detail_arab: scoreData.detail_arab,
           input_at_arab: scoreData.input_at_arab,
-          score_arab: scoreData.score_arab,
           created_at: item.pendaftar.created_at,
         });
       }
     }
 
-    let data = Array.from(pesertaMap.values());
+    const data = Array.from(pesertaMap.values());
 
     return NextResponse.json({ data });
   } catch (error: any) {
