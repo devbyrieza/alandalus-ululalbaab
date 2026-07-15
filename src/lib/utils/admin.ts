@@ -8,10 +8,6 @@ export function getAdminWhereClause(tahunAjaranId?: string): any {
   const where: any = {
     deleted_at: null,
     status_pendaftaran: { not: "mengundurkan_diri" },
-    NOT: [
-      { nama_lengkap: { startsWith: "TEST ", mode: "insensitive" } },
-      { nama_lengkap: { contains: "BYPASS", mode: "insensitive" } },
-    ],
   };
 
   if (tahunAjaranId) {
