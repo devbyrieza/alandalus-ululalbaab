@@ -641,17 +641,29 @@ export default function DataLengkapForm({
             autoGender = "Perempuan";
           }
 
+          // ==============================
+          // LOAD DRAFT DARI LOCALSTORAGE JIKA ADA
+          // ==============================
+          const localDraftStr = localStorage.getItem("ppdb_datalengkap_draft");
+          let initialData = { ...result.data };
+          if (localDraftStr) {
+            try {
+              const localDraft = JSON.parse(localDraftStr);
+              initialData = { ...initialData, ...localDraft };
+            } catch (e) {}
+          }
+
           setFormData((prev) => ({
             ...prev,
             santri: {
               ...prev.santri,
-              ...result.data.santri,
-              jenis_kelamin: autoGender,
+              ...initialData.santri,
+              jenis_kelamin: autoGender || initialData.santri?.jenis_kelamin || prev.santri.jenis_kelamin,
             },
-            ayah: { ...prev.ayah, ...result.data.ayah },
-            ibu: { ...prev.ibu, ...result.data.ibu },
-            wali: { ...prev.wali, ...result.data.wali },
-            wali_sama_dengan_ortu: result.data.wali_sama_dengan_ortu ?? true,
+            ayah: { ...prev.ayah, ...initialData.ayah },
+            ibu: { ...prev.ibu, ...initialData.ibu },
+            wali: { ...prev.wali, ...initialData.wali },
+            wali_sama_dengan_ortu: initialData.wali_sama_dengan_ortu !== undefined ? initialData.wali_sama_dengan_ortu : prev.wali_sama_dengan_ortu,
           }));
         }
 
@@ -687,6 +699,8 @@ export default function DataLengkapForm({
           body: JSON.stringify({ ...formData, is_draft: true }),
         });
         // Auto-save is silent, we don't show toast to user
+        // Save to local storage as fallback
+        localStorage.setItem("ppdb_datalengkap_draft", JSON.stringify(formData));
       } catch (err) {
         console.error("Background auto-save failed", err);
       }
@@ -715,6 +729,9 @@ export default function DataLengkapForm({
       if (!result.success) {
         throw new Error(result.error || "Gagal menyimpan data");
       }
+
+      // Bersihkan draft saat sukses submit data final
+      localStorage.removeItem("ppdb_datalengkap_draft");
 
       if (requestStatus?.status === "approved_to_edit") {
         const reqUpdate = await fetch("/api/pendaftar/request-edit", {
