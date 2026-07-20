@@ -523,6 +523,7 @@ export default function DataLengkapForm({
   const [requestStatus, setRequestStatus] = useState<any>(null);
   const [statusPendaftaran, setStatusPendaftaran] = useState<string>("draft");
   const [jenjang, setJenjang] = useState<string>("");
+  const [initialFormComplete, setInitialFormComplete] = useState<boolean | null>(null);
 
   const toggleSection = (section: keyof typeof openSections) => {
     setOpenSections((prev) => ({ ...prev, [section]: !prev[section] }));
@@ -858,14 +859,20 @@ export default function DataLengkapForm({
 
   // Form is locked if status is NOT in these open states
   const isFormComplete = Boolean(isSantriComplete && isAyahComplete && isIbuComplete && isWaliComplete);
+
+  useEffect(() => {
+    if (!loading && initialFormComplete === null) {
+      setInitialFormComplete(isFormComplete);
+    }
+  }, [loading, isFormComplete, initialFormComplete]);
+
   const isLocked = ![
     "draft",
     "awaiting_payment",
     "payment_verification",
     "verified",
-    "rejected",
-    "data_completed",
-  ].includes(statusPendaftaran) && isFormComplete;
+    "rejected"
+  ].includes(statusPendaftaran) && (initialFormComplete === true);
   const isEditMode = requestStatus?.status === "approved_to_edit";
   const canEdit = !isLocked || isEditMode;
 
