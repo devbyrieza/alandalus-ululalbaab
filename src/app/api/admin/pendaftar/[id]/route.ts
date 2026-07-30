@@ -540,11 +540,11 @@ export async function PATCH(
           pendaftar.jenis_kelamin,
           pendaftar.tahun_ajaran_id
         );
-      } catch (e) {
+      } catch (e: any) {
         return NextResponse.json({ error: e.message || "Gagal membuat nomor pendaftaran baru" }, { status: 500 });
       }
 
-      const dataLengkap = pendaftar.data_lengkap || {};
+      const dataLengkap = (pendaftar.data_lengkap as Record<string, any>) || {};
       if (!dataLengkap.santri) dataLengkap.santri = {};
       dataLengkap.santri.jenjang = body.jenjang;
 

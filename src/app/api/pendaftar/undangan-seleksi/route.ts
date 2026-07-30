@@ -230,9 +230,10 @@ export async function GET() {
     // Look at nilaiUjian from earlier
     const userNilai = nilaiUjian.length > 0 ? nilaiUjian[0] : null;
     
+    const syntheticBooked: any[] = [];
     if (userNilai) {
       // Helper function to check score existence robustly
-      const checkScore = (scoreField, detailField, rekomendasiField) => {
+      const checkScore = (scoreField: any, detailField: any, rekomendasiField: string) => {
         if (scoreField !== null) return true;
         if (detailField && typeof detailField === 'object') {
           return !!detailField[rekomendasiField] || !!detailField.nama_penguji;
@@ -242,12 +243,12 @@ export async function GET() {
 
       // 1. Quran
       if (!hasQuranBooking && checkScore((userNilai as any).nilai_tes_quran, (userNilai as any).detail_quran, 'rekomendasi')) {
-        booked.push({
+        syntheticBooked.push({
           id: "SYNTHETIC_QURAN",
           jenis_ujian: "Ujian Tahfidz/Al Qur'an (Admin/Jalur Khusus)",
-          tanggal_ujian: "Selesai",
-          waktu_mulai: "00:00",
-          waktu_selesai: "00:00", // Makes isSelesai = true in UI
+          tanggal_ujian: new Date(),
+          waktu_mulai: new Date(),
+          waktu_selesai: new Date(), // Makes isSelesai = true in UI
           lokasi: "-",
           keterangan: "Nilai telah disesuaikan oleh sistem/admin",
           category: "QURAN",
@@ -256,12 +257,12 @@ export async function GET() {
 
       // 2. Wawancara Santri
       if (!hasWawancaraSantriBooking && checkScore((userNilai as any).nilai_wawancara_santri, (userNilai as any).detail_wawancara, 'rekomendasi')) {
-        booked.push({
+        syntheticBooked.push({
           id: "SYNTHETIC_W_SANTRI",
           jenis_ujian: "Wawancara Calon Santri (Admin/Jalur Khusus)",
-          tanggal_ujian: "Selesai",
-          waktu_mulai: "00:00",
-          waktu_selesai: "00:00",
+          tanggal_ujian: new Date(),
+          waktu_mulai: new Date(),
+          waktu_selesai: new Date(),
           lokasi: "-",
           keterangan: "Nilai telah disesuaikan oleh sistem/admin",
           category: "W_SANTRI",
@@ -270,12 +271,12 @@ export async function GET() {
 
       // 3. Wawancara Ortu
       if (!hasWawancaraOrtuBooking && checkScore((userNilai as any).nilai_wawancara_ortu, (userNilai as any).detail_cawalsan, 'rekomendasi')) {
-        booked.push({
+        syntheticBooked.push({
           id: "SYNTHETIC_W_ORTU",
           jenis_ujian: "Wawancara Calon Orangtua/Wali (Admin/Jalur Khusus)",
-          tanggal_ujian: "Selesai",
-          waktu_mulai: "00:00",
-          waktu_selesai: "00:00",
+          tanggal_ujian: new Date(),
+          waktu_mulai: new Date(),
+          waktu_selesai: new Date(),
           lokasi: "-",
           keterangan: "Nilai telah disesuaikan oleh sistem/admin",
           category: "W_ORTU",
@@ -300,36 +301,39 @@ export async function GET() {
       }));
 
     // Transform booked jadwal
-    const booked = bookedJadwal.map((j) => {
-      const rawTitle = j.exam_session?.title || "Seleksi Santri Baru";
-      const hasScoreQuran = j.nilai_ujian?.some((n: any) => {
-        const q = n.detail_quran as any;
-        return n.nilai_tes_quran != null || !!(q && typeof q === "object" && (q.rekomendasi || q.nama_penguji));
-      });
-      const hasScoreSantri = j.nilai_ujian?.some((n: any) => {
-        const w = n.detail_wawancara as any;
-        return n.nilai_wawancara_santri != null || !!(w && typeof w === "object" && (w.rekomendasi || w.nama_penguji));
-      });
-      const hasScoreOrtu = j.nilai_ujian?.some((n: any) => {
-        const c = n.detail_cawalsan as any;
-        return n.nilai_wawancara_ortu != null || !!(c && typeof c === "object" && (c.rekomendasi || c.nama_penguji));
-      });
+    const booked = [
+      ...bookedJadwal.map((j) => {
+        const rawTitle = j.exam_session?.title || "Seleksi Santri Baru";
+        const hasScoreQuran = j.nilai_ujian?.some((n: any) => {
+          const q = n.detail_quran as any;
+          return n.nilai_tes_quran != null || !!(q && typeof q === "object" && (q.rekomendasi || q.nama_penguji));
+        });
+        const hasScoreSantri = j.nilai_ujian?.some((n: any) => {
+          const w = n.detail_wawancara as any;
+          return n.nilai_wawancara_santri != null || !!(w && typeof w === "object" && (w.rekomendasi || w.nama_penguji));
+        });
+        const hasScoreOrtu = j.nilai_ujian?.some((n: any) => {
+          const c = n.detail_cawalsan as any;
+          return n.nilai_wawancara_ortu != null || !!(c && typeof c === "object" && (c.rekomendasi || c.nama_penguji));
+        });
 
-      return {
-        id: j.id,
-        jenis_ujian: sanitizeTitle(rawTitle),
-        category: getExamCategory(rawTitle),
-        tanggal_ujian: j.tanggal_ujian,
-        waktu_mulai: j.exam_session?.start_time || j.waktu_mulai_santri,
-        waktu_selesai: j.exam_session?.end_time || j.waktu_selesai_santri,
-        lokasi: j.exam_session?.location || j.tempat_santri,
-        keterangan: j.catatan || j.exam_session?.notes,
-        online_test_link: j.online_test_link,
-        status_santri: hasScoreSantri ? "completed" : j.status_santri,
-        status_quran: hasScoreQuran ? "completed" : j.status_quran,
-        status_ortu: hasScoreOrtu ? "completed" : j.status_ortu,
-      };
-    });
+        return {
+          id: j.id,
+          jenis_ujian: sanitizeTitle(rawTitle),
+          category: getExamCategory(rawTitle),
+          tanggal_ujian: j.tanggal_ujian,
+          waktu_mulai: j.exam_session?.start_time || j.waktu_mulai_santri,
+          waktu_selesai: j.exam_session?.end_time || j.waktu_selesai_santri,
+          lokasi: j.exam_session?.location || j.tempat_santri,
+          keterangan: j.catatan || j.exam_session?.notes,
+          online_test_link: j.online_test_link,
+          status_santri: hasScoreSantri ? "completed" : j.status_santri,
+          status_quran: hasScoreQuran ? "completed" : j.status_quran,
+          status_ortu: hasScoreOrtu ? "completed" : j.status_ortu,
+        };
+      }),
+      ...syntheticBooked
+    ];
 
     // Calculate overall progress
     // Grup B: only count as completed when status is "completed", not just "scheduled"
