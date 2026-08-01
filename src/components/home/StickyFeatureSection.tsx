@@ -18,7 +18,7 @@ const FEATURES = [
       "Matematika & Sains modern",
       "Program bahasa Arab & Inggris aktif"
     ],
-    image: "/images/pembelajaran-kitab-turotz.webp",
+    image: "/images/kelas-dari-dalam.webp",
   },
   {
     id: "pengasuhan",
@@ -31,7 +31,7 @@ const FEATURES = [
       "Konseling psikologi berkala",
       "Pengembangan kecerdasan emosional"
     ],
-    image: "/images/tahfidz.webp",
+    image: "/images/masjid.webp",
   },
   {
     id: "fasilitas",

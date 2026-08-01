@@ -16,11 +16,11 @@ const BOARD_MEMBERS = [
     image: "/images/muhammad-arifin-badri.webp",
   },
   { name: "Ustadz Wahab Rajasam, M.Pd", image: "/images/wahab-rajasam.webp" },
-  { name: "KH. Dudun Abdul Gofar", image: "/images/dudun-abdul-gofar.webp" },
+  { name: "KH. Dudun Abdul Gofar", image: "" },
   { name: "Bpk. Tarmen Tascha, SE", image: "/images/tarmen-tascha.webp" },
   {
     name: "Ustadz Dwi Wahyu Iskandar, M.Pd",
-    image: "/images/dwi-wahyu-iskandar.webp",
+    image: "",
   },
 ] as const;
 
