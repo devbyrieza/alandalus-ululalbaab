@@ -28,6 +28,26 @@ export default function AdminTambahPendaftar() {
     catatan_pindahan: "",
   });
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      try {
+        const draft = localStorage.getItem("al_andalus_admin_tambah_pendaftar_draft");
+        if (draft) {
+          const parsed = JSON.parse(draft);
+          setFormData((prev) => ({ ...prev, ...parsed }));
+        }
+      } catch (e) {
+        console.error("Failed to parse admin tambah draft", e);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (typeof window !== "undefined" && (formData.nik || formData.nama_lengkap || formData.no_hp)) {
+      localStorage.setItem("al_andalus_admin_tambah_pendaftar_draft", JSON.stringify(formData));
+    }
+  }, [formData]);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
@@ -53,6 +73,10 @@ export default function AdminTambahPendaftar() {
 
       if (!res.ok) {
         throw new Error(data.error || "Terjadi kesalahan");
+      }
+
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("al_andalus_admin_tambah_pendaftar_draft");
       }
 
       Swal.fire({

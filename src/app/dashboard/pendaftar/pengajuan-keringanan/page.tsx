@@ -32,7 +32,28 @@ export default function PengajuanKeringananPage() {
 
   useEffect(() => {
     fetchData();
+    if (typeof window !== "undefined") {
+      try {
+        const draft = localStorage.getItem("al_andalus_pengajuan_keringanan_draft");
+        if (draft) {
+          const parsed = JSON.parse(draft);
+          if (parsed.kesanggupanBayar) setKesanggupanBayar(parsed.kesanggupanBayar);
+          if (parsed.alasan) setAlasan(parsed.alasan);
+        }
+      } catch (e) {
+        console.error("Failed to parse keringanan draft", e);
+      }
+    }
   }, []);
+
+  useEffect(() => {
+    if (typeof window !== "undefined" && (kesanggupanBayar || alasan)) {
+      localStorage.setItem(
+        "al_andalus_pengajuan_keringanan_draft",
+        JSON.stringify({ kesanggupanBayar, alasan })
+      );
+    }
+  }, [kesanggupanBayar, alasan]);
 
   const fetchData = async () => {
     try {
@@ -101,6 +122,9 @@ export default function PengajuanKeringananPage() {
       const json = await res.json();
       if (!res.ok) throw new Error(json.error || "Gagal mengirim pengajuan");
 
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("al_andalus_pengajuan_keringanan_draft");
+      }
       setMessage({
         type: "success",
         text: "Pengajuan berhasil dikirim dan sedang dalam proses peninjauan oleh Tim Finance.",

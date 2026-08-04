@@ -33,6 +33,9 @@ function DaftarSuksesContent() {
   useEffect(() => {
     if (typeof window !== "undefined") {
       sessionStorage.removeItem("pendaftaran_form");
+      sessionStorage.removeItem("pendaftaran_pindahan_form");
+      localStorage.removeItem("al_andalus_daftar_draft");
+      localStorage.removeItem("al_andalus_daftar_pindahan_draft");
     }
   }, []);
 

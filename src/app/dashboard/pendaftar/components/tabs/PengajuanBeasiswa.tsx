@@ -203,7 +203,29 @@ export default function PengajuanBeasiswaTab() {
 
   useEffect(() => {
     fetchData();
+    if (typeof window !== "undefined") {
+      try {
+        const draft = localStorage.getItem("al_andalus_beasiswa_draft");
+        if (draft) {
+          const parsed = JSON.parse(draft);
+          if (parsed.jenisPengajuan) setJenisPengajuan(parsed.jenisPengajuan);
+          if (parsed.alasanPengajuan) setAlasanPengajuan(parsed.alasanPengajuan);
+          if (parsed.nominalKesanggupan) setNominalKesanggupan(parsed.nominalKesanggupan);
+        }
+      } catch (e) {
+        console.error("Failed to parse beasiswa draft", e);
+      }
+    }
   }, []);
+
+  useEffect(() => {
+    if (typeof window !== "undefined" && (alasanPengajuan || nominalKesanggupan)) {
+      localStorage.setItem(
+        "al_andalus_beasiswa_draft",
+        JSON.stringify({ jenisPengajuan, alasanPengajuan, nominalKesanggupan })
+      );
+    }
+  }, [jenisPengajuan, alasanPengajuan, nominalKesanggupan]);
 
   const fetchData = async () => {
     try {
@@ -293,6 +315,9 @@ export default function PengajuanBeasiswaTab() {
 
       const result = await res.json();
       if (result.success) {
+        if (typeof window !== "undefined") {
+          localStorage.removeItem("al_andalus_beasiswa_draft");
+        }
         Swal.fire(
           "Berhasil",
           "Pengajuan berhasil dikirim dan akan diverifikasi",
