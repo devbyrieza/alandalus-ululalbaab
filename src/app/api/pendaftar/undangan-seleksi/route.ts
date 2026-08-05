@@ -1,5 +1,5 @@
-/**
- * Jadwal Seleksi API — Main data endpoint for the dashboard.
+﻿/**
+ * Jadwal Seleksi API â€” Main data endpoint for the dashboard.
  *
  * Returns:
  * - Grup A test completion status (akademik, kepribadian, kesiapan)
@@ -65,15 +65,29 @@ async function getSession() {
   }
 }
 
-export async function GET() {
+export async function GET(request: Request) {
   const session = await getSession();
-  if (!session || session.role !== "pendaftar") {
+  
+  const { searchParams } = new URL(request.url);
+  const targetPendaftarId = searchParams.get("pendaftarId");
+
+  let pendaftarId = "";
+  let isAdminBypass = false;
+
+  if (session?.role === "admin_super" || session?.role === "admin" || session?.role === "penguji") {
+    if (targetPendaftarId) {
+      pendaftarId = targetPendaftarId;
+      isAdminBypass = true;
+    } else {
+      return NextResponse.json({ error: "Unauthorized or missing pendaftarId" }, { status: 401 });
+    }
+  } else if (session?.role === "pendaftar") {
+    pendaftarId = session.id;
+  } else {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   try {
-    const pendaftarId = session.id;
-
     // 1. Fetch pendaftar with notification flags and status
     const pendaftar = await prisma.pendaftar.findUnique({
       where: { id: pendaftarId },
@@ -110,7 +124,7 @@ export async function GET() {
       pendaftar.status_pendaftaran || "",
     );
 
-    if (isLocked) {
+    if (isLocked && !isAdminBypass) {
       return NextResponse.json({
         data: {
           locked: true,
@@ -121,7 +135,26 @@ export async function GET() {
       });
     }
 
-    // 2. Fetch Grup A — Online test completion status
+    // â”€â”€ EARLY EXIT: Seleksi sudah selesai & pendaftar sudah accepted/enrolled â”€â”€
+    // Tampilkan halaman "Seleksi Selesai" daripada form jadwal
+    const SELEKSI_DONE_STATUSES = ["accepted", "enrolled"];
+    if (SELEKSI_DONE_STATUSES.includes(pendaftar.status_pendaftaran || "")) {
+      return NextResponse.json({
+        data: {
+          condition: "seleksi_selesai",
+          current_status: pendaftar.status_pendaftaran,
+          grupA: {
+            akademik: { completed: true, label: "Kemampuan Dasar Akademik" },
+            kepribadian: { completed: true, label: "Identifikasi Kepribadian" },
+            kesiapan: { completed: true, label: "Seleksi Kesiapan" },
+          },
+          grupB: { hasSchedules: false, availableSlots: [], booked: [] },
+          progress: { completed: 6, total: 6, percentage: 100 },
+        },
+      });
+    }
+
+    // 2. Fetch Grup A â€” Online test completion status
     const nilaiUjian = await prisma.nilaiUjian.findMany({
       where: { pendaftar_id: pendaftarId },
       select: { score_akademik: true, score_kepribadian: true, score_kesiapan: true, detail_akademik: true, detail_kepribadian: true, detail_kesiapan: true, nilai_tes_quran: true, detail_quran: true, nilai_wawancara_santri: true, detail_wawancara: true, nilai_wawancara_ortu: true, detail_cawalsan: true },
@@ -147,6 +180,7 @@ export async function GET() {
       kesiapan: { completed: hasKesiapan, label: "Seleksi Kesiapan" },
     };
 
+    // 3. Fetch Grup B â€” Available exam sessions (future, active)
     const availableSessions = await prisma.examSession.findMany({
       where: {
         is_active: true,
@@ -230,10 +264,9 @@ export async function GET() {
     // Look at nilaiUjian from earlier
     const userNilai = nilaiUjian.length > 0 ? nilaiUjian[0] : null;
     
-    const syntheticBooked: any[] = [];
     if (userNilai) {
       // Helper function to check score existence robustly
-      const checkScore = (scoreField: any, detailField: any, rekomendasiField: string) => {
+      const checkScore = (scoreField, detailField, rekomendasiField) => {
         if (scoreField !== null) return true;
         if (detailField && typeof detailField === 'object') {
           return !!detailField[rekomendasiField] || !!detailField.nama_penguji;
@@ -243,12 +276,12 @@ export async function GET() {
 
       // 1. Quran
       if (!hasQuranBooking && checkScore((userNilai as any).nilai_tes_quran, (userNilai as any).detail_quran, 'rekomendasi')) {
-        syntheticBooked.push({
+        booked.push({
           id: "SYNTHETIC_QURAN",
           jenis_ujian: "Ujian Tahfidz/Al Qur'an (Admin/Jalur Khusus)",
-          tanggal_ujian: new Date(),
-          waktu_mulai: new Date(),
-          waktu_selesai: new Date(), // Makes isSelesai = true in UI
+          tanggal_ujian: "Selesai",
+          waktu_mulai: "00:00",
+          waktu_selesai: "00:00", // Makes isSelesai = true in UI
           lokasi: "-",
           keterangan: "Nilai telah disesuaikan oleh sistem/admin",
           category: "QURAN",
@@ -257,12 +290,12 @@ export async function GET() {
 
       // 2. Wawancara Santri
       if (!hasWawancaraSantriBooking && checkScore((userNilai as any).nilai_wawancara_santri, (userNilai as any).detail_wawancara, 'rekomendasi')) {
-        syntheticBooked.push({
+        booked.push({
           id: "SYNTHETIC_W_SANTRI",
           jenis_ujian: "Wawancara Calon Santri (Admin/Jalur Khusus)",
-          tanggal_ujian: new Date(),
-          waktu_mulai: new Date(),
-          waktu_selesai: new Date(),
+          tanggal_ujian: "Selesai",
+          waktu_mulai: "00:00",
+          waktu_selesai: "00:00",
           lokasi: "-",
           keterangan: "Nilai telah disesuaikan oleh sistem/admin",
           category: "W_SANTRI",
@@ -271,12 +304,12 @@ export async function GET() {
 
       // 3. Wawancara Ortu
       if (!hasWawancaraOrtuBooking && checkScore((userNilai as any).nilai_wawancara_ortu, (userNilai as any).detail_cawalsan, 'rekomendasi')) {
-        syntheticBooked.push({
+        booked.push({
           id: "SYNTHETIC_W_ORTU",
           jenis_ujian: "Wawancara Calon Orangtua/Wali (Admin/Jalur Khusus)",
-          tanggal_ujian: new Date(),
-          waktu_mulai: new Date(),
-          waktu_selesai: new Date(),
+          tanggal_ujian: "Selesai",
+          waktu_mulai: "00:00",
+          waktu_selesai: "00:00",
           lokasi: "-",
           keterangan: "Nilai telah disesuaikan oleh sistem/admin",
           category: "W_ORTU",
@@ -301,39 +334,36 @@ export async function GET() {
       }));
 
     // Transform booked jadwal
-    const booked = [
-      ...bookedJadwal.map((j) => {
-        const rawTitle = j.exam_session?.title || "Seleksi Santri Baru";
-        const hasScoreQuran = j.nilai_ujian?.some((n: any) => {
-          const q = n.detail_quran as any;
-          return n.nilai_tes_quran != null || !!(q && typeof q === "object" && (q.rekomendasi || q.nama_penguji));
-        });
-        const hasScoreSantri = j.nilai_ujian?.some((n: any) => {
-          const w = n.detail_wawancara as any;
-          return n.nilai_wawancara_santri != null || !!(w && typeof w === "object" && (w.rekomendasi || w.nama_penguji));
-        });
-        const hasScoreOrtu = j.nilai_ujian?.some((n: any) => {
-          const c = n.detail_cawalsan as any;
-          return n.nilai_wawancara_ortu != null || !!(c && typeof c === "object" && (c.rekomendasi || c.nama_penguji));
-        });
+    const booked = bookedJadwal.map((j) => {
+      const rawTitle = j.exam_session?.title || "Seleksi Santri Baru";
+      const hasScoreQuran = j.nilai_ujian?.some((n: any) => {
+        const q = n.detail_quran as any;
+        return n.nilai_tes_quran != null || !!(q && typeof q === "object" && (q.rekomendasi || q.nama_penguji));
+      });
+      const hasScoreSantri = j.nilai_ujian?.some((n: any) => {
+        const w = n.detail_wawancara as any;
+        return n.nilai_wawancara_santri != null || !!(w && typeof w === "object" && (w.rekomendasi || w.nama_penguji));
+      });
+      const hasScoreOrtu = j.nilai_ujian?.some((n: any) => {
+        const c = n.detail_cawalsan as any;
+        return n.nilai_wawancara_ortu != null || !!(c && typeof c === "object" && (c.rekomendasi || c.nama_penguji));
+      });
 
-        return {
-          id: j.id,
-          jenis_ujian: sanitizeTitle(rawTitle),
-          category: getExamCategory(rawTitle),
-          tanggal_ujian: j.tanggal_ujian,
-          waktu_mulai: j.exam_session?.start_time || j.waktu_mulai_santri,
-          waktu_selesai: j.exam_session?.end_time || j.waktu_selesai_santri,
-          lokasi: j.exam_session?.location || j.tempat_santri,
-          keterangan: j.catatan || j.exam_session?.notes,
-          online_test_link: j.online_test_link,
-          status_santri: hasScoreSantri ? "completed" : j.status_santri,
-          status_quran: hasScoreQuran ? "completed" : j.status_quran,
-          status_ortu: hasScoreOrtu ? "completed" : j.status_ortu,
-        };
-      }),
-      ...syntheticBooked
-    ];
+      return {
+        id: j.id,
+        jenis_ujian: sanitizeTitle(rawTitle),
+        category: getExamCategory(rawTitle),
+        tanggal_ujian: j.tanggal_ujian,
+        waktu_mulai: j.exam_session?.start_time || j.waktu_mulai_santri,
+        waktu_selesai: j.exam_session?.end_time || j.waktu_selesai_santri,
+        lokasi: j.exam_session?.location || j.tempat_santri,
+        keterangan: j.catatan || j.exam_session?.notes,
+        online_test_link: j.online_test_link,
+        status_santri: hasScoreSantri ? "completed" : j.status_santri,
+        status_quran: hasScoreQuran ? "completed" : j.status_quran,
+        status_ortu: hasScoreOrtu ? "completed" : j.status_ortu,
+      };
+    });
 
     // Calculate overall progress
     // Grup B: only count as completed when status is "completed", not just "scheduled"
@@ -392,3 +422,4 @@ export async function GET() {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
+
