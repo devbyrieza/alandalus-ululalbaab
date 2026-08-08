@@ -5,7 +5,7 @@ import path from 'path';
 const prisma = new PrismaClient();
 
 async function main() {
-    const filePath = path.join(process.cwd(), '3. KANGGE SK Penerimaan santri baru 2026-2027 2.xlsx');
+    const filePath = path.join(process.cwd(), '3. KANGGE SK Penerimaan santri baru 2027-2028 2.xlsx');
     const workbook = XLSX.readFile(filePath);
     const sheetName = 'SK Penerimaan Santri';
     const worksheet = workbook.Sheets[sheetName];

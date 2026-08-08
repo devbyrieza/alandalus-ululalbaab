@@ -5,7 +5,7 @@ import path from 'path';
 const prisma = new PrismaClient();
 
 async function main() {
-    const mdPath = path.join(process.cwd(), 'DATA_SANTRI_ULUL_ALBAAB_2026-2027-1.md');
+    const mdPath = path.join(process.cwd(), 'DATA_SANTRI_ULUL_ALBAAB_2027-2028-1.md');
     if (!fs.existsSync(mdPath)) {
         console.error('Markdown file not found:', mdPath);
         process.exit(1);

@@ -5,7 +5,7 @@ import path from 'path';
 const prisma = new PrismaClient();
 
 async function main() {
-    const filePath = path.join(process.cwd(), 'Data_Santri_Putri_UlulAlbaab_2026-2027.xlsx');
+    const filePath = path.join(process.cwd(), 'Data_Santri_Putri_UlulAlbaab_2027-2028.xlsx');
     const workbook = XLSX.readFile(filePath);
     
     const activeTA = await prisma.tahunAjaran.findFirst({

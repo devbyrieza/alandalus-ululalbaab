@@ -64,7 +64,7 @@ export default function TentangPage() {
             Pesantren Al Andalus Ulul Albaab Sukabumi, cabang resmi dari Al Andalus
             International Islamic Boarding School (IIBS) Jonggol, Bogor. Memadukan intensitas
             Tahfidz Al-Qur'an dengan kurikulum TICE (Tahfizh, Islamic, & Entrepreneurship) untuk
-            Kaderisasi Ummat Rabbani, Cendekia, dan Mandiri. Tahun Ajaran 2026/2027 adalah Angkatan ke-4 sejak dikelola Al Andalus IIBS.
+            Kaderisasi Ummat Rabbani, Cendekia, dan Mandiri. Tahun Ajaran 2027-2028 adalah Angkatan ke-4 sejak dikelola Al Andalus IIBS.
           </motion.p>
         </Container>
       </section>
@@ -197,7 +197,7 @@ export default function TentangPage() {
                     <span className="text-primary-700 italic font-bold">
                       Al Andalus International Islamic Boarding School (IIBS)
                     </span>{" "}
-                    (Jonggol, Bogor). Tahun pelajaran 2026/2027 merupakan
+                    (Jonggol, Bogor). Tahun pelajaran 2027-2028 merupakan
                     angkatan ke-4 sejak resmi dikelola Al Andalus IIBS.
                   </p>
                   <p>

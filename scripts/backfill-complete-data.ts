@@ -499,7 +499,7 @@ async function main() {
     noMatchList.forEach((n, i) => console.log(`   ${i + 1}. ${n}`));
   } else if (noMatchList.length > 30) {
     console.log(`\n⚠️  ${noMatchList.length} pendaftar tidak ditemukan di SQL lama.`);
-    console.log('   (Kemungkinan ini adalah pendaftar baru tahun 2026/2027)');
+    console.log('   (Kemungkinan ini adalah pendaftar baru tahun 2027-2028)');
   }
 
   console.log('\n✨ Selesai!');

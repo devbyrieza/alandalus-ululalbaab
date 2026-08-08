@@ -154,7 +154,7 @@ export default function PengumumanTab() {
                 Hasil Seleksi
               </h1>
               <p className="text-secondary-100/80 font-medium text-lg">
-                Penerimaan Santri Baru TP 2026/2027
+                Penerimaan Santri Baru TP 2027-2028
               </p>
             </div>
           </div>

@@ -27,7 +27,7 @@ async function main() {
             tahunAjaran = await prisma.tahunAjaran.update({
                 where: { id: tahunAjaran.id },
                 data: {
-                    nama: '2026/2027',
+                    nama: '2027-2028',
                     tahun_mulai: 2026,
                     tahun_selesai: 2027,
                 }
@@ -45,7 +45,7 @@ async function main() {
                     id: '11111111-1111-1111-1111-111111111111',
                     tahun_mulai: 2026,
                     tahun_selesai: 2027,
-                    nama: '2026/2027',
+                    nama: '2027-2028',
                     is_active: true,
                     tanggal_buka_pendaftaran: new Date('2026-01-01'),
                     tanggal_tutup_pendaftaran: new Date('2026-12-31'),

@@ -1,8 +1,8 @@
 # Data Santri Ponpes Al Andalus Ulul Albaab
-## Tahun Pelajaran 2026/2027
+## Tahun Pelajaran 2027-2028
 ## Data Pembayaran Uang Pangkal
 
-> **Sumber:** File `Update_DATA_UP_2026-2027.xlsx`
+> **Sumber:** File `Update_DATA_UP_2027-2028.xlsx`
 > **Sheet digunakan:** `Fixed Data` (versi terbaru/terupdate)
 > **Total Santri:** 114 orang (+ 1 tambahan di bawah tabel)
 

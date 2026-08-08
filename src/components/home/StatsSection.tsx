@@ -38,7 +38,7 @@ const STATS: Stat[] = [
     icon: Calendar,
     color: "blue",
     suffix: "",
-    sublabel: "Tahun Ajaran 2026/2027",
+    sublabel: "Tahun Ajaran 2027-2028",
     description: "Tahun ke-4 Membangun Generasi",
   },
   {
