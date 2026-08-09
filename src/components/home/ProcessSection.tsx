@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import {
@@ -14,47 +14,48 @@ import {
 import { Container } from "@/components/layout/Container";
 import { motion } from "framer-motion";
 
-// ─── Data ────────────────────────────────────────────
+// â”€â”€â”€ Data â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const STEPS = [
   {
     icon: UserPlus,
     title: "Buat Akun",
-    description:
-      "Daftarkan data diri awal dan buat akun pendaftaran santri baru.",
+    description: "Mendaftar dan mengisi form pendaftaran awal.",
     accent: "blue" as const,
   },
   {
     icon: CreditCard,
     title: "Pembayaran",
-    description:
-      "Bayar biaya daftar & unggah bukti transfer ke dashboard online.",
+    description: "Membayar biaya pendaftaran seleksi calon santri baru.",
     accent: "amber" as const,
   },
   {
     icon: FileText,
-    title: "Lengkapi Berkas",
-    description:
-      "Isi form biodata lengkap dan unggah dokumen persyaratan digital.",
+    title: "Lengkapi Data",
+    description: "Mengisi data lengkap calon santri dan orangtua/wali.",
     accent: "blue" as const,
   },
   {
     icon: ClipboardCheck,
-    title: "Seleksi",
-    description:
-      "Hadiri dan ikuti ujian seleksi Al-Qur'an, wawancara, dan tes tulis.",
+    title: "Upload Berkas",
+    description: "Upload berkas persyaratan (Rapor, KK, Akte, dll).",
     accent: "amber" as const,
+  },
+  {
+    icon: GraduationCap,
+    title: "Tes Seleksi",
+    description: "Mengikuti ujian tes tertulis dan wawancara.",
+    accent: "blue" as const,
   },
   {
     icon: BellRing,
     title: "Pengumuman",
-    description: "Lihat hasil kelulusan seleksi melalui dashboard & WhatsApp.",
-    accent: "blue" as const,
+    description: "Pengumuman hasil kelulusan seleksi PPDB.",
+    accent: "amber" as const,
   },
   {
-    icon: GraduationCap,
+    icon: CheckCircle2,
     title: "Daftar Ulang",
-    description:
-      "Lengkapi administrasi akhir setelah dinyatakan lolos seleksi.",
+    description: "Membayar uang pangkal dan SPP bulan pertama.",
     accent: "blue" as const,
   },
 ] as const;
@@ -74,7 +75,7 @@ const ACCENT_MAP = {
   },
 };
 
-// ─── Step Card ────────────────────────────────────────
+// â”€â”€â”€ Step Card â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function StepCard({
   icon: Icon,
   title,
@@ -135,7 +136,7 @@ function StepCard({
   );
 }
 
-// ─── Main ─────────────────────────────────────────────
+// â”€â”€â”€ Main â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 export default function ProcessSection() {
   return (
     <section
@@ -192,7 +193,7 @@ export default function ProcessSection() {
           </motion.p>
         </div>
 
-        <div className="relative grid grid-cols-1 lg:grid-cols-6 gap-1 md:gap-0 max-w-5xl mx-auto">
+        <div className="relative grid grid-cols-1 lg:grid-cols-7 gap-1 md:gap-0 max-w-5xl mx-auto">
           {STEPS.map((step, idx) => (
             <StepCard
               key={idx}
@@ -224,3 +225,5 @@ export default function ProcessSection() {
     </section>
   );
 }
+
+
