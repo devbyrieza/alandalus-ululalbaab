@@ -962,6 +962,16 @@ function AdminPendaftarContent() {
   };
 
   const handleExport = async (type: "excel" | "pdf") => {
+    if (type === "excel") {
+      Swal.fire({
+        title: 'Fitur Terkunci 👑',
+        text: 'Fitur Export Excel Lengkap (Laporan Data Otomatis) hanya tersedia di versi Gold/Platinum. Hubungi Tim Pusat/Developer untuk melakukan Upgrade.',
+        icon: 'info',
+        confirmButtonColor: '#3b82f6',
+        confirmButtonText: 'Mengerti'
+      });
+      return;
+    }
     try {
       setExporting(true);
       const params = new URLSearchParams();

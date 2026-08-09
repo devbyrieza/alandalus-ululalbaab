@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import {
@@ -49,7 +49,7 @@ export default function Footer() {
         borderTop: "1px solid rgba(255,255,255,0.05)",
       }}
     >
-      {/* ── Decorative orbs — blue + yellow (energik, dua warna) ── */}
+      {/* â”€â”€ Decorative orbs â€” blue + yellow (energik, dua warna) â”€â”€ */}
       {/* Orb utama: biru cerah kanan-atas */}
       <div
         className="absolute top-0 right-0 w-[520px] h-[520px] rounded-full pointer-events-none -translate-y-1/2 translate-x-1/3"
@@ -58,7 +58,7 @@ export default function Footer() {
             "radial-gradient(circle, rgba(3,105,199,0.22) 0%, transparent 70%)",
         }}
       />
-      {/* Orb aksen: kuning kiri-bawah — signature Ulul Albaab */}
+      {/* Orb aksen: kuning kiri-bawah â€” signature Ulul Albaab */}
       <div
         className="absolute bottom-0 left-0 w-[280px] h-[280px] rounded-full pointer-events-none translate-y-1/2 -translate-x-1/4"
         style={{
@@ -85,7 +85,7 @@ export default function Footer() {
 
       <Container className="relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-10 mb-16">
-          {/* ── Brand Info ── */}
+          {/* â”€â”€ Brand Info â”€â”€ */}
           <div className="lg:col-span-1 space-y-8">
             <Link href="/" className="flex items-center gap-4 group">
               <div
@@ -161,7 +161,7 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* ── Lembaga Links ── */}
+          {/* â”€â”€ Lembaga Links â”€â”€ */}
           <div className="space-y-6">
             <h4
               className="text-xs font-black uppercase tracking-[0.12em]"
@@ -195,7 +195,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* ── Informasi Links ── */}
+          {/* â”€â”€ Informasi Links â”€â”€ */}
           <div className="space-y-6">
             <h4
               className="text-xs font-black uppercase tracking-[0.12em]"
@@ -225,7 +225,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* ── Kontak ── */}
+          {/* â”€â”€ Kontak â”€â”€ */}
           <div className="space-y-6">
             <h4
               className="text-xs font-black uppercase tracking-[0.12em]"
@@ -300,7 +300,7 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* ── Bottom Bar ── */}
+        {/* â”€â”€ Bottom Bar â”€â”€ */}
         <div
           className="pt-8 flex flex-col md:flex-row justify-between items-center gap-5"
           style={{ borderTop: "1px solid rgba(255,255,255,0.07)" }}
@@ -333,7 +333,7 @@ export default function Footer() {
               </Link>
             ))}
 
-            {/* Language toggle — yellow accent */}
+            {/* Language toggle â€” yellow accent */}
             <div
               className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold"
               style={{
@@ -351,3 +351,4 @@ export default function Footer() {
     </footer>
   );
 }
+
