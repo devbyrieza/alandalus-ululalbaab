@@ -98,7 +98,7 @@ export default function DaftarPage() {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const savedData = localStorage.getItem("al_andalus_daftar_draft") || sessionStorage.getItem("pendaftaran_form");
+      const savedData = null;
       if (savedData) {
         try {
           const parsed = JSON.parse(savedData);
@@ -123,8 +123,8 @@ export default function DaftarPage() {
   useEffect(() => {
     if (typeof window !== "undefined") {
       const timeoutId = setTimeout(() => {
-        localStorage.setItem("al_andalus_daftar_draft", JSON.stringify(formData));
-        sessionStorage.setItem("pendaftaran_form", JSON.stringify(formData));
+        // localStorage.setItem("al_andalus_daftar_draft", JSON.stringify(formData));
+        // sessionStorage.setItem("pendaftaran_form", JSON.stringify(formData));
       }, 500);
       return () => clearTimeout(timeoutId);
     }
@@ -327,8 +327,8 @@ export default function DaftarPage() {
                         });
 
                         if (result.isConfirmed) {
-                          localStorage.removeItem("al_andalus_daftar_draft");
-                          sessionStorage.removeItem("pendaftaran_form");
+                          // localStorage.removeItem("al_andalus_daftar_draft");
+                          // sessionStorage.removeItem("pendaftaran_form");
                           setFormData({
                             nik: "",
                             nama_lengkap: "",
