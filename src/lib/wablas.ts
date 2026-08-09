@@ -470,9 +470,12 @@ Panitia PPDB Al Andalus Ulul Albaab`,
 /**
  * Send registration success notification
  */
-
-  return { status: true, message: "FEATURE_LOCKED" }; // Enforced by tier strategy
-
+export async function notifyRegistrationSuccess(data: {
+  phone: string | null;
+  nama: string;
+  nomor_pendaftaran: string;
+  jenjang: string;
+}) {
   if (!data.phone) return { status: false, message: "Phone number missing" };
   return sendTemplate({
     phone: data.phone,
