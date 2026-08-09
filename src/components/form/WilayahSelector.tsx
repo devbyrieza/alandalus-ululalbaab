@@ -224,12 +224,7 @@ function WilayahSelect({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -4, scale: 0.98 }}
             transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
-            className="
-              absolute z-50 top-[calc(100%+6px)] left-0 right-0
-              bg-white border border-primary-200 rounded-xl
-              shadow-[var(--shadow-premium-lg)]
-              overflow-hidden
-            "
+            className="absolute z-50 top-[calc(100%+6px)] left-0 right-0 bg-white border border-primary-200 rounded-xl shadow-[var(--shadow-premium-lg)] overflow-hidden"
             role="listbox"
           >
             {/* Search — hanya tampil jika opsi banyak */}
@@ -242,14 +237,7 @@ function WilayahSelect({
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
                     placeholder={`Cari ${label.toLowerCase()}...`}
-                    className="
-                      w-full pl-8 pr-3 py-2 text-sm rounded-lg
-                      bg-primary-50/60 border border-primary-100
-                      text-ink-900 placeholder:text-ink-400
-                      focus:outline-none focus:border-primary-400
-                      focus:bg-white focus:shadow-[0_0_0_3px_rgba(3,105,199,0.08)]
-                      transition-all duration-150 font-medium
-                    "
+                    className="w-full pl-8 pr-3 py-2 text-sm rounded-lg bg-primary-50/60 border border-primary-100 text-ink-900 placeholder:text-ink-400 focus:outline-none focus:border-primary-400 focus:bg-white focus:shadow-[0_0_0_3px_rgba(3,105,199,0.08)] transition-all duration-150 font-medium"
                   />
                   <svg
                     className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-ink-400 pointer-events-none"
@@ -656,11 +644,7 @@ export default function WilayahSelector({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 4, scale: 0.98 }}
             transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-            className="
-              flex items-center gap-3 px-4 py-3
-              bg-primary-50 border border-primary-200
-              rounded-xl text-sm
-            "
+            className="flex items-center gap-3 px-4 py-3 bg-primary-50 border border-primary-200 rounded-xl text-sm"
           >
             {/* Icon dengan aksen kuning — signature Ulul Albaab */}
             <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary-600 flex items-center justify-center ring-2 ring-secondary-400/60">

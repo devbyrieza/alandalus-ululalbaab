@@ -801,7 +801,7 @@ export default function PembayaranPendaftaranTab({
       )}
 
       {/* Header Banner */}
-      <div className="relative overflow-hidden rounded-[2rem] bg-linear-to-br from-primary-700 to-primary-900 border border-primary-600 p-5 md:p-8 md:p-10 text-white shadow-lg app-card">
+      <div className="relative overflow-hidden rounded-[2rem] bg-linear-to-br from-primary-700 to-primary-900 border border-primary-600 p-5 md:p-8 text-white shadow-lg app-card">
         <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-secondary-50/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="flex items-start gap-5">
@@ -1172,7 +1172,7 @@ export default function PembayaranPendaftaranTab({
                               Nomor Rekening
                             </p>
                             <div className="flex flex-wrap items-center gap-4 mb-4">
-                              <h4 className="font-black text-2xl md:text-4xl sm:text-3xl md:text-5xl text-white tracking-tighter drop-shadow-sm break-all">
+                              <h4 className="font-black text-2xl md:text-4xl sm:text-3xl text-white tracking-tighter drop-shadow-sm break-all">
                                 {BANK_INFO.nomor_rekening}
                               </h4>
                               <div className="bg-primary-500/30 hover:bg-primary-500/50 transition-colors p-1 rounded-xl backdrop-blur-sm">

@@ -191,7 +191,7 @@ export default function PengumumanTab() {
               <motion.div
                 initial={{ scale: 0.95, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
-                className="group relative bg-linear-to-br from-emerald-500 via-emerald-600 to-primary-700 rounded-[3rem] p-6 md:p-10 md:p-12 text-white shadow-2xl shadow-emerald-500/30 overflow-hidden"
+                className="group relative bg-linear-to-br from-emerald-500 via-emerald-600 to-primary-700 rounded-[3rem] p-6 md:p-10 text-white shadow-2xl shadow-emerald-500/30 overflow-hidden"
               >
                 {/* Decorative Elements */}
                 <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-[60px] -translate-y-1/2 translate-x-1/2" />
@@ -205,7 +205,7 @@ export default function PengumumanTab() {
                     </span>
                   </div>
 
-                  <h2 className="text-3xl md:text-5xl md:text-6xl font-black font-display tracking-tight text-white mb-6 leading-tight">
+                  <h2 className="text-3xl md:text-5xl font-black font-display tracking-tight text-white mb-6 leading-tight">
                     SELAMAT!
                     <br />
                     ANDA DITERIMA
@@ -240,7 +240,7 @@ export default function PengumumanTab() {
               <motion.div
                 initial={{ scale: 0.95, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
-                className="relative bg-linear-to-br from-secondary-400 via-secondary-500 to-orange-600 rounded-[3rem] p-6 md:p-10 md:p-12 text-white shadow-2xl shadow-secondary-500/30 overflow-hidden"
+                className="relative bg-linear-to-br from-secondary-400 via-secondary-500 to-orange-600 rounded-[3rem] p-6 md:p-10 text-white shadow-2xl shadow-secondary-500/30 overflow-hidden"
               >
                 <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-[60px] -translate-y-1/2 translate-x-1/2" />
                 <AlertCircle className="absolute -bottom-10 -right-10 w-80 h-80 opacity-10 rotate-12" />
@@ -252,7 +252,7 @@ export default function PengumumanTab() {
                     </span>
                   </div>
 
-                  <h2 className="text-3xl md:text-5xl md:text-6xl font-black font-display tracking-tight text-white mb-6 leading-tight">
+                  <h2 className="text-3xl md:text-5xl font-black font-display tracking-tight text-white mb-6 leading-tight">
                     STATUS:
                     <br />
                     CADANGAN
@@ -285,7 +285,7 @@ export default function PengumumanTab() {
               <motion.div
                 initial={{ scale: 0.95, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
-                className="relative bg-linear-to-br from-rose-600 via-red-700 to-red-900 rounded-[3rem] p-6 md:p-10 md:p-12 text-white shadow-2xl shadow-red-600/30 overflow-hidden"
+                className="relative bg-linear-to-br from-rose-600 via-red-700 to-red-900 rounded-[3rem] p-6 md:p-10 text-white shadow-2xl shadow-red-600/30 overflow-hidden"
               >
                 <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-[60px] -translate-y-1/2 translate-x-1/2" />
                 <XCircle className="absolute -bottom-10 -right-10 w-80 h-80 opacity-10 rotate-12" />
@@ -297,7 +297,7 @@ export default function PengumumanTab() {
                     </span>
                   </div>
 
-                  <h2 className="text-3xl md:text-5xl md:text-6xl font-black font-display tracking-tight text-white mb-6 leading-tight">
+                  <h2 className="text-3xl md:text-5xl font-black font-display tracking-tight text-white mb-6 leading-tight">
                     BELUM DAPAT
                     <br />
                     DITERIMA
