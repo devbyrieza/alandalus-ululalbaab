@@ -1,0 +1,1 @@
+import { PrismaClient } from '@prisma/client'; const prisma = new PrismaClient(); async function main() { const logs = await prisma.whatsappLog.findMany({ orderBy: { id: 'desc' }, take: 3 }); console.log(logs); } main().finally(() => prisma.$disconnect());

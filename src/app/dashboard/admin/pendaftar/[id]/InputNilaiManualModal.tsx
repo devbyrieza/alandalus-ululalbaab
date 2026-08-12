@@ -82,7 +82,7 @@ export default function InputNilaiManualModal({
   };
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-start md:items-center pt-10 md:pt-0 pb-20 md:pb-0 justify-center bg-primary-950/40 backdrop-blur-sm p-4 overflow-y-auto overflow-x-hidden">
+    <div className="fixed inset-0 z-[100] flex items-start md:items-center pt-10 md:pt-0 pb-20 md:pb-0 justify-center bg-primary-950/40 backdrop-blur-sm p-4 overflow-y-auto overflow-x-hidden overscroll-contain custom-scrollbar">
       <div className="bg-white w-full max-w-4xl rounded-[2rem] shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
         {/* Header */}
         <div className="p-6 border-b border-ink-100 flex items-center justify-between bg-primary-50">
@@ -108,7 +108,7 @@ export default function InputNilaiManualModal({
         </div>
 
         {/* Body */}
-        <div className="p-6 overflow-y-auto no-scrollbar bg-ink-50/50">
+        <div className="p-6 overflow-y-auto no-scrollbar bg-ink-50/50 overscroll-contain custom-scrollbar">
           {errorMsg && (
             <div className="mb-6 p-4 bg-red-50 text-red-700 border border-red-200 rounded-2xl text-sm font-bold">
               {errorMsg}
