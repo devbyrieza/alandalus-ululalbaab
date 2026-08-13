@@ -98,7 +98,7 @@ export default function DaftarPage() {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const savedData = null;
+      const savedData = localStorage.getItem("al_andalus_daftar_draft");
       if (savedData) {
         try {
           const parsed = JSON.parse(savedData);
@@ -123,8 +123,8 @@ export default function DaftarPage() {
   useEffect(() => {
     if (typeof window !== "undefined") {
       const timeoutId = setTimeout(() => {
-        // localStorage.setItem("al_andalus_daftar_draft", JSON.stringify(formData));
-        // sessionStorage.setItem("pendaftaran_form", JSON.stringify(formData));
+        localStorage.setItem("al_andalus_daftar_draft", JSON.stringify(formData));
+        sessionStorage.setItem("pendaftaran_form", JSON.stringify(formData));
       }, 500);
       return () => clearTimeout(timeoutId);
     }
@@ -262,7 +262,7 @@ export default function DaftarPage() {
           className="text-center mb-16"
         >
           <div className="inline-flex items-center justify-center w-16 h-16 bg-white rounded-2xl shadow-sm border border-secondary-200 mb-6 group hover:scale-110 transition-transform app-card">
-            <School className="w-8 h-8 text-primary-600" />
+            <School className="w-8 h-8 text-blue-600" />
           </div>
           <motion.h1
             initial={{ opacity: 0, y: 10 }}
@@ -271,7 +271,7 @@ export default function DaftarPage() {
             className="text-2xl md:text-4xl lg:text-6xl font-display font-black text-ink-950 mb-3 tracking-tight"
           >
             Mulai Pendaftaran{" "}
-            <span className="text-gradient-primary">Terpadu</span>
+            <span className="text-amber-500">Terpadu</span>
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 10 }}
@@ -300,16 +300,16 @@ export default function DaftarPage() {
                   initial={{ opacity: 0, height: 0, marginBottom: 0 }}
                   animate={{ opacity: 1, height: "auto", marginBottom: 40 }}
                   exit={{ opacity: 0, height: 0, marginBottom: 0 }}
-                  className="bg-primary-50 border border-primary-100/50 rounded-3xl p-6 flex items-start gap-4 relative z-10 overflow-hidden"
+                  className="bg-blue-50 border border-blue-100/50 rounded-3xl p-6 flex items-start gap-4 relative z-10 overflow-hidden"
                 >
-                  <div className="w-10 h-10 bg-primary-500 rounded-full flex items-center justify-center text-white shrink-0 shadow-premium-xs">
+                  <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white shrink-0 shadow-premium-xs">
                     <CheckCircle className="w-6 h-6" />
                   </div>
                   <div className="flex-1">
-                    <p className="text-lg font-display font-black text-primary-900 leading-none mb-1">
+                    <p className="text-lg font-display font-black text-blue-900 leading-none mb-1">
                       Melanjutkan Draft Pendaftaran
                     </p>
-                    <p className="text-sm text-primary-600 font-medium">
+                    <p className="text-sm text-blue-700 font-medium">
                       Data yang anda masukkan sebelumnya telah tersimpan
                       otomatis dalam sesi ini.
                     </p>
@@ -321,14 +321,14 @@ export default function DaftarPage() {
                           text: "Hapus seluruh draf dan mulai dari awal?",
                           icon: "question",
                           showCancelButton: true,
-                          confirmButtonColor: "#1e40af",
+                          confirmButtonColor: "#0284c7",
                           confirmButtonText: "Ya, Hapus",
                           cancelButtonText: "Batal",
                         });
 
                         if (result.isConfirmed) {
-                          // localStorage.removeItem("al_andalus_daftar_draft");
-                          // sessionStorage.removeItem("pendaftaran_form");
+                          localStorage.removeItem("al_andalus_daftar_draft");
+                          sessionStorage.removeItem("pendaftaran_form");
                           setFormData({
                             nik: "",
                             nama_lengkap: "",
@@ -340,7 +340,7 @@ export default function DaftarPage() {
                           setFieldErrors({});
                         }
                       }}
-                      className="mt-3 flex items-center gap-1.5 text-xs font-black uppercase tracking-widest text-primary-800 hover:text-primary-950 transition-colors"
+                      className="mt-3 flex items-center gap-1.5 text-xs font-black uppercase tracking-widest text-blue-800 hover:text-blue-950 transition-colors"
                     >
                       <RefreshCw className="w-3 h-3" /> Mulai dari Awal
                     </button>
@@ -359,7 +359,7 @@ export default function DaftarPage() {
                 transition={{ delay: 0.4 }}
               >
                 <div className="flex items-center gap-3 mb-8">
-                  <div className="w-10 h-10 rounded-xl bg-secondary-50 flex items-center justify-center text-primary-600 shadow-sm border border-secondary-200">
+                  <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600 shadow-sm border border-blue-200">
                     <GraduationCap className="w-6 h-6" />
                   </div>
                   <h3 className="text-2xl font-display font-black text-ink-950">
@@ -582,8 +582,8 @@ export default function DaftarPage() {
                             whileTap={{ scale: 0.98 }}
                             className={`flex-1 flex items-center justify-center px-4 md:px-6 py-3 md:py-4 rounded-[1.5rem] md:rounded-[2rem] border-2 cursor-pointer transition-all duration-300 text-sm md:text-base ${
                               formData.jenis_kelamin === jk.val
-                                ? "bg-primary-700 border-primary-700 text-white font-black shadow-md"
-                                : "bg-secondary-50 border-secondary-200 text-ink-800 hover:border-primary-200 hover:bg-white font-bold"
+                                ? "bg-blue-600 border-blue-600 text-white font-black shadow-md"
+                                : "bg-secondary-50 border-secondary-200 text-ink-800 hover:border-blue-200 hover:bg-white font-bold"
                             }`}
                           >
                             <input
@@ -616,7 +616,7 @@ export default function DaftarPage() {
                 className="space-y-8"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-secondary-50 flex items-center justify-center text-primary-600 shadow-sm border border-secondary-200">
+                  <div className="w-10 h-10 rounded-xl bg-purple-50 flex items-center justify-center text-purple-600 shadow-sm border border-purple-200">
                     <Phone className="w-6 h-6" />
                   </div>
                   <h3 className="text-2xl font-display font-black text-ink-950">
@@ -677,7 +677,7 @@ export default function DaftarPage() {
                   whileTap={{ scale: 0.98 }}
                   type="submit"
                   disabled={isLoading}
-                  className="w-full py-4 md:py-6 rounded-pill bg-primary-700 text-white font-black text-lg md:text-xl hover:bg-primary-800 shadow-md transition-all flex items-center justify-center gap-3 disabled:opacity-50"
+                  className="w-full py-4 md:py-6 rounded-pill bg-blue-600 text-white font-black text-lg md:text-xl hover:bg-blue-700 shadow-md transition-all flex items-center justify-center gap-3 disabled:opacity-50"
                 >
                   {isLoading ? (
                     <>
@@ -693,7 +693,7 @@ export default function DaftarPage() {
                   Punya Akun?{" "}
                   <Link
                     href="/login"
-                    className="text-primary-700 hover:text-primary-800 hover:bg-secondary-50 px-3 py-1 rounded-full transition-colors ml-1 border border-transparent hover:border-secondary-200"
+                    className="text-amber-600 hover:text-amber-700 hover:bg-amber-50 px-3 py-1 rounded-full transition-colors ml-1 border border-transparent hover:border-amber-200"
                   >
                     Masuk di sini
                   </Link>

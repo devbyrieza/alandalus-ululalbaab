@@ -10,10 +10,10 @@ import { BRANDING } from "@/config/branding";
 
 const StatWidget = ({ label, value, icon: Icon, color, trend, breakdown, highlighted, onDownload, isDownloading, onPromote, isPromoting }: any) => {
     const colorMap: any = {
-    blue: "from-primary-600 to-primary-800",
-    emerald: "from-emerald-500 to-emerald-600",
+    blue: "from-blue-600 to-blue-800",
+    emerald: "from-blue-500 to-blue-600",
     amber: "from-amber-500 to-amber-600",
-    purple: "from-primary-500 to-primary-700",
+    purple: "from-blue-500 to-blue-700",
     rose: "from-rose-500 to-rose-600",
     slate: "from-slate-500 to-slate-600",
   };
@@ -28,7 +28,7 @@ const StatWidget = ({ label, value, icon: Icon, color, trend, breakdown, highlig
       }`}
     >
       <div className={`glow-blob w-32 h-32 opacity-10 transition-colors duration-500 -top-10 -right-10 ${
-        highlighted ? "glow-blob-primary" : "glow-blob-secondary"
+        highlighted ? "glow-blob-blue" : "glow-blob-amber"
       }`} aria-hidden="true" />
       <div className="relative z-10">
         <div className="flex items-center justify-between mb-8">
@@ -38,8 +38,8 @@ const StatWidget = ({ label, value, icon: Icon, color, trend, breakdown, highlig
           {trend && (
             <div className={`flex items-center gap-1.5 text-[10px] font-black px-3 py-1.5 rounded-full border ${
               highlighted
-                ? "text-emerald-400 bg-white/5 border-white/10"
-                : "text-emerald-600 bg-emerald-50 border-emerald-100"
+                ? "text-blue-400 bg-white/5 border-white/10"
+                : "text-blue-600 bg-blue-50 border-blue-100"
             }`}>
               <TrendingUp className="w-3.5 h-3.5" />
               <span className="uppercase tracking-wider">{trend}</span>
@@ -48,15 +48,15 @@ const StatWidget = ({ label, value, icon: Icon, color, trend, breakdown, highlig
         </div>
         <div className="mb-6 lg:mb-8">
           <p className={`stat-label uppercase tracking-[0.25em] mb-2 ${
-            highlighted ? "text-primary-300" : "text-primary-400"
+            highlighted ? "text-blue-300" : "text-blue-400"
           }`}>{label}</p>
           <div className="flex items-baseline justify-between gap-2 flex-wrap">
             <div className="flex items-baseline gap-2">
               <h3 className={`text-3xl sm:text-4xl lg:text-5xl font-black tracking-tighter ${
-                highlighted ? "text-white" : "text-primary-900"
+                highlighted ? "text-white" : "text-blue-900"
               }`}>{value}</h3>
               <span className={`text-xs font-bold ${
-                highlighted ? "text-primary-300" : "text-primary-300"
+                highlighted ? "text-blue-300" : "text-blue-300"
               }`}>Orang</span>
             </div>
 
@@ -68,8 +68,8 @@ const StatWidget = ({ label, value, icon: Icon, color, trend, breakdown, highlig
                   title="Unduh Excel"
                   className={`p-2 rounded-xl border transition-all hover:scale-105 duration-300 ${
                     highlighted 
-                      ? "bg-emerald-500/10 border-emerald-500/20 text-emerald-400 hover:bg-emerald-500/20" 
-                      : "bg-emerald-50 border-emerald-100 text-emerald-600 hover:bg-emerald-100"
+                      ? "bg-amber-500/10 border-amber-500/20 text-amber-400 hover:bg-amber-500/20" 
+                      : "bg-amber-50 border-amber-100 text-amber-600 hover:bg-amber-100"
                   }`}
                 >
                   {isDownloading === "excel" ? (
@@ -104,7 +104,7 @@ const StatWidget = ({ label, value, icon: Icon, color, trend, breakdown, highlig
             <button
               onClick={(e) => { e.stopPropagation(); onPromote(); }}
               disabled={isPromoting}
-              className="w-full flex items-center justify-center gap-2 py-2.5 px-4 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-black text-xs uppercase tracking-widest transition-all shadow-lg shadow-emerald-600/20 hover:scale-[1.02] active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full flex items-center justify-center gap-2 py-2.5 px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-black text-xs uppercase tracking-widest transition-all shadow-lg shadow-blue-600/20 hover:scale-[1.02] active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isPromoting ? (
                 <>
@@ -128,18 +128,18 @@ const StatWidget = ({ label, value, icon: Icon, color, trend, breakdown, highlig
             <div className="space-y-4">
               <div className="flex flex-col">
                 <span className={`text-[9px] font-black uppercase tracking-widest mb-1 ${
-                  highlighted ? "text-primary-300" : "text-primary-400"
+                  highlighted ? "text-blue-300" : "text-blue-400"
                 }`}>MTs Putra</span>
                 <span className={`text-base font-black leading-none ${
-                  highlighted ? "text-white" : "text-primary-700"
+                  highlighted ? "text-white" : "text-blue-700"
                 }`}>{breakdown.mts_l || 0}</span>
               </div>
               <div className="flex flex-col">
                 <span className={`text-[9px] font-black uppercase tracking-widest mb-1 ${
-                  highlighted ? "text-primary-300" : "text-primary-400"
+                  highlighted ? "text-blue-300" : "text-blue-400"
                 }`}>MTs Putri</span>
                 <span className={`text-base font-black leading-none ${
-                  highlighted ? "text-pink-300" : "text-pink-500"
+                  highlighted ? "text-amber-300" : "text-amber-500"
                 }`}>{breakdown.mts_p || 0}</span>
               </div>
             </div>
@@ -148,18 +148,18 @@ const StatWidget = ({ label, value, icon: Icon, color, trend, breakdown, highlig
             }`}>
               <div className="flex flex-col">
                 <span className={`text-[9px] font-black uppercase tracking-widest mb-1 ${
-                  highlighted ? "text-primary-300" : "text-primary-400"
+                  highlighted ? "text-blue-300" : "text-blue-400"
                 }`}>IL Putra</span>
                 <span className={`text-base font-black leading-none ${
-                  highlighted ? "text-white" : "text-primary-700"
+                  highlighted ? "text-white" : "text-blue-700"
                 }`}>{breakdown.il_l || 0}</span>
               </div>
               <div className="flex flex-col">
                 <span className={`text-[9px] font-black uppercase tracking-widest mb-1 ${
-                  highlighted ? "text-primary-300" : "text-primary-400"
+                  highlighted ? "text-blue-300" : "text-blue-400"
                 }`}>IL Putri</span>
                 <span className={`text-base font-black leading-none ${
-                  highlighted ? "text-pink-300" : "text-pink-500"
+                  highlighted ? "text-amber-300" : "text-amber-500"
                 }`}>{breakdown.il_p || 0}</span>
               </div>
             </div>
@@ -319,7 +319,7 @@ export default function AdminDashboardPage() {
       html: `<p>Yakin ingin memindahkan <b>semua ${stats.cadangan} Pendaftar Cadangan</b> ke status <b>Diterima</b>?</p><p class="mt-3 text-sm text-stone-500">Tindakan ini akan mengubah status seluruh Pendaftar Cadangan sekaligus dan tidak dapat diurungkan secara massal.</p>`,
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#059669",
+      confirmButtonColor: "#0284c7",
       cancelButtonColor: "#94a3b8",
       confirmButtonText: `Ya, Promosikan Semua ${stats.cadangan}!`,
       cancelButtonText: "Batal",
@@ -343,7 +343,7 @@ export default function AdminDashboardPage() {
         title: "Berhasil!",
         text: data.message || `${data.updated_count} Pendaftar berhasil dipindahkan ke Diterima.`,
         icon: "success",
-        confirmButtonColor: "#059669",
+        confirmButtonColor: "#0284c7",
       });
       fetchStats();
     } catch (error: any) {
@@ -395,16 +395,16 @@ export default function AdminDashboardPage() {
         </button>
       </div>
 
-      <div className="bg-linear-to-br from-primary-800 via-primary-700 to-blue-950 rounded-[2.5rem] lg:rounded-[3rem] p-6 sm:p-5 md:p-8 lg:p-6 text-white relative overflow-hidden shadow-[0_32px_64px_-16px_rgba(30,58,138,0.4)] border border-white/10">
+      <div className="bg-linear-to-br from-blue-800 via-blue-700 to-blue-950 rounded-[2.5rem] lg:rounded-[3rem] p-6 sm:p-5 md:p-8 lg:p-6 text-white relative overflow-hidden shadow-[0_32px_64px_-16px_rgba(30,58,138,0.4)] border border-white/10">
         
         <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12">
           <div className="max-w-xl w-full">
             <div className="section-label section-label-primary mb-6 lg:mb-8 bg-white/10 border-white/20 backdrop-blur-md">
-              <Activity className="w-4 h-4 text-secondary-400" />
+              <Activity className="w-4 h-4 text-amber-400" />
               <span className="text-white">Status Operasional: Aktif</span>
             </div>
             <h2 className="text-3xl sm:text-2xl md:text-4xl lg:text-6xl font-black mb-4 sm:mb-6 tracking-tighter leading-tight text-white drop-shadow-sm">
-              Pantau <span className="text-secondary-400">Pendaftaran</span>
+              Pantau <span className="text-amber-400">Pendaftaran</span>
             </h2>
             <div className="flex items-center gap-8 sm:gap-12 mt-8 lg:mt-12">
               <div>
@@ -421,15 +421,15 @@ export default function AdminDashboardPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 w-full lg:w-auto">
              <div className="bg-white/10 backdrop-blur-xl p-4 sm:p-6 lg:p-5 md:p-8 rounded-[1.5rem] sm:rounded-[2rem] border border-white/20 shadow-xl flex flex-col items-center group hover:bg-white/15 transition-all">
                 <p className="text-[9px] sm:text-[10px] font-black text-white/80 uppercase tracking-widest mb-2 sm:mb-4 text-center group-hover:text-white transition-colors">Diterima</p>
-                <p className="text-2xl sm:text-2xl md:text-4xl font-black text-emerald-300 drop-shadow-md">{stats.diterima}</p>
+                <p className="text-2xl sm:text-2xl md:text-4xl font-black text-amber-300 drop-shadow-md">{stats.diterima}</p>
              </div>
              <div className="bg-white/10 backdrop-blur-xl p-4 sm:p-6 lg:p-5 md:p-8 rounded-[1.5rem] sm:rounded-[2rem] border border-white/20 shadow-xl flex flex-col items-center group hover:bg-white/15 transition-all">
                 <p className="text-[9px] sm:text-[10px] font-black text-white/80 uppercase tracking-widest mb-2 sm:mb-4 text-center group-hover:text-white transition-colors">Proses Daftar Ulang</p>
-                <p className="text-2xl sm:text-2xl md:text-4xl font-black text-secondary-400 drop-shadow-md">{stats.daftar_ulang_sedang}</p>
+                <p className="text-2xl sm:text-2xl md:text-4xl font-black text-amber-400 drop-shadow-md">{stats.daftar_ulang_sedang}</p>
              </div>
              <div className="bg-white/10 backdrop-blur-xl p-4 sm:p-6 lg:p-5 md:p-8 rounded-[1.5rem] sm:rounded-[2rem] border border-white/20 shadow-xl flex flex-col items-center group hover:bg-white/15 transition-all md:col-span-2">
                 <p className="text-[9px] sm:text-[10px] font-black text-white/80 uppercase tracking-widest mb-2 sm:mb-4 text-center group-hover:text-white transition-colors">Lunas Daftar Ulang</p>
-                <p className="text-2xl sm:text-2xl md:text-4xl font-black text-emerald-300 drop-shadow-md">{stats.daftar_ulang_selesai}</p>
+                <p className="text-2xl sm:text-2xl md:text-4xl font-black text-amber-300 drop-shadow-md">{stats.daftar_ulang_selesai}</p>
              </div>
           </div>
         </div>
@@ -463,13 +463,13 @@ export default function AdminDashboardPage() {
       {/* SUMMARY INSIGHTS - Terbuka untuk semua Admin */}
       {(isAdminSuper || isAdminBerkas || isAdminKeuangan) && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
-          <div className="bg-linear-to-br from-primary-800 to-primary-950 rounded-[1.5rem] sm:rounded-[2rem] lg:rounded-[2.5rem] p-5 sm:p-5 md:p-8 lg:p-6 text-white relative overflow-hidden group shadow-[0_16px_40px_-12px_rgba(30,58,138,0.4)] border border-white/5">
+          <div className="bg-linear-to-br from-blue-800 to-blue-950 rounded-[1.5rem] sm:rounded-[2rem] lg:rounded-[2.5rem] p-5 sm:p-5 md:p-8 lg:p-6 text-white relative overflow-hidden group shadow-[0_16px_40px_-12px_rgba(30,58,138,0.4)] border border-white/5">
             <div className="absolute top-0 right-0 p-5 md:p-8 opacity-5 group-hover:rotate-12 transition-transform duration-700">
               <TrendingUp className="w-48 h-48" />
             </div>
             <div className="relative z-10">
               <h3 className="text-xl sm:text-2xl font-black mb-6 sm:mb-8 tracking-tight flex items-center gap-3 text-white">
-                <div className="w-2 h-8 bg-secondary-400 rounded-full" />
+                <div className="w-2 h-8 bg-amber-400 rounded-full" />
                 Statistik Pendaftaran
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8">

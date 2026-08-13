@@ -345,7 +345,7 @@ export default function DashboardPage() {
       <BackToHomeButton position="top-left" />
 
       {/* Background Decor */}
-      <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-primary-50/20 rounded-full blur-[140px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+      <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-blue-50/20 rounded-full blur-[140px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
       <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-[0.03] pointer-events-none" />
 
       {/* HEADER */}
@@ -358,11 +358,11 @@ export default function DashboardPage() {
                 animate={{ opacity: 1, x: 0 }}
                 className="flex items-center gap-3 mb-6"
               >
-                <div className="w-10 h-10 rounded-xl bg-primary-50 flex items-center justify-center text-primary-600 border border-primary-100 shadow-sm">
+                <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600 border border-blue-100 shadow-sm">
                   <LayoutDashboard className="w-6 h-6" />
                 </div>
-                <div className="h-0.5 w-12 bg-primary-100 rounded-full" />
-                <span className="text-[10px] font-black uppercase tracking-[0.3em] text-primary-600">
+                <div className="h-0.5 w-12 bg-blue-100 rounded-full" />
+                <span className="text-[10px] font-black uppercase tracking-[0.3em] text-blue-600">
                   Portal Santri
                 </span>
               </motion.div>
@@ -371,10 +371,10 @@ export default function DashboardPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 }}
-                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-display font-black text-primary-950 mb-6 leading-none tracking-tight"
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-display font-black text-blue-950 mb-6 leading-none tracking-tight"
               >
                 Ahlan wa Sahlan, <br />
-                <span className="text-primary-700 bg-primary-50 px-4 py-1 rounded-3xl inline-block mt-2">
+                <span className="text-blue-700 bg-blue-50 px-4 py-1 rounded-3xl inline-block mt-2">
                   {pendaftar.nama_lengkap.split(" ")[0]}!
                 </span>
               </motion.h1>
@@ -468,7 +468,7 @@ export default function DashboardPage() {
             {/* ACTION GRID */}
             <div>
               <div className="flex items-center justify-between mb-10 px-4">
-                <h3 className="text-3xl font-display font-black text-primary-950 tracking-tight">
+                <h3 className="text-3xl font-display font-black text-blue-950 tracking-tight">
                   Alur Pendaftaran
                 </h3>
                 <div className="h-0.5 flex-1 mx-10 bg-ink-50 rounded-full" />
@@ -574,22 +574,22 @@ export default function DashboardPage() {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.6 }}
-              className="bg-white p-6 sm:p-5 md:p-8 lg:p-6 rounded-[2rem] sm:rounded-[3rem] md:rounded-[4rem] shadow-2xl shadow-primary-900/5 border border-ink-50 flex flex-col items-center text-center relative overflow-hidden group"
+              className="bg-white p-6 sm:p-5 md:p-8 lg:p-6 rounded-[2rem] sm:rounded-[3rem] md:rounded-[4rem] shadow-2xl shadow-blue-900/5 border border-ink-50 flex flex-col items-center text-center relative overflow-hidden group"
             >
-              <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-primary-600 to-secondary-500" />
-              <div className="w-20 h-20 rounded-[2rem] bg-primary-50 flex items-center justify-center text-primary-600 mb-8 border border-primary-100 shadow-sm transition-transform group-hover:scale-110">
+              <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-600 to-amber-500" />
+              <div className="w-20 h-20 rounded-[2rem] bg-blue-50 flex items-center justify-center text-blue-600 mb-8 border border-blue-100 shadow-sm transition-transform group-hover:scale-110">
                 <IdCard className="w-10 h-10" />
               </div>
               <p className="text-[10px] font-black uppercase tracking-[0.4em] text-ink-500 mb-2">
                 No. Registrasi
               </p>
-              <h4 className="text-2xl md:text-4xl font-display font-black text-primary-950 mb-8 leading-none tracking-tight">
+              <h4 className="text-2xl md:text-4xl font-display font-black text-blue-950 mb-8 leading-none tracking-tight">
                 {pendaftar.nomor_pendaftaran}
               </h4>
               <div className="w-full h-px bg-ink-50 mb-8" />
               <div className="flex items-center gap-3">
-                <Star className="w-6 h-6 text-secondary-500 fill-secondary-500 animate-pulse" />
-                <span className="font-black text-sm text-primary-700 uppercase tracking-widest leading-none">
+                <Star className="w-6 h-6 text-amber-500 fill-amber-500 animate-pulse" />
+                <span className="font-black text-sm text-blue-700 uppercase tracking-widest leading-none">
                   {pendaftar.jenjang === "MTs"
                     ? "Madrasah Tsanawiyah"
                     : "I'dad Lughowi"}
@@ -602,20 +602,20 @@ export default function DashboardPage() {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.8 }}
-              className="bg-primary-950 p-6 sm:p-5 md:p-8 lg:p-6 rounded-[2rem] sm:rounded-[3rem] md:rounded-[4rem] shadow-2xl relative overflow-hidden group"
+              className="bg-blue-950 p-6 sm:p-5 md:p-8 lg:p-6 rounded-[2rem] sm:rounded-[3rem] md:rounded-[4rem] shadow-2xl relative overflow-hidden group"
             >
-              <div className="absolute top-0 left-0 w-full h-1 bg-secondary-400" />
-              <div className="absolute bottom-0 right-0 w-40 h-40 bg-primary-500/10 rounded-full blur-[60px] translate-y-1/2 translate-x-1/2 pointer-events-none" />
+              <div className="absolute top-0 left-0 w-full h-1 bg-amber-400" />
+              <div className="absolute bottom-0 right-0 w-40 h-40 bg-blue-500/10 rounded-full blur-[60px] translate-y-1/2 translate-x-1/2 pointer-events-none" />
 
               <div className="relative z-10">
-                <div className="w-16 h-16 rounded-[1.5rem] bg-primary-900 flex items-center justify-center text-white mb-8 border border-primary-800 shadow-lg">
+                <div className="w-16 h-16 rounded-[1.5rem] bg-blue-900 flex items-center justify-center text-white mb-8 border border-blue-800 shadow-lg">
                   <MessageCircle className="w-8 h-8" />
                 </div>
                 <h4 className="text-3xl font-display font-black mb-4 text-white leading-tight tracking-tight">
                   Butuh <br />
                   Bantuan?
                 </h4>
-                <p className="text-sm text-primary-200 font-bold leading-relaxed mb-10 opacity-80">
+                <p className="text-sm text-blue-200 font-bold leading-relaxed mb-10 opacity-80">
                   Tim panitia kami siap membantu Bapak/Ibu setiap hari melalui
                   layanan WhatsApp operasional.
                 </p>
@@ -624,16 +624,16 @@ export default function DashboardPage() {
                   href="https://wa.me/6281285300800"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-5 p-6 rounded-[2rem] bg-white hover:bg-secondary-400 transition-all group/btn shadow-xl active:scale-95"
+                  className="flex items-center gap-5 p-6 rounded-[2rem] bg-white hover:bg-amber-400 transition-all group/btn shadow-xl active:scale-95"
                 >
-                  <div className="w-14 h-14 rounded-2xl bg-primary-600 text-white flex items-center justify-center shadow-lg group-hover/btn:scale-110 transition-transform">
+                  <div className="w-14 h-14 rounded-2xl bg-blue-600 text-white flex items-center justify-center shadow-lg group-hover/btn:scale-110 transition-transform">
                     <Phone className="w-7 h-7" />
                   </div>
                   <div className="text-left leading-none">
-                    <p className="text-[10px] font-black uppercase tracking-widest text-primary-600 mb-2">
+                    <p className="text-[10px] font-black uppercase tracking-widest text-blue-600 mb-2">
                       WhatsApp CS
                     </p>
-                    <p className="font-black text-lg text-primary-950">
+                    <p className="font-black text-lg text-blue-950">
                       0812-8530-0800
                     </p>
                   </div>
