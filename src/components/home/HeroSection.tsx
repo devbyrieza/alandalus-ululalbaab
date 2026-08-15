@@ -343,29 +343,6 @@ export default function HeroSection() {
               />
             </div>
 
-            {/* Floating Card: Beasiswa — NEW highlight */}
-            <motion.div
-              animate={shouldReduceMotion ? {} : { y: [0, -12, 0] }}
-              transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-              className="absolute top-[-2%] -left-6 md:top-[5%] md:-left-20 lg:-left-28 z-20 scale-[0.8] md:scale-100"
-              style={{ transformOrigin: "left center" }}
-            >
-              <div className="glass-panel flex items-center gap-2 md:gap-3 px-3 md:px-4 py-2 md:py-3 rounded-xl md:rounded-2xl shadow-premium-lg border-amber-100">
-                <div className="icon-box w-9 h-9 md:w-11 md:h-11 rounded-lg md:rounded-xl bg-amber-500 text-white flex items-center justify-center shrink-0">
-                  <Gift className="w-4 h-4 md:w-5 md:h-5" />
-                </div>
-                <div>
-                  <p className="text-[9px] md:text-[10px] font-black uppercase tracking-wider mb-0.5 text-amber-600">Beasiswa</p>
-                  <p className="text-xs md:text-sm font-black leading-tight text-[var(--color-primary-900)]">
-                    Dhuafa Berprestasi
-                  </p>
-                  <p className="text-[9px] md:text-[10px] font-semibold mt-0.5 text-[var(--color-ink-500)]">
-                    Tersedia 10 Kuota
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-
             {/* Floating Card: Tersedia — FIX #2 md breakpoint */}
             <motion.div
               animate={shouldReduceMotion ? {} : { y: [0, -10, 0] }}

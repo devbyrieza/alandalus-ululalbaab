@@ -36,7 +36,6 @@ export default function Footer() {
   const infoLinks = [
     { label: "Pendaftaran PPDB", href: "/daftar" },
     { label: "Biaya Pendidikan", href: "/daftar#biaya" },
-    { label: "Beasiswa Tahfidz", href: "/daftar#beasiswa" },
     { label: "Kalender Akademik", href: "/kalender" },
   ];
 
