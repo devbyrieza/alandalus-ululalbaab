@@ -11,6 +11,7 @@ import HeroSection from "@/components/home/HeroSection";
 import StatsSection from "@/components/home/StatsSection";
 import AboutSection from "@/components/home/AboutSection";
 import ProgramSection from "@/components/home/ProgramSection";
+import ScholarshipSection from "@/components/home/ScholarshipSection";
 import FeaturesSection from "@/components/home/FeaturesSection";
 import TeachersSection from "@/components/home/TeachersSection";
 import BoardSection from "@/components/home/BoardSection";
