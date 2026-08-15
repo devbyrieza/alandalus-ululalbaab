@@ -1,0 +1,36 @@
+# ========================================
+# DOCKER COMPOSE PRODUCTION - ULUL ALBAAB
+# ========================================
+version: '3.8'
+
+services:
+  app-ulul:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        DATABASE_URL: ${DATABASE_URL}
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-https://ppdb.alandalus-ululalbaab.com}
+        NEXTAUTH_URL: ${NEXTAUTH_URL:-https://ppdb.alandalus-ululalbaab.com}
+        NEXTAUTH_SECRET: ${NEXTAUTH_SECRET:-supersecretkeyulul123}
+    container_name: pp-ululalbaab-app
+    restart: always
+    expose:
+      - "3000"
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      NEXTAUTH_URL: ${NEXTAUTH_URL}
+      NEXTAUTH_SECRET: ${NEXTAUTH_SECRET}
+      FAGI_WA_KEY: ${FAGI_WA_KEY}
+    networks:
+      - coolify
+    volumes:
+      - storage_ululalbaab_data:/app/public/storage
+      - storage_ululalbaab_data:/app/storage_data
+
+volumes:
+  storage_ululalbaab_data:
+
+networks:
+  coolify:
+    external: true
