@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
+import { BRANDING } from '@/config/branding';
 
 export default function SplashScreen() {
   const [show, setShow] = useState(true);
@@ -36,7 +37,7 @@ export default function SplashScreen() {
             {/* Logo */}
             <div className="relative w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden bg-white shadow-sm flex items-center justify-center p-2">
               <Image 
-                src="/images/logo.png" 
+                src={BRANDING.logoPath} 
                 alt="Logo" 
                 fill 
                 className="object-contain p-2"
