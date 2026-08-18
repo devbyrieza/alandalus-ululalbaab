@@ -386,7 +386,7 @@ export default function DaftarPage() {
                     },
                     {
                       value: "MA",
-                      title: "Madrasah Aliyah (MA) Langsung",
+                      title: "Sekolah Menengah Atas (SMA) Langsung",
                       subtitle: "Lulusan SMP/Sederajat",
                       desc: "Jalur langsung tanpa IL. Khusus yang lancar berbahasa Arab & hafal minimal 5 juz mutqin.",
                     },
