@@ -19,7 +19,7 @@ export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url);
     let tahunAjaranId = searchParams.get("tahun_ajaran_id");
 
-    const where = getAdminWhereClause(tahunAjaranId || undefined) as any;
+    const where = await getAdminWhereClause(tahunAjaranId || undefined) as any;
 
     // Aggregate Santri by Region
     const santriRaw = await prisma.pendaftar.groupBy({
@@ -155,3 +155,4 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
+

@@ -24,7 +24,7 @@ export async function GET(request: NextRequest) {
 
     // 2. Fetch Data
     // Get all students who PASSED
-    const baseWhere = getAdminWhereClause(tahunAjaranId || undefined) as any;
+    const baseWhere = await getAdminWhereClause(tahunAjaranId || undefined) as any;
     const students = await prisma.pendaftar.findMany({
       where: {
         ...baseWhere,
@@ -260,3 +260,4 @@ export async function GET(request: NextRequest) {
     );
   }
 }
+

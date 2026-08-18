@@ -42,7 +42,7 @@ export async function GET(request: NextRequest) {
     const { getAdminWhereClause } = await import("@/lib/utils/admin");
     const where: any = {
       pendaftar: {
-        is: getAdminWhereClause(),
+        is: await getAdminWhereClause(),
       },
     };
     
@@ -413,3 +413,4 @@ export async function PATCH(request: NextRequest) {
     );
   }
 }
+

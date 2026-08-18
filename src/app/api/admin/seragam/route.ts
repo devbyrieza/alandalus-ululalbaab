@@ -17,7 +17,7 @@ export async function GET(req: Request) {
     const { searchParams } = new URL(req.url);
     const showAll = searchParams.get("all") === "1";
 
-    const whereClause = getAdminWhereClause();
+    const whereClause = await getAdminWhereClause();
 
     const allowedStatuses = showAll 
       ? [
@@ -104,3 +104,4 @@ export async function PUT(req: Request) {
     );
   }
 }
+

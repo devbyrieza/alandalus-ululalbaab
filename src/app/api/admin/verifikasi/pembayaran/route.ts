@@ -39,7 +39,7 @@ export async function GET(request: NextRequest) {
     const where: any = {
       // Use global admin filter to exclude tests and soft-deleted records
       pendaftar: {
-        is: getAdminWhereClause(),
+        is: await getAdminWhereClause(),
       },
     };
     if (status === "all") {
@@ -130,7 +130,7 @@ export async function GET(request: NextRequest) {
     });
 
     // Fetch counts for pending status explicitly
-    const baseWhere = getAdminWhereClause() as any;
+    const baseWhere = await getAdminWhereClause() as any;
     
     const countPendaftaran = await prisma.pembayaran.count({
       where: {
@@ -453,3 +453,4 @@ export async function DELETE(request: NextRequest) {
     );
   }
 }
+

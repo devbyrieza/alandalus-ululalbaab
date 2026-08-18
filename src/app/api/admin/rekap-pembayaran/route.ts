@@ -21,7 +21,7 @@ export async function GET(request: NextRequest) {
     const tahunAjaranId = searchParams.get("tahun_ajaran_id");
 
     // 2. Fetch all pendaftar with their PENDAFTARAN payment(s)
-    const where = getAdminWhereClause(tahunAjaranId || undefined) as any;
+    const where = await getAdminWhereClause(tahunAjaranId || undefined) as any;
     const pendaftar = await prisma.pendaftar.findMany({
       where,
       select: {
@@ -122,3 +122,4 @@ export async function GET(request: NextRequest) {
     );
   }
 }
+

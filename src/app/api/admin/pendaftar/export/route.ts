@@ -84,7 +84,7 @@ export async function GET(req: NextRequest) {
     const tipePendaftaran = searchParams.get("tipe_pendaftaran") || "";
 
     // Build query - fetch ALL records (no pagination for export)
-    const baseWhere = getAdminWhereClause(tahunAjaran || undefined) as any;
+    const baseWhere = await getAdminWhereClause(tahunAjaran || undefined) as any;
     const where: Prisma.PendaftarWhereInput = {
       ...baseWhere,
     };
@@ -265,3 +265,4 @@ function query_status(status: string, where: any) {
     where.status_pendaftaran = status;
   }
 }
+

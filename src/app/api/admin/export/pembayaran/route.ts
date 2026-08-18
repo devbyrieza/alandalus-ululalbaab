@@ -89,7 +89,7 @@ export async function GET(request: NextRequest) {
 
     // Fetch data using Prisma
     const data = await prisma.pendaftar.findMany({
-      where: getAdminWhereClause(),
+      where: await getAdminWhereClause(),
       select: {
         id: true,
         nomor_pendaftaran: true,
@@ -381,3 +381,4 @@ export async function GET(request: NextRequest) {
     );
   }
 }
+

@@ -24,7 +24,7 @@ export async function GET(request: NextRequest) {
     const status = searchParams.get("status");
 
     const where: any = {
-      ...getAdminWhereClause(tahunAjaranId || undefined),
+      ...await getAdminWhereClause(tahunAjaranId || undefined),
       tipe_pendaftaran: "PINDAHAN",
     };
 
@@ -288,3 +288,4 @@ export async function PATCH(request: NextRequest) {
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }
+

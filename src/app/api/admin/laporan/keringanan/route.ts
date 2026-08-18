@@ -16,7 +16,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: "Forbidden: Akses ditolak" }, { status: 403 });
     }
 
-    const baseWhere = getAdminWhereClause() as any;
+    const baseWhere = await getAdminWhereClause() as any;
     const pendaftars = await prisma.pendaftar.findMany({
       where: baseWhere,
       select: {
@@ -78,3 +78,4 @@ export async function GET(request: NextRequest) {
     );
   }
 }
+

@@ -56,7 +56,7 @@ export async function GET(request: Request) {
     }
 
     // 2. Build where clause
-    const where = getAdminWhereClause(finalTAId);
+    const where = await getAdminWhereClause(finalTAId);
     where.tipe_pendaftaran = { not: "PINDAHAN" };
     console.log(`📊 [API Stats] Fetching for TA: ${finalTAId}`);
 
@@ -424,3 +424,4 @@ export async function GET(request: Request) {
     );
   }
 }
+

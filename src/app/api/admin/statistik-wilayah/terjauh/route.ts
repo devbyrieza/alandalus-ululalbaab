@@ -71,7 +71,7 @@ export async function POST(req: Request) {
       });
     }
 
-    const baseWhere = getAdminWhereClause();
+    const baseWhere = await getAdminWhereClause();
 
     // Ambil pendaftar
     const pendaftarList = await prisma.pendaftar.findMany({
@@ -222,3 +222,4 @@ export async function POST(req: Request) {
     return NextResponse.json({ success: false, error: error.message });
   }
 }
+

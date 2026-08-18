@@ -21,7 +21,7 @@ export async function GET() {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
-    const baseWhere = getAdminWhereClause();
+    const baseWhere = await getAdminWhereClause();
 
     const [unverifiedPaymentsCount, unverifiedDocsCount, pendingDataRequestsCount] = await Promise.all([
       prisma.pembayaran.count({
@@ -55,3 +55,4 @@ export async function GET() {
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }
+
