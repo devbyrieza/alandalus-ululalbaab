@@ -138,9 +138,7 @@ export default function PengaturanPage() {
   };
 
   const activeTahunAjaran = tahunAjaranList.find((ta) => ta.is_active);
-  const has2026 = tahunAjaranList.some(
-    (ta) => ta.tahun_mulai === 2026 && ta.tahun_selesai === 2027,
-  );
+  const has2027 = tahunAjaranList.some((ta) => ta.tahun_mulai === 2027);
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString("id-ID", {
@@ -483,4 +481,5 @@ export default function PengaturanPage() {
     </div>
   );
 }
+
 
