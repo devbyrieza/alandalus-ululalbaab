@@ -144,8 +144,8 @@ export async function GET(request: Request) {
     });
 
     const active = data.find((ta) => ta.is_active);
-    const has2026 = data.find(
-      (ta) => ta.tahun_mulai === 2026 && ta.tahun_selesai === 2027,
+    const has2027 = data.find(
+      (ta) => ta.tahun_mulai === 2027,
     );
 
     // MIGRATION: Also perform migration on GET if admin (to make it easy to trigger)
@@ -196,7 +196,7 @@ export async function GET(request: Request) {
       active_ta_fee: 250000,
       all: data,
       active,
-      has2026_2027: !!has2026,
+      has2027_2028: !!has2027,
     });
   } catch (error) {
     console.error("Get tahun ajaran error:", error);
@@ -206,6 +206,7 @@ export async function GET(request: Request) {
     );
   }
 }
+
 
 
 
