@@ -60,37 +60,6 @@ export async function POST() {
         data: { is_active: false },
       });
 
-      // 3. Pindahkan semua Pendaftar yang mendaftar setelah 1 Juli 2026 ke TA 2027/2028
-      const cutoffDate = new Date("2026-07-01");
-      const pendaftarsToMigrate = await tx.pendaftar.findMany({
-        where: {
-          created_at: { gte: cutoffDate },
-          tahun_ajaran_id: { not: ta2027.id },
-        },
-      });
-
-      console.log(`[SEED] Mengurutkan dan migrasi ${pendaftarsToMigrate.length} pendaftar ke TA 2027-2028`);
-
-      for (const p of pendaftarsToMigrate) {
-        // Ganti nomor pendaftaran dari awalan 26 menjadi 27
-        const newNomor = p.nomor_pendaftaran.replace(/^([a-zA-Z]+)26(\d+)$/, "$127$2");
-        
-        await tx.pendaftar.update({
-          where: { id: p.id },
-          data: {
-            tahun_ajaran_id: ta2027.id,
-            nomor_pendaftaran: newNomor,
-          },
-        });
-
-        // Update relasi
-        await tx.pembayaran.updateMany({ where: { pendaftar_id: p.id }, data: { tahun_ajaran_id: ta2027.id } });
-        await tx.jadwalUjian.updateMany({ where: { pendaftar_id: p.id }, data: { tahun_ajaran_id: ta2027.id } });
-        await tx.pengumuman.updateMany({ where: { pendaftar_id: p.id }, data: { tahun_ajaran_id: ta2027.id } });
-        await tx.hasilSeleksi.updateMany({ where: { pendaftar_id: p.id }, data: { tahun_ajaran_id: ta2027.id } });
-        await tx.reservasiPSB.updateMany({ where: { pendaftar_id: p.id }, data: { tahun_ajaran_id: ta2027.id } });
-      }
-
       return ta2027;
     });
 
@@ -206,6 +175,7 @@ export async function GET(request: Request) {
     );
   }
 }
+
 
 
 
