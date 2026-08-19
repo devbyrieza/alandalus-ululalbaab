@@ -4,7 +4,6 @@ import { prisma } from "@/lib/prisma";
 
 export async function POST() {
   try {
-    // 1. Validasi session manual
     const cookieStore = await cookies();
     const sessionCookie = cookieStore.get("app_session");
 
@@ -19,13 +18,18 @@ export async function POST() {
       return NextResponse.json({ error: "Invalid session" }, { status: 401 });
     }
 
-    // Check custom role
     const allowedRoles = ["admin", "admin_super", "head_of_it"];
     if (!allowedRoles.includes(session.role)) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
     const result = await prisma.$transaction(async (tx) => {
+      // 0. Kembalikan nama TA lama yang mungkin sempat di-rename user menjadi 2027/2028
+      await tx.tahunAjaran.updateMany({
+        where: { tahun_mulai: 2026, tahun_selesai: 2027 },
+        data: { nama: "2026/2027" }
+      });
+
       // 1. Cari atau buat 2027-2028 (dengan tahun_mulai: 2027 yang BENAR)
       let ta2027 = await tx.tahunAjaran.findFirst({
         where: { tahun_mulai: 2027, tahun_selesai: 2028 },
@@ -46,7 +50,7 @@ export async function POST() {
       } else {
         await tx.tahunAjaran.update({
           where: { id: ta2027.id },
-          data: { is_active: true, biaya_pendaftaran: 250000 },
+          data: { is_active: true, biaya_pendaftaran: 250000, nama: "2027/2028" },
         });
       }
 
@@ -202,5 +206,6 @@ export async function GET(request: Request) {
     );
   }
 }
+
 
 
