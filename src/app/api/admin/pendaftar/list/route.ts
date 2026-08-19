@@ -138,7 +138,7 @@ export async function GET(request: NextRequest) {
     if (jenisKelamin) {
       where.jenis_kelamin = { contains: jenisKelamin, mode: "insensitive" };
     }
-    if (tahunAjaran) where.tahun_ajaran_id = tahunAjaran;
+    if (tahunAjaran && tahunAjaran !== "all") where.tahun_ajaran_id = tahunAjaran;
     if (provinsi) where.provinsi = provinsi;
     if (kabupaten) where.kabupaten = kabupaten;
     if (kecamatan) where.kecamatan = kecamatan;
@@ -329,4 +329,5 @@ export async function GET(request: NextRequest) {
     );
   }
 }
+
 

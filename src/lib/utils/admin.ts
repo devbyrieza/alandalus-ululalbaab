@@ -10,7 +10,9 @@ export async function getAdminWhereClause(tahunAjaranId?: string): Promise<any> 
     status_pendaftaran: { not: "mengundurkan_diri" },
   };
 
-  if (tahunAjaranId) {
+  if (tahunAjaranId === "all") {
+    // Show all
+  } else if (tahunAjaranId) {
     where.tahun_ajaran_id = tahunAjaranId;
   } else {
     try {
@@ -27,3 +29,4 @@ export async function getAdminWhereClause(tahunAjaranId?: string): Promise<any> 
 
   return where;
 }
+
