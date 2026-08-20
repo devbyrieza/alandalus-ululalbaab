@@ -7,6 +7,7 @@ import { NextResponse, type NextRequest } from "next/server";
 function getSessionFromCookie(request: NextRequest): {
   role: string | null;
   id: string | null;
+  is_default_password?: boolean;
 } {
   const sessionCookie = request.cookies.get("app_session");
 
@@ -19,6 +20,7 @@ function getSessionFromCookie(request: NextRequest): {
     return {
       role: session.role || null,
       id: session.id || null,
+      is_default_password: session.is_default_password,
     };
   } catch {
     return { role: null, id: null };
@@ -26,7 +28,7 @@ function getSessionFromCookie(request: NextRequest): {
 }
 
 export async function middleware(request: NextRequest) {
-  const { role: userRole } = getSessionFromCookie(request);
+  const { role: userRole, is_default_password } = getSessionFromCookie(request);
   const { pathname } = request.nextUrl;
   const host = request.headers.get("host") || "";
 
@@ -165,6 +167,19 @@ export async function middleware(request: NextRequest) {
   // ═══════════════════════════════════════════
   if (pathname.startsWith("/daftar") && userRole === "pendaftar") {
     return NextResponse.redirect(new URL("/dashboard/pendaftar", request.url));
+  }
+
+  // ═══════════════════════════════════════════
+  // ENFORCE PASSWORD CHANGE
+  // ═══════════════════════════════════════════
+  if (is_default_password && userRole && !["pendaftar", "santri", "wali_santri"].includes(userRole)) {
+    if (!pathname.endsWith("/profil") && pathname !== "/login" && !pathname.startsWith("/api/")) {
+      const allowedPengujiRoles = ["penguji", "penguji_calsan", "pewawancara_calsan", "pewawancara_cawalsan", "admin_super"];
+      // admin_super might have access to both, but usually they go to admin dashboard
+      const isPenguji = allowedPengujiRoles.includes(userRole) && userRole !== "admin_super";
+      const baseDashboard = isPenguji ? "/dashboard/penguji" : "/dashboard/admin";
+      return NextResponse.redirect(new URL(`${baseDashboard}/profil`, request.url));
+    }
   }
 
   const response = NextResponse.next();

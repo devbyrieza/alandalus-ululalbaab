@@ -151,6 +151,8 @@ export async function POST(request: NextRequest) {
         );
       }
 
+      const isDefaultPassword = profile.must_change_password === true || password === "2026#@" || profile.plain_password === "2026#@";
+
       // Check for multi-role: if secondary_roles exist, require role selection
       const secondaryRoles: string[] = profile.secondary_roles || [];
       if (secondaryRoles.length > 0) {
@@ -161,6 +163,7 @@ export async function POST(request: NextRequest) {
           profile_id: profile.id,
           full_name: profile.full_name,
           available_roles: [...new Set([profile.role, ...secondaryRoles])],
+          is_default_password: isDefaultPassword,
         });
       }
 
@@ -169,6 +172,7 @@ export async function POST(request: NextRequest) {
         success: true,
         message: "Login berhasil",
         role: profile.role,
+        is_default_password: isDefaultPassword,
         data: {
           id: profile.id,
           full_name: profile.full_name,
@@ -183,6 +187,7 @@ export async function POST(request: NextRequest) {
           role: profile.role,
           id: profile.id,
           full_name: profile.full_name,
+          is_default_password: isDefaultPassword,
         }),
         {
           path: "/",
