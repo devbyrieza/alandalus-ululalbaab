@@ -18,7 +18,7 @@ async function main() {
   await prisma.profile.create({
     data: {
       username: 'wahabrajasam',
-      email: 'mudir@pesantren-alandalus.com',
+      email: 'prof.wahabrajasam35@gmail.com',
       full_name: 'Wahab Rajasam, M.Pd.',
       role: 'admin_super',
       phone: '-',
@@ -39,3 +39,4 @@ main()
   .finally(async () => {
     await prisma.$disconnect();
   });
+
