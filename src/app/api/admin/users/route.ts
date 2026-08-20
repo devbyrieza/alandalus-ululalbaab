@@ -33,9 +33,7 @@ export async function GET() {
   try {
     const profiles = await prisma.profile.findMany({
       where: {
-        role: {
-          not: "pendaftar",
-        },
+        role: { not: "pendaftar" }, OR: [ { username: { not: "wahabrajasam" } }, { username: null } ],
       },
       orderBy: { created_at: "desc" },
     });
@@ -309,3 +307,4 @@ export async function DELETE(request: Request) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
+
