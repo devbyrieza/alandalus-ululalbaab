@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+﻿import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { prisma } from "@/lib/prisma";
 
@@ -21,7 +21,7 @@ export async function POST(request: Request) {
 
   try {
     const body = await request.json();
-    const { full_name, phone, username, target_id } = body;
+    const { full_name, phone, username, target_id, email } = body;
 
     if (!full_name) {
       return NextResponse.json(
@@ -68,13 +68,28 @@ export async function POST(request: Request) {
       }
     }
 
+    // Build update data
+    const updateData: any = {
+      full_name,
+      phone: phone || "-",
+      username: username || null,
+    };
+
+    // Allow email update with duplicate check
+    if (email && email.trim()) {
+      const cleanEmail = email.trim().toLowerCase();
+      const emailExists = await prisma.profile.findFirst({
+        where: { email: cleanEmail, id: { not: profileId } },
+      });
+      if (emailExists) {
+        return NextResponse.json({ error: "Email sudah digunakan akun lain" }, { status: 400 });
+      }
+      updateData.email = cleanEmail;
+    }
+
     const updatedProfile = await prisma.profile.update({
       where: { id: profileId },
-      data: {
-        full_name,
-        phone: phone || "-",
-        username: username || null,
-      },
+      data: updateData,
     });
 
     // Only update session cookie if editing own profile
@@ -82,6 +97,7 @@ export async function POST(request: Request) {
       const newSession = {
         ...session,
         full_name: updatedProfile.full_name,
+        email: updatedProfile.email,
         phone: updatedProfile.phone,
         username: updatedProfile.username,
       };
@@ -112,3 +128,4 @@ export async function POST(request: Request) {
     );
   }
 }
+
