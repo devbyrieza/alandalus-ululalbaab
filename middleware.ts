@@ -31,29 +31,19 @@ export async function middleware(request: NextRequest) {
   const host = request.headers.get("host") || "";
 
   // ═══════════════════════════════════════════
-  // HANDLE CORS PREFLIGHT (OPTIONS)
-  // ═══════════════════════════════════════════
-  if (request.method === "OPTIONS") {
-    return new NextResponse(null, {
-      status: 200,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-        "Access-Control-Allow-Headers": "Content-Type, Authorization, x-rsc, rsc, next-router-prefetch, next-router-state-tree",
-      },
-    });
-  }
-
-  // ═══════════════════════════════════════════
   // DOMAIN ROUTING (Main Domain vs PPDB Subdomain)
   // ═══════════════════════════════════════════
   const isLocalhost = host.includes("localhost") || host.includes("127.0.0.1") || host.includes("192.168.");
   
   if (!isLocalhost) {
     const isPpdbDomain = host.startsWith("ppdb.");
+    const isSafinaDomain = host.startsWith("safina.") || host.startsWith("keuangan.");
+    const isAppDomain = isPpdbDomain || isSafinaDomain;
+
     const ppdbPaths = [
       "/ppdb", "/login", "/daftar", "/daftar-pindahan", "/daftar-sukses", 
-      "/dashboard", "/admin", "/auth", "/pilih-verifikasi", "/send-otp", "/verifikasi-otp"
+      "/dashboard", "/admin", "/auth", "/pilih-verifikasi", "/send-otp", "/verifikasi-otp",
+      "/panitia", "/bank-soal"
     ];
     const isPpdbPath = ppdbPaths.some(p => pathname === p || pathname.startsWith(p + "/"));
     
@@ -61,34 +51,44 @@ export async function middleware(request: NextRequest) {
     const isStaticOrApi = pathname.startsWith("/_next") || pathname.startsWith("/api") || pathname.includes(".");
     
     if (!isStaticOrApi) {
-      if (isPpdbDomain && !isPpdbPath && pathname !== "/") {
-        // If on PPDB domain but trying to access non-PPDB path (like /tentang), redirect to main domain
-        const mainDomain = host.replace("ppdb.", "");
+      if (isSafinaDomain) {
+        // Auto-redirect keuangan.* to safina.* for brand consistency
+        if (host.startsWith("keuangan.")) {
+          const redirectUrl = new URL(pathname, `https://${host.replace("keuangan.", "safina.")}`);
+          redirectUrl.search = request.nextUrl.search;
+          return NextResponse.redirect(redirectUrl);
+        }
+
+        // If accessing root of Safina, go straight to login
+        if (pathname === "/") {
+          const redirectUrl = new URL("/login", request.url);
+          redirectUrl.search = request.nextUrl.search;
+          return NextResponse.redirect(redirectUrl);
+        }
+      }
+
+      if (isAppDomain && !isPpdbPath && pathname !== "/") {
+        // If on App domain (PPDB/Safina) but trying to access non-App path (like /tentang), redirect to main website
+        const mainDomain = host.replace("ppdb.", "").replace("safina.", "").replace("keuangan.", "");
         const redirectUrl = new URL(pathname, `https://${mainDomain}`);
         redirectUrl.search = request.nextUrl.search;
-        const res = NextResponse.redirect(redirectUrl);
-        res.headers.set("Access-Control-Allow-Origin", "*");
-        return res;
+        return NextResponse.redirect(redirectUrl);
       }
       
-      if (!isPpdbDomain && isPpdbPath) {
-        // If on main domain but trying to access PPDB path, redirect to PPDB domain
+      if (!isAppDomain && isPpdbPath) {
+        // If on main website domain but trying to access App path, redirect to PPDB domain
         const baseHost = host.replace(/^www\./, "");
         const newPathname = pathname === "/ppdb" ? "/" : pathname;
         const redirectUrl = new URL(newPathname, `https://ppdb.${baseHost}`);
         redirectUrl.search = request.nextUrl.search;
-        const res = NextResponse.redirect(redirectUrl);
-        res.headers.set("Access-Control-Allow-Origin", "*");
-        return res;
+        return NextResponse.redirect(redirectUrl);
       }
       
       if (isPpdbDomain) {
         if (pathname === "/ppdb") {
           const redirectUrl = new URL("/", request.url);
           redirectUrl.search = request.nextUrl.search;
-          const res = NextResponse.redirect(redirectUrl);
-          res.headers.set("Access-Control-Allow-Origin", "*");
-          return res;
+          return NextResponse.redirect(redirectUrl);
         }
 
         if (pathname === "/") {
@@ -187,7 +187,6 @@ export async function middleware(request: NextRequest) {
     });
   }
 
-  response.headers.set("Access-Control-Allow-Origin", "*");
   return response;
 }
 
