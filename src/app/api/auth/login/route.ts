@@ -110,6 +110,7 @@ export async function POST(request: NextRequest) {
         where: {
           OR: [
             { email: { equals: identifier, mode: "insensitive" } },
+            { username: { equals: identifier, mode: "insensitive" } },
             { phone: { in: phoneVariations } },
           ],
         },
@@ -186,6 +187,7 @@ export async function POST(request: NextRequest) {
           role: profile.role,
           id: profile.id,
           full_name: profile.full_name,
+          username: profile.username,
           is_default_password: isDefaultPassword,
         }),
         {
