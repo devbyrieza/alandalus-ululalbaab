@@ -4,7 +4,7 @@ const XLSX = require('xlsx');
 const path = require('path');
 
 async function sync() {
-  const filePath = path.join(process.cwd(), 'Update DATA UP 2026-2027.xlsx');
+  const filePath = path.join(process.cwd(), 'Update DATA UP 2026/2027.xlsx');
   console.log(`Reading file: ${filePath}`);
   
   const workbook = XLSX.readFile(filePath);

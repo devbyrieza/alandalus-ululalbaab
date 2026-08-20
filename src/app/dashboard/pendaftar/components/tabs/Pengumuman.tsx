@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
@@ -154,7 +154,7 @@ export default function PengumumanTab() {
                 Hasil Seleksi
               </h1>
               <p className="text-secondary-100/80 font-medium text-lg">
-                Penerimaan Santri Baru TP 2027-2028
+                Penerimaan Santri Baru TP 2027/2028
               </p>
             </div>
           </div>
@@ -426,4 +426,5 @@ export default function PengumumanTab() {
     </motion.div>
   );
 }
+
 

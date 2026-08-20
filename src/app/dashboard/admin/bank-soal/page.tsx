@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import {
@@ -83,7 +83,7 @@ export default function BankSoalPanitiaPage() {
               <BookOpenCheck className="w-4 h-4 text-teal-300" /> Lisan & Wawancara: 15-20 Menit
             </span>
             <span className="flex items-center gap-1.5 bg-black/20 px-3 py-1.5 rounded-lg border border-white/10">
-              <Award className="w-4 h-4 text-amber-300" /> TA 2027–2028
+              <Award className="w-4 h-4 text-amber-300" /> TA 2027/2028
             </span>
           </div>
         </div>
@@ -555,3 +555,4 @@ export default function BankSoalPanitiaPage() {
     </div>
   );
 }
+

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { Suspense, useEffect } from "react";
 import Link from "next/link";
@@ -228,7 +228,7 @@ function PPDBContent() {
               className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-surface-200 text-primary-700 text-xs font-black uppercase tracking-widest mb-10 shadow-premium-sm"
             >
               <Sparkles className="w-3.5 h-3.5" />
-              <span>Penerimaan Santri Baru T.A 2027-2028 • Angkatan ke-4</span>
+              <span>Penerimaan Santri Baru T.A 2027/2028 • Angkatan ke-4</span>
             </motion.div>
 
             <motion.h1
@@ -267,7 +267,7 @@ function PPDBContent() {
                   Angkatan ke-4: Lebih Matang, Lebih Teruji
                 </h3>
                 <p className="text-primary-800 font-medium leading-relaxed">
-                  Menjadi bagian dari angkatan 2027-2028 adalah keistimewaan.
+                  Menjadi bagian dari angkatan 2027/2028 adalah keistimewaan.
                   Ananda akan bergabung dengan generasi ke-4 yang{" "}
                   <strong>
                     lebih matang sistemnya, lebih teruji kurikulumnya
@@ -367,7 +367,7 @@ function PPDBContent() {
               <span className="text-primary-600">Pendidikan</span>
             </h2>
             <p className="text-xl text-ink-600 max-w-2xl mx-auto font-medium">
-              Informasi pembiayaan lengkap untuk Tahun Ajaran 2027-2028.
+              Informasi pembiayaan lengkap untuk Tahun Ajaran 2027/2028.
             </p>
           </div>
 
@@ -552,8 +552,8 @@ function PPDBContent() {
                       a: "Ya, seluruh santri di Pesantren Al Andalus Ulul Albaab wajib tinggal di asrama untuk mengikuti seluruh rangkaian kegiatan tarbiyah, halaqah tahfidz, dan pembelajaran kitab turots secara maksimal.",
                     },
                     {
-                      q: "Kapan batas akhir pendaftaran PPDB 2027-2028?",
-                      a: "Pendaftaran PPDB Tahun Ajaran 2027-2028 dibuka mulai 31 Agustus sampai dengan 30 Oktober 2026. Hanya 2 bulan! Pendaftaran dapat ditutup lebih awal jika kuota terpenuhi. Segera daftar!",
+                      q: "Kapan batas akhir pendaftaran PPDB 2027/2028?",
+                      a: "Pendaftaran PPDB Tahun Ajaran 2027/2028 dibuka mulai 31 Agustus sampai dengan 30 Oktober 2026. Hanya 2 bulan! Pendaftaran dapat ditutup lebih awal jika kuota terpenuhi. Segera daftar!",
                     },
                     {
                       q: "Berapa total biaya yang harus disiapkan?",
@@ -639,7 +639,7 @@ function PPDBContent() {
                 <div className="flex items-center gap-2 text-primary-100/70">
                   <Award className="w-4 h-4 text-secondary-400" />
                   <span className="text-xs font-bold uppercase tracking-widest">
-                    Angkatan ke-4 • TA 2027-2028
+                    Angkatan ke-4 • TA 2027/2028
                   </span>
                 </div>
                 <div className="flex items-center gap-2 text-primary-100/70">
@@ -681,4 +681,5 @@ export default function PPDBPage() {
     </Suspense>
   );
 }
+
 

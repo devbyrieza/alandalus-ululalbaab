@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { motion, useMotionValue, animate } from "framer-motion";
 import { useInView } from "react-intersection-observer";
@@ -38,7 +38,7 @@ const STATS: Stat[] = [
     icon: Calendar,
     color: "blue",
     suffix: "",
-    sublabel: "Tahun Ajaran 2027-2028",
+    sublabel: "Tahun Ajaran 2027/2028",
     description: "Tahun ke-4 Membangun Generasi",
   },
   {
@@ -315,3 +315,4 @@ export default function StatsSection() {
     </section>
   );
 }
+

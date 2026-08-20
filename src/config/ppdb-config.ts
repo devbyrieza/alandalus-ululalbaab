@@ -1,4 +1,4 @@
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+﻿// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 //   PPDB CONFIGURATION - EASY CUSTOMIZATION
 //   Ganti bagian ini saja untuk setiap pesantren baru!
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -111,7 +111,7 @@ export const PPDB_CONFIG = {
     youtube: "Al Andalus Ulul Albaab",
   },
 
-  tahunAjaran: "2027-2028",
+  tahunAjaran: "2027/2028",
   angkatan: "Angkatan IX",
 
   // ⚙️ SETTING TEKNIS (UMUMNYA TIDAK PERLU DIUBAH)
@@ -144,3 +144,4 @@ export const generateCSSVariables = () => {
     accent: colors.accent,
   };
 };
+

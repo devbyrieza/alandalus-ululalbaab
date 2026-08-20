@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -385,7 +385,7 @@ export default function DashboardPage() {
                 transition={{ delay: 0.2 }}
                 className="text-xl md:text-2xl text-ink-500 font-bold max-w-2xl leading-relaxed tracking-tight"
               >
-                T.A 2027-2028 • Pantau progres pendaftaranmu secara berkala di
+                T.A 2027/2028 • Pantau progres pendaftaranmu secara berkala di
                 sini dengan mudah.
               </motion.p>
             </div>
@@ -531,7 +531,7 @@ export default function DashboardPage() {
                   href="/dashboard/pendaftar/pengumuman"
                   icon={Trophy}
                   title="Hasil Kelulusan"
-                  description="Pengumuman hasil akhir seleksi penerimaan santri baru T.A 2027-2028."
+                  description="Pengumuman hasil akhir seleksi penerimaan santri baru T.A 2027/2028."
                   step="05"
                   color="blue"
                   disabled={
@@ -646,5 +646,6 @@ export default function DashboardPage() {
     </main>
   );
 }
+
 
 

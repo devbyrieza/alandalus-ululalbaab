@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+﻿import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { prisma } from "@/lib/prisma";
 
@@ -30,7 +30,7 @@ export async function POST() {
         data: { nama: "2026/2027" }
       });
 
-      // 1. Cari atau buat 2027-2028 (dengan tahun_mulai: 2027 yang BENAR)
+      // 1. Cari atau buat 2027/2028 (dengan tahun_mulai: 2027 yang BENAR)
       let ta2027 = await tx.tahunAjaran.findFirst({
         where: { tahun_mulai: 2027, tahun_selesai: 2028 },
       });
@@ -175,6 +175,7 @@ export async function GET(request: Request) {
     );
   }
 }
+
 
 
 

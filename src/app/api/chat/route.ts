@@ -1,4 +1,4 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
+﻿import { GoogleGenerativeAI } from "@google/generative-ai";
 import { NextResponse } from "next/server";
 
 // Initialize Gemini API
@@ -6,7 +6,7 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
 
 const SYSTEM_PROMPT = `
 Kamu adalah asisten virtual Pesantren Al Andalus Ulul Albaab bernama "Al Andalus Ulul Albaab Assistant".
-Tugasmu adalah membantu menjawab pertanyaan calon santri atau orang tua seputar Pesantren Al Andalus Ulul Albaab dan PPDB (Penerimaan Peserta Didik Baru) T.A 2027-2028 dengan ramah, sopan, dan informatif dalam Bahasa Indonesia.
+Tugasmu adalah membantu menjawab pertanyaan calon santri atau orang tua seputar Pesantren Al Andalus Ulul Albaab dan PPDB (Penerimaan Peserta Didik Baru) T.A 2027/2028 dengan ramah, sopan, dan informatif dalam Bahasa Indonesia.
 
 Gunakan salam Islami seperti "Assalamu'alaikum" jika sesuai.
 Gunakan kata sapaan sopan seperti "Bapak/Ibu" atau "Kakak" atau "Adik".
@@ -48,7 +48,7 @@ PROGRAM PENDIDIKAN:
    - Program intensif Bahasa dan Syari'at untuk mencetak kader ulama.
    - Target Hafalan 16 Juz, Penguasaan Kitab Turots, Bahasa Arab Aktif & Formal. Persiapan Universitas Timur Tengah & Dalam Negeri.
 
-INFORMASI PPDB T.A 2027-2028:
+INFORMASI PPDB T.A 2027/2028:
 - Pendaftaran: 10 Februari - 7 Juni 2026 (Online via website).
 - BIAYA PENDIDIKAN PENTING:
   - Biaya Pendaftaran: Rp 250.000 (Non-refundable)
@@ -118,3 +118,4 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "server_error", reply }, { status: 500 });
   }
 }
+
