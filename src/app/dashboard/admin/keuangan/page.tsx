@@ -458,10 +458,10 @@ export default function KeuanganPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex justify-between items-center bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white p-5 md:p-6 rounded-2xl border border-slate-100 shadow-sm">
         <div>
           <div className="flex items-center gap-3 mb-1">
-            <h1 className="text-2xl font-bold text-slate-800 tracking-tight">
+            <h1 className="text-xl sm:text-2xl font-bold text-slate-800 tracking-tight whitespace-normal break-words">
               Rekap Keuangan
             </h1>
             {tahunAjaranList.length > 0 && (
@@ -482,7 +482,7 @@ export default function KeuanganPage() {
             Monitoring status pembayaran seluruh pendaftar
           </p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2 w-full md:w-auto">
                       <button
               onClick={handleExportKeringanan}
               className="bg-gold-600 hover:bg-gold-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 font-bold shadow-md transition-colors"
