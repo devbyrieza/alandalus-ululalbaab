@@ -1,6 +1,6 @@
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+﻿// â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
 // MIDDLEWARE: Role-Based Protection & Domain Routing
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
 
 import { NextResponse, type NextRequest } from "next/server";
 
@@ -32,9 +32,9 @@ export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const host = request.headers.get("host") || "";
 
-  // ═══════════════════════════════════════════
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
   // DOMAIN ROUTING (Main Domain vs PPDB Subdomain)
-  // ═══════════════════════════════════════════
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
   const isLocalhost = host.includes("localhost") || host.includes("127.0.0.1") || host.includes("192.168.");
   
   if (!isLocalhost) {
@@ -101,18 +101,18 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  // ═══════════════════════════════════════════
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
   // PROTECT: /dashboard/pendaftar
-  // ═══════════════════════════════════════════
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
   if (pathname.startsWith("/dashboard/pendaftar")) {
     if (!userRole || userRole !== "pendaftar") {
       return NextResponse.redirect(new URL("/login", request.url));
     }
   }
 
-  // ═══════════════════════════════════════════
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
   // PROTECT: /dashboard/admin
-  // ═══════════════════════════════════════════
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
   if (pathname.startsWith("/dashboard/admin")) {
     const allowedAdminRoles = ["admin_berkas", "admin_keuangan", "admin_super", "admin"];
     if (!userRole || !allowedAdminRoles.includes(userRole)) {
@@ -120,9 +120,9 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  // ═══════════════════════════════════════════
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
   // PROTECT: /dashboard/penguji
-  // ═══════════════════════════════════════════
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
   if (pathname.startsWith("/dashboard/penguji")) {
     const allowedPengujiRoles = ["penguji", "penguji_calsan", "pewawancara_calsan", "pewawancara_cawalsan", "admin_super"];
     if (!userRole || !allowedPengujiRoles.includes(userRole)) {
@@ -130,9 +130,9 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  // ═══════════════════════════════════════════
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
   // REDIRECT: /dashboard (root) based on role
-  // ═══════════════════════════════════════════
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
   if (pathname === "/dashboard" || pathname === "/dashboard/") {
     if (!userRole) {
       return NextResponse.redirect(new URL("/login", request.url));
@@ -149,9 +149,9 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  // ═══════════════════════════════════════════
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
   // REDIRECT: /login if already logged in
-  // ═══════════════════════════════════════════
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
   if (pathname === "/login" && userRole) {
     if (userRole === "pendaftar") {
       return NextResponse.redirect(new URL("/dashboard/pendaftar", request.url));
@@ -162,17 +162,17 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  // ═══════════════════════════════════════════
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
   // REDIRECT: /daftar if already logged in
-  // ═══════════════════════════════════════════
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
   if (pathname.startsWith("/daftar") && userRole === "pendaftar") {
     return NextResponse.redirect(new URL("/dashboard/pendaftar", request.url));
   }
 
-  // ═══════════════════════════════════════════
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
   // ENFORCE PASSWORD CHANGE
-  // ═══════════════════════════════════════════
-  if (is_default_password && userRole && !["pendaftar", "santri", "wali_santri"].includes(userRole)) {
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  if (is_default_password && userRole !== "admin_super" && userRole && !["pendaftar", "santri", "wali_santri"].includes(userRole)) {
     if (!pathname.endsWith("/profil") && pathname !== "/login" && !pathname.startsWith("/api/")) {
       const allowedPengujiRoles = ["penguji", "penguji_calsan", "pewawancara_calsan", "pewawancara_cawalsan", "admin_super"];
       // admin_super might have access to both, but usually they go to admin dashboard
@@ -184,9 +184,9 @@ export async function middleware(request: NextRequest) {
 
   const response = NextResponse.next();
 
-  // ═══════════════════════════════════════════
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
   // ROLLING SESSION: Automatically renew session cookie duration
-  // ═══════════════════════════════════════════
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
   const rawSessionCookie = request.cookies.get("app_session");
   if (rawSessionCookie && userRole) {
     const maxAge = 60 * 60 * 24 * 90; // 90 Days
@@ -217,3 +217,4 @@ export const config = {
     '/((?!api|_next/static|_next/image|favicon.ico).*)',
   ],
 };
+
