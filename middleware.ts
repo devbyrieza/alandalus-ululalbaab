@@ -1,4 +1,4 @@
-﻿// â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
+// â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
 // MIDDLEWARE: Role-Based Protection & Domain Routing
 // â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
 
@@ -7,9 +7,8 @@ import { NextResponse, type NextRequest } from "next/server";
 function getSessionFromCookie(request: NextRequest): {
   role: string | null;
   id: string | null;
-  is_default_password?: boolean;
 } {
-  const sessionCookie = request.cookies.get("app_session");
+  const sessionCookie = request.cookies.get("al_session");
 
   if (!sessionCookie) {
     return { role: null, id: null };
@@ -20,7 +19,6 @@ function getSessionFromCookie(request: NextRequest): {
     return {
       role: session.role || null,
       id: session.id || null,
-      is_default_password: session.is_default_password,
     };
   } catch {
     return { role: null, id: null };
@@ -28,7 +26,7 @@ function getSessionFromCookie(request: NextRequest): {
 }
 
 export async function middleware(request: NextRequest) {
-  const { role: userRole, is_default_password } = getSessionFromCookie(request);
+  const { role: userRole } = getSessionFromCookie(request);
   const { pathname } = request.nextUrl;
   const host = request.headers.get("host") || "";
 
@@ -169,34 +167,28 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/dashboard/pendaftar", request.url));
   }
 
-  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-  // ENFORCE PASSWORD CHANGE
-  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-  if (is_default_password && userRole !== "admin_super" && userRole && !["pendaftar", "santri", "wali_santri"].includes(userRole)) {
-    if (!pathname.endsWith("/profil") && pathname !== "/login" && !pathname.startsWith("/api/")) {
-      const allowedPengujiRoles = ["penguji", "penguji_calsan", "pewawancara_calsan", "pewawancara_cawalsan", "admin_super"];
-      // admin_super might have access to both, but usually they go to admin dashboard
-      const isPenguji = allowedPengujiRoles.includes(userRole) && userRole !== "admin_super";
-      const baseDashboard = isPenguji ? "/dashboard/penguji" : "/dashboard/admin";
-      return NextResponse.redirect(new URL(`${baseDashboard}/profil`, request.url));
-    }
-  }
-
   const response = NextResponse.next();
 
-  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  // ══════════════════════════════════════════════════════════════════════
   // ROLLING SESSION: Automatically renew session cookie duration
-  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-  const rawSessionCookie = request.cookies.get("app_session");
+  // ══════════════════════════════════════════════════════════════════════
+  const rawSessionCookie = request.cookies.get("al_session");
   if (rawSessionCookie && userRole) {
     const maxAge = 60 * 60 * 24 * 90; // 90 Days
     const expires = new Date(Date.now() + maxAge * 1000);
       
-    response.cookies.set("app_session", rawSessionCookie.value, {
+    let baseDomain = "";
+    if (host.includes("pesantren-alandalus-putra.com")) baseDomain = "pesantren-alandalus-putra.com";
+    else if (host.includes("pesantren-alandalus-putri.com")) baseDomain = "pesantren-alandalus-putri.com";
+    else if (host.includes("alandalus-ululalbaab.com")) baseDomain = "alandalus-ululalbaab.com";
+    else if (host.includes("pesantren-alimam.com")) baseDomain = "pesantren-alimam.com";
+
+    response.cookies.set("al_session", rawSessionCookie.value, {
       path: "/",
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
+      domain: baseDomain || undefined,
       maxAge,
       expires,
     });
@@ -217,4 +209,5 @@ export const config = {
     '/((?!api|_next/static|_next/image|favicon.ico).*)',
   ],
 };
+
 

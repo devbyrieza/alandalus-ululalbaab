@@ -51,7 +51,7 @@ export async function GET(request: NextRequest) {
     const response = NextResponse.redirect(new URL(targetUrl, baseUrl));
 
     response.cookies.set(
-      "app_session",
+      "al_session",
       JSON.stringify({
         role: role,
         id: id,

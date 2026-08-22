@@ -4,7 +4,7 @@ import { prisma } from "@/lib/prisma";
 
 async function getSession() {
   const cookieStore = await cookies();
-  const sessionCookie = cookieStore.get("app_session");
+  const sessionCookie = cookieStore.get("al_session");
   if (!sessionCookie) return null;
   try { return JSON.parse(sessionCookie.value); } catch { return null; }
 }
@@ -48,7 +48,7 @@ export async function POST(request: Request) {
     if (profileId === session.id) {
       const newSession = { ...session, photo_url: updatedProfile.photo_url };
       const cookieStore = await cookies();
-      cookieStore.set("app_session", JSON.stringify(newSession), {
+      cookieStore.set("al_session", JSON.stringify(newSession), {
         path: "/",
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",

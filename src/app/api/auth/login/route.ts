@@ -1,4 +1,4 @@
-﻿import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { comparePassword } from "@/lib/utils/password";
 
@@ -7,9 +7,9 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { login_type } = body;
 
-    // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+    // ═══════════════════════════════════════════
     // LOGIN PENDAFTAR (NIK + Nomor Pendaftaran)
-    // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+    // ═══════════════════════════════════════════
     if (login_type === "pendaftar") {
       const { nik, nomor_pendaftaran } = body;
 
@@ -61,7 +61,7 @@ export async function POST(request: NextRequest) {
       });
 
       responseJson.cookies.set(
-        "app_session",
+        "al_session",
         JSON.stringify({
           role: "pendaftar",
           id: pendaftar.id,
@@ -83,9 +83,9 @@ export async function POST(request: NextRequest) {
       return responseJson;
     }
 
-    // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+    // ═══════════════════════════════════════════
     // LOGIN ADMIN/PENGUJI (Email + Password)
-    // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+    // ═══════════════════════════════════════════
     else if (login_type === "admin") {
       const { email: rawEmail, password } = body;
       const identifier = rawEmail?.trim();
@@ -118,7 +118,7 @@ export async function POST(request: NextRequest) {
 
       if (!profile || !profile.password_hash) {
         return NextResponse.json(
-          { error: "Username / Email / No. WA atau Password salah" },
+          { error: "Email/Username atau Password salah" },
           { status: 401 },
         );
       }
@@ -151,23 +151,22 @@ export async function POST(request: NextRequest) {
         );
       }
 
-      const isDefaultPassword = profile.must_change_password === true || password === "2026#@" || profile.plain_password === "2026#@";
-
       // Check for multi-role: if secondary_roles exist, require role selection
       const secondaryRoles: string[] = profile.secondary_roles || [];
       if (secondaryRoles.length > 0) {
-        // Return role selection prompt â€” no cookie yet
+        // Return role selection prompt — no cookie yet
         return NextResponse.json({
           success: true,
           requires_role_selection: true,
           profile_id: profile.id,
           full_name: profile.full_name,
           available_roles: [...new Set([profile.role, ...secondaryRoles])],
-          is_default_password: isDefaultPassword,
         });
       }
 
-      // Single role â€” login normally
+      const isDefaultPassword = profile.must_change_password === true || password === "2026#@" || profile.plain_password === "2026#@";
+
+      // Single role — login normally
       const responseJson = NextResponse.json({
         success: true,
         message: "Login berhasil",
@@ -177,12 +176,14 @@ export async function POST(request: NextRequest) {
           id: profile.id,
           full_name: profile.full_name,
           phone: profile.phone,
+          username: profile.username,
           role: profile.role,
+          is_default_password: isDefaultPassword,
         },
       });
 
       responseJson.cookies.set(
-        "app_session",
+        "al_session",
         JSON.stringify({
           role: profile.role,
           id: profile.id,
@@ -217,5 +218,6 @@ export async function POST(request: NextRequest) {
     );
   }
 }
+
 
 
