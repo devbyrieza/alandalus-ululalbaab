@@ -6,6 +6,14 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     const { login_type } = body;
+    
+    const host = request.headers.get("host") || "";
+    let baseDomain = "";
+    if (host.includes("pesantren-alandalus-putra.com")) baseDomain = "pesantren-alandalus-putra.com";
+    else if (host.includes("pesantren-alandalus-putri.com")) baseDomain = "pesantren-alandalus-putri.com";
+    else if (host.includes("alandalus-ululalbaab.com")) baseDomain = "alandalus-ululalbaab.com";
+    else if (host.includes("pesantren-ululalbaab.com")) baseDomain = "pesantren-ululalbaab.com";
+    else if (host.includes("pesantren-alimam.com")) baseDomain = "pesantren-alimam.com";
 
     // ═══════════════════════════════════════════
     // LOGIN PENDAFTAR (NIK + Nomor Pendaftaran)
@@ -74,7 +82,7 @@ export async function POST(request: NextRequest) {
           httpOnly: true,
           secure: process.env.NODE_ENV === "production" && !request.headers.get("host")?.includes("localhost") && !request.headers.get("host")?.includes("127.0.0.1") && !request.headers.get("host")?.startsWith("192.168."),
           sameSite: "lax",
-      domain: process.env.NEXT_PUBLIC_COOKIE_DOMAIN || undefined,
+          domain: baseDomain || undefined,
           maxAge: 60 * 60 * 24 * 90,
           expires: new Date(Date.now() + 60 * 60 * 24 * 90 * 1000), // 90 Days Persistent Session
         },
@@ -197,7 +205,7 @@ export async function POST(request: NextRequest) {
           httpOnly: true,
           secure: process.env.NODE_ENV === "production" && !request.headers.get("host")?.includes("localhost") && !request.headers.get("host")?.includes("127.0.0.1") && !request.headers.get("host")?.startsWith("192.168."),
           sameSite: "lax",
-      domain: process.env.NEXT_PUBLIC_COOKIE_DOMAIN || undefined,
+          domain: baseDomain || undefined,
           maxAge: 60 * 60 * 24 * 90,
           expires: new Date(Date.now() + 60 * 60 * 24 * 90 * 1000), // 90 Days Persistent Session
         },

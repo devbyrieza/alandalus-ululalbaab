@@ -181,6 +181,7 @@ export async function middleware(request: NextRequest) {
     if (host.includes("pesantren-alandalus-putra.com")) baseDomain = "pesantren-alandalus-putra.com";
     else if (host.includes("pesantren-alandalus-putri.com")) baseDomain = "pesantren-alandalus-putri.com";
     else if (host.includes("alandalus-ululalbaab.com")) baseDomain = "alandalus-ululalbaab.com";
+    else if (host.includes("pesantren-ululalbaab.com")) baseDomain = "pesantren-ululalbaab.com";
     else if (host.includes("pesantren-alimam.com")) baseDomain = "pesantren-alimam.com";
 
     response.cookies.set("al_session", rawSessionCookie.value, {
