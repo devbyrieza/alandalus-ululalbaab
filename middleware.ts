@@ -186,7 +186,7 @@ export async function middleware(request: NextRequest) {
     response.cookies.set("al_session", rawSessionCookie.value, {
       path: "/",
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      secure: process.env.NODE_ENV === "production" && !host.includes("localhost") && !host.includes("127.0.0.1") && !host.startsWith("192.168."),
       sameSite: "lax",
       domain: baseDomain || undefined,
       maxAge,

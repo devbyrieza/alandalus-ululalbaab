@@ -72,7 +72,7 @@ export async function POST(request: NextRequest) {
         {
           path: "/",
           httpOnly: true,
-          secure: process.env.NODE_ENV === "production",
+          secure: process.env.NODE_ENV === "production" && !request.headers.get("host")?.includes("localhost") && !request.headers.get("host")?.includes("127.0.0.1") && !request.headers.get("host")?.startsWith("192.168."),
           sameSite: "lax",
       domain: process.env.NEXT_PUBLIC_COOKIE_DOMAIN || undefined,
           maxAge: 60 * 60 * 24 * 90,
@@ -195,7 +195,7 @@ export async function POST(request: NextRequest) {
         {
           path: "/",
           httpOnly: true,
-          secure: process.env.NODE_ENV === "production",
+          secure: process.env.NODE_ENV === "production" && !request.headers.get("host")?.includes("localhost") && !request.headers.get("host")?.includes("127.0.0.1") && !request.headers.get("host")?.startsWith("192.168."),
           sameSite: "lax",
       domain: process.env.NEXT_PUBLIC_COOKIE_DOMAIN || undefined,
           maxAge: 60 * 60 * 24 * 90,
