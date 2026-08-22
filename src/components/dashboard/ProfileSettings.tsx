@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import {
   User,
   Lock,
@@ -8,7 +8,10 @@ import {
   Loader2,
   CheckCircle2,
   AlertCircle,
+  Camera,
+  Upload,
 } from "lucide-react";
+import Image from "next/image";
 
 interface UserSession {
   id: string;
@@ -17,6 +20,7 @@ interface UserSession {
   role: string;
   phone?: string;
   username?: string;
+  photo_url?: string;
 }
 
 export default function ProfileSettings({ user }: { user: UserSession }) {
@@ -28,6 +32,12 @@ export default function ProfileSettings({ user }: { user: UserSession }) {
   const [phone, setPhone] = useState(user?.phone || "");
   const [username, setUsername] = useState(user?.username || "");
   const [email, setEmail] = useState(user?.email || "");
+
+  // Photo State
+  const [photoPreview, setPhotoPreview] = useState<string | null>(user?.photo_url || null);
+  const [photoLoading, setPhotoLoading] = useState(false);
+  const [photoSuccess, setPhotoSuccess] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // UI State
   const [loading, setLoading] = useState(false);
@@ -48,6 +58,49 @@ export default function ProfileSettings({ user }: { user: UserSession }) {
       admin: "Admin",
     };
     return roleMap[role] || role.replace("_", " ").toUpperCase();
+  };
+
+  const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+      setError("File harus berupa gambar (JPG, PNG, WebP, dll).");
+      return;
+    }
+    if (file.size > 2 * 1024 * 1024) {
+      setError("Ukuran foto maksimal 2MB.");
+      return;
+    }
+
+    setError(null);
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const base64 = reader.result as string;
+      setPhotoPreview(base64);
+      handleUploadPhoto(base64);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleUploadPhoto = async (photo_url: string) => {
+    setPhotoLoading(true);
+    setPhotoSuccess(false);
+    try {
+      const res = await fetch("/api/profile/photo", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ photo_url }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Gagal memperbarui foto");
+      setPhotoSuccess(true);
+      setTimeout(() => setPhotoSuccess(false), 4000);
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setPhotoLoading(false);
+    }
   };
 
   const handleSaveProfile = async (e: React.FormEvent) => {
@@ -81,7 +134,6 @@ export default function ProfileSettings({ user }: { user: UserSession }) {
   };
 
   const handleSavePassword = async (e: React.FormEvent) => {
-    // ... (existing logic remains same)
     e.preventDefault();
     setError(null);
     setSuccess(false);
@@ -130,7 +182,6 @@ export default function ProfileSettings({ user }: { user: UserSession }) {
       setNewPassword("");
       setConfirmPassword("");
 
-      // Auto hide success message after 5 seconds
       setTimeout(() => {
         setSuccess(false);
       }, 5000);
@@ -140,6 +191,14 @@ export default function ProfileSettings({ user }: { user: UserSession }) {
       setLoading(false);
     }
   };
+
+  const getInitials = (name: string) =>
+    name
+      .split(" ")
+      .slice(0, 2)
+      .map((n) => n[0])
+      .join("")
+      .toUpperCase();
 
   return (
     <div className="space-y-6 max-w-2xl pb-12">
@@ -163,10 +222,47 @@ export default function ProfileSettings({ user }: { user: UserSession }) {
       {/* Profile Info Card */}
       <div className="bg-white border border-gray-100 rounded-2xl shadow-xs overflow-hidden">
         <div className="p-6 md:p-8 border-b border-gray-100">
-          <div className="flex items-center gap-4 mb-4">
-            <div className="w-16 h-16 rounded-full bg-primary-100 flex items-center justify-center text-primary-600">
-              <User className="w-8 h-8" />
+          {/* Avatar Section */}
+          <div className="flex items-center gap-5 mb-4">
+            <div className="relative group">
+              <div className="w-20 h-20 rounded-full overflow-hidden bg-primary-100 flex items-center justify-center text-primary-600 ring-4 ring-primary-50">
+                {photoPreview ? (
+                  <img
+                    src={photoPreview}
+                    alt="Foto Profil"
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <span className="text-2xl font-bold text-primary-600">
+                    {getInitials(fullName || user?.full_name || "U")}
+                  </span>
+                )}
+              </div>
+
+              {/* Upload overlay */}
+              <button
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                disabled={photoLoading}
+                className="absolute inset-0 rounded-full bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center cursor-pointer"
+                title="Ganti foto profil"
+              >
+                {photoLoading ? (
+                  <Loader2 className="w-6 h-6 text-white animate-spin" />
+                ) : (
+                  <Camera className="w-6 h-6 text-white" />
+                )}
+              </button>
+
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                onChange={handlePhotoChange}
+                className="hidden"
+              />
             </div>
+
             <div>
               <h2 className="text-xl font-bold text-gray-900">
                 {fullName || user?.full_name}
@@ -176,6 +272,16 @@ export default function ProfileSettings({ user }: { user: UserSession }) {
                   {formatRoleDisplay(user?.role)}
                 </span>
               </div>
+              <button
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                disabled={photoLoading}
+                className="mt-2 inline-flex items-center gap-1.5 text-xs text-primary-600 hover:text-primary-700 font-medium transition-colors"
+              >
+                <Upload className="w-3 h-3" />
+                {photoLoading ? "Mengunggah..." : photoSuccess ? "✓ Foto berhasil diperbarui!" : "Ganti Foto Profil"}
+              </button>
+              <p className="text-[10px] text-gray-400 mt-0.5">Format: JPG, PNG, WebP. Maks 2MB.</p>
             </div>
           </div>
         </div>
@@ -338,6 +444,9 @@ export default function ProfileSettings({ user }: { user: UserSession }) {
                 />
               </div>
             </div>
+            <p className="text-xs text-gray-400">
+              Password baru harus minimal 8 karakter dan mengandung: huruf besar, huruf kecil, angka, dan karakter khusus (!@#$%^&*).
+            </p>
 
             <div className="pt-4 flex justify-end">
               <button
