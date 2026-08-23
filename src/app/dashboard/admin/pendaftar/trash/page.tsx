@@ -2,19 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import {
-  Trash2,
-  RotateCcw,
-  ArrowLeft,
-  Loader2,
-  ChevronLeft,
-  ChevronRight,
-  X,
-  Users,
-  Hash,
-  Calendar,
-  Search,
-} from "lucide-react";
+import { Trash2, RotateCcw, ArrowLeft, Loader2, ChevronLeft, ChevronRight, X, Users, Hash, Calendar, Search, CheckCircle2,  } from "lucide-react";
 import Swal from "sweetalert2";
 
 interface DeletedPendaftar {
@@ -394,7 +382,7 @@ export default function TrashPage() {
             <div className="p-6 space-y-4">
               <div className="bg-green-50 border-2 border-green-200 rounded-xl p-4">
                 <p className="text-sm text-green-800 font-medium">
-                  ✅ Data{" "}
+                  <CheckCircle2 className="w-4 h-4 inline-block mr-1 text-green-600" /> Data{" "}
                   <strong>{toTitleCase(restoringItem.nama_lengkap)}</strong> (
                   {restoringItem.nomor_pendaftaran}) akan dipulihkan dan muncul
                   kembali di daftar pendaftar aktif.

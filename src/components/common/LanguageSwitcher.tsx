@@ -5,15 +5,15 @@ import { Globe, ChevronDown, Check } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const LANGUAGES = [
-  { code: "id", name: "Indonesia", flag: "🇮🇩" },
-  { code: "en", name: "English", flag: "🇺🇸" },
-  { code: "ar", name: "العربية", flag: "🇸🇦" },
-  { code: "ms", name: "Melayu", flag: "🇲🇾" },
-  { code: "zh-CN", name: "简体中文", flag: "🇨🇳" },
-  { code: "ja", name: "日本語", flag: "🇯🇵" },
-  { code: "ko", name: "한국어", flag: "🇰🇷" },
-  { code: "fr", name: "Français", flag: "🇫🇷" },
-  { code: "de", name: "Deutsch", flag: "🇩🇪" },
+  { code: "id", name: "Indonesia" },
+  { code: "en", name: "English" },
+  { code: "ar", name: "العربية" },
+  { code: "ms", name: "Melayu" },
+  { code: "zh-CN", name: "简体中文" },
+  { code: "ja", name: "日本語" },
+  { code: "ko", name: "한국어" },
+  { code: "fr", name: "Français" },
+  { code: "de", name: "Deutsch" },
 ];
 
 export default function LanguageSwitcher() {
@@ -214,7 +214,6 @@ export default function LanguageSwitcher() {
                     }`}
                   >
                     <div className="flex items-center gap-3">
-                      <span className="text-base">{lang.flag}</span>
                       <span>{lang.name}</span>
                     </div>
                     {currentLang === lang.code && <Check className="w-4 h-4" />}

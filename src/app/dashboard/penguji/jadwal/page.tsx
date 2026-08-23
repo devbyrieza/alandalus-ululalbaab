@@ -1,27 +1,7 @@
 "use client";
 
 import { useState, useEffect, useMemo } from "react";
-import {
-  Calendar,
-  Clock,
-  MapPin,
-  Users,
-  FileText,
-  Loader2,
-  Plus,
-  Trash2,
-  CheckCircle,
-  XCircle,
-  Hash,
-  AlertTriangle,
-  Save,
-  Trophy,
-  AlertCircle,
-  Edit2,
-  CheckSquare,
-  Square,
-  Layers,
-} from "lucide-react";
+import { Calendar, Clock, MapPin, Users, FileText, Loader2, Plus, Trash2, CheckCircle, XCircle, Hash, AlertTriangle, Save, Trophy, AlertCircle, Edit2, CheckSquare, Square, Layers, , Sparkles } from "lucide-react";
 import Swal from "sweetalert2";
 
 // --- Types ---
@@ -1350,7 +1330,7 @@ export default function JadwalPengujiPage() {
                                   onClick={() => handleCompleteExam(item.id)}
                                   className="w-full py-4 bg-primary-600 hover:bg-primary-700 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-2xl transition-all active:scale-95 shadow-lg shadow-primary-600/20"
                                 >
-                                  ✓ Tandai Wawancara Calon Santri Selesai
+                                  <CheckCircle className="w-3.5 h-3.5 inline-block mr-1" /> Tandai Wawancara Calon Santri Selesai
                                 </button>
                               ))}
                             {userId &&
@@ -1365,7 +1345,7 @@ export default function JadwalPengujiPage() {
                                   onClick={() => handleCompleteExam(item.id)}
                                   className="w-full py-4 bg-primary-600 hover:bg-primary-700 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-2xl transition-all active:scale-95 shadow-lg shadow-primary-600/20"
                                 >
-                                  ✓ Tandai Seleksi Al Qur'an Selesai
+                                  <CheckCircle className="w-3.5 h-3.5 inline-block mr-1" /> Tandai Seleksi Al Qur'an Selesai
                                 </button>
                               ))}
                             {userId &&
@@ -1380,7 +1360,7 @@ export default function JadwalPengujiPage() {
                                   onClick={() => handleCompleteExam(item.id)}
                                   className="w-full py-4 bg-primary-600 hover:bg-primary-700 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-2xl transition-all active:scale-95 shadow-lg shadow-primary-600/20"
                                 >
-                                  ✓ Tandai Seleksi Wawancara Orang Tua Selesai
+                                  <CheckCircle className="w-3.5 h-3.5 inline-block mr-1" /> Tandai Seleksi Wawancara Orang Tua Selesai
                                 </button>
                               ))}
                             {/* Bottom row: Lihat Data + Batalkan */}
@@ -2191,7 +2171,7 @@ export default function JadwalPengujiPage() {
                 <div className="bg-primary-600 rounded-2xl p-4 shadow-lg shadow-primary-950/20 text-white flex items-start gap-3 relative overflow-hidden group">
                   <div className="absolute top-0 right-0 w-20 h-20 bg-white/10 rounded-full -mr-10 -mt-10 blur-xl"></div>
                   <div className="w-8 h-8 bg-white/20 backdrop-blur-md rounded-xl flex items-center justify-center shrink-0">
-                    <span className="text-sm">✨</span>
+                    <AlertCircle className="w-4 h-4 text-white" />
                   </div>
                   <div>
                     <p className="text-[10px] text-primary-100 font-black uppercase tracking-widest mb-0.5">

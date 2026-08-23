@@ -1,22 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import {
-  Download,
-  Search,
-  Loader2,
-  CreditCard,
-  CheckCircle2,
-  Clock,
-  AlertCircle,
-  XCircle,
-  TrendingUp,
-  ChevronDown,
-  ChevronUp,
-  ExternalLink,
-  FileText,
-  Users,
-} from "lucide-react";
+import { Download, Search, Loader2, CreditCard, CheckCircle2, Clock, AlertCircle, XCircle, TrendingUp, ChevronDown, ChevronUp, ExternalLink, FileText, Users, Building2, BookOpen, , Building } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
 import Alert from "@/components/ui/Alert";
 import { exportToExcelProfessional, exportToPDF } from "@/lib/utils/export";
@@ -517,7 +502,7 @@ export default function KeuanganPage() {
               : "text-slate-500 hover:text-slate-700"
           }`}
         >
-          💳 Pembayaran Pendaftaran
+          <CreditCard className="w-4 h-4 inline-block mr-1" /> Pembayaran Pendaftaran
         </button>
         <button
           onClick={() => {
@@ -530,7 +515,7 @@ export default function KeuanganPage() {
               : "text-slate-500 hover:text-slate-700"
           }`}
         >
-          🏢 Uang Pangkal
+          <Building2 className="w-4 h-4 inline-block mr-1" /> Uang Pangkal
         </button>
         <button
           onClick={() => {
@@ -543,7 +528,7 @@ export default function KeuanganPage() {
               : "text-slate-500 hover:text-slate-700"
           }`}
         >
-          📖 SPP Bln Pertama
+          <BookOpen className="w-4 h-4 inline-block mr-1" /> SPP Bln Pertama
         </button>
       </div>
 

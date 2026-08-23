@@ -11,6 +11,8 @@ import UrgencyBar from "@/components/ui/UrgencyBar";
 import FloatingWhatsApp from "@/components/ui/FloatingWhatsApp";
 import LiveActivityToast from "@/components/ui/LiveActivityToast";
 import ScrollProgressBar from "@/components/ui/ScrollProgressBar";
+import { CheckCircle2 } from "lucide-react";
+
 
 export default function LayoutWrapper({
   children,
@@ -27,13 +29,13 @@ export default function LayoutWrapper({
 
   return (
     <div className="relative min-h-screen flex flex-col font-sans">
-      {/* ✅ SCROLL PROGRESS BAR */}
+      {/* SCROLL PROGRESS BAR */}
       {!hideNavbarFooter && <ScrollProgressBar height={3} />}
 
-      {/* ✅ NAVBAR */}
+      {/* NAVBAR */}
       {!hideNavbarFooter && <Navbar />}
 
-      {/* ✅ MAIN CONTENT */}
+      {/* MAIN CONTENT */}
       <main className={hideNavbarFooter ? "flex-1" : "flex-1 pt-20 md:pt-24"}>
         {!hideNavbarFooter && <UrgencyBar />}
         {hideNavbarFooter ? (
@@ -43,10 +45,10 @@ export default function LayoutWrapper({
         )}
       </main>
 
-      {/* ✅ FOOTER */}
+      {/* FOOTER */}
       {!hideNavbarFooter && <Footer />}
 
-      {/* ✅ FLOATING WIDGETS */}
+      {/* FLOATING WIDGETS */}
       {!hideNavbarFooter && (
         <>
           {/* <TawkToScript /> */}

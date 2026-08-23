@@ -1,20 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import {
-  CheckCircle,
-  AlertCircle,
-  FileText,
-  Send,
-  Loader2,
-  History,
-  Copy,
-  Building2,
-  CreditCard as CreditCardIcon,
-  MessageCircle,
-  Banknote,
-  BookOpen,
-} from "lucide-react";
+import { CheckCircle, AlertCircle, FileText, Send, Loader2, History, Copy, Building2, CreditCard as CreditCardIcon, MessageCircle, Banknote, BookOpen, , Clock } from "lucide-react";
 import { Alert } from "@/components/ui";
 import { formatCurrency } from "@/lib/utils";
 
@@ -249,7 +236,7 @@ export default function DaftarUlangTab() {
           >
             {totalDaftarUlangPaid >= expectedUangPangkal && (
               <span className="absolute top-2 right-2 bg-emerald-500 text-white text-[9px] font-black px-1.5 py-0.5 rounded-full">
-                ✓ LUNAS
+                LUNAS
               </span>
             )}
             <Building2
@@ -289,7 +276,7 @@ export default function DaftarUlangTab() {
           >
             {totalSppPaid >= expectedSpp && (
               <span className="absolute top-2 right-2 bg-emerald-500 text-white text-[9px] font-black px-1.5 py-0.5 rounded-full">
-                ✓ LUNAS
+                LUNAS
               </span>
             )}
             <BookOpen
@@ -331,7 +318,7 @@ export default function DaftarUlangTab() {
                   : "bg-slate-100 text-slate-700 border-slate-200"
               }`}
             >
-              {isTabLunas ? "✓ LUNAS" : totalPaid > 0 ? "CICILAN AKTIF" : "BELUM BAYAR"}
+              {isTabLunas ? "LUNAS" : totalPaid > 0 ? "CICILAN AKTIF" : "BELUM BAYAR"}
             </span>
           </div>
         </div>
@@ -415,10 +402,10 @@ export default function DaftarUlangTab() {
                     }`}
                   >
                     {p.status_pembayaran === "verified"
-                      ? "✓ Verified"
+                      ? "Verified"
                       : p.status_pembayaran === "rejected"
-                      ? "✗ Ditolak"
-                      : "⏰ Pending"}
+                      ? "Ditolak"
+                      : "Pending"}
                   </span>
                 </div>
               </div>

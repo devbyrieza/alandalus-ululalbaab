@@ -3,37 +3,7 @@
 import { useState, useEffect, Suspense, useRef } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 
-import {
-  Users,
-  Search,
-  Filter,
-  Eye,
-  ChevronLeft,
-  ChevronRight,
-  Loader2,
-  RefreshCw,
-  FileText,
-  Calendar,
-  Phone,
-  Mail,
-  Hash,
-  CheckSquare,
-  Square,
-  Download,
-  Edit,
-  ArrowLeft,
-  FileSpreadsheet,
-  X,
-  Save,
-  FileCheck,
-  RotateCcw,
-  UploadCloud,
-  CreditCard,
-  Trash2,
-  LogOut,
-  Plus,
-  Shuffle,
-} from "lucide-react";
+import { Users, Search, Filter, Eye, ChevronLeft, ChevronRight, Loader2, RefreshCw, FileText, Calendar, Phone, Mail, Hash, CheckSquare, Square, Download, Edit, ArrowLeft, FileSpreadsheet, X, Save, FileCheck, RotateCcw, UploadCloud, CreditCard, Trash2, LogOut, Plus, Shuffle, AlertTriangle, , Crown, Star } from "lucide-react";
 import Link from "next/link";
 import { UserRole } from "@/lib/access-control";
 import { exportToExcelProfessional, exportToPDF } from "@/lib/utils/export";
@@ -2449,7 +2419,7 @@ function AdminPendaftarContent() {
             <div className="p-6 space-y-4">
               <div className="bg-secondary-50 border-2 border-secondary-200 rounded-xl p-4">
                 <p className="text-sm text-secondary-800 font-medium">
-                  ⚠️ Anda akan menghapus data{" "}
+                  <AlertTriangle className="w-4 h-4 inline-block mr-1 text-amber-500" /> Anda akan menghapus data{" "}
                   <strong>{toTitleCase(deletingPendaftar.nama_lengkap)}</strong>{" "}
                   ({deletingPendaftar.nomor_pendaftaran}). Data akan dipindahkan
                   ke Sampah dan bisa di-restore kapan saja.

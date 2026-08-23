@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { RefreshCw, Check, Smartphone, User, Key } from "lucide-react";
+import { RefreshCw, Check, Smartphone, User, Key, ClipboardList, Sparkles, FileText, BarChart, Calendar, PartyPopper, BarChart2, CheckCircle2 } from "lucide-react";
 
 interface PendingSMS {
   id: string;
@@ -69,7 +69,7 @@ export default function AdminSMSDashboard() {
       <div className="max-w-6xl mx-auto">
         <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
           <h1 className="text-2xl font-bold text-gray-900 mb-2">
-            📱 Dashboard Admin - SMS Manual
+            <Smartphone className="w-6 h-6 inline-block mr-2" /> Dashboard Admin - SMS Manual
           </h1>
           <p className="text-gray-600 mb-4">
             Sistem dalam{" "}
@@ -78,7 +78,7 @@ export default function AdminSMSDashboard() {
           </p>
 
           <div className="bg-primary-50 border border-primary-200 rounded-lg p-4 mb-6">
-            <h3 className="font-bold text-primary-800 mb-2">📋 Instruksi:</h3>
+            <h3 className="font-bold text-primary-800 mb-2"><ClipboardList className="w-5 h-5 inline-block mr-1" /> Instruksi:</h3>
             <ol className="list-decimal list-inside text-primary-700 space-y-1">
               <li>Salin nomor HP dan OTP di bawah</li>
               <li>Kirim SMS dari HP Admin ke nomor tersebut</li>
@@ -89,7 +89,7 @@ export default function AdminSMSDashboard() {
 
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-lg font-bold text-gray-800">
-              📋 Daftar SMS yang Perlu Dikirim: {pendingSMS.length}
+              <ClipboardList className="w-5 h-5 inline-block mr-1" /> Daftar SMS yang Perlu Dikirim: {pendingSMS.length}
             </h2>
             <button
               onClick={fetchPendingSMS}
@@ -104,7 +104,7 @@ export default function AdminSMSDashboard() {
             <div className="text-center py-10">
               <Check className="w-12 h-12 text-green-500 mx-auto mb-4" />
               <p className="text-gray-600">
-                🎉 Tidak ada SMS yang perlu dikirim!
+                <Sparkles className="w-6 h-6 inline-block mr-2" /> Tidak ada SMS yang perlu dikirim!
               </p>
               <p className="text-sm text-gray-500 mt-2">
                 Semua OTP sudah terkirim atau belum ada pendaftaran.
@@ -153,7 +153,7 @@ export default function AdminSMSDashboard() {
 
                   <div className="bg-white rounded-lg p-4 mb-4">
                     <p className="text-sm text-gray-500 mb-2">
-                      📝 Pesan yang dikirim:
+                      <FileText className="w-4 h-4 inline-block mr-1" /> Pesan yang dikirim:
                     </p>
                     <pre className="bg-gray-900 text-white p-4 rounded-lg text-sm">
                       {`PPDB ULUL ALBAAB
@@ -170,14 +170,14 @@ Hubungi 0812-8530-0800 jika ada masalah.`}
                       onClick={() => markAsSent(item.id)}
                       className="flex-1 py-3 bg-green-600 text-white font-bold rounded-lg hover:bg-green-700 flex items-center justify-center gap-2"
                     >
-                      <Check className="w-5 h-5" />✓ Sudah Dikirim
+                      <Check className="w-5 h-5" /> Sudah Dikirim
                     </button>
 
                     <a
                       href={`sms:${item.phone}&body=PPDB ULUL ALBAAB: Kode OTP: ${item.otp} untuk ${item.nama}`}
                       className="px-6 py-3 bg-primary-600 text-white font-bold rounded-lg hover:bg-primary-700"
                     >
-                      📱 Buka Aplikasi SMS
+                      <Smartphone className="w-5 h-5 inline-block mr-1" /> Buka Aplikasi SMS
                     </a>
                   </div>
                 </div>
@@ -187,23 +187,23 @@ Hubungi 0812-8530-0800 jika ada masalah.`}
         </div>
 
         <div className="bg-white rounded-xl shadow-lg p-6">
-          <h3 className="font-bold text-gray-900 mb-4">📊 Status Sistem:</h3>
+          <h3 className="font-bold text-gray-900 mb-4"><BarChart className="w-5 h-5 inline-block mr-1" /> Status Sistem:</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-primary-50 p-4 rounded-lg">
               <p className="text-sm text-primary-600">SMS Service</p>
-              <p className="text-2xl font-bold">🔄 Simulation</p>
+              <p className="text-2xl font-bold flex items-center gap-2"><RefreshCw className="w-6 h-6" /> Simulation</p>
             </div>
             <div className="bg-green-50 p-4 rounded-lg">
               <p className="text-sm text-green-600">Telegram</p>
-              <p className="text-2xl font-bold">✅ Ready</p>
+              <p className="text-2xl font-bold flex items-center gap-2"><Check className="w-6 h-6" /> Ready</p>
             </div>
             <div className="bg-purple-50 p-4 rounded-lg">
               <p className="text-sm text-purple-600">Email</p>
-              <p className="text-2xl font-bold">✅ Ready</p>
+              <p className="text-2xl font-bold flex items-center gap-2"><Check className="w-6 h-6" /> Ready</p>
             </div>
             <div className="bg-secondary-50 p-4 rounded-lg">
               <p className="text-sm text-secondary-600">Launch Date</p>
-              <p className="text-2xl font-bold">📅 22 Jan</p>
+              <p className="text-2xl font-bold flex items-center gap-2"><Calendar className="w-6 h-6" /> 22 Jan</p>
             </div>
           </div>
         </div>

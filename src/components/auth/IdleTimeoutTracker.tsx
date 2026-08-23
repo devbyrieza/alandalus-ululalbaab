@@ -1,5 +1,5 @@
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// IDLE TIMEOUT TRACKER 🚨
+// IDLE TIMEOUT TRACKER
 // Auto-logout setelah 24 jam tidak ada aktivitas
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // Path: src/components/auth/IdleTimeoutTracker.tsx
@@ -10,17 +10,17 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { logoutUser } from "@/lib/auth";
-import { AlertCircle, Clock } from "lucide-react";
+import { AlertCircle, Clock, AlertTriangle, Target, Package, RefreshCw, LogOut, Palette, BookOpen } from "lucide-react";
 
 // ============================================
-// ⚙️ KONFIGURASI
+// KONFIGURASI
 // ============================================
 const IDLE_TIMEOUT = 24 * 60 * 60 * 1000; // 24 jam dalam milliseconds
 const WARNING_TIME = 5 * 60 * 1000; // Warning 5 menit sebelum logout
 const CHECK_INTERVAL = 1000; // Check setiap 1 detik
 
 // ============================================
-// 🎯 EVENTS YANG DIANGGAP "AKTIVITAS"
+// EVENTS YANG DIANGGAP "AKTIVITAS"
 // ============================================
 const ACTIVITY_EVENTS = [
   "mousedown", // Klik mouse
@@ -32,7 +32,7 @@ const ACTIVITY_EVENTS = [
 ];
 
 // ============================================
-// 📦 COMPONENT
+// COMPONENT
 // ============================================
 export default function IdleTimeoutTracker() {
   const router = useRouter();
@@ -43,7 +43,7 @@ export default function IdleTimeoutTracker() {
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   // ============================================
-  // 🔄 UPDATE LAST ACTIVITY TIME
+  // UPDATE LAST ACTIVITY TIME
   // ============================================
   const updateActivity = () => {
     lastActivityRef.current = Date.now();
@@ -52,10 +52,10 @@ export default function IdleTimeoutTracker() {
   };
 
   // ============================================
-  // 🚪 HANDLE LOGOUT
+  // HANDLE LOGOUT
   // ============================================
   const handleLogout = async () => {
-    console.log("⏰ Idle timeout reached - logging out...");
+    console.log("Idle timeout reached - logging out...");
 
     // Clear interval
     if (intervalRef.current) {
@@ -72,7 +72,7 @@ export default function IdleTimeoutTracker() {
   };
 
   // ============================================
-  // ⏰ CHECK IDLE TIME
+  // CHECK IDLE TIME
   // ============================================
   useEffect(() => {
     // Set initial last activity
@@ -120,7 +120,7 @@ export default function IdleTimeoutTracker() {
   }, [showWarning]);
 
   // ============================================
-  // 🎨 RENDER WARNING MODAL
+  // RENDER WARNING MODAL
   // ============================================
   if (!showWarning) return null;
 
@@ -177,7 +177,7 @@ export default function IdleTimeoutTracker() {
 }
 
 // ============================================
-// 📖 CARA PAKAI:
+// CARA PAKAI:
 // ============================================
 //
 // Di Layout Dashboard (src/app/dashboard/layout.tsx):
@@ -194,7 +194,7 @@ export default function IdleTimeoutTracker() {
 // }
 //
 // ============================================
-// 🎯 CARA KERJA:
+// CARA KERJA:
 // ============================================
 //
 // 1. Track user activity (klik, scroll, keyboard)

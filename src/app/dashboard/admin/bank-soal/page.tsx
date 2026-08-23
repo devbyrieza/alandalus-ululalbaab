@@ -1,25 +1,7 @@
-﻿"use client";
+"use client";
 
 import { useState } from "react";
-import {
-  BookOpen,
-  Brain,
-  Heart,
-  Users,
-  UserCheck,
-  BookOpenCheck,
-  Search,
-  Printer,
-  Clock,
-  CheckCircle2,
-  FileText,
-  AlertCircle,
-  Sparkles,
-  HelpCircle,
-  Filter,
-  Flame,
-  Award,
-} from "lucide-react";
+import { BookOpen, Brain, Heart, Users, UserCheck, BookOpenCheck, Search, Printer, Clock, CheckCircle2, FileText, AlertCircle, Sparkles, HelpCircle, Filter, Flame, Award, AlertTriangle, Star, MessageCircle, Settings, BarChart, User, , BarChart2 } from "lucide-react";
 import { AKADEMIK_MTS } from "@/lib/questions/akademik-mts";
 import { AKADEMIK_IL, AKADEMIK_MA } from "@/lib/questions/akademik-il-ma";
 import { KEPRIBADIAN_QUESTIONS } from "@/lib/questions/kepribadian";
@@ -242,7 +224,7 @@ export default function BankSoalPanitiaPage() {
               <p className="font-bold">Informasi Ujian Akademik & Syarat Khusus MA / SMA (Langsung Tanpa IL):</p>
               <p>Durasi Pengerjaan: <strong>60 Menit</strong> | Total Soal: <strong>20 Butir (Nahwu Bahasa Arab, B.Indo, IPA, Matematika)</strong></p>
               <div className="mt-2 p-2.5 bg-amber-100/70 border border-amber-300 rounded-xl text-amber-950 font-semibold text-xs">
-                ⚠️ <strong>KETENTUAN KHUSUS JALUR SMA/MA LANGSUNG (TANPA I'DAD LUGHAWI):</strong><br />
+                <AlertTriangle className="w-4 h-4 inline-block mr-1 text-amber-600" /> <strong>KETENTUAN KHUSUS JALUR SMA/MA LANGSUNG (TANPA I'DAD LUGHAWI):</strong><br />
                 Pendaftar Jalur SMA/MA Langsung (Tanpa IL) <strong>WAJIB</strong> mengikuti <strong>Tes Lisan Bahasa Arab</strong> serta memiliki <strong>Tes Hafalan Al-Qur'an Minimal 4 Juz Mutqin</strong>. Apabila tidak memenuhi syarat 4 Juz Mutqin & Lisan Arab, pendaftar akan diarahkan ke Jalur I'dad Lughawi (IL).
               </div>
             </div>
@@ -365,7 +347,7 @@ export default function BankSoalPanitiaPage() {
           <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm p-4 md:p-6 space-y-6">
             <div className="space-y-4">
               <h3 className="font-extrabold text-base text-indigo-950 flex items-center gap-2 border-b pb-2">
-                👦 Kriteria Penilaian Calsan Putra (7 Indikator)
+                <User className="w-5 h-5 inline-block mr-1 text-indigo-700" /> Kriteria Penilaian Calsan Putra (7 Indikator)
               </h3>
 
               <div className="grid grid-cols-1 gap-4">
@@ -481,7 +463,7 @@ export default function BankSoalPanitiaPage() {
                 2. TES TAMBAHAN HAFALAN
               </span>
               <p className="text-[11px] font-bold text-emerald-900 bg-emerald-50 p-2 rounded-lg border border-emerald-200">
-                ⭐ Syarat Wajib: Hafalan Al-Qur'an Minimal 4 Juz Mutqin
+                <Star className="w-4 h-4 inline-block mr-1 text-amber-500" /> Syarat Wajib: Hafalan Al-Qur'an Minimal 4 Juz Mutqin
               </p>
               <ul className="text-xs space-y-2 text-slate-700 pt-1">
                 <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-600" /> Hafalan Ziyadah (Baru)</li>
@@ -501,7 +483,7 @@ export default function BankSoalPanitiaPage() {
                 3. TES LISAN BAHASA ARAB
               </span>
               <p className="text-[11px] font-bold text-amber-900 bg-amber-50 p-2 rounded-lg border border-amber-200">
-                🗣️ Syarat Wajib: Kemampuan Komunikasi & Nahwu Lisan
+                <MessageCircle className="w-4 h-4 inline-block mr-1 text-amber-500" /> Syarat Wajib: Kemampuan Komunikasi & Nahwu Lisan
               </p>
               <ul className="text-xs space-y-2 text-slate-700 pt-1">
                 <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-amber-600" /> Muhadatsah (Percakapan Bahasa Arab)</li>
@@ -521,7 +503,7 @@ export default function BankSoalPanitiaPage() {
         <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-6">
           <div className="space-y-2">
             <h3 className="font-extrabold text-lg text-slate-900">
-              ⚙️ Bobot Rumus Nilai Akhir & Penentuan Kelulusan Sistem PPDB
+              <Settings className="w-5 h-5 inline-block mr-1 text-slate-700" /> Bobot Rumus Nilai Akhir & Penentuan Kelulusan Sistem PPDB
             </h3>
             <p className="text-xs text-slate-500">
               Sistem PPDB mengkalkulasi nilai secara otomatis begitu penguji memasukkan nilai pada portal penguji.
@@ -530,7 +512,7 @@ export default function BankSoalPanitiaPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
-              <h4 className="font-bold text-sm text-teal-800">📊 Bobot Komponen Penilaian (100%):</h4>
+              <h4 className="font-bold text-sm text-teal-800 flex items-center gap-1"><BarChart className="w-4 h-4" /> Bobot Komponen Penilaian (100%):</h4>
               <ul className="text-xs space-y-1.5 text-slate-700">
                 <li>• <strong>Tes Akademik (Online):</strong> 30%</li>
                 <li>• <strong>Tes Al-Qur'an (Tahfizh & Tajwid):</strong> 30%</li>
@@ -542,7 +524,7 @@ export default function BankSoalPanitiaPage() {
             </div>
 
             <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
-              <h4 className="font-bold text-sm text-emerald-800">✅ Kriteria Keputusan Sistem:</h4>
+              <h4 className="font-bold text-sm text-emerald-800 flex items-center gap-1"><CheckCircle2 className="w-4 h-4" /> Kriteria Keputusan Sistem:</h4>
               <ul className="text-xs space-y-1.5 text-slate-700">
                 <li>• <strong>DITERIMA:</strong> Jika Nilai Akhir &ge; 75 dan Rekomendasi Al-Qur'an Status A/B.</li>
                 <li>• <strong>CADANGAN:</strong> Jika Nilai Akhir 65–74 atau kuota gelombang penuh.</li>
