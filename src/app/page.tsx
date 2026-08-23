@@ -40,82 +40,64 @@ export default function HomePage() {
         <section id="beranda" aria-label="Hero">
           <HeroSection />
         </section>
-
-        <section id="statistik" aria-label="Statistik Pesantren">
-          <ScrollAnimation delay={0.15} direction="up" duration={0.7}>
-            <StatsSection />
-          </ScrollAnimation>
-        </section>
-
-        <section id="tentang" aria-label="Tentang Ulul Albaab">
-          <ScrollAnimation delay={0.1} direction="none" duration={0.8}>
-            <AboutSection />
-          </ScrollAnimation>
-        </section>
-
         <section id="program" aria-label="Program Unggulan">
           <ScrollAnimation delay={0.12} direction="up" duration={0.7}>
             <ProgramSection />
           </ScrollAnimation>
         </section>
-
-        <section id="keunggulan" aria-label="Keunggulan Pesantren">
-          <ScrollAnimation delay={0.1} direction="none" duration={0.75}>
-            <StickyFeatureSection />
-          </ScrollAnimation>
-        </section>
-
-        <section id="pengajar" aria-label="Tim Pengajar">
-          <ScrollAnimation delay={0.1} direction="left" duration={0.7}>
-            <TeachersSection />
-          </ScrollAnimation>
-        </section>
-
-        <section id="pengurus" aria-label="Dewan Pengurus">
-          <ScrollAnimation delay={0.1} direction="up" duration={0.7}>
-            <BoardSection />
-          </ScrollAnimation>
-        </section>
-
         <section id="proses" aria-label="Alur Pendaftaran">
           <ScrollAnimation delay={0.1} direction="none" duration={0.8}>
             <ProcessSection />
           </ScrollAnimation>
         </section>
-
+        <section id="statistik" aria-label="Statistik Pesantren">
+          <ScrollAnimation delay={0.15} direction="up" duration={0.7}>
+            <StatsSection />
+          </ScrollAnimation>
+        </section>
+        <section id="pengajar" aria-label="Tim Pengajar">
+          <ScrollAnimation delay={0.1} direction="left" duration={0.7}>
+            <TeachersSection />
+          </ScrollAnimation>
+        </section>
         <section id="fasilitas" aria-label="Fasilitas Pesantren">
           <ScrollAnimation delay={0.1} direction="up" duration={0.7}>
             <BentoGridSection />
           </ScrollAnimation>
         </section>
-
+        <section id="tentang" aria-label="Tentang Ulul Albaab">
+          <ScrollAnimation delay={0.1} direction="none" duration={0.8}>
+            <AboutSection />
+          </ScrollAnimation>
+        </section>
+        <section id="keunggulan" aria-label="Keunggulan Pesantren">
+          <ScrollAnimation delay={0.1} direction="none" duration={0.75}>
+            <StickyFeatureSection />
+          </ScrollAnimation>
+        </section>
         <section id="kegiatan" aria-label="Kegiatan Pesantren">
           <ScrollAnimation delay={0.1} direction="left" duration={0.7}>
             <ActivitiesSection />
           </ScrollAnimation>
         </section>
-
         <section id="testimoni" aria-label="Testimoni Santri & Wali">
           <ScrollAnimation delay={0.12} direction="up" duration={0.75}>
             <TestimonialsSection />
           </ScrollAnimation>
         </section>
-
         <section id="faq" aria-label="Pertanyaan Umum">
           <ScrollAnimation delay={0.1} direction="none" duration={0.8}>
             <FaqSection />
           </ScrollAnimation>
         </section>
-
-        <section id="kontak" aria-label="Hubungi Kami">
-          <ScrollAnimation delay={0.1} direction="up" duration={0.7}>
-            <ContactSection />
-          </ScrollAnimation>
-        </section>
-
         <section id="daftar" aria-label="Daftar Sekarang">
           <ScrollAnimation delay={0.15} direction="none" duration={0.8}>
             <CtaSection />
+          </ScrollAnimation>
+        </section>
+        <section id="kontak" aria-label="Hubungi Kami">
+          <ScrollAnimation delay={0.1} direction="up" duration={0.7}>
+            <ContactSection />
           </ScrollAnimation>
         </section>
       </main>
