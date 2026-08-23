@@ -11,8 +11,7 @@ import {
   Loader2,
   AlertTriangle,
   ArrowLeft,
-  Zap,
-} from "lucide-react";
+  Zap } from "lucide-react";
 
 import Swal from "sweetalert2";
 
@@ -75,9 +74,7 @@ function PilihVerifikasiContent() {
           no_hp,
           jenis_kelamin,
           jenjang,
-          nomor_pendaftaran: nomorPendaftaran,
-        }),
-      });
+          nomor_pendaftaran: nomorPendaftaran }) });
 
       const data = await response.json();
 
@@ -93,8 +90,7 @@ function PilihVerifikasiContent() {
         jenis_kelamin,
         nik,
         channel: selectedChannel,
-        demo_mode: "true",
-      });
+        demo_mode: "true" });
 
       router.push(`/daftar-sukses?${params.toString()}`);
     } catch (error: any) {

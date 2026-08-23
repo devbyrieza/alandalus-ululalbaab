@@ -34,8 +34,7 @@ export async function GET(request: NextRequest) {
     const { prisma } = await import("@/lib/prisma");
     const user = await prisma.profile.findUnique({
       where: { id },
-      select: { phone: true },
-    });
+      select: { phone: true } });
 
     // If user has a valid phone number, they MUST verify PIN
     if (user && user.phone && user.phone !== "-" && user.phone.length > 5) {
@@ -55,8 +54,7 @@ export async function GET(request: NextRequest) {
       JSON.stringify({
         role: role,
         id: id,
-        full_name: full_name,
-      }),
+        full_name: full_name }),
       {
         path: "/",
         httpOnly: true,

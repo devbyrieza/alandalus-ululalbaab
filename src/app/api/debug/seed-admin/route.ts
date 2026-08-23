@@ -28,8 +28,7 @@ export async function GET() {
           role: "admin_super",
           full_name: "Super Admin Rescue",
           phone: "081234567890",
-          updated_at: new Date(),
-        }
+          updated_at: new Date() }
       });
     } else {
       await prisma.profile.update({
@@ -51,8 +50,7 @@ export async function GET() {
           role: "admin_super",
           full_name: "Ustadz Wahab Rajasam",
           phone: "081234567888",
-          updated_at: new Date(),
-        }
+          updated_at: new Date() }
       });
     } else {
       await prisma.profile.update({

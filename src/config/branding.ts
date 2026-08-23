@@ -33,5 +33,4 @@ export const BRANDING = {
   fbUrl:
     process.env.NEXT_PUBLIC_FB_URL ||
     "https://www.facebook.com/alandalus.ululalbaab/",
-  twitterUrl: process.env.NEXT_PUBLIC_TWITTER_URL || "#",
-};
+  twitterUrl: process.env.NEXT_PUBLIC_TWITTER_URL || "#" };

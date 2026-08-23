@@ -81,8 +81,7 @@ export async function POST(request: NextRequest) {
       channel: otp_channel as OTPChannel,
       identifier: normalizedPhone,
       otp,
-      nama: nama_lengkap,
-    });
+      nama: nama_lengkap });
 
     if (!otpResult.success) {
       console.error("❌ OTP send failed (Wablas error):", otpResult.message);
@@ -105,8 +104,7 @@ export async function POST(request: NextRequest) {
         expires_at: expiresAt,
         otp_channel: otp_channel,
         registration_data: body, // Menyimpan seluruh payload pendaftaran
-      },
-    });
+      } });
 
     updateRateLimit(normalizedPhone);
 

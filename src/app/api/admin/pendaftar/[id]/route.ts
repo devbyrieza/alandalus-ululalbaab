@@ -53,24 +53,19 @@ export async function GET(
             nama: true,
             tahun_mulai: true,
             tahun_selesai: true,
-            biaya_pendaftaran: true,
-          },
-        },
+            biaya_pendaftaran: true } },
         orang_tua: true,
         dokumen: true,
         pembayaran: true,
         jadwal_ujian: true,
         nilai_ujian: {
-          orderBy: { updated_at: "desc" },
-        },
+          orderBy: { updated_at: "desc" } },
         pengumuman: true,
         rapor: true,
         prestasi: true,
         kesehatan: true,
         asrama: true,
-        reservasi: true,
-      },
-    });
+        reservasi: true } });
 
     if (!pendaftar) {
       return NextResponse.json(
@@ -205,10 +200,8 @@ export async function GET(
             status_ibu:
               pendaftar.orang_tua.status_ibu ||
               ibu.status_hidup ||
-              "Masih Hidup",
-          }
-        : null,
-    };
+              "Masih Hidup" }
+        : null };
 
     return NextResponse.json({ data: mergedPendaftar });
   } catch (error) {
@@ -272,8 +265,7 @@ export async function PATCH(
             penghasilan: orang_tua.penghasilan_ayah,
             no_hp: orang_tua.no_hp_ayah,
             status_hidup: orang_tua.status_ayah,
-            alamat: orang_tua.alamat_ayah,
-          } : {},
+            alamat: orang_tua.alamat_ayah } : {},
           ibu: orang_tua ? {
             nama_lengkap: orang_tua.nama_ibu,
             nik: orang_tua.nik_ibu,
@@ -284,8 +276,7 @@ export async function PATCH(
             penghasilan: orang_tua.penghasilan_ibu,
             no_hp: orang_tua.no_hp_ibu,
             status_hidup: orang_tua.status_ibu,
-            alamat: orang_tua.alamat_ibu,
-          } : {},
+            alamat: orang_tua.alamat_ibu } : {},
           wali: orang_tua ? {
             nama_lengkap: orang_tua.nama_wali,
             nik: orang_tua.nik_wali,
@@ -296,10 +287,8 @@ export async function PATCH(
             penghasilan: orang_tua.penghasilan_wali,
             no_hp: orang_tua.no_hp_wali,
             alamat: orang_tua.alamat_wali,
-            hubungan: orang_tua.hubungan_wali,
-          } : {},
-          wali_sama_dengan_ortu: orang_tua?.nama_wali ? false : true,
-        };
+            hubungan: orang_tua.hubungan_wali } : {},
+          wali_sama_dengan_ortu: orang_tua?.nama_wali ? false : true };
 
         // Update Pendaftar Columns
         await tx.pendaftar.update({
@@ -336,9 +325,7 @@ export async function PATCH(
             npsn: santri.npsn,
             catatan_pindahan: santri.catatan_pindahan,
             data_lengkap: dataLengkapObj,
-            updated_at: new Date(),
-          },
-        });
+            updated_at: new Date() } });
 
         // Update OrangTua Columns
         if (orang_tua) {
@@ -373,24 +360,20 @@ export async function PATCH(
             no_hp_wali: orang_tua.no_hp_wali,
             alamat_wali: orang_tua.alamat_wali,
             hubungan_wali: orang_tua.hubungan_wali,
-            updated_at: new Date(),
-          };
+            updated_at: new Date() };
 
           await tx.orangTua.upsert({
             where: { pendaftar_id: params.id },
             create: {
               pendaftar_id: params.id,
-              ...parentData,
-            },
-            update: parentData,
-          });
+              ...parentData },
+            update: parentData });
         }
 
         // Sync with related user profile
         const pendaftarRecord = await tx.pendaftar.findUnique({
           where: { id: params.id },
-          select: { user_id: true },
-        });
+          select: { user_id: true } });
 
         if (pendaftarRecord?.user_id) {
           await tx.profile.update({
@@ -399,9 +382,7 @@ export async function PATCH(
               full_name: santri.nama_lengkap,
               phone: santri.no_hp,
               email: santri.email,
-              updated_at: new Date(),
-            },
-          });
+              updated_at: new Date() } });
         }
       });
 
@@ -412,14 +393,12 @@ export async function PATCH(
         adminName: session.full_name || session.name || "Admin",
         targetId: params.id,
         targetName: santri.nama_lengkap,
-        details: { nomor_pendaftaran: santri.nomor_pendaftaran },
-      });
+        details: { nomor_pendaftaran: santri.nomor_pendaftaran } });
 
       await invalidateAdminPendaftarCache();
       return NextResponse.json({
         success: true,
-        message: "Data pendaftar berhasil diperbarui secara lengkap",
-      });
+        message: "Data pendaftar berhasil diperbarui secara lengkap" });
     }
 
     // SCENARIO 0.5: Update Nilai Manual (Admin Super Only)
@@ -465,8 +444,7 @@ export async function PATCH(
         detail_wawancara: dWawancara,
         detail_cawalsan: dCawalsan,
         detail_hafalan: dHafalan,
-        detail_arab: dArab,
-      };
+        detail_arab: dArab };
 
       if (existingNilai) {
         await prisma.nilaiUjian.update({
@@ -493,8 +471,7 @@ export async function PATCH(
         adminName: session.full_name || session.name || "Admin",
         targetId: params.id,
         targetName: "Nilai Ujian",
-        details: parsedScores,
-      });
+        details: parsedScores });
 
       // Recalculate and update the status of the applicant
       await recalculateNilaiUjian(params.id);
@@ -570,14 +547,12 @@ export async function PATCH(
           jenjang_baru: body.jenjang,
           nomor_pendaftaran_lama: pendaftar.nomor_pendaftaran,
           nomor_pendaftaran_baru: newNomorPendaftaran
-        },
-      });
+        } });
 
       await invalidateAdminPendaftarCache();
       return NextResponse.json({
         success: true,
-        message: "Jenjang berhasil diubah ke " + body.jenjang + ". Nomor pendaftaran baru: " + newNomorPendaftaran,
-      });
+        message: "Jenjang berhasil diubah ke " + body.jenjang + ". Nomor pendaftaran baru: " + newNomorPendaftaran });
     }
 
     // SCENARIO 1: Update Phone Number (Admin Super Only)
@@ -592,8 +567,7 @@ export async function PATCH(
       // 1. Fetch current pendaftar to get user_id
       const pendaftar = await prisma.pendaftar.findUnique({
         where: { id: params.id },
-        select: { user_id: true, nama_lengkap: true, no_hp: true },
-      });
+        select: { user_id: true, nama_lengkap: true, no_hp: true } });
 
       if (!pendaftar) {
         return NextResponse.json(
@@ -607,15 +581,13 @@ export async function PATCH(
         // Update Pendaftar
         await tx.pendaftar.update({
           where: { id: params.id },
-          data: { no_hp, updated_at: new Date() },
-        });
+          data: { no_hp, updated_at: new Date() } });
 
         // Update Profile (User) if linked
         if (pendaftar.user_id) {
           await tx.profile.update({
             where: { id: pendaftar.user_id },
-            data: { phone: no_hp, updated_at: new Date() },
-          });
+            data: { phone: no_hp, updated_at: new Date() } });
         }
       });
 
@@ -626,14 +598,12 @@ export async function PATCH(
         adminName: session.full_name || session.name || "Admin",
         targetId: params.id,
         targetName: pendaftar.nama_lengkap,
-        details: { previous_phone: pendaftar.no_hp, new_phone: no_hp },
-      });
+        details: { previous_phone: pendaftar.no_hp, new_phone: no_hp } });
 
       await invalidateAdminPendaftarCache();
       return NextResponse.json({
         success: true,
-        message: "Nomor HP berhasil diperbarui",
-      });
+        message: "Nomor HP berhasil diperbarui" });
     }
 
     // SCENARIO 2: Update Status
@@ -652,8 +622,7 @@ export async function PATCH(
 
     const updateData: any = {
       status_pendaftaran: status_proses,
-      updated_at: new Date(),
-    };
+      updated_at: new Date() };
 
     if (status_proses === "mengundurkan_diri" && existingPendaftar && !existingPendaftar.nomor_pendaftaran.startsWith("WD_")) {
       updateData.nomor_pendaftaran = `WD_${Date.now()}_${existingPendaftar.nomor_pendaftaran}`;
@@ -661,8 +630,7 @@ export async function PATCH(
 
     const data = await prisma.pendaftar.update({
       where: { id: params.id },
-      data: updateData,
-    });
+      data: updateData });
 
     // SYNC TO PENGUMUMAN: If status is final, ensure student dashboard matches
     const finalStatuses = ["accepted", "rejected", "announced", "cadangan"];
@@ -682,8 +650,7 @@ export async function PATCH(
           is_published: true, 
           published_at: new Date(),
           tahun_ajaran_id: data.tahun_ajaran_id
-        },
-      });
+        } });
     }
 
     // Logging audit action
@@ -694,14 +661,12 @@ export async function PATCH(
       adminName: session.full_name || session.name || "Admin",
       targetId: params.id,
       targetName: data.nama_lengkap,
-      details: { previous_status: "unknown", new_status: status_proses },
-    });
+      details: { previous_status: "unknown", new_status: status_proses } });
 
     await invalidateAdminPendaftarCache();
     return NextResponse.json({
       success: true,
-      data,
-    });
+      data });
   } catch (error) {
     console.error("Error in admin pendaftar update API:", error);
     return NextResponse.json(
@@ -749,9 +714,7 @@ export async function DELETE(
         asrama: true,
         hasil_seleksi: true,
         reservasi: true,
-        whatsapp_logs: true,
-      },
-    });
+        whatsapp_logs: true } });
 
     if (!pendaftar) {
       return NextResponse.json(
@@ -777,9 +740,7 @@ export async function DELETE(
           nama_lengkap: pendaftar.nama_lengkap,
           backup_data: JSON.parse(JSON.stringify(pendaftar)),
           deleted_by: session.id,
-          deleted_by_name: session.full_name || session.name || "Admin Super",
-        },
-      }),
+          deleted_by_name: session.full_name || session.name || "Admin Super" } }),
       // 2. Soft delete the pendaftar
       prisma.pendaftar.update({
         where: { id: params.id },
@@ -788,9 +749,7 @@ export async function DELETE(
           nik: `DEL_${Date.now()}_${pendaftar.nik}`,
           deleted_at: new Date(),
           deleted_by: session.id,
-          updated_at: new Date(),
-        },
-      }),
+          updated_at: new Date() } }),
     ]);
 
     // Audit log
@@ -802,15 +761,12 @@ export async function DELETE(
       targetName: pendaftar.nama_lengkap,
       details: {
         nomor_pendaftaran: pendaftar.nomor_pendaftaran,
-        status_sebelum: pendaftar.status_pendaftaran,
-      },
-    });
+        status_sebelum: pendaftar.status_pendaftaran } });
 
     await invalidateAdminPendaftarCache();
     return NextResponse.json({
       success: true,
-      message: `Data ${pendaftar.nama_lengkap} berhasil dihapus (soft delete). Data cadangan telah disimpan dan bisa direstore kapan saja.`,
-    });
+      message: `Data ${pendaftar.nama_lengkap} berhasil dihapus (soft delete). Data cadangan telah disimpan dan bisa direstore kapan saja.` });
   } catch (error) {
     console.error("Error in admin pendaftar soft delete API:", error);
     return NextResponse.json(

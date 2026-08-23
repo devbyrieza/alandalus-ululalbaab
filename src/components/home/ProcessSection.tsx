@@ -9,8 +9,7 @@ import {
   GraduationCap,
   CheckCircle2,
   BellRing,
-  ArrowRight,
-} from "lucide-react";
+  ArrowRight } from "lucide-react";
 import { Container } from "@/components/layout/Container";
 import { motion } from "framer-motion";
 
@@ -20,44 +19,37 @@ const STEPS = [
     icon: UserPlus,
     title: "Buat Akun",
     description: "Mendaftar dan mengisi form pendaftaran awal.",
-    accent: "blue" as const,
-  },
+    accent: "blue" as const },
   {
     icon: CreditCard,
     title: "Pembayaran",
     description: "Membayar biaya pendaftaran seleksi calon santri baru.",
-    accent: "amber" as const,
-  },
+    accent: "amber" as const },
   {
     icon: FileText,
     title: "Lengkapi Data",
     description: "Mengisi data lengkap calon santri dan orangtua/wali.",
-    accent: "blue" as const,
-  },
+    accent: "blue" as const },
   {
     icon: ClipboardCheck,
     title: "Upload Berkas",
     description: "Upload berkas persyaratan (Rapor, KK, Akte, dll).",
-    accent: "amber" as const,
-  },
+    accent: "amber" as const },
   {
     icon: GraduationCap,
     title: "Tes Seleksi",
     description: "Mengikuti ujian tes tertulis dan wawancara.",
-    accent: "blue" as const,
-  },
+    accent: "blue" as const },
   {
     icon: BellRing,
     title: "Pengumuman",
     description: "Pengumuman hasil kelulusan seleksi PPDB.",
-    accent: "amber" as const,
-  },
+    accent: "amber" as const },
   {
     icon: CheckCircle2,
     title: "Daftar Ulang",
     description: "Membayar uang pangkal dan SPP bulan pertama.",
-    accent: "blue" as const,
-  },
+    accent: "blue" as const },
 ] as const;
 
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -66,14 +58,11 @@ const ACCENT_MAP = {
   blue: {
     icon: "bg-primary-50 text-primary-600 border-primary-100 group-hover:bg-primary-100 group-hover:border-primary-200",
     badge: "bg-primary-600 text-white",
-    title: "group-hover:text-primary-700",
-  },
+    title: "group-hover:text-primary-700" },
   amber: {
     icon: "bg-secondary-50 text-secondary-700 border-secondary-100 group-hover:bg-secondary-100 group-hover:border-secondary-200",
     badge: "bg-secondary-500 text-white",
-    title: "group-hover:text-secondary-700",
-  },
-};
+    title: "group-hover:text-secondary-700" } };
 
 // â”€â”€â”€ Step Card â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function StepCard({
@@ -82,8 +71,7 @@ function StepCard({
   description,
   accent,
   index,
-  isLast,
-}: (typeof STEPS)[number] & { index: number; isLast: boolean }) {
+  isLast }: (typeof STEPS)[number] & { index: number; isLast: boolean }) {
   const colors = ACCENT_MAP[accent];
 
   return (
@@ -147,15 +135,13 @@ export default function ProcessSection() {
         className="absolute -top-32 right-0 translate-x-1/3 w-[500px] h-[500px] pointer-events-none"
         style={{
           background:
-            "radial-gradient(circle, rgba(254,243,199,0.4) 0%, transparent 65%)",
-        }}
+            "radial-gradient(circle, rgba(254,243,199,0.4) 0%, transparent 65%)" }}
       />
       <div
         className="absolute -bottom-24 left-0 -translate-x-1/3 w-[400px] h-[400px] pointer-events-none"
         style={{
           background:
-            "radial-gradient(circle, rgba(220,237,255,0.35) 0%, transparent 65%)",
-        }}
+            "radial-gradient(circle, rgba(220,237,255,0.35) 0%, transparent 65%)" }}
       />
 
       <Container className="relative z-10">

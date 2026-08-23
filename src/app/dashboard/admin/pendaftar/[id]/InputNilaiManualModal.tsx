@@ -14,8 +14,7 @@ export default function InputNilaiManualModal({
   isOpen,
   onClose,
   pendaftarId,
-  onSuccess,
-}: InputNilaiManualModalProps) {
+  onSuccess }: InputNilaiManualModalProps) {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     score_akademik: "",
@@ -25,8 +24,7 @@ export default function InputNilaiManualModal({
     score_kepribadian: "",
     score_kesiapan: "",
     override_status: "",
-    catatan_bypass: "",
-  });
+    catatan_bypass: "" });
   const [errorMsg, setErrorMsg] = useState("");
 
   const totalScore = useMemo(() => {
@@ -64,9 +62,7 @@ export default function InputNilaiManualModal({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           pendaftar_id: pendaftarId,
-          ...formData,
-        }),
-      });
+          ...formData }) });
 
       const data = await res.json();
       if (!res.ok) {

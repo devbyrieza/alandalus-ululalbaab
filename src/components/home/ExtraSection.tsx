@@ -14,8 +14,7 @@ import {
   Dumbbell,
   Play,
   Palette,
-  Sparkles,
-} from "lucide-react";
+  Sparkles } from "lucide-react";
 import { Container } from "@/components/layout/Container";
 import { motion } from "framer-motion";
 
@@ -58,8 +57,7 @@ export default function ExtraSection() {
         className="absolute top-0 right-0 w-[500px] h-[500px] pointer-events-none -translate-y-1/2 translate-x-1/2"
         style={{
           background:
-            "radial-gradient(circle, rgba(254,243,199,0.3) 0%, transparent 60%)",
-        }}
+            "radial-gradient(circle, rgba(254,243,199,0.3) 0%, transparent 60%)" }}
       />
 
       <Container className="relative z-10">

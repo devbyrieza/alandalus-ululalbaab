@@ -11,22 +11,19 @@ const CONTACT_INFO = [
     title: "Lokasi Pesantren",
     content: "Jl. KH Mama Oyon, Cihaur",
     detail: "Kec. Cicantayan, Sukabumi 43155",
-    accent: "blue" as const,
-  },
+    accent: "blue" as const },
   {
     icon: Phone,
     title: "WhatsApp CS Pusat",
     content: "+62 812-85-300800",
     detail: "Senin-Sabtu (08.00 - 16.00)",
-    accent: "amber" as const,
-  },
+    accent: "amber" as const },
   {
     icon: Mail,
     title: "Email Resmi",
     content: "alandalusululalbaab2@gmail.com",
     detail: "Kirim pertanyaan kapan saja",
-    accent: "blue" as const,
-  },
+    accent: "blue" as const },
 ] as const;
 
 const EASE = [0.16, 1, 0.3, 1] as const;

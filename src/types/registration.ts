@@ -89,8 +89,7 @@ export const JENJANG_OPTIONS = [
   {
     value: "IL",
     label: "I'dad Lughowi",
-    description: "Persiapan Bahasa Arab",
-  },
+    description: "Persiapan Bahasa Arab" },
 ] as const;
 
 export type JenjangValue = (typeof JENJANG_OPTIONS)[number]["value"];

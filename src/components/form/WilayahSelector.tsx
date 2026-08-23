@@ -56,8 +56,7 @@ function WilayahSelect({
   isUnlocked,
   lockedMessage,
   icon,
-  stepNumber,
-}: WilayahSelectProps) {
+  stepNumber }: WilayahSelectProps) {
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
   const containerRef = useRef<HTMLDivElement>(null);
@@ -318,8 +317,7 @@ function WilayahSelect({
 export default function WilayahSelector({
   value,
   onChange,
-  disabled = false,
-}: WilayahSelectorProps) {
+  disabled = false }: WilayahSelectorProps) {
   const [provinces, setProvinces] = useState<WilayahData[]>([]);
   const [regencies, setRegencies] = useState<WilayahData[]>([]);
   const [districts, setDistricts] = useState<WilayahData[]>([]);
@@ -329,8 +327,7 @@ export default function WilayahSelector({
     provinsi: false,
     kabupaten: false,
     kecamatan: false,
-    kelurahan: false,
-  });
+    kelurahan: false });
 
   /* ── Fetch Provinces on mount ── */
   useEffect(() => {

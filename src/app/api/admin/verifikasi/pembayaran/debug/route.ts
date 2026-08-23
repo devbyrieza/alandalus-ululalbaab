@@ -23,8 +23,7 @@ export async function GET(request: NextRequest) {
       env_storage_path: process.env.STORAGE_PATH || "not set",
       resolved_storage_dir: STORAGE_DIR,
       exists: fs.existsSync(STORAGE_DIR),
-      contents: fs.existsSync(STORAGE_DIR) ? fs.readdirSync(STORAGE_DIR) : [],
-    };
+      contents: fs.existsSync(STORAGE_DIR) ? fs.readdirSync(STORAGE_DIR) : [] };
 
     // Recursive check for subfolders
     const categories = debugInfo.contents;
@@ -49,8 +48,7 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      debug: { ...debugInfo, subContents },
-    });
+      debug: { ...debugInfo, subContents } });
   } catch (error: any) {
     return NextResponse.json(
       { success: false, error: error.message },

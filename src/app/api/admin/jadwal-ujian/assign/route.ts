@@ -14,8 +14,7 @@ export async function POST(req: NextRequest) {
 
     // Get session details
     const examSession = await prisma.examSession.findUnique({
-      where: { id: exam_session_id },
-    });
+      where: { id: exam_session_id } });
 
     if (!examSession) {
       return NextResponse.json({ error: "Session not found" }, { status: 404 });
@@ -34,10 +33,8 @@ export async function POST(req: NextRequest) {
           id:
             (
               await prisma.jadwalUjian.findFirst({
-                where: { pendaftar_id, tahun_ajaran_id },
-              })
-            )?.id || "00000000-0000-0000-0000-000000000000",
-        },
+                where: { pendaftar_id, tahun_ajaran_id } })
+            )?.id || "00000000-0000-0000-0000-000000000000" },
         update: {
           exam_session_id,
           tanggal_ujian: examSession.start_time,
@@ -48,8 +45,7 @@ export async function POST(req: NextRequest) {
           waktu_mulai_ortu: examSession.start_time,
           waktu_selesai_ortu: examSession.end_time,
           tempat_ortu:
-            examSession.location || "Pesantren Al Andalus Ulul Albaab",
-        },
+            examSession.location || "Pesantren Al Andalus Ulul Albaab" },
         create: {
           pendaftar_id,
           tahun_ajaran_id,
@@ -62,18 +58,14 @@ export async function POST(req: NextRequest) {
           waktu_mulai_ortu: examSession.start_time,
           waktu_selesai_ortu: examSession.end_time,
           tempat_ortu:
-            examSession.location || "Pesantren Al Andalus Ulul Albaab",
-        },
-      }),
+            examSession.location || "Pesantren Al Andalus Ulul Albaab" } }),
       prisma.examSession.update({
         where: { id: exam_session_id },
-        data: { booked_count: { increment: 1 } },
-      }),
+        data: { booked_count: { increment: 1 } } }),
       // Also update pendaftar status to 'scheduled'
       prisma.pendaftar.update({
         where: { id: pendaftar_id },
-        data: { status_pendaftaran: "scheduled" },
-      }),
+        data: { status_pendaftaran: "scheduled" } }),
     ]);
 
     // Logging audit action
@@ -82,15 +74,13 @@ export async function POST(req: NextRequest) {
       adminId: session.id || "system",
       adminName: session.full_name || session.name || "Admin",
       targetId: pendaftar_id,
-      details: { exam_session_id, session_title: examSession.title },
-    });
+      details: { exam_session_id, session_title: examSession.title } });
 
     // NEW ENHANCEMENT: Send WhatsApp notification
     try {
       const pendaftar = await prisma.pendaftar.findUnique({
         where: { id: pendaftar_id },
-        select: { nama_lengkap: true, no_hp: true },
-      });
+        select: { nama_lengkap: true, no_hp: true } });
 
       if (pendaftar?.no_hp) {
         const { notifyTestSchedule } = await import("@/lib/wablas");
@@ -103,12 +93,10 @@ export async function POST(req: NextRequest) {
               weekday: "long",
               year: "numeric",
               month: "long",
-              day: "numeric",
-            },
+              day: "numeric" },
           ),
           waktu: `${new Date(examSession.start_time).toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit" })} - ${new Date(examSession.end_time).toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit" })}`,
-          tempat: examSession.location || "Pesantren Al Andalus Ulul Albaab",
-        });
+          tempat: examSession.location || "Pesantren Al Andalus Ulul Albaab" });
       }
     } catch (waError) {
       console.error("WA Notification failed:", waError);

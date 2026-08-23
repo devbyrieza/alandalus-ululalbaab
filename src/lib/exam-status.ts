@@ -6,8 +6,7 @@ import { prisma } from "./prisma";
 export async function markExamComponentAsComplete({
   jadwalId,
   userId,
-  componentType,
-}: {
+  componentType }: {
   jadwalId: string;
   userId: string;
   componentType?: "santri" | "quran" | "ortu" | "hafalan" | "arab";
@@ -21,11 +20,7 @@ export async function markExamComponentAsComplete({
           id: true,
           nama_lengkap: true,
           no_hp: true,
-          orang_tua: { select: { no_hp_ayah: true, no_hp_ibu: true } },
-        },
-      },
-    },
-  });
+          orang_tua: { select: { no_hp_ayah: true, no_hp_ibu: true } } } } } });
 
   if (!jadwal) throw new Error("Jadwal not found");
 
@@ -72,8 +67,7 @@ export async function markExamComponentAsComplete({
       // Check session creator fallback
       const sess = await prisma.examSession.findFirst({
         where: { id: jadwal.exam_session_id ?? undefined },
-        select: { created_by: true, title: true },
-      });
+        select: { created_by: true, title: true } });
       if (sess && sess.created_by === userId) {
         const title = (sess.title || "").toLowerCase();
         if (title.includes("qur") || title.includes("quran")) {
@@ -114,8 +108,7 @@ export async function markExamComponentAsComplete({
   // 3. Update Status
   const updatedJadwal = await prisma.jadwalUjian.update({
     where: { id: jadwalId },
-    data: updates,
-  });
+    data: updates });
 
   // 4. Check if ALL DONE
   const isSantriDone =
@@ -143,6 +136,5 @@ export async function markExamComponentAsComplete({
   return {
     success: true,
     updatedField,
-    isAllDone,
-  };
+    isAllDone };
 }

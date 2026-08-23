@@ -9,8 +9,7 @@ import {
   CheckCircle2,
   AlertCircle,
   Camera,
-  Upload,
-} from "lucide-react";
+  Upload } from "lucide-react";
 import Image from "next/image";
 
 interface UserSession {
@@ -55,8 +54,7 @@ export default function ProfileSettings({ user }: { user: UserSession }) {
       penguji: "Penguji Al-Qur'an",
       pewawancara_calsan: "Pewawancara Calsan",
       pewawancara_cawalsan: "Pewawancara Cawalsan",
-      admin: "Admin",
-    };
+      admin: "Admin" };
     return roleMap[role] || role.replace("_", " ").toUpperCase();
   };
 
@@ -90,8 +88,7 @@ export default function ProfileSettings({ user }: { user: UserSession }) {
       const res = await fetch("/api/profile/photo", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ photo_url }),
-      });
+        body: JSON.stringify({ photo_url }) });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Gagal memperbarui foto");
       setPhotoSuccess(true);
@@ -118,8 +115,7 @@ export default function ProfileSettings({ user }: { user: UserSession }) {
       const res = await fetch("/api/profile/update", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ full_name: fullName, phone, username, email }),
-      });
+        body: JSON.stringify({ full_name: fullName, phone, username, email }) });
 
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Gagal memperbarui profil");
@@ -169,8 +165,7 @@ export default function ProfileSettings({ user }: { user: UserSession }) {
       const res = await fetch("/api/profile/password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ newPassword }),
-      });
+        body: JSON.stringify({ newPassword }) });
 
       const data = await res.json();
 

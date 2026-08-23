@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { BookOpen, Brain, Heart, Users, UserCheck, BookOpenCheck, Search, Printer, Clock, CheckCircle2, FileText, AlertCircle, Sparkles, HelpCircle, Filter, Flame, Award, AlertTriangle, Star, MessageCircle, Settings, BarChart, User, , BarChart2 } from "lucide-react";
+import { BookOpen, Brain, Heart, Users, UserCheck, BookOpenCheck, Search, Printer, Clock, CheckCircle2, FileText, AlertCircle, Sparkles, HelpCircle, Filter, Flame, Award, AlertTriangle, Star, MessageCircle, Settings, BarChart, User, BarChart2 } from "lucide-react";
 import { AKADEMIK_MTS } from "@/lib/questions/akademik-mts";
 import { AKADEMIK_IL, AKADEMIK_MA } from "@/lib/questions/akademik-il-ma";
 import { KEPRIBADIAN_QUESTIONS } from "@/lib/questions/kepribadian";

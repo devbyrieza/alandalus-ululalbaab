@@ -43,12 +43,9 @@ export async function PATCH(
           { penguji_hafalan_id: userId },
           { penguji_arab_id: userId },
           { exam_session: { created_by: userId } },
-        ],
-      },
+        ] },
       include: {
-        exam_session: { select: { title: true, created_by: true } },
-      },
-    });
+        exam_session: { select: { title: true, created_by: true } } } });
 
     // If examiner, only specific fields.
     const isWawancara = assignment?.penguji_santri_id === userId;
@@ -60,8 +57,7 @@ export async function PATCH(
     // Fetch user profile to see if they're actually an admin who switched roles
     const userProfile = await prisma.profile.findUnique({
       where: { id: userId },
-      select: { role: true, secondary_roles: true },
-    });
+      select: { role: true, secondary_roles: true } });
     const allRoles = userProfile
       ? [userProfile.role, ...(userProfile.secondary_roles || [])]
       : [];
@@ -159,8 +155,7 @@ export async function PATCH(
     // 0. Pre-fetch existing record to check timestamps
     const existing = await prisma.nilaiUjian.findFirst({
       where: { pendaftar_id: pendaftarId },
-      orderBy: { created_at: "desc" },
-    });
+      orderBy: { created_at: "desc" } });
 
     const updateData: any = {};
     const now = new Date();
@@ -176,8 +171,7 @@ export async function PATCH(
           return NextResponse.json(
             {
               error:
-                "Masa edit (24 jam) untuk Tes Quran sudah habis. Silakan hubungi Admin Super.",
-            },
+                "Masa edit (24 jam) untuk Tes Quran sudah habis. Silakan hubungi Admin Super." },
             { status: 403 },
           );
         }
@@ -211,8 +205,7 @@ export async function PATCH(
           return NextResponse.json(
             {
               error:
-                "Masa edit (24 jam) untuk Wawancara Calon Santri sudah habis. Silakan hubungi Admin Super.",
-            },
+                "Masa edit (24 jam) untuk Wawancara Calon Santri sudah habis. Silakan hubungi Admin Super." },
             { status: 403 },
           );
         }
@@ -245,8 +238,7 @@ export async function PATCH(
           return NextResponse.json(
             {
               error:
-                "Masa edit (24 jam) untuk Seleksi Wawancara Orang Tua/Wali sudah habis. Silakan hubungi Admin Super.",
-            },
+                "Masa edit (24 jam) untuk Seleksi Wawancara Orang Tua/Wali sudah habis. Silakan hubungi Admin Super." },
             { status: 403 },
           );
         }
@@ -315,17 +307,13 @@ export async function PATCH(
         data: {
           ...updateData,
           jadwal_ujian_id: assignment?.id, // Ensure the link is established/updated
-          updated_at: now,
-        },
-      });
+          updated_at: now } });
     } else {
       await prisma.nilaiUjian.create({
         data: {
           pendaftar_id: pendaftarId,
           jadwal_ujian_id: assignment?.id,
-          ...updateData,
-        },
-      });
+          ...updateData } });
     }
 
     // 4. Trigger Recalculation
@@ -345,8 +333,7 @@ export async function PATCH(
           await markExamComponentAsComplete({
             jadwalId: assignment.id,
             userId,
-            componentType,
-          });
+            componentType });
         }
       } catch (err) {
         console.error("Automation Error (Ignored):", err);

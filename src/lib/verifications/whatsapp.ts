@@ -27,8 +27,7 @@ Panitia PPDB Al Andalus Ulul Albaab`;
     if (result.status) {
       return {
         success: true,
-        messageId: result.data?.id || `wa_${Date.now()}`,
-      };
+        messageId: result.data?.id || `wa_${Date.now()}` };
     }
 
     // Fallback untuk development
@@ -39,8 +38,7 @@ Panitia PPDB Al Andalus Ulul Albaab`;
 
     return {
       success: false,
-      error: result.message || "WhatsApp service error",
-    };
+      error: result.message || "WhatsApp service error" };
   } catch (error: any) {
     console.error("WhatsApp send error:", error);
     return { success: false, error: error.message };

@@ -46,8 +46,7 @@ export async function POST(request: NextRequest) {
 
     const user = await prisma.profile.findUnique({
       where: { id: finalUserId },
-      select: { id: true, role: true, full_name: true, phone: true, secondary_roles: true },
-    });
+      select: { id: true, role: true, full_name: true, phone: true, secondary_roles: true } });
 
     if (!user) {
       return NextResponse.json(
@@ -85,8 +84,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       success: true,
       link: magicLinkUrl,
-      shortLink,
-    });
+      shortLink });
   } catch (error: any) {
     console.error("Generate Magic Link Error:", error);
     return NextResponse.json(
@@ -128,14 +126,10 @@ export async function GET(request: NextRequest) {
                 "pewawancara_calsan",
                 "pewawancara_cawalsan",
                 "penguji_umum",
-              ],
-            },
-          },
-        ],
-      },
+              ] } },
+        ] },
       select: { id: true, full_name: true, role: true, secondary_roles: true },
-      orderBy: { full_name: "asc" },
-    });
+      orderBy: { full_name: "asc" } });
 
     const baseUrl =
       process.env.NEXT_PUBLIC_APP_URL ||
@@ -168,8 +162,7 @@ export async function GET(request: NextRequest) {
           role: user.role,
           secondary_roles: user.secondary_roles,
           link: magicLinkUrl,
-          shortLink,
-        };
+          shortLink };
       }),
     );
 

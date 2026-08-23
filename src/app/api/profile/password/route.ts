@@ -47,8 +47,7 @@ export async function POST(request: Request) {
 
     // Verify user exists
     const user = await prisma.profile.findUnique({
-      where: { id: userId },
-    });
+      where: { id: userId } });
 
     if (!user) {
       return NextResponse.json(
@@ -71,14 +70,11 @@ export async function POST(request: Request) {
       data: {
         password_hash,
         must_change_password: false,
-        updated_at: new Date(),
-      },
-    });
+        updated_at: new Date() } });
 
     const response = NextResponse.json({
       success: true,
-      message: "Password berhasil diperbarui.",
-    });
+      message: "Password berhasil diperbarui." });
 
     session.is_default_password = false;
     response.cookies.set("al_session", JSON.stringify(session), {

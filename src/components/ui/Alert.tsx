@@ -46,8 +46,7 @@ const variantConfig = {
     bodyColorFilled: "text-white/90",
     dismissColor:
       "text-[var(--color-success-500)]/50 hover:text-[var(--color-success-500)] hover:bg-[var(--color-success-100)]",
-    dismissColorFilled: "text-white/60 hover:text-white hover:bg-white/20",
-  },
+    dismissColorFilled: "text-white/60 hover:text-white hover:bg-white/20" },
   error: {
     container: "bg-[var(--color-danger-50)] border-[var(--color-danger-100)]",
     containerFilled:
@@ -64,8 +63,7 @@ const variantConfig = {
     bodyColorFilled: "text-white/90",
     dismissColor:
       "text-[var(--color-danger-500)]/50 hover:text-[var(--color-danger-500)] hover:bg-[var(--color-danger-100)]",
-    dismissColorFilled: "text-white/60 hover:text-white hover:bg-white/20",
-  },
+    dismissColorFilled: "text-white/60 hover:text-white hover:bg-white/20" },
   warning: {
     container: "bg-[var(--color-warning-50)] border-[var(--color-warning-100)]",
     containerFilled:
@@ -82,8 +80,7 @@ const variantConfig = {
     bodyColorFilled: "text-white/90",
     dismissColor:
       "text-[var(--color-warning-500)]/50 hover:text-[var(--color-warning-500)] hover:bg-[var(--color-warning-100)]",
-    dismissColorFilled: "text-white/60 hover:text-white hover:bg-white/20",
-  },
+    dismissColorFilled: "text-white/60 hover:text-white hover:bg-white/20" },
   // info → menggunakan blue Ulul Albaab (bukan info-500 generik)
   info: {
     container:
@@ -102,9 +99,7 @@ const variantConfig = {
     bodyColorFilled: "text-white/90",
     dismissColor:
       "text-[var(--color-primary-500)]/50 hover:text-[var(--color-primary-600)] hover:bg-[var(--color-primary-100)]",
-    dismissColorFilled: "text-white/60 hover:text-white hover:bg-white/20",
-  },
-} as const;
+    dismissColorFilled: "text-white/60 hover:text-white hover:bg-white/20" } } as const;
 
 const sizeConfig = {
   sm: {
@@ -114,8 +109,7 @@ const sizeConfig = {
     title: "text-xs font-semibold tracking-[-0.01em]",
     body: "text-xs leading-relaxed",
     dismiss: "w-5 h-5",
-    accentBorder: "border-l-[3px]",
-  },
+    accentBorder: "border-l-[3px]" },
   md: {
     container: "p-4 gap-3 rounded-[var(--radius-lg)]",
     iconWrapper: "w-8 h-8",
@@ -123,8 +117,7 @@ const sizeConfig = {
     title: "text-sm font-semibold tracking-[-0.01em]",
     body: "text-sm leading-relaxed",
     dismiss: "w-6 h-6",
-    accentBorder: "border-l-[3px]",
-  },
+    accentBorder: "border-l-[3px]" },
   lg: {
     container: "p-5 gap-3.5 rounded-[var(--radius-xl)]",
     iconWrapper: "w-9 h-9",
@@ -132,9 +125,7 @@ const sizeConfig = {
     title: "text-base font-semibold tracking-[-0.015em]",
     body: "text-sm leading-relaxed",
     dismiss: "w-6 h-6",
-    accentBorder: "border-l-4",
-  },
-} as const;
+    accentBorder: "border-l-4" } } as const;
 
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
    ANIMATION VARIANTS
@@ -144,21 +135,17 @@ const alertMotion: Variants = {
     opacity: 0,
     y: -8,
     scale: 0.98,
-    filter: "blur(2px)",
-  },
+    filter: "blur(2px)" },
   animate: {
     opacity: 1,
     y: 0,
     scale: 1,
-    filter: "blur(0px)",
-  },
+    filter: "blur(0px)" },
   exit: {
     opacity: 0,
     y: -6,
     scale: 0.97,
-    filter: "blur(2px)",
-  },
-};
+    filter: "blur(2px)" } };
 
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
    MAIN COMPONENT
@@ -172,8 +159,7 @@ export default function Alert({
   onDismiss,
   size = "md",
   accent = false,
-  filled = false,
-}: AlertProps) {
+  filled = false }: AlertProps) {
   const [visible, setVisible] = useState(true);
 
   const cfg = variantConfig[type];
@@ -305,8 +291,7 @@ interface InlineAlertProps {
 export function InlineAlert({
   type = "error",
   children,
-  className,
-}: InlineAlertProps) {
+  className }: InlineAlertProps) {
   const cfg = variantConfig[type];
   const IconComponent = cfg.icon;
 
@@ -342,8 +327,7 @@ export function AlertBanner({
   type = "warning",
   children,
   dismissible = true,
-  className,
-}: AlertBannerProps) {
+  className }: AlertBannerProps) {
   const [visible, setVisible] = useState(true);
   const cfg = variantConfig[type];
   const IconComponent = cfg.icon;

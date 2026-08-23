@@ -10,29 +10,24 @@ const FAQS = [
   {
     question: "Kapan pendaftaran santri baru angkatan 2027/2028 dibuka?",
     answer:
-      "Pendaftaran PPDB Tahun Ajaran 2027/2028 dibuka mulai tanggal 5 September sampai dengan 28 Desember 2026. Namun, pendaftaran dapat ditutup lebih awal jika kuota santri baru sudah terpenuhi.",
-  },
+      "Pendaftaran PPDB Tahun Ajaran 2027/2028 dibuka mulai tanggal 5 September sampai dengan 28 Desember 2026. Namun, pendaftaran dapat ditutup lebih awal jika kuota santri baru sudah terpenuhi." },
   {
     question: "Apakah santri diwajibkan untuk tinggal di asrama?",
     answer:
-      "Ya, seluruh santri di Pesantren Al Andalus Ulul Albaab wajib tinggal di asrama untuk mengikuti seluruh rangkaian kegiatan tarbiyah, halaqah tahfidz, dan pembelajaran kitab turots secara maksimal.",
-  },
+      "Ya, seluruh santri di Pesantren Al Andalus Ulul Albaab wajib tinggal di asrama untuk mengikuti seluruh rangkaian kegiatan tarbiyah, halaqah tahfidz, dan pembelajaran kitab turots secara maksimal." },
   {
     question:
       "Kurikulum apa yang diterapkan di Pesantren Al Andalus Ulul Albaab?",
     answer:
-      "Kami menerapkan Kurikulum Terpadu yang menggabungkan kurikulum Nasional dengan kurikulum khas Andalus yang berfokus pada penguasaan Bahasa Arab, Tahfidz Al-Qur'an, dan Kitab Turots.",
-  },
+      "Kami menerapkan Kurikulum Terpadu yang menggabungkan kurikulum Nasional dengan kurikulum khas Andalus yang berfokus pada penguasaan Bahasa Arab, Tahfidz Al-Qur'an, dan Kitab Turots." },
   {
     question: "Apa saja berkas persyaratan yang harus disiapkan?",
     answer:
-      "Berkas utama yang diperlukan adalah Akta Kelahiran, Kartu Keluarga, Ijazah/Rapor terakhir, dan pas foto terbaru. Seluruh berkas diunggah secara digital melalui dashboard pendaftaran.",
-  },
+      "Berkas utama yang diperlukan adalah Akta Kelahiran, Kartu Keluarga, Ijazah/Rapor terakhir, dan pas foto terbaru. Seluruh berkas diunggah secara digital melalui dashboard pendaftaran." },
   {
     question: "Bagaimana sistem seleksi yang diterapkan?",
     answer:
-      "Sistem seleksi meliputi tes lisan (tahfidz/bacaan Al-Qur'an), tes tertulis (pengetahuan dasar agama dan akademik), serta Seleksi Wawancara Calon Santri dan orang tua.",
-  },
+      "Sistem seleksi meliputi tes lisan (tahfidz/bacaan Al-Qur'an), tes tertulis (pengetahuan dasar agama dan akademik), serta Seleksi Wawancara Calon Santri dan orang tua." },
 ] as const;
 
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -44,8 +39,7 @@ function FaqItem({
   answer,
   isOpen,
   toggle,
-  index,
-}: {
+  index }: {
   question: string;
   answer: string;
   isOpen: boolean;
@@ -126,15 +120,13 @@ export default function FaqSection() {
         className="absolute top-1/2 -left-32 -translate-y-1/2 w-[380px] h-[380px] pointer-events-none"
         style={{
           background:
-            "radial-gradient(circle, rgba(254,243,199,0.5) 0%, transparent 65%)",
-        }}
+            "radial-gradient(circle, rgba(254,243,199,0.5) 0%, transparent 65%)" }}
       />
       <div
         className="absolute top-10 -right-20 w-[300px] h-[300px] pointer-events-none"
         style={{
           background:
-            "radial-gradient(circle, rgba(220,237,255,0.45) 0%, transparent 65%)",
-        }}
+            "radial-gradient(circle, rgba(220,237,255,0.45) 0%, transparent 65%)" }}
       />
 
       <Container className="relative z-10">

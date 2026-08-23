@@ -41,8 +41,7 @@ export async function POST(request: Request) {
 
     const updatedProfile = await prisma.profile.update({
       where: { id: profileId },
-      data: { photo_url, updated_at: new Date() },
-    });
+      data: { photo_url, updated_at: new Date() } });
 
     // Update session cookie if own profile
     if (profileId === session.id) {
@@ -54,15 +53,13 @@ export async function POST(request: Request) {
         secure: process.env.NODE_ENV === "production",
         sameSite: "lax",
         domain: process.env.NEXT_PUBLIC_COOKIE_DOMAIN || undefined,
-        maxAge: 60 * 60 * 24 * 90,
-      });
+        maxAge: 60 * 60 * 24 * 90 });
     }
 
     return NextResponse.json({
       success: true,
       message: "Foto profil berhasil diperbarui.",
-      photo_url: updatedProfile.photo_url,
-    });
+      photo_url: updatedProfile.photo_url });
   } catch (error: any) {
     console.error("POST profile/photo error:", error);
     return NextResponse.json(

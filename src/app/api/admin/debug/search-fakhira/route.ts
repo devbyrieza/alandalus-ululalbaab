@@ -11,10 +11,7 @@ export async function GET() {
       where: {
         nama_lengkap: {
           contains: "Fakhira",
-          mode: "insensitive",
-        },
-      },
-    });
+          mode: "insensitive" } } });
 
     return NextResponse.json({
       count: results.length,
@@ -23,9 +20,7 @@ export async function GET() {
         nama: r.nama_lengkap,
         nomor: r.nomor_pendaftaran,
         deleted_at: (r as any).deleted_at || null,
-        status: r.status_pendaftaran,
-      })),
-    });
+        status: r.status_pendaftaran })) });
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }

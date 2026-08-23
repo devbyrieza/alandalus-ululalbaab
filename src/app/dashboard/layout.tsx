@@ -9,8 +9,7 @@ import { AlertTriangle, BookOpen, Target, CheckCircle2, XCircle } from "lucide-r
 
 
 export default function DashboardLayout({
-  children,
-}: {
+  children }: {
   children: React.ReactNode;
 }) {
   return (

@@ -31,8 +31,7 @@ export async function POST(request: NextRequest) {
     // 2. Fetch User Profile to check Phone Number
     const user = await prisma.profile.findUnique({
       where: { id },
-      select: { phone: true },
-    });
+      select: { phone: true } });
 
     if (!user || !user.phone || user.phone === "-") {
       return NextResponse.json(
@@ -60,16 +59,14 @@ export async function POST(request: NextRequest) {
       "/daftar";
     const response = NextResponse.json({
       success: true,
-      redirect: new URL(targetUrl, baseUrl).toString(),
-    });
+      redirect: new URL(targetUrl, baseUrl).toString() });
 
     response.cookies.set(
       "al_session",
       JSON.stringify({
         role: role,
         id: id,
-        full_name: full_name,
-      }),
+        full_name: full_name }),
       {
         path: "/",
         httpOnly: true,

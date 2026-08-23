@@ -9,19 +9,16 @@ import Image from "next/image";
 const BOARD_MEMBERS = [
   {
     name: "Ustadz Nurdin Apud Sabrini, Lc, M.Pd",
-    image: "/images/nurdin-apud-sabrini.webp",
-  },
+    image: "/images/nurdin-apud-sabrini.webp" },
   {
     name: "Ustadz Dr. Muhammad Arifin Badri, Lc, M.A",
-    image: "/images/muhammad-arifin-badri.webp",
-  },
+    image: "/images/muhammad-arifin-badri.webp" },
   { name: "Ustadz Wahab Rajasam, M.Pd", image: "/images/wahab-rajasam.webp" },
   { name: "KH. Dudun Abdul Gofar", image: "" },
   { name: "Bpk. Tarmen Tascha, SE", image: "/images/tarmen-tascha.webp" },
   {
     name: "Ustadz Dwi Wahyu Iskandar, M.Pd",
-    image: "",
-  },
+    image: "" },
 ] as const;
 
 // ─── Animation ───────────────────────────────────────
@@ -31,8 +28,7 @@ const EASE = [0.16, 1, 0.3, 1] as const;
 function MemberCard({
   name,
   image,
-  index,
-}: {
+  index }: {
   name: string;
   image: string;
   index: number;
@@ -88,15 +84,13 @@ export default function BoardSection() {
         className="absolute -top-32 -right-32 w-[480px] h-[480px] pointer-events-none"
         style={{
           background:
-            "radial-gradient(circle, rgba(220,237,255,0.5) 0%, transparent 65%)",
-        }}
+            "radial-gradient(circle, rgba(220,237,255,0.5) 0%, transparent 65%)" }}
       />
       <div
         className="absolute -bottom-24 -left-24 w-[360px] h-[360px] pointer-events-none"
         style={{
           background:
-            "radial-gradient(circle, rgba(254,243,199,0.4) 0%, transparent 65%)",
-        }}
+            "radial-gradient(circle, rgba(254,243,199,0.4) 0%, transparent 65%)" }}
       />
 
       <Container className="relative z-10">

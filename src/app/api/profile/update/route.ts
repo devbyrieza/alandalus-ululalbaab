@@ -58,8 +58,7 @@ export async function POST(request: Request) {
         );
       }
       const existing = await prisma.profile.findFirst({
-        where: { username, id: { not: profileId } },
-      });
+        where: { username, id: { not: profileId } } });
       if (existing) {
         return NextResponse.json(
           { error: "Username sudah digunakan" },
@@ -72,15 +71,13 @@ export async function POST(request: Request) {
     const updateData: any = {
       full_name,
       phone: phone || "-",
-      username: username || null,
-    };
+      username: username || null };
 
     // Allow email update with duplicate check
     if (email && email.trim()) {
       const cleanEmail = email.trim().toLowerCase();
       const emailExists = await prisma.profile.findFirst({
-        where: { email: cleanEmail, id: { not: profileId } },
-      });
+        where: { email: cleanEmail, id: { not: profileId } } });
       if (emailExists) {
         return NextResponse.json({ error: "Email sudah digunakan akun lain" }, { status: 400 });
       }
@@ -89,8 +86,7 @@ export async function POST(request: Request) {
 
     const updatedProfile = await prisma.profile.update({
       where: { id: profileId },
-      data: updateData,
-    });
+      data: updateData });
 
     // Only update session cookie if editing own profile
     if (profileId === session.id) {
@@ -99,8 +95,7 @@ export async function POST(request: Request) {
         full_name: updatedProfile.full_name,
         email: updatedProfile.email,
         phone: updatedProfile.phone,
-        username: updatedProfile.username,
-      };
+        username: updatedProfile.username };
 
       const cookieStore = await cookies();
       cookieStore.set("al_session", JSON.stringify(newSession), {
@@ -109,8 +104,7 @@ export async function POST(request: Request) {
         secure: process.env.NODE_ENV === "production",
         sameSite: "lax",
         domain: process.env.NEXT_PUBLIC_COOKIE_DOMAIN || undefined,
-        maxAge: 60 * 60 * 24 * 90,
-      });
+        maxAge: 60 * 60 * 24 * 90 });
     }
 
     return NextResponse.json({
@@ -118,8 +112,7 @@ export async function POST(request: Request) {
       message: profileId === session.id
         ? "Profil Anda berhasil diperbarui."
         : `Profil ${updatedProfile.full_name} berhasil diperbarui.`,
-      data: updatedProfile,
-    });
+      data: updatedProfile });
   } catch (error: any) {
     console.error("POST profile/update error:", error);
     return NextResponse.json(

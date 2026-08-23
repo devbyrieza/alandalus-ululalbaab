@@ -61,10 +61,7 @@ export async function GET(
         where: {
           pendaftar_id: session.id,
           file_path: {
-            contains: filename,
-          },
-        },
-      });
+            contains: filename } } });
 
       if (doc) {
         isOwner = true;
@@ -73,10 +70,7 @@ export async function GET(
           where: {
             pendaftar_id: session.id,
             bukti_transfer_path: {
-              contains: filename,
-            },
-          },
-        });
+              contains: filename } } });
         if (payment) {
           isOwner = true;
         }
@@ -100,8 +94,7 @@ export async function GET(
         {
           error:
             "File tidak ditemukan di server. Kemungkinan file terhapus saat redeploy atau volume storage belum terpasang.",
-          path: relativePath,
-        },
+          path: relativePath },
         { status: 404 },
       );
     }
@@ -113,9 +106,7 @@ export async function GET(
         "Content-Type": fileData.mimeType,
         "Content-Length": fileData.buffer.length.toString(),
         "Content-Disposition": `inline; filename="${pathSegments[pathSegments.length - 1]}"`,
-        "Cache-Control": "private, max-age=3600",
-      },
-    });
+        "Cache-Control": "private, max-age=3600" } });
 
     return response;
   } catch (error) {

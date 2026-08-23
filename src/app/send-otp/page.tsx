@@ -50,8 +50,7 @@ export default function SendOtpPage() {
 
     // Prepare payload
     const payload: Record<string, string> = {
-      channel: selectedChannel,
-    };
+      channel: selectedChannel };
 
     if (selectedChannel === "email") {
       payload.email = email;
@@ -65,10 +64,8 @@ export default function SendOtpPage() {
       const response = await fetch("/api/register/send-otp", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
+          "Content-Type": "application/json" },
+        body: JSON.stringify(payload) });
 
       const data: ApiResponse = await response.json();
 

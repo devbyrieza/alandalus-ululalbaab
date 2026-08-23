@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Trash2, RotateCcw, ArrowLeft, Loader2, ChevronLeft, ChevronRight, X, Users, Hash, Calendar, Search, CheckCircle2,  } from "lucide-react";
+import { Trash2, RotateCcw, ArrowLeft, Loader2, ChevronLeft, ChevronRight, X, Users, Hash, Calendar, Search, CheckCircle2 } from "lucide-react";
 import Swal from "sweetalert2";
 
 interface DeletedPendaftar {
@@ -36,8 +36,7 @@ export default function TrashPage() {
     page: 1,
     limit: 20,
     total: 0,
-    totalPages: 0,
-  });
+    totalPages: 0 });
 
   const [search, setSearch] = useState("");
   const [searchInput, setSearchInput] = useState("");
@@ -57,8 +56,7 @@ export default function TrashPage() {
         page: pagination.page.toString(),
         limit: pagination.limit.toString(),
         search: search,
-        jenjang: jenjangFilter,
-      });
+        jenjang: jenjangFilter });
 
       const res = await fetch(`/api/admin/pendaftar/trash?${params}`);
       if (!res.ok) throw new Error("Failed to fetch");
@@ -90,8 +88,7 @@ export default function TrashPage() {
       const res = await fetch(
         `/api/admin/pendaftar/${restoringItem.id}/restore`,
         {
-          method: "POST",
-        },
+          method: "POST" },
       );
 
       const result = await res.json();
@@ -131,8 +128,7 @@ export default function TrashPage() {
       month: "short",
       year: "numeric",
       hour: "2-digit",
-      minute: "2-digit",
-    });
+      minute: "2-digit" });
   };
 
   const handlePageChange = (newPage: number) => {

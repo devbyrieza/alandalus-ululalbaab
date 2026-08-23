@@ -13,8 +13,7 @@ import {
   Hash,
   ChevronLeft,
   ChevronRight,
-  Filter,
-} from "lucide-react";
+  Filter } from "lucide-react";
 import Link from "next/link";
 import Swal from "sweetalert2";
 
@@ -90,8 +89,7 @@ export default function BroadcastPage() {
       showCancelButton: true,
       confirmButtonColor: "#1e40af",
       confirmButtonText: "Ya, Kirim!",
-      cancelButtonText: "Batal",
-    });
+      cancelButtonText: "Batal" });
 
     if (!isConfirmed) return;
 
@@ -106,9 +104,7 @@ export default function BroadcastPage() {
           message,
           header,
           footer,
-          includeName,
-        }),
-      });
+          includeName }) });
 
       const data = await res.json();
       setResults(data);

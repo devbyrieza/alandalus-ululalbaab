@@ -24,8 +24,7 @@ import {
   Shield,
   Star,
   MapPin,
-  Clock,
-} from "lucide-react";
+  Clock } from "lucide-react";
 import { Container } from "@/components/layout/Container";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -37,8 +36,7 @@ const StatCard = ({
   icon: Icon,
   value,
   label,
-  delay = 0,
-}: {
+  delay = 0 }: {
   icon: any;
   value: string;
   label: string;
@@ -138,44 +136,37 @@ function PPDBContent() {
       phase: "Registrasi Online",
       date: "31 Agustus - 30 Oktober 2026",
       desc: "Daftar dan buat akun pendaftar melalui website resmi atau scan barcode di brosur.",
-      status: "active",
-    },
+      status: "active" },
     {
       phase: "Membayar Biaya Pendaftaran",
       date: "Setelah Registrasi",
       desc: "Lakukan pembayaran biaya pendaftaran sebesar Rp 250.000 via Transfer Bank.",
-      status: "upcoming",
-    },
+      status: "upcoming" },
     {
       phase: "Isi Formulir Online",
       date: "Setelah Bayar",
       desc: "Lengkapi formulir online dengan data diri santri, orang tua/wali, dan informasi yang diperlukan.",
-      status: "upcoming",
-    },
+      status: "upcoming" },
     {
       phase: "Upload Berkas",
       date: "Setelah Formulir",
       desc: "Upload seluruh dokumen persyaratan termasuk format yang bisa didownload dari sistem.",
-      status: "upcoming",
-    },
+      status: "upcoming" },
     {
       phase: "Undangan Jadwal Seleksi",
       date: "Jadwal Dipilih",
       desc: "Menerima undangan jadwal Seleksi: Al-Qur'an, Kemampuan Akademik, Identifikasi Kepribadian, Seleksi Kesiapan, dan Wawancara.",
-      status: "upcoming",
-    },
+      status: "upcoming" },
     {
       phase: "Pengumuman Hasil",
       date: "Setelah Tes",
       desc: "Hasil seleksi diumumkan melalui Dashboard Pendaftar dan Notifikasi WhatsApp.",
-      status: "upcoming",
-    },
+      status: "upcoming" },
     {
       phase: "Pembayaran Uang Pangkal",
       date: "Setelah Diterima",
       desc: "Melakukan pelunasan Uang Pangkal sebagai tanda jadi daftar ulang.",
-      status: "upcoming",
-    },
+      status: "upcoming" },
   ];
 
   const requirements = [
@@ -188,8 +179,7 @@ function PPDBContent() {
         { name: "Scan Rapor 2 Semester Terakhir", type: "Wajib" },
         { name: "Scan Nomor Induk Siswa Nasional (NISN)", type: "Wajib" },
         { name: "Foto Setengah Badan", type: "Wajib" },
-      ],
-    },
+      ] },
     {
       title: "Dokumen Tambahan (Format Panitia)",
       icon: CheckCircle,
@@ -200,10 +190,8 @@ function PPDBContent() {
         { name: "Scan Pakta Integritas Calon Orangtua/Wali Santri (Format Panitia)", type: "Wajib" },
         {
           name: "Scan Pernyataan Bebas Perilaku Negatif (Format Panitia)",
-          type: "Wajib",
-        },
-      ],
-    },
+          type: "Wajib" },
+      ] },
   ];
 
   const biaya = [
@@ -504,18 +492,15 @@ function PPDBContent() {
                       {
                         icon: BookOpen,
                         title: "Kurikulum Mutakhir",
-                        desc: "Perpaduan kurikulum Nasional & kurikulum khas Andalus.",
-                      },
+                        desc: "Perpaduan kurikulum Nasional & kurikulum khas Andalus." },
                       {
                         icon: GraduationCap,
                         title: "Guru Berkompeten",
-                        desc: "Alumni Perguruan Tinggi Terbaik Dalam & Luar Negeri serta Pondok Pesantren Unggulan.",
-                      },
+                        desc: "Alumni Perguruan Tinggi Terbaik Dalam & Luar Negeri serta Pondok Pesantren Unggulan." },
                       {
                         icon: MapPin,
                         title: "Lingkungan Asri",
-                        desc: "Suasana belajar yang tenang & udara bersih.",
-                      },
+                        desc: "Suasana belajar yang tenang & udara bersih." },
                     ].map((feat, i) => {
                       const FeatIcon = feat.icon;
                       return (
@@ -549,16 +534,13 @@ function PPDBContent() {
                   {[
                     {
                       q: "Apakah santri wajib asrama?",
-                      a: "Ya, seluruh santri di Pesantren Al Andalus Ulul Albaab wajib tinggal di asrama untuk mengikuti seluruh rangkaian kegiatan tarbiyah, halaqah tahfidz, dan pembelajaran kitab turots secara maksimal.",
-                    },
+                      a: "Ya, seluruh santri di Pesantren Al Andalus Ulul Albaab wajib tinggal di asrama untuk mengikuti seluruh rangkaian kegiatan tarbiyah, halaqah tahfidz, dan pembelajaran kitab turots secara maksimal." },
                     {
                       q: "Kapan batas akhir pendaftaran PPDB 2027/2028?",
-                      a: "Pendaftaran PPDB Tahun Ajaran 2027/2028 dibuka mulai 31 Agustus sampai dengan 30 Oktober 2026. Hanya 2 bulan! Pendaftaran dapat ditutup lebih awal jika kuota terpenuhi. Segera daftar!",
-                    },
+                      a: "Pendaftaran PPDB Tahun Ajaran 2027/2028 dibuka mulai 31 Agustus sampai dengan 30 Oktober 2026. Hanya 2 bulan! Pendaftaran dapat ditutup lebih awal jika kuota terpenuhi. Segera daftar!" },
                     {
                       q: "Berapa total biaya yang harus disiapkan?",
-                      a: "Biaya pendaftaran Rp 250.000, Uang Pangkal Rp 9.800.000, dan SPP/Taawun Rp 1.100.000/bulan (All In = Rp 13.200.000/tahun sudah termasuk makan, asrama, dan seluruh kegiatan pesantren).",
-                    },
+                      a: "Biaya pendaftaran Rp 250.000, Uang Pangkal Rp 9.800.000, dan SPP/Taawun Rp 1.100.000/bulan (All In = Rp 13.200.000/tahun sudah termasuk makan, asrama, dan seluruh kegiatan pesantren)." },
                   ].map((faq, i) => (
                     <motion.div key={i} className="group">
                       <details className="bg-white rounded-lg border border-surface-100 shadow-premium-sm transition-all duration-300 open:shadow-premium-lg">
