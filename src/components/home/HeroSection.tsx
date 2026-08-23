@@ -350,8 +350,8 @@ export default function HeroSection() {
               className="absolute -top-8 -right-6 md:-top-5 lg:-top-6 md:-right-4 lg:-right-6 z-20 scale-[0.8] md:scale-100"
               style={{ transformOrigin: "right center" }}
             >
-              <div className="glass-panel flex items-center gap-3 px-4 py-3 rounded-2xl">
-                <div className="icon-box icon-box-primary w-11 h-11 rounded-xl">
+              <div className="glass-panel flex items-center gap-3 px-4 py-3 rounded-lg">
+                <div className="icon-box icon-box-primary w-11 h-11 rounded-lg">
                   <GraduationCap className="w-5 h-5" />
                 </div>
                 <div>
@@ -378,8 +378,8 @@ export default function HeroSection() {
               className="absolute -bottom-8 -left-6 md:-bottom-6 lg:-bottom-8 md:-left-4 lg:-left-6 z-20 scale-[0.8] md:scale-100"
               style={{ transformOrigin: "left center" }}
             >
-              <div className="glass-panel flex items-center gap-3 px-4 py-3 rounded-2xl">
-                <div className="icon-box icon-box-primary w-11 h-11 rounded-xl">
+              <div className="glass-panel flex items-center gap-3 px-4 py-3 rounded-lg">
+                <div className="icon-box icon-box-primary w-11 h-11 rounded-lg">
                   <Globe className="w-5 h-5" />
                 </div>
                 <div>

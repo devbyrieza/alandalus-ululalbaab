@@ -61,7 +61,7 @@ function FaqItem({
     >
       <div
         className={[
-          "rounded-2xl border bg-white overflow-hidden transition-all duration-300",
+          "rounded-lg border bg-white overflow-hidden transition-all duration-300",
           isOpen
             ? "border-primary-200 shadow-premium-sm ring-1 ring-primary-100/60"
             : "border-primary-100 hover:border-primary-200 hover:shadow-xs",
@@ -69,7 +69,7 @@ function FaqItem({
       >
         <button
           onClick={toggle}
-          className="w-full text-left flex items-center justify-between gap-4 px-6 py-5 md:px-7 md:py-6 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 rounded-2xl flex-wrap"
+          className="w-full text-left flex items-center justify-between gap-4 px-6 py-5 md:px-7 md:py-6 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 rounded-lg flex-wrap"
           aria-expanded={isOpen}
         >
           <span
@@ -192,10 +192,10 @@ export default function FaqSection() {
           transition={{ delay: 0.2, duration: 0.6, ease: EASE }}
           className="mt-14 md:mt-16 max-w-sm mx-auto"
         >
-          <div className="group relative flex flex-col items-center gap-5 bg-primary-50/60 rounded-2xl p-7 border border-primary-100 text-center overflow-hidden transition-all duration-400 hover:border-primary-200 hover:shadow-premium-sm">
+          <div className="group relative flex flex-col items-center gap-5 bg-primary-50/60 rounded-lg p-7 border border-primary-100 text-center overflow-hidden transition-all duration-400 hover:border-primary-200 hover:shadow-premium-sm">
             <div className="absolute inset-0 bg-gradient-to-b from-transparent to-secondary-50/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
-            <div className="relative z-10 w-12 h-12 rounded-xl bg-white flex items-center justify-center shadow-xs border border-primary-100 group-hover:border-primary-200 transition-colors duration-300">
+            <div className="relative z-10 w-12 h-12 rounded-lg bg-white flex items-center justify-center shadow-xs border border-primary-100 group-hover:border-primary-200 transition-colors duration-300">
               <MessageCircleMore
                 className="w-5 h-5 text-primary-500"
                 strokeWidth={1.75}

@@ -231,7 +231,7 @@ export default function AuditSeleksiPage() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h1 className="text-3xl font-black text-ink-900 tracking-tight flex items-center gap-3">
-            <div className="p-2.5 bg-primary-600 rounded-2xl shadow-lg shadow-primary-600/20">
+            <div className="p-2.5 bg-primary-600 rounded-lg shadow-sm border border-gray-200 shadow-primary-600/20">
               <Activity className="w-6 h-6 text-white" />
             </div>
             Audit <span className="text-primary-700">Hasil Seleksi</span>
@@ -245,14 +245,14 @@ export default function AuditSeleksiPage() {
           <Button
             onClick={handleExport}
             variant="outline"
-            className="rounded-2xl border-ink-200 font-bold bg-white"
+            className="rounded-lg border-ink-200 font-bold bg-white"
           >
             <Download className="w-4 h-4 mr-2" /> Export
           </Button>
           <Button
             onClick={fetchCandidates}
             variant="outline"
-            className="rounded-2xl border-ink-200 font-bold bg-white"
+            className="rounded-lg border-ink-200 font-bold bg-white"
           >
             <RefreshCcw className="w-4 h-4 mr-2" /> Refresh
           </Button>
@@ -269,11 +269,11 @@ export default function AuditSeleksiPage() {
               placeholder="Cari nama/NP..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-ink-50 border border-ink-100 rounded-xl pl-10 pr-4 py-2.5 text-sm font-medium outline-none focus:ring-4 focus:ring-primary-500/5 transition-all"
+              className="w-full bg-ink-50 border border-ink-100 rounded-lg pl-10 pr-4 py-2.5 text-sm font-medium outline-none focus:ring-4 focus:ring-primary-500/5 transition-all"
             />
           </div>
 
-          <div className="flex items-center gap-2 px-3 py-2 bg-ink-50 rounded-xl border border-ink-100">
+          <div className="flex items-center gap-2 px-3 py-2 bg-ink-50 rounded-lg border border-ink-100">
             <Filter className="w-3.5 h-3.5 text-ink-400" />
             <select
               value={filterStatus}
@@ -287,7 +287,7 @@ export default function AuditSeleksiPage() {
             </select>
           </div>
 
-          <div className="flex items-center gap-2 px-3 py-2 bg-ink-50 rounded-xl border border-ink-100">
+          <div className="flex items-center gap-2 px-3 py-2 bg-ink-50 rounded-lg border border-ink-100">
             <select
               value={filterJenjang}
               onChange={(e) => setFilterJenjang(e.target.value)}
@@ -307,21 +307,21 @@ export default function AuditSeleksiPage() {
           <Button
             onClick={() => handleBatchPublish("accepted")}
             disabled={selectedIds.length === 0 || isPublishing}
-            className="flex-1 lg:flex-none bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-black text-[11px] px-6 py-2.5 shadow-lg shadow-emerald-200 transition-all active:scale-95"
+            className="flex-1 lg:flex-none bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-black text-[11px] px-6 py-2.5 shadow-sm border border-gray-200 shadow-emerald-200 transition-all active:scale-95"
           >
             DITERIMA ({selectedIds.length})
           </Button>
           <Button
             onClick={() => handleBatchPublish("cadangan")}
             disabled={selectedIds.length === 0 || isPublishing}
-            className="flex-1 lg:flex-none bg-secondary-500 hover:bg-secondary-600 text-white rounded-xl font-black text-[11px] px-6 py-2.5 shadow-lg shadow-secondary-200 transition-all active:scale-95"
+            className="flex-1 lg:flex-none bg-secondary-500 hover:bg-secondary-600 text-white rounded-lg font-black text-[11px] px-6 py-2.5 shadow-sm border border-gray-200 shadow-secondary-200 transition-all active:scale-95"
           >
             CADANGAN
           </Button>
           <Button
             onClick={() => handleBatchPublish("rejected")}
             disabled={selectedIds.length === 0 || isPublishing}
-            className="flex-1 lg:flex-none bg-rose-600 hover:bg-rose-700 text-white rounded-xl font-black text-[11px] px-6 py-2.5 shadow-lg shadow-rose-200 transition-all active:scale-95"
+            className="flex-1 lg:flex-none bg-rose-600 hover:bg-rose-700 text-white rounded-lg font-black text-[11px] px-6 py-2.5 shadow-sm border border-gray-200 shadow-rose-200 transition-all active:scale-95"
           >
             TOLAK
           </Button>
@@ -487,7 +487,7 @@ export default function AuditSeleksiPage() {
       
       {/* Legend & Help */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-        <div className="bg-primary-950 rounded-3xl p-5 md:p-8 text-white relative overflow-hidden group shadow-xl shadow-primary-900/20">
+        <div className="bg-primary-950 rounded-lg p-5 md:p-8 text-white relative overflow-hidden group shadow-sm border border-gray-200 shadow-primary-900/20">
           <div className="absolute top-0 right-0 p-5 md:p-8 opacity-10 group-hover:rotate-12 transition-transform duration-700">
             <Activity className="w-40 h-40 text-white" />
           </div>
@@ -510,14 +510,14 @@ export default function AuditSeleksiPage() {
               </p>
             </div>
             <div className="mt-8 flex items-center gap-4 text-[10px] font-black uppercase tracking-[0.2em] text-white/80">
-              <span className="px-3 py-1.5 border border-white/20 rounded-lg bg-white/5 backdrop-blur-sm">A: ≥ 80+</span>
-              <span className="px-3 py-1.5 border border-white/20 rounded-lg bg-white/5 backdrop-blur-sm">B: ≥ 65+</span>
-              <span className="px-3 py-1.5 border border-white/20 rounded-lg bg-white/5 backdrop-blur-sm">C: ≥ 50+</span>
+              <span className="px-3 py-1.5 border border-white/20 rounded-lg bg-white/5 ">A: ≥ 80+</span>
+              <span className="px-3 py-1.5 border border-white/20 rounded-lg bg-white/5 ">B: ≥ 65+</span>
+              <span className="px-3 py-1.5 border border-white/20 rounded-lg bg-white/5 ">C: ≥ 50+</span>
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-3xl p-5 md:p-8 border border-ink-100 shadow-premium-sm flex flex-col justify-between">
+        <div className="bg-white rounded-lg p-5 md:p-8 border border-ink-100 shadow-premium-sm flex flex-col justify-between">
           <div>
             <h3 className="text-xl font-black text-ink-900 mb-2">Panduan Penerbitan</h3>
             <p className="text-ink-500 text-sm font-medium leading-relaxed">
@@ -525,8 +525,8 @@ export default function AuditSeleksiPage() {
               Sistem akan secara otomatis memperbarui dashboard santri dan mengirimkan notifikasi resmi via WhatsApp.
             </p>
           </div>
-          <div className="mt-8 flex items-center gap-4 p-4 bg-primary-50 rounded-2xl border border-primary-100">
-             <div className="p-3 bg-white rounded-xl shadow-sm">
+          <div className="mt-8 flex items-center gap-4 p-4 bg-primary-50 rounded-lg border border-primary-100">
+             <div className="p-3 bg-white rounded-lg shadow-sm">
                 <RefreshCcw className="w-5 h-5 text-primary-600" />
              </div>
              <p className="text-[11px] font-bold text-primary-800 leading-snug">

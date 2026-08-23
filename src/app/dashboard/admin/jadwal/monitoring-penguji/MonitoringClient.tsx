@@ -63,8 +63,8 @@ export default function MonitoringClient({ data }: { data: ExaminerStat[] }) {
     <div className="space-y-6">
       {/* Header & Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-white rounded-3xl p-6 border border-ink-100 shadow-sm flex items-center gap-4">
-          <div className="w-14 h-14 bg-primary-50 rounded-2xl flex items-center justify-center text-primary-600">
+        <div className="bg-white rounded-lg p-6 border border-ink-100 shadow-sm flex items-center gap-4">
+          <div className="w-14 h-14 bg-primary-50 rounded-lg flex items-center justify-center text-primary-600">
             <ClipboardEdit className="w-7 h-7" />
           </div>
           <div>
@@ -74,8 +74,8 @@ export default function MonitoringClient({ data }: { data: ExaminerStat[] }) {
             </p>
           </div>
         </div>
-        <div className="bg-white rounded-3xl p-6 border border-ink-100 shadow-sm flex items-center gap-4">
-          <div className="w-14 h-14 bg-red-50 rounded-2xl flex items-center justify-center text-red-500">
+        <div className="bg-white rounded-lg p-6 border border-ink-100 shadow-sm flex items-center gap-4">
+          <div className="w-14 h-14 bg-red-50 rounded-lg flex items-center justify-center text-red-500">
             <Clock className="w-7 h-7" />
           </div>
           <div>
@@ -85,8 +85,8 @@ export default function MonitoringClient({ data }: { data: ExaminerStat[] }) {
             </p>
           </div>
         </div>
-        <div className="bg-white rounded-3xl p-6 border border-ink-100 shadow-sm flex items-center gap-4">
-          <div className="w-14 h-14 bg-green-50 rounded-2xl flex items-center justify-center text-green-500">
+        <div className="bg-white rounded-lg p-6 border border-ink-100 shadow-sm flex items-center gap-4">
+          <div className="w-14 h-14 bg-green-50 rounded-lg flex items-center justify-center text-green-500">
             <CheckCircle2 className="w-7 h-7" />
           </div>
           <div>
@@ -99,13 +99,13 @@ export default function MonitoringClient({ data }: { data: ExaminerStat[] }) {
       </div>
 
       {/* Filters */}
-      <div className="bg-white p-4 rounded-3xl border border-ink-100 shadow-sm flex flex-col md:flex-row gap-4 justify-between items-center">
+      <div className="bg-white p-4 rounded-lg border border-ink-100 shadow-sm flex flex-col md:flex-row gap-4 justify-between items-center">
         <div className="relative w-full md:w-96">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-ink-400" />
           <input
             type="text"
             placeholder="Cari nama penguji..."
-            className="w-full pl-12 pr-4 py-3 bg-ink-50 border-none rounded-2xl focus:ring-2 focus:ring-primary-500 text-sm font-bold text-primary-950"
+            className="w-full pl-12 pr-4 py-3 bg-ink-50 border-none rounded-lg focus:ring-2 focus:ring-primary-500 text-sm font-bold text-primary-950"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
@@ -115,9 +115,9 @@ export default function MonitoringClient({ data }: { data: ExaminerStat[] }) {
             <button
               key={type}
               onClick={() => setFilterType(type)}
-              className={`px-6 py-3 rounded-2xl text-xs font-black uppercase tracking-widest whitespace-nowrap transition-all ${
+              className={`px-6 py-3 rounded-lg text-xs font-black uppercase tracking-widest whitespace-nowrap transition-all ${
                 filterType === type
-                  ? "bg-primary-950 text-white shadow-lg"
+                  ? "bg-primary-950 text-white shadow-sm border border-gray-200"
                   : "bg-ink-50 text-ink-500 hover:bg-ink-100"
               }`}
             >
@@ -128,7 +128,7 @@ export default function MonitoringClient({ data }: { data: ExaminerStat[] }) {
       </div>
 
       {/* Table / List */}
-      <div className="bg-white border border-ink-100 rounded-3xl overflow-hidden shadow-sm">
+      <div className="bg-white border border-ink-100 rounded-lg overflow-hidden shadow-sm">
         {filteredData.length === 0 ? (
           <div className="p-6 md:p-12 text-center text-ink-400 font-bold">
             Tidak ada data penguji yang sesuai dengan filter.
@@ -146,7 +146,7 @@ export default function MonitoringClient({ data }: { data: ExaminerStat[] }) {
                     onClick={() => toggleExpand(stat.id + stat.roleType)}
                   >
                     <div className="flex items-center gap-4 flex-1">
-                      <div className={`w-12 h-12 rounded-2xl flex items-center justify-center font-black text-lg ${
+                      <div className={`w-12 h-12 rounded-lg flex items-center justify-center font-black text-lg ${
                         isAllDone ? "bg-green-100 text-green-700" : "bg-orange-100 text-orange-700"
                       }`}>
                         {stat.name.charAt(0)}
@@ -191,13 +191,13 @@ export default function MonitoringClient({ data }: { data: ExaminerStat[] }) {
                             target="_blank" 
                             rel="noreferrer"
                             onClick={(e) => e.stopPropagation()}
-                            className="w-10 h-10 bg-green-500 text-white rounded-xl flex items-center justify-center hover:bg-green-600 transition-colors shadow-md shadow-green-500/20"
+                            className="w-10 h-10 bg-green-500 text-white rounded-lg flex items-center justify-center hover:bg-green-600 transition-colors shadow-sm border border-gray-200 shadow-green-500/20"
                             title="Ingatkan via WA"
                           >
                             <MessageCircle className="w-5 h-5" />
                           </a>
                         )}
-                        <button className="w-10 h-10 bg-white border border-ink-200 text-ink-400 rounded-xl flex items-center justify-center hover:bg-ink-50 transition-colors">
+                        <button className="w-10 h-10 bg-white border border-ink-200 text-ink-400 rounded-lg flex items-center justify-center hover:bg-ink-50 transition-colors">
                           {isExpanded ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
                         </button>
                       </div>
@@ -226,7 +226,7 @@ export default function MonitoringClient({ data }: { data: ExaminerStat[] }) {
                               </h4>
                               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                                 {stat.pendingStudents.map((student) => (
-                                  <div key={student.jadwalId} className="bg-white p-3 rounded-2xl border border-ink-200 shadow-sm flex flex-col">
+                                  <div key={student.jadwalId} className="bg-white p-3 rounded-lg border border-ink-200 shadow-sm flex flex-col">
                                     <span className="text-[10px] font-black text-ink-400 uppercase tracking-widest">{student.registrationNumber}</span>
                                     <span className="text-sm font-bold text-primary-950 truncate" title={student.name}>{student.name}</span>
                                     <span className="text-xs text-ink-500 mt-2 bg-ink-50 w-fit px-2 py-1 rounded-md">

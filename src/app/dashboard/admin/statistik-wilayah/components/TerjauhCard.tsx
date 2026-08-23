@@ -47,9 +47,9 @@ export default function TerjauhCard({
   };
 
   return (
-    <div className="bg-white rounded-3xl p-6 shadow-sm border border-ink-100 mt-8">
+    <div className="bg-white rounded-lg p-6 shadow-sm border border-ink-100 mt-8">
       <div className="flex items-center gap-3 mb-6">
-        <div className="w-10 h-10 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center">
+        <div className="w-10 h-10 rounded-lg bg-orange-50 text-orange-600 flex items-center justify-center">
           <Navigation className="w-5 h-5" />
         </div>
         <div>
@@ -66,7 +66,7 @@ export default function TerjauhCard({
           <select
             value={tahunAjaran}
             onChange={(e) => setTahunAjaran(e.target.value)}
-            className="w-full p-3 bg-surface-50 border border-ink-200 rounded-xl focus:outline-hidden focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20"
+            className="w-full p-3 bg-surface-50 border border-ink-200 rounded-lg focus:outline-hidden focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20"
           >
             {tahunAjaranList.map((ta) => (
               <option key={ta} value={ta}>
@@ -80,7 +80,7 @@ export default function TerjauhCard({
           <select
             value={jenjang}
             onChange={(e) => setJenjang(e.target.value)}
-            className="w-full p-3 bg-surface-50 border border-ink-200 rounded-xl focus:outline-hidden focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20"
+            className="w-full p-3 bg-surface-50 border border-ink-200 rounded-lg focus:outline-hidden focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20"
           >
             {jenjangList.map((j) => (
               <option key={j} value={j}>
@@ -93,7 +93,7 @@ export default function TerjauhCard({
           <button
             onClick={handleSearch}
             disabled={loading}
-            className="w-full md:w-auto p-3 px-6 bg-primary-600 text-white rounded-xl font-bold hover:bg-primary-700 transition-colors flex items-center justify-center gap-2 disabled:opacity-70"
+            className="w-full md:w-auto p-3 px-6 bg-primary-600 text-white rounded-lg font-bold hover:bg-primary-700 transition-colors flex items-center justify-center gap-2 disabled:opacity-70"
           >
             {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Search className="w-5 h-5" />}
             {loading ? "Mencari..." : "Cari"}
@@ -102,7 +102,7 @@ export default function TerjauhCard({
       </div>
 
       {error && (
-        <div className="p-4 bg-red-50 text-red-600 rounded-xl text-sm font-medium border border-red-100">
+        <div className="p-4 bg-red-50 text-red-600 rounded-lg text-sm font-medium border border-red-100">
           {error}
         </div>
       )}
@@ -113,7 +113,7 @@ export default function TerjauhCard({
             Top 5 Pendaftar Terjauh
           </div>
           {result.map((item: any, index: number) => (
-            <div key={index} className={`p-5 md:p-6 bg-linear-to-br ${index === 0 ? 'from-orange-50 to-white border-orange-200 shadow-md' : 'from-surface-50 to-white border-ink-100 shadow-sm'} border rounded-2xl transition-all hover:shadow-md`}>
+            <div key={index} className={`p-5 md:p-6 bg-linear-to-br ${index === 0 ? 'from-orange-50 to-white border-orange-200 shadow-sm border border-gray-200' : 'from-surface-50 to-white border-ink-100 shadow-sm'} border rounded-lg transition-all hover:shadow-sm border border-gray-200`}>
               <div className="flex flex-col md:flex-row items-center gap-5 md:gap-6 text-center md:text-left">
                 <div className={`rounded-full flex items-center justify-center shrink-0 shadow-sm border ${index === 0 ? 'bg-orange-100 text-orange-600 border-orange-200 w-16 h-16 md:w-20 md:h-20' : 'bg-surface-100 text-ink-500 border-ink-200 w-12 h-12 md:w-14 md:h-14'}`}>
                   {index === 0 ? <MapPin className="w-8 h-8 md:w-10 md:h-10" /> : <span className="text-lg md:text-xl font-black">#{index + 1}</span>}
@@ -133,7 +133,7 @@ export default function TerjauhCard({
                   <p className="text-ink-500 font-medium text-xs md:text-sm leading-relaxed mb-3 line-clamp-2 md:line-clamp-none">
                     {item.alamat_lengkap}
                   </p>
-                  <div className={`inline-flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 ${index === 0 ? 'bg-orange-100 border border-orange-200 text-orange-800' : 'bg-surface-100 border border-ink-200 text-ink-700'} font-black rounded-xl text-xs md:text-sm shadow-sm`}>
+                  <div className={`inline-flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 ${index === 0 ? 'bg-orange-100 border border-orange-200 text-orange-800' : 'bg-surface-100 border border-ink-200 text-ink-700'} font-black rounded-lg text-xs md:text-sm shadow-sm`}>
                     Jarak: {item.jarak_km.toLocaleString("id-ID")} KM
                   </div>
                 </div>

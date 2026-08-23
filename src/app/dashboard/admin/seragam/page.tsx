@@ -236,10 +236,10 @@ export default function RekapSeragamPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-linear-to-br from-primary-700 to-primary-900 rounded-3xl p-5 md:p-8 text-white relative overflow-hidden shadow-xl">
+      <div className="bg-linear-to-br from-primary-700 to-primary-900 rounded-lg p-5 md:p-8 text-white relative overflow-hidden shadow-sm border border-gray-200">
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -mr-20 -mt-20 blur-3xl pointer-events-none"></div>
         <div className="flex items-center gap-5 relative z-10">
-          <div className="w-16 h-16 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center text-primary-100 shadow-inner">
+          <div className="w-16 h-16 bg-white/20  rounded-lg flex items-center justify-center text-primary-100 shadow-inner">
             <Shirt className="w-8 h-8" />
           </div>
           <div>
@@ -253,7 +253,7 @@ export default function RekapSeragamPage() {
         </div>
       </div>
 
-      <div className="bg-white rounded-3xl shadow-sm border border-ink-100 flex flex-col min-h-[500px]">
+      <div className="bg-white rounded-lg shadow-sm border border-ink-100 flex flex-col min-h-[500px]">
         {/* Toolbar */}
         <div className="p-6 border-b border-ink-100 flex flex-col md:flex-row gap-4 justify-between items-center bg-ink-50/50 rounded-t-3xl">
           <div className="relative w-full md:w-80">
@@ -265,12 +265,12 @@ export default function RekapSeragamPage() {
               placeholder="Cari nama atau no pendaftaran..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-11 pr-4 py-3 bg-white border border-ink-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none text-sm font-medium transition-all shadow-sm"
+              className="w-full pl-11 pr-4 py-3 bg-white border border-ink-200 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none text-sm font-medium transition-all shadow-sm"
             />
           </div>
 
           <div className="flex flex-wrap gap-3 w-full md:w-auto items-center">
-            <div className="flex items-center gap-2 px-4 py-3 bg-white rounded-xl border border-ink-200 shadow-sm md:mr-2">
+            <div className="flex items-center gap-2 px-4 py-3 bg-white rounded-lg border border-ink-200 shadow-sm md:mr-2">
               <input 
                 type="checkbox" 
                 id="showAll" 
@@ -285,21 +285,21 @@ export default function RekapSeragamPage() {
             
             <button
               onClick={exportExcel}
-              className="flex-1 md:flex-none flex items-center justify-center gap-2 px-5 py-3 bg-white border border-ink-200 text-ink-700 rounded-xl text-sm font-black hover:bg-ink-50 shadow-sm transition-all"
+              className="flex-1 md:flex-none flex items-center justify-center gap-2 px-5 py-3 bg-white border border-ink-200 text-ink-700 rounded-lg text-sm font-black hover:bg-ink-50 shadow-sm transition-all"
             >
               <Download className="w-4 h-4" />
               Download Excel
             </button>
             <button
               onClick={exportPDF}
-              className="flex-1 md:flex-none flex items-center justify-center gap-2 px-5 py-3 bg-white border border-red-200 text-red-700 rounded-xl text-sm font-black hover:bg-red-50 shadow-sm transition-all"
+              className="flex-1 md:flex-none flex items-center justify-center gap-2 px-5 py-3 bg-white border border-red-200 text-red-700 rounded-lg text-sm font-black hover:bg-red-50 shadow-sm transition-all"
             >
               <FileText className="w-4 h-4" />
               Download PDF
             </button>
             <button
               onClick={handleBroadcast}
-              className="flex-1 md:flex-none flex items-center justify-center gap-2 px-5 py-3 bg-primary-700 text-white rounded-xl text-sm font-black hover:bg-primary-800 shadow-lg shadow-primary-200 transition-all"
+              className="flex-1 md:flex-none flex items-center justify-center gap-2 px-5 py-3 bg-primary-700 text-white rounded-lg text-sm font-black hover:bg-primary-800 shadow-sm border border-gray-200 shadow-primary-200 transition-all"
             >
               <MessageSquare className="w-4 h-4" />
               Ingatkan (WA)
@@ -443,8 +443,8 @@ export default function RekapSeragamPage() {
 
       {/* Edit Modal */}
       {editModalOpen && editingItem && (
-        <div className="fixed inset-0 z-50 flex items-start md:items-center pt-10 md:pt-0 pb-20 md:pb-0 justify-center p-4 bg-ink-950/50 backdrop-blur-sm overflow-y-auto overflow-x-hidden overscroll-contain custom-scrollbar">
-          <div className="bg-white rounded-3xl shadow-xl w-full max-w-md overflow-hidden">
+        <div className="fixed inset-0 z-50 flex items-start md:items-center pt-10 md:pt-0 pb-20 md:pb-0 justify-center p-4 bg-ink-950/50  overflow-y-auto overflow-x-hidden overscroll-contain custom-scrollbar">
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 w-full max-w-md overflow-hidden">
             <div className="p-6 border-b border-ink-100 bg-ink-50/50">
               <h3 className="text-xl font-black text-ink-950">Ubah Ukuran Seragam</h3>
               <p className="text-sm font-medium text-ink-500 mt-1">{editingItem.nama_lengkap}</p>
@@ -456,7 +456,7 @@ export default function RekapSeragamPage() {
                 <select
                   value={formSizes.baju}
                   onChange={(e) => setFormSizes({ ...formSizes, baju: e.target.value })}
-                  className="w-full bg-ink-50 border border-ink-200 px-4 py-3 rounded-xl focus:ring-2 focus:ring-primary-500 outline-none font-bold"
+                  className="w-full bg-ink-50 border border-ink-200 px-4 py-3 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none font-bold"
                 >
                   <option value="">-- Pilih --</option>
                   <option value="S">S</option>
@@ -473,7 +473,7 @@ export default function RekapSeragamPage() {
                 <select
                   value={formSizes.celana}
                   onChange={(e) => setFormSizes({ ...formSizes, celana: e.target.value })}
-                  className="w-full bg-ink-50 border border-ink-200 px-4 py-3 rounded-xl focus:ring-2 focus:ring-primary-500 outline-none font-bold"
+                  className="w-full bg-ink-50 border border-ink-200 px-4 py-3 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none font-bold"
                 >
                   <option value="">-- Pilih --</option>
                   <option value="S">S</option>
@@ -490,7 +490,7 @@ export default function RekapSeragamPage() {
                 <select
                   value={formSizes.almamater}
                   onChange={(e) => setFormSizes({ ...formSizes, almamater: e.target.value })}
-                  className="w-full bg-ink-50 border border-ink-200 px-4 py-3 rounded-xl focus:ring-2 focus:ring-primary-500 outline-none font-bold"
+                  className="w-full bg-ink-50 border border-ink-200 px-4 py-3 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none font-bold"
                 >
                   <option value="">-- Pilih --</option>
                   <option value="S">S</option>
@@ -507,14 +507,14 @@ export default function RekapSeragamPage() {
               <button
                 onClick={() => setEditModalOpen(false)}
                 disabled={savingEdit}
-                className="px-5 py-2.5 rounded-xl text-sm font-black text-ink-600 hover:bg-ink-100 transition-colors"
+                className="px-5 py-2.5 rounded-lg text-sm font-black text-ink-600 hover:bg-ink-100 transition-colors"
               >
                 Batal
               </button>
               <button
                 onClick={handleSaveEdit}
                 disabled={savingEdit}
-                className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-black bg-primary-600 hover:bg-primary-700 text-white shadow-lg shadow-primary-200 transition-all disabled:opacity-50"
+                className="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-black bg-primary-600 hover:bg-primary-700 text-white shadow-sm border border-gray-200 shadow-primary-200 transition-all disabled:opacity-50"
               >
                 {savingEdit && <Loader2 className="w-4 h-4 animate-spin" />}
                 Simpan Perubahan

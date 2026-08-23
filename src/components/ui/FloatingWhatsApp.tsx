@@ -40,7 +40,7 @@ export default function FloatingWhatsApp() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 8, scale: 0.92, transition: { duration: 0.2 } }}
             transition={SPRING}
-            className="relative bg-white rounded-2xl border border-surface-100 px-4 py-3 max-w-[200px] sm:max-w-[220px]"
+            className="relative bg-white rounded-lg border border-surface-100 px-4 py-3 max-w-[200px] sm:max-w-[220px]"
             style={{ boxShadow: "0 8px 32px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06)" }}
           >
             <button onClick={() => setDismissed(true)} className="absolute top-1.5 right-1.5 w-5 h-5 flex items-center justify-center rounded-full text-ink-400 hover:text-ink-700 hover:bg-surface-100 transition-all duration-150" aria-label="Tutup">

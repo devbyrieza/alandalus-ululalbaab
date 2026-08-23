@@ -79,7 +79,7 @@ export default function ContactSection() {
               {CONTACT_INFO.map((item, idx) => (
                 <div
                   key={idx}
-                  className={`bg-white p-6 rounded-2xl border border-primary-100 shadow-premium-sm hover:shadow-premium-md flex flex-col items-start group transition-all duration-400 ${idx === 0 ? "sm:col-span-2" : ""}`}
+                  className={`bg-white p-6 rounded-lg border border-primary-100 shadow-premium-sm hover:shadow-premium-md flex flex-col items-start group transition-all duration-400 ${idx === 0 ? "sm:col-span-2" : ""}`}
                 >
                   <div
                     className={`w-11 h-11 rounded-[12px] flex items-center justify-center mb-4 transition-transform shadow-xs group-hover:scale-105 duration-400 shrink-0 ${

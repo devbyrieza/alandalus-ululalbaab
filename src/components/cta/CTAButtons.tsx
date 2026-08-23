@@ -43,7 +43,7 @@ export function CTAInfoPPDB({
       <Button
         size="lg"
         className={`
-          group shadow-lg hover:shadow-xl font-bold transition-all duration-300 hover:-translate-y-1
+          group shadow-sm border border-gray-200 hover:shadow-sm border border-gray-200 font-bold transition-all duration-300 hover:-translate-y-1
           ${
             variant === "primary"
               ? "bg-gradient-to-r from-[var(--color-primary-700)] to-[var(--color-primary-900)] hover:from-[var(--color-primary-800)] hover:to-[var(--color-primary-950)] text-white"
@@ -88,7 +88,7 @@ export function CTASyaratJadwal({
       <Button
         size="lg"
         className={`
-          group shadow-lg hover:shadow-xl font-bold transition-all duration-300 hover:-translate-y-1
+          group shadow-sm border border-gray-200 hover:shadow-sm border border-gray-200 font-bold transition-all duration-300 hover:-translate-y-1
           bg-gradient-to-r from-[var(--color-primary-600)] to-[var(--color-primary-700)] 
           hover:from-[var(--color-primary-700)] hover:to-[var(--color-primary-800)] text-white
           ${size === "sm" ? "px-6 py-2.5 text-sm" : "px-8 py-4 text-base"}
@@ -136,8 +136,8 @@ export function CTAKonsultasi({
         group font-semibold transition-all duration-300 hover:-translate-y-1
         ${
           variant === "outline"
-            ? "border-2 border-[var(--color-primary-600)] text-[var(--color-primary-700)] hover:bg-[var(--color-primary-50)] shadow-md hover:shadow-lg"
-            : "bg-[var(--color-primary-50)] text-[var(--color-primary-700)] hover:bg-[var(--color-primary-100)] shadow-sm hover:shadow-md"
+            ? "border-2 border-[var(--color-primary-600)] text-[var(--color-primary-700)] hover:bg-[var(--color-primary-50)] shadow-sm border border-gray-200 hover:shadow-sm border border-gray-200"
+            : "bg-[var(--color-primary-50)] text-[var(--color-primary-700)] hover:bg-[var(--color-primary-100)] shadow-sm hover:shadow-sm border border-gray-200"
         }
         ${size === "sm" ? "px-6 py-2.5 text-sm" : "px-8 py-4 text-base"}
         ${className}
@@ -190,7 +190,7 @@ export function CTADaftarSekarang({
       <Button
         size="lg"
         className={`
-          group relative shadow-xl hover:shadow-2xl font-bold transition-all duration-300 hover:-translate-y-1
+          group relative shadow-sm border border-gray-200 hover:shadow-sm border border-gray-200 font-bold transition-all duration-300 hover:-translate-y-1
           bg-gradient-to-r from-[var(--color-secondary-500)] to-[var(--color-secondary-600)] 
           hover:from-[var(--color-secondary-600)] hover:to-[var(--color-secondary-700)] 
           text-white animate-pulse hover:animate-none
@@ -225,7 +225,7 @@ export function CTADaftarSekarang({
  */
 export function CTAStickyDaftar() {
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-lg border-t border-[var(--color-secondary-200)] shadow-2xl p-4 animate-fadeInUp">
+    <div className="fixed bottom-0 left-0 right-0 z-40 bg-white/95  border-t border-[var(--color-secondary-200)] shadow-sm border border-gray-200 p-4 animate-fadeInUp">
       <div className="max-w-7xl mx-auto flex items-center justify-between gap-4 flex-wrap">
         <div className="flex-1">
           <p className="text-sm font-bold text-[var(--color-text-900)] mb-1">
@@ -242,7 +242,7 @@ export function CTAStickyDaftar() {
 
         <Button
           size="lg"
-          className="shadow-xl hover:shadow-2xl font-bold transition-all duration-300 hover:scale-105 bg-gradient-amber text-white"
+          className="shadow-sm border border-gray-200 hover:shadow-sm border border-gray-200 font-bold transition-all duration-300 hover:scale-105 bg-gradient-amber text-white"
           asChild
         >
           <Link href="/daftar" className="flex items-center gap-2">
@@ -266,7 +266,7 @@ export function NavbarCTAPPDB() {
   return (
     <Button
       size="sm"
-      className="shadow-md hover:shadow-xl shadow-secondary text-white font-semibold transition-all duration-300 hover:-translate-y-1 bg-gradient-amber"
+      className="shadow-sm border border-gray-200 hover:shadow-sm border border-gray-200 shadow-secondary text-white font-semibold transition-all duration-300 hover:-translate-y-1 bg-gradient-amber"
       asChild
     >
       <Link href="/ppdb" className="flex items-center gap-2">
@@ -285,7 +285,7 @@ export function NavbarCTALogin() {
     <Button
       variant="outline"
       size="sm"
-      className="font-semibold transition-all duration-300 hover:shadow-md shadow-sm"
+      className="font-semibold transition-all duration-300 hover:shadow-sm border border-gray-200 shadow-sm"
       style={{
         borderColor: "var(--color-primary-700)",
         color: "var(--color-primary-700)",
@@ -311,7 +311,7 @@ export function MobileCTAPPDB() {
   return (
     <div className="space-y-3">
       {/* Urgency Banner */}
-      <div className="flex items-start gap-3 p-4 rounded-xl bg-gradient-to-r from-[var(--color-secondary-50)] to-[var(--color-secondary-100)] border border-[var(--color-secondary-200)]">
+      <div className="flex items-start gap-3 p-4 rounded-lg bg-gradient-to-r from-[var(--color-secondary-50)] to-[var(--color-secondary-100)] border border-[var(--color-secondary-200)]">
         <Clock className="w-5 h-5 text-[var(--color-secondary-600)] flex-shrink-0 mt-0.5" />
         <div>
           <p className="text-sm font-bold text-[var(--color-text-900)] mb-1">
@@ -330,7 +330,7 @@ export function MobileCTAPPDB() {
       {/* CTA Button */}
       <Button
         size="sm"
-        className="w-full text-white font-bold shadow-lg hover:shadow-xl shadow-secondary bg-gradient-amber"
+        className="w-full text-white font-bold shadow-sm border border-gray-200 hover:shadow-sm border border-gray-200 shadow-secondary bg-gradient-amber"
         asChild
       >
         <Link href="/ppdb" className="flex items-center justify-center gap-2">

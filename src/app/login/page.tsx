@@ -336,7 +336,7 @@ export default function LoginPage() {
           className="text-center mb-10"
         >
           <Link href="/">
-            <div className="app-card inline-flex items-center justify-center w-24 h-24 bg-white/10 backdrop-blur-md rounded-[2rem] shadow-2xl border border-white/20 mb-6 hover:scale-110 hover:bg-white/20 transition-all duration-300 group overflow-hidden">
+            <div className="app-card inline-flex items-center justify-center w-24 h-24 bg-white/10  rounded-[2rem] shadow-sm border border-gray-200 border border-white/20 mb-6 hover:scale-110 hover:bg-white/20 transition-all duration-300 group overflow-hidden">
               <img
                 src={BRANDING.logoPath}
                 alt={"Logo " + BRANDING.schoolName}
@@ -344,9 +344,9 @@ export default function LoginPage() {
               />
             </div>
           </Link>
-          <h1 className="text-3xl md:text-5xl font-display font-black text-white mb-2 tracking-tight drop-shadow-md">
+          <h1 className="text-3xl md:text-5xl font-display font-black text-white mb-2 tracking-tight drop-shadow-sm border border-gray-200">
             Portal{" "}
-            <span className="text-secondary-400 font-black drop-shadow-md">
+            <span className="text-secondary-400 font-black drop-shadow-sm border border-gray-200">
               {BRANDING.schoolShortName}
             </span>
           </h1>
@@ -360,7 +360,7 @@ export default function LoginPage() {
           initial={{ opacity: 0, scale: 0.95, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ delay: 0.1, duration: 0.5, ease: "easeOut" }}
-          className="w-full max-w-[480px] bg-white/90 backdrop-blur-2xl rounded-[2.5rem] md:rounded-[3rem] shadow-premium-2xl border border-white p-6 md:p-12 relative overflow-hidden"
+          className="w-full max-w-[480px] bg-white backdrop-blur-2xl rounded-[2.5rem] md:rounded-[3rem] shadow-premium-2xl border border-white p-6 md:p-12 relative overflow-hidden"
         >
           {/* Subtle inside glow */}
           <div className="absolute top-0 right-0 w-64 h-64 bg-secondary-300/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
@@ -372,7 +372,7 @@ export default function LoginPage() {
               <motion.div
                 layoutId="auth-tab"
                 transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                className={`absolute top-2 bottom-2 rounded-2xl bg-white shadow-sm border border-slate-200/50 ${
+                className={`absolute top-2 bottom-2 rounded-lg bg-white shadow-sm border border-slate-200/50 ${
                   activeTab === "pendaftar"
                     ? "left-2 w-[calc(50%-8px)]"
                     : "left-[calc(50%+4px)] w-[calc(50%-8px)]"
@@ -384,7 +384,7 @@ export default function LoginPage() {
                   setActiveTab("pendaftar");
                   setError("");
                 }}
-                className={`flex-1 relative z-10 py-3.5 text-xs font-black uppercase tracking-widest text-center rounded-2xl transition-colors duration-300 ${activeTab === "pendaftar" ? "text-primary-700" : "text-ink-600 hover:text-ink-800"}`}
+                className={`flex-1 relative z-10 py-3.5 text-xs font-black uppercase tracking-widest text-center rounded-lg transition-colors duration-300 ${activeTab === "pendaftar" ? "text-primary-700" : "text-ink-600 hover:text-ink-800"}`}
               >
                 Pendaftar
               </button>
@@ -393,7 +393,7 @@ export default function LoginPage() {
                   setActiveTab("admin");
                   setError("");
                 }}
-                className={`flex-1 relative z-10 py-3.5 text-xs font-black uppercase tracking-widest text-center rounded-2xl transition-colors duration-300 ${activeTab === "admin" ? "text-primary-700" : "text-ink-600 hover:text-ink-800"}`}
+                className={`flex-1 relative z-10 py-3.5 text-xs font-black uppercase tracking-widest text-center rounded-lg transition-colors duration-300 ${activeTab === "admin" ? "text-primary-700" : "text-ink-600 hover:text-ink-800"}`}
               >
                 Portal Staf
               </button>
@@ -407,9 +407,9 @@ export default function LoginPage() {
                 initial={{ opacity: 0, height: 0, marginBottom: 0 }}
                 animate={{ opacity: 1, height: "auto", marginBottom: 32 }}
                 exit={{ opacity: 0, height: 0, marginBottom: 0 }}
-                className="p-5 bg-red-50 border border-red-100 rounded-3xl flex items-start gap-4 overflow-hidden"
+                className="p-5 bg-red-50 border border-red-100 rounded-lg flex items-start gap-4 overflow-hidden"
               >
-                <div className="w-10 h-10 bg-red-500 rounded-2xl flex items-center justify-center text-white shrink-0 shadow-premium-xs">
+                <div className="w-10 h-10 bg-red-500 rounded-lg flex items-center justify-center text-white shrink-0 shadow-premium-xs">
                   <AlertCircle className="w-6 h-6" />
                 </div>
                 <p className="text-sm text-red-700 font-bold leading-tight mt-0.5">
@@ -432,7 +432,7 @@ export default function LoginPage() {
                   className="space-y-5"
                 >
                   <div className="text-center mb-6">
-                    <div className="w-14 h-14 bg-secondary-100 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-secondary-200">
+                    <div className="w-14 h-14 bg-secondary-100 rounded-lg flex items-center justify-center mx-auto mb-4 border border-secondary-200">
                       <Layers className="w-7 h-7 text-primary-700" />
                     </div>
                     <h2 className="text-xl font-black text-ink-950">
@@ -460,9 +460,9 @@ export default function LoginPage() {
                           whileTap={{ scale: 0.98 }}
                           onClick={() => handleSelectRole(role)}
                           disabled={selectingRole}
-                          className={`w-full p-4 rounded-2xl bg-gradient-to-r ${info.color} border text-left flex items-center gap-4 transition-all hover:shadow-md disabled:opacity-60`}
+                          className={`w-full p-4 rounded-lg bg-gradient-to-r ${info.color} border text-left flex items-center gap-4 transition-all hover:shadow-sm border border-gray-200 disabled:opacity-60`}
                         >
-                          <div className="w-12 h-12 rounded-2xl bg-white/80 flex items-center justify-center text-primary-700 shrink-0 shadow-xs border border-white">
+                          <div className="w-12 h-12 rounded-lg bg-white flex items-center justify-center text-primary-700 shrink-0 shadow-xs border border-white">
                             <RoleIcon className="w-6 h-6" />
                           </div>
                           <div className="flex-1">
@@ -512,7 +512,7 @@ export default function LoginPage() {
                         setNomorPendaftaran(e.target.value.toUpperCase())
                       }
                       placeholder="Contoh: MTI2600001"
-                      className="w-full px-5 py-3 md:px-8 md:py-5 pl-14 md:pl-16 rounded-xl md:rounded-2xl bg-white/50 backdrop-blur-sm border border-white/50 focus:bg-white/90 focus:border-secondary-400 focus:ring-4 focus:ring-secondary-100 transition-all font-bold text-ink-950 uppercase placeholder:normal-case placeholder:font-medium placeholder:text-ink-400 text-sm md:text-base shadow-inner"
+                      className="w-full px-5 py-3 md:px-8 md:py-5 pl-14 md:pl-16 rounded-lg md:rounded-lg bg-white/50  border border-white/50 focus:bg-white focus:border-secondary-400 focus:ring-4 focus:ring-secondary-100 transition-all font-bold text-ink-950 uppercase placeholder:normal-case placeholder:font-medium placeholder:text-ink-400 text-sm md:text-base shadow-inner"
                       disabled={isLoading}
                     />
                   </AuthInput>
@@ -527,7 +527,7 @@ export default function LoginPage() {
                         setNikPendaftar(e.target.value.replace(/\D/g, ""))
                       }
                       placeholder="16 Digit NIK Sesuai KK"
-                      className="w-full px-5 py-3 md:px-8 md:py-5 pl-14 md:pl-16 rounded-xl md:rounded-2xl bg-white/50 backdrop-blur-sm border border-white/50 focus:bg-white/90 focus:border-secondary-400 focus:ring-4 focus:ring-secondary-100 transition-all font-bold text-ink-950 placeholder:font-medium placeholder:text-ink-400 text-sm md:text-base shadow-inner"
+                      className="w-full px-5 py-3 md:px-8 md:py-5 pl-14 md:pl-16 rounded-lg md:rounded-lg bg-white/50  border border-white/50 focus:bg-white focus:border-secondary-400 focus:ring-4 focus:ring-secondary-100 transition-all font-bold text-ink-950 placeholder:font-medium placeholder:text-ink-400 text-sm md:text-base shadow-inner"
                       disabled={isLoading}
                     />
                   </AuthInput>
@@ -537,7 +537,7 @@ export default function LoginPage() {
                     whileTap={{ scale: 0.98 }}
                     type="submit"
                     disabled={isLoading}
-                    className="w-full py-4 md:py-5 rounded-[1.5rem] bg-gradient-to-r from-secondary-400 to-secondary-600 text-primary-950 font-black text-lg md:text-xl shadow-xl shadow-secondary-400/20 border border-secondary-300 transition-all flex items-center justify-center gap-3 disabled:opacity-50"
+                    className="w-full py-4 md:py-5 rounded-[1.5rem] bg-gradient-to-r from-secondary-400 to-secondary-600 text-primary-950 font-black text-lg md:text-xl shadow-sm border border-gray-200 shadow-secondary-400/20 border border-secondary-300 transition-all flex items-center justify-center gap-3 disabled:opacity-50"
                   >
                     {isLoading ? (
                       <Loader2 className="w-6 h-6 animate-spin" />
@@ -555,7 +555,7 @@ export default function LoginPage() {
                     </p>
                     <Link
                       href="/daftar"
-                      className="inline-flex items-center gap-2 px-6 md:px-10 py-3 rounded-xl bg-white/50 backdrop-blur-sm text-primary-800 font-black text-sm border border-primary-100 hover:bg-white hover:shadow-md hover:-translate-y-1 transition-all"
+                      className="inline-flex items-center gap-2 px-6 md:px-10 py-3 rounded-lg bg-white/50  text-primary-800 font-black text-sm border border-primary-100 hover:bg-white hover:shadow-sm border border-gray-200 hover:-translate-y-1 transition-all"
                     >
                       Daftar Baru Di Sini
                     </Link>
@@ -576,7 +576,7 @@ export default function LoginPage() {
                       value={emailAdmin}
                       onChange={(e) => setEmailAdmin(e.target.value)}
                       placeholder="Username / Email / No. WA"
-                      className="w-full px-5 py-3 md:px-8 md:py-5 pl-14 md:pl-16 rounded-xl md:rounded-2xl bg-white/50 backdrop-blur-sm border border-white/50 focus:bg-white/90 focus:border-secondary-400 focus:ring-4 focus:ring-secondary-100 transition-all font-bold text-ink-950 placeholder:font-medium placeholder:text-ink-400 text-sm md:text-base shadow-inner"
+                      className="w-full px-5 py-3 md:px-8 md:py-5 pl-14 md:pl-16 rounded-lg md:rounded-lg bg-white/50  border border-white/50 focus:bg-white focus:border-secondary-400 focus:ring-4 focus:ring-secondary-100 transition-all font-bold text-ink-950 placeholder:font-medium placeholder:text-ink-400 text-sm md:text-base shadow-inner"
                       disabled={isLoading}
                     />
                   </AuthInput>
@@ -603,7 +603,7 @@ export default function LoginPage() {
                       value={passwordAdmin}
                       onChange={(e) => setPasswordAdmin(e.target.value)}
                       placeholder="••••••••"
-                      className="w-full px-5 py-3 md:px-8 md:py-5 pl-14 md:pl-16 pr-12 md:pr-16 rounded-xl md:rounded-2xl bg-white/50 backdrop-blur-sm border border-white/50 focus:bg-white/90 focus:border-secondary-400 focus:ring-4 focus:ring-secondary-100 transition-all font-bold text-ink-950 placeholder:font-medium placeholder:text-ink-400 text-sm md:text-base shadow-inner"
+                      className="w-full px-5 py-3 md:px-8 md:py-5 pl-14 md:pl-16 pr-12 md:pr-16 rounded-lg md:rounded-lg bg-white/50  border border-white/50 focus:bg-white focus:border-secondary-400 focus:ring-4 focus:ring-secondary-100 transition-all font-bold text-ink-950 placeholder:font-medium placeholder:text-ink-400 text-sm md:text-base shadow-inner"
                       disabled={isLoading}
                     />
                   </AuthInput>
@@ -613,7 +613,7 @@ export default function LoginPage() {
                     whileTap={{ scale: 0.98 }}
                     type="submit"
                     disabled={isLoading}
-                    className="w-full py-4 md:py-5 rounded-[1.5rem] bg-gradient-to-r from-primary-700 to-primary-900 text-white font-black text-lg md:text-xl shadow-xl shadow-primary-900/20 border border-primary-600 transition-all flex items-center justify-center gap-3 disabled:opacity-50"
+                    className="w-full py-4 md:py-5 rounded-[1.5rem] bg-gradient-to-r from-primary-700 to-primary-900 text-white font-black text-lg md:text-xl shadow-sm border border-gray-200 shadow-primary-900/20 border border-primary-600 transition-all flex items-center justify-center gap-3 disabled:opacity-50"
                   >
                     {isLoading ? (
                       <Loader2 className="w-6 h-6 animate-spin" />
@@ -625,8 +625,8 @@ export default function LoginPage() {
                     )}
                   </motion.button>
 
-                  <div className="p-6 bg-secondary-50/50 rounded-2xl border border-secondary-100 flex items-start gap-4">
-                    <div className="w-8 h-8 rounded-xl bg-secondary-100 flex items-center justify-center text-primary-700 shrink-0">
+                  <div className="p-6 bg-secondary-50/50 rounded-lg border border-secondary-100 flex items-start gap-4">
+                    <div className="w-8 h-8 rounded-lg bg-secondary-100 flex items-center justify-center text-primary-700 shrink-0">
                       <Sparkles className="w-4 h-4" />
                     </div>
                     <p className="text-xs text-ink-600 font-bold leading-relaxed mt-0.5">

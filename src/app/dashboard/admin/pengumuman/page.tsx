@@ -136,17 +136,17 @@ export default function PengumumanPage() {
     <div className="space-y-6">
       {/* Header Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-stone-100">
+        <div className="bg-white p-6 rounded-lg shadow-sm border border-stone-100">
           <p className="text-stone-500 text-sm font-medium">Kandidat Tampil</p>
           <h3 className="text-2xl font-bold text-stone-800">{stats.total}</h3>
         </div>
-        <div className="bg-primary-50 p-6 rounded-xl shadow-sm border border-primary-100">
+        <div className="bg-primary-50 p-6 rounded-lg shadow-sm border border-primary-100">
           <p className="text-primary-600 text-sm font-medium">
             Proses Seleksi (Belum Selesai)
           </p>
           <h3 className="text-2xl font-bold text-primary-700">{stats.ready}</h3>
         </div>
-        <div className="bg-green-50 p-6 rounded-xl shadow-sm border border-green-100">
+        <div className="bg-green-50 p-6 rounded-lg shadow-sm border border-green-100">
           <p className="text-green-600 text-sm font-medium">Sudah Lulus</p>
           <h3 className="text-2xl font-bold text-green-700">
             {stats.accepted}
@@ -155,7 +155,7 @@ export default function PengumumanPage() {
       </div>
 
       {/* Filters & Actions */}
-      <div className="bg-white p-4 rounded-xl shadow-sm border border-stone-100 flex flex-col md:flex-row justify-between items-center gap-4">
+      <div className="bg-white p-4 rounded-lg shadow-sm border border-stone-100 flex flex-col md:flex-row justify-between items-center gap-4">
         <div className="flex items-center gap-4 w-full md:w-auto">
           <div className="flex items-center gap-2 px-3 py-2 bg-stone-50 rounded-lg border border-stone-200">
             <Filter className="w-4 h-4 text-stone-500" />
@@ -189,7 +189,7 @@ export default function PengumumanPage() {
         <button
           onClick={handlePublish}
           disabled={selectedIds.length === 0 || isPublishing}
-          className="flex items-center gap-2 px-6 py-2.5 bg-green-600 hover:bg-green-700 disabled:bg-stone-300 text-white rounded-xl font-bold transition-all shadow-lg shadow-green-200 disabled:shadow-none"
+          className="flex items-center gap-2 px-6 py-2.5 bg-green-600 hover:bg-green-700 disabled:bg-stone-300 text-white rounded-lg font-bold transition-all shadow-sm border border-gray-200 shadow-green-200 disabled:shadow-none"
         >
           {isPublishing ? (
             "Memproses..."
@@ -203,7 +203,7 @@ export default function PengumumanPage() {
       </div>
 
       {/* Table & Mobile View */}
-      <div className="bg-white rounded-xl shadow-lg border border-stone-200 overflow-hidden">
+      <div className="bg-white rounded-lg shadow-sm border border-gray-200 border border-stone-200 overflow-hidden">
         {/* Mobile View: Cards */}
         <div className="md:hidden divide-y divide-stone-100 select-none">
           {candidates.length === 0 ? (

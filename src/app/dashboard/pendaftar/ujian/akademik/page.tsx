@@ -177,7 +177,7 @@ export default function AkademikTestPage() {
   if (alreadyDone) {
     return (
       <div className="max-w-lg mx-auto p-5 md:p-8 text-center mt-10">
-        <div className="bg-white rounded-2xl shadow-lg border p-6 md:p-10">
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 border p-6 md:p-10">
           <CheckCircle className="w-16 h-16 text-emerald-500 mx-auto mb-4" />
           <h2 className="text-xl font-bold mb-2">Tes Sudah Dikerjakan</h2>
           <p className="text-stone-600 mb-6">
@@ -187,7 +187,7 @@ export default function AkademikTestPage() {
             onClick={() =>
               router.push("/dashboard/pendaftar?tab=undangan-seleksi")
             }
-            className="px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white font-bold rounded-xl transition-colors"
+            className="px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white font-bold rounded-lg transition-colors"
           >
             Kembali ke Jadwal Seleksi
           </button>
@@ -199,7 +199,7 @@ export default function AkademikTestPage() {
   if (isLocked) {
     return (
       <div className="max-w-lg mx-auto p-5 md:p-8 text-center mt-10">
-        <div className="bg-white rounded-[2rem] shadow-xl border p-6 md:p-10">
+        <div className="bg-white rounded-[2rem] shadow-sm border border-gray-200 border p-6 md:p-10">
           <div className="w-20 h-20 bg-secondary-100 rounded-full flex items-center justify-center mx-auto mb-6">
             <AlertCircle className="w-10 h-10 text-secondary-600" />
           </div>
@@ -212,7 +212,7 @@ export default function AkademikTestPage() {
           </p>
           <button
             onClick={() => router.push("/dashboard/pendaftar")}
-            className="w-full px-6 py-4 bg-primary-700 hover:bg-primary-800 text-white font-black rounded-xl transition-all shadow-md uppercase tracking-widest text-sm"
+            className="w-full px-6 py-4 bg-primary-700 hover:bg-primary-800 text-white font-black rounded-lg transition-all shadow-sm border border-gray-200 uppercase tracking-widest text-sm"
           >
             Kembali ke Dashboard
           </button>
@@ -225,7 +225,7 @@ export default function AkademikTestPage() {
     return (
       <div className="max-w-3xl mx-auto p-4 md:p-6">
         {pendaftarId && (
-          <div className="mb-4 p-4 bg-amber-100 border border-amber-300 rounded-xl text-amber-900 flex items-center gap-3">
+          <div className="mb-4 p-4 bg-amber-100 border border-amber-300 rounded-lg text-amber-900 flex items-center gap-3">
             <AlertCircle className="w-5 h-5 flex-shrink-0" />
             <p className="text-sm font-bold">MODE ADMIN: Anda sedang mengakses/mengisikan ujian atas nama santri lain.</p>
           </div>
@@ -237,7 +237,7 @@ export default function AkademikTestPage() {
           <ArrowLeft className="w-4 h-4" /> Kembali
         </button>
 
-        <div className="bg-gradient-to-r from-primary-600 to-primary-800 rounded-[2rem] p-5 md:p-8 mb-8 text-white relative overflow-hidden shadow-lg border border-primary-500">
+        <div className="bg-gradient-to-r from-primary-600 to-primary-800 rounded-[2rem] p-5 md:p-8 mb-8 text-white relative overflow-hidden shadow-sm border border-gray-200 border border-primary-500">
           <div className="absolute top-0 right-0 p-5 md:p-8 opacity-10">
             <FileText className="w-32 h-32" />
           </div>
@@ -252,9 +252,9 @@ export default function AkademikTestPage() {
           </div>
         </div>
 
-        <div className="bg-white rounded-2xl shadow-sm border p-5 md:p-8">
+        <div className="bg-white rounded-lg shadow-sm border p-5 md:p-8">
           <div className="space-y-4 text-stone-700">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-stone-50 p-4 rounded-xl text-sm">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-stone-50 p-4 rounded-lg text-sm">
               <div>
                 <span className="text-stone-500">Jenjang:</span>{" "}
                 <strong>{jenjang}</strong>
@@ -272,7 +272,7 @@ export default function AkademikTestPage() {
                 <strong>PAI, B.Indo, IPA, Mat</strong>
               </div>
             </div>
-            <div className="bg-secondary-50 p-4 rounded-xl border border-secondary-200">
+            <div className="bg-secondary-50 p-4 rounded-lg border border-secondary-200">
               <h4 className="font-bold text-secondary-800 mb-2">Perhatian</h4>
               <ul className="text-sm text-secondary-700 space-y-1">
                 <li>â€¢ Pastikan koneksi internet stabil</li>
@@ -281,7 +281,7 @@ export default function AkademikTestPage() {
                 <li>â€¢ Jawaban otomatis dikirim jika waktu habis</li>
               </ul>
             </div>
-            <div className="bg-primary-50 border border-primary-200 rounded-xl p-6">
+            <div className="bg-primary-50 border border-primary-200 rounded-lg p-6">
               <div className="flex gap-5">
                 <div className="w-14 h-14 rounded-full bg-white flex items-center justify-center border border-primary-100 flex-shrink-0 shadow-sm">
                   <AlertCircle className="w-7 h-7 text-primary-600" />
@@ -302,7 +302,7 @@ export default function AkademikTestPage() {
             </div>
             <button
               onClick={handleStart}
-              className="w-full py-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl transition-colors text-lg"
+              className="w-full py-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg transition-colors text-lg"
             >
               Mulai Tes
             </button>
@@ -316,13 +316,13 @@ export default function AkademikTestPage() {
     <div className="max-w-4xl mx-auto p-4 md:p-6 pb-32">
       {/* Floating Timer */}
       <div
-        className={`fixed top-20 right-4 md:right-10 bg-white border shadow-lg rounded-full px-4 py-2 z-50 flex items-center gap-2 font-bold font-mono text-xl ${timeLeft <= 300 ? "text-red-600 animate-pulse" : "text-indigo-600"}`}
+        className={`fixed top-20 right-4 md:right-10 bg-white border shadow-sm border border-gray-200 rounded-full px-4 py-2 z-50 flex items-center gap-2 font-bold font-mono text-xl ${timeLeft <= 300 ? "text-red-600 animate-pulse" : "text-indigo-600"}`}
       >
         <Timer className="w-5 h-5" /> {formatTime(timeLeft)}
       </div>
 
       <div className="mt-2 space-y-6">
-        <div className="bg-gradient-to-r from-indigo-600 to-primary-700 rounded-xl p-6">
+        <div className="bg-gradient-to-r from-indigo-600 to-primary-700 rounded-lg p-6">
           <h2 className="text-xl font-bold text-white">
             Seleksi Akademik â€” {jenjang}
           </h2>
@@ -332,7 +332,7 @@ export default function AkademikTestPage() {
         </div>
 
         {questions.map((q) => (
-          <div key={q.id} className="bg-white rounded-xl shadow-sm border p-6">
+          <div key={q.id} className="bg-white rounded-lg shadow-sm border p-6">
             <div className="font-medium mb-4 text-stone-900 whitespace-pre-line">
               <span className="font-bold mr-2 text-stone-400">{q.id}.</span>{" "}
               {q.text}
@@ -365,7 +365,7 @@ export default function AkademikTestPage() {
           <button
             onClick={() => handleSubmit(false)}
             disabled={loading}
-            className="w-full sm:w-auto bg-red-600 hover:bg-red-700 disabled:bg-stone-300 text-white font-bold rounded-xl px-5 md:px-8 py-4 text-lg transition-colors flex items-center justify-center gap-2"
+            className="w-full sm:w-auto bg-red-600 hover:bg-red-700 disabled:bg-stone-300 text-white font-bold rounded-lg px-5 md:px-8 py-4 text-lg transition-colors flex items-center justify-center gap-2"
           >
             {loading ? (
               <>

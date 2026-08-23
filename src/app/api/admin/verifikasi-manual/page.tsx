@@ -123,7 +123,7 @@ export default function VerifikasiManualPage() {
     <div className="min-h-screen bg-gray-50 p-4">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
-        <div className="bg-white rounded-xl shadow p-6 mb-6">
+        <div className="bg-white rounded-lg shadow p-6 mb-6">
           <div className="flex justify-between items-center">
             <div>
               <h1 className="text-2xl font-bold">Verifikasi Manual WhatsApp</h1>
@@ -146,7 +146,7 @@ export default function VerifikasiManualPage() {
         {/* Daftar Pending */}
         <div className="space-y-4">
           {pending.length === 0 ? (
-            <div className="bg-white rounded-xl shadow p-5 md:p-8 text-center">
+            <div className="bg-white rounded-lg shadow p-5 md:p-8 text-center">
               <CheckCircle className="w-12 h-12 text-green-500 mx-auto mb-4" />
               <h3 className="text-xl font-semibold">
                 Tidak ada verifikasi pending
@@ -154,7 +154,7 @@ export default function VerifikasiManualPage() {
             </div>
           ) : (
             pending.map((item) => (
-              <div key={item.id} className="bg-white rounded-xl shadow p-6">
+              <div key={item.id} className="bg-white rounded-lg shadow p-6">
                 <div className="flex flex-col md:flex-row justify-between gap-4">
                   {/* Info Pendaftar */}
                   <div className="flex-1">

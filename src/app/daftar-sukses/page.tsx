@@ -47,13 +47,13 @@ function DaftarSuksesContent() {
   };
 
   return (
-    <div className="app-card max-w-lg w-full bg-white rounded-[2.5rem] shadow-lg border border-primary-200 p-5 md:p-8 relative overflow-hidden">
+    <div className="app-card max-w-lg w-full bg-white rounded-[2.5rem] shadow-sm border border-gray-200 border border-primary-200 p-5 md:p-8 relative overflow-hidden">
       {/* Background Blurs */}
       <div className="absolute -top-32 -right-32 w-64 h-64 bg-primary-50 rounded-full blur-3xl pointer-events-none" />
 
       {/* Success Icon */}
       <div className="text-center relative z-10 mb-6 mt-4">
-        <div className="relative inline-flex items-center justify-center w-24 h-24 bg-primary-50 rounded-3xl border border-primary-200">
+        <div className="relative inline-flex items-center justify-center w-24 h-24 bg-primary-50 rounded-lg border border-primary-200">
           <CheckCircle2 className="w-14 h-14 text-primary-600 animate-bounce" />
           <Sparkles className="w-8 h-8 text-primary-200 absolute -top-3 -right-3 animate-pulse" />
         </div>
@@ -81,7 +81,7 @@ function DaftarSuksesContent() {
         </p>
 
         {/* Nomor Pendaftaran */}
-        <div className="bg-white rounded-xl border border-primary-200 p-4 mb-3 shadow-sm app-card">
+        <div className="bg-white rounded-lg border border-primary-200 p-4 mb-3 shadow-sm app-card">
           <p className="text-xs font-bold text-ink-500 mb-2 flex items-center gap-1.5 uppercase tracking-wider">
             <CreditCard className="w-3.5 h-3.5 text-primary-600" />
             Nomor Pendaftaran
@@ -92,7 +92,7 @@ function DaftarSuksesContent() {
             </p>
             <button
               onClick={() => handleCopy(nomor_pendaftaran, "nomor")}
-              className="p-2.5 bg-primary-50 hover:bg-primary-200 border border-primary-200 rounded-xl transition-colors shrink-0 app-card hover:scale-105 active:scale-95"
+              className="p-2.5 bg-primary-50 hover:bg-primary-200 border border-primary-200 rounded-lg transition-colors shrink-0 app-card hover:scale-105 active:scale-95"
               title="Salin nomor pendaftaran"
             >
               {copiedField === "nomor" ? (
@@ -105,7 +105,7 @@ function DaftarSuksesContent() {
         </div>
 
         {/* NIK Santri */}
-        <div className="bg-white rounded-xl border border-primary-200 p-4 mb-3 shadow-sm app-card">
+        <div className="bg-white rounded-lg border border-primary-200 p-4 mb-3 shadow-sm app-card">
           <p className="text-xs font-bold text-ink-500 mb-2 flex items-center gap-1.5 uppercase tracking-wider">
             <IdCard className="w-3.5 h-3.5 text-primary-600" />
             NIK Santri (Password)
@@ -114,7 +114,7 @@ function DaftarSuksesContent() {
             <p className="text-lg font-black text-ink-900 break-all">{nik}</p>
             <button
               onClick={() => handleCopy(nik, "nik")}
-              className="p-2.5 bg-primary-50 hover:bg-primary-200 border border-primary-200 rounded-xl transition-colors shrink-0 app-card hover:scale-105 active:scale-95"
+              className="p-2.5 bg-primary-50 hover:bg-primary-200 border border-primary-200 rounded-lg transition-colors shrink-0 app-card hover:scale-105 active:scale-95"
               title="Salin NIK"
             >
               {copiedField === "nik" ? (
@@ -175,7 +175,7 @@ function DaftarSuksesContent() {
       <div className="relative z-10 w-full mb-6">
         <button
           onClick={() => router.push("/login")}
-          className="w-full py-4 md:py-5 rounded-pill bg-primary-600 text-white font-black text-lg hover:bg-primary-700 shadow-xl shadow-primary-200 transition-all flex items-center justify-center gap-2.5 active:scale-95"
+          className="w-full py-4 md:py-5 rounded-pill bg-primary-600 text-white font-black text-lg hover:bg-primary-700 shadow-sm border border-gray-200 shadow-primary-200 transition-all flex items-center justify-center gap-2.5 active:scale-95"
         >
           Lanjut ke Halaman Login
           <ArrowRight className="w-5 h-5" />
@@ -202,7 +202,7 @@ function DaftarSuksesContent() {
 // Loading fallback
 function LoadingFallback() {
   return (
-    <div className="app-card max-w-lg w-full bg-white rounded-[2.5rem] shadow-lg border border-primary-200 p-5 md:p-8">
+    <div className="app-card max-w-lg w-full bg-white rounded-[2.5rem] shadow-sm border border-gray-200 border border-primary-200 p-5 md:p-8">
       <div className="flex flex-col items-center justify-center py-12">
         <Loader2 className="w-12 h-12 text-primary-600 animate-spin mb-4" />
         <p className="text-ink-600 font-medium">Memuat halaman...</p>

@@ -43,10 +43,10 @@ function MemberCard({
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: true, margin: "-40px" }}
       transition={{ delay: index * 0.07, duration: 0.6, ease: EASE }}
-      className="group flex items-center gap-5 p-4 md:p-5 bg-white rounded-2xl border border-primary-100 shadow-premium-sm hover:shadow-premium-md hover:border-primary-300 transition-all duration-400"
+      className="group flex items-center gap-5 p-4 md:p-5 bg-white rounded-lg border border-primary-100 shadow-premium-sm hover:shadow-premium-md hover:border-primary-300 transition-all duration-400"
     >
       {/* Avatar */}
-      <div className="relative w-[72px] h-[72px] md:w-20 md:h-20 rounded-xl overflow-hidden shrink-0 bg-primary-50 border border-primary-100 shadow-xs transition-transform duration-500 group-hover:scale-[1.04]">
+      <div className="relative w-[72px] h-[72px] md:w-20 md:h-20 rounded-lg overflow-hidden shrink-0 bg-primary-50 border border-primary-100 shadow-xs transition-transform duration-500 group-hover:scale-[1.04]">
         {image ? (
           <Image
             src={image}

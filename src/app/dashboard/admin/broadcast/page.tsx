@@ -138,10 +138,10 @@ export default function BroadcastPage() {
   return (
     <div className="space-y-6 max-w-7xl mx-auto">
       {/* Header */}
-      <div className="bg-white rounded-2xl shadow-clay-lg p-5 md:p-8 border border-white/40 overflow-hidden relative">
+      <div className="bg-white rounded-lg shadow-clay-lg p-5 md:p-8 border border-white/40 overflow-hidden relative">
         <div className="absolute top-0 right-0 w-32 h-32 bg-primary-600/5 rounded-full -mr-16 -mt-16 blur-3xl"></div>
         <div className="relative flex items-center gap-6">
-          <div className="p-4 bg-gradient-to-br from-primary-600 to-emerald-600 rounded-2xl shadow-lg shadow-primary-600/20">
+          <div className="p-4 bg-gradient-to-br from-primary-600 to-emerald-600 rounded-lg shadow-sm border border-gray-200 shadow-primary-600/20">
             <Bell className="w-8 h-8 text-white" />
           </div>
           <div>
@@ -158,7 +158,7 @@ export default function BroadcastPage() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Left Column: Recipient Selection */}
         <div className="lg:col-span-7 space-y-6">
-          <div className="bg-white rounded-2xl shadow-clay-md border border-white/40 overflow-hidden flex flex-col h-[700px]">
+          <div className="bg-white rounded-lg shadow-clay-md border border-white/40 overflow-hidden flex flex-col h-[700px]">
             <div className="p-6 border-b border-ink-100 flex items-center justify-between bg-secondary-50/50">
               <h2 className="font-bold text-ink-900 flex items-center gap-2">
                 <Users className="w-5 h-5 text-primary-700" />
@@ -171,7 +171,7 @@ export default function BroadcastPage() {
                   placeholder="Cari pendaftar..."
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  className="w-full bg-white border border-ink-100 rounded-xl pl-9 pr-4 py-2 text-sm focus:ring-2 focus:ring-primary-600/10 outline-none"
+                  className="w-full bg-white border border-ink-100 rounded-lg pl-9 pr-4 py-2 text-sm focus:ring-2 focus:ring-primary-600/10 outline-none"
                 />
               </div>
             </div>
@@ -193,7 +193,7 @@ export default function BroadcastPage() {
                 filteredPendaftar.map((p) => (
                   <label
                     key={p.id}
-                    className={`flex items-center gap-4 p-4 rounded-2xl border transition-all cursor-pointer group ${
+                    className={`flex items-center gap-4 p-4 rounded-lg border transition-all cursor-pointer group ${
                       selectedIds.includes(p.id)
                         ? "bg-primary-50 border-primary-200"
                         : "bg-white border-transparent hover:bg-secondary-50"
@@ -242,7 +242,7 @@ export default function BroadcastPage() {
 
         {/* Right Column: Message Composer */}
         <div className="lg:col-span-5 space-y-6">
-          <div className="bg-white rounded-2xl shadow-clay-md border border-white/40 p-6 space-y-6 sticky top-28">
+          <div className="bg-white rounded-lg shadow-clay-md border border-white/40 p-6 space-y-6 sticky top-28">
             <h2 className="font-bold text-ink-900 flex items-center gap-2">
               <Send className="w-5 h-5 text-primary-700" />
               Tulis Pesan
@@ -258,7 +258,7 @@ export default function BroadcastPage() {
                   value={header}
                   onChange={(e) => setHeader(e.target.value)}
                   placeholder="Contoh: Assalamu'alaikum"
-                  className="w-full bg-secondary-50 border-none rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-primary-600/10 outline-none font-medium"
+                  className="w-full bg-secondary-50 border-none rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-primary-600/10 outline-none font-medium"
                 />
               </div>
 
@@ -287,7 +287,7 @@ export default function BroadcastPage() {
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   placeholder="Tulis pesan Anda di sini..."
-                  className="w-full bg-secondary-50 border-none rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-primary-600/10 outline-none font-medium"
+                  className="w-full bg-secondary-50 border-none rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-primary-600/10 outline-none font-medium"
                 />
               </div>
 
@@ -300,17 +300,17 @@ export default function BroadcastPage() {
                   value={footer}
                   onChange={(e) => setFooter(e.target.value)}
                   placeholder="Contoh: Tim PSB Ulul Albaab"
-                  className="w-full bg-secondary-50 border-none rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-primary-600/10 outline-none font-medium"
+                  className="w-full bg-secondary-50 border-none rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-primary-600/10 outline-none font-medium"
                 />
               </div>
             </div>
 
             {/* Preview Card */}
-            <div className="bg-secondary-50 rounded-2xl p-4 border border-ink-100">
+            <div className="bg-secondary-50 rounded-lg p-4 border border-ink-100">
               <span className="text-[10px] font-black uppercase text-ink-400 tracking-widest block mb-3">
                 Pratinjau Pesan (Contoh)
               </span>
-              <div className="bg-white rounded-xl p-4 shadow-sm text-sm whitespace-pre-wrap font-medium text-ink-800 leading-relaxed border border-white/80">
+              <div className="bg-white rounded-lg p-4 shadow-sm text-sm whitespace-pre-wrap font-medium text-ink-800 leading-relaxed border border-white/80">
                 {previewMessage("Muhammad Al-Fatih")}
               </div>
             </div>
@@ -318,7 +318,7 @@ export default function BroadcastPage() {
             <button
               onClick={handleSendBroadcast}
               disabled={sending || selectedIds.length === 0 || !message}
-              className="w-full py-4 bg-gradient-to-br from-primary-600 to-emerald-600 text-white rounded-2xl font-black shadow-lg shadow-primary-600/20 hover:shadow-primary-600/30 transition-all flex items-center justify-center gap-3 disabled:opacity-50 disabled:shadow-none"
+              className="w-full py-4 bg-gradient-to-br from-primary-600 to-emerald-600 text-white rounded-lg font-black shadow-sm border border-gray-200 shadow-primary-600/20 hover:shadow-primary-600/30 transition-all flex items-center justify-center gap-3 disabled:opacity-50 disabled:shadow-none"
             >
               {sending ? (
                 <>
@@ -335,7 +335,7 @@ export default function BroadcastPage() {
 
             {results && (
               <div
-                className={`p-4 rounded-xl flex items-start gap-3 ${results.failed > 0 ? "bg-red-50 text-red-700" : "bg-green-50 text-green-700"}`}
+                className={`p-4 rounded-lg flex items-start gap-3 ${results.failed > 0 ? "bg-red-50 text-red-700" : "bg-green-50 text-green-700"}`}
               >
                 {results.failed > 0 ? (
                   <AlertCircle className="w-5 h-5 mt-0.5" />

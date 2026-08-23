@@ -159,10 +159,10 @@ export default function PengaturanPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-white rounded-xl shadow-lg p-6 border-2 border-purple-100">
+      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 border-2 border-purple-100">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <div className="p-3 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-xl">
+            <div className="p-3 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-lg">
               <Settings className="w-8 h-8 text-white" />
             </div>
             <div>
@@ -184,7 +184,7 @@ export default function PengaturanPage() {
       {/* Message */}
       {message && (
         <div
-          className={`p-4 rounded-xl border-2 ${
+          className={`p-4 rounded-lg border-2 ${
             message.type === "success"
               ? "bg-green-50 border-green-200 text-green-800"
               : "bg-red-50 border-red-200 text-red-800"
@@ -202,7 +202,7 @@ export default function PengaturanPage() {
       )}
 
       {/* Tahun Ajaran Section */}
-      <div className="bg-white rounded-xl shadow-lg p-6 border-2 border-purple-100">
+      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 border-2 border-purple-100">
         <div className="flex items-center gap-3 mb-6">
           <Calendar className="w-6 h-6 text-purple-600" />
           <h3 className="text-xl font-bold text-stone-900">Tahun Ajaran</h3>
@@ -220,7 +220,7 @@ export default function PengaturanPage() {
                 Tahun Ajaran Aktif
               </h4>
               {activeTahunAjaran ? (
-                <div className="bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-200 rounded-xl p-4 flex items-center justify-between">
+                <div className="bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-200 rounded-lg p-4 flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <Star className="w-6 h-6 text-green-600 fill-green-600" />
                     <div>
@@ -243,13 +243,13 @@ export default function PengaturanPage() {
                   </div>
                   <button
                     onClick={() => startEdit(activeTahunAjaran)}
-                    className="p-2 bg-white text-green-600 rounded-lg hover:shadow-md transition-all border border-green-100"
+                    className="p-2 bg-white text-green-600 rounded-lg hover:shadow-sm border border-gray-200 transition-all border border-green-100"
                   >
                     <Edit3 className="w-5 h-5" />
                   </button>
                 </div>
               ) : (
-                <div className="bg-secondary-50 border-2 border-secondary-200 rounded-xl p-4">
+                <div className="bg-secondary-50 border-2 border-secondary-200 rounded-lg p-4">
                   <p className="text-secondary-800 font-medium">
                     Tidak ada tahun ajaran yang aktif
                   </p>
@@ -263,7 +263,7 @@ export default function PengaturanPage() {
                 <button
                   onClick={handleSeed2026}
                   disabled={seeding}
-                  className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white rounded-xl font-bold transition-all disabled:opacity-50"
+                  className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white rounded-lg font-bold transition-all disabled:opacity-50"
                 >
                   {seeding ? (
                     <Loader2 className="w-5 h-5 animate-spin" />
@@ -300,7 +300,7 @@ export default function PengaturanPage() {
                   {tahunAjaranList.map((ta) => (
                     <div
                       key={ta.id}
-                      className={`border-2 rounded-xl p-4 transition-all ${
+                      className={`border-2 rounded-lg p-4 transition-all ${
                         ta.is_active
                           ? "border-green-300 bg-green-50"
                           : "border-stone-200 bg-stone-50"
@@ -353,8 +353,8 @@ export default function PengaturanPage() {
 
       {/* Edit Modal Overlay */}
       {editingTa && (
-        <div className="fixed inset-0 z-[9999] flex items-start md:items-center pt-10 md:pt-0 pb-20 md:pb-0 justify-center bg-stone-900/50 backdrop-blur-sm p-4 overflow-y-auto overflow-x-hidden overscroll-contain custom-scrollbar">
-          <div className="bg-white rounded-3xl shadow-2xl w-full max-w-lg overflow-hidden animate-in fade-in zoom-in duration-200">
+        <div className="fixed inset-0 z-[9999] flex items-start md:items-center pt-10 md:pt-0 pb-20 md:pb-0 justify-center bg-stone-900/50  p-4 overflow-y-auto overflow-x-hidden overscroll-contain custom-scrollbar">
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 w-full max-w-lg overflow-hidden animate-in fade-in zoom-in duration-200">
             <div className="px-6 py-4 bg-gradient-to-r from-purple-600 to-indigo-700 text-white flex items-center justify-between">
               <h3 className="text-lg font-bold">Edit Tahun Ajaran</h3>
               <button
@@ -376,7 +376,7 @@ export default function PengaturanPage() {
                   onChange={(e) =>
                     setEditFormData({ ...editFormData, nama: e.target.value })
                   }
-                  className="w-full px-4 py-2 rounded-xl border-2 border-stone-200 focus:border-purple-500 outline-none transition-all"
+                  className="w-full px-4 py-2 rounded-lg border-2 border-stone-200 focus:border-purple-500 outline-none transition-all"
                   required
                 />
               </div>
@@ -395,7 +395,7 @@ export default function PengaturanPage() {
                         tanggal_buka_pendaftaran: e.target.value,
                       })
                     }
-                    className="w-full px-4 py-2 rounded-xl border-2 border-stone-200 focus:border-purple-500 outline-none transition-all"
+                    className="w-full px-4 py-2 rounded-lg border-2 border-stone-200 focus:border-purple-500 outline-none transition-all"
                     required
                   />
                 </div>
@@ -412,7 +412,7 @@ export default function PengaturanPage() {
                         tanggal_tutup_pendaftaran: e.target.value,
                       })
                     }
-                    className="w-full px-4 py-2 rounded-xl border-2 border-stone-200 focus:border-purple-500 outline-none transition-all"
+                    className="w-full px-4 py-2 rounded-lg border-2 border-stone-200 focus:border-purple-500 outline-none transition-all"
                     required
                   />
                 </div>
@@ -431,7 +431,7 @@ export default function PengaturanPage() {
                       biaya_pendaftaran: Number(e.target.value),
                     })
                   }
-                  className="w-full px-4 py-2 rounded-xl border-2 border-stone-200 focus:border-purple-500 outline-none transition-all"
+                  className="w-full px-4 py-2 rounded-lg border-2 border-stone-200 focus:border-purple-500 outline-none transition-all"
                   required
                 />
               </div>
@@ -461,14 +461,14 @@ export default function PengaturanPage() {
                 <button
                   type="button"
                   onClick={() => setEditingTa(null)}
-                  className="flex-1 px-6 py-3 bg-stone-100 hover:bg-stone-200 text-stone-600 font-bold rounded-2xl transition-all"
+                  className="flex-1 px-6 py-3 bg-stone-100 hover:bg-stone-200 text-stone-600 font-bold rounded-lg transition-all"
                 >
                   Batal
                 </button>
                 <button
                   type="submit"
                   disabled={updating}
-                  className="flex-1 px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-2xl shadow-lg shadow-purple-200 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+                  className="flex-1 px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-lg shadow-sm border border-gray-200 shadow-purple-200 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
                 >
                   {updating && <Loader2 className="w-4 h-4 animate-spin" />}
                   Simpan Perubahan

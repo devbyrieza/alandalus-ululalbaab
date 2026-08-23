@@ -104,10 +104,10 @@ function PilihVerifikasiContent() {
   };
 
   return (
-    <div className="max-w-lg w-full bg-white rounded-2xl shadow-2xl border-2 border-primary-200 p-5 md:p-8">
+    <div className="max-w-lg w-full bg-white rounded-lg shadow-sm border border-gray-200 border-2 border-primary-200 p-5 md:p-8">
       {/* Demo Mode Badge */}
       {DEMO_MODE && (
-        <div className="mb-6 p-3 bg-primary-50 border-2 border-primary-100 rounded-xl app-card">
+        <div className="mb-6 p-3 bg-primary-50 border-2 border-primary-100 rounded-lg app-card">
           <div className="flex items-center gap-3 justify-center">
             <Zap className="w-5 h-5 text-primary-600" />
             <p className="text-sm font-black text-primary-900">
@@ -145,13 +145,13 @@ function PilihVerifikasiContent() {
           }}
           className={`app-card w-full p-6 rounded-[1.5rem] border-2 transition-all duration-300 text-left relative ${
             selectedChannel === "whatsapp"
-              ? "border-primary-600 bg-primary-50 shadow-md scale-[1.02]"
+              ? "border-primary-600 bg-primary-50 shadow-sm border border-gray-200 scale-[1.02]"
               : "border-primary-100 bg-white hover:border-primary-200 hover:shadow-sm"
           }`}
         >
           {/* Selected Badge */}
           {selectedChannel === "whatsapp" && (
-            <div className="absolute -top-3 -right-3 bg-primary-600 text-white rounded-full p-2 shadow-lg animate-bounce">
+            <div className="absolute -top-3 -right-3 bg-primary-600 text-white rounded-full p-2 shadow-sm border border-gray-200 animate-bounce">
               <Check className="w-5 h-5" />
             </div>
           )}
@@ -159,9 +159,9 @@ function PilihVerifikasiContent() {
           <div className="flex items-center gap-4">
             {/* Icon */}
             <div
-              className={`p-4 rounded-xl transition-all duration-300 ${
+              className={`p-4 rounded-lg transition-all duration-300 ${
                 selectedChannel === "whatsapp"
-                  ? "bg-primary-600 shadow-md"
+                  ? "bg-primary-600 shadow-sm border border-gray-200"
                   : "bg-secondary-100"
               }`}
             >
@@ -222,13 +222,13 @@ function PilihVerifikasiContent() {
           }}
           className={`app-card w-full p-6 rounded-[1.5rem] border-2 transition-all duration-300 text-left relative ${
             selectedChannel === "sms"
-              ? "border-primary-600 bg-secondary-50 shadow-md scale-[1.02]"
+              ? "border-primary-600 bg-secondary-50 shadow-sm border border-gray-200 scale-[1.02]"
               : "border-secondary-200 bg-white hover:border-primary-200 hover:shadow-sm"
           }`}
         >
           {/* Selected Badge */}
           {selectedChannel === "sms" && (
-            <div className="absolute -top-3 -right-3 bg-primary-600 text-white rounded-full p-2 shadow-lg animate-bounce">
+            <div className="absolute -top-3 -right-3 bg-primary-600 text-white rounded-full p-2 shadow-sm border border-gray-200 animate-bounce">
               <Check className="w-5 h-5" />
             </div>
           )}
@@ -236,9 +236,9 @@ function PilihVerifikasiContent() {
           <div className="flex items-center gap-4">
             {/* Icon */}
             <div
-              className={`p-4 rounded-xl transition-all duration-300 ${
+              className={`p-4 rounded-lg transition-all duration-300 ${
                 selectedChannel === "sms"
-                  ? "bg-primary-600 shadow-md"
+                  ? "bg-primary-600 shadow-sm border border-gray-200"
                   : "bg-secondary-100"
               }`}
             >
@@ -288,7 +288,7 @@ function PilihVerifikasiContent() {
 
       {/* Info Box - Pilihan Aktif */}
       <div
-        className={`relative z-10 mb-6 p-4 rounded-xl border transition-all duration-300 ${
+        className={`relative z-10 mb-6 p-4 rounded-lg border transition-all duration-300 ${
           selectedChannel === "whatsapp"
             ? "bg-secondary-50 border-primary-200"
             : "bg-secondary-50 border-primary-200"
@@ -331,7 +331,7 @@ function PilihVerifikasiContent() {
         <button
           onClick={handleProsesDemo}
           disabled={isLoading}
-          className={`w-full py-4 px-6 font-black text-lg md:text-xl rounded-pill transition-all duration-300 disabled:opacity-50 flex items-center justify-center gap-3 shadow-md hover:scale-[1.02] active:scale-95 ${
+          className={`w-full py-4 px-6 font-black text-lg md:text-xl rounded-pill transition-all duration-300 disabled:opacity-50 flex items-center justify-center gap-3 shadow-sm border border-gray-200 hover:scale-[1.02] active:scale-95 ${
             selectedChannel === "whatsapp"
               ? "bg-primary-900 hover:bg-secondary-100 border border-primary-900 hover:text-primary-900 text-white"
               : "bg-primary-900 hover:bg-secondary-100 border border-primary-900 hover:text-primary-900 text-white"
@@ -404,7 +404,7 @@ function PilihVerifikasiContent() {
 // Loading fallback
 function LoadingFallback() {
   return (
-    <div className="app-card max-w-lg w-full bg-white rounded-[2rem] shadow-lg border border-secondary-200 p-5 md:p-8 flex items-center justify-center">
+    <div className="app-card max-w-lg w-full bg-white rounded-[2rem] shadow-sm border border-gray-200 border border-secondary-200 p-5 md:p-8 flex items-center justify-center">
       <div className="flex flex-col items-center justify-center py-12">
         <Loader2 className="w-12 h-12 text-primary-600 animate-spin mb-4" />
         <p className="text-ink-600 font-medium">Memuat halaman...</p>

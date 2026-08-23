@@ -32,7 +32,7 @@ const StatWidget = ({ label, value, icon: Icon, color, trend, breakdown, highlig
       }`} aria-hidden="true" />
       <div className="relative z-10">
         <div className="flex items-center justify-between mb-8">
-          <div className={`icon-box w-14 h-14 rounded-2xl bg-linear-to-br ${colorMap[color] || colorMap.blue} text-white shadow-xl group-hover:scale-110 group-hover:rotate-3 duration-500`}>
+          <div className={`icon-box w-14 h-14 rounded-lg bg-linear-to-br ${colorMap[color] || colorMap.blue} text-white shadow-sm border border-gray-200 group-hover:scale-110 group-hover:rotate-3 duration-500`}>
             <Icon className="w-6 h-6" />
           </div>
           {trend && (
@@ -66,7 +66,7 @@ const StatWidget = ({ label, value, icon: Icon, color, trend, breakdown, highlig
                   onClick={(e) => { e.stopPropagation(); onDownload("excel"); }}
                   disabled={!!isDownloading}
                   title="Unduh Excel"
-                  className={`p-2 rounded-xl border transition-all hover:scale-105 duration-300 ${
+                  className={`p-2 rounded-lg border transition-all hover:scale-105 duration-300 ${
                     highlighted 
                       ? "bg-amber-500/10 border-amber-500/20 text-amber-400 hover:bg-amber-500/20" 
                       : "bg-amber-50 border-amber-100 text-amber-600 hover:bg-amber-100"
@@ -82,7 +82,7 @@ const StatWidget = ({ label, value, icon: Icon, color, trend, breakdown, highlig
                   onClick={(e) => { e.stopPropagation(); onDownload("pdf"); }}
                   disabled={!!isDownloading}
                   title="Unduh PDF"
-                  className={`p-2 rounded-xl border transition-all hover:scale-105 duration-300 ${
+                  className={`p-2 rounded-lg border transition-all hover:scale-105 duration-300 ${
                     highlighted 
                       ? "bg-rose-500/10 border-rose-500/20 text-rose-400 hover:bg-rose-500/20" 
                       : "bg-rose-50 border-rose-100 text-rose-600 hover:bg-rose-100"
@@ -104,7 +104,7 @@ const StatWidget = ({ label, value, icon: Icon, color, trend, breakdown, highlig
             <button
               onClick={(e) => { e.stopPropagation(); onPromote(); }}
               disabled={isPromoting}
-              className="w-full flex items-center justify-center gap-2 py-2.5 px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-black text-xs uppercase tracking-widest transition-all shadow-lg shadow-blue-600/20 hover:scale-[1.02] active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full flex items-center justify-center gap-2 py-2.5 px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-black text-xs uppercase tracking-widest transition-all shadow-sm border border-gray-200 shadow-blue-600/20 hover:scale-[1.02] active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isPromoting ? (
                 <>
@@ -390,7 +390,7 @@ export default function AdminDashboardPage() {
           </h1>
           <p className="text-xs sm:text-sm text-primary-500 font-medium mt-1">Pantau perkembangan pendaftaran santri secara langsung.</p>
         </div>
-        <button onClick={fetchStats} className="p-3 bg-white border border-primary-100 rounded-2xl text-primary-400 hover:text-primary-600 transition-all shadow-premium-sm self-start sm:self-auto hover-lift">
+        <button onClick={fetchStats} className="p-3 bg-white border border-primary-100 rounded-lg text-primary-400 hover:text-primary-600 transition-all shadow-premium-sm self-start sm:self-auto hover-lift">
           <RefreshCw className={`w-5 h-5 ${loading ? "animate-spin" : ""}`} />
         </button>
       </div>
@@ -399,7 +399,7 @@ export default function AdminDashboardPage() {
         
         <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12">
           <div className="max-w-xl w-full">
-            <div className="section-label section-label-primary mb-6 lg:mb-8 bg-white/10 border-white/20 backdrop-blur-md">
+            <div className="section-label section-label-primary mb-6 lg:mb-8 bg-white/10 border-white/20 ">
               <Activity className="w-4 h-4 text-amber-400" />
               <span className="text-white">Status Operasional: Aktif</span>
             </div>
@@ -408,28 +408,28 @@ export default function AdminDashboardPage() {
             </h2>
             <div className="flex items-center gap-8 sm:gap-12 mt-8 lg:mt-12">
               <div>
-                <span className="text-3xl sm:text-3xl md:text-5xl font-black text-white drop-shadow-md">{stats.total_pendaftar}</span>
+                <span className="text-3xl sm:text-3xl md:text-5xl font-black text-white drop-shadow-sm border border-gray-200">{stats.total_pendaftar}</span>
                 <p className="text-[10px] sm:text-[11px] font-black text-primary-200/70 uppercase tracking-widest mt-2">Pendaftar</p>
               </div>
               <div className="w-px h-12 sm:h-16 bg-white/20" />
               <div>
-                <span className="text-3xl sm:text-3xl md:text-5xl font-black text-secondary-400 drop-shadow-md">{stats.sudah_bayar}</span>
+                <span className="text-3xl sm:text-3xl md:text-5xl font-black text-secondary-400 drop-shadow-sm border border-gray-200">{stats.sudah_bayar}</span>
                 <p className="text-[10px] sm:text-[11px] font-black text-primary-200/70 uppercase tracking-widest mt-2">Bayar Pendaftaran</p>
               </div>
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 w-full lg:w-auto">
-             <div className="bg-white/10 backdrop-blur-xl p-4 sm:p-6 lg:p-5 md:p-8 rounded-[1.5rem] sm:rounded-[2rem] border border-white/20 shadow-xl flex flex-col items-center group hover:bg-white/15 transition-all">
+             <div className="bg-white/10  p-4 sm:p-6 lg:p-5 md:p-8 rounded-[1.5rem] sm:rounded-[2rem] border border-white/20 shadow-sm border border-gray-200 flex flex-col items-center group hover:bg-white/15 transition-all">
                 <p className="text-[9px] sm:text-[10px] font-black text-white/80 uppercase tracking-widest mb-2 sm:mb-4 text-center group-hover:text-white transition-colors">Diterima</p>
-                <p className="text-2xl sm:text-2xl md:text-4xl font-black text-amber-300 drop-shadow-md">{stats.diterima}</p>
+                <p className="text-2xl sm:text-2xl md:text-4xl font-black text-amber-300 drop-shadow-sm border border-gray-200">{stats.diterima}</p>
              </div>
-             <div className="bg-white/10 backdrop-blur-xl p-4 sm:p-6 lg:p-5 md:p-8 rounded-[1.5rem] sm:rounded-[2rem] border border-white/20 shadow-xl flex flex-col items-center group hover:bg-white/15 transition-all">
+             <div className="bg-white/10  p-4 sm:p-6 lg:p-5 md:p-8 rounded-[1.5rem] sm:rounded-[2rem] border border-white/20 shadow-sm border border-gray-200 flex flex-col items-center group hover:bg-white/15 transition-all">
                 <p className="text-[9px] sm:text-[10px] font-black text-white/80 uppercase tracking-widest mb-2 sm:mb-4 text-center group-hover:text-white transition-colors">Proses Daftar Ulang</p>
-                <p className="text-2xl sm:text-2xl md:text-4xl font-black text-amber-400 drop-shadow-md">{stats.daftar_ulang_sedang}</p>
+                <p className="text-2xl sm:text-2xl md:text-4xl font-black text-amber-400 drop-shadow-sm border border-gray-200">{stats.daftar_ulang_sedang}</p>
              </div>
-             <div className="bg-white/10 backdrop-blur-xl p-4 sm:p-6 lg:p-5 md:p-8 rounded-[1.5rem] sm:rounded-[2rem] border border-white/20 shadow-xl flex flex-col items-center group hover:bg-white/15 transition-all md:col-span-2">
+             <div className="bg-white/10  p-4 sm:p-6 lg:p-5 md:p-8 rounded-[1.5rem] sm:rounded-[2rem] border border-white/20 shadow-sm border border-gray-200 flex flex-col items-center group hover:bg-white/15 transition-all md:col-span-2">
                 <p className="text-[9px] sm:text-[10px] font-black text-white/80 uppercase tracking-widest mb-2 sm:mb-4 text-center group-hover:text-white transition-colors">Lunas Daftar Ulang</p>
-                <p className="text-2xl sm:text-2xl md:text-4xl font-black text-amber-300 drop-shadow-md">{stats.daftar_ulang_selesai}</p>
+                <p className="text-2xl sm:text-2xl md:text-4xl font-black text-amber-300 drop-shadow-sm border border-gray-200">{stats.daftar_ulang_selesai}</p>
              </div>
           </div>
         </div>
@@ -514,9 +514,9 @@ export default function AdminDashboardPage() {
                 Aksi Cepat
               </h3>
               <div className="space-y-4">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 sm:p-6 bg-primary-50 rounded-2xl sm:rounded-3xl border border-primary-100 hover:border-primary-200 transition-all cursor-default group/item gap-4">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 sm:p-6 bg-primary-50 rounded-lg sm:rounded-lg border border-primary-100 hover:border-primary-200 transition-all cursor-default group/item gap-4">
                   <div className="flex items-center gap-4 sm:gap-5">
-                    <div className="w-12 h-12 rounded-2xl bg-white shadow-sm flex items-center justify-center text-primary-600 transition-transform group-hover/item:scale-110 shrink-0">
+                    <div className="w-12 h-12 rounded-lg bg-white shadow-sm flex items-center justify-center text-primary-600 transition-transform group-hover/item:scale-110 shrink-0">
                       <Users className="w-6 h-6" />
                     </div>
                     <div>
@@ -529,9 +529,9 @@ export default function AdminDashboardPage() {
                     <ChevronRight className="w-5 h-5 text-ink-300 hidden sm:block" />
                   </div>
                 </div>
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 sm:p-6 bg-primary-50 rounded-2xl sm:rounded-3xl border border-primary-100 hover:border-emerald-200 transition-all cursor-default group/item gap-4">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 sm:p-6 bg-primary-50 rounded-lg sm:rounded-lg border border-primary-100 hover:border-emerald-200 transition-all cursor-default group/item gap-4">
                   <div className="flex items-center gap-4 sm:gap-5">
-                    <div className="w-12 h-12 rounded-2xl bg-white shadow-sm flex items-center justify-center text-emerald-600 transition-transform group-hover/item:scale-110 shrink-0">
+                    <div className="w-12 h-12 rounded-lg bg-white shadow-sm flex items-center justify-center text-emerald-600 transition-transform group-hover/item:scale-110 shrink-0">
                       <Wallet className="w-6 h-6" />
                     </div>
                     <div>

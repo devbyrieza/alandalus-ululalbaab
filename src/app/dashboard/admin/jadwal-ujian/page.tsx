@@ -380,7 +380,7 @@ function JadwalUjianContent() {
       {/* Standardized Refreshing Overlay */}
       {refreshing && (
         <div className="fixed inset-0 bg-white/40 backdrop-blur-[1px] z-[100] flex items-start md:items-center pt-10 md:pt-0 pb-20 md:pb-0 justify-center pointer-events-none overflow-y-auto overflow-x-hidden p-4 overscroll-contain custom-scrollbar">
-          <div className="bg-white/80 px-6 py-3 rounded-2xl shadow-xl border border-stone-100 flex items-center gap-3 animate-in fade-in zoom-in duration-300">
+          <div className="bg-white px-6 py-3 rounded-lg shadow-sm border border-gray-200 border border-stone-100 flex items-center gap-3 animate-in fade-in zoom-in duration-300">
             <Loader2 className="w-5 h-5 animate-spin text-purple-600" />
             <span className="text-sm font-bold text-stone-700 tracking-tight">
               Memperbarui data...
@@ -389,11 +389,11 @@ function JadwalUjianContent() {
         </div>
       )}
       {/* Header */}
-      <div className="bg-white rounded-2xl shadow-clay-lg p-5 md:p-8 border border-white/40 overflow-hidden relative">
+      <div className="bg-white rounded-lg shadow-clay-lg p-5 md:p-8 border border-white/40 overflow-hidden relative">
         <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/5 rounded-full -mr-16 -mt-16 blur-3xl"></div>
         <div className="relative flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="flex items-center gap-6">
-            <div className="p-4 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-2xl shadow-lg shadow-purple-500/20">
+            <div className="p-4 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-lg shadow-sm border border-gray-200 shadow-purple-500/20">
               <Calendar className="w-8 h-8 text-white" />
             </div>
             <div>
@@ -410,7 +410,7 @@ function JadwalUjianContent() {
             {isAdmin && (
               <button
                 onClick={() => setShowBroadcastModal(true)}
-                className="flex items-center gap-3 px-6 py-3 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-2xl font-black border border-indigo-200 transition-all"
+                className="flex items-center gap-3 px-6 py-3 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-lg font-black border border-indigo-200 transition-all"
               >
                 <Send className="w-5 h-5" />
                 Pulse Notifikasi
@@ -419,7 +419,7 @@ function JadwalUjianContent() {
             {isAdmin && (
               <button
                 onClick={() => setShowAddSession(true)}
-                className="flex items-center gap-3 px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-2xl font-black shadow-lg shadow-purple-600/20 transition-all hover:-translate-y-0.5"
+                className="flex items-center gap-3 px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-black shadow-sm border border-gray-200 shadow-purple-600/20 transition-all hover:-translate-y-0.5"
               >
                 <Plus className="w-5 h-5" />
                 Sesi Baru
@@ -431,10 +431,10 @@ function JadwalUjianContent() {
 
       {/* Broadcast Info Card */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-gradient-to-br from-indigo-600 to-purple-700 rounded-2xl p-6 text-white shadow-lg overflow-hidden relative">
+        <div className="bg-gradient-to-br from-indigo-600 to-purple-700 rounded-lg p-6 text-white shadow-sm border border-gray-200 overflow-hidden relative">
           <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16 blur-xl"></div>
           <div className="relative flex items-center gap-6">
-            <div className="p-4 bg-white/20 rounded-2xl backdrop-blur-md">
+            <div className="p-4 bg-white/20 rounded-lg ">
               <Users className="w-8 h-8" />
             </div>
             <div>
@@ -451,8 +451,8 @@ function JadwalUjianContent() {
             </div>
           </div>
         </div>
-        <div className="bg-white rounded-2xl p-6 border border-indigo-100 shadow-clay-md flex items-center gap-6">
-          <div className="p-4 bg-emerald-50 rounded-2xl border border-emerald-100">
+        <div className="bg-white rounded-lg p-6 border border-indigo-100 shadow-clay-md flex items-center gap-6">
+          <div className="p-4 bg-emerald-50 rounded-lg border border-emerald-100">
             <Calendar className="w-8 h-8 text-emerald-600" />
           </div>
           <div>
@@ -480,11 +480,11 @@ function JadwalUjianContent() {
 
           <div className="grid grid-cols-1 gap-4">
             {loading ? (
-              <div className="bg-white rounded-2xl p-6 md:p-12 text-center border border-white/40">
+              <div className="bg-white rounded-lg p-6 md:p-12 text-center border border-white/40">
                 <Loader2 className="w-8 h-8 animate-spin text-purple-500 mx-auto" />
               </div>
             ) : sessions.length === 0 ? (
-              <div className="bg-white rounded-2xl p-6 md:p-12 text-center border-2 border-dashed border-ink-100">
+              <div className="bg-white rounded-lg p-6 md:p-12 text-center border-2 border-dashed border-ink-100">
                 <Calendar className="w-12 h-12 text-ink-200 mx-auto mb-4" />
                 <p className="font-bold text-ink-400">
                   Belum ada sesi ujian yang dibuat.
@@ -494,10 +494,10 @@ function JadwalUjianContent() {
               sessions.map((s) => (
                 <div
                   key={s.id}
-                  className={`group bg-white rounded-2xl shadow-clay-md border border-white/40 p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 transition-all ${selectedPendaftarId ? "ring-2 ring-purple-100 hover:ring-purple-200" : ""}`}
+                  className={`group bg-white rounded-lg shadow-clay-md border border-white/40 p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 transition-all ${selectedPendaftarId ? "ring-2 ring-purple-100 hover:ring-purple-200" : ""}`}
                 >
                   <div className="flex items-start gap-5">
-                    <div className="w-14 h-14 rounded-2xl bg-purple-50 flex items-center justify-center text-purple-600 shadow-inner">
+                    <div className="w-14 h-14 rounded-lg bg-purple-50 flex items-center justify-center text-purple-600 shadow-inner">
                       <Clock className="w-7 h-7" />
                     </div>
                     <div>
@@ -525,7 +525,7 @@ function JadwalUjianContent() {
                       <button
                         onClick={() => handleAssign(s.id)}
                         disabled={assigning || s.booked_count >= s.quota}
-                        className="w-full md:w-auto px-6 py-3 bg-gradient-to-br from-primary-600 to-emerald-600 text-white rounded-xl font-black shadow-lg shadow-primary-600/20 hover:scale-105 transition-all flex items-center justify-center gap-2"
+                        className="w-full md:w-auto px-6 py-3 bg-gradient-to-br from-primary-600 to-emerald-600 text-white rounded-lg font-black shadow-sm border border-gray-200 shadow-primary-600/20 hover:scale-105 transition-all flex items-center justify-center gap-2"
                       >
                         {assigning ? (
                           <Loader2 className="w-4 h-4 animate-spin" />
@@ -568,7 +568,7 @@ function JadwalUjianContent() {
             Calon Peserta
           </h2>
 
-          <div className="bg-white rounded-2xl shadow-clay-md border border-white/40 overflow-hidden flex flex-col h-[600px] sticky top-28">
+          <div className="bg-white rounded-lg shadow-clay-md border border-white/40 overflow-hidden flex flex-col h-[600px] sticky top-28">
             <div className="p-4 border-b border-ink-100 bg-secondary-50/50">
               <div className="relative">
                 <Search className="absolute left-3 top-2.5 w-4 h-4 text-ink-400" />
@@ -580,7 +580,7 @@ function JadwalUjianContent() {
                     setSearch(e.target.value);
                     updateFilters(e.target.value);
                   }}
-                  className="w-full bg-white border border-ink-100 rounded-xl pl-9 pr-4 py-2 text-sm focus:ring-2 focus:ring-indigo-500/10 outline-none"
+                  className="w-full bg-white border border-ink-100 rounded-lg pl-9 pr-4 py-2 text-sm focus:ring-2 focus:ring-indigo-500/10 outline-none"
                 />
               </div>
             </div>
@@ -601,7 +601,7 @@ function JadwalUjianContent() {
                         selectedPendaftarId === p.id ? null : p.id,
                       )
                     }
-                    className={`p-4 rounded-xl border transition-all cursor-pointer flex items-center justify-between group ${
+                    className={`p-4 rounded-lg border transition-all cursor-pointer flex items-center justify-between group ${
                       selectedPendaftarId === p.id
                         ? "bg-indigo-50 border-indigo-200 shadow-inner"
                         : "bg-white border-transparent hover:bg-secondary-50"
@@ -641,8 +641,8 @@ function JadwalUjianContent() {
 
       {/* Add Session Modal */}
       {showAddSession && (
-        <div className="fixed inset-0 z-50 flex items-start md:items-center pt-10 md:pt-0 pb-20 md:pb-0 justify-center p-4 bg-ink-900/60 backdrop-blur-md animate-in fade-in duration-300 overflow-y-auto overflow-x-hidden overscroll-contain custom-scrollbar">
-          <div className="bg-white rounded-3xl w-full max-w-lg shadow-clay-lg border border-white overflow-hidden animate-in zoom-in-95 duration-300">
+        <div className="fixed inset-0 z-50 flex items-start md:items-center pt-10 md:pt-0 pb-20 md:pb-0 justify-center p-4 bg-ink-900/60  animate-in fade-in duration-300 overflow-y-auto overflow-x-hidden overscroll-contain custom-scrollbar">
+          <div className="bg-white rounded-lg w-full max-w-lg shadow-clay-lg border border-white overflow-hidden animate-in zoom-in-95 duration-300">
             <form onSubmit={handleCreateSession}>
               <div className="p-5 md:p-8 space-y-6">
                 <div className="flex items-center justify-between">
@@ -670,7 +670,7 @@ function JadwalUjianContent() {
                         setNewSession({ ...newSession, title: e.target.value })
                       }
                       placeholder="Contoh: Gelombang 1 - Sesi Pagi"
-                      className="w-full bg-secondary-50 border-none rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-purple-500/10 outline-none font-bold"
+                      className="w-full bg-secondary-50 border-none rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-purple-500/10 outline-none font-bold"
                     />
                   </div>
 
@@ -689,7 +689,7 @@ function JadwalUjianContent() {
                             start_time: e.target.value,
                           })
                         }
-                        className="w-full bg-secondary-50 border-none rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-purple-500/10 outline-none font-bold"
+                        className="w-full bg-secondary-50 border-none rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-purple-500/10 outline-none font-bold"
                       />
                     </div>
                     <div>
@@ -706,7 +706,7 @@ function JadwalUjianContent() {
                             end_time: e.target.value,
                           })
                         }
-                        className="w-full bg-secondary-50 border-none rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-purple-500/10 outline-none font-bold"
+                        className="w-full bg-secondary-50 border-none rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-purple-500/10 outline-none font-bold"
                       />
                     </div>
                   </div>
@@ -726,7 +726,7 @@ function JadwalUjianContent() {
                             quota: parseInt(e.target.value),
                           })
                         }
-                        className="w-full bg-secondary-50 border-none rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-purple-500/10 outline-none font-bold"
+                        className="w-full bg-secondary-50 border-none rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-purple-500/10 outline-none font-bold"
                       />
                     </div>
                     <div>
@@ -743,12 +743,12 @@ function JadwalUjianContent() {
                           })
                         }
                         placeholder="Contoh: Ruang CBT atau Online"
-                        className="w-full bg-secondary-50 border-none rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-purple-500/10 outline-none font-bold"
+                        className="w-full bg-secondary-50 border-none rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-purple-500/10 outline-none font-bold"
                       />
                     </div>
                   </div>
 
-                  <div className="bg-purple-50 rounded-xl p-4 border border-purple-100 flex items-start gap-3">
+                  <div className="bg-purple-50 rounded-lg p-4 border border-purple-100 flex items-start gap-3">
                     <AlertCircle className="w-5 h-5 text-purple-600 shrink-0 mt-0.5" />
                     <div>
                       <p className="text-xs font-bold text-purple-900 uppercase tracking-wider mb-1">
@@ -768,13 +768,13 @@ function JadwalUjianContent() {
                 <button
                   type="button"
                   onClick={() => setShowAddSession(false)}
-                  className="flex-1 py-4 bg-secondary-100 hover:bg-secondary-200 text-ink-600 rounded-2xl font-black transition-all"
+                  className="flex-1 py-4 bg-secondary-100 hover:bg-secondary-200 text-ink-600 rounded-lg font-black transition-all"
                 >
                   Batal
                 </button>
                 <button
                   type="submit"
-                  className="flex-[2] py-4 bg-purple-600 hover:bg-purple-700 text-white rounded-2xl font-black shadow-lg shadow-purple-600/20 transition-all"
+                  className="flex-[2] py-4 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-black shadow-sm border border-gray-200 shadow-purple-600/20 transition-all"
                 >
                   Simpan Sesi
                 </button>
@@ -786,8 +786,8 @@ function JadwalUjianContent() {
 
       {/* Sending Progress Modal */}
       {sendingProgress.active && (
-        <div className="fixed inset-0 z-[60] flex items-start md:items-center pt-10 md:pt-0 pb-20 md:pb-0 justify-center p-4 bg-ink-900/80 backdrop-blur-sm overflow-y-auto overflow-x-hidden overscroll-contain custom-scrollbar">
-          <div className="bg-white rounded-3xl w-full max-w-md shadow-2xl border border-white p-5 md:p-8 text-center animate-pulse">
+        <div className="fixed inset-0 z-[60] flex items-start md:items-center pt-10 md:pt-0 pb-20 md:pb-0 justify-center p-4 bg-ink-900/80  overflow-y-auto overflow-x-hidden overscroll-contain custom-scrollbar">
+          <div className="bg-white rounded-lg w-full max-w-md shadow-sm border border-gray-200 border border-white p-5 md:p-8 text-center animate-pulse">
             <Loader2 className="w-12 h-12 text-purple-600 animate-spin mx-auto mb-4" />
             <h2 className="text-2xl font-black text-ink-900 mb-2">
               Mengirim Notifikasi...
@@ -809,7 +809,7 @@ function JadwalUjianContent() {
               {sendingProgress.curr} / {sendingProgress.total}
             </p>
 
-            <div className="bg-secondary-50 rounded-xl p-4 text-left h-32 overflow-hidden flex flex-col-reverse gap-1 border border-ink-100">
+            <div className="bg-secondary-50 rounded-lg p-4 text-left h-32 overflow-hidden flex flex-col-reverse gap-1 border border-ink-100">
               {sendingProgress.logs.map((log, idx) => (
                 <p
                   key={idx}
@@ -825,8 +825,8 @@ function JadwalUjianContent() {
 
       {/* Broadcast Pulse Modal */}
       {showBroadcastModal && (
-        <div className="fixed inset-0 z-50 flex items-start md:items-center pt-10 md:pt-0 pb-20 md:pb-0 justify-center p-4 bg-ink-900/60 backdrop-blur-md animate-in fade-in duration-300 overflow-y-auto overflow-x-hidden overscroll-contain custom-scrollbar">
-          <div className="bg-white rounded-3xl w-full max-w-md shadow-clay-lg border border-white overflow-hidden animate-in zoom-in-95 duration-300">
+        <div className="fixed inset-0 z-50 flex items-start md:items-center pt-10 md:pt-0 pb-20 md:pb-0 justify-center p-4 bg-ink-900/60  animate-in fade-in duration-300 overflow-y-auto overflow-x-hidden overscroll-contain custom-scrollbar">
+          <div className="bg-white rounded-lg w-full max-w-md shadow-clay-lg border border-white overflow-hidden animate-in zoom-in-95 duration-300">
             <div className="p-5 md:p-8 space-y-6">
               <div className="flex items-center justify-between">
                 <h2 className="text-2xl font-black text-ink-900">
@@ -841,7 +841,7 @@ function JadwalUjianContent() {
               </div>
 
               <div className="space-y-4">
-                <div className="p-4 bg-indigo-50 rounded-2xl border border-indigo-100">
+                <div className="p-4 bg-indigo-50 rounded-lg border border-indigo-100">
                   <p className="text-sm font-bold text-indigo-900 mb-1">
                     Target Pengiriman
                   </p>
@@ -858,7 +858,7 @@ function JadwalUjianContent() {
                 </div>
 
                 <div
-                  className="flex items-center gap-3 p-4 bg-secondary-50 rounded-2xl cursor-pointer"
+                  className="flex items-center gap-3 p-4 bg-secondary-50 rounded-lg cursor-pointer"
                   onClick={() => setResetFlags(!resetFlags)}
                 >
                   <div
@@ -878,7 +878,7 @@ function JadwalUjianContent() {
                   </div>
                 </div>
 
-                <div className="bg-secondary-50 rounded-xl p-4 border border-secondary-100 flex items-start gap-3">
+                <div className="bg-secondary-50 rounded-lg p-4 border border-secondary-100 flex items-start gap-3">
                   <AlertCircle className="w-5 h-5 text-secondary-600 shrink-0 mt-0.5" />
                   <p className="text-[11px] text-secondary-800 leading-relaxed font-bold">
                     Pesan akan masuk antrean (Queue) untuk mencegah BAN.
@@ -890,7 +890,7 @@ function JadwalUjianContent() {
               <div className="flex gap-3">
                 <button
                   onClick={() => setShowBroadcastModal(false)}
-                  className="flex-1 py-4 bg-secondary-100 hover:bg-secondary-200 text-ink-600 rounded-2xl font-black transition-all"
+                  className="flex-1 py-4 bg-secondary-100 hover:bg-secondary-200 text-ink-600 rounded-lg font-black transition-all"
                 >
                   Batal
                 </button>
@@ -900,7 +900,7 @@ function JadwalUjianContent() {
                     broadcasting ||
                     (availStats.eligibleCount === 0 && !resetFlags)
                   }
-                  className="flex-[2] py-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl font-black shadow-lg shadow-indigo-600/20 transition-all flex items-center justify-center gap-2"
+                  className="flex-[2] py-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-black shadow-sm border border-gray-200 shadow-indigo-600/20 transition-all flex items-center justify-center gap-2"
                 >
                   {broadcasting && <Loader2 className="w-4 h-4 animate-spin" />}
                   Kirim Sekarang
@@ -918,7 +918,7 @@ export default function JadwalUjianPage() {
   return (
     <Suspense
       fallback={
-        <div className="flex flex-col items-center justify-center p-20 bg-white rounded-3xl border border-secondary-100">
+        <div className="flex flex-col items-center justify-center p-20 bg-white rounded-lg border border-secondary-100">
           <Loader2 className="w-12 h-12 animate-spin text-purple-600 mb-4" />
           <p className="text-ink-400 font-bold tracking-wide">
             Memuat halaman...

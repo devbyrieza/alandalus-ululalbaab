@@ -273,14 +273,14 @@ function DokumenCard({
     <div
       className={`group rounded-[1.5rem] border transition-all duration-300 overflow-hidden relative ${
         isDragging
-          ? "border-primary-600 bg-primary-50 shadow-lg scale-[1.02] ring-4 ring-primary-600/10"
+          ? "border-primary-600 bg-primary-50 shadow-sm border border-gray-200 scale-[1.02] ring-4 ring-primary-600/10"
           : dokumen.status === "verified"
             ? "border-emerald-200 bg-emerald-50/50"
             : dokumen.status === "rejected"
               ? "border-red-200 bg-red-50/50"
               : dokumen.status === "uploaded"
                 ? "border-primary-200 bg-primary-50/50"
-                : "border-ink-100 bg-white hover:border-primary-300 hover:shadow-lg hover:shadow-primary-950/5"
+                : "border-ink-100 bg-white hover:border-primary-300 hover:shadow-sm border border-gray-200 hover:shadow-primary-950/5"
       }`}
     >
       {/* Status Bar */}
@@ -304,7 +304,7 @@ function DokumenCard({
         <div className="flex items-center justify-between gap-4 flex-wrap">
           <div className="flex items-center gap-4 flex-1">
             <div
-              className={`w-12 h-12 rounded-2xl flex items-center justify-center shadow-sm transition-all ${
+              className={`w-12 h-12 rounded-lg flex items-center justify-center shadow-sm transition-all ${
                 dokumen.status === "verified"
                   ? "bg-emerald-100 text-emerald-600"
                   : dokumen.status === "rejected"
@@ -381,7 +381,7 @@ function DokumenCard({
                     e.stopPropagation();
                     onPreview();
                   }}
-                  className="w-10 h-10 flex items-center justify-center text-ink-400 hover:text-primary-700 hover:bg-white rounded-xl transition-all shadow-sm border border-transparent hover:border-ink-100"
+                  className="w-10 h-10 flex items-center justify-center text-ink-400 hover:text-primary-700 hover:bg-white rounded-lg transition-all shadow-sm border border-transparent hover:border-ink-100"
                   title="Lihat Dokumen"
                 >
                   <Eye className="w-5 h-5" />
@@ -391,7 +391,7 @@ function DokumenCard({
                     e.stopPropagation();
                     onDownload();
                   }}
-                  className="w-10 h-10 flex items-center justify-center text-ink-400 hover:text-primary-700 hover:bg-white rounded-xl transition-all shadow-sm border border-transparent hover:border-ink-100"
+                  className="w-10 h-10 flex items-center justify-center text-ink-400 hover:text-primary-700 hover:bg-white rounded-lg transition-all shadow-sm border border-transparent hover:border-ink-100"
                   title="Download Dokumen"
                 >
                   <Download className="w-5 h-5" />
@@ -399,7 +399,7 @@ function DokumenCard({
               </>
             )}
             <div
-              className={`w-10 h-10 flex items-center justify-center rounded-xl transition-all ${isExpanded ? "bg-ink-900 text-white" : "bg-surface-100 text-ink-400 group-hover:bg-white group-hover:shadow-sm"}`}
+              className={`w-10 h-10 flex items-center justify-center rounded-lg transition-all ${isExpanded ? "bg-ink-900 text-white" : "bg-surface-100 text-ink-400 group-hover:bg-white group-hover:shadow-sm"}`}
             >
               {isExpanded ? (
                 <ChevronUp className="w-5 h-5" />
@@ -412,7 +412,7 @@ function DokumenCard({
 
         {/* Progress bar saat upload */}
         {isUploading && (
-          <div className="mt-4 bg-white p-3 rounded-xl border border-ink-100 shadow-sm animate-in fade-in slide-in-from-top-2">
+          <div className="mt-4 bg-white p-3 rounded-lg border border-ink-100 shadow-sm animate-in fade-in slide-in-from-top-2">
             <div className="flex items-center justify-between text-xs font-bold mb-2">
               <span className="text-primary-700 flex items-center gap-2">
                 <Loader2 className="w-3 h-3 animate-spin" /> Mengupload...
@@ -434,13 +434,13 @@ function DokumenCard({
         <div className="px-7 pb-7 pt-2 border-t border-ink-100/50">
           {/* Info dokumen yang sudah diupload */}
           {dokumen.status !== "pending" && dokumen.file_name && (
-            <div className="mb-6 bg-white p-4 rounded-2xl border border-ink-100 shadow-sm relative overflow-hidden">
+            <div className="mb-6 bg-white p-4 rounded-lg border border-ink-100 shadow-sm relative overflow-hidden">
               <div className="absolute top-0 right-0 w-20 h-20 bg-surface-100 rounded-bl-full -mr-4 -mt-4 z-0" />
               <div className="flex items-center gap-4 relative z-10">
                 {(() => {
                   const FileIcon = getFileIcon(dokumen.file_type);
                   return (
-                    <div className="w-14 h-14 bg-surface-50 rounded-xl flex items-center justify-center border border-ink-100 shadow-inner">
+                    <div className="w-14 h-14 bg-surface-50 rounded-lg flex items-center justify-center border border-ink-100 shadow-inner">
                       <FileIcon className="w-7 h-7 text-ink-500" />
                     </div>
                   );
@@ -478,7 +478,7 @@ function DokumenCard({
 
               {/* Catatan jika ditolak */}
               {dokumen.status === "rejected" && dokumen.catatan && (
-                <div className="mt-4 p-4 bg-red-50 border border-red-100 rounded-xl flex gap-3 items-start">
+                <div className="mt-4 p-4 bg-red-50 border border-red-100 rounded-lg flex gap-3 items-start">
                   <XCircle className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
                   <div>
                     <p className="text-xs font-black text-red-800 uppercase tracking-wider mb-1">
@@ -493,7 +493,7 @@ function DokumenCard({
 
               {/* Info verifikasi */}
               {dokumen.status === "verified" && dokumen.verified_at && (
-                <div className="mt-4 p-4 bg-emerald-50 border border-emerald-100 rounded-xl flex gap-3 items-center">
+                <div className="mt-4 p-4 bg-emerald-50 border border-emerald-100 rounded-lg flex gap-3 items-center">
                   <CheckCircle className="w-5 h-5 text-emerald-500 shrink-0" />
                   <div>
                     <p className="text-xs font-black text-emerald-800 uppercase tracking-wider mb-0.5">
@@ -543,7 +543,7 @@ function DokumenCard({
                   <Loader2 className="w-8 h-8 text-primary-700 animate-spin" />
                 </div>
               ) : (
-                <div className="w-16 h-16 bg-surface-100 rounded-2xl flex items-center justify-center group-hover:bg-secondary-100 group-hover:scale-110 transition-all duration-300 shadow-inner">
+                <div className="w-16 h-16 bg-surface-100 rounded-lg flex items-center justify-center group-hover:bg-secondary-100 group-hover:scale-110 transition-all duration-300 shadow-inner">
                   {isLocked ? (
                     <ShieldCheck className="w-8 h-8 text-emerald-500" />
                   ) : (
@@ -873,7 +873,7 @@ export default function UploadBerkasTab() {
   if (error) {
     return (
       <div className="space-y-6">
-        <div className="bg-red-50 border-2 border-red-200 rounded-xl p-6 text-center">
+        <div className="bg-red-50 border-2 border-red-200 rounded-lg p-6 text-center">
           <XCircle className="w-12 h-12 text-red-500 mx-auto mb-4" />
           <h3 className="text-lg font-bold text-red-800 mb-2">
             Gagal Memuat Data
@@ -896,7 +896,7 @@ export default function UploadBerkasTab() {
       {/* Toast Notification */}
       {toast && (
         <div
-          className={`fixed top-4 right-4 z-50 px-6 py-4 rounded-xl shadow-lg flex items-center gap-3 animate-fadeInRight ${
+          className={`fixed top-4 right-4 z-50 px-6 py-4 rounded-lg shadow-sm border border-gray-200 flex items-center gap-3 animate-fadeInRight ${
             toast.type === "success"
               ? "bg-green-500 text-white"
               : "bg-red-500 text-white"
@@ -918,11 +918,11 @@ export default function UploadBerkasTab() {
       )}
 
       {/* Header */}
-      <div className="relative overflow-hidden rounded-[2rem] bg-linear-to-br from-primary-700 to-primary-900 border border-primary-600 p-5 md:p-8 text-white shadow-lg app-card">
+      <div className="relative overflow-hidden rounded-[2rem] bg-linear-to-br from-primary-700 to-primary-900 border border-primary-600 p-5 md:p-8 text-white shadow-sm border border-gray-200 app-card">
         <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-secondary-50/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="flex items-center gap-5">
-            <div className="w-16 h-16 rounded-[1.5rem] bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 shadow-sm shrink-0">
+            <div className="w-16 h-16 rounded-[1.5rem] bg-white/10  flex items-center justify-center border border-white/20 shadow-sm shrink-0">
               <Upload className="w-8 h-8 text-secondary-100" />
             </div>
             <div>
@@ -937,7 +937,7 @@ export default function UploadBerkasTab() {
           <button
             onClick={fetchDokumenStatus}
             disabled={loading}
-            className="inline-flex items-center gap-2 px-5 py-3 bg-white border border-ink-100 text-ink-600 font-bold rounded-xl hover:bg-surface-50 transition-all shadow-sm active:scale-95 disabled:opacity-50"
+            className="inline-flex items-center gap-2 px-5 py-3 bg-white border border-ink-100 text-ink-600 font-bold rounded-lg hover:bg-surface-50 transition-all shadow-sm active:scale-95 disabled:opacity-50"
           >
             <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin" : ""}`} />
             Refresh Status
@@ -948,9 +948,9 @@ export default function UploadBerkasTab() {
       {/* Progress Summary */}
       {summary && (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="bg-white rounded-2xl p-5 border border-ink-100 shadow-sm hover:shadow-md transition-all">
+          <div className="bg-white rounded-lg p-5 border border-ink-100 shadow-sm hover:shadow-sm border border-gray-200 transition-all">
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-secondary-50 rounded-xl flex items-center justify-center">
+              <div className="w-12 h-12 bg-secondary-50 rounded-lg flex items-center justify-center">
                 <FileText className="w-6 h-6 text-secondary-600" />
               </div>
               <div>
@@ -964,9 +964,9 @@ export default function UploadBerkasTab() {
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl p-5 border border-ink-100 shadow-sm hover:shadow-md transition-all">
+          <div className="bg-white rounded-lg p-5 border border-ink-100 shadow-sm hover:shadow-sm border border-gray-200 transition-all">
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-primary-50 rounded-xl flex items-center justify-center">
+              <div className="w-12 h-12 bg-primary-50 rounded-lg flex items-center justify-center">
                 <Upload className="w-6 h-6 text-primary-600" />
               </div>
               <div>
@@ -985,9 +985,9 @@ export default function UploadBerkasTab() {
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl p-5 border border-ink-100 shadow-sm hover:shadow-md transition-all">
+          <div className="bg-white rounded-lg p-5 border border-ink-100 shadow-sm hover:shadow-sm border border-gray-200 transition-all">
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center">
+              <div className="w-12 h-12 bg-emerald-50 rounded-lg flex items-center justify-center">
                 <FileCheck className="w-6 h-6 text-emerald-600" />
               </div>
               <div>
@@ -1006,9 +1006,9 @@ export default function UploadBerkasTab() {
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl p-5 border border-ink-100 shadow-sm hover:shadow-md transition-all">
+          <div className="bg-white rounded-lg p-5 border border-ink-100 shadow-sm hover:shadow-sm border border-gray-200 transition-all">
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-secondary-50 rounded-xl flex items-center justify-center">
+              <div className="w-12 h-12 bg-secondary-50 rounded-lg flex items-center justify-center">
                 <div className="w-6 h-6 flex items-center justify-center">
                   <span className="text-xs font-black text-primary-700">
                     {summary.progress.required.percentage}%
@@ -1021,7 +1021,7 @@ export default function UploadBerkasTab() {
                 </p>
                 <div className="w-full h-2.5 bg-surface-100 rounded-full mt-2 overflow-hidden">
                   <div
-                    className="h-full bg-linear-to-r from-primary-500 to-primary-700 rounded-full transition-all duration-500 shadow-lg shadow-primary-500/20"
+                    className="h-full bg-linear-to-r from-primary-500 to-primary-700 rounded-full transition-all duration-500 shadow-sm border border-gray-200 shadow-primary-500/20"
                     style={{
                       width: `${summary.progress.required.percentage}%`,
                     }}
@@ -1035,7 +1035,7 @@ export default function UploadBerkasTab() {
 
       {/* Info Box */}
       <div className="bg-secondary-50/50 border border-secondary-100 rounded-[1.5rem] p-6 flex flex-col md:flex-row items-start gap-4 shadow-sm">
-        <div className="w-10 h-10 bg-secondary-100 rounded-xl flex items-center justify-center flex-shrink-0 text-secondary-600">
+        <div className="w-10 h-10 bg-secondary-100 rounded-lg flex items-center justify-center flex-shrink-0 text-secondary-600">
           <AlertCircle className="w-5 h-5" />
         </div>
         <div>
@@ -1116,13 +1116,13 @@ export default function UploadBerkasTab() {
       */}
 
       {/* Submit/Lock Section */}
-      <div className="bg-white border text-center border-ink-200 rounded-3xl p-5 md:p-8 shadow-sm">
+      <div className="bg-white border text-center border-ink-200 rounded-lg p-5 md:p-8 shadow-sm">
         <div className="max-w-xl mx-auto space-y-6">
           {isLocked ? (
             dokumenList.some((d) => d.status === "rejected") ? (
               // Case: Locked but REJECTED docs exist
               <>
-                <div className="w-16 h-16 rounded-2xl bg-red-100 text-red-600 flex items-center justify-center mx-auto transition-colors animate-pulse">
+                <div className="w-16 h-16 rounded-lg bg-red-100 text-red-600 flex items-center justify-center mx-auto transition-colors animate-pulse">
                   <AlertCircle className="w-8 h-8" />
                 </div>
 
@@ -1137,7 +1137,7 @@ export default function UploadBerkasTab() {
                   </p>
                 </div>
 
-                <div className="p-4 bg-red-50 border border-red-100 rounded-xl flex gap-3 items-center justify-center">
+                <div className="p-4 bg-red-50 border border-red-100 rounded-lg flex gap-3 items-center justify-center">
                   <XCircle className="w-5 h-5 text-red-600" />
                   <span className="text-red-800 font-bold text-sm">
                     Menunggu Perbaikan Anda
@@ -1147,7 +1147,7 @@ export default function UploadBerkasTab() {
             ) : isVerified ? (
               // Case: Documents APPROVED/VERIFIED
               <>
-                <div className="w-16 h-16 rounded-2xl bg-secondary-100 text-primary-700 flex items-center justify-center mx-auto transition-colors">
+                <div className="w-16 h-16 rounded-lg bg-secondary-100 text-primary-700 flex items-center justify-center mx-auto transition-colors">
                   <CheckCircle className="w-8 h-8" />
                 </div>
 
@@ -1160,7 +1160,7 @@ export default function UploadBerkasTab() {
                   </p>
                   <Link
                     href="/dashboard/pendaftar/undangan-seleksi"
-                    className="inline-flex items-center gap-2 px-6 py-3 bg-secondary-400 text-primary-950 font-black rounded-xl hover:bg-secondary-300 transition-all shadow-lg shadow-secondary-400/20 hover:-translate-y-1 border border-secondary-500"
+                    className="inline-flex items-center gap-2 px-6 py-3 bg-secondary-400 text-primary-950 font-black rounded-lg hover:bg-secondary-300 transition-all shadow-sm border border-gray-200 shadow-secondary-400/20 hover:-translate-y-1 border border-secondary-500"
                   >
                     Buka Jadwal Seleksi
                     <FileCheck className="w-5 h-5" />
@@ -1170,7 +1170,7 @@ export default function UploadBerkasTab() {
             ) : (
               // Case: Locked and waiting verification (Normal)
               <>
-                <div className="w-16 h-16 rounded-2xl bg-secondary-100 text-secondary-600 flex items-center justify-center mx-auto transition-colors">
+                <div className="w-16 h-16 rounded-lg bg-secondary-100 text-secondary-600 flex items-center justify-center mx-auto transition-colors">
                   <ShieldCheck className="w-8 h-8" />
                 </div>
 
@@ -1185,14 +1185,14 @@ export default function UploadBerkasTab() {
                   </p>
                 </div>
 
-                <div className="p-4 bg-secondary-50 border border-secondary-100 rounded-xl flex gap-3 items-center justify-center">
+                <div className="p-4 bg-secondary-50 border border-secondary-100 rounded-lg flex gap-3 items-center justify-center">
                   <Clock className="w-5 h-5 text-secondary-600" />
                   <span className="text-secondary-800 font-bold text-sm">
                     Sedang Diverifikasi Admin
                   </span>
                 </div>
 
-                <div className="mt-4 p-4 bg-emerald-50 border border-emerald-200 rounded-xl flex flex-col sm:flex-row items-center sm:items-start gap-3 text-left">
+                <div className="mt-4 p-4 bg-emerald-50 border border-emerald-200 rounded-lg flex flex-col sm:flex-row items-center sm:items-start gap-3 text-left">
                   <div className="w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center shrink-0 mt-0.5">
                     <MessageCircle className="w-5 h-5 text-emerald-600" />
                   </div>
@@ -1219,7 +1219,7 @@ export default function UploadBerkasTab() {
           ) : (
             <>
               <div
-                className={`w-16 h-16 rounded-2xl flex items-center justify-center mx-auto transition-colors ${
+                className={`w-16 h-16 rounded-lg flex items-center justify-center mx-auto transition-colors ${
                   summary && summary.progress.required.percentage === 100
                     ? "bg-secondary-100 text-primary-700"
                     : "bg-surface-100 text-ink-300"
@@ -1248,11 +1248,11 @@ export default function UploadBerkasTab() {
                   summary.progress.required.percentage < 100 ||
                   isSubmitting
                 }
-                className={`w-full py-4 rounded-xl font-black text-lg flex items-center justify-center gap-3 transition-all ${
+                className={`w-full py-4 rounded-lg font-black text-lg flex items-center justify-center gap-3 transition-all ${
                   summary &&
                   summary.progress.required.percentage === 100 &&
                   !isSubmitting
-                    ? "bg-secondary-400 text-primary-950 hover:bg-secondary-300 shadow-xl shadow-secondary-400/20 hover:-translate-y-1 border border-secondary-500"
+                    ? "bg-secondary-400 text-primary-950 hover:bg-secondary-300 shadow-sm border border-gray-200 shadow-secondary-400/20 hover:-translate-y-1 border border-secondary-500"
                     : "bg-surface-200 text-ink-400 cursor-not-allowed"
                 }`}
               >

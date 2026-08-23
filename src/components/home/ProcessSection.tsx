@@ -105,7 +105,7 @@ function StepCard({
         {/* Icon box */}
         <div
           className={[
-            "w-16 h-16 md:w-20 md:h-20 rounded-2xl border flex items-center justify-center mb-5",
+            "w-16 h-16 md:w-20 md:h-20 rounded-lg border flex items-center justify-center mb-5",
             "transition-all duration-400 group-hover:scale-105 group-hover:shadow-premium-sm shadow-xs",
             colors.icon,
           ].join(" ")}

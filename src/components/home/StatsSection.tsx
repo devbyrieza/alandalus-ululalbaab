@@ -132,7 +132,7 @@ function StatCard({
       }}
       className="group relative h-full hover-lift-sm"
     >
-      <div className="glass-panel relative flex flex-col items-center text-center px-6 py-8 md:px-8 md:py-10 rounded-2xl overflow-hidden h-full">
+      <div className="glass-panel relative flex flex-col items-center text-center px-6 py-8 md:px-8 md:py-10 rounded-lg overflow-hidden h-full">
         {/* Hover radial bg */}
         <div
           className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
@@ -146,7 +146,7 @@ function StatCard({
         {/* Icon */}
         <div
           className={[
-            "relative mb-6 w-13 h-13 md:w-14 md:h-14 flex items-center justify-center rounded-xl shadow-xs",
+            "relative mb-6 w-13 h-13 md:w-14 md:h-14 flex items-center justify-center rounded-lg shadow-xs",
             "transition-all duration-500 group-hover:scale-110",
             isBlue ? "bg-primary-50 text-primary-700 group-hover:bg-primary-100" : "",
             isAmber ? "bg-secondary-100 text-primary-700 group-hover:bg-secondary-200" : "",
@@ -155,7 +155,7 @@ function StatCard({
           <Icon className="w-5 h-5 md:w-6 md:h-6" strokeWidth={1.75} />
           <div
             className={[
-              "absolute inset-0 rounded-xl ring-0 transition-all duration-500",
+              "absolute inset-0 rounded-lg ring-0 transition-all duration-500",
               isBlue ? "group-hover:ring-2 group-hover:ring-primary-200" : "",
               isAmber ? "group-hover:ring-2 group-hover:ring-secondary-300" : "",
             ].join(" ")}

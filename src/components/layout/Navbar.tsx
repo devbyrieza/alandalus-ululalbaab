@@ -154,7 +154,7 @@ export default function Navbar() {
                   className={`w-10 h-10 sm:w-11 sm:h-11 rounded-[14px] flex items-center justify-center border overflow-hidden transition-all duration-500 group-hover:scale-105 group-hover:-rotate-3 ${
                     isScrolled
                       ? "bg-white border-[var(--color-primary-100)] shadow-[var(--shadow-premium-sm)]"
-                      : "bg-white/90 border-white/70 shadow-[0_2px_12px_rgba(3,105,199,0.12)]"
+                      : "bg-white border-white/70 shadow-[0_2px_12px_rgba(3,105,199,0.12)]"
                   }`}
                 >
                   <Image
@@ -191,8 +191,8 @@ export default function Navbar() {
             <nav
               className={`hidden lg:flex items-center gap-0.5 p-1.5 rounded-full border transition-all duration-300 ${
                 isScrolled
-                  ? "bg-white/80 border-[var(--color-primary-100)] shadow-sm"
-                  : "bg-white/70 backdrop-blur-md border-white/65 shadow-[0_2px_16px_rgba(3,105,199,0.10)]"
+                  ? "bg-white border-[var(--color-primary-100)] shadow-sm"
+                  : "bg-white  border-white/65 shadow-[0_2px_16px_rgba(3,105,199,0.10)]"
               }`}
             >
               {navLinks.map((link) => {
@@ -230,9 +230,9 @@ export default function Navbar() {
                             <div className="mega-menu-content p-6 grid grid-cols-1 sm:grid-cols-2 gap-6 relative">
                               <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-white rotate-45 border-l border-t border-surface-100" />
                               
-                              <Link href="/program#mts" className="group/item p-4 rounded-2xl hover:bg-primary-50 transition-colors border border-transparent hover:border-primary-100">
+                              <Link href="/program#mts" className="group/item p-4 rounded-lg hover:bg-primary-50 transition-colors border border-transparent hover:border-primary-100">
                                 <div className="flex items-center gap-3 mb-2">
-                                  <div className="w-10 h-10 rounded-xl bg-primary-100 text-primary-700 flex items-center justify-center group-hover/item:scale-110 transition-transform">
+                                  <div className="w-10 h-10 rounded-lg bg-primary-100 text-primary-700 flex items-center justify-center group-hover/item:scale-110 transition-transform">
                                     <BookOpen className="w-5 h-5" />
                                   </div>
                                   <h4 className="font-bold text-ink-900 group-hover/item:text-primary-700">MTs (Setara SMP)</h4>
@@ -240,9 +240,9 @@ export default function Navbar() {
                                 <p className="text-sm text-ink-500">Program menengah pertama berfokus pada tahfidz dan adab dasar.</p>
                               </Link>
                               
-                              <Link href="/program#il" className="group/item p-4 rounded-2xl hover:bg-primary-50 transition-colors border border-transparent hover:border-primary-100">
+                              <Link href="/program#il" className="group/item p-4 rounded-lg hover:bg-primary-50 transition-colors border border-transparent hover:border-primary-100">
                                 <div className="flex items-center gap-3 mb-2">
-                                  <div className="w-10 h-10 rounded-xl bg-secondary-100 text-secondary-700 flex items-center justify-center group-hover/item:scale-110 transition-transform">
+                                  <div className="w-10 h-10 rounded-lg bg-secondary-100 text-secondary-700 flex items-center justify-center group-hover/item:scale-110 transition-transform">
                                     <Star className="w-5 h-5" />
                                   </div>
                                   <h4 className="font-bold text-ink-900 group-hover/item:text-primary-700">I'dad Lughowi (IL)</h4>
@@ -311,10 +311,10 @@ export default function Navbar() {
             {/* ── Hamburger (below lg) ── */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className={`lg:hidden p-3 rounded-2xl transition-all duration-300 min-h-[48px] min-w-[48px] flex items-center justify-center border ${
+              className={`lg:hidden p-3 rounded-lg transition-all duration-300 min-h-[48px] min-w-[48px] flex items-center justify-center border ${
                 isScrolled
                   ? "bg-white border-[var(--color-primary-100)] text-[var(--color-primary-700)] hover:bg-[var(--color-primary-50)] shadow-[var(--shadow-xs)]"
-                  : "bg-white/85 backdrop-blur-sm border-white/70 text-[var(--color-ink-800)] hover:bg-white/95 shadow-[0_2px_12px_rgba(3,105,199,0.10)]"
+                  : "bg-white/85  border-white/70 text-[var(--color-ink-800)] hover:bg-white/95 shadow-[0_2px_12px_rgba(3,105,199,0.10)]"
               }`}
               aria-label={isMenuOpen ? "Tutup menu" : "Buka menu"}
             >
@@ -364,7 +364,7 @@ export default function Navbar() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="absolute inset-0 bg-[var(--color-primary-950)]/40 backdrop-blur-sm"
+              className="absolute inset-0 bg-[var(--color-primary-950)]/40 "
               onClick={() => setIsMenuOpen(false)}
             />
 
@@ -392,7 +392,7 @@ export default function Navbar() {
 
               {/* School identity strip */}
               <div className="flex items-center gap-3 px-6 py-3 border-b border-[var(--color-primary-50)] flex-shrink-0">
-                <div className="w-9 h-9 rounded-xl bg-[var(--color-primary-50)] border border-[var(--color-primary-100)] flex items-center justify-center overflow-hidden">
+                <div className="w-9 h-9 rounded-lg bg-[var(--color-primary-50)] border border-[var(--color-primary-100)] flex items-center justify-center overflow-hidden">
                   <Image
                     src={BRANDING.logoPath}
                     alt=""
@@ -431,7 +431,7 @@ export default function Navbar() {
                           handleNavClick(e, link.href);
                           setIsMenuOpen(false);
                         }}
-                        className={`px-4 py-4 rounded-xl text-base font-bold transition-all min-h-[56px] flex items-center justify-between group ${
+                        className={`px-4 py-4 rounded-lg text-base font-bold transition-all min-h-[56px] flex items-center justify-between group ${
                           isActive(link.href)
                             ? "bg-[var(--color-primary-800)] text-[var(--color-secondary-100)] shadow-[var(--shadow-primary)]"
                             : "text-[var(--color-ink-800)] hover:bg-[var(--color-primary-50)] hover:text-[var(--color-primary-800)]"
@@ -454,7 +454,7 @@ export default function Navbar() {
                     <Link
                       href="/dashboard"
                       onClick={() => setIsMenuOpen(false)}
-                      className="btn-primary w-full justify-center gap-3 min-h-[56px] relative overflow-hidden shadow-md active:scale-98 transition-all"
+                      className="btn-primary w-full justify-center gap-3 min-h-[56px] relative overflow-hidden shadow-sm border border-gray-200 active:scale-98 transition-all"
                     >
                       <span className="flex h-2 w-2 relative">
                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-300 opacity-75"></span>
@@ -468,7 +468,7 @@ export default function Navbar() {
                       <Link
                         href="/login"
                         onClick={() => setIsMenuOpen(false)}
-                        className="w-full py-4 text-sm font-bold rounded-xl border border-[var(--color-primary-100)] text-[var(--color-primary-700)] bg-[var(--color-primary-50)] hover:bg-[var(--color-primary-100)] text-center transition-all min-h-[52px] flex items-center justify-center gap-2"
+                        className="w-full py-4 text-sm font-bold rounded-lg border border-[var(--color-primary-100)] text-[var(--color-primary-700)] bg-[var(--color-primary-50)] hover:bg-[var(--color-primary-100)] text-center transition-all min-h-[52px] flex items-center justify-center gap-2"
                       >
                         Masuk ke Dashboard
                       </Link>

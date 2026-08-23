@@ -213,7 +213,7 @@ function VerifikasiOTPContent() {
   }, [otpCode]);
 
   return (
-    <div className="app-card max-w-md w-full bg-white rounded-[2.5rem] shadow-lg border border-primary-100 p-5 md:p-8 relative z-10">
+    <div className="app-card max-w-md w-full bg-white rounded-[2.5rem] shadow-sm border border-gray-200 border border-primary-100 p-5 md:p-8 relative z-10">
       {/* Decorative Blur Inside Card */}
       <div className="absolute top-0 right-0 w-64 h-64 bg-secondary-50/30 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
 
@@ -227,7 +227,7 @@ function VerifikasiOTPContent() {
           } rounded-full flex items-center justify-center mx-auto mb-4 relative shadow-sm`}
         >
           {/* Icon WhatsApp only */}
-          <div className="p-3 bg-primary-700 rounded-2xl shadow-sm app-card">
+          <div className="p-3 bg-primary-700 rounded-lg shadow-sm app-card">
             <Smartphone className="w-10 h-10 text-white" />
           </div>
         </div>
@@ -246,7 +246,7 @@ function VerifikasiOTPContent() {
 
         {/* OTP Display Banner (when WhatsApp not available) */}
         {sim_code && (
-          <div className="mt-4 p-3 bg-secondary-50 border border-secondary-200 rounded-xl app-card shadow-sm">
+          <div className="mt-4 p-3 bg-secondary-50 border border-secondary-200 rounded-lg app-card shadow-sm">
             <p className="text-xs font-black uppercase tracking-widest text-primary-800 mb-1">
               Kode Verifikasi Anda
             </p>
@@ -278,7 +278,7 @@ function VerifikasiOTPContent() {
             value={digit}
             onChange={(e) => handleOTPChange(index, e.target.value)}
             onKeyDown={(e) => handleOTPKeyDown(index, e)}
-            className={`w-12 h-14 md:w-14 md:h-16 text-center text-3xl font-display font-black border-2 rounded-xl focus:outline-none focus:ring-4 transition-all app-card shadow-sm ${
+            className={`w-12 h-14 md:w-14 md:h-16 text-center text-3xl font-display font-black border-2 rounded-lg focus:outline-none focus:ring-4 transition-all app-card shadow-sm ${
               otpError
                 ? "border-red-500 bg-red-50 focus:ring-red-100 text-red-700"
                 : digit
@@ -294,7 +294,7 @@ function VerifikasiOTPContent() {
       {/* Error Message */}
       <div className="relative z-10">
         {otpError && (
-          <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-xl app-card shadow-sm">
+          <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg app-card shadow-sm">
             <p className="text-sm text-red-700 font-bold flex items-center justify-center gap-2">
               <AlertCircle className="w-5 h-5 flex-shrink-0" />
               <span>{otpError}</span>
@@ -304,7 +304,7 @@ function VerifikasiOTPContent() {
 
         {/* Loading State */}
         {isVerifying && (
-          <div className="mb-4 p-3 bg-primary-50 border border-primary-200 rounded-xl app-card shadow-sm">
+          <div className="mb-4 p-3 bg-primary-50 border border-primary-200 rounded-lg app-card shadow-sm">
             <p className="text-sm text-primary-700 font-bold flex items-center justify-center gap-2">
               <Loader2 className="w-5 h-5 animate-spin" />
               <span>Memverifikasi kode...</span>
@@ -338,7 +338,7 @@ function VerifikasiOTPContent() {
           <button
             onClick={handleVerifyOTP}
             disabled={isVerifying || otpCode.join("").length !== 6}
-            className="w-full py-4 px-6 font-black text-lg md:text-xl rounded-pill transition-all duration-300 disabled:opacity-50 flex items-center justify-center gap-3 shadow-md border border-transparent hover:bg-secondary-100 hover:text-primary-900 bg-primary-900 text-white hover:border-primary-900 active:scale-95 app-card tracking-wide"
+            className="w-full py-4 px-6 font-black text-lg md:text-xl rounded-pill transition-all duration-300 disabled:opacity-50 flex items-center justify-center gap-3 shadow-sm border border-gray-200 border border-transparent hover:bg-secondary-100 hover:text-primary-900 bg-primary-900 text-white hover:border-primary-900 active:scale-95 app-card tracking-wide"
           >
             <CheckCircle2 className="w-6 h-6" />
             Verifikasi Kode
@@ -415,7 +415,7 @@ function VerifikasiOTPContent() {
 // Loading fallback
 function LoadingFallback() {
   return (
-    <div className="app-card max-w-md w-full bg-white rounded-[2.5rem] shadow-lg border border-primary-100 p-5 md:p-8">
+    <div className="app-card max-w-md w-full bg-white rounded-[2.5rem] shadow-sm border border-gray-200 border border-primary-100 p-5 md:p-8">
       <div className="flex flex-col items-center justify-center py-12">
         <Loader2 className="w-12 h-12 text-primary-600 animate-spin mb-4" />
         <p className="text-ink-600 font-medium">Memuat halaman...</p>

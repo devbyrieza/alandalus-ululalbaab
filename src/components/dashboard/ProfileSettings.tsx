@@ -213,14 +213,14 @@ export default function ProfileSettings({ user }: { user: UserSession }) {
 
       {/* Error Alert */}
       {error && (
-        <div className="p-4 rounded-xl bg-red-50 text-red-700 border border-red-100 flex items-start gap-3">
+        <div className="p-4 rounded-lg bg-red-50 text-red-700 border border-red-100 flex items-start gap-3">
           <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
           <p className="text-sm font-medium">{error}</p>
         </div>
       )}
 
       {/* Profile Info Card */}
-      <div className="bg-white border border-gray-100 rounded-2xl shadow-xs overflow-hidden">
+      <div className="bg-white border border-gray-100 rounded-lg shadow-xs overflow-hidden">
         <div className="p-6 md:p-8 border-b border-gray-100">
           {/* Avatar Section */}
           <div className="flex items-center gap-5 mb-4">
@@ -297,7 +297,7 @@ export default function ProfileSettings({ user }: { user: UserSession }) {
                   type="text"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
-                  className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none"
+                  className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none"
                 />
               </div>
               <div>
@@ -309,7 +309,7 @@ export default function ProfileSettings({ user }: { user: UserSession }) {
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   placeholder="Contoh: 08123456789"
-                  className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none"
+                  className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none"
                 />
                 <div className="mt-1.5 flex flex-col gap-1">
                   <p className="text-[10px] text-gray-400 ml-1 leading-relaxed">
@@ -332,7 +332,7 @@ export default function ProfileSettings({ user }: { user: UserSession }) {
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="Kosongkan jika belum memiliki username"
-                className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none"
+                className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none"
               />
               <p className="text-[10px] text-gray-400 mt-1.5 ml-1 italic">
                 Kosongkan jika belum memiliki username
@@ -352,7 +352,7 @@ export default function ProfileSettings({ user }: { user: UserSession }) {
                 onChange={user?.role === "admin_super" ? (e) => setEmail(e.target.value) : undefined}
                 disabled={user?.role !== "admin_super"}
                 placeholder="Email akun"
-                className={`w-full px-4 py-3 border border-gray-200 rounded-xl outline-none ${
+                className={`w-full px-4 py-3 border border-gray-200 rounded-lg outline-none ${
                   user?.role === "admin_super"
                     ? "bg-white focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500"
                     : "bg-gray-50 text-gray-500 cursor-not-allowed focus:ring-0"
@@ -375,7 +375,7 @@ export default function ProfileSettings({ user }: { user: UserSession }) {
               <button
                 type="submit"
                 disabled={profileLoading}
-                className="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 hover:bg-black text-white rounded-xl font-bold text-sm shadow-sm transition-all"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 hover:bg-black text-white rounded-lg font-bold text-sm shadow-sm transition-all"
               >
                 {profileLoading ? (
                   <Loader2 className="w-4 h-4 animate-spin" />
@@ -390,7 +390,7 @@ export default function ProfileSettings({ user }: { user: UserSession }) {
       </div>
 
       {/* Security Settings Card */}
-      <div className="bg-white border border-gray-100 rounded-2xl shadow-xs overflow-hidden">
+      <div className="bg-white border border-gray-100 rounded-lg shadow-xs overflow-hidden">
         <div className="p-6 md:p-8 border-b border-gray-100">
           <div className="flex items-center gap-3 mb-1">
             <Lock className="w-5 h-5 text-gray-400" />
@@ -404,7 +404,7 @@ export default function ProfileSettings({ user }: { user: UserSession }) {
         <div className="p-6 md:p-8 bg-gray-50/30">
           {/* Success Alert */}
           {success && (
-            <div className="mb-6 p-4 rounded-xl bg-emerald-50 text-emerald-800 border border-emerald-100 flex items-start gap-3">
+            <div className="mb-6 p-4 rounded-lg bg-emerald-50 text-emerald-800 border border-emerald-100 flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 shrink-0 mt-0.5 text-emerald-600" />
               <div>
                 <p className="text-sm font-bold">
@@ -428,7 +428,7 @@ export default function ProfileSettings({ user }: { user: UserSession }) {
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none"
+                  className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none"
                 />
               </div>
               <div>
@@ -440,7 +440,7 @@ export default function ProfileSettings({ user }: { user: UserSession }) {
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none"
+                  className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none"
                 />
               </div>
             </div>
@@ -452,7 +452,7 @@ export default function ProfileSettings({ user }: { user: UserSession }) {
               <button
                 type="submit"
                 disabled={loading || !newPassword || !confirmPassword}
-                className={`inline-flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-sm text-white shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500
+                className={`inline-flex items-center gap-2 px-6 py-3 rounded-lg font-bold text-sm text-white shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500
                                     ${
                                       loading ||
                                       !newPassword ||

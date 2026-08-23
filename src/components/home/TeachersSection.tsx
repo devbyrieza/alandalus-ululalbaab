@@ -126,7 +126,7 @@ export default function TeachersSection() {
               ].map((feature, i) => (
                 <div
                   key={i}
-                  className="group flex items-center gap-4 bg-white p-3.5 rounded-2xl border border-primary-100 shadow-premium-sm hover:shadow-premium-md hover:border-primary-200 transition-all duration-400"
+                  className="group flex items-center gap-4 bg-white p-3.5 rounded-lg border border-primary-100 shadow-premium-sm hover:shadow-premium-md hover:border-primary-200 transition-all duration-400"
                 >
                   <div
                     className={`w-11 h-11 rounded-[12px] flex items-center justify-center shrink-0 shadow-xs transition-transform duration-400 group-hover:scale-105 ${
@@ -161,7 +161,7 @@ export default function TeachersSection() {
                 whileInView={{ opacity: 1, y: 0, scale: 1 }}
                 viewport={{ once: true, margin: "-20px" }}
                 transition={{ delay: idx * 0.05, duration: 0.5, ease: EASE }}
-                className="group relative bg-white p-5 rounded-2xl border border-primary-100 shadow-premium-sm hover:shadow-premium-md hover:border-primary-200 flex items-start gap-3.5 overflow-hidden transition-all duration-400"
+                className="group relative bg-white p-5 rounded-lg border border-primary-100 shadow-premium-sm hover:shadow-premium-md hover:border-primary-200 flex items-start gap-3.5 overflow-hidden transition-all duration-400"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-primary-50/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 

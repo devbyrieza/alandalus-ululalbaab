@@ -308,7 +308,7 @@ function SectionHeader({
           onToggle();
         }
       }}
-      className={`w-full flex items-center justify-between p-5 rounded-2xl transition-all duration-300 border ${
+      className={`w-full flex items-center justify-between p-5 rounded-lg transition-all duration-300 border ${
         disabled
           ? "bg-slate-50 border-slate-200 opacity-60 cursor-not-allowed"
           : isOpen
@@ -318,7 +318,7 @@ function SectionHeader({
     >
       <div className="flex items-center gap-4">
         <div
-          className={`w-12 h-12 rounded-xl flex items-center justify-center transition-colors ${
+          className={`w-12 h-12 rounded-lg flex items-center justify-center transition-colors ${
             isCompleted
               ? "bg-emerald-100 text-emerald-600"
               : isOpen
@@ -389,7 +389,7 @@ function InputField({
   inputFilter,
 }: InputFieldProps) {
   const baseInputClass =
-    "w-full px-4 py-3 bg-white border border-ink-200 rounded-xl text-ink-900 placeholder:text-stone-600 focus:border-primary-600 focus:ring-4 focus:ring-primary-600/10 transition-all outline-none disabled:bg-surface-100 disabled:text-ink-600 font-medium";
+    "w-full px-4 py-3 bg-white border border-ink-200 rounded-lg text-ink-900 placeholder:text-stone-600 focus:border-primary-600 focus:ring-4 focus:ring-primary-600/10 transition-all outline-none disabled:bg-surface-100 disabled:text-ink-600 font-medium";
 
   // Filter function for input validation
   const handleFilteredChange = (rawValue: string) => {
@@ -892,7 +892,7 @@ export default function DataLengkapForm({
     >
       {toastMessage && (
         <div
-          className={`fixed top-6 right-6 z-50 px-6 py-4 rounded-2xl shadow-clay-lg flex items-center gap-3 animate-in slide-in-from-right duration-300 ${
+          className={`fixed top-6 right-6 z-50 px-6 py-4 rounded-lg shadow-clay-lg flex items-center gap-3 animate-in slide-in-from-right duration-300 ${
             toastMessage.type === "success"
               ? "bg-emerald-500 text-white shadow-emerald-500/20"
               : "bg-red-500 text-white shadow-red-500/20"
@@ -911,9 +911,9 @@ export default function DataLengkapForm({
 
       {/* Info Box */}
       {isEditMode ? (
-        <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-5 shadow-sm">
+        <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-5 shadow-sm">
           <div className="flex items-start gap-4">
-            <div className="w-10 h-10 bg-emerald-100 rounded-xl flex items-center justify-center shrink-0">
+            <div className="w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center shrink-0">
               <CheckCircle className="w-6 h-6 text-emerald-600" />
             </div>
             <div>
@@ -929,9 +929,9 @@ export default function DataLengkapForm({
           </div>
         </div>
       ) : isLocked ? (
-        <div className="bg-primary-50 border border-primary-200 rounded-2xl p-5 shadow-sm">
+        <div className="bg-primary-50 border border-primary-200 rounded-lg p-5 shadow-sm">
           <div className="flex items-start gap-4">
-            <div className="w-10 h-10 bg-primary-100 rounded-xl flex items-center justify-center shrink-0">
+            <div className="w-10 h-10 bg-primary-100 rounded-lg flex items-center justify-center shrink-0">
               <Info className="w-6 h-6 text-primary-600" />
             </div>
             <div className="flex-1">
@@ -948,7 +948,7 @@ export default function DataLengkapForm({
                   href="https://wa.me/6281234567801?text=Bismillah,%20saya%20ingin%20mengajukan%20perubahan%20data%20pendaftaran%20untuk%20nomor%20pendaftaran:%20"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-500 text-white rounded-xl text-xs font-bold shadow-sm hover:bg-emerald-600 transition-colors"
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-500 text-white rounded-lg text-xs font-bold shadow-sm hover:bg-emerald-600 transition-colors"
                 >
                   <Phone className="w-3.5 h-3.5 text-white" />
                   Admin Pendaftaran 1
@@ -957,7 +957,7 @@ export default function DataLengkapForm({
                   href="https://wa.me/6281234567899?text=Bismillah,%20saya%20ingin%20mengajukan%20perubahan%20data%20pendaftaran%20untuk%20nomor%20pendaftaran:%20"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-500 text-white rounded-xl text-xs font-bold shadow-sm hover:bg-emerald-600 transition-colors"
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-500 text-white rounded-lg text-xs font-bold shadow-sm hover:bg-emerald-600 transition-colors"
                 >
                   <Phone className="w-3.5 h-3.5 text-white" />
                   Admin Pendaftaran 2
@@ -967,8 +967,8 @@ export default function DataLengkapForm({
           </div>
         </div>
       ) : (
-        <div className="bg-secondary-50 border border-secondary-100 rounded-2xl p-5 flex gap-4">
-          <div className="w-10 h-10 bg-secondary-100 rounded-xl flex items-center justify-center shrink-0">
+        <div className="bg-secondary-50 border border-secondary-100 rounded-lg p-5 flex gap-4">
+          <div className="w-10 h-10 bg-secondary-100 rounded-lg flex items-center justify-center shrink-0">
             <Info className="w-6 h-6 text-secondary-600" />
           </div>
           <div>
@@ -1902,7 +1902,7 @@ export default function DataLengkapForm({
         </div>
       </fieldset>
 
-      <div className="p-4 bg-surface-50 border border-ink-100 rounded-2xl flex items-center gap-3">
+      <div className="p-4 bg-surface-50 border border-ink-100 rounded-lg flex items-center gap-3">
         <AlertCircle className="w-5 h-5 text-ink-600" />
         <p className="text-sm text-ink-500 font-medium">
           Tanda <span className="text-red-500 font-bold">*</span> menunjukkan
@@ -1916,7 +1916,7 @@ export default function DataLengkapForm({
           <button
             type="submit"
             disabled={saving}
-            className="flex items-center gap-2 px-5 md:px-8 py-4 rounded-xl bg-linear-to-r from-primary-600 to-primary-800 text-white font-bold text-lg shadow-lg shadow-primary-600/30 hover:shadow-primary-600/40 hover:-translate-y-1 transition-all disabled:opacity-50 disabled:transform-none"
+            className="flex items-center gap-2 px-5 md:px-8 py-4 rounded-lg bg-linear-to-r from-primary-600 to-primary-800 text-white font-bold text-lg shadow-sm border border-gray-200 shadow-primary-600/30 hover:shadow-primary-600/40 hover:-translate-y-1 transition-all disabled:opacity-50 disabled:transform-none"
           >
             {saving ? (
               <Loader2 className="w-6 h-6 animate-spin" />

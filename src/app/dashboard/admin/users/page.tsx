@@ -76,14 +76,14 @@ export default function UserManagementPage() {
                 <label class="block text-[10px] font-black uppercase text-primary-600 mb-1.5 tracking-wider">
                   Link Singkat (Akses Cepat)
                 </label>
-                <input type="text" value="${data.shortLink}" class="w-full p-3 border-2 border-primary-100 rounded-3xl bg-stone-50 font-bold focus:outline-none focus:border-primary-500 text-sm" readonly onclick="this.select()" />
+                <input type="text" value="${data.shortLink}" class="w-full p-3 border-2 border-primary-100 rounded-lg bg-stone-50 font-bold focus:outline-none focus:border-primary-500 text-sm" readonly onclick="this.select()" />
               </div>
 
               <div>
                 <label class="block text-[10px] font-black uppercase text-stone-400 mb-1.5 tracking-wider">
                   Link Lengkap (Alternatif)
                 </label>
-                <input type="text" value="${data.link}" class="w-full p-3 border border-stone-200 rounded-3xl bg-stone-50 focus:outline-none text-xs text-stone-400" readonly onclick="this.select()" />
+                <input type="text" value="${data.link}" class="w-full p-3 border border-stone-200 rounded-lg bg-stone-50 focus:outline-none text-xs text-stone-400" readonly onclick="this.select()" />
               </div>
             </div>
           `,
@@ -255,18 +255,18 @@ export default function UserManagementPage() {
   return (
     <div className="space-y-10 pb-16 animate-in fade-in duration-700">
       {/* Admin Banner */}
-      <div className="relative overflow-hidden rounded-4xl bg-linear-to-br from-primary-700 to-primary-900 text-white p-6 md:p-10 shadow-2xl app-card border border-primary-600">
+      <div className="relative overflow-hidden rounded-4xl bg-linear-to-br from-primary-700 to-primary-900 text-white p-6 md:p-10 shadow-sm border border-gray-200 app-card border border-primary-600">
         <div className="absolute top-0 right-0 w-96 h-96 bg-secondary-400/10 rounded-full blur-3xl pointer-events-none" />
         <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-10">
           <div className="flex items-center gap-6">
-            <div className="w-20 h-20 rounded-3xl bg-white/10 flex items-center justify-center border border-white/20 text-secondary-300">
+            <div className="w-20 h-20 rounded-lg bg-white/10 flex items-center justify-center border border-white/20 text-secondary-300">
               <ShieldAlert className="w-10 h-10" />
             </div>
             <div>
               <span className="bg-white/10 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border border-white/10">
                 Panel Kontrol
               </span>
-              <h1 className="text-3xl md:text-2xl sm:text-3xl lg:text-5xl font-black font-display tracking-tight mt-2 italic shadow-xl shadow-emerald-900/20 text-white">
+              <h1 className="text-3xl md:text-2xl sm:text-3xl lg:text-5xl font-black font-display tracking-tight mt-2 italic shadow-sm border border-gray-200 shadow-emerald-900/20 text-white">
                 Manajemen Admin
               </h1>
             </div>
@@ -276,7 +276,7 @@ export default function UserManagementPage() {
               resetForm();
               setIsModalOpen(true);
             }}
-            className="bg-secondary-400 hover:bg-secondary-300 text-primary-950 px-6 md:px-10 py-5 rounded-3xl font-black uppercase text-xs shadow-xl transition-all flex items-center justify-center gap-2 hover:scale-105 active:scale-95"
+            className="bg-secondary-400 hover:bg-secondary-300 text-primary-950 px-6 md:px-10 py-5 rounded-lg font-black uppercase text-xs shadow-sm border border-gray-200 transition-all flex items-center justify-center gap-2 hover:scale-105 active:scale-95"
           >
             <Plus className="w-6 h-6" /> Tambah Pengguna
           </button>
@@ -284,7 +284,7 @@ export default function UserManagementPage() {
       </div>
 
       {/* User List Dashboard */}
-      <div className="bg-white rounded-4xl border border-secondary-100 shadow-xl shadow-emerald-900/20 overflow-hidden app-card">
+      <div className="bg-white rounded-4xl border border-secondary-100 shadow-sm border border-gray-200 shadow-emerald-900/20 overflow-hidden app-card">
         <div className="p-5 md:p-8 border-b border-stone-50 flex flex-col md:flex-row justify-between items-center gap-6 bg-secondary-50/10">
           <div className="relative w-full md:w-[28rem]">
             <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-stone-300" />
@@ -293,7 +293,7 @@ export default function UserManagementPage() {
               placeholder="Cari pengguna sistem..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-16 pr-8 py-5 bg-white border-2 border-secondary-100 rounded-[2.5rem] focus:outline-none focus:border-primary-500 font-bold shadow-xl shadow-emerald-900/20 placeholder:text-stone-300"
+              className="w-full pl-16 pr-8 py-5 bg-white border-2 border-secondary-100 rounded-[2.5rem] focus:outline-none focus:border-primary-500 font-bold shadow-sm border border-gray-200 shadow-emerald-900/20 placeholder:text-stone-300"
             />
           </div>
           <p className="text-[10px] font-black uppercase tracking-widest text-stone-500 bg-stone-100 px-4 py-2 rounded-full">
@@ -326,7 +326,7 @@ export default function UserManagementPage() {
                   >
                     <td className="p-5 md:p-8">
                       <div className="flex items-center gap-5">
-                        <div className="w-12 h-12 rounded-3xl bg-primary-100 flex items-center justify-center text-primary-700 font-black text-xs border-2 border-white shadow-xl shadow-emerald-900/20">
+                        <div className="w-12 h-12 rounded-lg bg-primary-100 flex items-center justify-center text-primary-700 font-black text-xs border-2 border-white shadow-sm border border-gray-200 shadow-emerald-900/20">
                           {user.full_name.charAt(0)}
                         </div>
                         <div>
@@ -341,7 +341,7 @@ export default function UserManagementPage() {
                     </td>
                     <td className="p-5 md:p-8 text-center">
                       <div className="flex flex-wrap justify-center gap-2">
-                        <span className="px-4 py-1.5 bg-primary-50 text-primary-700 text-[10px] font-black rounded-3xl border border-primary-100 uppercase tracking-widest shadow-xl shadow-emerald-900/20">
+                        <span className="px-4 py-1.5 bg-primary-50 text-primary-700 text-[10px] font-black rounded-lg border border-primary-100 uppercase tracking-widest shadow-sm border border-gray-200 shadow-emerald-900/20">
                           {ROLE_LABELS[user.role as UserRole] ||
                             user.role.replace("_", " ")}
                         </span>
@@ -351,7 +351,7 @@ export default function UserManagementPage() {
                             .map((r, i) => (
                               <span
                                 key={i}
-                                className="px-4 py-1.5 bg-stone-100 text-stone-600 text-[10px] font-black rounded-3xl border border-stone-200 uppercase tracking-widest shadow-xl shadow-emerald-900/20"
+                                className="px-4 py-1.5 bg-stone-100 text-stone-600 text-[10px] font-black rounded-lg border border-stone-200 uppercase tracking-widest shadow-sm border border-gray-200 shadow-emerald-900/20"
                               >
                                 {ROLE_LABELS[r as UserRole] ||
                                   r.replace("_", " ")}
@@ -415,9 +415,9 @@ export default function UserManagementPage() {
               });
             }
           }}
-          className="fixed inset-0 z-50 flex items-start md:items-center pt-10 md:pt-0 pb-20 md:pb-0 justify-center p-6 bg-primary-950/40 backdrop-blur-md animate-in fade-in duration-300 overflow-y-auto overflow-x-hidden overscroll-contain custom-scrollbar"
+          className="fixed inset-0 z-50 flex items-start md:items-center pt-10 md:pt-0 pb-20 md:pb-0 justify-center p-6 bg-primary-950/40  animate-in fade-in duration-300 overflow-y-auto overflow-x-hidden overscroll-contain custom-scrollbar"
         >
-          <div className="bg-white rounded-[3rem] shadow-2xl w-full max-w-3xl flex flex-col max-h-[90vh] animate-in zoom-in duration-300 border border-white/20">
+          <div className="bg-white rounded-[3rem] shadow-sm border border-gray-200 w-full max-w-3xl flex flex-col max-h-[90vh] animate-in zoom-in duration-300 border border-white/20">
             <div className="p-6 md:p-12 border-b flex justify-between items-center bg-stone-50/50 shrink-0">
               <div>
                 <h3 className="text-3xl font-black text-ink-950 font-display italic tracking-tight uppercase leading-none mb-1">
@@ -447,7 +447,7 @@ export default function UserManagementPage() {
                     onChange={(e) =>
                       setFormData({ ...formData, full_name: e.target.value })
                     }
-                    className="w-full px-4 md:px-5 py-4 bg-stone-100/50 border-2 border-transparent focus:border-primary-600 focus:bg-white focus:outline-none font-bold rounded-3xl transition-all"
+                    className="w-full px-4 md:px-5 py-4 bg-stone-100/50 border-2 border-transparent focus:border-primary-600 focus:bg-white focus:outline-none font-bold rounded-lg transition-all"
                   />
                 </div>
                 <div className="col-span-1 md:col-span-2">
@@ -461,7 +461,7 @@ export default function UserManagementPage() {
                     onChange={(e) =>
                       setFormData({ ...formData, email: e.target.value })
                     }
-                    className="w-full px-4 md:px-5 py-4 bg-stone-100/50 border-2 border-transparent focus:border-primary-600 focus:bg-white focus:outline-none font-bold rounded-3xl transition-all"
+                    className="w-full px-4 md:px-5 py-4 bg-stone-100/50 border-2 border-transparent focus:border-primary-600 focus:bg-white focus:outline-none font-bold rounded-lg transition-all"
                   />
                 </div>
                 <div className="col-span-1 md:col-span-2">
@@ -475,7 +475,7 @@ export default function UserManagementPage() {
                       setFormData({ ...formData, username: e.target.value })
                     }
                     placeholder="Contoh: ustadz_fulan"
-                    className="w-full px-4 md:px-5 py-4 bg-stone-100/50 border-2 border-transparent focus:border-primary-600 focus:bg-white focus:outline-none font-bold rounded-3xl transition-all"
+                    className="w-full px-4 md:px-5 py-4 bg-stone-100/50 border-2 border-transparent focus:border-primary-600 focus:bg-white focus:outline-none font-bold rounded-lg transition-all"
                   />
                 </div>
                 <div>
@@ -487,7 +487,7 @@ export default function UserManagementPage() {
                     onChange={(e) =>
                       setFormData({ ...formData, role: e.target.value })
                     }
-                    className="w-full px-4 md:px-5 py-4 bg-primary-50 border-2 border-primary-100 text-primary-900 rounded-3xl font-black text-xs uppercase tracking-widest cursor-pointer"
+                    className="w-full px-4 md:px-5 py-4 bg-primary-50 border-2 border-primary-100 text-primary-900 rounded-lg font-black text-xs uppercase tracking-widest cursor-pointer"
                   >
                     {ROLE_OPTIONS.map((o) => (
                       <option key={o.value} value={o.value}>
@@ -508,7 +508,7 @@ export default function UserManagementPage() {
                       onChange={(e) =>
                         setFormData({ ...formData, password: e.target.value })
                       }
-                      className="w-full px-4 md:px-5 py-4 bg-stone-100/50 border-2 border-transparent focus:border-primary-600 focus:bg-white focus:outline-none font-bold rounded-3xl transition-all pr-16"
+                      className="w-full px-4 md:px-5 py-4 bg-stone-100/50 border-2 border-transparent focus:border-primary-600 focus:bg-white focus:outline-none font-bold rounded-lg transition-all pr-16"
                       placeholder={
                         isEditing ? "(Abaikan jika sama)" : "••••••••"
                       }
@@ -537,7 +537,7 @@ export default function UserManagementPage() {
                     onChange={(e) =>
                       setFormData({ ...formData, phone: e.target.value })
                     }
-                    className="w-full px-4 md:px-5 py-4 bg-stone-100/50 border-2 border-transparent focus:border-primary-600 focus:bg-white focus:outline-none font-bold rounded-3xl transition-all"
+                    className="w-full px-4 md:px-5 py-4 bg-stone-100/50 border-2 border-transparent focus:border-primary-600 focus:bg-white focus:outline-none font-bold rounded-lg transition-all"
                   />
                 </div>
                 <div className="col-span-1 md:col-span-2">
@@ -549,7 +549,7 @@ export default function UserManagementPage() {
                     onChange={(e) =>
                       setFormData({ ...formData, jenis_kelamin: e.target.value })
                     }
-                    className="w-full px-4 md:px-5 py-4 bg-stone-100/50 border-2 border-transparent focus:border-primary-600 focus:bg-white focus:outline-none font-bold rounded-3xl transition-all cursor-pointer"
+                    className="w-full px-4 md:px-5 py-4 bg-stone-100/50 border-2 border-transparent focus:border-primary-600 focus:bg-white focus:outline-none font-bold rounded-lg transition-all cursor-pointer"
                   >
                     <option value="">Pilih Jenis Kelamin</option>
                     <option value="L">Laki-Laki (Ustadz)</option>
@@ -564,7 +564,7 @@ export default function UserManagementPage() {
                     {ROLE_OPTIONS.map((o) => (
                       <label
                         key={o.value}
-                        className={`flex items-center gap-2 px-4 py-2 rounded-3xl border cursor-pointer transition-all ${formData.secondary_roles.includes(o.value) ? "bg-primary-50 border-primary-200 text-primary-800" : "bg-stone-50 border-stone-200 text-stone-500 hover:bg-stone-100"} ${formData.role === o.value ? "opacity-50 cursor-not-allowed" : ""}`}
+                        className={`flex items-center gap-2 px-4 py-2 rounded-lg border cursor-pointer transition-all ${formData.secondary_roles.includes(o.value) ? "bg-primary-50 border-primary-200 text-primary-800" : "bg-stone-50 border-stone-200 text-stone-500 hover:bg-stone-100"} ${formData.role === o.value ? "opacity-50 cursor-not-allowed" : ""}`}
                       >
                         <input
                           type="checkbox"
@@ -620,7 +620,7 @@ export default function UserManagementPage() {
               <div className="pt-10">
                 <button
                   type="submit"
-                  className="w-full py-6 bg-primary-950 text-white font-black uppercase text-xs tracking-widest rounded-3xl shadow-2xl hover:bg-primary-800 hover:scale-[1.02] active:scale-95 transition-all shadow-primary-900/30"
+                  className="w-full py-6 bg-primary-950 text-white font-black uppercase text-xs tracking-widest rounded-lg shadow-sm border border-gray-200 hover:bg-primary-800 hover:scale-[1.02] active:scale-95 transition-all shadow-primary-900/30"
                 >
                   {isEditing ? "Simpan Perubahan" : "Tambah Pengguna Baru"}
                 </button>

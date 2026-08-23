@@ -151,10 +151,10 @@ export default function TrashPage() {
       </Link>
 
       {/* Header */}
-      <div className="bg-white rounded-xl shadow-lg p-4 md:p-6 border-2 border-red-100">
+      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 md:p-6 border-2 border-red-100">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="flex items-center gap-3 md:gap-4">
-            <div className="p-2.5 md:p-3 bg-gradient-to-br from-red-500 to-rose-600 rounded-xl flex-shrink-0">
+            <div className="p-2.5 md:p-3 bg-gradient-to-br from-red-500 to-rose-600 rounded-lg flex-shrink-0">
               <Trash2 className="w-6 h-6 md:w-8 md:h-8 text-white" />
             </div>
             <div>
@@ -175,11 +175,11 @@ export default function TrashPage() {
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-                className="px-4 py-2 border-2 border-stone-200 rounded-xl text-sm focus:border-red-500 focus:ring-4 focus:ring-red-500/10 outline-hidden min-w-[200px]"
+                className="px-4 py-2 border-2 border-stone-200 rounded-lg text-sm focus:border-red-500 focus:ring-4 focus:ring-red-500/10 outline-hidden min-w-[200px]"
               />
               <button
                 onClick={handleSearch}
-                className="bg-stone-100 p-2 rounded-xl border-2 border-stone-200 hover:border-red-500 hover:text-red-600 transition-colors"
+                className="bg-stone-100 p-2 rounded-lg border-2 border-stone-200 hover:border-red-500 hover:text-red-600 transition-colors"
               >
                 <Search className="w-5 h-5" />
               </button>
@@ -190,7 +190,7 @@ export default function TrashPage() {
                 setJenjangFilter(e.target.value);
                 setPagination((prev) => ({ ...prev, page: 1 }));
               }}
-              className="px-4 py-2 border-2 border-stone-200 rounded-xl text-sm focus:border-red-500 focus:ring-4 focus:ring-red-500/10 outline-hidden bg-white appearance-none pr-10"
+              className="px-4 py-2 border-2 border-stone-200 rounded-lg text-sm focus:border-red-500 focus:ring-4 focus:ring-red-500/10 outline-hidden bg-white appearance-none pr-10"
             >
               <option value="">Semua Jenjang</option>
               <option value="TK">TK</option>
@@ -205,7 +205,7 @@ export default function TrashPage() {
       </div>
 
       {/* Table */}
-      <div className="bg-white rounded-xl shadow-lg border-2 border-red-100 overflow-hidden">
+      <div className="bg-white rounded-lg shadow-sm border border-gray-200 border-2 border-red-100 overflow-hidden">
         {loading ? (
           <div className="flex items-center justify-center py-20">
             <div className="text-center">
@@ -297,7 +297,7 @@ export default function TrashPage() {
                             setRestoringItem(item);
                             setIsRestoreModalOpen(true);
                           }}
-                          className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-bold transition-all shadow-sm hover:shadow-md"
+                          className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-bold transition-all shadow-sm hover:shadow-sm border border-gray-200"
                         >
                           <RotateCcw className="w-4 h-4" />
                           <span>Restore</span>
@@ -355,8 +355,8 @@ export default function TrashPage() {
 
       {/* Restore Confirmation Modal */}
       {isRestoreModalOpen && restoringItem && (
-        <div className="fixed inset-0 z-50 flex items-start md:items-center pt-10 md:pt-0 pb-20 md:pb-0 justify-center bg-black/50 backdrop-blur-sm p-4 overflow-y-auto overflow-x-hidden overscroll-contain custom-scrollbar">
-          <div className="bg-white rounded-2xl shadow-xl w-full max-w-md border-2 border-green-100 animate-in fade-in zoom-in duration-200">
+        <div className="fixed inset-0 z-50 flex items-start md:items-center pt-10 md:pt-0 pb-20 md:pb-0 justify-center bg-black/50  p-4 overflow-y-auto overflow-x-hidden overscroll-contain custom-scrollbar">
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 w-full max-w-md border-2 border-green-100 animate-in fade-in zoom-in duration-200">
             <div className="flex justify-between items-center p-6 border-b border-green-100">
               <div className="flex items-center gap-3">
                 <div className="p-2 bg-green-100 rounded-lg">
@@ -380,7 +380,7 @@ export default function TrashPage() {
             </div>
 
             <div className="p-6 space-y-4">
-              <div className="bg-green-50 border-2 border-green-200 rounded-xl p-4">
+              <div className="bg-green-50 border-2 border-green-200 rounded-lg p-4">
                 <p className="text-sm text-green-800 font-medium">
                   <CheckCircle2 className="w-4 h-4 inline-block mr-1 text-green-600" /> Data{" "}
                   <strong>{toTitleCase(restoringItem.nama_lengkap)}</strong> (
@@ -393,7 +393,7 @@ export default function TrashPage() {
                 <button
                   type="button"
                   onClick={() => setIsRestoreModalOpen(false)}
-                  className="px-5 py-2.5 font-bold text-stone-500 hover:bg-stone-100 rounded-xl transition-colors"
+                  className="px-5 py-2.5 font-bold text-stone-500 hover:bg-stone-100 rounded-lg transition-colors"
                   disabled={isRestoring}
                 >
                   Batal
@@ -401,7 +401,7 @@ export default function TrashPage() {
                 <button
                   onClick={handleRestore}
                   disabled={isRestoring}
-                  className="flex items-center gap-2 px-5 py-2.5 bg-green-600 hover:bg-green-700 text-white font-bold rounded-xl shadow-lg shadow-green-200 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex items-center gap-2 px-5 py-2.5 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg shadow-sm border border-gray-200 shadow-green-200 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isRestoring ? (
                     <>

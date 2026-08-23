@@ -149,7 +149,7 @@ function WilayahSelect({
         aria-expanded={open}
         className={`
           w-full flex items-center gap-3 px-4 py-3
-          rounded-xl border-2 text-left text-sm font-medium
+          rounded-lg border-2 text-left text-sm font-medium
           transition-all duration-200 outline-none
           focus-visible:ring-2 focus-visible:ring-primary-400/50 focus-visible:ring-offset-1
           ${
@@ -224,7 +224,7 @@ function WilayahSelect({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -4, scale: 0.98 }}
             transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
-            className="absolute z-50 top-[calc(100%+6px)] left-0 right-0 bg-white border border-primary-200 rounded-xl shadow-[var(--shadow-premium-lg)] overflow-hidden"
+            className="absolute z-50 top-[calc(100%+6px)] left-0 right-0 bg-white border border-primary-200 rounded-lg shadow-[var(--shadow-premium-lg)] overflow-hidden"
             role="listbox"
           >
             {/* Search — hanya tampil jika opsi banyak */}
@@ -602,7 +602,7 @@ export default function WilayahSelector({
               disabled={disabled}
               className={`
                 w-full pl-11 pr-4 py-3
-                rounded-xl border-2 text-sm font-medium
+                rounded-lg border-2 text-sm font-medium
                 transition-all duration-200 outline-none
                 placeholder:text-ink-400 text-ink-900
                 focus-visible:ring-2 focus-visible:ring-primary-400/50 focus-visible:ring-offset-1
@@ -644,7 +644,7 @@ export default function WilayahSelector({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 4, scale: 0.98 }}
             transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-            className="flex items-center gap-3 px-4 py-3 bg-primary-50 border border-primary-200 rounded-xl text-sm"
+            className="flex items-center gap-3 px-4 py-3 bg-primary-50 border border-primary-200 rounded-lg text-sm"
           >
             {/* Icon dengan aksen kuning — signature Ulul Albaab */}
             <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary-600 flex items-center justify-center ring-2 ring-secondary-400/60">

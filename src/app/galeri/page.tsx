@@ -110,7 +110,7 @@ export default function GaleriPage() {
               className="mb-12"
             >
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-xl bg-primary-50 flex items-center justify-center text-primary-700 border border-primary-100">
+                <div className="w-10 h-10 rounded-lg bg-primary-50 flex items-center justify-center text-primary-700 border border-primary-100">
                   <Images className="w-5 h-5" />
                 </div>
                 <h2 className="text-3xl md:text-4xl font-display font-black text-ink-950 tracking-tight">
@@ -128,7 +128,7 @@ export default function GaleriPage() {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ delay: idx * 0.05 }}
-                  className="relative rounded-3xl overflow-hidden group aspect-[4/3] shadow-premium-md hover:shadow-premium-xl transition-all duration-500"
+                  className="relative rounded-lg overflow-hidden group aspect-[4/3] shadow-premium-md hover:shadow-premium-xl transition-all duration-500"
                 >
                   <Image
                     src={img.src}
@@ -138,7 +138,7 @@ export default function GaleriPage() {
                   />
                   <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent opacity-80 group-hover:opacity-90 transition-opacity" />
                   <div className="absolute bottom-2 left-2 right-2 md:bottom-4 md:left-4 md:right-4">
-                    <span className="text-white font-bold text-[10px] sm:text-xs md:text-sm drop-shadow-lg leading-tight block">
+                    <span className="text-white font-bold text-[10px] sm:text-xs md:text-sm drop-shadow-sm border border-gray-200 leading-tight block">
                       {img.label}
                     </span>
                   </div>
@@ -156,7 +156,7 @@ export default function GaleriPage() {
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="bg-primary-900 bg-linear-to-br from-primary-800 to-primary-950 rounded-[2rem] md:rounded-[3rem] lg:rounded-[4rem] p-6 sm:p-5 md:p-8 lg:p-24 text-center text-white relative overflow-hidden shadow-lg"
+            className="bg-primary-900 bg-linear-to-br from-primary-800 to-primary-950 rounded-[2rem] md:rounded-[3rem] lg:rounded-[4rem] p-6 sm:p-5 md:p-8 lg:p-24 text-center text-white relative overflow-hidden shadow-sm border border-gray-200"
           >
             <div className="absolute top-0 right-0 w-32 h-32 sm:w-64 sm:h-64 md:w-96 md:h-96 bg-white/5 rounded-full blur-[60px] md:blur-[100px] -translate-y-1/2 translate-x-1/2" />
             <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-5" />
@@ -174,7 +174,7 @@ export default function GaleriPage() {
               </p>
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 md:gap-6 justify-center px-4">
                 <Link href="/kontak">
-                  <button className="w-full sm:w-auto px-6 sm:px-6 md:px-10 py-3.5 sm:py-4 md:py-5 rounded-pill bg-white text-primary-950 font-black text-sm sm:text-base md:text-lg hover:bg-primary-50 shadow-md transition-all min-h-[48px] sm:min-h-[52px]">
+                  <button className="w-full sm:w-auto px-6 sm:px-6 md:px-10 py-3.5 sm:py-4 md:py-5 rounded-pill bg-white text-primary-950 font-black text-sm sm:text-base md:text-lg hover:bg-primary-50 shadow-sm border border-gray-200 transition-all min-h-[48px] sm:min-h-[52px]">
                     Jadwalkan Kunjungan
                   </button>
                 </Link>

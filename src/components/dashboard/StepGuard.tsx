@@ -110,7 +110,7 @@ export default function StepGuard({
           <p className="text-stone-600 mb-6">{unlockMessage}</p>
 
           {/* Current Status */}
-          <div className="bg-white rounded-xl p-4 border-2 border-secondary-200 mb-6">
+          <div className="bg-white rounded-lg p-4 border-2 border-secondary-200 mb-6">
             <p className="text-sm text-stone-500 mb-2">Status Anda saat ini:</p>
             <span
               className={`inline-block px-4 py-2 rounded-lg text-sm font-bold ${statusInfo.color}`}
@@ -121,7 +121,7 @@ export default function StepGuard({
 
           {/* Next Step */}
           {nextStep && (
-            <div className="bg-primary-50 rounded-xl p-4 border-2 border-primary-200 mb-6">
+            <div className="bg-primary-50 rounded-lg p-4 border-2 border-primary-200 mb-6">
               <div className="flex items-start gap-3">
                 <AlertCircle className="w-5 h-5 text-primary-600 flex-shrink-0 mt-0.5" />
                 <div className="text-left">
@@ -137,7 +137,7 @@ export default function StepGuard({
           {/* Back Button */}
           <Link
             href={redirectOnFail}
-            className="inline-flex items-center gap-2 px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white font-bold rounded-xl transition-colors"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white font-bold rounded-lg transition-colors"
           >
             <ArrowLeft className="w-5 h-5" />
             Kembali ke Beranda

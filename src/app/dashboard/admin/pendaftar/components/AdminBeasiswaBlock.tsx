@@ -290,7 +290,7 @@ function AdminBerkasSection({
           return (
             <div
               key={item.fieldKey}
-              className={`rounded-xl border p-3 transition-colors ${
+              className={`rounded-lg border p-3 transition-colors ${
                 currentPath
                   ? "bg-green-50 border-green-200"
                   : item.required
@@ -611,7 +611,7 @@ export default function AdminBeasiswaBlock({
     <div className="space-y-4">
       {current ? (
         <div
-          className={`rounded-xl p-4 border ${
+          className={`rounded-lg p-4 border ${
             isKeduanya ? "bg-primary-50 border-primary-200" : hasBeasiswa ? "bg-emerald-50 border-emerald-200" : "bg-amber-50 border-amber-200"
           }`}
         >
@@ -690,14 +690,14 @@ export default function AdminBeasiswaBlock({
           
           <button
             onClick={handleDelete}
-            className="w-full mt-2 bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200 py-2.5 rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-2"
+            className="w-full mt-2 bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200 py-2.5 rounded-lg text-xs font-bold transition-colors flex items-center justify-center gap-2"
           >
             <Trash2 className="w-4 h-4" />
             Hapus Bantuan
           </button>
         </div>
       ) : (
-        <div className="rounded-xl border-2 border-dashed border-stone-200 p-5 text-center text-stone-400">
+        <div className="rounded-lg border-2 border-dashed border-stone-200 p-5 text-center text-stone-400">
           <HandCoins className="w-8 h-8 mx-auto mb-2 opacity-30" />
           <p className="text-sm font-medium">Belum ada bantuan biaya yang diberikan</p>
         </div>
@@ -706,7 +706,7 @@ export default function AdminBeasiswaBlock({
       {!current && !activeSection && (
         <button
           onClick={openForm}
-          className="w-full flex flex-col items-center justify-center gap-2 p-4 bg-primary-50 hover:bg-primary-100 border-2 border-primary-200 rounded-xl transition-all group"
+          className="w-full flex flex-col items-center justify-center gap-2 p-4 bg-primary-50 hover:bg-primary-100 border-2 border-primary-200 rounded-lg transition-all group"
         >
           <HandCoins className="w-7 h-7 text-primary-500 group-hover:scale-110 transition-transform" />
           <span className="font-black text-sm text-primary-900">Atur Bantuan Biaya</span>
@@ -715,7 +715,7 @@ export default function AdminBeasiswaBlock({
       )}
 
       {activeSection === "form" && (
-        <div className="rounded-xl border-2 border-primary-200 bg-primary-50/30 p-4 sm:p-5 space-y-5">
+        <div className="rounded-lg border-2 border-primary-200 bg-primary-50/30 p-4 sm:p-5 space-y-5">
           <div className="flex items-center justify-between border-b border-primary-100 pb-3">
             <div className="flex items-center gap-2">
               <HandCoins className="w-5 h-5 text-primary-600" />
@@ -727,7 +727,7 @@ export default function AdminBeasiswaBlock({
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="bg-white p-4 rounded-xl border border-stone-200 shadow-sm space-y-4">
+            <div className="bg-white p-4 rounded-lg border border-stone-200 shadow-sm space-y-4">
               <div className="flex items-center gap-2 border-b border-stone-100 pb-2">
                 <Building2 className="w-4 h-4 text-primary-600" />
                 <h5 className="font-black text-xs text-stone-700 uppercase tracking-widest">Uang Pangkal</h5>
@@ -772,7 +772,7 @@ export default function AdminBeasiswaBlock({
               )}
             </div>
 
-            <div className="bg-white p-4 rounded-xl border border-stone-200 shadow-sm space-y-4">
+            <div className="bg-white p-4 rounded-lg border border-stone-200 shadow-sm space-y-4">
               <div className="flex items-center gap-2 border-b border-stone-100 pb-2">
                 <BookOpen className="w-4 h-4 text-violet-600" />
                 <h5 className="font-black text-xs text-stone-700 uppercase tracking-widest">SPP Bulan Pertama</h5>

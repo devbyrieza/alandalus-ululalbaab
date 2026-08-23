@@ -137,7 +137,7 @@ export default function KesiapanTestPage() {
   if (alreadyDone) {
     return (
       <div className="max-w-lg mx-auto p-5 md:p-8 text-center mt-10">
-        <div className="bg-white rounded-2xl shadow-lg border p-6 md:p-10">
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 border p-6 md:p-10">
           <CheckCircle className="w-16 h-16 text-emerald-500 mx-auto mb-4" />
           <h2 className="text-xl font-bold mb-2">Tes Sudah Dikerjakan</h2>
           <p className="text-stone-600 mb-6">
@@ -147,7 +147,7 @@ export default function KesiapanTestPage() {
             onClick={() =>
               router.push("/dashboard/pendaftar?tab=undangan-seleksi")
             }
-            className="px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white font-bold rounded-xl transition-colors"
+            className="px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white font-bold rounded-lg transition-colors"
           >
             Kembali ke Jadwal Seleksi
           </button>
@@ -159,7 +159,7 @@ export default function KesiapanTestPage() {
   if (isLocked) {
     return (
       <div className="max-w-lg mx-auto p-5 md:p-8 text-center mt-10">
-        <div className="bg-white rounded-[2rem] shadow-xl border p-6 md:p-10">
+        <div className="bg-white rounded-[2rem] shadow-sm border border-gray-200 border p-6 md:p-10">
           <div className="w-20 h-20 bg-secondary-100 rounded-full flex items-center justify-center mx-auto mb-6">
             <AlertCircle className="w-10 h-10 text-secondary-600" />
           </div>
@@ -172,7 +172,7 @@ export default function KesiapanTestPage() {
           </p>
           <button
             onClick={() => router.push("/dashboard/pendaftar")}
-            className="w-full px-6 py-4 bg-primary-700 hover:bg-primary-800 text-white font-black rounded-xl transition-all shadow-md uppercase tracking-widest text-sm"
+            className="w-full px-6 py-4 bg-primary-700 hover:bg-primary-800 text-white font-black rounded-lg transition-all shadow-sm border border-gray-200 uppercase tracking-widest text-sm"
           >
             Kembali ke Dashboard
           </button>
@@ -184,7 +184,7 @@ export default function KesiapanTestPage() {
   return (
     <div className="max-w-4xl mx-auto p-4 md:p-6 pb-24">
       {pendaftarId && (
-        <div className="mb-4 p-4 bg-amber-100 border border-amber-300 rounded-xl text-amber-900 flex items-center gap-3">
+        <div className="mb-4 p-4 bg-amber-100 border border-amber-300 rounded-lg text-amber-900 flex items-center gap-3">
           <AlertCircle className="w-5 h-5 flex-shrink-0" />
           <p className="text-sm font-bold">MODE ADMIN: Anda sedang mengakses/mengisikan ujian atas nama santri lain.</p>
         </div>
@@ -196,7 +196,7 @@ export default function KesiapanTestPage() {
         <ArrowLeft className="w-4 h-4" /> Kembali
       </button>
 
-      <div className="bg-gradient-to-r from-primary-600 to-primary-800 rounded-xl p-6 mb-6">
+      <div className="bg-gradient-to-r from-primary-600 to-primary-800 rounded-lg p-6 mb-6">
         <h1 className="text-xl font-bold text-white">
           Seleksi Kesiapan Calon Santri/Wati
         </h1>
@@ -206,7 +206,7 @@ export default function KesiapanTestPage() {
       </div>
 
       {/* Pesan Mudir */}
-      <div className="bg-primary-50 border border-primary-200 rounded-xl p-4 mb-6">
+      <div className="bg-primary-50 border border-primary-200 rounded-lg p-4 mb-6">
         <div className="flex gap-4">
           <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center border border-primary-100 flex-shrink-0">
             <AlertCircle className="w-6 h-6 text-primary-600" />
@@ -229,7 +229,7 @@ export default function KesiapanTestPage() {
       {KESIAPAN_QUESTIONS.map((section, idx) => (
         <div
           key={idx}
-          className="bg-white rounded-xl shadow-sm border mb-6 overflow-hidden"
+          className="bg-white rounded-lg shadow-sm border mb-6 overflow-hidden"
         >
           <div className="px-6 py-4 bg-stone-50 border-b font-bold text-stone-800">
             {section.section}
@@ -270,7 +270,7 @@ export default function KesiapanTestPage() {
         <button
           onClick={handleSubmit}
           disabled={loading}
-          className="w-full py-4 bg-emerald-600 hover:bg-emerald-700 disabled:bg-stone-300 text-white font-bold rounded-xl shadow-lg transition-colors flex items-center justify-center gap-2"
+          className="w-full py-4 bg-emerald-600 hover:bg-emerald-700 disabled:bg-stone-300 text-white font-bold rounded-lg shadow-sm border border-gray-200 transition-colors flex items-center justify-center gap-2"
         >
           {loading ? (
             <>

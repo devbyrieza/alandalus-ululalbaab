@@ -215,10 +215,10 @@ export default function AdminSidebar({
   return (
     <div className="min-h-screen bg-[#fafaf9] font-sans selection:bg-primary-100 selection:text-primary-900">
       {/* ─── MOBILE HEADER (Hanya muncul di layar < 1024px) ─── */}
-      <div className="lg:hidden fixed top-0 left-0 right-0 z-[60] bg-white/90 backdrop-blur-2xl border-b border-ink-200/60 px-6 py-4 flex items-center justify-between shadow-sm">
+      <div className="lg:hidden fixed top-0 left-0 right-0 z-[60] bg-white backdrop-blur-2xl border-b border-ink-200/60 px-6 py-4 flex items-center justify-between shadow-sm">
         <button
           onClick={() => setSidebarOpen(true)}
-          className="p-2.5 -ml-2 text-ink-600 hover:bg-ink-100 rounded-2xl transition-all active:scale-95"
+          className="p-2.5 -ml-2 text-ink-600 hover:bg-ink-100 rounded-lg transition-all active:scale-95"
         >
           <Menu className="w-6 h-6" />
         </button>
@@ -230,7 +230,7 @@ export default function AdminSidebar({
             Control Center
           </span>
         </div>
-        <div className="w-10 h-10 rounded-2xl bg-linear-to-br from-primary-700 to-primary-900 flex items-center justify-center text-white text-sm font-black shadow-lg shadow-primary-200">
+        <div className="w-10 h-10 rounded-lg bg-linear-to-br from-primary-700 to-primary-900 flex items-center justify-center text-white text-sm font-black shadow-sm border border-gray-200 shadow-primary-200">
           {(adminName || "A").charAt(0)}
         </div>
       </div>
@@ -245,18 +245,18 @@ export default function AdminSidebar({
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setSidebarOpen(false)}
-              className="fixed inset-0 z-[70] bg-primary-950/40 backdrop-blur-md lg:hidden overflow-y-auto overflow-x-hidden p-4 overscroll-contain custom-scrollbar"
+              className="fixed inset-0 z-[70] bg-primary-950/40  lg:hidden overflow-y-auto overflow-x-hidden p-4 overscroll-contain custom-scrollbar"
             />
             <motion.aside
               initial={{ x: "-100%" }}
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
               transition={{ type: "spring", damping: 30, stiffness: 300 }}
-              className="fixed top-0 left-0 bottom-0 z-[80] w-80 bg-white shadow-2xl lg:hidden flex flex-col rounded-r-[3rem] overflow-hidden"
+              className="fixed top-0 left-0 bottom-0 z-[80] w-80 bg-white shadow-sm border border-gray-200 lg:hidden flex flex-col rounded-r-[3rem] overflow-hidden"
             >
               <div className="p-5 md:p-8 flex items-center justify-between border-b border-ink-50 bg-linear-to-b from-ink-50 to-white">
                 <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 bg-white rounded-2xl flex items-center justify-center shadow-clay-sm border border-ink-100">
+                  <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center shadow-clay-sm border border-ink-100">
                     <img
                       src={BRANDING.logoPath}
                       alt="Logo"
@@ -269,7 +269,7 @@ export default function AdminSidebar({
                 </div>
                 <button
                   onClick={() => setSidebarOpen(false)}
-                  className="p-3 hover:bg-red-50 rounded-2xl text-red-400 transition-all active:scale-90"
+                  className="p-3 hover:bg-red-50 rounded-lg text-red-400 transition-all active:scale-90"
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -281,9 +281,9 @@ export default function AdminSidebar({
                     key={item.name}
                     href={item.href}
                     onClick={() => setSidebarOpen(false)}
-                    className={`flex items-center justify-between px-4 py-4 rounded-2xl transition-all ${
+                    className={`flex items-center justify-between px-4 py-4 rounded-lg transition-all ${
                       item.isActive
-                        ? "bg-primary-700 text-white shadow-xl shadow-primary-200 font-bold"
+                        ? "bg-primary-700 text-white shadow-sm border border-gray-200 shadow-primary-200 font-bold"
                         : "text-ink-500 hover:bg-ink-50 hover:text-primary-900"
                     }`}
                   >
@@ -315,7 +315,7 @@ export default function AdminSidebar({
                     <select
                       value={userRole || ""}
                       onChange={handleRoleSwitch}
-                      className="w-full appearance-none bg-ink-50 border border-ink-100 text-[10px] font-black text-primary-900 uppercase tracking-widest pl-10 pr-8 py-3 rounded-xl cursor-pointer focus:outline-none focus:ring-4 focus:ring-primary-500/5 transition-all group-hover:bg-ink-100"
+                      className="w-full appearance-none bg-ink-50 border border-ink-100 text-[10px] font-black text-primary-900 uppercase tracking-widest pl-10 pr-8 py-3 rounded-lg cursor-pointer focus:outline-none focus:ring-4 focus:ring-primary-500/5 transition-all group-hover:bg-ink-100"
                     >
                       {availableRoles.map((role) => (
                         <option key={role} value={role}>
@@ -328,7 +328,7 @@ export default function AdminSidebar({
                 )}
                 <button
                   onClick={handleLogout}
-                  className="w-full flex items-center justify-center gap-3 px-6 py-4 bg-red-50 text-red-600 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-red-100 transition-all active:scale-95"
+                  className="w-full flex items-center justify-center gap-3 px-6 py-4 bg-red-50 text-red-600 rounded-lg font-black text-xs uppercase tracking-widest hover:bg-red-100 transition-all active:scale-95"
                 >
                   <LogOut className="w-4 h-4" /> Keluar Sistem
                 </button>
@@ -348,7 +348,7 @@ export default function AdminSidebar({
             href="/dashboard/admin"
             className="flex items-center gap-4 overflow-hidden group"
           >
-            <div className="shrink-0 w-12 h-12 bg-white rounded-2xl flex items-center justify-center border border-ink-100 shadow-xl group-hover:rotate-6 transition-all duration-500">
+            <div className="shrink-0 w-12 h-12 bg-white rounded-lg flex items-center justify-center border border-ink-100 shadow-sm border border-gray-200 group-hover:rotate-6 transition-all duration-500">
               <img
                 src={BRANDING.logoPath}
                 alt="Logo"
@@ -384,7 +384,7 @@ export default function AdminSidebar({
                 <select
                   value={userRole || ""}
                   onChange={handleRoleSwitch}
-                  className="w-full appearance-none bg-ink-50 border border-ink-100 text-[10px] font-black text-primary-900 uppercase tracking-widest pl-10 pr-8 py-3 rounded-xl cursor-pointer focus:outline-none focus:ring-4 focus:ring-primary-500/5 transition-all group-hover:bg-ink-100"
+                  className="w-full appearance-none bg-ink-50 border border-ink-100 text-[10px] font-black text-primary-900 uppercase tracking-widest pl-10 pr-8 py-3 rounded-lg cursor-pointer focus:outline-none focus:ring-4 focus:ring-primary-500/5 transition-all group-hover:bg-ink-100"
                 >
                   {availableRoles.map((role) => (
                     <option key={role} value={role}>
@@ -415,7 +415,7 @@ export default function AdminSidebar({
                   )}
                   <Link
                     href={item.href}
-                    className={`relative group flex items-center justify-between px-4 py-3.5 rounded-2xl transition-all duration-300 ${
+                    className={`relative group flex items-center justify-between px-4 py-3.5 rounded-lg transition-all duration-300 ${
                       item.isActive
                         ? "text-primary-950 font-black"
                         : "text-ink-500 hover:text-primary-900 hover:bg-ink-50"
@@ -425,7 +425,7 @@ export default function AdminSidebar({
                     {item.isActive && (
                       <motion.div
                         layoutId="sidebar-active"
-                        className="absolute inset-0 bg-primary-50 rounded-2xl -z-10 border border-primary-100 shadow-sm"
+                        className="absolute inset-0 bg-primary-50 rounded-lg -z-10 border border-primary-100 shadow-sm"
                         transition={{
                           type: "spring",
                           bounce: 0.2,
@@ -463,7 +463,7 @@ export default function AdminSidebar({
 
                     {/* Tooltip: Hanya muncul saat sidebar dikempiskan (Collapsed Mode) */}
                     {collapsed && (
-                      <div className="absolute left-full ml-6 px-4 py-2 bg-primary-950 text-white text-[11px] font-black rounded-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all whitespace-nowrap z-[100] shadow-2xl border border-white/10 uppercase tracking-widest">
+                      <div className="absolute left-full ml-6 px-4 py-2 bg-primary-950 text-white text-[11px] font-black rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all whitespace-nowrap z-[100] shadow-sm border border-gray-200 border border-white/10 uppercase tracking-widest">
                         {item.name}
                       </div>
                     )}
@@ -479,7 +479,7 @@ export default function AdminSidebar({
           {/* Toggle Button */}
           <button
             onClick={() => setCollapsed(!collapsed)}
-            className={`w-full flex items-center justify-center p-3 rounded-xl text-ink-400 hover:text-primary-950 hover:bg-white hover:shadow-sm mb-4 transition-all duration-300 active:scale-95 ${collapsed ? "" : "gap-3"}`}
+            className={`w-full flex items-center justify-center p-3 rounded-lg text-ink-400 hover:text-primary-950 hover:bg-white hover:shadow-sm mb-4 transition-all duration-300 active:scale-95 ${collapsed ? "" : "gap-3"}`}
           >
             <PanelLeft
               className={`w-5 h-5 shrink-0 transition-transform duration-700 ${collapsed ? "rotate-180" : ""}`}
@@ -493,9 +493,9 @@ export default function AdminSidebar({
 
           {/* Profile Card */}
           <div
-            className={`flex items-center gap-4 p-3 rounded-2xl transition-all group relative ${collapsed ? "justify-center" : "bg-white shadow-sm border border-ink-100"}`}
+            className={`flex items-center gap-4 p-3 rounded-lg transition-all group relative ${collapsed ? "justify-center" : "bg-white shadow-sm border border-ink-100"}`}
           >
-            <div className="shrink-0 w-10 h-10 rounded-2xl bg-linear-to-br from-primary-700 to-primary-900 flex items-center justify-center text-white font-black text-sm shadow-xl shadow-primary-100 ring-4 ring-white border border-primary-500/20">
+            <div className="shrink-0 w-10 h-10 rounded-lg bg-linear-to-br from-primary-700 to-primary-900 flex items-center justify-center text-white font-black text-sm shadow-sm border border-gray-200 shadow-primary-100 ring-4 ring-white border border-primary-500/20">
               {(adminName || "A").charAt(0)}
             </div>
             {!collapsed && (
@@ -511,7 +511,7 @@ export default function AdminSidebar({
             {!collapsed && (
               <button
                 onClick={handleLogout}
-                className="p-2 text-ink-300 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all active:scale-90"
+                className="p-2 text-ink-300 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all active:scale-90"
                 title="Logout"
               >
                 <LogOut className="w-4 h-4" />
@@ -526,7 +526,7 @@ export default function AdminSidebar({
         className={`flex-1 min-w-0 transition-all duration-500 ${collapsed ? "lg:pl-24" : "lg:pl-72"}`}
       >
         {/* Top Desktop Navigation (Floating Navbar) */}
-        <header className="hidden lg:flex sticky top-0 z-40 bg-white/80 backdrop-blur-2xl border-b border-ink-100 h-24 items-center justify-between px-6 md:px-12">
+        <header className="hidden lg:flex sticky top-0 z-40 bg-white backdrop-blur-2xl border-b border-ink-100 h-24 items-center justify-between px-6 md:px-12">
           <div className="flex items-center gap-10">
             {/* Breadcrumbs: Memandu user posisi saat ini */}
             <div className="flex items-center gap-3 text-[11px] font-black text-ink-400 uppercase tracking-widest">
@@ -544,13 +544,13 @@ export default function AdminSidebar({
           <div className="flex items-center gap-6">
             <LanguageSwitcher />
             <div className="h-6 w-px bg-ink-100" />
-            <button className="relative p-3 text-ink-400 hover:text-primary-700 hover:bg-primary-50 rounded-2xl transition-all active:scale-95">
+            <button className="relative p-3 text-ink-400 hover:text-primary-700 hover:bg-primary-50 rounded-lg transition-all active:scale-95">
               <Bell className="w-5 h-5" />
               <span className="absolute top-3 right-3 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white shadow-sm animate-pulse" />
             </button>
             <Link
               href="/"
-              className="px-5 md:px-8 py-3.5 bg-primary-950 text-white text-[11px] font-black uppercase tracking-[0.2em] rounded-2xl hover:bg-primary-800 transition-all shadow-xl shadow-primary-950/20 active:scale-95"
+              className="px-5 md:px-8 py-3.5 bg-primary-950 text-white text-[11px] font-black uppercase tracking-[0.2em] rounded-lg hover:bg-primary-800 transition-all shadow-sm border border-gray-200 shadow-primary-950/20 active:scale-95"
             >
               Kunjungi Situs
             </Link>

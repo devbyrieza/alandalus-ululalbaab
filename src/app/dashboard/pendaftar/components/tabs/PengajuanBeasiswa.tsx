@@ -96,7 +96,7 @@ function FileUploadField({
   };
 
   return (
-    <div className="bg-stone-50 p-4 rounded-xl border border-stone-200">
+    <div className="bg-stone-50 p-4 rounded-lg border border-stone-200">
       <div className="flex justify-between items-start mb-1">
         <label className="block text-sm font-bold text-ink-900">
           {item.label}{" "}
@@ -104,7 +104,7 @@ function FileUploadField({
         </label>
       </div>
       <p className="text-xs text-stone-500 mb-3">{item.desc}</p>
-      <label className="flex flex-col items-center justify-center w-full h-24 border-2 border-dashed border-stone-300 rounded-xl cursor-pointer hover:bg-white transition-colors bg-stone-50">
+      <label className="flex flex-col items-center justify-center w-full h-24 border-2 border-dashed border-stone-300 rounded-lg cursor-pointer hover:bg-white transition-colors bg-stone-50">
         <div className="flex flex-col items-center justify-center py-4">
           {file ? (
             <>
@@ -370,7 +370,7 @@ export default function PengajuanBeasiswaTab() {
     const missingCount = requiredBerkas.filter((b) => !b.path).length;
 
     return (
-      <div className="bg-white rounded-2xl shadow-sm border border-stone-200 p-6 md:p-8 animate-in fade-in slide-in-from-bottom-4 duration-500 max-w-2xl mx-auto space-y-6">
+      <div className="bg-white rounded-lg shadow-sm border border-stone-200 p-6 md:p-8 animate-in fade-in slide-in-from-bottom-4 duration-500 max-w-2xl mx-auto space-y-6">
         {/* Status Header */}
         <div className="text-center">
           <div
@@ -427,7 +427,7 @@ export default function PengajuanBeasiswaTab() {
             </div>
           )}
           {data.catatan_keputusan && (
-            <div className="bg-surface-50 p-4 rounded-xl mt-2">
+            <div className="bg-surface-50 p-4 rounded-lg mt-2">
               <span className="block text-xs font-bold text-surface-600 uppercase mb-1">
                 Catatan Verifikator
               </span>
@@ -439,7 +439,7 @@ export default function PengajuanBeasiswaTab() {
         </div>
 
         {/* Berkas Section */}
-        <div className="border border-stone-200 rounded-xl p-4">
+        <div className="border border-stone-200 rounded-lg p-4">
           <div className="flex items-center justify-between mb-3">
             <h3 className="font-bold text-ink-900 text-sm flex items-center gap-2">
               <FileText className="w-4 h-4 text-primary-500" />
@@ -472,7 +472,7 @@ export default function PengajuanBeasiswaTab() {
   );
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-stone-200 p-6 md:p-8 animate-in fade-in slide-in-from-bottom-4 duration-500 max-w-3xl mx-auto">
+    <div className="bg-white rounded-lg shadow-sm border border-stone-200 p-6 md:p-8 animate-in fade-in slide-in-from-bottom-4 duration-500 max-w-3xl mx-auto">
       <div className="text-center mb-8">
         <div className="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
           <FileText className="w-8 h-8 text-primary-600" />
@@ -494,7 +494,7 @@ export default function PengajuanBeasiswaTab() {
           </label>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <label
-              className={`cursor-pointer border-2 rounded-xl p-4 flex flex-col items-center text-center transition-all ${
+              className={`cursor-pointer border-2 rounded-lg p-4 flex flex-col items-center text-center transition-all ${
                 jenisPengajuan === "KERINGANAN_BIAYA"
                   ? "border-primary-500 bg-primary-50 text-primary-900 shadow-sm"
                   : "border-stone-200 hover:border-primary-200"
@@ -514,7 +514,7 @@ export default function PengajuanBeasiswaTab() {
               </span>
             </label>
             <label
-              className={`cursor-pointer border-2 rounded-xl p-4 flex flex-col items-center text-center transition-all ${
+              className={`cursor-pointer border-2 rounded-lg p-4 flex flex-col items-center text-center transition-all ${
                 jenisPengajuan === "BEASISWA_PRESTASI"
                   ? "border-primary-500 bg-primary-50 text-primary-900 shadow-sm"
                   : "border-stone-200 hover:border-primary-200"
@@ -545,7 +545,7 @@ export default function PengajuanBeasiswaTab() {
             required
             rows={3}
             placeholder="Jelaskan secara singkat alasan pengajuan Anda..."
-            className="w-full p-3 border border-stone-300 rounded-xl focus:border-primary-500 focus:ring-1 focus:ring-primary-500 transition-all resize-none text-sm"
+            className="w-full p-3 border border-stone-300 rounded-lg focus:border-primary-500 focus:ring-1 focus:ring-primary-500 transition-all resize-none text-sm"
             value={alasanPengajuan}
             onChange={(e) => setAlasanPengajuan(e.target.value)}
           />
@@ -563,7 +563,7 @@ export default function PengajuanBeasiswaTab() {
               required
               min="0"
               placeholder="Contoh: 5000000"
-              className="w-full p-3 border border-stone-300 rounded-xl focus:border-primary-500 focus:ring-1 focus:ring-primary-500 transition-all text-sm"
+              className="w-full p-3 border border-stone-300 rounded-lg focus:border-primary-500 focus:ring-1 focus:ring-primary-500 transition-all text-sm"
               value={nominalKesanggupan}
               onChange={(e) => setNominalKesanggupan(e.target.value)}
             />
@@ -586,7 +586,7 @@ export default function PengajuanBeasiswaTab() {
           </div>
 
           {/* Info syarat berkas */}
-          <div className="mb-4 p-3 bg-blue-50 border border-blue-100 rounded-xl text-xs text-blue-800 font-medium">
+          <div className="mb-4 p-3 bg-blue-50 border border-blue-100 rounded-lg text-xs text-blue-800 font-medium">
             {jenisPengajuan === "BEASISWA_PRESTASI" ? (
               <span>
                 <strong>Beasiswa</strong> memerlukan: SKTM + Surat Keterangan
@@ -618,7 +618,7 @@ export default function PengajuanBeasiswaTab() {
         <button
           type="submit"
           disabled={submitting}
-          className="w-full mt-6 py-4 bg-primary-600 hover:bg-primary-700 text-white font-black rounded-xl shadow-lg shadow-primary-500/30 flex justify-center items-center gap-2 transition-all disabled:opacity-70"
+          className="w-full mt-6 py-4 bg-primary-600 hover:bg-primary-700 text-white font-black rounded-lg shadow-sm border border-gray-200 shadow-primary-500/30 flex justify-center items-center gap-2 transition-all disabled:opacity-70"
         >
           {submitting ? (
             <Loader2 className="w-5 h-5 animate-spin" />

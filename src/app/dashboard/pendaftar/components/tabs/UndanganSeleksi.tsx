@@ -248,7 +248,7 @@ export default function UndanganSeleksiTab() {
   if (data.locked && !isTestingAccount) {
     return (
       <div className="space-y-6">
-        <div className="bg-linear-to-r from-stone-600 to-stone-800 rounded-2xl p-6 md:p-8 text-white shadow-lg relative overflow-hidden">
+        <div className="bg-linear-to-r from-stone-600 to-stone-800 rounded-lg p-6 md:p-8 text-white shadow-sm border border-gray-200 relative overflow-hidden">
           <div className="relative z-10">
             <h1 className="text-2xl font-black mb-2 text-white flex items-center gap-3">
               <svg
@@ -274,7 +274,7 @@ export default function UndanganSeleksiTab() {
           </div>
         </div>
 
-        <div className={`border-2 rounded-3xl p-5 md:p-8 md:p-12 text-center shadow-sm ${data.current_status?.includes('reject') || data.current_status?.includes('incomplete') ? 'border-red-200 bg-red-50' : 'bg-secondary-50 border-secondary-200'}`}>
+        <div className={`border-2 rounded-lg p-5 md:p-8 md:p-12 text-center shadow-sm ${data.current_status?.includes('reject') || data.current_status?.includes('incomplete') ? 'border-red-200 bg-red-50' : 'bg-secondary-50 border-secondary-200'}`}>
           <div className={`w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 ${data.current_status?.includes('reject') || data.current_status?.includes('incomplete') ? 'bg-red-100' : 'bg-secondary-100'}`}>
             {data.current_status?.includes('reject') || data.current_status?.includes('incomplete') ? (
               <AlertCircle className="w-10 h-10 text-red-600" />
@@ -296,7 +296,7 @@ export default function UndanganSeleksiTab() {
           <div className="mt-8 flex flex-wrap justify-center gap-4">
             <Link
               href="/dashboard/pendaftar?tab=upload-berkas"
-              className="px-5 md:px-8 py-3 bg-primary-700 text-white font-black rounded-xl hover:bg-primary-800 transition-all shadow-md uppercase tracking-widest text-sm"
+              className="px-5 md:px-8 py-3 bg-primary-700 text-white font-black rounded-lg hover:bg-primary-800 transition-all shadow-sm border border-gray-200 uppercase tracking-widest text-sm"
             >
               Cek Status Berkas
             </Link>
@@ -305,7 +305,7 @@ export default function UndanganSeleksiTab() {
 
         {/* Preview of what's coming (blurred/locked looks) */}
         <div className="opacity-40 pointer-events-none select-none filter blur-[1px]">
-          <div className="bg-white rounded-xl border border-stone-100 p-5 md:p-8 text-center">
+          <div className="bg-white rounded-lg border border-stone-100 p-5 md:p-8 text-center">
             <p className="text-stone-400 font-bold uppercase tracking-widest text-sm">
               Pratinjau Tahap Seleksi
             </p>
@@ -318,7 +318,7 @@ export default function UndanganSeleksiTab() {
   return (
     <div className="space-y-6">
       {/* ========== HEADER ========== */}
-      <div className="bg-linear-to-r from-primary-700 to-primary-900 rounded-2xl p-6 md:p-8 text-white shadow-lg relative overflow-hidden">
+      <div className="bg-linear-to-r from-primary-700 to-primary-900 rounded-lg p-6 md:p-8 text-white shadow-sm border border-gray-200 relative overflow-hidden">
         <div className="relative z-10">
           <h1 className="text-2xl font-black mb-2 text-white">
             Jadwal Seleksi
@@ -335,7 +335,7 @@ export default function UndanganSeleksiTab() {
           <a
             href="/dashboard/pendaftar/kartu-ujian"
             target="_blank"
-            className="bg-white/20 hover:bg-white/30 text-white border border-white/50 px-4 py-2 rounded-xl flex items-center gap-2 transition-all font-black backdrop-blur-sm text-sm"
+            className="bg-white/20 hover:bg-white/30 text-white border border-white/50 px-4 py-2 rounded-lg flex items-center gap-2 transition-all font-black  text-sm"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -358,7 +358,7 @@ export default function UndanganSeleksiTab() {
       </div>
 
       {/* ========== PROGRESS BAR ========== */}
-      <div className="bg-white rounded-xl border border-stone-200 p-5 shadow-sm">
+      <div className="bg-white rounded-lg border border-stone-200 p-5 shadow-sm">
         <div className="flex items-center justify-between mb-3">
           <h3 className="font-bold text-ink-800 text-sm">Progress Seleksi</h3>
           <span className="text-sm font-black text-primary-600">
@@ -367,7 +367,7 @@ export default function UndanganSeleksiTab() {
         </div>
         <div className="w-full h-3 bg-surface-100 rounded-full overflow-hidden">
           <div
-            className="h-full bg-linear-to-r from-primary-500 to-primary-700 rounded-full transition-all duration-700 shadow-lg shadow-primary-500/20"
+            className="h-full bg-linear-to-r from-primary-500 to-primary-700 rounded-full transition-all duration-700 shadow-sm border border-gray-200 shadow-primary-500/20"
             style={{ width: `${data.progress.percentage}%` }}
           />
         </div>
@@ -398,15 +398,15 @@ export default function UndanganSeleksiTab() {
             return (
               <div
                 key={key}
-                className={`bg-white rounded-xl border-2 p-5 transition-all ${
+                className={`bg-white rounded-lg border-2 p-5 transition-all ${
                   item.completed
                     ? "border-emerald-200 bg-emerald-50/50"
-                    : "border-stone-100 hover:border-primary-200 hover:shadow-md"
+                    : "border-stone-100 hover:border-primary-200 hover:shadow-sm border border-gray-200"
                 }`}
               >
                 <div className="flex items-start justify-between mb-3">
                   <div
-                    className={`w-10 h-10 rounded-xl flex items-center justify-center ${
+                    className={`w-10 h-10 rounded-lg flex items-center justify-center ${
                       item.completed ? "bg-emerald-100" : "bg-primary-50"
                     }`}
                   >
@@ -471,7 +471,7 @@ export default function UndanganSeleksiTab() {
         {/* Condition: Already booked schedules */}
         {data.grupB.booked.length > 0 && (
           <div className="space-y-3">
-              <div className="bg-emerald-50 border border-emerald-200 p-4 rounded-xl flex items-center gap-3">
+              <div className="bg-emerald-50 border border-emerald-200 p-4 rounded-lg flex items-center gap-3">
                 <CheckCircle className="w-5 h-5 text-emerald-600 flex-shrink-0" />
                 <div>
                   <h3 className="font-bold text-emerald-900 text-sm">
@@ -491,7 +491,7 @@ export default function UndanganSeleksiTab() {
                 return (
                   <div
                     key={item.id}
-                    className={`rounded-xl shadow-sm p-5 border-2 relative overflow-hidden ${
+                    className={`rounded-lg shadow-sm p-5 border-2 relative overflow-hidden ${
                       isSelesai ? "bg-stone-50 border-stone-200" : "bg-white border-primary-100"
                     }`}
                   >
@@ -559,7 +559,7 @@ export default function UndanganSeleksiTab() {
 
         {/* Condition 1: No sessions available AND haven't booked all 3 */}
         {!data.grupB.hasSchedules && data.grupB.booked.length < 3 && (
-          <div className="bg-secondary-50 border border-secondary-200 rounded-xl p-6 text-center">
+          <div className="bg-secondary-50 border border-secondary-200 rounded-lg p-6 text-center">
             <div className="w-14 h-14 bg-secondary-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <Info className="w-7 h-7 text-secondary-600" />
             </div>
@@ -605,7 +605,7 @@ export default function UndanganSeleksiTab() {
                 );
 
                 return (
-                  <div className="text-center py-12 bg-white rounded-2xl border-2 border-dashed border-stone-200">
+                  <div className="text-center py-12 bg-white rounded-lg border-2 border-dashed border-stone-200">
                     {isAllBooked ? (
                       <>
                         <CheckCircle className="w-12 h-12 text-emerald-500 mx-auto mb-4" />
@@ -641,10 +641,10 @@ export default function UndanganSeleksiTab() {
                     return (
                       <div
                         key={slot.id}
-                        className={`bg-white rounded-xl shadow-sm p-5 border-2 transition-all ${
+                        className={`bg-white rounded-lg shadow-sm p-5 border-2 transition-all ${
                           slot.isFull
                             ? "opacity-75 border-surface-200 bg-surface-50"
-                            : "border-surface-100 hover:border-primary-300 hover:shadow-md"
+                            : "border-surface-100 hover:border-primary-300 hover:shadow-sm border border-gray-200"
                         }`}
                       >
                         <div className="flex justify-between items-start mb-3">
@@ -711,7 +711,7 @@ export default function UndanganSeleksiTab() {
         {data.grupB.hasSchedules &&
           data.grupB.availableSlots.length === 0 &&
           data.grupB.booked.length === 0 && (
-            <div className="text-center py-8 bg-white rounded-xl border border-stone-200">
+            <div className="text-center py-8 bg-white rounded-lg border border-stone-200">
               <Calendar className="w-10 h-10 text-stone-300 mx-auto mb-3" />
               <p className="text-stone-500 text-sm">
                 Belum ada jadwal seleksi yang tersedia saat ini.

@@ -82,12 +82,12 @@ export default function InputNilaiManualModal({
   };
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-start md:items-center pt-10 md:pt-0 pb-20 md:pb-0 justify-center bg-primary-950/40 backdrop-blur-sm p-4 overflow-y-auto overflow-x-hidden overscroll-contain custom-scrollbar">
-      <div className="bg-white w-full max-w-4xl rounded-[2rem] shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+    <div className="fixed inset-0 z-[100] flex items-start md:items-center pt-10 md:pt-0 pb-20 md:pb-0 justify-center bg-primary-950/40  p-4 overflow-y-auto overflow-x-hidden overscroll-contain custom-scrollbar">
+      <div className="bg-white w-full max-w-4xl rounded-[2rem] shadow-sm border border-gray-200 overflow-hidden flex flex-col max-h-[90vh]">
         {/* Header */}
         <div className="p-6 border-b border-ink-100 flex items-center justify-between bg-primary-50">
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-primary-700 shadow-sm border border-primary-100">
+            <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center text-primary-700 shadow-sm border border-primary-100">
               <Calculator className="w-6 h-6" />
             </div>
             <div>
@@ -101,7 +101,7 @@ export default function InputNilaiManualModal({
           </div>
           <button
             onClick={onClose}
-            className="p-2 text-ink-400 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all"
+            className="p-2 text-ink-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all"
           >
             <X className="w-6 h-6" />
           </button>
@@ -110,7 +110,7 @@ export default function InputNilaiManualModal({
         {/* Body */}
         <div className="p-6 overflow-y-auto no-scrollbar bg-ink-50/50 overscroll-contain custom-scrollbar">
           {errorMsg && (
-            <div className="mb-6 p-4 bg-red-50 text-red-700 border border-red-200 rounded-2xl text-sm font-bold">
+            <div className="mb-6 p-4 bg-red-50 text-red-700 border border-red-200 rounded-lg text-sm font-bold">
               {errorMsg}
             </div>
           )}
@@ -122,7 +122,7 @@ export default function InputNilaiManualModal({
               <div className="space-y-4 lg:col-span-3">
                 
                 {/* CBT Group */}
-                <div className="bg-white p-5 rounded-2xl border border-ink-200 shadow-sm space-y-4">
+                <div className="bg-white p-5 rounded-lg border border-ink-200 shadow-sm space-y-4">
                   <div className="flex items-center gap-2 mb-2">
                     <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
                       <BookOpen className="w-4 h-4" />
@@ -147,7 +147,7 @@ export default function InputNilaiManualModal({
                 </div>
 
                 {/* Al-Quran Group */}
-                <div className="bg-white p-5 rounded-2xl border border-ink-200 shadow-sm space-y-4">
+                <div className="bg-white p-5 rounded-lg border border-ink-200 shadow-sm space-y-4">
                   <div className="flex items-center gap-2 mb-2">
                     <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center">
                       <GraduationCap className="w-4 h-4" />
@@ -162,7 +162,7 @@ export default function InputNilaiManualModal({
                 </div>
 
                 {/* Wawancara Group */}
-                <div className="bg-white p-5 rounded-2xl border border-ink-200 shadow-sm space-y-4">
+                <div className="bg-white p-5 rounded-lg border border-ink-200 shadow-sm space-y-4">
                   <div className="flex items-center gap-2 mb-2">
                     <div className="w-8 h-8 rounded-lg bg-orange-50 text-orange-600 flex items-center justify-center">
                       <Users className="w-4 h-4" />
@@ -187,14 +187,14 @@ export default function InputNilaiManualModal({
               {/* Kolom Kanan: Kalkulator & Keputusan */}
               <div className="space-y-4 lg:col-span-2">
                 
-                <div className="bg-primary-900 text-white p-6 rounded-3xl shadow-lg relative overflow-hidden h-[180px] flex flex-col justify-center">
+                <div className="bg-primary-900 text-white p-6 rounded-lg shadow-sm border border-gray-200 relative overflow-hidden h-[180px] flex flex-col justify-center">
                   <div className="absolute -right-10 -top-10 w-40 h-40 bg-white/10 rounded-full blur-2xl"></div>
                   <h3 className="text-xs font-bold text-primary-200 uppercase tracking-widest mb-1 relative z-10">Estimasi Total Skor</h3>
                   <div className="text-6xl font-black relative z-10">{totalScore.toFixed(1)}</div>
                   <p className="text-[10px] text-primary-200 mt-3 font-medium relative z-10 leading-snug opacity-80">Ini adalah estimasi real-time berdasarkan rumus bobot pesantren.</p>
                 </div>
 
-                <div className="bg-white p-5 rounded-2xl border border-ink-200 shadow-sm space-y-4">
+                <div className="bg-white p-5 rounded-lg border border-ink-200 shadow-sm space-y-4">
                   <h3 className="text-sm font-black text-ink-900 border-b border-ink-100 pb-2">Keputusan & Catatan</h3>
                   
                   <div className="space-y-2">
@@ -203,7 +203,7 @@ export default function InputNilaiManualModal({
                       name="override_status"
                       value={formData.override_status}
                       onChange={handleChange}
-                      className="w-full bg-ink-50 border border-ink-200 px-3 py-3 rounded-xl focus:ring-2 focus:ring-primary-500 outline-none text-sm font-bold"
+                      className="w-full bg-ink-50 border border-ink-200 px-3 py-3 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none text-sm font-bold"
                     >
                       <option value="">-- Ikuti Rumus Sistem (Default) --</option>
                       <option value="DITERIMA">Paksa: DITERIMA</option>
@@ -220,7 +220,7 @@ export default function InputNilaiManualModal({
                       value={formData.catatan_bypass}
                       onChange={handleChange}
                       rows={4}
-                      className="w-full bg-ink-50 border border-ink-200 px-3 py-3 rounded-xl focus:ring-2 focus:ring-primary-500 outline-none text-sm font-medium resize-none"
+                      className="w-full bg-ink-50 border border-ink-200 px-3 py-3 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none text-sm font-medium resize-none"
                       placeholder="Misal: Santri mengikuti ujian offline di gelombang 1, data dari lembar nilai..."
                       required
                     ></textarea>
@@ -237,7 +237,7 @@ export default function InputNilaiManualModal({
           <button
             type="button"
             onClick={onClose}
-            className="px-6 py-3 bg-white text-ink-700 rounded-xl font-black text-sm shadow-sm border border-ink-200 hover:bg-ink-50"
+            className="px-6 py-3 bg-white text-ink-700 rounded-lg font-black text-sm shadow-sm border border-ink-200 hover:bg-ink-50"
             disabled={loading}
           >
             Batal
@@ -246,7 +246,7 @@ export default function InputNilaiManualModal({
             type="submit"
             form="form-input-manual"
             disabled={loading}
-            className="flex items-center gap-2 px-5 md:px-8 py-3 bg-primary-700 text-white rounded-xl font-black text-sm shadow-lg shadow-primary-200 hover:bg-primary-800 disabled:opacity-50"
+            className="flex items-center gap-2 px-5 md:px-8 py-3 bg-primary-700 text-white rounded-lg font-black text-sm shadow-sm border border-gray-200 shadow-primary-200 hover:bg-primary-800 disabled:opacity-50"
           >
             {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Save className="w-5 h-5" />}
             {loading ? "Menyimpan..." : "Simpan & Proses"}

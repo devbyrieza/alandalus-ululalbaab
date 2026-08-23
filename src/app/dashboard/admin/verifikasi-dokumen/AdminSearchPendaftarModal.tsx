@@ -52,11 +52,11 @@ export default function AdminSearchPendaftarModal({ isOpen, onClose }: AdminSear
 
   return (
     <div 
-      className="fixed inset-0 bg-stone-900/80 backdrop-blur-sm z-[100] flex justify-center items-start pt-10 md:pt-16 px-4 overflow-y-auto overscroll-contain custom-scrollbar"
+      className="fixed inset-0 bg-stone-900/80  z-[100] flex justify-center items-start pt-10 md:pt-16 px-4 overflow-y-auto overscroll-contain custom-scrollbar"
       onClick={onClose}
     >
       <div 
-        className="bg-white rounded-3xl w-full max-w-xl shadow-2xl relative mb-20 animate-in zoom-in-95 duration-200"
+        className="bg-white rounded-lg w-full max-w-xl shadow-sm border border-gray-200 relative mb-20 animate-in zoom-in-95 duration-200"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between p-6 border-b border-stone-100">
@@ -77,7 +77,7 @@ export default function AdminSearchPendaftarModal({ isOpen, onClose }: AdminSear
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Cari nama, nomor pendaftaran, atau no hp..."
-              className="w-full pl-12 pr-4 py-3 bg-stone-50 border border-stone-200 rounded-xl focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 focus:outline-none font-medium transition-all"
+              className="w-full pl-12 pr-4 py-3 bg-stone-50 border border-stone-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 focus:outline-none font-medium transition-all"
               autoFocus
             />
             {isSearching && (
@@ -86,7 +86,7 @@ export default function AdminSearchPendaftarModal({ isOpen, onClose }: AdminSear
           </div>
 
           {query.length >= 2 && (
-            <div className="border border-stone-200 rounded-xl overflow-hidden max-h-[60vh] overflow-y-auto bg-white shadow-sm overscroll-contain custom-scrollbar">
+            <div className="border border-stone-200 rounded-lg overflow-hidden max-h-[60vh] overflow-y-auto bg-white shadow-sm overscroll-contain custom-scrollbar">
               {results.length > 0 ? (
                 results.map((p) => (
                   <button
