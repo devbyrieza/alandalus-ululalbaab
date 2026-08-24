@@ -69,7 +69,7 @@ export default function HeroSection() {
     <section
       ref={ref}
       aria-label="Hero — Beranda Al Fath"
-      className="relative pt-28 pb-16 lg:pt-24 xl:pt-28 lg:pb-20 overflow-hidden"
+      className="relative pt-24 pb-16 lg:pt-12 xl:pt-16 lg:pb-20 overflow-hidden"
       style={{
         background:
           "linear-gradient(160deg, var(--color-surface-50) 0%, var(--color-white) 55%, var(--color-primary-50) 100%)" }}
@@ -280,7 +280,7 @@ export default function HeroSection() {
             initial="hidden"
             animate={animate}
             transition={{ delay: shouldReduceMotion ? 0 : 0.25 }}
-            className="relative w-full mt-8 lg:-mt-16 xl:-mt-24 lg:max-w-[500px] xl:max-w-[540px] lg:ml-auto"
+            className="relative w-full mt-6 lg:-mt-20 xl:-mt-[7.5rem] lg:max-w-[500px] xl:max-w-[540px] lg:ml-auto"
             style={{ overflow: "visible" }}
           >
             {/* Main Image */}
