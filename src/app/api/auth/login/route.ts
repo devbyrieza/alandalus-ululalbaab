@@ -76,7 +76,7 @@ export async function POST(request: NextRequest) {
           httpOnly: true,
           secure: process.env.NODE_ENV === "production" && !request.headers.get("host")?.includes("localhost") && !request.headers.get("host")?.includes("127.0.0.1") && !request.headers.get("host")?.startsWith("192.168."),
           sameSite: "lax",
-          domain: baseDomain || undefined,
+          
           maxAge: 60 * 60 * 24 * 90,
           expires: new Date(Date.now() + 60 * 60 * 24 * 90 * 1000), // 90 Days Persistent Session
         },
@@ -193,7 +193,7 @@ export async function POST(request: NextRequest) {
           httpOnly: true,
           secure: process.env.NODE_ENV === "production" && !request.headers.get("host")?.includes("localhost") && !request.headers.get("host")?.includes("127.0.0.1") && !request.headers.get("host")?.startsWith("192.168."),
           sameSite: "lax",
-          domain: baseDomain || undefined,
+          
           maxAge: 60 * 60 * 24 * 90,
           expires: new Date(Date.now() + 60 * 60 * 24 * 90 * 1000), // 90 Days Persistent Session
         },
