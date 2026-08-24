@@ -94,7 +94,7 @@ export default function HeroSection() {
       </div>
 
       <Container className="relative z-10">
-        <div className="grid lg:grid-cols-[1.3fr_1fr] gap-12 lg:gap-16 xl:gap-20 items-center">
+        <div className="grid lg:grid-cols-[1.3fr_1fr] gap-12 lg:gap-16 xl:gap-20 items-center lg:items-start">
           {/* CONTENT SIDE */}
           <div className="flex flex-col gap-6 lg:gap-7 text-center lg:text-left items-center lg:items-start w-full">
             {/* Opening Badge */}
@@ -280,7 +280,7 @@ export default function HeroSection() {
             initial="hidden"
             animate={animate}
             transition={{ delay: shouldReduceMotion ? 0 : 0.25 }}
-            className="relative w-full mt-6 lg:-mt-20 xl:-mt-[7.5rem] lg:max-w-[500px] xl:max-w-[540px] lg:ml-auto"
+            className="relative w-full mt-6 lg:mt-6 xl:mt-8 lg:max-w-[500px] xl:max-w-[540px] lg:ml-auto"
             style={{ overflow: "visible" }}
           >
             {/* Main Image */}
