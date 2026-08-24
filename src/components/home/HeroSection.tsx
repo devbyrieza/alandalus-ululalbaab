@@ -69,7 +69,7 @@ export default function HeroSection() {
     <section
       ref={ref}
       aria-label="Hero — Beranda Al Fath"
-      className="relative pt-32 pb-20 lg:pt-40 lg:pb-24 overflow-hidden"
+      className="relative pt-28 pb-16 lg:pt-24 xl:pt-28 lg:pb-20 overflow-hidden"
       style={{
         background:
           "linear-gradient(160deg, var(--color-surface-50) 0%, var(--color-white) 55%, var(--color-primary-50) 100%)" }}
@@ -96,7 +96,7 @@ export default function HeroSection() {
       <Container className="relative z-10">
         <div className="grid lg:grid-cols-[1.3fr_1fr] gap-12 lg:gap-16 xl:gap-20 items-center">
           {/* CONTENT SIDE */}
-          <div className="flex flex-col gap-7 lg:gap-9 text-center lg:text-left items-center lg:items-start w-full">
+          <div className="flex flex-col gap-6 lg:gap-7 text-center lg:text-left items-center lg:items-start w-full">
             {/* Opening Badge */}
             <motion.div
               variants={fadeUp}
@@ -280,7 +280,7 @@ export default function HeroSection() {
             initial="hidden"
             animate={animate}
             transition={{ delay: shouldReduceMotion ? 0 : 0.25 }}
-            className="relative w-full mt-8 lg:-mt-8 xl:-mt-12 lg:max-w-[500px] xl:max-w-[540px] lg:ml-auto"
+            className="relative w-full mt-8 lg:-mt-16 xl:-mt-24 lg:max-w-[500px] xl:max-w-[540px] lg:ml-auto"
             style={{ overflow: "visible" }}
           >
             {/* Main Image */}
