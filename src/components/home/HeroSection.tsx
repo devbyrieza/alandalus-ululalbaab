@@ -69,7 +69,7 @@ export default function HeroSection() {
     <section
       ref={ref}
       aria-label="Hero — Beranda Al Fath"
-      className="relative min-h-[100vh] md:min-h-[90vh] lg:min-h-[85vh] flex items-center pt-24 pb-20 md:pt-28 lg:pt-24 lg:pb-20 overflow-hidden"
+      className="relative pt-32 pb-20 lg:pt-40 lg:pb-24 overflow-hidden"
       style={{
         background:
           "linear-gradient(160deg, var(--color-surface-50) 0%, var(--color-white) 55%, var(--color-primary-50) 100%)" }}
@@ -94,7 +94,7 @@ export default function HeroSection() {
       </div>
 
       <Container className="relative z-10">
-        <div className="grid lg:grid-cols-[1.1fr_0.9fr] xl:grid-cols-[1.2fr_0.8fr] gap-12 lg:gap-16 xl:gap-20 items-center">
+        <div className="grid lg:grid-cols-[1.3fr_1fr] gap-12 lg:gap-16 xl:gap-20 items-center">
           {/* CONTENT SIDE */}
           <div className="flex flex-col gap-7 lg:gap-9 text-center lg:text-left items-center lg:items-start w-full">
             {/* Opening Badge */}
@@ -119,21 +119,13 @@ export default function HeroSection() {
               className="space-y-3"
             >
               <h1
-                className="leading-[1.06] tracking-[-0.03em] mx-auto lg:mx-0 max-w-2xl lg:max-w-none font-black text-balance text-center lg:text-left"
-                style={{
-                  fontSize: "clamp(2.5rem, 5vw + 1rem, 5rem)" }}
+                className="leading-[1.1] tracking-[-0.03em] mx-auto lg:mx-0 max-w-2xl lg:max-w-none font-black text-center lg:text-left text-4xl md:text-5xl lg:text-6xl xl:text-[4.5rem]"
               >
-                <span className="block text-ink-950">
+                <span className="text-ink-950 block mb-1">
                   Kaderisasi Ummat
                 </span>
-                <span className="block mt-1 text-[var(--color-primary-700)]">
-                  <span className="gradient-text-blue">
-                    Rabbani, Cendekia,
-                  </span>
-                  <br className="hidden sm:block" />
-                  <span className="gradient-text-blue">
-                    dan Mandiri
-                  </span>
+                <span className="gradient-text-blue">
+                  Rabbani, Cendekia, dan Mandiri
                 </span>
               </h1>
             </motion.div>
