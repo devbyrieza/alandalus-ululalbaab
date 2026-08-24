@@ -2215,11 +2215,8 @@ html, body {
 /* ── Viracun UI Adoptions ────────────────────────────────────────────────── */
 @layer base {
   body {
-    background:
-      radial-gradient(ellipse at 85% 0%, rgba(85, 0, 0, 0.035) 0%, transparent 55%),
-      radial-gradient(ellipse at 0% 100%, rgba(221, 193, 146, 0.055) 0%, transparent 55%),
-      var(--color-surface-50, #f8fafc) !important;
-    background-attachment: fixed !important;
+    background: var(--color-surface-50, #f8fafc) !important;
+      background-attachment: fixed !important;
   }
 }
 
