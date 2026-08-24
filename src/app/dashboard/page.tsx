@@ -198,7 +198,7 @@ const ActionCard = ({
       className={`group h-full flex flex-col p-6 sm:p-8 rounded-[2.5rem] border-2 transition-all duration-300 ${
         disabled
           ? "bg-ink-50/50 border-ink-100 opacity-60 grayscale cursor-not-allowed"
-          : `bg-white border-ink-50 hover:border-primary-500 hover:shadow-sm border border-gray-200 hover:shadow-primary-900/10`
+          : `bg-white border-ink-50 hover:border-primary-500 hover:shadow-sm hover:shadow-primary-900/10`
       }`}
     >
       <div className="flex items-start justify-between mb-8">
@@ -381,7 +381,7 @@ export default function DashboardPage() {
               <button
                 onClick={handleLogout}
                 disabled={isLoggingOut}
-                className="group flex items-center gap-2 sm:gap-3 px-6 sm:px-6 md:px-10 py-4 sm:py-5 bg-white border border-ink-100 rounded-[2rem] font-black text-[10px] sm:text-xs uppercase tracking-widest text-ink-500 hover:bg-red-50 hover:text-red-700 hover:border-red-100 transition-all shadow-sm border border-gray-200 shadow-ink-900/5 active:scale-95 disabled:opacity-50"
+                className="group flex items-center gap-2 sm:gap-3 px-6 sm:px-6 md:px-10 py-4 sm:py-5 bg-white border border-ink-100 rounded-[2rem] font-black text-[10px] sm:text-xs uppercase tracking-widest text-ink-500 hover:bg-red-50 hover:text-red-700 hover:border-red-100 transition-all shadow-sm shadow-ink-900/5 active:scale-95 disabled:opacity-50"
               >
                 <LogOut className="w-5 h-5 transition-transform group-hover:rotate-12" />
                 <span>{isLoggingOut ? "Keluar..." : "Keluar"}</span>
@@ -401,14 +401,14 @@ export default function DashboardPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
-              className={`p-5 sm:p-8 md:p-10 lg:p-12 rounded-[2rem] sm:rounded-[3rem] md:rounded-[4rem] border-2 shadow-sm border border-gray-200 relative overflow-hidden bg-gradient-to-br from-white to-ink-50/30 ${statusInfo.border}`}
+              className={`p-5 sm:p-8 md:p-10 lg:p-12 rounded-[2rem] sm:rounded-[3rem] md:rounded-[4rem] border-2 shadow-sm relative overflow-hidden bg-gradient-to-br from-white to-ink-50/30 ${statusInfo.border}`}
             >
               <div className="absolute top-0 right-0 w-80 h-80 bg-primary-500/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
 
               <div className="relative z-10">
                 <div className="flex flex-col md:flex-row md:items-center gap-6 sm:gap-10 mb-8 sm:mb-10">
                   <div
-                    className={`w-20 h-20 sm:w-24 sm:h-24 rounded-[2rem] sm:rounded-[2.5rem] bg-white flex items-center justify-center ${statusInfo.text} shadow-sm border border-gray-200 border border-ink-50 shrink-0`}
+                    className={`w-20 h-20 sm:w-24 sm:h-24 rounded-[2rem] sm:rounded-[2.5rem] bg-white flex items-center justify-center ${statusInfo.text} shadow-sm border border-ink-50 shrink-0`}
                   >
                     <StatusIcon
                       className={`w-10 h-10 sm:w-12 sm:h-12 ${pendaftar.status_pendaftaran === "payment_verification" ? "animate-spin" : ""}`}
@@ -556,7 +556,7 @@ export default function DashboardPage() {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.6 }}
-              className="bg-white p-6 sm:p-5 md:p-8 lg:p-6 rounded-[2rem] sm:rounded-[3rem] md:rounded-[4rem] shadow-sm border border-gray-200 shadow-blue-900/5 border border-ink-50 flex flex-col items-center text-center relative overflow-hidden group"
+              className="bg-white p-6 sm:p-5 md:p-8 lg:p-6 rounded-[2rem] sm:rounded-[3rem] md:rounded-[4rem] shadow-sm shadow-blue-900/5 border border-ink-50 flex flex-col items-center text-center relative overflow-hidden group"
             >
               <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-600 to-amber-500" />
               <div className="w-20 h-20 rounded-[2rem] bg-blue-50 flex items-center justify-center text-blue-600 mb-8 border border-blue-100 shadow-sm transition-transform group-hover:scale-110">
@@ -584,13 +584,13 @@ export default function DashboardPage() {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.8 }}
-              className="bg-blue-950 p-6 sm:p-5 md:p-8 lg:p-6 rounded-[2rem] sm:rounded-[3rem] md:rounded-[4rem] shadow-sm border border-gray-200 relative overflow-hidden group"
+              className="bg-blue-950 p-6 sm:p-5 md:p-8 lg:p-6 rounded-[2rem] sm:rounded-[3rem] md:rounded-[4rem] shadow-sm relative overflow-hidden group"
             >
               <div className="absolute top-0 left-0 w-full h-1 bg-amber-400" />
               <div className="absolute bottom-0 right-0 w-40 h-40 bg-blue-500/10 rounded-full blur-[60px] translate-y-1/2 translate-x-1/2 pointer-events-none" />
 
               <div className="relative z-10">
-                <div className="w-16 h-16 rounded-[1.5rem] bg-blue-900 flex items-center justify-center text-white mb-8 border border-blue-800 shadow-sm border border-gray-200">
+                <div className="w-16 h-16 rounded-[1.5rem] bg-blue-900 flex items-center justify-center text-white mb-8 border border-blue-800 shadow-sm">
                   <MessageCircle className="w-8 h-8" />
                 </div>
                 <h4 className="text-3xl font-display font-black mb-4 text-white leading-tight tracking-tight">
@@ -606,9 +606,9 @@ export default function DashboardPage() {
                   href="https://wa.me/6281285300800"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-5 p-6 rounded-[2rem] bg-white hover:bg-amber-400 transition-all group/btn shadow-sm border border-gray-200 active:scale-95"
+                  className="flex items-center gap-5 p-6 rounded-[2rem] bg-white hover:bg-amber-400 transition-all group/btn shadow-sm active:scale-95"
                 >
-                  <div className="w-14 h-14 rounded-lg bg-blue-600 text-white flex items-center justify-center shadow-sm border border-gray-200 group-hover/btn:scale-110 transition-transform">
+                  <div className="w-14 h-14 rounded-lg bg-blue-600 text-white flex items-center justify-center shadow-sm group-hover/btn:scale-110 transition-transform">
                     <Phone className="w-7 h-7" />
                   </div>
                   <div className="text-left leading-none">

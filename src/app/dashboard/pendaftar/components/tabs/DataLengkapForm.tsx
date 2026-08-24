@@ -1884,7 +1884,7 @@ export default function DataLengkapForm({
           <button
             type="submit"
             disabled={saving}
-            className="flex items-center gap-2 px-5 md:px-8 py-4 rounded-lg bg-linear-to-r from-primary-600 to-primary-800 text-white font-bold text-lg shadow-sm border border-gray-200 shadow-primary-600/30 hover:shadow-primary-600/40 hover:-translate-y-1 transition-all disabled:opacity-50 disabled:transform-none"
+            className="flex items-center gap-2 px-5 md:px-8 py-4 rounded-lg bg-linear-to-r from-primary-600 to-primary-800 text-white font-bold text-lg shadow-sm shadow-primary-600/30 hover:shadow-primary-600/40 hover:-translate-y-1 transition-all disabled:opacity-50 disabled:transform-none"
           >
             {saving ? (
               <Loader2 className="w-6 h-6 animate-spin" />

@@ -257,7 +257,7 @@ function PaymentTimeline({ paymentStatus }: { paymentStatus: PaymentStatus }) {
               "bg-emerald-500 border-emerald-500 text-white shadow-emerald-500/30";
           if (step.status === "current")
             statusColor =
-              "bg-white border-primary-600 text-primary-700 shadow-sm border border-gray-200 shadow-primary-600/20";
+              "bg-white border-primary-600 text-primary-700 shadow-sm shadow-primary-600/20";
 
           return (
             <div key={step.id} className="flex flex-col items-center">
@@ -445,7 +445,7 @@ function UploadArea({
                 {!isUploading && (
                   <button
                     onClick={handleRemoveFile}
-                    className="absolute -top-2 -right-2 bg-red-500 text-white p-1.5 rounded-full shadow-sm border border-gray-200 transition-transform hover:scale-110 md:opacity-0 md:group-hover/preview:opacity-100"
+                    className="absolute -top-2 -right-2 bg-red-500 text-white p-1.5 rounded-full shadow-sm transition-transform hover:scale-110 md:opacity-0 md:group-hover/preview:opacity-100"
                     title="Hapus file"
                   >
                     <Trash2 className="w-4 h-4" />
@@ -473,7 +473,7 @@ function UploadArea({
                 <button
                   onClick={handleUploadClick}
                   disabled={isUploading}
-                  className="flex-1 sm:flex-none px-5 md:px-8 py-3 bg-secondary-400 text-primary-950 font-black rounded-lg hover:bg-secondary-300 transition-colors shadow-sm border border-gray-200 shadow-secondary-400/30 flex items-center justify-center gap-2"
+                  className="flex-1 sm:flex-none px-5 md:px-8 py-3 bg-secondary-400 text-primary-950 font-black rounded-lg hover:bg-secondary-300 transition-colors shadow-sm shadow-secondary-400/30 flex items-center justify-center gap-2"
                 >
                   {isUploading ? (
                     <Loader2 className="w-5 h-5 animate-spin" />
@@ -765,7 +765,7 @@ export default function PembayaranPendaftaranTab({
               : toast.type === "error"
                 ? "bg-red-500"
                 : "bg-primary-500"
-          } text-white shadow-sm border border-gray-200`}
+          } text-white shadow-sm`}
         >
           <CheckCircle className="w-5 h-5" />
           <span className="font-bold text-sm tracking-wide">
@@ -781,7 +781,7 @@ export default function PembayaranPendaftaranTab({
       )}
 
       {/* Header Banner */}
-      <div className="relative overflow-hidden rounded-[2rem] bg-linear-to-br from-primary-700 to-primary-900 border border-primary-600 p-5 md:p-8 text-white shadow-sm border border-gray-200 app-card">
+      <div className="relative overflow-hidden rounded-[2rem] bg-linear-to-br from-primary-700 to-primary-900 border border-primary-600 p-5 md:p-8 text-white shadow-sm app-card">
         <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-secondary-50/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="flex items-start gap-5">
@@ -958,7 +958,7 @@ export default function PembayaranPendaftaranTab({
               {/* PAYMENT CARDS GRID */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 pt-4">
                 {/* CARD 1: MIDTRANS (DEV) */}
-                <div className="relative group bg-white rounded-[2.5rem] p-5 md:p-8 border border-surface-200 shadow-sm transition-all hover:shadow-sm border border-gray-200 overflow-visible opacity-80 grayscale-[0.5] hover:grayscale-0">
+                <div className="relative group bg-white rounded-[2.5rem] p-5 md:p-8 border border-surface-200 shadow-sm transition-all hover:shadow-sm overflow-visible opacity-80 grayscale-[0.5] hover:grayscale-0">
                   {/* Background Decor */}
                   <div className="absolute top-0 right-0 w-32 h-32 bg-secondary-50 rounded-bl-[4rem] -z-0" />
 
@@ -1011,7 +1011,7 @@ export default function PembayaranPendaftaranTab({
                 {/* CARD 2: BSI MANUAL */}
                 <div
                   onClick={() => setActivePaymentMethod("manual")}
-                  className={`relative group bg-white rounded-[2.5rem] p-8 border-2 transition-all cursor-pointer shadow-sm border border-gray-200 md:hover:-translate-y-2 md:hover:shadow-sm border border-gray-200 overflow-visible ${
+                  className={`relative group bg-white rounded-[2.5rem] p-8 border-2 transition-all cursor-pointer shadow-sm md:hover:-translate-y-2 md:hover:shadow-sm overflow-visible ${
                     activePaymentMethod === "manual"
                       ? "border-primary-600 ring-4 ring-primary-600/10 shadow-primary-600/10"
                       : "border-white hover:border-primary-300 shadow-sm"
@@ -1028,14 +1028,14 @@ export default function PembayaranPendaftaranTab({
 
                   {activePaymentMethod === "manual" && (
                     <div className="absolute top-6 right-6 lg:right-8 z-20">
-                      <div className="w-8 h-8 bg-primary-600 rounded-full flex items-center justify-center animate-in zoom-in shadow-sm border border-gray-200 shadow-primary-600/30">
+                      <div className="w-8 h-8 bg-primary-600 rounded-full flex items-center justify-center animate-in zoom-in shadow-sm shadow-primary-600/30">
                         <Check className="w-5 h-5 text-white" />
                       </div>
                     </div>
                   )}
 
                   {/* Recommendation Badge */}
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-linear-to-r from-primary-700 to-primary-500 text-white text-[10px] sm:text-xs font-black px-6 py-2 rounded-full shadow-sm border border-gray-200 shadow-primary-600/30 z-20 flex items-center gap-2 uppercase tracking-widest whitespace-nowrap">
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-linear-to-r from-primary-700 to-primary-500 text-white text-[10px] sm:text-xs font-black px-6 py-2 rounded-full shadow-sm shadow-primary-600/30 z-20 flex items-center gap-2 uppercase tracking-widest whitespace-nowrap">
                     <StarIcon className="w-3.5 h-3.5 fill-secondary-300 text-secondary-300" />
                     Rekomendasi
                   </div>
@@ -1084,7 +1084,7 @@ export default function PembayaranPendaftaranTab({
                       <button
                         className={`w-full py-4 rounded-lg font-black transition-all flex items-center justify-center gap-2 ${
                           activePaymentMethod === "manual"
-                            ? "bg-primary-600 text-white hover:bg-primary-700 shadow-sm border border-gray-200 shadow-primary-600/20"
+                            ? "bg-primary-600 text-white hover:bg-primary-700 shadow-sm shadow-primary-600/20"
                             : "bg-surface-50 text-primary-800 hover:bg-primary-50 group-hover:bg-primary-600 group-hover:text-white"
                         }`}
                       >
@@ -1124,7 +1124,7 @@ export default function PembayaranPendaftaranTab({
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 items-stretch">
                       {/* LEFT COLUMN: BANK INFO */}
-                      <div className="bg-gradient-to-br from-primary-600 to-primary-800 border border-primary-500 rounded-[2.5rem] p-5 md:p-8 shadow-sm border border-gray-200 relative overflow-hidden flex flex-col justify-between text-white group/card">
+                      <div className="bg-gradient-to-br from-primary-600 to-primary-800 border border-primary-500 rounded-[2.5rem] p-5 md:p-8 shadow-sm relative overflow-hidden flex flex-col justify-between text-white group/card">
                         <div className="absolute top-0 right-0 w-80 h-80 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
                         <div className="absolute bottom-0 left-0 w-40 h-40 bg-primary-400/20 rounded-full blur-2xl translate-y-1/2 -translate-x-1/2 pointer-events-none" />
 
@@ -1239,7 +1239,7 @@ export default function PembayaranPendaftaranTab({
               <div className="flex justify-center">
                 <a
                   href="/dashboard/pendaftar/isi-data-lengkap"
-                  className="px-5 md:px-8 py-4 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold shadow-sm border border-gray-200 shadow-emerald-600/20 transition-all hover:scale-105 flex items-center gap-2"
+                  className="px-5 md:px-8 py-4 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold shadow-sm shadow-emerald-600/20 transition-all hover:scale-105 flex items-center gap-2"
                 >
                   <span>Lanjut Isi Data Diri</span>
                 </a>
@@ -1261,7 +1261,7 @@ export default function PembayaranPendaftaranTab({
               </div>
               <a
                 href="/dashboard/pendaftar/pembayaran-pendaftaran"
-                className="px-6 py-3 bg-secondary-400 hover:bg-secondary-300 text-primary-950 rounded-lg font-black shadow-sm border border-gray-200 shadow-secondary-400/20 transition-all hover:scale-105 flex items-center gap-2 border border-secondary-500"
+                className="px-6 py-3 bg-secondary-400 hover:bg-secondary-300 text-primary-950 rounded-lg font-black shadow-sm shadow-secondary-400/20 transition-all hover:scale-105 flex items-center gap-2 border border-secondary-500"
               >
                 <span>Ke Halaman Pembayaran</span>
               </a>

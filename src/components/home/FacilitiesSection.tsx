@@ -264,7 +264,7 @@ export default function FacilitiesSection() {
           className="flex justify-center"
         >
           <Link href="/fasilitas">
-            <button className="btn-secondary group inline-flex items-center gap-2 px-8 py-3 bg-white border border-primary-200 shadow-sm hover:shadow-sm border border-gray-200 transition-all">
+            <button className="btn-secondary group inline-flex items-center gap-2 px-8 py-3 bg-white border border-primary-200 shadow-sm hover:shadow-sm transition-all">
               <span className="text-[0.875rem] font-bold">
                 Lihat Semua Fasilitas
               </span>

@@ -208,7 +208,7 @@ export default function PerubahanDataPage() {
                       <button
                         onClick={() => handleAction(req.id, "approve")}
                         disabled={processing === req.id}
-                        className="flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-3 bg-primary-700 text-white rounded-lg text-sm font-bold shadow-sm border border-gray-200 shadow-primary-600/20 hover:bg-primary-800 transition-all disabled:opacity-50"
+                        className="flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-3 bg-primary-700 text-white rounded-lg text-sm font-bold shadow-sm shadow-primary-600/20 hover:bg-primary-800 transition-all disabled:opacity-50"
                       >
                         {processing === req.id ? (
                           <Loader2 className="w-4 h-4 animate-spin" />
@@ -231,7 +231,7 @@ export default function PerubahanDataPage() {
                     <div className="flex gap-2 w-full">
                       <Link
                         href={`/dashboard/admin/pendaftar/${req.pendaftar_id}`}
-                        className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-primary-600 text-white rounded-lg text-sm font-bold shadow-sm border border-gray-200 shadow-primary-500/20 hover:bg-primary-700 transition-all"
+                        className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-primary-600 text-white rounded-lg text-sm font-bold shadow-sm shadow-primary-500/20 hover:bg-primary-700 transition-all"
                       >
                         <Eye className="w-4 h-4" />
                         Cek Perubahan
@@ -239,7 +239,7 @@ export default function PerubahanDataPage() {
                       <button
                         onClick={() => handleAction(req.id, "complete")}
                         disabled={processing === req.id}
-                        className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-emerald-600 text-white rounded-lg text-sm font-bold shadow-sm border border-gray-200 shadow-emerald-500/20 hover:bg-emerald-700 transition-all disabled:opacity-50"
+                        className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-emerald-600 text-white rounded-lg text-sm font-bold shadow-sm shadow-emerald-500/20 hover:bg-emerald-700 transition-all disabled:opacity-50"
                       >
                         {processing === req.id ? (
                           <Loader2 className="w-4 h-4 animate-spin" />

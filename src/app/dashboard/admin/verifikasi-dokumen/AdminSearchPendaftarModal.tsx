@@ -56,7 +56,7 @@ export default function AdminSearchPendaftarModal({ isOpen, onClose }: AdminSear
       onClick={onClose}
     >
       <div 
-        className="bg-white rounded-lg w-full max-w-xl shadow-sm border border-gray-200 relative mb-20 animate-in zoom-in-95 duration-200"
+        className="bg-white rounded-lg w-full max-w-xl shadow-sm relative mb-20 animate-in zoom-in-95 duration-200"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between p-6 border-b border-stone-100">

@@ -110,7 +110,7 @@ export default function ExamCardPage() {
       </div>
 
       {/* A4 Paper simulating div */}
-      <div className="bg-white shadow-sm border border-gray-200 w-full max-w-[21cm] min-h-[29.7cm] p-[2cm] relative print:shadow-none print:w-full print:p-0">
+      <div className="bg-white shadow-sm w-full max-w-[21cm] min-h-[29.7cm] p-[2cm] relative print:shadow-none print:w-full print:p-0">
         {/* Header with Border */}
         <div className="border-2 border-black p-1 mb-1">
           <div className="border border-black p-6 relative">

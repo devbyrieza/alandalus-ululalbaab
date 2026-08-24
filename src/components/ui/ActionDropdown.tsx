@@ -90,7 +90,7 @@ export function ActionDropdown({ items }: ActionDropdownProps) {
         <div
           ref={menuRef}
           style={dropdownStyles}
-          className={`rounded-lg bg-white shadow-sm border border-gray-200 shadow-stone-200/50 ring-1 ring-black ring-opacity-5 focus:outline-none overflow-hidden transform transition-all duration-200 ease-out ${isUp ? 'origin-bottom-right' : 'origin-top-right'}`}
+          className={`rounded-lg bg-white shadow-sm shadow-stone-200/50 ring-1 ring-black ring-opacity-5 focus:outline-none overflow-hidden transform transition-all duration-200 ease-out ${isUp ? 'origin-bottom-right' : 'origin-top-right'}`}
         >
           <div className="py-1" role="menu" aria-orientation="vertical">
             {visibleItems.map((item, index) => {

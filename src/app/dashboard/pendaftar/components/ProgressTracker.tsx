@@ -70,7 +70,7 @@ export default function ProgressTracker({
   const progressPercentage = (completedPhases / totalPhases) * 100;
 
   return (
-    <div className="bg-white rounded-[2.5rem] p-5 md:p-8 border border-stone-100 shadow-sm border border-gray-200 shadow-stone-200/50 overflow-hidden relative group text-left">
+    <div className="bg-white rounded-[2.5rem] p-5 md:p-8 border border-stone-100 shadow-sm shadow-stone-200/50 overflow-hidden relative group text-left">
       {/* Decorative Background Icons */}
       <div className="absolute -top-10 -right-10 opacity-[0.03] rotate-12 pointer-events-none">
         <GraduationCap size={300} className="text-primary-900" />
@@ -137,9 +137,9 @@ export default function ProgressTracker({
                       whileHover={{ scale: 1.1 }}
                       className={`w-14 h-14 md:w-20 md:h-20 rounded-[1.5rem] md:rounded-[2rem] flex items-center justify-center relative z-10 transition-all duration-500 border-4 ${
                         isCompleted
-                          ? "bg-primary-700 border-white text-white shadow-sm border border-gray-200 shadow-primary-200"
+                          ? "bg-primary-700 border-white text-white shadow-sm shadow-primary-200"
                           : isCurrent
-                            ? "bg-white border-primary-700 text-primary-700 shadow-sm border border-gray-200 shadow-primary-100 scale-110"
+                            ? "bg-white border-primary-700 text-primary-700 shadow-sm shadow-primary-100 scale-110"
                             : "bg-white border-stone-100 text-stone-200"
                       }`}
                     >

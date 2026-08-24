@@ -203,7 +203,7 @@ export default function DaftarUlangTab() {
   return (
     <div className="space-y-8 max-w-4xl mx-auto pb-12">
       {/* Header */}
-      <div className="bg-linear-to-br from-primary-700 to-primary-900 rounded-lg p-5 md:p-8 text-white shadow-sm border border-gray-200 relative overflow-hidden">
+      <div className="bg-linear-to-br from-primary-700 to-primary-900 rounded-lg p-5 md:p-8 text-white shadow-sm relative overflow-hidden">
         <div className="absolute top-0 right-0 p-4 opacity-10">
           <CheckCircle className="w-32 h-32" />
         </div>
@@ -451,7 +451,7 @@ export default function DaftarUlangTab() {
                 onClick={() => setPaymentMethod("transfer")}
                 className={`py-2 px-2 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-2 ${
                   paymentMethod === "transfer"
-                    ? "bg-primary-600 text-white shadow-sm border border-gray-200"
+                    ? "bg-primary-600 text-white shadow-sm"
                     : "text-slate-500 hover:bg-slate-50"
                 }`}
               >
@@ -536,7 +536,7 @@ export default function DaftarUlangTab() {
                 href="https://wa.me/6281220636945?text=Assalamualaikum%20Admin%20Finance%2C%20saya%20wali%20dari%20calon%20santri%20ingin%20berkonsultasi%2Fmengajukan%20keringanan%20terkait%20biaya%20Daftar%20Ulang."
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center justify-center gap-1.5 py-2.5 px-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold text-[11px] sm:text-xs transition-all shadow-sm border border-gray-200 hover:shadow-sm border border-gray-200 active:scale-95 group"
+                className="inline-flex items-center justify-center gap-1.5 py-2.5 px-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold text-[11px] sm:text-xs transition-all shadow-sm hover:shadow-sm active:scale-95 group"
               >
                 <svg
                   viewBox="0 0 24 24"
@@ -551,7 +551,7 @@ export default function DaftarUlangTab() {
                 href="https://wa.me/6285111524441?text=Assalamualaikum%20Admin%20CS%2C%20saya%20wali%20dari%20calon%20santri%20ingin%20bertanya%20terkait%20biaya%20Daftar%20Ulang."
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center justify-center gap-1.5 py-2.5 px-3 bg-cyan-600 hover:bg-cyan-700 text-white rounded-lg font-bold text-[11px] sm:text-xs transition-all shadow-sm border border-gray-200 hover:shadow-sm border border-gray-200 active:scale-95 group"
+                className="inline-flex items-center justify-center gap-1.5 py-2.5 px-3 bg-cyan-600 hover:bg-cyan-700 text-white rounded-lg font-bold text-[11px] sm:text-xs transition-all shadow-sm hover:shadow-sm active:scale-95 group"
               >
                 <MessageCircle className="w-4 h-4" />
                 <span>Admin CS</span>
@@ -621,7 +621,7 @@ export default function DaftarUlangTab() {
           )}
         </div>
       ) : (
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 border border-slate-100 overflow-hidden">
+        <div className="bg-white rounded-lg shadow-sm border border-slate-100 overflow-hidden">
           <div
             className={`p-6 border-b border-ink-100 flex justify-between items-center ${
               subTab === "uang_pangkal" ? "bg-primary-50" : "bg-violet-50"
@@ -663,7 +663,7 @@ export default function DaftarUlangTab() {
                     }
                     className={`p-4 rounded-lg border-2 transition-all text-left flex flex-col ${
                       numericNominal === expectedTagihan
-                        ? "border-primary-500 bg-primary-50/50 ring-2 ring-primary-500/20 shadow-sm border border-gray-200"
+                        ? "border-primary-500 bg-primary-50/50 ring-2 ring-primary-500/20 shadow-sm"
                         : "border-slate-200 bg-white hover:bg-slate-50"
                     }`}
                   >
@@ -695,7 +695,7 @@ export default function DaftarUlangTab() {
                     className={`p-4 rounded-lg border-2 transition-all text-left flex flex-col ${
                       numericNominal >= halfTagihan &&
                       numericNominal < expectedTagihan
-                        ? "border-primary-500 bg-primary-50/50 ring-2 ring-primary-500/20 shadow-sm border border-gray-200"
+                        ? "border-primary-500 bg-primary-50/50 ring-2 ring-primary-500/20 shadow-sm"
                         : "border-slate-200 bg-white hover:bg-slate-50"
                     }`}
                   >
@@ -882,7 +882,7 @@ export default function DaftarUlangTab() {
             <button
               type="submit"
               disabled={submitting || !pernyataan || !file || !nominal}
-              className="w-full py-4 bg-gold-400 hover:bg-gold-300 text-primary-950 font-black rounded-lg shadow-sm border border-gray-200 shadow-gold-400/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 border border-gold-500"
+              className="w-full py-4 bg-gold-400 hover:bg-gold-300 text-primary-950 font-black rounded-lg shadow-sm shadow-gold-400/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 border border-gold-500"
             >
               {submitting ? (
                 <Loader2 className="animate-spin" />

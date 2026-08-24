@@ -239,7 +239,7 @@ export default function UndanganSeleksiTab() {
   if (data.locked && !isTestingAccount) {
     return (
       <div className="space-y-6">
-        <div className="bg-linear-to-r from-stone-600 to-stone-800 rounded-lg p-6 md:p-8 text-white shadow-sm border border-gray-200 relative overflow-hidden">
+        <div className="bg-linear-to-r from-stone-600 to-stone-800 rounded-lg p-6 md:p-8 text-white shadow-sm relative overflow-hidden">
           <div className="relative z-10">
             <h1 className="text-2xl font-black mb-2 text-white flex items-center gap-3">
               <svg
@@ -287,7 +287,7 @@ export default function UndanganSeleksiTab() {
           <div className="mt-8 flex flex-wrap justify-center gap-4">
             <Link
               href="/dashboard/pendaftar?tab=upload-berkas"
-              className="px-5 md:px-8 py-3 bg-primary-700 text-white font-black rounded-lg hover:bg-primary-800 transition-all shadow-sm border border-gray-200 uppercase tracking-widest text-sm"
+              className="px-5 md:px-8 py-3 bg-primary-700 text-white font-black rounded-lg hover:bg-primary-800 transition-all shadow-sm uppercase tracking-widest text-sm"
             >
               Cek Status Berkas
             </Link>
@@ -309,7 +309,7 @@ export default function UndanganSeleksiTab() {
   return (
     <div className="space-y-6">
       {/* ========== HEADER ========== */}
-      <div className="bg-linear-to-r from-primary-700 to-primary-900 rounded-lg p-6 md:p-8 text-white shadow-sm border border-gray-200 relative overflow-hidden">
+      <div className="bg-linear-to-r from-primary-700 to-primary-900 rounded-lg p-6 md:p-8 text-white shadow-sm relative overflow-hidden">
         <div className="relative z-10">
           <h1 className="text-2xl font-black mb-2 text-white">
             Jadwal Seleksi
@@ -358,7 +358,7 @@ export default function UndanganSeleksiTab() {
         </div>
         <div className="w-full h-3 bg-surface-100 rounded-full overflow-hidden">
           <div
-            className="h-full bg-linear-to-r from-primary-500 to-primary-700 rounded-full transition-all duration-700 shadow-sm border border-gray-200 shadow-primary-500/20"
+            className="h-full bg-linear-to-r from-primary-500 to-primary-700 rounded-full transition-all duration-700 shadow-sm shadow-primary-500/20"
             style={{ width: `${data.progress.percentage}%` }}
           />
         </div>
@@ -392,7 +392,7 @@ export default function UndanganSeleksiTab() {
                 className={`bg-white rounded-lg border-2 p-5 transition-all ${
                   item.completed
                     ? "border-emerald-200 bg-emerald-50/50"
-                    : "border-stone-100 hover:border-primary-200 hover:shadow-sm border border-gray-200"
+                    : "border-stone-100 hover:border-primary-200 hover:shadow-sm"
                 }`}
               >
                 <div className="flex items-start justify-between mb-3">
@@ -635,7 +635,7 @@ export default function UndanganSeleksiTab() {
                         className={`bg-white rounded-lg shadow-sm p-5 border-2 transition-all ${
                           slot.isFull
                             ? "opacity-75 border-surface-200 bg-surface-50"
-                            : "border-surface-100 hover:border-primary-300 hover:shadow-sm border border-gray-200"
+                            : "border-surface-100 hover:border-primary-300 hover:shadow-sm"
                         }`}
                       >
                         <div className="flex justify-between items-start mb-3">

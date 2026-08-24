@@ -297,7 +297,7 @@ export default function ActivitiesSection() {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.1 + idx * 0.05 }}
-                  className="flex flex-col items-center gap-3 p-4 bg-white rounded-lg border border-primary-50 shadow-sm hover:border-primary-100 hover:shadow-sm border border-gray-200 transition-all group text-center"
+                  className="flex flex-col items-center gap-3 p-4 bg-white rounded-lg border border-primary-50 shadow-sm hover:border-primary-100 hover:shadow-sm transition-all group text-center"
                 >
                   <div className="w-10 h-10 rounded-lg bg-primary-50 flex items-center justify-center text-primary-600 group-hover:bg-primary-600 group-hover:text-white transition-colors">
                     <Icon className="w-5 h-5" />
@@ -318,7 +318,7 @@ export default function ActivitiesSection() {
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="w-full"
           >
-            <div className="relative p-10 md:p-12 rounded-[2.5rem] bg-primary-900 overflow-hidden shadow-sm border border-gray-200">
+            <div className="relative p-10 md:p-12 rounded-[2.5rem] bg-primary-900 overflow-hidden shadow-sm">
               <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10" />
               <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-secondary-500/10 rounded-full blur-[60px] -translate-y-1/2 translate-x-1/4" />
 
@@ -335,7 +335,7 @@ export default function ActivitiesSection() {
 
                 <div className="shrink-0">
                   <Link href="/kegiatan">
-                    <button className="group relative inline-flex items-center gap-3 px-8 py-4 bg-secondary-500 text-primary-950 font-black text-sm uppercase tracking-widest rounded-lg overflow-hidden transition-all duration-300 hover:shadow-sm border border-gray-200 hover:scale-105 active:scale-95">
+                    <button className="group relative inline-flex items-center gap-3 px-8 py-4 bg-secondary-500 text-primary-950 font-black text-sm uppercase tracking-widest rounded-lg overflow-hidden transition-all duration-300 hover:shadow-sm hover:scale-105 active:scale-95">
                       <span className="relative z-10">Eksplorasi Seluruh Kegiatan</span>
                       <CalendarIcon className="relative z-10 w-5 h-5 transition-transform duration-300 group-hover:rotate-12" />
                       <div className="absolute inset-0 bg-secondary-400 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />

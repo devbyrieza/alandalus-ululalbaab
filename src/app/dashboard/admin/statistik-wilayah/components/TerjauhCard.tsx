@@ -111,7 +111,7 @@ export default function TerjauhCard({
             Top 5 Pendaftar Terjauh
           </div>
           {result.map((item: any, index: number) => (
-            <div key={index} className={`p-5 md:p-6 bg-linear-to-br ${index === 0 ? 'from-orange-50 to-white border-orange-200 shadow-sm border border-gray-200' : 'from-surface-50 to-white border-ink-100 shadow-sm'} border rounded-lg transition-all hover:shadow-sm border border-gray-200`}>
+            <div key={index} className={`p-5 md:p-6 bg-linear-to-br ${index === 0 ? 'from-orange-50 to-white border-orange-200 shadow-sm' : 'from-surface-50 to-white border-ink-100 shadow-sm'} border rounded-lg transition-all hover:shadow-sm`}>
               <div className="flex flex-col md:flex-row items-center gap-5 md:gap-6 text-center md:text-left">
                 <div className={`rounded-full flex items-center justify-center shrink-0 shadow-sm border ${index === 0 ? 'bg-orange-100 text-orange-600 border-orange-200 w-16 h-16 md:w-20 md:h-20' : 'bg-surface-100 text-ink-500 border-ink-200 w-12 h-12 md:w-14 md:h-14'}`}>
                   {index === 0 ? <MapPin className="w-8 h-8 md:w-10 md:h-10" /> : <span className="text-lg md:text-xl font-black">#{index + 1}</span>}

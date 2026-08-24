@@ -132,7 +132,7 @@ export default function PengumumanTab() {
       className="space-y-8 pb-12"
     >
       {/* Premium Header */}
-      <div className="relative overflow-hidden rounded-[2.5rem] bg-linear-to-br from-primary-800 via-primary-900 to-primary-950 p-6 md:p-10 text-white shadow-sm border border-gray-200 border border-white/10">
+      <div className="relative overflow-hidden rounded-[2.5rem] bg-linear-to-br from-primary-800 via-primary-900 to-primary-950 p-6 md:p-10 text-white shadow-sm border border-white/10">
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-secondary-400/10 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-primary-400/10 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2 pointer-events-none" />
 
@@ -142,7 +142,7 @@ export default function PengumumanTab() {
               initial={{ scale: 0.8, rotate: -10 }}
               animate={{ scale: 1, rotate: 0 }}
               transition={{ type: "spring", stiffness: 200 }}
-              className="w-20 h-20 rounded-lg bg-linear-to-br from-secondary-400 to-secondary-600 flex items-center justify-center shadow-sm border border-gray-200 border border-white/20 shrink-0"
+              className="w-20 h-20 rounded-lg bg-linear-to-br from-secondary-400 to-secondary-600 flex items-center justify-center shadow-sm border border-white/20 shrink-0"
             >
               <Trophy className="w-10 h-10 text-primary-950" />
             </motion.div>
@@ -163,7 +163,7 @@ export default function PengumumanTab() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
-          className="bg-white  rounded-[2.5rem] p-16 shadow-sm border border-gray-200 border border-primary-100 text-center"
+          className="bg-white  rounded-[2.5rem] p-16 shadow-sm border border-primary-100 text-center"
         >
           <div className="w-24 h-24 bg-primary-50 rounded-full flex items-center justify-center mx-auto mb-8 shadow-inner ring-8 ring-primary-50/50">
             <Calendar className="w-10 h-10 text-primary-600" />
@@ -188,7 +188,7 @@ export default function PengumumanTab() {
               <motion.div
                 initial={{ scale: 0.95, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
-                className="group relative bg-linear-to-br from-emerald-500 via-emerald-600 to-primary-700 rounded-[3rem] p-6 md:p-10 text-white shadow-sm border border-gray-200 shadow-emerald-500/30 overflow-hidden"
+                className="group relative bg-linear-to-br from-emerald-500 via-emerald-600 to-primary-700 rounded-[3rem] p-6 md:p-10 text-white shadow-sm shadow-emerald-500/30 overflow-hidden"
               >
                 {/* Decorative Elements */}
                 <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-[60px] -translate-y-1/2 translate-x-1/2" />
@@ -221,7 +221,7 @@ export default function PengumumanTab() {
                     <button
                       onClick={handleDownloadSurat}
                       disabled={isGenerating}
-                      className="inline-flex items-center justify-center gap-3 px-6 md:px-10 py-5 bg-white text-primary-950 rounded-lg font-black hover:bg-secondary-400 transition-all shadow-sm border border-gray-200 active:scale-95 disabled:opacity-50 group/btn"
+                      className="inline-flex items-center justify-center gap-3 px-6 md:px-10 py-5 bg-white text-primary-950 rounded-lg font-black hover:bg-secondary-400 transition-all shadow-sm active:scale-95 disabled:opacity-50 group/btn"
                     >
                       {isGenerating ? (
                         <Loader2 className="w-6 h-6 animate-spin" />
@@ -237,7 +237,7 @@ export default function PengumumanTab() {
               <motion.div
                 initial={{ scale: 0.95, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
-                className="relative bg-linear-to-br from-secondary-400 via-secondary-500 to-orange-600 rounded-[3rem] p-6 md:p-10 text-white shadow-sm border border-gray-200 shadow-secondary-500/30 overflow-hidden"
+                className="relative bg-linear-to-br from-secondary-400 via-secondary-500 to-orange-600 rounded-[3rem] p-6 md:p-10 text-white shadow-sm shadow-secondary-500/30 overflow-hidden"
               >
                 <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-[60px] -translate-y-1/2 translate-x-1/2" />
                 <AlertCircle className="absolute -bottom-10 -right-10 w-80 h-80 opacity-10 rotate-12" />
@@ -267,7 +267,7 @@ export default function PengumumanTab() {
                   <button
                     onClick={handleDownloadSurat}
                     disabled={isGenerating}
-                    className="inline-flex items-center justify-center gap-3 px-6 md:px-10 py-5 bg-primary-950 text-white rounded-lg font-black hover:bg-primary-900 transition-all shadow-sm border border-gray-200 active:scale-95 disabled:opacity-50"
+                    className="inline-flex items-center justify-center gap-3 px-6 md:px-10 py-5 bg-primary-950 text-white rounded-lg font-black hover:bg-primary-900 transition-all shadow-sm active:scale-95 disabled:opacity-50"
                   >
                     {isGenerating ? (
                       <Loader2 className="w-6 h-6 animate-spin" />
@@ -282,7 +282,7 @@ export default function PengumumanTab() {
               <motion.div
                 initial={{ scale: 0.95, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
-                className="relative bg-linear-to-br from-rose-600 via-red-700 to-red-900 rounded-[3rem] p-6 md:p-10 text-white shadow-sm border border-gray-200 shadow-red-600/30 overflow-hidden"
+                className="relative bg-linear-to-br from-rose-600 via-red-700 to-red-900 rounded-[3rem] p-6 md:p-10 text-white shadow-sm shadow-red-600/30 overflow-hidden"
               >
                 <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-[60px] -translate-y-1/2 translate-x-1/2" />
                 <XCircle className="absolute -bottom-10 -right-10 w-80 h-80 opacity-10 rotate-12" />
@@ -314,7 +314,7 @@ export default function PengumumanTab() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
-              className="bg-white rounded-[2.5rem] p-6 md:p-10 shadow-sm border border-gray-200 border border-primary-100"
+              className="bg-white rounded-[2.5rem] p-6 md:p-10 shadow-sm border border-primary-100"
             >
               <div className="flex items-start gap-6">
                 <div className="p-4 bg-primary-50 rounded-lg">
@@ -366,7 +366,7 @@ export default function PengumumanTab() {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.5 }}
-              className="bg-white  rounded-[2.5rem] p-5 md:p-8 shadow-sm border border-gray-200 border border-primary-100 sticky top-8"
+              className="bg-white  rounded-[2.5rem] p-5 md:p-8 shadow-sm border border-primary-100 sticky top-8"
             >
               <div className="flex items-center gap-4 mb-8">
                 <div className="p-3 bg-primary-50 rounded-lg">

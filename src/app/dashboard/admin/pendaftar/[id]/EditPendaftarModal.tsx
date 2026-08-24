@@ -140,7 +140,7 @@ export default function EditPendaftarModal({
 
   return (
     <div className="fixed inset-0 bg-black/60  flex items-start md:items-center pt-10 md:pt-0 pb-20 md:pb-0 justify-center z-50 p-4 overflow-y-auto overflow-x-hidden overscroll-contain custom-scrollbar">
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 w-full max-w-5xl max-h-[90vh] flex flex-col overflow-hidden border border-stone-200">
+      <div className="bg-white rounded-lg shadow-sm w-full max-w-5xl max-h-[90vh] flex flex-col overflow-hidden border border-stone-200">
         {/* Modal Header */}
         <div className="bg-primary-950 p-6 text-white flex items-center justify-between border-b border-primary-900">
           <div>
@@ -973,7 +973,7 @@ export default function EditPendaftarModal({
             <button
               type="submit"
               disabled={savingEdit}
-              className="px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-lg font-black text-sm uppercase transition-all shadow-sm border border-gray-200 flex items-center gap-2 disabled:opacity-50"
+              className="px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-lg font-black text-sm uppercase transition-all shadow-sm flex items-center gap-2 disabled:opacity-50"
             >
               {savingEdit ? "Menyimpan..." : "Simpan Perubahan"}
             </button>

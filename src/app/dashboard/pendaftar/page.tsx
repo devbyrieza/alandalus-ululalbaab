@@ -103,7 +103,7 @@ export default function DashboardPendaftarPage() {
 
 function HeroBanner({ nama, nomorPendaftaran, lastUpdate }: any) {
   return (
-    <div className="relative overflow-hidden rounded-[2rem] sm:rounded-[2.5rem] md:rounded-[3.5rem] bg-linear-to-br from-blue-700 to-blue-900 text-white p-6 sm:p-5 md:p-8 shadow-sm border border-gray-200 border border-blue-600/50">
+    <div className="relative overflow-hidden rounded-[2rem] sm:rounded-[2.5rem] md:rounded-[3.5rem] bg-linear-to-br from-blue-700 to-blue-900 text-white p-6 sm:p-5 md:p-8 shadow-sm border border-blue-600/50">
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-amber-400/10 rounded-full blur-3xl pointer-events-none -translate-y-1/2 translate-x-1/2" />
       <div className="relative z-10 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8 lg:gap-10">
         <div className="flex-1 space-y-4 sm:space-y-6">
@@ -122,7 +122,7 @@ function HeroBanner({ nama, nomorPendaftaran, lastUpdate }: any) {
           </div>
           <h1 className="text-3xl sm:text-3xl md:text-5xl lg:text-7xl font-black leading-[1.1] font-display tracking-tight text-white italic">
             Selamat Datang, <br />
-            <span className="text-amber-400 not-italic uppercase drop-shadow-sm border border-gray-200">
+            <span className="text-amber-400 not-italic uppercase drop-shadow-sm">
               {nama}!
             </span>
           </h1>
@@ -145,7 +145,7 @@ function HeroBanner({ nama, nomorPendaftaran, lastUpdate }: any) {
 
 function GuidedActionCard({ nextStep }: any) {
   return (
-    <div className="bg-white rounded-[1.5rem] sm:rounded-[2rem] md:rounded-[2.5rem] border-2 border-blue-100 shadow-sm border border-gray-200 shadow-blue/5 overflow-hidden group">
+    <div className="bg-white rounded-[1.5rem] sm:rounded-[2rem] md:rounded-[2.5rem] border-2 border-blue-100 shadow-sm shadow-blue/5 overflow-hidden group">
       <div className="flex flex-col md:flex-row items-stretch">
         <div className="bg-amber-400 p-6 sm:p-5 md:p-8 flex flex-col items-center justify-center text-blue-950 min-w-[200px]">
           <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-lg bg-white/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
@@ -172,7 +172,7 @@ function GuidedActionCard({ nextStep }: any) {
           <div className="flex flex-wrap gap-4">
             <Link
               href={nextStep.href}
-              className="px-6 sm:px-6 md:px-10 py-4 sm:py-5 bg-blue-700 hover:bg-blue-800 text-white rounded-lg font-black uppercase text-xs sm:text-sm shadow-sm border border-gray-200 shadow-blue/20 transition-all hover:scale-105 active:scale-95 flex items-center gap-3 group/btn w-full sm:w-auto justify-center"
+              className="px-6 sm:px-6 md:px-10 py-4 sm:py-5 bg-blue-700 hover:bg-blue-800 text-white rounded-lg font-black uppercase text-xs sm:text-sm shadow-sm shadow-blue/20 transition-all hover:scale-105 active:scale-95 flex items-center gap-3 group/btn w-full sm:w-auto justify-center"
             >
               Mulai Sekarang{" "}
               <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover/btn:translate-x-2 transition-transform" />
@@ -218,7 +218,7 @@ function StatusGrid({ status, statusLabel, pengumuman }: any) {
       {items.map((item, id) => (
         <div
           key={id}
-          className="bg-white rounded-[1.5rem] border border-surface-200 p-6 flex flex-col gap-4 shadow-sm hover:shadow-sm border border-gray-200 transition-shadow"
+          className="bg-white rounded-[1.5rem] border border-surface-200 p-6 flex flex-col gap-4 shadow-sm hover:shadow-sm transition-shadow"
         >
           <div className="flex items-center gap-4">
             <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${item.bg} ${item.color}`}>
@@ -238,7 +238,7 @@ function StatusGrid({ status, statusLabel, pengumuman }: any) {
 
 function SupportCenter() {
   return (
-    <div className="bg-blue-950 text-white rounded-[1.5rem] sm:rounded-[2rem] p-6 sm:p-8 md:p-12 relative overflow-hidden group shadow-sm border border-gray-200">
+    <div className="bg-blue-950 text-white rounded-[1.5rem] sm:rounded-[2rem] p-6 sm:p-8 md:p-12 relative overflow-hidden group shadow-sm">
       <div className="absolute top-0 right-0 w-96 h-96 bg-amber-400 rounded-full blur-[120px] opacity-20 -translate-y-1/2 translate-x-1/2" />
       <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-10 text-center md:text-left">
         <div className="flex-1 space-y-3">
@@ -261,7 +261,7 @@ function SupportCenter() {
           <a
             href="https://wa.me/6281285300800"
             target="_blank"
-            className="flex items-center justify-center gap-3 px-6 py-4 bg-amber-400 text-blue-950 font-black text-sm uppercase tracking-widest rounded-lg hover:bg-amber-300 shadow-sm border border-gray-200 transition-all hover:scale-105 active:scale-95 w-full"
+            className="flex items-center justify-center gap-3 px-6 py-4 bg-amber-400 text-blue-950 font-black text-sm uppercase tracking-widest rounded-lg hover:bg-amber-300 shadow-sm transition-all hover:scale-105 active:scale-95 w-full"
           >
             Chat di WhatsApp
             <ArrowRight className="w-4 h-4" />
@@ -284,7 +284,7 @@ function LoadingState() {
 
 function ErrorState({ message }: { message: string }) {
   return (
-    <div className="p-20 text-center text-red-600 font-bold bg-white rounded-4xl border border-red-100 shadow-sm border border-gray-200">
+    <div className="p-20 text-center text-red-600 font-bold bg-white rounded-4xl border border-red-100 shadow-sm">
       {message}
     </div>
   );

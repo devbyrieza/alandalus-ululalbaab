@@ -117,7 +117,7 @@ export default function MonitoringClient({ data }: { data: ExaminerStat[] }) {
               onClick={() => setFilterType(type)}
               className={`px-6 py-3 rounded-lg text-xs font-black uppercase tracking-widest whitespace-nowrap transition-all ${
                 filterType === type
-                  ? "bg-primary-950 text-white shadow-sm border border-gray-200"
+                  ? "bg-primary-950 text-white shadow-sm"
                   : "bg-ink-50 text-ink-500 hover:bg-ink-100"
               }`}
             >
@@ -191,7 +191,7 @@ export default function MonitoringClient({ data }: { data: ExaminerStat[] }) {
                             target="_blank" 
                             rel="noreferrer"
                             onClick={(e) => e.stopPropagation()}
-                            className="w-10 h-10 bg-green-500 text-white rounded-lg flex items-center justify-center hover:bg-green-600 transition-colors shadow-sm border border-gray-200 shadow-green-500/20"
+                            className="w-10 h-10 bg-green-500 text-white rounded-lg flex items-center justify-center hover:bg-green-600 transition-colors shadow-sm shadow-green-500/20"
                             title="Ingatkan via WA"
                           >
                             <MessageCircle className="w-5 h-5" />

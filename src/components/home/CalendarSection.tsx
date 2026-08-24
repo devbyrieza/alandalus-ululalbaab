@@ -154,7 +154,7 @@ export default function CalendarSection() {
 
                 <div className="space-y-3.5 w-full max-w-[240px]">
                   <Link href="/kalender" className="block w-full">
-                    <button className="btn-primary w-full justify-center py-3 shadow-sm border border-gray-200">
+                    <button className="btn-primary w-full justify-center py-3 shadow-sm">
                       Cek Kalender
                       <ArrowUpRight className="w-4 h-4 ml-1" />
                     </button>

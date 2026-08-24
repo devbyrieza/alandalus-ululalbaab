@@ -79,7 +79,7 @@ export default function InputNilaiManualModal({
 
   return (
     <div className="fixed inset-0 z-[100] flex items-start md:items-center pt-10 md:pt-0 pb-20 md:pb-0 justify-center bg-primary-950/40  p-4 overflow-y-auto overflow-x-hidden overscroll-contain custom-scrollbar">
-      <div className="bg-white w-full max-w-4xl rounded-[2rem] shadow-sm border border-gray-200 overflow-hidden flex flex-col max-h-[90vh]">
+      <div className="bg-white w-full max-w-4xl rounded-[2rem] shadow-sm overflow-hidden flex flex-col max-h-[90vh]">
         {/* Header */}
         <div className="p-6 border-b border-ink-100 flex items-center justify-between bg-primary-50">
           <div className="flex items-center gap-4">
@@ -183,7 +183,7 @@ export default function InputNilaiManualModal({
               {/* Kolom Kanan: Kalkulator & Keputusan */}
               <div className="space-y-4 lg:col-span-2">
                 
-                <div className="bg-primary-900 text-white p-6 rounded-lg shadow-sm border border-gray-200 relative overflow-hidden h-[180px] flex flex-col justify-center">
+                <div className="bg-primary-900 text-white p-6 rounded-lg shadow-sm relative overflow-hidden h-[180px] flex flex-col justify-center">
                   <div className="absolute -right-10 -top-10 w-40 h-40 bg-white/10 rounded-full blur-2xl"></div>
                   <h3 className="text-xs font-bold text-primary-200 uppercase tracking-widest mb-1 relative z-10">Estimasi Total Skor</h3>
                   <div className="text-6xl font-black relative z-10">{totalScore.toFixed(1)}</div>
@@ -242,7 +242,7 @@ export default function InputNilaiManualModal({
             type="submit"
             form="form-input-manual"
             disabled={loading}
-            className="flex items-center gap-2 px-5 md:px-8 py-3 bg-primary-700 text-white rounded-lg font-black text-sm shadow-sm border border-gray-200 shadow-primary-200 hover:bg-primary-800 disabled:opacity-50"
+            className="flex items-center gap-2 px-5 md:px-8 py-3 bg-primary-700 text-white rounded-lg font-black text-sm shadow-sm shadow-primary-200 hover:bg-primary-800 disabled:opacity-50"
           >
             {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Save className="w-5 h-5" />}
             {loading ? "Menyimpan..." : "Simpan & Proses"}

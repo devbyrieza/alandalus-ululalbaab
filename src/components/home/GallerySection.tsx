@@ -277,7 +277,7 @@ export default function GallerySection() {
 
               <motion.div variants={fadeUpVariants}>
                 <Link href="/kalender">
-                  <button className="btn-primary inline-flex items-center gap-2 group px-7 py-3.5 shadow-sm border border-gray-200">
+                  <button className="btn-primary inline-flex items-center gap-2 group px-7 py-3.5 shadow-sm">
                     Lihat Jadwal Lengkap
                     <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
                   </button>

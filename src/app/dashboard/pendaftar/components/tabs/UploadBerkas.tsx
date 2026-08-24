@@ -270,14 +270,14 @@ function DokumenCard({
     <div
       className={`group rounded-[1.5rem] border transition-all duration-300 overflow-hidden relative ${
         isDragging
-          ? "border-primary-600 bg-primary-50 shadow-sm border border-gray-200 scale-[1.02] ring-4 ring-primary-600/10"
+          ? "border-primary-600 bg-primary-50 shadow-sm scale-[1.02] ring-4 ring-primary-600/10"
           : dokumen.status === "verified"
             ? "border-emerald-200 bg-emerald-50/50"
             : dokumen.status === "rejected"
               ? "border-red-200 bg-red-50/50"
               : dokumen.status === "uploaded"
                 ? "border-primary-200 bg-primary-50/50"
-                : "border-ink-100 bg-white hover:border-primary-300 hover:shadow-sm border border-gray-200 hover:shadow-primary-950/5"
+                : "border-ink-100 bg-white hover:border-primary-300 hover:shadow-sm hover:shadow-primary-950/5"
       }`}
     >
       {/* Status Bar */}
@@ -886,7 +886,7 @@ export default function UploadBerkasTab() {
       {/* Toast Notification */}
       {toast && (
         <div
-          className={`fixed top-4 right-4 z-50 px-6 py-4 rounded-lg shadow-sm border border-gray-200 flex items-center gap-3 animate-fadeInRight ${
+          className={`fixed top-4 right-4 z-50 px-6 py-4 rounded-lg shadow-sm flex items-center gap-3 animate-fadeInRight ${
             toast.type === "success"
               ? "bg-green-500 text-white"
               : "bg-red-500 text-white"
@@ -908,7 +908,7 @@ export default function UploadBerkasTab() {
       )}
 
       {/* Header */}
-      <div className="relative overflow-hidden rounded-[2rem] bg-linear-to-br from-primary-700 to-primary-900 border border-primary-600 p-5 md:p-8 text-white shadow-sm border border-gray-200 app-card">
+      <div className="relative overflow-hidden rounded-[2rem] bg-linear-to-br from-primary-700 to-primary-900 border border-primary-600 p-5 md:p-8 text-white shadow-sm app-card">
         <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-secondary-50/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="flex items-center gap-5">
@@ -938,7 +938,7 @@ export default function UploadBerkasTab() {
       {/* Progress Summary */}
       {summary && (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="bg-white rounded-lg p-5 border border-ink-100 shadow-sm hover:shadow-sm border border-gray-200 transition-all">
+          <div className="bg-white rounded-lg p-5 border border-ink-100 shadow-sm hover:shadow-sm transition-all">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 bg-secondary-50 rounded-lg flex items-center justify-center">
                 <FileText className="w-6 h-6 text-secondary-600" />
@@ -954,7 +954,7 @@ export default function UploadBerkasTab() {
             </div>
           </div>
 
-          <div className="bg-white rounded-lg p-5 border border-ink-100 shadow-sm hover:shadow-sm border border-gray-200 transition-all">
+          <div className="bg-white rounded-lg p-5 border border-ink-100 shadow-sm hover:shadow-sm transition-all">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 bg-primary-50 rounded-lg flex items-center justify-center">
                 <Upload className="w-6 h-6 text-primary-600" />
@@ -975,7 +975,7 @@ export default function UploadBerkasTab() {
             </div>
           </div>
 
-          <div className="bg-white rounded-lg p-5 border border-ink-100 shadow-sm hover:shadow-sm border border-gray-200 transition-all">
+          <div className="bg-white rounded-lg p-5 border border-ink-100 shadow-sm hover:shadow-sm transition-all">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 bg-emerald-50 rounded-lg flex items-center justify-center">
                 <FileCheck className="w-6 h-6 text-emerald-600" />
@@ -996,7 +996,7 @@ export default function UploadBerkasTab() {
             </div>
           </div>
 
-          <div className="bg-white rounded-lg p-5 border border-ink-100 shadow-sm hover:shadow-sm border border-gray-200 transition-all">
+          <div className="bg-white rounded-lg p-5 border border-ink-100 shadow-sm hover:shadow-sm transition-all">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 bg-secondary-50 rounded-lg flex items-center justify-center">
                 <div className="w-6 h-6 flex items-center justify-center">
@@ -1011,7 +1011,7 @@ export default function UploadBerkasTab() {
                 </p>
                 <div className="w-full h-2.5 bg-surface-100 rounded-full mt-2 overflow-hidden">
                   <div
-                    className="h-full bg-linear-to-r from-primary-500 to-primary-700 rounded-full transition-all duration-500 shadow-sm border border-gray-200 shadow-primary-500/20"
+                    className="h-full bg-linear-to-r from-primary-500 to-primary-700 rounded-full transition-all duration-500 shadow-sm shadow-primary-500/20"
                     style={{
                       width: `${summary.progress.required.percentage}%` }}
                   />
@@ -1149,7 +1149,7 @@ export default function UploadBerkasTab() {
                   </p>
                   <Link
                     href="/dashboard/pendaftar/undangan-seleksi"
-                    className="inline-flex items-center gap-2 px-6 py-3 bg-secondary-400 text-primary-950 font-black rounded-lg hover:bg-secondary-300 transition-all shadow-sm border border-gray-200 shadow-secondary-400/20 hover:-translate-y-1 border border-secondary-500"
+                    className="inline-flex items-center gap-2 px-6 py-3 bg-secondary-400 text-primary-950 font-black rounded-lg hover:bg-secondary-300 transition-all shadow-sm shadow-secondary-400/20 hover:-translate-y-1 border border-secondary-500"
                   >
                     Buka Jadwal Seleksi
                     <FileCheck className="w-5 h-5" />
@@ -1241,7 +1241,7 @@ export default function UploadBerkasTab() {
                   summary &&
                   summary.progress.required.percentage === 100 &&
                   !isSubmitting
-                    ? "bg-secondary-400 text-primary-950 hover:bg-secondary-300 shadow-sm border border-gray-200 shadow-secondary-400/20 hover:-translate-y-1 border border-secondary-500"
+                    ? "bg-secondary-400 text-primary-950 hover:bg-secondary-300 shadow-sm shadow-secondary-400/20 hover:-translate-y-1 border border-secondary-500"
                     : "bg-surface-200 text-ink-400 cursor-not-allowed"
                 }`}
               >

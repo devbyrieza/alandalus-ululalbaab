@@ -220,7 +220,7 @@ export default function HasilSeleksiPage() {
         <button
           onClick={handleExportExcel}
           disabled={candidates.length === 0 || loading}
-          className="flex items-center justify-center gap-2 px-6 py-2.5 bg-green-600 hover:bg-green-700 text-white rounded-lg font-bold transition-all shadow-sm border border-gray-200 shadow-green-200 disabled:shadow-none disabled:bg-stone-300 w-full md:w-auto"
+          className="flex items-center justify-center gap-2 px-6 py-2.5 bg-green-600 hover:bg-green-700 text-white rounded-lg font-bold transition-all shadow-sm shadow-green-200 disabled:shadow-none disabled:bg-stone-300 w-full md:w-auto"
         >
           <Download className="w-4 h-4" />
           Ekspor Excel

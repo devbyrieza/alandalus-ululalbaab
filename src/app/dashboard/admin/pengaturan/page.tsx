@@ -149,7 +149,7 @@ export default function PengaturanPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 border-2 border-purple-100">
+      <div className="bg-white rounded-lg shadow-sm p-6 border-2 border-purple-100">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             <div className="p-3 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-lg">
@@ -192,7 +192,7 @@ export default function PengaturanPage() {
       )}
 
       {/* Tahun Ajaran Section */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 border-2 border-purple-100">
+      <div className="bg-white rounded-lg shadow-sm p-6 border-2 border-purple-100">
         <div className="flex items-center gap-3 mb-6">
           <Calendar className="w-6 h-6 text-purple-600" />
           <h3 className="text-xl font-bold text-stone-900">Tahun Ajaran</h3>
@@ -233,7 +233,7 @@ export default function PengaturanPage() {
                   </div>
                   <button
                     onClick={() => startEdit(activeTahunAjaran)}
-                    className="p-2 bg-white text-green-600 rounded-lg hover:shadow-sm border border-gray-200 transition-all border border-green-100"
+                    className="p-2 bg-white text-green-600 rounded-lg hover:shadow-sm transition-all border border-green-100"
                   >
                     <Edit3 className="w-5 h-5" />
                   </button>
@@ -344,7 +344,7 @@ export default function PengaturanPage() {
       {/* Edit Modal Overlay */}
       {editingTa && (
         <div className="fixed inset-0 z-[9999] flex items-start md:items-center pt-10 md:pt-0 pb-20 md:pb-0 justify-center bg-stone-900/50  p-4 overflow-y-auto overflow-x-hidden overscroll-contain custom-scrollbar">
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 w-full max-w-lg overflow-hidden animate-in fade-in zoom-in duration-200">
+          <div className="bg-white rounded-lg shadow-sm w-full max-w-lg overflow-hidden animate-in fade-in zoom-in duration-200">
             <div className="px-6 py-4 bg-gradient-to-r from-purple-600 to-indigo-700 text-white flex items-center justify-between">
               <h3 className="text-lg font-bold">Edit Tahun Ajaran</h3>
               <button
@@ -454,7 +454,7 @@ export default function PengaturanPage() {
                 <button
                   type="submit"
                   disabled={updating}
-                  className="flex-1 px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-lg shadow-sm border border-gray-200 shadow-purple-200 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+                  className="flex-1 px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-lg shadow-sm shadow-purple-200 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
                 >
                   {updating && <Loader2 className="w-4 h-4 animate-spin" />}
                   Simpan Perubahan

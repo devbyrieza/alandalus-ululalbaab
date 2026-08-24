@@ -280,7 +280,7 @@ export default function DaftarPage() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.3 }}
-            className="app-card bg-white rounded-[2.5rem] md:rounded-[3.5rem] shadow-sm border border-gray-200 p-6 md:p-16 border border-secondary-200 relative overflow-hidden"
+            className="app-card bg-white rounded-[2.5rem] md:rounded-[3.5rem] shadow-sm p-6 md:p-16 border border-secondary-200 relative overflow-hidden"
           >
             {/* Soft decorative blur inside card */}
             <div className="absolute top-0 right-0 w-64 h-64 bg-secondary-50/30 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
@@ -399,7 +399,7 @@ export default function DaftarPage() {
                           isClosed
                             ? "opacity-50 grayscale cursor-not-allowed border-secondary-200 bg-stone-50"
                             : formData.jenjang === option.value
-                              ? "border-primary-600 bg-secondary-50 shadow-sm border border-gray-200"
+                              ? "border-primary-600 bg-secondary-50 shadow-sm"
                               : "border-secondary-200 bg-white hover:border-primary-200 hover:shadow-sm"
                         }`}
                       >
@@ -565,7 +565,7 @@ export default function DaftarPage() {
                             whileTap={{ scale: 0.98 }}
                             className={`flex-1 flex items-center justify-center px-4 md:px-6 py-3 md:py-4 rounded-[1.5rem] md:rounded-[2rem] border-2 cursor-pointer transition-all duration-300 text-sm md:text-base ${
                               formData.jenis_kelamin === jk.val
-                                ? "bg-blue-600 border-blue-600 text-white font-black shadow-sm border border-gray-200"
+                                ? "bg-blue-600 border-blue-600 text-white font-black shadow-sm"
                                 : "bg-secondary-50 border-secondary-200 text-ink-800 hover:border-blue-200 hover:bg-white font-bold"
                             }`}
                           >
@@ -659,7 +659,7 @@ export default function DaftarPage() {
                   whileTap={{ scale: 0.98 }}
                   type="submit"
                   disabled={isLoading}
-                  className="w-full py-4 md:py-6 rounded-pill bg-blue-600 text-white font-black text-lg md:text-xl hover:bg-blue-700 shadow-sm border border-gray-200 transition-all flex items-center justify-center gap-3 disabled:opacity-50"
+                  className="w-full py-4 md:py-6 rounded-pill bg-blue-600 text-white font-black text-lg md:text-xl hover:bg-blue-700 shadow-sm transition-all flex items-center justify-center gap-3 disabled:opacity-50"
                 >
                   {isLoading ? (
                     <>

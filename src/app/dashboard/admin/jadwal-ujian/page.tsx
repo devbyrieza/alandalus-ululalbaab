@@ -366,7 +366,7 @@ function JadwalUjianContent() {
       {/* Standardized Refreshing Overlay */}
       {refreshing && (
         <div className="fixed inset-0 bg-white/40 backdrop-blur-[1px] z-[100] flex items-start md:items-center pt-10 md:pt-0 pb-20 md:pb-0 justify-center pointer-events-none overflow-y-auto overflow-x-hidden p-4 overscroll-contain custom-scrollbar">
-          <div className="bg-white px-6 py-3 rounded-lg shadow-sm border border-gray-200 border border-stone-100 flex items-center gap-3 animate-in fade-in zoom-in duration-300">
+          <div className="bg-white px-6 py-3 rounded-lg shadow-sm border border-stone-100 flex items-center gap-3 animate-in fade-in zoom-in duration-300">
             <Loader2 className="w-5 h-5 animate-spin text-purple-600" />
             <span className="text-sm font-bold text-stone-700 tracking-tight">
               Memperbarui data...
@@ -379,7 +379,7 @@ function JadwalUjianContent() {
         <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/5 rounded-full -mr-16 -mt-16 blur-3xl"></div>
         <div className="relative flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="flex items-center gap-6">
-            <div className="p-4 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-lg shadow-sm border border-gray-200 shadow-purple-500/20">
+            <div className="p-4 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-lg shadow-sm shadow-purple-500/20">
               <Calendar className="w-8 h-8 text-white" />
             </div>
             <div>
@@ -405,7 +405,7 @@ function JadwalUjianContent() {
             {isAdmin && (
               <button
                 onClick={() => setShowAddSession(true)}
-                className="flex items-center gap-3 px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-black shadow-sm border border-gray-200 shadow-purple-600/20 transition-all hover:-translate-y-0.5"
+                className="flex items-center gap-3 px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-black shadow-sm shadow-purple-600/20 transition-all hover:-translate-y-0.5"
               >
                 <Plus className="w-5 h-5" />
                 Sesi Baru
@@ -417,7 +417,7 @@ function JadwalUjianContent() {
 
       {/* Broadcast Info Card */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-gradient-to-br from-indigo-600 to-purple-700 rounded-lg p-6 text-white shadow-sm border border-gray-200 overflow-hidden relative">
+        <div className="bg-gradient-to-br from-indigo-600 to-purple-700 rounded-lg p-6 text-white shadow-sm overflow-hidden relative">
           <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16 blur-xl"></div>
           <div className="relative flex items-center gap-6">
             <div className="p-4 bg-white/20 rounded-lg ">
@@ -511,7 +511,7 @@ function JadwalUjianContent() {
                       <button
                         onClick={() => handleAssign(s.id)}
                         disabled={assigning || s.booked_count >= s.quota}
-                        className="w-full md:w-auto px-6 py-3 bg-gradient-to-br from-primary-600 to-emerald-600 text-white rounded-lg font-black shadow-sm border border-gray-200 shadow-primary-600/20 hover:scale-105 transition-all flex items-center justify-center gap-2"
+                        className="w-full md:w-auto px-6 py-3 bg-gradient-to-br from-primary-600 to-emerald-600 text-white rounded-lg font-black shadow-sm shadow-primary-600/20 hover:scale-105 transition-all flex items-center justify-center gap-2"
                       >
                         {assigning ? (
                           <Loader2 className="w-4 h-4 animate-spin" />
@@ -755,7 +755,7 @@ function JadwalUjianContent() {
                 </button>
                 <button
                   type="submit"
-                  className="flex-[2] py-4 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-black shadow-sm border border-gray-200 shadow-purple-600/20 transition-all"
+                  className="flex-[2] py-4 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-black shadow-sm shadow-purple-600/20 transition-all"
                 >
                   Simpan Sesi
                 </button>
@@ -768,7 +768,7 @@ function JadwalUjianContent() {
       {/* Sending Progress Modal */}
       {sendingProgress.active && (
         <div className="fixed inset-0 z-[60] flex items-start md:items-center pt-10 md:pt-0 pb-20 md:pb-0 justify-center p-4 bg-ink-900/80  overflow-y-auto overflow-x-hidden overscroll-contain custom-scrollbar">
-          <div className="bg-white rounded-lg w-full max-w-md shadow-sm border border-gray-200 border border-white p-5 md:p-8 text-center animate-pulse">
+          <div className="bg-white rounded-lg w-full max-w-md shadow-sm border border-white p-5 md:p-8 text-center animate-pulse">
             <Loader2 className="w-12 h-12 text-purple-600 animate-spin mx-auto mb-4" />
             <h2 className="text-2xl font-black text-ink-900 mb-2">
               Mengirim Notifikasi...
@@ -880,7 +880,7 @@ function JadwalUjianContent() {
                     broadcasting ||
                     (availStats.eligibleCount === 0 && !resetFlags)
                   }
-                  className="flex-[2] py-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-black shadow-sm border border-gray-200 shadow-indigo-600/20 transition-all flex items-center justify-center gap-2"
+                  className="flex-[2] py-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-black shadow-sm shadow-indigo-600/20 transition-all flex items-center justify-center gap-2"
                 >
                   {broadcasting && <Loader2 className="w-4 h-4 animate-spin" />}
                   Kirim Sekarang

@@ -456,7 +456,7 @@ function VerifikasiPembayaranContent() {
       {/* Refreshing Overlay */}
       {isRefreshing && (
         <div className="fixed inset-0 bg-white/40 backdrop-blur-[1px] z-[100] flex items-start md:items-center pt-10 md:pt-0 pb-20 md:pb-0 justify-center pointer-events-none overflow-y-auto overflow-x-hidden p-4 overscroll-contain custom-scrollbar">
-          <div className="bg-white px-6 py-3 rounded-lg shadow-sm border border-gray-200 border border-stone-100 flex items-center gap-3 animate-in fade-in zoom-in duration-300">
+          <div className="bg-white px-6 py-3 rounded-lg shadow-sm border border-stone-100 flex items-center gap-3 animate-in fade-in zoom-in duration-300">
             <Loader2 className="w-5 h-5 animate-spin text-primary-600" />
             <span className="text-sm font-bold text-stone-700 tracking-tight">
               Memperbarui data...
@@ -494,7 +494,7 @@ function VerifikasiPembayaranContent() {
               <button
                 type="button"
                 onClick={() => setShowUploadAtasNamaModal(true)}
-                className="flex items-center gap-2 px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg text-sm font-bold transition-all shadow-sm border border-gray-200 shadow-primary-600/20 whitespace-nowrap"
+                className="flex items-center gap-2 px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg text-sm font-bold transition-all shadow-sm shadow-primary-600/20 whitespace-nowrap"
               >
                 <UploadCloud className="w-4 h-4" />
                 Upload Atas Nama
@@ -554,7 +554,7 @@ function VerifikasiPembayaranContent() {
             <button
               onClick={() => handleExport("excel")}
               disabled={exporting}
-              className="flex items-center gap-2 px-3 md:px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold transition-all shadow-sm hover:shadow-sm border border-gray-200 disabled:opacity-50 text-sm"
+              className="flex items-center gap-2 px-3 md:px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold transition-all shadow-sm hover:shadow-sm disabled:opacity-50 text-sm"
               title="Download Excel"
             >
               {exporting ? (
@@ -567,7 +567,7 @@ function VerifikasiPembayaranContent() {
             <button
               onClick={() => handleExport("pdf")}
               disabled={exporting}
-              className="flex items-center gap-2 px-3 md:px-4 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-lg font-bold transition-all shadow-sm hover:shadow-sm border border-gray-200 disabled:opacity-50 text-sm"
+              className="flex items-center gap-2 px-3 md:px-4 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-lg font-bold transition-all shadow-sm hover:shadow-sm disabled:opacity-50 text-sm"
               title="Download PDF"
             >
               {exporting ? (
@@ -579,7 +579,7 @@ function VerifikasiPembayaranContent() {
             </button>
             <button
               onClick={() => fetchPembayaran(true)}
-              className="flex items-center gap-2 px-3 md:px-6 py-2.5 bg-white hover:bg-stone-50 border border-stone-200 text-stone-700 rounded-lg font-bold transition-all shadow-sm hover:shadow-sm border border-gray-200 text-sm"
+              className="flex items-center gap-2 px-3 md:px-6 py-2.5 bg-white hover:bg-stone-50 border border-stone-200 text-stone-700 rounded-lg font-bold transition-all shadow-sm hover:shadow-sm text-sm"
             >
               <RefreshCw className="w-4 h-4" />
               <span className="hidden sm:inline">Refresh</span>
@@ -807,7 +807,7 @@ function VerifikasiPembayaranContent() {
                     {statusFilter === "pending" && (
                       <button
                         onClick={() => openModal(pay)}
-                        className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-3 bg-primary-700 hover:bg-primary-800 text-white rounded-lg text-sm font-bold shadow-sm border border-gray-200 shadow-primary-700/20 transition-all hover:-translate-y-0.5"
+                        className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-3 bg-primary-700 hover:bg-primary-800 text-white rounded-lg text-sm font-bold shadow-sm shadow-primary-700/20 transition-all hover:-translate-y-0.5"
                       >
                         <CheckCircle className="w-4 h-4" />
                         Verifikasi
@@ -843,7 +843,7 @@ function VerifikasiPembayaranContent() {
       {/* Modal */}
       {showModal && selectedPembayaran && (
         <div className="fixed inset-0 bg-black/60  flex items-start md:items-center pt-10 md:pt-0 pb-20 md:pb-0 justify-center z-50 p-4 animate-in fade-in duration-200 overflow-y-auto overflow-x-hidden overscroll-contain custom-scrollbar">
-          <div className="bg-white rounded-[2rem] shadow-sm border border-gray-200 max-w-2xl w-full max-h-[90vh] flex flex-col overflow-hidden animate-in zoom-in-95 duration-200">
+          <div className="bg-white rounded-[2rem] shadow-sm max-w-2xl w-full max-h-[90vh] flex flex-col overflow-hidden animate-in zoom-in-95 duration-200">
             {/* Header - Fixed */}
             <div className="p-6 border-b border-stone-100 bg-stone-50/50 flex justify-between items-center">
               <div>
@@ -905,7 +905,7 @@ function VerifikasiPembayaranContent() {
                         onClick={() => setEditTipeCicilan("LUNAS")}
                         className={`flex-1 py-2 rounded-lg text-xs font-black transition-all ${
                           editTipeCicilan === "LUNAS"
-                            ? "bg-violet-600 text-white shadow-sm border border-gray-200"
+                            ? "bg-violet-600 text-white shadow-sm"
                             : "bg-white text-violet-600 border border-violet-200"
                         }`}
                       >
@@ -920,7 +920,7 @@ function VerifikasiPembayaranContent() {
                         }}
                         className={`flex-1 py-2 rounded-lg text-xs font-black transition-all ${
                           editTipeCicilan === "CICILAN"
-                            ? "bg-violet-600 text-white shadow-sm border border-gray-200"
+                            ? "bg-violet-600 text-white shadow-sm"
                             : "bg-white text-violet-600 border border-violet-200"
                         }`}
                       >
@@ -1010,7 +1010,7 @@ function VerifikasiPembayaranContent() {
                         href={selectedPembayaran.bukti_transfer_url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="px-6 py-3 bg-white rounded-full font-bold text-stone-900 shadow-sm border border-gray-200 hover:scale-105 transition-transform flex items-center gap-2"
+                        className="px-6 py-3 bg-white rounded-full font-bold text-stone-900 shadow-sm hover:scale-105 transition-transform flex items-center gap-2"
                       >
                         <Eye className="w-4 h-4" />
                         Lihat Full Size
@@ -1060,7 +1060,7 @@ function VerifikasiPembayaranContent() {
                     handleVerify(selectedPembayaran.id, "verified")
                   }
                   disabled={processing || (activeTab === "DAFTAR_ULANG" && !editTipeCicilan)}
-                  className="flex-1 flex items-center justify-center gap-2 px-4 py-4 bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg font-bold transition-all hover:shadow-sm border border-gray-200 hover:shadow-emerald-500/20 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex-1 flex items-center justify-center gap-2 px-4 py-4 bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg font-bold transition-all hover:shadow-sm hover:shadow-emerald-500/20 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {processing ? (
                     <Loader2 className="w-5 h-5 animate-spin" />
@@ -1077,7 +1077,7 @@ function VerifikasiPembayaranContent() {
                     handleVerify(selectedPembayaran.id, "rejected")
                   }
                   disabled={processing}
-                  className="flex-1 flex items-center justify-center gap-2 px-4 py-4 bg-rose-500 hover:bg-rose-600 text-white rounded-lg font-bold transition-all hover:shadow-sm border border-gray-200 hover:shadow-rose-500/20 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex-1 flex items-center justify-center gap-2 px-4 py-4 bg-rose-500 hover:bg-rose-600 text-white rounded-lg font-bold transition-all hover:shadow-sm hover:shadow-rose-500/20 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {processing ? (
                     <Loader2 className="w-5 h-5 animate-spin" />

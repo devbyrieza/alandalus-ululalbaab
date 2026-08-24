@@ -106,7 +106,7 @@ export default function SendOtpPage() {
       <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-[0.02] pointer-events-none" />
 
       <BackToHomeButton position="top-left" />
-      <div className="app-card bg-white rounded-[2.5rem] shadow-sm border border-gray-200 border border-primary-100 w-full max-w-md p-6 md:p-8 relative z-10">
+      <div className="app-card bg-white rounded-[2.5rem] shadow-sm border border-primary-100 w-full max-w-md p-6 md:p-8 relative z-10">
         {/* Soft decorative blur inside card */}
         <div className="absolute top-0 right-0 w-64 h-64 bg-primary-50/30 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
         {/* Header */}
@@ -142,7 +142,7 @@ export default function SendOtpPage() {
             <div
               className={`p-4 border-2 rounded-lg cursor-pointer transition-all app-card ${
                 selectedChannel === "telegram"
-                  ? "border-primary-600 bg-primary-50 shadow-sm border border-gray-200 scale-[1.02]"
+                  ? "border-primary-600 bg-primary-50 shadow-sm scale-[1.02]"
                   : "border-surface-200 bg-white hover:border-primary-200 hover:shadow-sm"
               }`}
               onClick={() => setSelectedChannel("telegram")}
@@ -193,7 +193,7 @@ export default function SendOtpPage() {
             <div
               className={`p-4 border-2 rounded-lg cursor-pointer transition-all app-card ${
                 selectedChannel === "email"
-                  ? "border-primary-600 bg-secondary-50 shadow-sm border border-gray-200 scale-[1.02]"
+                  ? "border-primary-600 bg-secondary-50 shadow-sm scale-[1.02]"
                   : "border-secondary-200 bg-white hover:border-primary-200 hover:shadow-sm"
               }`}
               onClick={() => setSelectedChannel("email")}
@@ -254,7 +254,7 @@ export default function SendOtpPage() {
             <div
               className={`p-4 border-2 rounded-lg cursor-pointer transition-all app-card ${
                 selectedChannel === "sms"
-                  ? "border-primary-600 bg-secondary-50 shadow-sm border border-gray-200 scale-[1.02]"
+                  ? "border-primary-600 bg-secondary-50 shadow-sm scale-[1.02]"
                   : "border-secondary-200 bg-white hover:border-primary-200 hover:shadow-sm"
               }`}
               onClick={() => setSelectedChannel("sms")}
@@ -383,7 +383,7 @@ export default function SendOtpPage() {
         <button
           onClick={handleSendOtp}
           disabled={loading}
-          className={`relative z-10 w-full py-4 md:py-5 rounded-pill font-black text-lg text-white flex items-center justify-center shadow-sm border border-gray-200 transition-all active:scale-95 border border-transparent disabled:opacity-50 hover:bg-secondary-100 hover:text-primary-900 border-primary-900 bg-primary-900`}
+          className={`relative z-10 w-full py-4 md:py-5 rounded-pill font-black text-lg text-white flex items-center justify-center shadow-sm transition-all active:scale-95 border border-transparent disabled:opacity-50 hover:bg-secondary-100 hover:text-primary-900 border-primary-900 bg-primary-900`}
         >
           {loading ? (
             <>

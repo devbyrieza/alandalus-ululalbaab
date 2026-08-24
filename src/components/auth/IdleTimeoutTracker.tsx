@@ -134,7 +134,7 @@ export default function IdleTimeoutTracker() {
 
       {/* Warning Modal */}
       <div className="fixed inset-0 flex items-center justify-center z-[9999] p-4">
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 max-w-md w-full p-6 animate-fadeInUp">
+        <div className="bg-white rounded-lg shadow-sm max-w-md w-full p-6 animate-fadeInUp">
           {/* Icon */}
           <div className="w-16 h-16 rounded-full bg-yellow-100 flex items-center justify-center mx-auto mb-4">
             <AlertCircle className="w-8 h-8 text-yellow-600" />
@@ -166,7 +166,7 @@ export default function IdleTimeoutTracker() {
           {/* Button */}
           <button
             onClick={updateActivity}
-            className="w-full py-3 px-6 bg-gradient-to-r from-[var(--color-brown-700)] to-[var(--color-brown-800)] hover:from-[var(--color-brown-800)] hover:to-[var(--color-brown-900)] text-white font-bold rounded-lg transition-all duration-300 shadow-sm border border-gray-200 hover:shadow-sm border border-gray-200"
+            className="w-full py-3 px-6 bg-gradient-to-r from-[var(--color-brown-700)] to-[var(--color-brown-800)] hover:from-[var(--color-brown-800)] hover:to-[var(--color-brown-900)] text-white font-bold rounded-lg transition-all duration-300 shadow-sm hover:shadow-sm"
           >
             Saya Masih Di Sini
           </button>

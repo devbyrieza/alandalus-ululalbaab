@@ -66,7 +66,7 @@ export default function AdminSMSDashboard() {
   return (
     <div className="min-h-screen bg-gray-50 p-6">
       <div className="max-w-6xl mx-auto">
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
+        <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
           <h1 className="text-2xl font-bold text-gray-900 mb-2">
             <Smartphone className="w-6 h-6 inline-block mr-2" /> Dashboard Admin - SMS Manual
           </h1>
@@ -185,7 +185,7 @@ Hubungi 0812-8530-0800 jika ada masalah.`}
           )}
         </div>
 
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+        <div className="bg-white rounded-lg shadow-sm p-6">
           <h3 className="font-bold text-gray-900 mb-4"><BarChart className="w-5 h-5 inline-block mr-1" /> Status Sistem:</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-primary-50 p-4 rounded-lg">

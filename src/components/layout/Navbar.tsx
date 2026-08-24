@@ -451,7 +451,7 @@ export default function Navbar() {
                     <Link
                       href="/dashboard"
                       onClick={() => setIsMenuOpen(false)}
-                      className="btn-primary w-full justify-center gap-3 min-h-[56px] relative overflow-hidden shadow-sm border border-gray-200 active:scale-98 transition-all"
+                      className="btn-primary w-full justify-center gap-3 min-h-[56px] relative overflow-hidden shadow-sm active:scale-98 transition-all"
                     >
                       <span className="flex h-2 w-2 relative">
                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-300 opacity-75"></span>

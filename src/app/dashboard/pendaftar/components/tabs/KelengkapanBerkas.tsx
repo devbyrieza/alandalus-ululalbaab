@@ -737,7 +737,7 @@ export default function KelengkapanBerkasTab() {
         </div>
       )}
       {/* Header Banner */}
-      <div className="relative overflow-hidden rounded-[2rem] bg-linear-to-br from-primary-700 to-primary-900 border border-primary-600 p-5 md:p-8 text-white shadow-sm border border-gray-200 app-card">
+      <div className="relative overflow-hidden rounded-[2rem] bg-linear-to-br from-primary-700 to-primary-900 border border-primary-600 p-5 md:p-8 text-white shadow-sm app-card">
         <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-secondary-50/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
         <div className="relative z-10 flex items-start md:items-center gap-6">
           <div className="w-16 h-16 rounded-[1.5rem] bg-white/10  flex items-center justify-center border border-white/20 shadow-sm shrink-0">
@@ -767,7 +767,7 @@ export default function KelengkapanBerkasTab() {
               onClick={() => setActiveTab(tab.id as TabType)}
               className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-pill text-sm font-black transition-all duration-300 group ${
                 isActive
-                  ? "bg-primary-700 text-white shadow-sm border border-gray-200"
+                  ? "bg-primary-700 text-white shadow-sm"
                   : "text-ink-600 hover:bg-secondary-100 hover:text-primary-800"
               }`}
             >
@@ -1241,7 +1241,7 @@ export default function KelengkapanBerkasTab() {
                 <button
                   disabled={!isDataComplete}
                   onClick={() => setShowConfirmModal(true)}
-                  className={`w-full sm:w-auto py-3 px-10 rounded-lg text-lg font-black shadow-sm border border-gray-200 transition-all flex items-center justify-center gap-2 ${
+                  className={`w-full sm:w-auto py-3 px-10 rounded-lg text-lg font-black shadow-sm transition-all flex items-center justify-center gap-2 ${
                     isDataComplete
                       ? "bg-secondary-400 hover:bg-secondary-300 text-primary-950 shadow-secondary-400/20 border border-secondary-500"
                       : "bg-stone-200 text-stone-600 cursor-not-allowed shadow-none"
@@ -1267,7 +1267,7 @@ export default function KelengkapanBerkasTab() {
 
       {showConfirmModal && (
         <div className="fixed inset-0 z-[100] flex items-start md:items-center pt-10 md:pt-0 pb-20 md:pb-0 justify-center p-4 bg-ink-900/60  animate-in fade-in duration-200 overflow-y-auto overflow-x-hidden overscroll-contain custom-scrollbar">
-          <div className="bg-white rounded-[2rem] shadow-sm border border-gray-200 max-w-md w-full overflow-hidden animate-in zoom-in-95 duration-200 p-5 md:p-8 text-center relative">
+          <div className="bg-white rounded-[2rem] shadow-sm max-w-md w-full overflow-hidden animate-in zoom-in-95 duration-200 p-5 md:p-8 text-center relative">
             <div className="w-20 h-20 bg-secondary-50 rounded-lg flex items-center justify-center mx-auto mb-6 shadow-inner border border-secondary-100 rotate-3">
               <AlertTriangle className="w-10 h-10 text-secondary-500" />
             </div>
@@ -1315,7 +1315,7 @@ export default function KelengkapanBerkasTab() {
                   }
                 }}
                 disabled={loading}
-                className="flex-1 py-3.5 px-4 rounded-lg bg-linear-to-r from-secondary-400 to-secondary-500 text-primary-950 font-black hover:shadow-sm border border-gray-200 hover:shadow-secondary-400/30 transition-all active:scale-95 flex items-center justify-center gap-2 disabled:opacity-70 disabled:active:scale-100"
+                className="flex-1 py-3.5 px-4 rounded-lg bg-linear-to-r from-secondary-400 to-secondary-500 text-primary-950 font-black hover:shadow-sm hover:shadow-secondary-400/30 transition-all active:scale-95 flex items-center justify-center gap-2 disabled:opacity-70 disabled:active:scale-100"
               >
                 {loading ? (
                   <Loader2 className="w-5 h-5 animate-spin" />

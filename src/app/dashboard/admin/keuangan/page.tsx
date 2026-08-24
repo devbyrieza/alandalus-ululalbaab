@@ -458,19 +458,19 @@ export default function KeuanganPage() {
         <div className="flex flex-wrap items-center gap-2 w-full md:w-auto">
                       <button
               onClick={handleExportKeringanan}
-              className="bg-gold-600 hover:bg-gold-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 font-bold shadow-sm border border-gray-200 transition-colors"
+              className="bg-gold-600 hover:bg-gold-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 font-bold shadow-sm transition-colors"
             >
               <Download className="w-4 h-4" /> Export Keringanan
             </button>
             <button
               onClick={() => handleExport("excel")}
-            className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 font-bold shadow-sm border border-gray-200 transition-colors"
+            className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 font-bold shadow-sm transition-colors"
           >
             <Download className="w-4 h-4" /> Export Excel
           </button>
           <button
             onClick={() => handleExport("pdf")}
-            className="bg-rose-600 hover:bg-rose-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 font-bold shadow-sm border border-gray-200 transition-colors"
+            className="bg-rose-600 hover:bg-rose-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 font-bold shadow-sm transition-colors"
           >
             <Download className="w-4 h-4" /> Export PDF
           </button>

@@ -235,7 +235,7 @@ export default function RekapSeragamPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-linear-to-br from-primary-700 to-primary-900 rounded-lg p-5 md:p-8 text-white relative overflow-hidden shadow-sm border border-gray-200">
+      <div className="bg-linear-to-br from-primary-700 to-primary-900 rounded-lg p-5 md:p-8 text-white relative overflow-hidden shadow-sm">
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -mr-20 -mt-20 blur-3xl pointer-events-none"></div>
         <div className="flex items-center gap-5 relative z-10">
           <div className="w-16 h-16 bg-white/20  rounded-lg flex items-center justify-center text-primary-100 shadow-inner">
@@ -298,7 +298,7 @@ export default function RekapSeragamPage() {
             </button>
             <button
               onClick={handleBroadcast}
-              className="flex-1 md:flex-none flex items-center justify-center gap-2 px-5 py-3 bg-primary-700 text-white rounded-lg text-sm font-black hover:bg-primary-800 shadow-sm border border-gray-200 shadow-primary-200 transition-all"
+              className="flex-1 md:flex-none flex items-center justify-center gap-2 px-5 py-3 bg-primary-700 text-white rounded-lg text-sm font-black hover:bg-primary-800 shadow-sm shadow-primary-200 transition-all"
             >
               <MessageSquare className="w-4 h-4" />
               Ingatkan (WA)
@@ -443,7 +443,7 @@ export default function RekapSeragamPage() {
       {/* Edit Modal */}
       {editModalOpen && editingItem && (
         <div className="fixed inset-0 z-50 flex items-start md:items-center pt-10 md:pt-0 pb-20 md:pb-0 justify-center p-4 bg-ink-950/50  overflow-y-auto overflow-x-hidden overscroll-contain custom-scrollbar">
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 w-full max-w-md overflow-hidden">
+          <div className="bg-white rounded-lg shadow-sm w-full max-w-md overflow-hidden">
             <div className="p-6 border-b border-ink-100 bg-ink-50/50">
               <h3 className="text-xl font-black text-ink-950">Ubah Ukuran Seragam</h3>
               <p className="text-sm font-medium text-ink-500 mt-1">{editingItem.nama_lengkap}</p>
@@ -513,7 +513,7 @@ export default function RekapSeragamPage() {
               <button
                 onClick={handleSaveEdit}
                 disabled={savingEdit}
-                className="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-black bg-primary-600 hover:bg-primary-700 text-white shadow-sm border border-gray-200 shadow-primary-200 transition-all disabled:opacity-50"
+                className="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-black bg-primary-600 hover:bg-primary-700 text-white shadow-sm shadow-primary-200 transition-all disabled:opacity-50"
               >
                 {savingEdit && <Loader2 className="w-4 h-4 animate-spin" />}
                 Simpan Perubahan

@@ -1157,7 +1157,7 @@ function AdminPendaftarContent() {
       {/* Refreshing Overlay */}
       {refreshing && (
         <div className="fixed inset-0 bg-white/40 backdrop-blur-[1px] z-[100] flex items-start md:items-center pt-10 md:pt-0 pb-20 md:pb-0 justify-center pointer-events-none overflow-y-auto overflow-x-hidden p-4 overscroll-contain custom-scrollbar">
-          <div className="bg-white px-6 py-3 rounded-lg shadow-sm border border-gray-200 border border-stone-100 flex items-center gap-3 animate-in fade-in zoom-in duration-300">
+          <div className="bg-white px-6 py-3 rounded-lg shadow-sm border border-stone-100 flex items-center gap-3 animate-in fade-in zoom-in duration-300">
             <Loader2 className="w-5 h-5 animate-spin text-primary-600" />
             <span className="text-sm font-bold text-stone-700 tracking-tight">
               Memperbarui data...
@@ -1194,7 +1194,7 @@ function AdminPendaftarContent() {
       <div className="bg-white rounded-lg shadow-sm p-4 md:p-8 border border-gold-100">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 flex-wrap">
           <div className="flex flex-wrap items-center gap-3 md:gap-5">
-            <div className="p-2.5 md:p-4 bg-linear-to-br from-primary-600 to-primary-900 rounded-lg shadow-sm border border-gray-200 shadow-primary-900/20 flex-shrink-0">
+            <div className="p-2.5 md:p-4 bg-linear-to-br from-primary-600 to-primary-900 rounded-lg shadow-sm shadow-primary-900/20 flex-shrink-0">
               <Users className="w-6 h-6 md:w-8 md:h-8 text-gold-300" />
             </div>
             <div className="min-w-0">
@@ -1255,7 +1255,7 @@ function AdminPendaftarContent() {
             <button
               onClick={() => handleExport("pdf")}
               disabled={exporting}
-              className="flex items-center gap-2 px-3 md:px-4 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-lg font-bold transition-all shadow-sm hover:shadow-sm border border-gray-200 disabled:opacity-50 text-sm"
+              className="flex items-center gap-2 px-3 md:px-4 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-lg font-bold transition-all shadow-sm hover:shadow-sm disabled:opacity-50 text-sm"
               title="Download PDF"
             >
               {exporting ? (
@@ -1268,7 +1268,7 @@ function AdminPendaftarContent() {
             <button
               onClick={() => fetchPendaftar()}
               disabled={refreshing}
-              className="flex items-center gap-2 px-3 md:px-4 py-2.5 bg-white hover:bg-stone-50 border border-stone-200 text-stone-700 rounded-lg font-bold transition-all shadow-sm hover:shadow-sm border border-gray-200 text-sm disabled:opacity-50"
+              className="flex items-center gap-2 px-3 md:px-4 py-2.5 bg-white hover:bg-stone-50 border border-stone-200 text-stone-700 rounded-lg font-bold transition-all shadow-sm hover:shadow-sm text-sm disabled:opacity-50"
               title="Muat Ulang"
             >
               <RefreshCw
@@ -1319,7 +1319,7 @@ function AdminPendaftarContent() {
               />
               <button
                 onClick={handleSearch}
-                className="w-full sm:w-auto px-5 md:px-8 py-3 bg-primary-700 hover:bg-primary-800 text-white rounded-lg font-black transition-all flex-shrink-0 text-sm md:text-base shadow-sm border border-gray-200 shadow-primary-700/20 active:scale-95"
+                className="w-full sm:w-auto px-5 md:px-8 py-3 bg-primary-700 hover:bg-primary-800 text-white rounded-lg font-black transition-all flex-shrink-0 text-sm md:text-base shadow-sm shadow-primary-700/20 active:scale-95"
               >
                 Cari
               </button>
@@ -1650,7 +1650,7 @@ function AdminPendaftarContent() {
 
       {/* Bulk Actions */}
       {selectedIds.length > 0 && (
-        <div className="bg-gradient-to-r from-purple-50 to-primary-50 rounded-lg shadow-sm border border-gray-200 p-4 border-2 border-purple-200">
+        <div className="bg-gradient-to-r from-purple-50 to-primary-50 rounded-lg shadow-sm p-4 border-2 border-purple-200">
           <div className="flex items-center justify-between flex-wrap gap-4">
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-2">
@@ -1696,7 +1696,7 @@ function AdminPendaftarContent() {
               <button
                 onClick={handleBulkUpdate}
                 disabled={!bulkStatus || bulkUpdating}
-                className="flex items-center justify-center gap-2 px-5 md:px-8 py-2.5 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-black transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-sm border border-gray-200 shadow-purple-600/20 active:scale-95 text-sm"
+                className="flex items-center justify-center gap-2 px-5 md:px-8 py-2.5 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-black transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-sm shadow-purple-600/20 active:scale-95 text-sm"
               >
                 {bulkUpdating ? (
                   <>
@@ -1747,7 +1747,7 @@ function AdminPendaftarContent() {
                     }
                   }}
                   disabled={bulkUpdating}
-                  className="flex items-center justify-center gap-2 px-5 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-lg font-black transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-sm border border-gray-200 shadow-rose-600/20 active:scale-95 text-sm ml-auto"
+                  className="flex items-center justify-center gap-2 px-5 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-lg font-black transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-sm shadow-rose-600/20 active:scale-95 text-sm ml-auto"
                 >
                   <Trash2 className="w-4 h-4" />
                   <span className="hidden lg:inline">Ke Sampah</span>
@@ -1763,7 +1763,7 @@ function AdminPendaftarContent() {
                     return p && (p.status_pendaftaran === "announced" || p.status_pendaftaran === "cadangan");
                   }))}
                   disabled={isPromotingCadangan}
-                  className="flex items-center justify-center gap-2 px-5 md:px-8 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-black transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-sm border border-gray-200 shadow-emerald-600/20 active:scale-95 text-sm"
+                  className="flex items-center justify-center gap-2 px-5 md:px-8 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-black transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-sm shadow-emerald-600/20 active:scale-95 text-sm"
                 >
                   {isPromotingCadangan ? (
                     <>
@@ -2210,7 +2210,7 @@ function AdminPendaftarContent() {
       {/* Announcement Modal */}
       {isAnnouncementModalOpen && selectedPendaftar && (
         <div className="fixed inset-0 z-50 flex items-start md:items-center pt-10 md:pt-0 pb-20 md:pb-0 justify-center bg-black/50  p-4 overflow-y-auto overscroll-contain custom-scrollbar">
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 w-full max-w-lg border-2 border-stone-100 animate-in fade-in zoom-in duration-200">
+          <div className="bg-white rounded-lg shadow-sm w-full max-w-lg border-2 border-stone-100 animate-in fade-in zoom-in duration-200">
             <div className="flex justify-between items-center p-6 border-b border-stone-100">
               <div>
                 <h3 className="text-xl font-bold text-stone-900">
@@ -2316,7 +2316,7 @@ function AdminPendaftarContent() {
                 <button
                   type="submit"
                   disabled={isSubmittingAnnouncement}
-                  className="flex items-center gap-2 px-6 py-2.5 bg-primary-700 hover:bg-primary-800 text-white font-bold rounded-lg shadow-sm border border-gray-200 shadow-primary-200 hover:shadow-primary-300 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex items-center gap-2 px-6 py-2.5 bg-primary-700 hover:bg-primary-800 text-white font-bold rounded-lg shadow-sm shadow-primary-200 hover:shadow-primary-300 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isSubmittingAnnouncement ? (
                     <>
@@ -2339,7 +2339,7 @@ function AdminPendaftarContent() {
       {/* Delete Confirmation Modal */}
       {isDeleteModalOpen && deletingPendaftar && (
         <div className="fixed inset-0 z-50 flex items-start md:items-center pt-10 md:pt-0 pb-20 md:pb-0 justify-center bg-black/50  p-4 overflow-y-auto overflow-x-hidden overscroll-contain custom-scrollbar">
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 w-full max-w-md border-2 border-red-100 animate-in fade-in zoom-in duration-200">
+          <div className="bg-white rounded-lg shadow-sm w-full max-w-md border-2 border-red-100 animate-in fade-in zoom-in duration-200">
             <div className="flex justify-between items-center p-6 border-b border-red-100">
               <div className="flex items-center gap-3">
                 <div className="p-2 bg-red-100 rounded-lg">
@@ -2406,7 +2406,7 @@ function AdminPendaftarContent() {
                     deleteConfirmName.trim().toLowerCase() !==
                       deletingPendaftar.nama_lengkap.trim().toLowerCase()
                   }
-                  className="flex items-center gap-2 px-5 py-2.5 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg shadow-sm border border-gray-200 shadow-red-200 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex items-center gap-2 px-5 py-2.5 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg shadow-sm shadow-red-200 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isDeleting ? (
                     <>

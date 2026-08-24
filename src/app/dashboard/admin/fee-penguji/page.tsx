@@ -124,7 +124,7 @@ export default function RekapFeePengujiPage() {
           </Button>
           <Button
             onClick={handleExportExcel}
-            className="rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-black shadow-sm border border-gray-200 shadow-emerald-600/20 h-11"
+            className="rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-black shadow-sm shadow-emerald-600/20 h-11"
           >
             <Download className="w-4 h-4 mr-2" />
             Export Excel

@@ -207,7 +207,7 @@ export default function ProfilPage() {
             {requestStatus.status === "approved_to_edit" && (
               <Link
                 href="/dashboard/pendaftar/kelengkapan-berkas"
-                className="ml-auto px-4 py-2 bg-pine-600 text-white text-xs font-bold rounded-lg hover:bg-pine-700 shadow-pine-500/20 shadow-sm border border-gray-200 transition-all"
+                className="ml-auto px-4 py-2 bg-pine-600 text-white text-xs font-bold rounded-lg hover:bg-pine-700 shadow-pine-500/20 shadow-sm transition-all"
               >
                 Edit Sekarang
               </Link>
@@ -399,7 +399,7 @@ export default function ProfilPage() {
                 !isRequesting ? (
                   <button
                     onClick={() => setIsRequesting(true)}
-                    className="w-full py-4 bg-white border border-ink-200 text-ink-700 font-bold rounded-lg hover:bg-surface-50 hover:border-primary-300 hover:text-primary-700 transition-all shadow-sm hover:shadow-sm border border-gray-200"
+                    className="w-full py-4 bg-white border border-ink-200 text-ink-700 font-bold rounded-lg hover:bg-surface-50 hover:border-primary-300 hover:text-primary-700 transition-all shadow-sm hover:shadow-sm"
                   >
                     Ajukan Perubahan
                   </button>
@@ -426,7 +426,7 @@ export default function ProfilPage() {
                       <button
                         onClick={handleRequestEdit}
                         disabled={submittingRequest}
-                        className="py-3 text-sm font-bold text-white bg-pine-600 hover:bg-pine-700 rounded-lg shadow-sm border border-gray-200 shadow-pine-500/20 disabled:opacity-50"
+                        className="py-3 text-sm font-bold text-white bg-pine-600 hover:bg-pine-700 rounded-lg shadow-sm shadow-pine-500/20 disabled:opacity-50"
                       >
                         {submittingRequest ? "Mengirim..." : "Kirim Pengajuan"}
                       </button>

@@ -146,7 +146,7 @@ export default function PengajuanKeringananPage() {
   if (pengajuan) {
     return (
       <div className="max-w-4xl mx-auto py-8">
-        <div className="bg-white rounded-[2rem] p-8 shadow-sm border border-gray-200 border border-primary-100 flex flex-col items-center text-center">
+        <div className="bg-white rounded-[2rem] p-8 shadow-sm border border-primary-100 flex flex-col items-center text-center">
           <div
             className={`w-24 h-24 rounded-[2rem] flex items-center justify-center mb-6 shadow-sm border ${
               pengajuan.status === "approved"
@@ -229,7 +229,7 @@ export default function PengajuanKeringananPage() {
   return (
     <div className="space-y-8 max-w-4xl mx-auto pb-12">
       {/* Header */}
-      <div className="bg-linear-to-br from-primary-700 to-primary-900 rounded-lg p-6 md:p-8 text-white shadow-sm border border-gray-200 relative overflow-hidden">
+      <div className="bg-linear-to-br from-primary-700 to-primary-900 rounded-lg p-6 md:p-8 text-white shadow-sm relative overflow-hidden">
         <div className="absolute top-0 right-0 p-4 opacity-10">
           <ShieldCheck className="w-32 h-32" />
         </div>
@@ -252,7 +252,7 @@ export default function PengajuanKeringananPage() {
 
       <form
         onSubmit={handleSubmit}
-        className="bg-white rounded-lg shadow-sm border border-gray-200 border border-slate-100 overflow-hidden"
+        className="bg-white rounded-lg shadow-sm border border-slate-100 overflow-hidden"
       >
         <div className="p-6 md:p-8 space-y-8">
           {/* Section 1: Rincian */}
@@ -384,7 +384,7 @@ export default function PengajuanKeringananPage() {
           <button
             type="submit"
             disabled={submitting}
-            className="w-full py-4 bg-primary-600 hover:bg-primary-700 text-white font-black rounded-lg shadow-sm border border-gray-200 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            className="w-full py-4 bg-primary-600 hover:bg-primary-700 text-white font-black rounded-lg shadow-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >
             {submitting ? (
               <Loader2 className="w-5 h-5 animate-spin" />

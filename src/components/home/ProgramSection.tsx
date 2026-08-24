@@ -93,7 +93,7 @@ function getTokens(variant: ProgramVariant) {
           "group-hover/item:bg-primary-600 group-hover/item:border-primary-600",
         checkIcon: "text-primary-600 group-hover/item:text-white",
         ctaBtn:
-          "bg-white border-primary-200 text-primary-800 hover:bg-primary-700 hover:border-primary-700 hover:text-white shadow-sm hover:shadow-sm border border-gray-200" };
+          "bg-white border-primary-200 text-primary-800 hover:bg-primary-700 hover:border-primary-700 hover:text-white shadow-sm hover:shadow-sm" };
     case "amber":
       return {
         accentBar: "bg-gradient-to-r from-secondary-600 via-secondary-400 to-secondary-200",
@@ -105,7 +105,7 @@ function getTokens(variant: ProgramVariant) {
         checkHover:
           "group-hover/item:bg-secondary-500 group-hover/item:border-secondary-500",
         checkIcon: "text-secondary-600 group-hover/item:text-white",
-        ctaBtn: "bg-white border-secondary-200 text-primary-800 hover:bg-secondary-500 hover:border-secondary-500 hover:text-white shadow-sm hover:shadow-sm border border-gray-200" };
+        ctaBtn: "bg-white border-secondary-200 text-primary-800 hover:bg-secondary-500 hover:border-secondary-500 hover:text-white shadow-sm hover:shadow-sm" };
   }
 }
 

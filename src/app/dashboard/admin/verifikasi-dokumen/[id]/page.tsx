@@ -463,7 +463,7 @@ export default function VerifikasiDokumenDetailPage() {
         </p>
         <button
           onClick={() => router.back()}
-          className="px-6 py-3 bg-primary-700 hover:bg-primary-800 text-white rounded-lg font-bold transition-all shadow-sm border border-gray-200 shadow-primary-700/20 active:scale-95"
+          className="px-6 py-3 bg-primary-700 hover:bg-primary-800 text-white rounded-lg font-bold transition-all shadow-sm shadow-primary-700/20 active:scale-95"
         >
           Kembali ke Daftar
         </button>
@@ -491,7 +491,7 @@ export default function VerifikasiDokumenDetailPage() {
             >
               <ChevronLeft className="w-6 h-6" />
             </button>
-            <div className="p-4 bg-linear-to-br from-primary-600 to-primary-900 rounded-lg shadow-sm border border-gray-200 shadow-primary-900/20">
+            <div className="p-4 bg-linear-to-br from-primary-600 to-primary-900 rounded-lg shadow-sm shadow-primary-900/20">
               <User className="w-8 h-8 text-secondary-300" />
             </div>
             <div>
@@ -523,7 +523,7 @@ export default function VerifikasiDokumenDetailPage() {
         {dokumenList.map((dok) => (
           <div
             key={dok.id}
-            className={`bg-white border rounded-lg overflow-hidden transition-all shadow-xs hover:shadow-sm border border-gray-200 hover:shadow-primary-900/5 ${
+            className={`bg-white border rounded-lg overflow-hidden transition-all shadow-xs hover:shadow-sm hover:shadow-primary-900/5 ${
               dok.status_verifikasi === "verified"
                 ? "border-emerald-200"
                 : dok.status_verifikasi === "rejected"
@@ -643,7 +643,7 @@ export default function VerifikasiDokumenDetailPage() {
                   className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-xs font-bold transition-all ${
                     dok.status_verifikasi === "verified"
                       ? "bg-emerald-50 text-emerald-600 border border-emerald-100 cursor-default"
-                      : "bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm border border-gray-200 shadow-emerald-600/20 active:scale-95 disabled:opacity-50"
+                      : "bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm shadow-emerald-600/20 active:scale-95 disabled:opacity-50"
                   }`}
                 >
                   {processingDocs.has(dok.id) ? (
@@ -712,7 +712,7 @@ export default function VerifikasiDokumenDetailPage() {
           className="fixed inset-0 bg-stone-900/95 flex items-start md:items-center pt-10 md:pt-0 pb-20 md:pb-0 justify-center z-[100] p-4  overflow-y-auto overflow-x-hidden overscroll-contain custom-scrollbar"
           onClick={() => setPreviewDoc(null)}
         >
-          <div className="relative max-w-6xl max-h-[95vh] w-full h-full bg-white/5 overflow-hidden rounded-lg flex flex-col shadow-sm border border-gray-200">
+          <div className="relative max-w-6xl max-h-[95vh] w-full h-full bg-white/5 overflow-hidden rounded-lg flex flex-col shadow-sm">
             {/* Modal Header */}
             <div className="flex items-center justify-between p-4 bg-stone-900/80  border-b border-white/10 shrink-0 z-10 sticky top-0">
               <h3 className="text-white font-bold capitalize">
@@ -805,7 +805,7 @@ export default function VerifikasiDokumenDetailPage() {
                   <img
                     src={previewDoc.url}
                     alt="Preview"
-                    className="max-w-full max-h-[90vh] object-contain origin-center drop-shadow-sm border border-gray-200 rounded-lg transition-transform duration-200 ease-out"
+                    className="max-w-full max-h-[90vh] object-contain origin-center drop-shadow-sm rounded-lg transition-transform duration-200 ease-out"
                     style={{ transform: `scale(${zoomLevel})` }}
                   />
                 </div>
@@ -826,7 +826,7 @@ export default function VerifikasiDokumenDetailPage() {
           }}
         >
           <div
-            className="bg-white rounded-lg shadow-sm border border-gray-200 w-full max-w-md overflow-hidden animate-in fade-in zoom-in duration-200"
+            className="bg-white rounded-lg shadow-sm w-full max-w-md overflow-hidden animate-in fade-in zoom-in duration-200"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="p-5 border-b border-stone-100 flex items-center justify-between bg-stone-50">
@@ -913,7 +913,7 @@ export default function VerifikasiDokumenDetailPage() {
                 disabled={
                   processingDocs.has(rejectModal.docId) || !rejectReason.trim()
                 }
-                className="px-5 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-lg text-sm font-bold shadow-sm border border-gray-200 shadow-rose-600/20 hover:shadow-rose-600/40 transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed transform active:scale-95"
+                className="px-5 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-lg text-sm font-bold shadow-sm shadow-rose-600/20 hover:shadow-rose-600/40 transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed transform active:scale-95"
               >
                 {processingDocs.has(rejectModal.docId) ? (
                   <Loader2 className="w-4 h-4 animate-spin" />

@@ -156,7 +156,7 @@ export default function ProfilTab() {
       </div>
 
       {/* Nomor Pendaftaran Card */}
-      <div className="bg-gradient-to-r from-secondary-500 to-orange-500 rounded-lg p-6 text-white shadow-sm border border-gray-200">
+      <div className="bg-gradient-to-r from-secondary-500 to-orange-500 rounded-lg p-6 text-white shadow-sm">
         <div className="flex items-center gap-4">
           <div className="p-3 bg-white bg-opacity-20 rounded-lg">
             <CheckCircle className="w-8 h-8" />
@@ -172,7 +172,7 @@ export default function ProfilTab() {
 
       <div className="grid grid-cols-1 lg:grid-cols-1 md:grid-cols-2 gap-6">
         {/* Data Pribadi */}
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 border-2 border-secondary-100">
+        <div className="bg-white rounded-lg shadow-sm p-6 border-2 border-secondary-100">
           <div className="flex items-center gap-3 mb-4">
             <div className="p-2 bg-secondary-100 rounded-lg">
               <User className="w-6 h-6 text-primary-700" />
@@ -213,7 +213,7 @@ export default function ProfilTab() {
         </div>
 
         {/* Kontak */}
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 border-2 border-primary-100">
+        <div className="bg-white rounded-lg shadow-sm p-6 border-2 border-primary-100">
           <div className="flex items-center gap-3 mb-4">
             <div className="p-2 bg-primary-100 rounded-lg">
               <Phone className="w-6 h-6 text-primary-600" />
@@ -238,7 +238,7 @@ export default function ProfilTab() {
         </div>
 
         {/* Alamat */}
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 border-2 border-green-100">
+        <div className="bg-white rounded-lg shadow-sm p-6 border-2 border-green-100">
           <div className="flex items-center gap-3 mb-4">
             <div className="p-2 bg-green-100 rounded-lg">
               <MapPin className="w-6 h-6 text-green-600" />
@@ -265,7 +265,7 @@ export default function ProfilTab() {
         </div>
 
         {/* Asal Sekolah */}
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 border-2 border-purple-100">
+        <div className="bg-white rounded-lg shadow-sm p-6 border-2 border-purple-100">
           <div className="flex items-center gap-3 mb-4">
             <div className="p-2 bg-purple-100 rounded-lg">
               <School className="w-6 h-6 text-purple-600" />

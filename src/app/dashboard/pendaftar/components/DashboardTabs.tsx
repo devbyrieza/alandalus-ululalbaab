@@ -95,7 +95,7 @@ export default function DashboardTabs({ statusProses }: DashboardTabsProps) {
                 <Lock className="w-3 h-3 text-ink-300" />
 
                 {/* Minimal tooltip on hover for mobile/desktop */}
-                <div className="absolute top-full left-0 mt-2 p-2 bg-ink-900 text-white text-[8px] rounded shadow-sm border border-gray-200 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all z-50 whitespace-nowrap">
+                <div className="absolute top-full left-0 mt-2 p-2 bg-ink-900 text-white text-[8px] rounded shadow-sm invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all z-50 whitespace-nowrap">
                   {getUnlockMessage(tab.id)}
                 </div>
               </div>
@@ -108,7 +108,7 @@ export default function DashboardTabs({ statusProses }: DashboardTabsProps) {
               href={tab.href}
               className={`flex-shrink-0 flex items-center gap-2 px-4 py-3 rounded-lg transition-all duration-300 relative group ${
                 isActive
-                  ? "bg-primary-900 text-white shadow-primary-200 shadow-sm border border-gray-200 scale-105"
+                  ? "bg-primary-900 text-white shadow-primary-200 shadow-sm scale-105"
                   : "text-ink-600 hover:bg-secondary-50 hover:text-primary-900"
               }`}
             >

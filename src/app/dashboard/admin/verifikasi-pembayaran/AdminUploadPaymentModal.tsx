@@ -125,7 +125,7 @@ export default function AdminUploadPaymentModal({
       onClick={onClose}
     >
       <div 
-        className="bg-white rounded-lg w-full max-w-2xl shadow-sm border border-gray-200 relative mb-20"
+        className="bg-white rounded-lg w-full max-w-2xl shadow-sm relative mb-20"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between p-6 border-b border-stone-100">

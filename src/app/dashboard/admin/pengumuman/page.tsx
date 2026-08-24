@@ -186,7 +186,7 @@ export default function PengumumanPage() {
         <button
           onClick={handlePublish}
           disabled={selectedIds.length === 0 || isPublishing}
-          className="flex items-center gap-2 px-6 py-2.5 bg-green-600 hover:bg-green-700 disabled:bg-stone-300 text-white rounded-lg font-bold transition-all shadow-sm border border-gray-200 shadow-green-200 disabled:shadow-none"
+          className="flex items-center gap-2 px-6 py-2.5 bg-green-600 hover:bg-green-700 disabled:bg-stone-300 text-white rounded-lg font-bold transition-all shadow-sm shadow-green-200 disabled:shadow-none"
         >
           {isPublishing ? (
             "Memproses..."
@@ -200,7 +200,7 @@ export default function PengumumanPage() {
       </div>
 
       {/* Table & Mobile View */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 border border-stone-200 overflow-hidden">
+      <div className="bg-white rounded-lg shadow-sm border border-stone-200 overflow-hidden">
         {/* Mobile View: Cards */}
         <div className="md:hidden divide-y divide-stone-100 select-none">
           {candidates.length === 0 ? (

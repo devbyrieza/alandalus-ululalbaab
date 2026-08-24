@@ -52,7 +52,7 @@ export default function BentoGridSection() {
               <h3 className="text-xl font-bold text-ink-900 mb-2 group-hover:text-primary-700 transition-colors">Lab Komputer & Multimedia</h3>
               <p className="text-ink-600 text-sm">Fasilitas modern untuk mendukung pembelajaran IT dan kemampuan digital santri.</p>
             </div>
-            <div className="w-32 h-32 relative rounded-lg overflow-hidden shrink-0 shadow-sm border border-gray-200">
+            <div className="w-32 h-32 relative rounded-lg overflow-hidden shrink-0 shadow-sm">
               <Image src="/images/hero.jpg" alt="Lab" fill className="object-cover" />
             </div>
           </motion.div>

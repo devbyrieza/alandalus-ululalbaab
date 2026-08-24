@@ -194,7 +194,7 @@ export default function LanguageSwitcher() {
               initial={{ opacity: 0, y: 10, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 10, scale: 0.95 }}
-              className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-sm border border-gray-200 border border-slate-100 p-2 z-[70] overflow-hidden"
+              className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-sm border border-slate-100 p-2 z-[70] overflow-hidden"
             >
               <div className="px-3 py-2 border-b border-slate-50 mb-1">
                 <p className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em]">

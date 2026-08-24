@@ -218,7 +218,7 @@ export default function DashboardLayout({
           </div>
 
           {/* Tooltip for locked state */}
-          <div className="absolute left-14 top-full z-50 w-64 p-3 mt-2 text-xs text-white bg-ink-900 rounded-lg shadow-sm border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-2 group-hover:translate-y-0 lg:left-full lg:top-0 lg:ml-2">
+          <div className="absolute left-14 top-full z-50 w-64 p-3 mt-2 text-xs text-white bg-ink-900 rounded-lg shadow-sm opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-2 group-hover:translate-y-0 lg:left-full lg:top-0 lg:ml-2">
             <div className="font-bold mb-1 flex items-center gap-2">
               <Lock className="w-3.5 h-3.5 text-gold-400" />
               <span>Akses Terkunci</span>
@@ -254,7 +254,7 @@ export default function DashboardLayout({
           href={item.href}
           className={`group flex items-center px-4 py-3.5 text-sm font-bold rounded-lg transition-all duration-200 ${
             item.active
-              ? "bg-primary-900 text-white shadow-sm border border-gray-200 border border-primary-800"
+              ? "bg-primary-900 text-white shadow-sm border border-primary-800"
               : showAnyBadge
               ? "text-orange-700 bg-orange-50 hover:bg-orange-100 border border-orange-200"
               : "text-ink-600 hover:bg-gold-100 hover:text-primary-900"
@@ -340,7 +340,7 @@ export default function DashboardLayout({
             >
               {statusInfo.label}
             </div>
-            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-linear-to-br from-primary-700 to-primary-900 flex items-center justify-center text-white text-sm font-black shadow-sm border border-gray-200 border border-gold-100">
+            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-linear-to-br from-primary-700 to-primary-900 flex items-center justify-center text-white text-sm font-black shadow-sm border border-gold-100">
               {namaLengkap.charAt(0)}
             </div>
           </div>
@@ -353,7 +353,7 @@ export default function DashboardLayout({
               {/* Brand */}
               <div className="px-6 pt-8 pb-6 border-b border-gold-100/50 mb-2">
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 h-10 rounded-lg bg-white flex items-center justify-center shadow-sm border border-gray-200 ring-4 ring-gold-50 overflow-hidden">
+                  <div className="w-10 h-10 rounded-lg bg-white flex items-center justify-center shadow-sm ring-4 ring-gold-50 overflow-hidden">
                     <img
                       src={BRANDING.logoPath}
                       alt="Logo"
@@ -376,7 +376,7 @@ export default function DashboardLayout({
                 {/* User Card */}
                 <div className="p-4 rounded-[1.5rem] bg-gold-50/50 border border-gold-100 relative overflow-hidden group app-card">
                   {pasFoto && STATUS_ORDER.indexOf(statusProses) >= STATUS_ORDER.indexOf("docs_verified") ? (
-                    <div className="absolute top-4 right-4 w-12 h-12 rounded-full overflow-hidden border-2 border-white shadow-sm border border-gray-200 z-10 shrink-0 bg-surface-100">
+                    <div className="absolute top-4 right-4 w-12 h-12 rounded-full overflow-hidden border-2 border-white shadow-sm z-10 shrink-0 bg-surface-100">
                       <img src={pasFoto} alt="Foto Pendaftar" className="w-full h-full object-cover" />
                     </div>
                   ) : (
@@ -436,7 +436,7 @@ export default function DashboardLayout({
               onClick={() => setSidebarOpen(false)}
             />
             <div
-              className={`absolute top-0 left-0 bottom-0 w-80 bg-white shadow-sm border border-gray-200 transition-transform duration-300 transform ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}`}
+              className={`absolute top-0 left-0 bottom-0 w-80 bg-white shadow-sm transition-transform duration-300 transform ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}`}
             >
               {/* Mobile Sidebar Content */}
               <div className="flex flex-col h-full overflow-hidden">
