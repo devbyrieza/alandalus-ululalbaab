@@ -76,7 +76,7 @@ export default function HeroSection() {
     >
       {/* CiroAI Atmospheric Background Blobs */}
       <div className="glow-blob glow-blob-primary w-[60%] h-[70%] -top-[20%] -left-[10%] opacity-20" aria-hidden="true" />
-      <div className="glow-blob glow-blob-gold w-[50%] h-[60%] top-[10%] -right-[10%] opacity-15" aria-hidden="true" />
+      
       <div className="glow-blob glow-blob-primary w-[40%] h-[40%] bottom-[-10%] left-[20%] opacity-10" aria-hidden="true" />
       
       <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
@@ -422,7 +422,7 @@ export default function HeroSection() {
 
             {/* Decorative glows */}
             <div className="glow-blob glow-blob-primary w-64 h-64 -bottom-14 -right-14 opacity-15" aria-hidden="true" />
-            <div className="glow-blob glow-blob-gold w-48 h-48 -top-10 -left-10 opacity-20" aria-hidden="true" />
+            
           </motion.div>
         </div>
       </Container>

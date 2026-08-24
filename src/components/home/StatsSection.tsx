@@ -228,7 +228,7 @@ export default function StatsSection() {
     >
       {/* CiroAI Background glows */}
       <div className="glow-blob glow-blob-primary w-[600px] h-[600px] -top-[25%] right-0 translate-x-[20%]" aria-hidden="true" />
-      <div className="glow-blob glow-blob-secondary w-[500px] h-[500px] -bottom-[25%] left-0 -translate-x-[20%]" aria-hidden="true" />
+      
 
       <Container className="relative z-10">
         <div className="max-w-5xl mx-auto space-y-12 md:space-y-14">

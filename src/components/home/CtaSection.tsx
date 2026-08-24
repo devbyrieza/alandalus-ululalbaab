@@ -22,7 +22,7 @@ export default function CtaSection() {
         >
           <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-[0.08] mix-blend-overlay pointer-events-none" />
           <div className="hidden sm:block glow-blob glow-blob-primary w-[600px] h-[600px] -top-32 -right-32 opacity-30" />
-          <div className="hidden sm:block glow-blob glow-blob-secondary w-[500px] h-[500px] -bottom-32 -left-32 opacity-20" />
+          
 
           <div className="relative z-10 max-w-3xl mx-auto flex flex-col items-center">
             <div className="section-label section-label-white mb-6">
