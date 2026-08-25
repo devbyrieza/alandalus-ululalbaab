@@ -12,37 +12,26 @@ const GALLERY_CATEGORIES = [
     title: "Fasilitas Pesantren",
     items: [
       { src: "/images/masjid.webp", label: "Masjid Jami' Ulul Albaab" },
-      { src: "/images/asrama.webp", label: "Asrama Santri" },
-      { src: "/images/tentang.webp", label: "Gedung Utama" },
+      { src: "/images/asrama.webp", label: "Kompleks Asrama Santri" },
       {
         src: "/images/gedung-utama-dan-lapangan-basket.webp",
-        label: "Gedung Utama & Lapangan Basket" },
-      { src: "/images/gedung-kelas.webp", label: "Gedung Kelas" },
-      { src: "/images/kelas-dari-dalam.webp", label: "Ruang Kelas dari Dalam" },
-      { src: "/images/luar-kelas.webp", label: "Koridor Kelas" },
-      {
-        src: "/images/lapangan-minisoccer.webp",
-        label: "Lapangan Mini Soccer" },
-      { src: "/images/kantor-ppdb-tamu.webp", label: "Kantor PPDB & Tamu" },
-      { src: "/images/depot-galon-gratis.webp", label: "Depot Galon Gratis" },
-    ] },
+        label: "Gedung Utama & Lapangan Basket"
+      },
+      { src: "/images/kelas-dari-dalam.webp", label: "Ruang Kelas Pembelajaran" },
+      { src: "/images/depot-galon-gratis.webp", label: "Fasilitas Air Minum Bersih Santri" },
+    ]
+  },
   {
-    title: "Kegiatan Santri",
+    title: "Kegiatan & Suasana Santri",
     items: [
-      {
-        src: "/images/pembelajaran-kitab-turotz.webp",
-        label: "Pembelajaran Kitab Turots" },
       { src: "/images/tahfidz.webp", label: "Halaqoh Tahfidz Al-Qur'an" },
-      { src: "/images/extra-karate.webp", label: "Ekstrakurikuler Karate" },
-    ] },
-  {
-    title: "Suasana Pesantren",
-    items: [
+      { src: "/images/extra-karate.webp", label: "Ekstrakurikuler Karate & Bela Diri" },
       {
         src: "/images/welcome-selamat-datang.webp",
-        label: "Selamat Datang di Ulul Albaab" },
-      { src: "/images/halaman-dekat-masjid.webp", label: "Halaman Pesantren" },
-    ] },
+        label: "Kawasan Pesantren Ulul Albaab"
+      },
+    ]
+  },
 ];
 
 export default function GaleriPage() {
@@ -83,8 +72,7 @@ export default function GaleriPage() {
             transition={{ delay: 0.2 }}
             className="text-xl md:text-2xl text-ink-600 max-w-3xl mx-auto leading-relaxed font-medium"
           >
-            Koleksi foto suasana, fasilitas, dan kegiatan santri di Pesantren Al
-            Andalus Ulul Albaab.
+            Koleksi foto suasana, fasilitas utama, dan kegiatan santri di Pesantren Al-Andalus Ulul Albaab.
           </motion.p>
         </Container>
       </section>
@@ -121,19 +109,20 @@ export default function GaleriPage() {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ delay: idx * 0.05 }}
-                  className="relative rounded-lg overflow-hidden group aspect-[4/3] shadow-premium-md hover:shadow-premium-xl transition-all duration-500"
+                  className="group relative aspect-[4/3] rounded-3xl overflow-hidden bg-slate-100 border border-primary-100/50 shadow-md hover:shadow-lg transition-all"
                 >
                   <Image
                     src={img.src}
                     alt={img.label}
                     fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    loading="lazy"
                   />
-                  <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent opacity-80 group-hover:opacity-90 transition-opacity" />
-                  <div className="absolute bottom-2 left-2 right-2 md:bottom-4 md:left-4 md:right-4">
-                    <span className="text-white font-bold text-[10px] sm:text-xs md:text-sm drop-shadow-sm leading-tight block">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
+                    <p className="text-white font-bold text-sm leading-snug">
                       {img.label}
-                    </span>
+                    </p>
                   </div>
                 </motion.div>
               ))}
@@ -142,43 +131,31 @@ export default function GaleriPage() {
         </section>
       ))}
 
-      {/* CTA */}
-      <section className="py-16 md:py-24 lg:py-32 bg-white">
-        <Container>
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="bg-primary-900 bg-linear-to-br from-primary-800 to-primary-950 rounded-[2rem] md:rounded-[3rem] lg:rounded-[4rem] p-6 sm:p-5 md:p-8 lg:p-24 text-center text-white relative overflow-hidden shadow-sm"
-          >
-            <div className="absolute top-0 right-0 w-32 h-32 sm:w-64 sm:h-64 md:w-96 md:h-96 bg-white/5 rounded-full blur-[60px] md:blur-[100px] -translate-y-1/2 translate-x-1/2" />
-            <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-5" />
-
-            <div className="relative z-10">
-              <h2 className="text-xl sm:text-2xl md:text-4xl lg:text-3xl xl:text-6xl font-display font-black mb-4 sm:mb-6 md:mb-8 text-white leading-tight">
-                Tertarik? <br />{" "}
-                <span className="text-secondary-400">
-                  Kunjungi Langsung!
-                </span>
-              </h2>
-              <p className="text-sm sm:text-base md:text-lg lg:text-xl text-primary-50 max-w-2xl mx-auto mb-6 sm:mb-8 md:mb-10 lg:mb-12 font-medium px-2">
-                Foto tidak cukup menggambarkan suasana sesungguhnya. Jadwalkan
-                kunjungan ke pesantren dan rasakan sendiri.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 md:gap-6 justify-center px-4">
-                <Link href="/kontak">
-                  <button className="w-full sm:w-auto px-6 sm:px-6 md:px-10 py-3.5 sm:py-4 md:py-5 rounded-pill bg-white text-primary-950 font-black text-sm sm:text-base md:text-lg hover:bg-primary-50 shadow-sm transition-all min-h-[48px] sm:min-h-[52px]">
-                    Jadwalkan Kunjungan
-                  </button>
-                </Link>
-                <Link href="/ppdb">
-                  <button className="w-full sm:w-auto px-6 md:px-10 py-3.5 sm:py-4 md:py-5 rounded-pill bg-white/10 text-white font-bold border border-white/20 hover:bg-white/20 transition-all flex items-center justify-center gap-2 sm:gap-3 text-sm sm:text-base md:text-lg min-h-[48px] sm:min-h-[52px]">
-                    Info PPDB
-                  </button>
-                </Link>
-              </div>
-            </div>
-          </motion.div>
+      {/* CTA Bottom */}
+      <section className="py-20 md:py-28 bg-gradient-to-br from-primary-900 to-primary-950 text-white text-center relative overflow-hidden">
+        <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-5" />
+        <Container className="relative z-10">
+          <h2 className="text-3xl md:text-5xl font-display font-black mb-6 leading-tight">
+            Ingin Melihat Langsung <br />
+            <span className="text-secondary-300">Kampus Ulul Albaab?</span>
+          </h2>
+          <p className="text-lg text-primary-100 max-w-2xl mx-auto mb-10">
+            Daftar sekarang secara online atau jadwalkan kunjungan langsung bersama panitia PSB.
+          </p>
+          <div className="flex flex-wrap justify-center gap-4">
+            <Link
+              href="/daftar"
+              className="px-8 py-4 rounded-pill bg-white text-primary-900 font-bold hover:bg-primary-50 transition-all shadow-lg hover:-translate-y-0.5"
+            >
+              Daftar Online Sekarang
+            </Link>
+            <Link
+              href="/kontak"
+              className="px-8 py-4 rounded-pill bg-white/10 text-white font-bold border border-white/20 hover:bg-white/20 transition-all"
+            >
+              Hubungi Panitia
+            </Link>
+          </div>
         </Container>
       </section>
     </main>
