@@ -104,24 +104,12 @@ export async function generateNomorPendaftaran(
  * @returns Prefix string (MTI, MTA, ILI, ILA, MAI, MAA)
  */
 export function generatePrefix(jenjang: string, jenis_kelamin: string): string {
-  let prefix = "";
   const normJenjang = (jenjang || "").toUpperCase().replace(/[\s\-_]/g, "");
-
-  if (normJenjang.includes("MTS")) {
-    prefix = "MT";
-  } else if (normJenjang.includes("IL") || normJenjang.includes("IDAD") || normJenjang.includes("LUGHAW")) {
-    prefix = "IL";
-  } else if (normJenjang.includes("SMA") || normJenjang.includes("MA")) {
-    prefix = "SM";
-  } else {
-    prefix = normJenjang.slice(0, 2) || "MT";
-  }
-
-  // Suffix: A = Putra, I = Putri
-  const normGender = (jenis_kelamin || "L").toUpperCase();
-  prefix += (normGender === "P" || normGender === "PUTRI" || normGender === "AKHAWAT") ? "I" : "A";
-
-  return prefix;
+  const isPutri = (jenis_kelamin || "").toUpperCase() === "P" || (jenis_kelamin || "").toUpperCase() === "PUTRI";
+  if (normJenjang.includes("MTS") || normJenjang.includes("SMP")) return isPutri ? "MTI" : "MTA";
+  if (normJenjang.includes("IL") || normJenjang.includes("IDAD") || normJenjang.includes("LUGHAW")) return isPutri ? "ILI" : "ILA";
+  if (normJenjang.includes("SMA") || normJenjang.includes("MA")) return isPutri ? "SMI" : "SMA";
+  return isPutri ? "MTI" : "MTA";
 }
 
 // ===================================
