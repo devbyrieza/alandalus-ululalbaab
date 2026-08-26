@@ -41,7 +41,7 @@ const EXTRA_ACTIVITIES: ExtraItem[] = [
   { name: "Bulutangkis", icon: Zap, accent: "amber" },
   { name: "Pertanian", icon: TreePine, accent: "amber" },
   { name: "Periklanan", icon: Waves, accent: "blue" },
-  { name: "Web Programming", icon: Rocket, accent: "amber" },
+  { name: "Kewirausahaan", icon: Rocket, accent: "amber" },
 ] as const;
 
 const EASE = [0.16, 1, 0.3, 1] as const;
