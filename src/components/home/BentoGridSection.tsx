@@ -125,7 +125,7 @@ export default function BentoGridSection() {
               <div>
                 <h3 className="text-lg font-black text-white mb-1">Sarana Olahraga</h3>
                 <p className="text-white/80 text-xs leading-relaxed">
-                  Lapangan futsal, badminton, voli, & basket lengkap.
+                  Lapangan minisoccer, badminton, voli, & basket lengkap.
                 </p>
               </div>
             </div>

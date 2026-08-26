@@ -691,7 +691,7 @@ Mohon konfirmasi kesediaan waktu kunjungan tersebut. Terima kasih.`;
                 <div className="aspect-square rounded-[3rem] sm:rounded-[4rem] bg-white p-3 sm:p-6 sm:p-8 shadow-sm relative rotate-2 hover:rotate-0 transition-transform duration-700 border border-primary-100">
                   <div className="relative w-full h-full rounded-[2.5rem] sm:rounded-[3.2rem] overflow-hidden">
                     <Image
-                      src="/images/drone-campus.jpg"
+                      src="/images/gedung-utama-dan-lapangan-basket.webp"
                       alt="Lapangan Basket"
                       fill
                       className="object-cover transition-transform duration-700 hover:scale-110"

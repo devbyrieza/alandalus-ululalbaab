@@ -28,7 +28,7 @@ const EXTRA_ACTIVITIES: ExtraItem[] = [
   { name: "Karate", icon: Trophy, accent: "blue" },
   { name: "Pramuka", icon: Shield, accent: "amber" },
   { name: "Panahan", icon: Target, accent: "blue" },
-  { name: "Futsal", icon: Trophy, accent: "amber" },
+  { name: "Minisoccer", icon: Trophy, accent: "amber" },
   { name: "Volly", icon: Trophy, accent: "blue" },
 
   { name: "Komputer", icon: Monitor, accent: "amber" },

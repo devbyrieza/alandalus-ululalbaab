@@ -93,13 +93,13 @@ const ALBUMS: Album[] = [
     id: "olahraga",
     title: "Sarana Olahraga Terpadu",
     category: "Kebugaran & Ekstrakurikuler",
-    desc: "Fasilitas lengkap untuk futsal, badminton, voli, dan basket guna mendukung kebugaran fisik santri.",
+    desc: "Fasilitas lengkap untuk minisoccer, badminton, voli, dan basket guna mendukung kebugaran fisik santri.",
     cover: "/images/lapangan-futsal.jpg",
     items: [
-      { src: "/images/lapangan-futsal.jpg", label: "Lapangan Futsal Standar Pesantren" },
-      { src: "/images/lapangan-badminton.jpg", label: "Lapangan Badminton Santri" },
+      { src: "/images/lapangan-futsal.jpg", label: "Lapangan Minisoccer Standar Pesantren" },
+      { src: "/images/lapangan-badminton-2.jpg", label: "Lapangan Badminton Santri" },
       { src: "/images/lapangan-voli.jpg", label: "Lapangan Voli Santri" },
-      { src: "/images/lapangan-basket.png", label: "Lapangan Basket Santri" },
+      { src: "/images/gedung-utama-dan-lapangan-basket.webp", label: "Lapangan Basket & Gedung Utama" },
     ],
   },
   {

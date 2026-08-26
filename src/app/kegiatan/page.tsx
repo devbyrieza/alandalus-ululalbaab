@@ -548,9 +548,9 @@ export default function KegiatanPage() {
       desc: "Olahraga sunnah untuk melatih fokus & ketenangan.",
       benefit: "Fokus & Konsentrasi" },
     {
-      name: "Futsal",
+      name: "Minisoccer",
       icon: Dribbble,
-      desc: "Olahraga tim untuk kesehatan dan sportivitas.",
+      desc: "Olahraga sepak bola outdoor untuk kesehatan fisik dan sportivitas.",
       benefit: "Kerjasama Tim" },
     {
       name: "Volly",

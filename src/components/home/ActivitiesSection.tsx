@@ -74,7 +74,7 @@ const EXTRA_ACTIVITIES: ExtraActivity[] = [
   { name: "Karate", icon: Trophy, color: "blue" },
   { name: "Pramuka", icon: Shield, color: "amber" },
   { name: "Panahan", icon: Target, color: "blue" },
-  { name: "Futsal", icon: Trophy, color: "amber" },
+  { name: "Minisoccer", icon: Trophy, color: "amber" },
   { name: "Volly", icon: Trophy, color: "blue" },
   { name: "Komputer", icon: Monitor, color: "amber" },
   { name: "Design Grafis", icon: Palette, color: "blue" },
