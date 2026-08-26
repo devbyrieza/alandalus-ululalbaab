@@ -182,3 +182,6 @@ MASTER_PPDB_UlulAlbaab_2026-2027.xlsx
 /temp_docx/
 brosur_*.html
 flyer_*.html
+# Local Backup Folders
+*cadangan*
+
