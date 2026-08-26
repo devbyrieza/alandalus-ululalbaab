@@ -1,5 +1,3 @@
-// src/components/home/HeroSection.tsx — alfath-template-demo
-// FIXED: reduced motion badge, tablet breakpoint, touch hover, explicit font sizing
 "use client";
 
 import { useState, useEffect } from "react";
@@ -11,7 +9,8 @@ import {
   GraduationCap,
   Globe,
   CheckCircle2,
-  Gift } from "lucide-react";
+  Gift
+} from "lucide-react";
 import { Container } from "@/components/layout/Container";
 import { motion, useReducedMotion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
@@ -25,7 +24,10 @@ const fadeUp = {
     filter: "blur(0px)",
     transition: {
       duration: 0.75,
-      ease: [0.16, 1, 0.3, 1] as [number, number, number, number] } } };
+      ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
+    },
+  },
+};
 
 const fadeIn = {
   hidden: { opacity: 0, scale: 0.97 },
@@ -34,7 +36,10 @@ const fadeIn = {
     scale: 1,
     transition: {
       duration: 0.9,
-      ease: [0.16, 1, 0.3, 1] as [number, number, number, number] } } };
+      ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
+    },
+  },
+};
 
 export default function HeroSection() {
   const [session, setSession] = useState<any>(null);
@@ -60,11 +65,6 @@ export default function HeroSection() {
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.08 });
   const animate = inView ? "visible" : "hidden";
 
-  // FIX #4: Badge animate computed correctly — no scale jump when reduced motion is on
-  const badgeAnimate = inView
-    ? { opacity: 1, scale: 1, rotate: -6 }
-    : { opacity: 0, scale: shouldReduceMotion ? 1 : 0.5, rotate: -25 };
-
   return (
     <section
       ref={ref}
@@ -72,26 +72,12 @@ export default function HeroSection() {
       className="relative pt-24 pb-16 lg:pt-12 xl:pt-16 lg:pb-20 overflow-hidden"
       style={{
         background:
-          "linear-gradient(160deg, var(--color-surface-50) 0%, var(--color-white) 55%, var(--color-primary-50) 100%)" }}
+          "linear-gradient(160deg, var(--color-surface-50) 0%, var(--color-white) 55%, var(--color-primary-50) 100%)",
+      }}
     >
-      {/* CiroAI Atmospheric Background Blobs */}
+      {/* Background Blobs */}
       <div className="glow-blob glow-blob-primary w-[60%] h-[70%] -top-[20%] -left-[10%] opacity-20" aria-hidden="true" />
-      
       <div className="glow-blob glow-blob-primary w-[40%] h-[40%] bottom-[-10%] left-[20%] opacity-10" aria-hidden="true" />
-      
-      <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
-        <div
-          className="absolute inset-0 opacity-[0.015]"
-          style={{
-            backgroundImage: `linear-gradient(var(--color-primary-500) 1px, transparent 1px), linear-gradient(90deg, var(--color-primary-500) 1px, transparent 1px)`,
-            backgroundSize: "64px 64px" }}
-        />
-        <div
-          className="absolute inset-0 opacity-[0.012]"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")` }}
-        />
-      </div>
 
       <Container className="relative z-10">
         <div className="grid lg:grid-cols-[1.3fr_1fr] gap-12 lg:gap-16 xl:gap-20 items-center lg:items-start">
@@ -110,7 +96,7 @@ export default function HeroSection() {
               </span>
             </motion.div>
 
-            {/* Headline — FIX #1: explicit clamp for 360px safety */}
+            {/* Headline */}
             <motion.div
               variants={fadeUp}
               initial="hidden"
@@ -118,9 +104,7 @@ export default function HeroSection() {
               transition={{ delay: 0.2 }}
               className="space-y-3"
             >
-              <h1
-                className="leading-[1.1] tracking-[-0.03em] mx-auto lg:mx-0 max-w-2xl lg:max-w-none font-black text-center lg:text-left text-4xl md:text-5xl lg:text-6xl xl:text-[4.5rem]"
-              >
+              <h1 className="leading-[1.1] tracking-[-0.03em] mx-auto lg:mx-0 max-w-2xl lg:max-w-none font-black text-center lg:text-left text-4xl md:text-5xl lg:text-6xl xl:text-[4.5rem]">
                 <span className="text-ink-950 block mb-1">
                   Kaderisasi Ummat
                 </span>
@@ -136,17 +120,12 @@ export default function HeroSection() {
               initial="hidden"
               animate={animate}
               transition={{ delay: 0.3 }}
-              className="text-base lg:text-[1.075rem] leading-[1.85] max-w-[42rem] mx-auto lg:mx-0 text-center lg:text-left text-pretty"
-              style={{ color: "var(--color-ink-600)", fontWeight: 450 }}
+              className="text-base lg:text-[1.075rem] leading-[1.85] max-w-[42rem] mx-auto lg:mx-0 text-center lg:text-left text-pretty text-slate-600 font-medium"
             >
-              Bukan sekadar tempat belajar — sebuah sistem pembentukan karakter
-              yang{" "}
-              <strong
-                className="font-bold"
-                style={{ color: "var(--color-primary-700)" }}
-              >
+              Bukan sekadar tempat belajar — sebuah ekosistem pendidikan yang{" "}
+              <strong className="font-bold text-primary-700">
                 mengedepankan keteladanan para pendidik serta mendidik tanpa kekerasan dan luka pengasuhan
-              </strong>, memadukan Intensitas Tahfidz Al-Qur'an, Ilmu Syar'i, Akademik, Leadership, dan Enterpreneurship.
+              </strong>, memadukan Intensitas Tahfidz Al-Qur'an, Ilmu Syar'i, Sains Akademik, dan Islamic Entrepreneurship berbasis TICE.
             </motion.p>
 
             {/* Tagline Divider */}
@@ -161,10 +140,7 @@ export default function HeroSection() {
                 className="h-px flex-1 max-w-[3rem]"
                 style={{ background: "var(--color-primary-200)" }}
               />
-              <p
-                className="text-sm font-semibold italic"
-                style={{ color: "var(--color-primary-700)" }}
-              >
+              <p className="text-sm font-semibold italic text-primary-700">
                 &ldquo;{BRANDING.schoolTagline}&rdquo;
               </p>
               <div
@@ -215,7 +191,6 @@ export default function HeroSection() {
                     </Link>
                   </>
                 )}
-
               </div>
 
               <div className="flex items-center gap-3 mt-1">
@@ -232,7 +207,8 @@ export default function HeroSection() {
                       style={{
                         background: item.bg,
                         borderColor: "var(--color-white)",
-                        boxShadow: "var(--shadow-xs)" }}
+                        boxShadow: "var(--shadow-xs)",
+                      }}
                       aria-hidden="true"
                     />
                   ))}
@@ -253,176 +229,38 @@ export default function HeroSection() {
 
               <div className="flex flex-wrap gap-x-5 gap-y-2 justify-center lg:justify-start mt-1">
                 {[
-                  "MTs & IL tersedia",
-                  "Proses PPDB Cepat & Transparan",
-                  "Sistem Boarding (Asrama)",
-                ].map((point) => (
-                  <span
-                    key={point}
-                    className="flex items-center gap-1.5 text-[11px] font-semibold"
-                    style={{ color: "var(--color-ink-500)" }}
-                  >
-                    <CheckCircle2
-                      className="w-3.5 h-3.5 flex-shrink-0"
-                      style={{ color: "var(--color-primary-500)" }}
-                      aria-hidden="true"
-                    />
-                    {point}
-                  </span>
+                  "MTs & IL Putra/Putri",
+                  "Kurikulum TICE Terpadu",
+                  "Boarding Asrama Representatif",
+                ].map((item, i) => (
+                  <div key={i} className="flex items-center gap-1.5 text-xs text-slate-500 font-medium">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-primary-600 shrink-0" />
+                    <span>{item}</span>
+                  </div>
                 ))}
               </div>
             </motion.div>
           </div>
 
-          {/* VISUAL SIDE — FIX #2: overflow visible + md breakpoints */}
+          {/* IMAGE SIDE */}
           <motion.div
             variants={fadeIn}
             initial="hidden"
             animate={animate}
-            transition={{ delay: shouldReduceMotion ? 0 : 0.25 }}
-            className="relative w-full mt-6 lg:mt-6 xl:mt-8 lg:max-w-[500px] xl:max-w-[540px] lg:ml-auto"
-            style={{ overflow: "visible" }}
+            transition={{ delay: 0.25 }}
+            className="relative w-full max-w-[480px] lg:max-w-none mx-auto"
           >
-            {/* Main Image */}
-            <div
-              className="relative z-10"
-              style={{
-                borderRadius: "2rem",
-                border: "10px solid var(--color-white)",
-                boxShadow:
-                  "var(--shadow-premium-2xl), 0 0 0 1px var(--color-primary-100)",
-                overflow: "hidden" }}
-            >
+            <div className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
               <Image
-                src="/images/drone-campus.jpg"
-                alt={`${BRANDING.schoolName} — Pesantren Ulul Albaab`}
-                width={800}
-                height={600}
+                src="/images/hero.jpg"
+                alt="Pesantren Islam Internasional Al-Andalus Ulul Albaab"
+                fill
                 priority
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 800px"
-                className="w-full h-auto object-cover aspect-[4/3]"
-                style={{
-                  transition: "transform 0.7s cubic-bezier(0.16, 1, 0.3, 1)" }}
-                onMouseEnter={(e) => {
-                  if (!shouldReduceMotion)
-                    e.currentTarget.style.transform = "scale(1.04)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = "scale(1)";
-                }}
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-cover"
               />
-              <div
-                className="absolute inset-0 pointer-events-none"
-                style={{
-                  background:
-                    "linear-gradient(to top, rgba(10, 22, 16, 0.50) 0%, transparent 55%)" }}
-                aria-hidden="true"
-              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
             </div>
-
-            {/* Floating Card: Tersedia — FIX #2 md breakpoint */}
-            <motion.div
-              animate={shouldReduceMotion ? {} : { y: [0, -10, 0] }}
-              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute -top-8 -right-6 md:-top-5 lg:-top-6 md:-right-4 lg:-right-6 z-20 scale-[0.8] md:scale-100"
-              style={{ transformOrigin: "right center" }}
-            >
-              <div className="glass-panel flex items-center gap-3 px-4 py-3 rounded-lg">
-                <div className="icon-box icon-box-primary w-11 h-11 rounded-lg">
-                  <GraduationCap className="w-5 h-5" />
-                </div>
-                <div>
-                  <p className="stat-label mb-1">Tersedia</p>
-                  <p className="text-sm font-black leading-tight text-[var(--color-primary-900)]">
-                    MTs &amp; IL
-                  </p>
-                  <p className="text-[10px] font-semibold mt-0.5 text-[var(--color-ink-500)]">
-                    Kuota terbatas
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Floating Card: Jaringan Global — FIX #2 md breakpoint */}
-            <motion.div
-              animate={shouldReduceMotion ? {} : { y: [0, 10, 0] }}
-              transition={{
-                duration: 6,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: 1 }}
-              className="absolute -bottom-8 -left-6 md:-bottom-6 lg:-bottom-8 md:-left-4 lg:-left-6 z-20 scale-[0.8] md:scale-100"
-              style={{ transformOrigin: "left center" }}
-            >
-              <div className="glass-panel flex items-center gap-3 px-4 py-3 rounded-lg">
-                <div className="icon-box icon-box-primary w-11 h-11 rounded-lg">
-                  <Globe className="w-5 h-5" />
-                </div>
-                <div>
-                  <p className="text-sm font-black leading-tight text-[var(--color-primary-900)]">
-                    Bekerjasama dengan
-                  </p>
-                  <p className="text-[10px] font-semibold mt-0.5 text-[var(--color-ink-500)]">
-                    Universitas Islam Terkemuka di 3 Benua
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Info Badge — FIX #4: proper reduced motion, FIX #2: md position */}
-            <motion.div
-              initial={{
-                opacity: 0,
-                scale: shouldReduceMotion ? 1 : 0.5,
-                rotate: shouldReduceMotion ? -6 : -25 }}
-              animate={badgeAnimate}
-              transition={{
-                duration: shouldReduceMotion ? 0.01 : 0.85,
-                delay: shouldReduceMotion ? 0 : 0.9,
-                ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
-              whileHover={shouldReduceMotion ? {} : { rotate: 0, scale: 1.05 }}
-              className="absolute -bottom-16 -right-4 md:bottom-6 md:-right-6 lg:bottom-10 lg:-right-10 z-30 cursor-default scale-[0.85] md:scale-100"
-              style={{
-                background:
-                  "linear-gradient(135deg, var(--color-secondary-300) 0%, var(--color-secondary-500) 100%)",
-                padding: "0.85rem 1rem",
-                borderRadius: "1.25rem",
-                border: "4px solid var(--color-white)",
-                boxShadow: "var(--shadow-premium-lg)",
-                transition: "transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)" }}
-            >
-              <div className="text-center min-w-[80px]">
-                <p
-                  className="text-[9px] font-black uppercase tracking-[0.1em] leading-none mb-1.5"
-                  style={{ color: "var(--color-primary-950)" }}
-                >
-                  Info Penting
-                </p>
-                <p
-                  className="text-base font-black leading-tight"
-                  style={{ color: "var(--color-primary-900)" }}
-                >
-                  Pendaftaran
-                  <br />
-                  Dibuka
-                </p>
-                <div
-                  className="mt-2 py-1 px-2.5 rounded-full"
-                  style={{ background: "rgba(10, 22, 16, 0.12)" }}
-                >
-                  <p
-                    className="text-[9px] font-bold"
-                    style={{ color: "var(--color-primary-900)" }}
-                  >
-                    Kuota Terbatas
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Decorative glows */}
-            <div className="glow-blob glow-blob-primary w-64 h-64 -bottom-14 -right-14 opacity-15" aria-hidden="true" />
-            
           </motion.div>
         </div>
       </Container>

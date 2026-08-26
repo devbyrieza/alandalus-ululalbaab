@@ -16,59 +16,67 @@ import {
   CheckCircle2,
   Trophy,
   Globe,
-  ShieldCheck } from "lucide-react";
+  ShieldCheck,
+  Building2,
+  Briefcase
+} from "lucide-react";
 import { Container } from "@/components/layout/Container";
-import { Button } from "@/components/ui/button";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
-// Program Data with Refined Info
+// Program Data with Accurate Ulul Albaab Curriculum
 const PROGRAMS = [
   {
     id: "mts",
-    name: "SMP IT",
+    name: "Madrasah Tsanawiyah",
     buttonLabel: "Daftar MTs",
-    fullName: "Program SMP IT (SMP)",
+    fullName: "Program Madrasah Tsanawiyah (MTs)",
+    badge: "Tingkat Menengah (Setara SMP)",
     description:
-      "Kami menerapkan Kurikulum Terpadu yang menggabungkan standar Nasional dengan khas Andalus, berfokus pada penguasaan Tahfidz Al-Qur'an serta pembentukan karakter Leadership yang kokoh sejak dini.",
+      "Kami menerapkan Kurikulum Terpadu yang memadukan kurikulum Kementerian Agama/Nasional dengan kurikulum khas Andalus berbasis Kitab Turots, berfokus pada penguasaan Tahfidz Al-Qur'an 12 Juz Mutqin serta penanaman adab dan jiwa Entrepreneurship Islami sejak dini.",
     stats: [
-      { label: "Tahfidz", value: "Target 12 Juz", icon: BookOpen },
-      { label: "Prioritas", value: "Leadership", icon: ShieldCheck },
-      { label: "Bahasa", value: "Dwi-Bahasa", icon: Globe },
+      { label: "Tahfidz", value: "Target 12 Juz Mutqin", icon: BookOpen },
+      { label: "Kurikulum Khas", value: "TICE System", icon: ShieldCheck },
+      { label: "Bahasa Pengantar", value: "Bahasa Arab Aktif", icon: Globe },
     ],
     curriculum: [
-      "Target Hafalan 12 Juz Mutqin",
-      "Leadership & Character Building",
-      "Bahasa Arab & Inggris Yaumiyah",
-      "Kajian Kitab Turots Dasar",
-      "Kurikulum Nasional Lengkap",
+      "Target Hafalan 12 Juz Al-Qur'an Mutqin",
+      "Pendidikan Berbasis TICE (Tahfidz, Islamic Curriculum, Entrepreneurship)",
+      "Bahasa Arab & Inggris sebagai Bahasa Pengantar Yaumiyah",
+      "Kajian Kitab Turots Dasar & Fiqih Ibadah",
+      "Kurikulum Nasional Madrasah Tsanawiyah Lengkap",
+      "Kuota: 48 Santri Putra · 24 Santriwati Putri",
     ],
-    image: "/images/mts.webp",
-    theme: "maroon",
+    image: "/images/ruang-kelas.jpg",
+    theme: "blue",
     accent: "text-primary-600",
-    bg: "bg-primary-50" },
+    bg: "bg-primary-50",
+  },
   {
     id: "il",
     name: "I'dad Lughowi",
-    buttonLabel: "Daftar IL",
-    fullName: "Program I'dad Lughowi (SMA)",
+    buttonLabel: "Daftar I'dad Lughowi",
+    fullName: "Program I'dad Lughowi (Persiapan SMA)",
+    badge: "Tingkat Persiapan Menuju SMA",
     description:
-      "Program persiapan intensif menuju jenjang Aliyah, berfokus pada pemantapan Bahasa Arab, Tahfidz, dan kematangan leadership organisasi untuk mencetak kader ulama yang kontributif.",
+      "Program persiapan intensif bahasa Arab dan ilmu syar'i bagi santri lulusan SMP/MTs umum sebelum melangkah ke jenjang Sekolah Menengah Atas (SMA) berbasis pesantren, guna mencetak Hamalatul Qur'an yang berwawasan luas dan berdikari.",
     stats: [
       { label: "Tahfidz", value: "Target 16 Juz", icon: BookOpen },
-      { label: "Kekhasan", value: "Kader Leadership", icon: Users },
-      { label: "Fokus", value: "Bahasa & Syar'i", icon: Sparkles },
+      { label: "Fokus Utama", value: "Bahasa Arab & Syar'i", icon: Sparkles },
+      { label: "Jenjang Lanjutan", value: "SMA Pesantren", icon: GraduationCap },
     ],
     curriculum: [
-      "Tahun I'dad: Intensif Bahasa Arab",
-      "Target Hafalan 16 Juz",
-      "Manajemen Organisasi & Leadership",
-      "Kajian Kitab Turots Lanjutan",
-      "Pembinaan Dakwah Lapangan",
+      "Persiapan Intensif Bahasa Arab (Nahwu, Sharaf, Muhadatsah)",
+      "Target Hafalan 16 Juz Al-Qur'an",
+      "Pondasi Kitab Turots & Fiqih Muamalah",
+      "Pembinaan Islamic Entrepreneurship & Kemandirian Santri",
+      "Persiapan Lanjutan Masuk Jenjang SMA Pesantren",
+      "Kuota: 24 Santri Putra · 24 Santriwati Putri",
     ],
-    image: "/images/il.webp",
-    theme: "gold",
-    accent: "text-gold-600",
-    bg: "bg-secondary-50" },
+    image: "/images/kelas-dari-dalam.webp",
+    theme: "amber",
+    accent: "text-amber-600",
+    bg: "bg-amber-50",
+  },
 ];
 
 export default function ProgramPage() {
@@ -103,8 +111,8 @@ export default function ProgramPage() {
 
   return (
     <main className="bg-white min-h-screen">
-      {/* 1. Hero Section - Airy & Clean */}
-      <section className="relative py-24 md:py-32 overflow-hidden bg-white">
+      {/* 1. Hero Section */}
+      <section className="relative py-20 md:py-28 overflow-hidden bg-white">
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-secondary-50/50 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
         <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-[0.02] pointer-events-none" />
 
@@ -112,36 +120,35 @@ export default function ProgramPage() {
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-pill bg-primary-50 border border-primary-100 text-primary-700 text-xs font-bold uppercase tracking-widest mb-8 shadow-sm"
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary-50 border border-primary-100 text-primary-700 text-xs font-bold uppercase tracking-widest mb-8 shadow-xs"
           >
             <GraduationCap className="w-3.5 h-3.5" />
-            <span>Jenjang Pendidikan</span>
+            <span>Jenjang Pendidikan • Tahun Ajaran 2027/2028</span>
           </motion.div>
 
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-3xl md:text-5xl lg:text-8xl font-display font-black mb-10 tracking-tight leading-[0.9] text-ink-950"
+            className="text-3xl md:text-5xl lg:text-7xl font-black mb-6 tracking-tight leading-tight text-slate-900"
           >
-            Program <br />
-            <span className="text-gradient-primary">Terbaik Kita</span>
+            Program Pendidikan <br />
+            <span className="text-primary-700">Unggulan Kami</span>
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-lg md:text-xl text-ink-600 max-w-2xl mx-auto leading-relaxed font-medium"
+            className="text-base sm:text-lg md:text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed font-medium"
           >
-            Kurikulum terintegrasi komprehensif yang menyelaraskan standar
-            Nasional dengan khas Andalus.
+            Pendidikan berbasis TICE (Tahfidz, Islamic Curriculum, & Entrepreneurship) yang menyelaraskan kurikulum nasional dengan kurikulum khas Andalus.
           </motion.p>
         </Container>
       </section>
 
-      {/* 2. Navigation Tabs (Sticky) - Refined */}
-      <div className="sticky top-[72px] z-40 bg-white/60  border-y border-surface-100 py-4">
+      {/* 2. Navigation Tabs (Sticky) */}
+      <div className="sticky top-[72px] z-40 bg-white/80 backdrop-blur-md border-y border-slate-200 py-4 shadow-xs">
         <Container>
           <div className="flex flex-wrap justify-center gap-3">
             {PROGRAMS.map((program) => (
@@ -152,14 +159,11 @@ export default function ProgramPage() {
                     .getElementById(program.id)
                     ?.scrollIntoView({ behavior: "smooth" });
                 }}
-                className={`px-8 py-3 rounded-pill font-black text-sm transition-all border shadow-sm
-                                ${
-                                  activeSection === program.id
-                                    ? program.theme === "maroon"
-                                      ? "bg-primary-700 text-white border-primary-700"
-                                      : "bg-gold-500 text-white border-gold-500"
-                                    : "bg-white text-ink-500 border-primary-100 hover:border-primary-300 hover:text-primary-700"
-                                }`}
+                className={`px-6 md:px-8 py-2.5 md:py-3 rounded-full font-bold text-sm transition-all border shadow-xs ${
+                  activeSection === program.id
+                    ? 'bg-primary-600 text-white border-primary-600 shadow-md shadow-primary-600/20'
+                    : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
+                }`}
               >
                 {program.name}
               </button>
@@ -168,153 +172,109 @@ export default function ProgramPage() {
         </Container>
       </div>
 
-      {/* 3. Program Content Sections */}
-      <div className="py-12">
+      {/* 3. Program Sections Detail */}
+      <div className="space-y-16 md:space-y-28 py-16 md:py-24">
         {PROGRAMS.map((program, idx) => (
           <section
             key={program.id}
             id={program.id}
-            className="py-24 md:py-32 scroll-mt-32 overflow-hidden"
+            className="scroll-mt-36 relative overflow-hidden"
           >
             <Container>
-              <div
-                className={`grid lg:grid-cols-2 gap-16 lg:gap-24 items-center ${idx % 2 === 1 ? "lg:grid-flow-dense" : ""}`}
-              >
+              <div className="grid lg:grid-cols-2 gap-10 md:gap-16 items-center">
                 {/* Image Side */}
                 <motion.div
-                  initial={{ opacity: 0, x: idx % 2 === 0 ? -40 : 40 }}
+                  initial={{ opacity: 0, x: idx % 2 === 0 ? -30 : 30 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
-                  className={`relative ${idx % 2 === 1 ? "lg:col-start-2" : ""}`}
+                  transition={{ duration: 0.6 }}
+                  className={`relative ${idx % 2 === 1 ? 'lg:col-start-2' : ''}`}
                 >
-                  <div className="aspect-[4/5] max-h-[520px] min-h-[350px] md:min-h-[440px] w-full rounded-[2.5rem] md:rounded-[3.5rem] overflow-hidden shadow-sm relative z-10 p-2.5 md:p-3 bg-white border border-primary-100">
-                    <div className="relative w-full h-full min-h-[330px] md:min-h-[420px] rounded-[2rem] md:rounded-[2.8rem] overflow-hidden bg-gradient-to-br from-primary-950 via-primary-900 to-primary-950">
-                      <Image
-                        src={program.image}
-                        alt={program.fullName}
-                        fill
-                        priority={idx === 0}
-                        sizes="(max-width: 768px) 100vw, 50vw"
-                        className="object-cover transition-transform duration-700 hover:scale-105"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                  <div className="aspect-[4/3] w-full rounded-2xl md:rounded-[2.5rem] overflow-hidden shadow-lg border border-slate-200 relative group bg-slate-900">
+                    <Image
+                      src={program.image}
+                      alt={program.fullName}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
 
-                      <div className="absolute bottom-10 left-10 right-10 z-20">
-                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-white/20  border border-white/30 text-white text-[10px] font-black uppercase tracking-widest mb-3">
-                          <Star className="w-3.5 h-3.5 fill-gold-400 text-gold-400" />
-                          <span>Program Unggulan</span>
-                        </div>
-                        <h3 className="text-3 font-display font-black text-white md:text-4xl leading-none">
-                          Pengalaman Terbaik
-                        </h3>
-                      </div>
+                    <div className="absolute bottom-6 left-6 right-6 z-10 text-white">
+                      <span className="inline-block px-3 py-1 rounded-lg bg-white/20 backdrop-blur-md text-[11px] font-bold uppercase tracking-wider mb-2 border border-white/20">
+                        {program.badge}
+                      </span>
+                      <h3 className="text-xl md:text-2xl font-black">
+                        {program.name}
+                      </h3>
                     </div>
                   </div>
-
-                  {/* Decorative Blob */}
-                  <div
-                    className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] rounded-full blur-[120px] -z-10 opacity-30
-                                        ${program.theme === "maroon" ? "bg-primary-100" : "bg-secondary-200"}
-                                    `}
-                  />
                 </motion.div>
 
                 {/* Content Side */}
-                <div className={idx % 2 === 1 ? "lg:col-start-1" : ""}>
+                <div className={idx % 2 === 1 ? 'lg:col-start-1' : ''}>
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="text-center lg:text-left"
                   >
-                    <h2 className="text-2xl md:text-4xl lg:text-6xl font-display font-black text-ink-950 leading-[0.95] mb-8">
+                    <span className="text-xs font-bold text-primary-600 uppercase tracking-widest block mb-2">
+                      {program.badge}
+                    </span>
+                    <h2 className="text-2xl md:text-4xl font-black text-slate-900 leading-tight mb-4">
                       {program.fullName}
                     </h2>
-                    <p className="text-xl text-ink-600 font-medium leading-relaxed mb-10 text-center lg:text-left">
+                    <p className="text-base md:text-lg text-slate-600 leading-relaxed mb-8">
                       {program.description}
                     </p>
                   </motion.div>
 
-                  {/* Stats Grid - Modern Design */}
-                  <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-10">
+                  {/* Stats Grid */}
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4 mb-8">
                     {program.stats.map((stat, sIdx) => (
                       <div
                         key={sIdx}
-                        className={`app-card bg-white p-5 rounded-[2rem] border border-primary-50 shadow-sm hover:shadow-sm transition-all text-center group`}
+                        className="bg-slate-50 p-4 rounded-xl border border-slate-200 text-center"
                       >
-                        <div
-                          className={`w-10 h-10 rounded-lg mx-auto mb-3 flex items-center justify-center transition-transform group-hover:scale-110 border border-primary-100
-                                                    ${program.theme === "maroon" ? "bg-primary-50 text-primary-600" : "bg-secondary-100 text-gold-700"}
-                                                `}
-                        >
-                          <stat.icon className="w-5 h-5" />
+                        <div className="w-8 h-8 rounded-lg bg-primary-100 text-primary-700 flex items-center justify-center mx-auto mb-2">
+                          <stat.icon className="w-4 h-4" />
                         </div>
-                        <p className="text-[10px] text-ink-400 font-black uppercase tracking-widest mb-1">
+                        <p className="text-[10px] text-slate-500 font-bold uppercase tracking-wider mb-0.5">
                           {stat.label}
                         </p>
-                        <p
-                          className={`font-black text-ink-950 ${stat.value.length > 20 ? "text-sm leading-tight" : "text-lg"}`}
-                        >
+                        <p className="font-bold text-slate-900 text-sm">
                           {stat.value}
                         </p>
                       </div>
                     ))}
                   </div>
 
-                  {/* Curriculum Card - Refined */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className={`app-card rounded-[3rem] p-10 mb-10 border ${program.bg} border-primary-100 shadow-sm relative overflow-hidden`}
-                  >
-                    <div className="absolute top-0 right-0 p-5 md:p-8 opacity-5">
-                      <BookOpen className="w-32 h-32 text-primary-900" />
-                    </div>
+                  {/* Curriculum Card */}
+                  <div className="bg-white rounded-2xl p-6 md:p-8 mb-8 border border-slate-200 shadow-xs">
+                    <h4 className="text-lg font-black text-slate-900 mb-4 flex items-center gap-2.5">
+                      <div className="w-2 h-6 rounded-full bg-primary-600" />
+                      Fokus &amp; Kurikulum Unggulan
+                    </h4>
 
-                    <h3 className="text-2xl font-black text-ink-950 mb-8 flex items-center gap-3">
-                      <div
-                        className={`w-3 h-10 rounded-full ${program.theme === "maroon" ? "bg-primary-600" : "bg-gold-500"}`}
-                      />
-                      Kurikulum & Fokus
-                    </h3>
-
-                    <ul className="space-y-5 relative z-10">
+                    <ul className="space-y-3">
                       {program.curriculum.map((item, cIdx) => (
-                        <li
-                          key={cIdx}
-                          className="flex items-start gap-4 group/item"
-                        >
-                          <div
-                            className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 mt-0.5 shadow-sm
-                                                        ${program.theme === "maroon" ? "bg-primary-600 text-white" : "bg-gold-500 text-white"}
-                                                    `}
-                          >
-                            <CheckCircle2 className="w-4 h-4" />
-                          </div>
-                          <span className="text-ink-800 font-bold text-lg leading-tight tracking-tight group-hover/item:text-ink-950 transition-colors">
+                        <li key={cIdx} className="flex items-start gap-3">
+                          <CheckCircle2 className="w-5 h-5 text-primary-600 shrink-0 mt-0.5" />
+                          <span className="text-slate-700 font-medium text-sm md:text-base leading-relaxed">
                             {item}
                           </span>
                         </li>
                       ))}
                     </ul>
-                  </motion.div>
+                  </div>
 
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                  >
-                    <Link href={`/daftar?program=${program.id}`}>
-                      <button
-                        className={`w-full sm:w-auto px-14 py-5 rounded-pill font-black text-white text-lg shadow-sm transition-all hover:-translate-y-1
-                                                ${program.theme === "maroon" ? "bg-primary-700 hover:bg-primary-800" : "bg-gold-600 hover:bg-gold-700"}
-                                            `}
-                      >
-                        Daftarkan Sekarang
-                      </button>
-                    </Link>
-                  </motion.div>
+                  {/* CTA Button */}
+                  <Link href={`/daftar?program=${program.id}`}>
+                    <button className="w-full sm:w-auto px-8 py-4 rounded-xl font-black text-white text-base bg-primary-600 hover:bg-primary-500 shadow-md shadow-primary-600/20 transition-all hover:-translate-y-0.5 flex items-center justify-center gap-2">
+                      {program.buttonLabel}
+                      <ArrowRight className="w-4 h-4" />
+                    </button>
+                  </Link>
                 </div>
               </div>
             </Container>
@@ -322,41 +282,30 @@ export default function ProgramPage() {
         ))}
       </div>
 
-      {/* Bottom CTA - Impactful */}
-      <section className="py-16 md:py-24 lg:py-32 bg-surface-50">
-        <Container>
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="bg-primary-900 bg-linear-to-br from-primary-800 to-primary-950 rounded-[2rem] md:rounded-[3rem] lg:rounded-[4rem] p-6 sm:p-5 md:p-8 lg:p-24 text-center text-white relative overflow-hidden"
-          >
-            <div className="absolute top-0 right-0 w-32 h-32 sm:w-64 sm:h-64 md:w-96 md:h-96 bg-white/5 rounded-full blur-[60px] md:blur-[100px] -translate-y-1/2 translate-x-1/2" />
-            <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-5" />
-
-            <div className="relative z-10">
-              <h2 className="text-xl sm:text-2xl md:text-4xl lg:text-3xl xl:text-6xl font-display font-black mb-4 sm:mb-6 md:mb-8 text-white leading-tight">
-                Mulai Perjalanan <br />{" "}
-                <span className="text-secondary-300">Terbaik</span> Mereka
-              </h2>
-              <p className="text-sm sm:text-base md:text-lg lg:text-xl text-primary-50 max-w-2xl mx-auto mb-6 sm:mb-8 md:mb-10 lg:mb-12 font-medium px-2">
-                Konsultasikan rencana pendidikan putra-putri Anda dengan tim
-                kami untuk mendapatkan pilihan program yang paling tepat.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 md:gap-6 justify-center px-4">
-                <Link href="/daftar">
-                  <button className="w-full sm:w-auto px-6 sm:px-6 md:px-10 py-3.5 sm:py-4 md:py-5 rounded-pill bg-white text-primary-900 font-black text-sm sm:text-base md:text-lg hover:bg-primary-50 shadow-sm transition-all min-h-[48px] sm:min-h-[52px]">
-                    Pendaftaran Online
-                  </button>
-                </Link>
-                <Link href="/kontak">
-                  <button className="w-full sm:w-auto px-6 sm:px-6 md:px-10 py-3.5 sm:py-4 md:py-5 rounded-pill bg-white/10 text-white font-bold border border-white/20 hover:bg-white/20 transition-all text-sm sm:text-base md:text-lg min-h-[48px] sm:min-h-[52px]">
-                    Hubungi Admissions
-                  </button>
-                </Link>
-              </div>
-            </div>
-          </motion.div>
+      {/* Bottom CTA */}
+      <section className="py-20 bg-primary-950 text-white relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-primary-800/30 rounded-full blur-3xl pointer-events-none" />
+        <Container className="relative z-10 text-center">
+          <h2 className="text-3xl md:text-4xl font-black mb-4 tracking-tight">
+            Konsultasi &amp; Pendaftaran Santri Baru
+          </h2>
+          <p className="text-primary-200/80 max-w-xl mx-auto mb-8 text-base md:text-lg">
+            Daftarkan putra-putri Anda sekarang untuk Tahun Ajaran 2027/2028 di Pesantren Islam Internasional Al-Andalus Ulul Albaab.
+          </p>
+          <div className="flex flex-wrap justify-center gap-4">
+            <Link
+              href="/daftar"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-primary-600 hover:bg-primary-500 text-white font-bold text-base shadow-lg shadow-primary-600/30 transition-all hover:-translate-y-0.5"
+            >
+              Daftar PPDB Sekarang <ArrowRight className="w-4 h-4" />
+            </Link>
+            <Link
+              href="/kontak"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-white text-slate-900 hover:bg-slate-100 font-bold text-base transition-all hover:-translate-y-0.5"
+            >
+              Hubungi Admissions
+            </Link>
+          </div>
         </Container>
       </section>
     </main>
