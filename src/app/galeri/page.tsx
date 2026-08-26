@@ -1,35 +1,54 @@
 "use client";
 import { useEffect } from "react";
-
 import Image from "next/image";
 import Link from "next/link";
-import { Camera, Images, ArrowRight } from "lucide-react";
+import { Camera, Images, ArrowRight, Sparkles } from "lucide-react";
 import { Container } from "@/components/layout/Container";
 import { motion } from "framer-motion";
 
 const GALLERY_CATEGORIES = [
   {
-    title: "Fasilitas Pesantren",
+    title: "Fasilitas & Kompleks Pesantren",
+    desc: "Sarana belajar, ibadah, dan tempat tinggal yang representatif, bersih, dan modern.",
     items: [
-      { src: "/images/masjid.webp", label: "Masjid Jami' Ulul Albaab" },
-      { src: "/images/asrama.webp", label: "Kompleks Asrama Santri" },
-      {
-        src: "/images/gedung-utama-dan-lapangan-basket.webp",
-        label: "Gedung Utama & Lapangan Basket"
-      },
-      { src: "/images/kelas-dari-dalam.webp", label: "Ruang Kelas Pembelajaran" },
-      { src: "/images/depot-galon-gratis.webp", label: "Fasilitas Air Minum Bersih Santri" },
+      { src: "/images/drone-campus.jpg", label: "Panorama Udara Kampus Pesantren Ulul Albaab" },
+      { src: "/images/masjid-utama.jpg", label: "Masjid Jami' Ulul Albaab" },
+      { src: "/images/masjid-interior.jpg", label: "Ruang Utama Sholat & Ibadah" },
+      { src: "/images/gedung-asrama.jpg", label: "Kompleks Gedung Asrama Santri" },
+      { src: "/images/ruang-kelas.jpg", label: "Ruang Kelas Pembelajaran Modern" },
+      { src: "/images/ruang-kelas-2.jpg", label: "Suasana Belajar yang Nyaman & Kondusif" },
+      { src: "/images/lab-komputer.jpg", label: "Laboratorium Komputer & Teknologi" },
+      { src: "/images/lab-ipa.jpg", label: "Laboratorium Praktikum Sains & IPA" },
+      { src: "/images/perpustakaan.jpg", label: "Perpustakaan & Sumber Belajar Santri" },
+      { src: "/images/kantor-guru.jpg", label: "Ruang Kantor Asatidz & Guru" },
+      { src: "/images/ruang-uks.jpg", label: "Ruang UKS & Pelayanan Kesehatan Santri" },
+      { src: "/images/ruang-bk.jpg", label: "Ruang Bimbingan Konseling (BK)" },
+      { src: "/images/ruang-osis.jpg", label: "Ruang OSIS & Gugus Depan Pramuka" },
+      { src: "/images/toilet-putra.jpg", label: "Fasilitas Sanitasi & Toilet Putra Bersih" },
+      { src: "/images/toilet-putri.jpg", label: "Fasilitas Sanitasi & Toilet Putri Bersih" },
     ]
   },
   {
-    title: "Kegiatan & Suasana Santri",
+    title: "Sarana Olahraga",
+    desc: "Fasilitas olahraga lengkap untuk menjaga kebugaran, kesehatan fisik, dan sportivitas santri.",
     items: [
-      { src: "/images/tahfidz.webp", label: "Halaqoh Tahfidz Al-Qur'an" },
-      { src: "/images/extra-karate.webp", label: "Ekstrakurikuler Karate & Bela Diri" },
-      {
-        src: "/images/welcome-selamat-datang.webp",
-        label: "Kawasan Pesantren Ulul Albaab"
-      },
+      { src: "/images/lapangan-futsal.jpg", label: "Lapangan Futsal Pesantren" },
+      { src: "/images/lapangan-badminton.jpg", label: "Lapangan Badminton Santri" },
+      { src: "/images/lapangan-voli.jpg", label: "Lapangan Voli Santri" },
+    ]
+  },
+  {
+    title: "Kegiatan Santri & Prestasi",
+    desc: "Dokumentasi keseharian, halaqoh Al-Qur'an, pembinaan karakter, dan capaian prestasi santri.",
+    items: [
+      { src: "/images/prestasi-santri-1.jpg", label: "Profil Prestasi & Karakter Unggul Santri" },
+      { src: "/images/prestasi-santri-2.jpg", label: "Halaqoh Tahfidz & Wisuda Prestasi" },
+      { src: "/images/kegiatan-santri-1.jpg", label: "Keseharian & Disiplin Belajar Santri" },
+      { src: "/images/kegiatan-santri-2.jpg", label: "Kegiatan Ekstrakurikuler & Pembinaan Bakat" },
+      { src: "/images/kegiatan-santri-3.jpg", label: "Pembelajaran Luar Kelas & Lapangan" },
+      { src: "/images/kegiatan-santri-4.jpg", label: "Kebersamaan & Ukhuwah Islamiyah" },
+      { src: "/images/santri-aktivitas-1.jpg", label: "Aktivitas Santri Jenjang MTs" },
+      { src: "/images/santri-aktivitas-2.jpg", label: "Aktivitas Santri Jenjang I'dad & SMA" },
     ]
   },
 ];
@@ -42,37 +61,37 @@ export default function GaleriPage() {
   return (
     <main className="bg-white min-h-screen">
       {/* Hero */}
-      <section className="relative py-24 md:py-32 overflow-hidden bg-white">
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-secondary-50/50 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+      <section className="relative py-20 md:py-28 overflow-hidden bg-gradient-to-b from-slate-50 to-white">
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary-50/50 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
         <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-[0.02] pointer-events-none" />
 
         <Container className="relative z-10 text-center">
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-pill bg-primary-50 border border-primary-100 text-primary-700 text-xs font-bold uppercase tracking-widest mb-10 shadow-sm"
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary-50 border border-primary-100 text-primary-700 text-xs font-bold uppercase tracking-widest mb-6 shadow-sm"
           >
             <Camera className="w-3.5 h-3.5" />
-            <span>Dokumentasi Pesantren</span>
+            <span>Dokumentasi Resmi Pesantren</span>
           </motion.div>
 
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-3xl md:text-5xl lg:text-8xl font-display font-black mb-10 tracking-tight leading-[0.9] text-ink-950"
+            className="text-3xl md:text-5xl lg:text-6xl font-black mb-6 tracking-tight text-slate-900"
           >
-            Galeri <br />
-            <span className="text-gradient-primary">Ulul Albaab</span>
+            Galeri Foto <br />
+            <span className="text-primary-700">Pesantren Ulul Albaab</span>
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-xl md:text-2xl text-ink-600 max-w-3xl mx-auto leading-relaxed font-medium"
+            className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed"
           >
-            Koleksi foto suasana, fasilitas utama, dan kegiatan santri di Pesantren Al-Andalus Ulul Albaab.
+            Jelajahi suasana kampus, fasilitas representatif, serta ragam aktivitas belajar dan pembinaan santri di Pesantren Islam Internasional Al-Andalus Ulul Albaab.
           </motion.p>
         </Container>
       </section>
@@ -81,48 +100,53 @@ export default function GaleriPage() {
       {GALLERY_CATEGORIES.map((category, catIdx) => (
         <section
           key={catIdx}
-          className={`py-16 md:py-24 ${catIdx % 2 === 0 ? "bg-white" : "bg-surface-50/30"}`}
+          className={`py-14 md:py-20 ${catIdx % 2 === 0 ? "bg-white" : "bg-slate-50/60"}`}
         >
           <Container>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="mb-12"
+              className="mb-10"
             >
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-lg bg-primary-50 flex items-center justify-center text-primary-700 border border-primary-100">
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-10 h-10 rounded-xl bg-primary-50 flex items-center justify-center text-primary-700 border border-primary-100 shadow-sm">
                   <Images className="w-5 h-5" />
                 </div>
-                <h2 className="text-3xl md:text-4xl font-display font-black text-ink-950 tracking-tight">
-                  {category.title}
-                </h2>
+                <div>
+                  <h2 className="text-2xl md:text-3xl font-black text-slate-900 tracking-tight">
+                    {category.title}
+                  </h2>
+                  <p className="text-sm text-slate-500 mt-1">{category.desc}</p>
+                </div>
               </div>
-              <div className="w-20 h-1.5 bg-secondary-400 rounded-pill" />
             </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
-              {category.items.map((img, idx) => (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {category.items.map((item, itemIdx) => (
                 <motion.div
-                  key={idx}
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
+                  key={itemIdx}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: idx * 0.05 }}
-                  className="group relative aspect-[4/3] rounded-3xl overflow-hidden bg-slate-100 border border-primary-100/50 shadow-md hover:shadow-lg transition-all"
+                  transition={{ delay: (itemIdx % 3) * 0.1 }}
+                  className="group rounded-2xl overflow-hidden bg-white border border-slate-200/80 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col"
                 >
-                  <Image
-                    src={img.src}
-                    alt={img.label}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
-                    <p className="text-white font-bold text-sm leading-snug">
-                      {img.label}
+                  <div className="relative aspect-video w-full overflow-hidden bg-slate-100">
+                    <Image
+                      src={item.src}
+                      alt={item.label}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  </div>
+                  <div className="p-4 bg-white grow flex items-center justify-between gap-2 border-t border-slate-100">
+                    <p className="text-sm font-bold text-slate-800 leading-snug group-hover:text-primary-700 transition-colors">
+                      {item.label}
                     </p>
+                    <Sparkles className="w-4 h-4 text-primary-500 opacity-0 group-hover:opacity-100 transition-opacity shrink-0" />
                   </div>
                 </motion.div>
               ))}
@@ -131,29 +155,28 @@ export default function GaleriPage() {
         </section>
       ))}
 
-      {/* CTA Bottom */}
-      <section className="py-20 md:py-28 bg-gradient-to-br from-primary-900 to-primary-950 text-white text-center relative overflow-hidden">
-        <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-5" />
-        <Container className="relative z-10">
-          <h2 className="text-3xl md:text-5xl font-display font-black mb-6 leading-tight">
-            Ingin Melihat Langsung <br />
-            <span className="text-secondary-300">Kampus Ulul Albaab?</span>
+      {/* CTA */}
+      <section className="py-20 bg-primary-950 text-white relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-primary-800/30 rounded-full blur-3xl pointer-events-none" />
+        <Container className="relative z-10 text-center">
+          <h2 className="text-3xl md:text-4xl font-black mb-4 tracking-tight">
+            Ingin Melihat Kampus Secara Langsung?
           </h2>
-          <p className="text-lg text-primary-100 max-w-2xl mx-auto mb-10">
-            Daftar sekarang secara online atau jadwalkan kunjungan langsung bersama panitia PSB.
+          <p className="text-primary-200/80 max-w-xl mx-auto mb-8 text-base md:text-lg">
+            Kami menyambut kunjungan silaturahmi calon santri dan orang tua untuk melihat fasilitas dan lingkungan pesantren.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link
-              href="/daftar"
-              className="px-8 py-4 rounded-pill bg-white text-primary-900 font-bold hover:bg-primary-50 transition-all shadow-lg hover:-translate-y-0.5"
+              href="/fasilitas"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-primary-600 hover:bg-primary-500 text-white font-bold text-base shadow-lg shadow-primary-600/30 transition-all hover:-translate-y-0.5"
             >
-              Daftar Online Sekarang
+              Lihat Detail Fasilitas <ArrowRight className="w-4 h-4" />
             </Link>
             <Link
-              href="/kontak"
-              className="px-8 py-4 rounded-pill bg-white/10 text-white font-bold border border-white/20 hover:bg-white/20 transition-all"
+              href="/daftar"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-white text-slate-900 hover:bg-slate-100 font-bold text-base transition-all hover:-translate-y-0.5"
             >
-              Hubungi Panitia
+              Daftar PPDB Sekarang
             </Link>
           </div>
         </Container>

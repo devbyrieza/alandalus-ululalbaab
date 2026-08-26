@@ -114,7 +114,7 @@ export default function FasilitasPage() {
     
     const message = `Assalamu'alaikum Warahmatullahi Wabarakatuh.
 
-Saya ingin mengajukan Jadwal Kunjungan ke Pesantren Al Imam Al Islami.
+Saya ingin mengajukan Jadwal Kunjungan ke Pesantren Islam Internasional Al-Andalus Ulul Albaab.
 
 *Rincian Rencana Kunjungan:*
 • Nama: ${visitForm.nama}
@@ -211,7 +211,7 @@ Mohon konfirmasi kesediaan waktu kunjungan tersebut. Terima kasih.`;
               <div className="space-y-6 pt-12">
                 <div className="aspect-[4/5] max-h-[500px] w-full rounded-[3rem] overflow-hidden shadow-sm relative group border border-primary-100 bg-gradient-to-br from-primary-950 to-primary-900">
                   <Image
-                    src="/images/masjid.webp"
+                    src="/images/masjid-utama.jpg"
                     alt="Masjid"
                     fill
                     className="object-cover group-hover:scale-110 transition-transform duration-700"
@@ -219,14 +219,14 @@ Mohon konfirmasi kesediaan waktu kunjungan tersebut. Terima kasih.`;
                   <div className="absolute bottom-5 left-5 z-10">
                     <div className="bg-white/95  px-4 py-1.5 rounded-lg shadow-sm border border-white/40 transition-transform duration-300 group-hover:translate-y-[-4px]">
                       <span className="text-ink-950 font-black text-sm md:text-[15px] tracking-tight">
-                        Masjid Jami' Al Imam
+                        Masjid Jami' Ulul Albaab
                       </span>
                     </div>
                   </div>
                 </div>
                 <div className="aspect-square rounded-[3rem] overflow-hidden shadow-sm relative group border border-primary-100 bg-gradient-to-br from-primary-950 to-primary-900">
                   <Image
-                    src="/images/lapangan-minisoccer.webp"
+                    src="/images/lapangan-futsal.jpg"
                     alt="Lapangan"
                     fill
                     className="object-cover group-hover:scale-110 transition-transform duration-700"
@@ -243,7 +243,7 @@ Mohon konfirmasi kesediaan waktu kunjungan tersebut. Terima kasih.`;
               <div className="space-y-6">
                 <div className="aspect-square rounded-[3rem] overflow-hidden shadow-sm relative group border border-primary-100 bg-gradient-to-br from-primary-950 to-primary-900">
                   <Image
-                    src="/images/asrama.webp"
+                    src="/images/gedung-asrama.jpg"
                     alt="Asrama"
                     fill
                     className="object-cover group-hover:scale-110 transition-transform duration-700"
@@ -258,7 +258,7 @@ Mohon konfirmasi kesediaan waktu kunjungan tersebut. Terima kasih.`;
                 </div>
                 <div className="aspect-[4/5] max-h-[500px] w-full rounded-[3rem] overflow-hidden shadow-sm relative group border border-primary-100 bg-gradient-to-br from-primary-950 to-primary-900">
                   <Image
-                    src="/images/kelas-dari-dalam.webp"
+                    src="/images/ruang-kelas.jpg"
                     alt="Kelas"
                     fill
                     className="object-cover group-hover:scale-110 transition-transform duration-700"
@@ -315,7 +315,7 @@ Mohon konfirmasi kesediaan waktu kunjungan tersebut. Terima kasih.`;
               className="section-subtitle"
             >
               Sarana vital yang menjadi jantung aktivitas harian di{" "}
-              <br className="hidden md:block" /> Pesantren Al Imam Al Islami
+              <br className="hidden md:block" /> Pesantren Islam Internasional Al-Andalus Ulul Albaab
               untuk kenyamanan dan kekhusyukan.
             </motion.p>
           </div>
@@ -387,8 +387,8 @@ Mohon konfirmasi kesediaan waktu kunjungan tersebut. Terima kasih.`;
                 <div className="aspect-square rounded-[3rem] sm:rounded-[4rem] bg-white p-3 sm:p-6 sm:p-8 shadow-sm relative rotate-2 hover:rotate-0 transition-transform duration-700 border border-primary-100">
                   <div className="relative w-full h-full rounded-[2.5rem] sm:rounded-[3.2rem] overflow-hidden">
                     <Image
-                      src="/images/masjid.webp"
-                      alt="Masjid Jami' Al Imam"
+                      src="/images/masjid-utama.jpg"
+                      alt="Masjid Jami' Ulul Albaab"
                       fill
                       className="object-cover transition-transform duration-700 hover:scale-110"
                     />
@@ -408,7 +408,7 @@ Mohon konfirmasi kesediaan waktu kunjungan tersebut. Terima kasih.`;
                 <div className="aspect-square rounded-[3rem] sm:rounded-[4rem] bg-white p-3 sm:p-6 sm:p-8 shadow-sm relative -rotate-2 hover:rotate-0 transition-transform duration-700 border border-primary-100">
                   <div className="relative w-full h-full rounded-[2.5rem] sm:rounded-[3.2rem] overflow-hidden">
                     <Image
-                      src="/images/kelas-dari-dalam.webp"
+                      src="/images/ruang-kelas.jpg"
                       alt="Ruang Kelas Modern"
                       fill
                       className="object-cover transition-transform duration-700 hover:scale-110"
@@ -539,7 +539,7 @@ Mohon konfirmasi kesediaan waktu kunjungan tersebut. Terima kasih.`;
                 <div className="aspect-square rounded-[3rem] sm:rounded-[4rem] bg-white p-3 sm:p-6 sm:p-8 shadow-sm relative rotate-2 hover:rotate-0 transition-transform duration-700 border border-primary-100">
                   <div className="relative w-full h-full rounded-[2.5rem] sm:rounded-[3.2rem] overflow-hidden">
                     <Image
-                      src="/images/asrama.webp"
+                      src="/images/gedung-asrama.jpg"
                       alt="Asrama Santri"
                       fill
                       className="object-cover transition-transform duration-700 hover:scale-110"
@@ -560,7 +560,7 @@ Mohon konfirmasi kesediaan waktu kunjungan tersebut. Terima kasih.`;
                 <div className="aspect-square rounded-[3rem] sm:rounded-[4rem] bg-white p-3 sm:p-6 sm:p-8 shadow-sm relative -rotate-2 hover:rotate-0 transition-transform duration-700 border border-primary-100">
                   <div className="relative w-full h-full rounded-[2.5rem] sm:rounded-[3.2rem] overflow-hidden">
                     <Image
-                      src="/images/lapangan-minisoccer.webp"
+                      src="/images/lapangan-futsal.jpg"
                       alt="Lapangan Minisoccer"
                       fill
                       className="object-cover transition-transform duration-700 hover:scale-110"
@@ -691,7 +691,7 @@ Mohon konfirmasi kesediaan waktu kunjungan tersebut. Terima kasih.`;
                 <div className="aspect-square rounded-[3rem] sm:rounded-[4rem] bg-white p-3 sm:p-6 sm:p-8 shadow-sm relative rotate-2 hover:rotate-0 transition-transform duration-700 border border-primary-100">
                   <div className="relative w-full h-full rounded-[2.5rem] sm:rounded-[3.2rem] overflow-hidden">
                     <Image
-                      src="/images/gedung-utama-dan-lapangan-basket.webp"
+                      src="/images/drone-campus.jpg"
                       alt="Lapangan Basket"
                       fill
                       className="object-cover transition-transform duration-700 hover:scale-110"
@@ -843,7 +843,7 @@ Mohon konfirmasi kesediaan waktu kunjungan tersebut. Terima kasih.`;
                 <div className="aspect-square rounded-[3rem] sm:rounded-[4rem] bg-white p-3 sm:p-6 sm:p-8 shadow-sm relative rotate-2 hover:rotate-0 transition-transform duration-700 border border-primary-100">
                   <div className="relative w-full h-full rounded-[2.5rem] sm:rounded-[3.2rem] overflow-hidden">
                     <Image
-                      src="/images/kantor-ppdb-tamu.webp"
+                      src="/images/kantor-guru.jpg"
                       alt="Kantor PPDB Al Imam"
                       fill
                       className="object-cover transition-transform duration-700 hover:scale-110"
@@ -1054,7 +1054,7 @@ Mohon konfirmasi kesediaan waktu kunjungan tersebut. Terima kasih.`;
                     Kunjungi <span className="text-gradient-primary">Kami</span>
                   </h2>
                   <p className="text-lg text-ink-600 mb-8 leading-relaxed font-medium">
-                    Masih banyak fasilitas pendukung lainnya di dalam Pesantren Al Imam Al Islami.
+                    Masih banyak fasilitas pendukung lainnya di dalam Pesantren Islam Internasional Al-Andalus Ulul Albaab.
                     Ingin melihat langsung? Jadwalkan kunjungan Anda melalui formulir ini.
                   </p>
                   
@@ -1096,7 +1096,7 @@ Mohon konfirmasi kesediaan waktu kunjungan tersebut. Terima kasih.`;
                         allowFullScreen
                         loading="lazy"
                         referrerPolicy="no-referrer-when-downgrade"
-                        title="Lokasi Pesantren Al Imam Al Islami"
+                        title="Lokasi Pesantren Islam Internasional Al-Andalus Ulul Albaab"
                         className="grayscale group-hover:grayscale-0 transition-all duration-700 opacity-80 group-hover:opacity-100"
                       />
                       <div className="absolute bottom-3 left-3 bg-white  px-4 py-2 rounded-lg shadow-sm border border-primary-100 flex items-center gap-2 z-10 pointer-events-none">

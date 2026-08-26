@@ -25,7 +25,7 @@ export default function BentoGridSection() {
             viewport={{ once: true }}
             className="md:col-span-2 lg:col-span-2 row-span-2 bento-card relative group"
           >
-            <Image src="/images/hero.jpg" alt="Masjid" fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
+            <Image src="/images/drone-campus.jpg" alt="Masjid" fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
             <div className="absolute inset-0 p-8 flex flex-col justify-end">
               <div className="w-12 h-12 bg-white/20  rounded-lg flex items-center justify-center mb-4 text-white">
@@ -53,7 +53,7 @@ export default function BentoGridSection() {
               <p className="text-ink-600 text-sm">Fasilitas modern untuk mendukung pembelajaran IT dan kemampuan digital santri.</p>
             </div>
             <div className="w-32 h-32 relative rounded-lg overflow-hidden shrink-0 shadow-sm">
-              <Image src="/images/hero.jpg" alt="Lab" fill className="object-cover" />
+              <Image src="/images/drone-campus.jpg" alt="Lab" fill className="object-cover" />
             </div>
           </motion.div>
 
