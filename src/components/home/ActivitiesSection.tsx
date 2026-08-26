@@ -66,7 +66,7 @@ const ACTIVITIES: Activity[] = [
     badge: "Life Skills",
     description:
       "Program pelatihan entrepreneurship dan keterampilan hidup mandiri guna mencetak santri yang siap berdikari di masa depan.",
-    image: "/images/lapangan-badminton.jpg",
+    image: "/images/lapangan-badminton-2.jpg",
   },
 ];
 
