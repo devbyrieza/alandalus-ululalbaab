@@ -68,7 +68,7 @@ export default function HeroSection() {
   return (
     <section
       ref={ref}
-      aria-label="Hero — Beranda Al Fath"
+      aria-label="Hero — Beranda Ulul Albaab"
       className="relative pt-24 pb-16 lg:pt-12 xl:pt-16 lg:pb-20 overflow-hidden"
       style={{
         background:
@@ -247,7 +247,7 @@ export default function HeroSection() {
                   >
                     Angkatan Pertama
                   </span>
-                  {" • "}Pesantren Al Fath
+                  {" • "}Pesantren Ulul Albaab
                 </p>
               </div>
 
@@ -295,7 +295,7 @@ export default function HeroSection() {
             >
               <Image
                 src="/images/drone-campus.jpg"
-                alt={`${BRANDING.schoolName} — Pesantren Al Fath`}
+                alt={`${BRANDING.schoolName} — Pesantren Ulul Albaab`}
                 width={800}
                 height={600}
                 priority
