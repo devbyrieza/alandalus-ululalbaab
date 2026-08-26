@@ -108,11 +108,11 @@ export const PPDB_CONFIG = {
 
   // 👥 DEWAN PEMBINA
   dewanPembina: [
-    "Ustadz Dr. Nurdin Apud Sarbini, Lc., M.Pd",
     "Ustadz Dr. Muhammad Arifin Badri, Lc., MA",
+    "Ustadz Dr. Nurdin Apud Sarbini, Lc., M.Pd",
+    "H. Tarmen Tascha, SE",
     "Ustadz Wahab Rajasam, M.Pd",
     "K.H Dudun Abdul Gofar",
-    "Bpk. Tarmen Tascha, S.E",
     "Ustadz Dwi Wahyu Iskandar",
   ],
 

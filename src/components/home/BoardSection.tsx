@@ -5,15 +5,18 @@ import { Container } from "@/components/layout/Container";
 import { motion } from "framer-motion";
 import Image from "next/image";
 
-// ─── Data Dewan Pembina ─────────────────────────────
 const BOARD_MEMBERS = [
+  {
+    name: "Ustadz Dr. Muhammad Arifin Badri, Lc., MA",
+    image: "/images/muhammad-arifin-badri.webp",
+  },
   {
     name: "Ustadz Dr. Nurdin Apud Sarbini, Lc., M.Pd",
     image: "/images/nurdin-apud-sabrini.webp",
   },
   {
-    name: "Ustadz Dr. Muhammad Arifin Badri, Lc., MA",
-    image: "/images/muhammad-arifin-badri.webp",
+    name: "H. Tarmen Tascha, SE",
+    image: "/images/tarmen-tascha.webp",
   },
   {
     name: "Ustadz Wahab Rajasam, M.Pd",
@@ -22,10 +25,6 @@ const BOARD_MEMBERS = [
   {
     name: "K.H Dudun Abdul Gofar",
     image: "",
-  },
-  {
-    name: "Bpk. Tarmen Tascha, S.E",
-    image: "/images/tarmen-tascha.webp",
   },
   {
     name: "Ustadz Dwi Wahyu Iskandar",
