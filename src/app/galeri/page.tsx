@@ -34,12 +34,12 @@ interface Album {
 const ALBUMS: Album[] = [
   {
     id: "masjid",
-    title: "Masjid Jami' Pesantren",
+    title: "Masjid Pesantren Ulul Albaab",
     category: "Ibadah & Spiritual",
     desc: "Pusat ibadah sholat 5 waktu berjamaah, halaqoh Al-Qur'an, dan kajian keislaman.",
     cover: "/images/masjid-1.jpg",
     items: [
-      { src: "/images/masjid-1.jpg", label: "Tampak Luar & Kubah Masjid Jami' Ulul Albaab" },
+      { src: "/images/masjid-1.jpg", label: "Tampak Luar & Bangunan Masjid Ulul Albaab" },
       { src: "/images/masjid-2.jpg", label: "Interior Ruang Utama Sholat & Ibadah Berjamaah" },
     ],
   },

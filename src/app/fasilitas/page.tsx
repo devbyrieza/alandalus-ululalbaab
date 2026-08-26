@@ -219,7 +219,7 @@ Mohon konfirmasi kesediaan waktu kunjungan tersebut. Terima kasih.`;
                   <div className="absolute bottom-5 left-5 z-10">
                     <div className="bg-white/95  px-4 py-1.5 rounded-lg shadow-sm border border-white/40 transition-transform duration-300 group-hover:translate-y-[-4px]">
                       <span className="text-ink-950 font-black text-sm md:text-[15px] tracking-tight">
-                        Masjid Jami' Ulul Albaab
+                        Masjid Ulul Albaab
                       </span>
                     </div>
                   </div>
@@ -339,12 +339,12 @@ Mohon konfirmasi kesediaan waktu kunjungan tersebut. Terima kasih.`;
                   </div>
 
                   <h3 className="text-3xl sm:text-2xl md:text-4xl lg:text-3xl font-black text-primary-950 mb-6 leading-[1.1]">
-                    Masjid Jami' <br className="hidden sm:block" /> Al Imam
+                    Masjid <br className="hidden sm:block" /> Ulul Albaab
                   </h3>
                   <p className="text-base sm:text-lg lg:text-xl text-primary-950/70 mb-8 sm:mb-10 leading-relaxed font-medium">
-                    Pusat peribadatan santri yang mampu menampung 1000 jamaah.
-                    Dilengkapi pendingin ruangan, karpet premium, dan sistem
-                    audio berkualitas tinggi.
+                    Pusat peribadatan dan halaqah tahfidz santri yang nyaman,
+                    sejuk, dan asri guna mendukung kekhusyukan ibadah sholat
+                    berjamaah serta kegiatan dzikir dan muroja'ah harian.
                   </p>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
@@ -354,10 +354,10 @@ Mohon konfirmasi kesediaan waktu kunjungan tersebut. Terima kasih.`;
                       </div>
                       <div>
                         <h4 className="font-black text-primary-950 text-[15px] sm:text-lg uppercase tracking-tight">
-                          Kapasitas Luas
+                          Suasana Khusyuk
                         </h4>
                         <p className="text-xs sm:text-sm text-primary-500 font-medium">
-                          2 Lantai utama luas
+                          Nyaman, asri & sejuk
                         </p>
                       </div>
                     </div>
@@ -367,10 +367,10 @@ Mohon konfirmasi kesediaan waktu kunjungan tersebut. Terima kasih.`;
                       </div>
                       <div>
                         <h4 className="font-black text-primary-950 text-[15px] sm:text-lg uppercase tracking-tight">
-                          Kenyamanan
+                          Pusat Ibadah
                         </h4>
                         <p className="text-xs sm:text-sm text-primary-500 font-medium">
-                          Full AC & Karpet Empuk
+                          Halaqah Qur'an & Sholat
                         </p>
                       </div>
                     </div>
@@ -388,7 +388,7 @@ Mohon konfirmasi kesediaan waktu kunjungan tersebut. Terima kasih.`;
                   <div className="relative w-full h-full rounded-[2.5rem] sm:rounded-[3.2rem] overflow-hidden">
                     <Image
                       src="/images/masjid-1.jpg"
-                      alt="Masjid Jami' Ulul Albaab"
+                      alt="Masjid Ulul Albaab"
                       fill
                       className="object-cover transition-transform duration-700 hover:scale-110"
                     />
@@ -844,7 +844,7 @@ Mohon konfirmasi kesediaan waktu kunjungan tersebut. Terima kasih.`;
                   <div className="relative w-full h-full rounded-[2.5rem] sm:rounded-[3.2rem] overflow-hidden">
                     <Image
                       src="/images/kantor-guru.jpg"
-                      alt="Kantor PPDB Al Imam"
+                      alt="Kantor PPDB Ulul Albaab"
                       fill
                       className="object-cover transition-transform duration-700 hover:scale-110"
                     />

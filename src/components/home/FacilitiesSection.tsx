@@ -24,7 +24,7 @@ import { Container } from "@/components/layout/Container";
 import { motion, type Variants, type Transition } from "framer-motion";
 
 const FACILITIES = [
-  { name: "Masjid Kapasitas 900 Jamaah", icon: Home, color: "blue" },
+  { name: "Masjid Nyaman & Khusyuk", icon: Home, color: "blue" },
   { name: "Gedung Sekolah Terpadu", icon: School, color: "amber" },
   { name: "Asrama Representatif", icon: Building2, color: "ink" },
   { name: "Fasilitas Olahraga", icon: Dumbbell, color: "amber" },
@@ -43,7 +43,7 @@ const FACILITIES = [
 const FACILITY_IMAGES = [
   {
     src: "/images/masjid-1.jpg",
-    label: "Masjid Jami'",
+    label: "Masjid Ulul Albaab",
     sub: "Pusat Ibadah & Tahfidz",
     span: "col-span-2 row-span-2",
     priority: true,

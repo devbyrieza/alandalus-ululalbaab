@@ -38,7 +38,7 @@ const GALLERY_ITEMS = [
     icon: Target },
   {
     image: "/images/masjid.webp",
-    title: "Masjid Jami'",
+    title: "Masjid Ulul Albaab",
     description: "Pusat Ibadah & Tarbiyah Santri",
     icon: School },
 ] as const;

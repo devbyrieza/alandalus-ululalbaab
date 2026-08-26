@@ -20,7 +20,7 @@ export default function BentoGridSection() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 auto-rows-[240px]">
           
-          {/* Card 1: Masjid Jami' (Span 2 cols, 2 rows) */}
+          {/* Card 1: Masjid Ulul Albaab (Span 2 cols, 2 rows) */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -29,7 +29,7 @@ export default function BentoGridSection() {
           >
             <Image 
               src="/images/masjid-1.jpg" 
-              alt="Masjid Jami' Ulul Albaab" 
+              alt="Masjid Ulul Albaab" 
               fill 
               className="object-cover transition-transform duration-700 group-hover:scale-105" 
             />
@@ -38,9 +38,9 @@ export default function BentoGridSection() {
               <div className="w-12 h-12 bg-white/20 backdrop-blur-md rounded-xl flex items-center justify-center mb-4 text-amber-300 border border-white/20 shadow-sm">
                 <BookOpen className="w-6 h-6" />
               </div>
-              <h3 className="text-2xl md:text-3xl font-black text-white mb-2">Masjid Jami' Pusat Hafalan</h3>
+              <h3 className="text-2xl md:text-3xl font-black text-white mb-2">Masjid Pusat Hafalan &amp; Ibadah</h3>
               <p className="text-white/85 max-w-md text-sm md:text-base leading-relaxed">
-                Pusat kegiatan ibadah, sholat berjamaah, dan halaqah tahfidz Al-Qur'an dengan suasana yang tenang dan kondusif.
+                Pusat kegiatan ibadah, sholat berjamaah, dan halaqah tahfidz Al-Qur'an dengan suasana yang asri, tenang, dan kondusif.
               </p>
             </div>
           </motion.div>
