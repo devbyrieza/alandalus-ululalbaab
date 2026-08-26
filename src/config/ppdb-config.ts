@@ -1,23 +1,24 @@
-﻿// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-//   PPDB CONFIGURATION - EASY CUSTOMIZATION
-//   Ganti bagian ini saja untuk setiap pesantren baru!
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+//   PPDB CONFIGURATION - AL ANDALUS ULUL ALBAAB
+//   Tahun Ajaran 2027/2028 (PSB / PPDB)
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 export const PPDB_CONFIG = {
-  // 🏫 INFO PESANTREN (GANTI INI DULU!)
+  // 🏫 INFO PESANTREN
   pesantren: {
-    nama: "Pesantren Al Andalus Ulul Albaab",
+    nama: "Pesantren Islam Internasional Al-Andalus Ulul Albaab",
     singkatan: "Al Andalus Ulul Albaab",
+    legal: "Pesantren Ulul Albaab Sukabumi Managed by Al Andalus IIBS",
     alamat:
       "Jl. KH Mama Oyon, Cihaur, Kec. Cicantayan, Kabupaten Sukabumi, Jawa Barat 43155",
     telepon: "+62 812-8530-0800",
     email: "alandalusululalbaab2@gmail.com",
     emailPpdb: "alandalusululalbaab2@gmail.com",
-    website: "https://www.ppdb.alandalus-ululalbaab.com" },
+    website: "https://pesantren-ululalbaab.com",
+  },
 
-  // 🎨 BRAND COLORS (GANTI SESUAI LOGO)
+  // 🎨 BRAND COLORS
   colors: {
-    // Primary Colors (Biru Muda / Sky)
     primary: {
       50: "#f0f9ff",
       100: "#e0f2fe",
@@ -25,68 +26,105 @@ export const PPDB_CONFIG = {
       300: "#7dd3fc",
       400: "#38bdf8",
       500: "#0ea5e9",
-      600: "#0284c7", // Warna tombol & aksi utama
-      700: "#0369a1", // Warna teks penting
+      600: "#0284c7",
+      700: "#0369a1",
       800: "#075985",
-      900: "#0c4a6e", // Warna teks gelap
+      900: "#0c4a6e",
     },
-
-    // Secondary Colors (Kuning / Amber)
     secondary: {
       50: "#fffbeb",
       100: "#fef3c7",
       200: "#fde68a",
       300: "#fcd34d",
-      400: "#fbbf24" },
-
-    // Accent Colors (Warna Aksen)
+      400: "#fbbf24",
+    },
     accent: {
-      gold: "#fbbf24", // Untuk highlight & achievement
-      teal: "#14b8a6", // Untuk success & info
-      red: "#ef4444", // Untuk error & warning
-    } },
+      gold: "#fbbf24",
+      teal: "#14b8a6",
+      red: "#ef4444",
+    },
+  },
 
-  // 📱 PROGRAM PENDIDIKAN (SESUAIKAN!)
+  // 📱 PROGRAM PENDIDIKAN
   programs: [
     {
       id: "mts",
       name: "MTs",
-      fullName: "MTs",
+      fullName: "Madrasah Tsanawiyah (MTs)",
       description:
-        "Program pendidikan formal setara SMP dengan kurikulum integrasi pesantren.",
-      image: "/images/mts.webp",
-      theme: "brown" },
+        "Program pendidikan formal setara SMP memadukan kurikulum kepesantrenan khas Andalus, Tahfidz 12 Juz, dan kurikulum nasional.",
+      image: "/images/ruang-kelas.jpg",
+      theme: "blue",
+      kuotaPutra: 48,
+      kuotaPutri: 24,
+    },
     {
       id: "il",
       name: "I'dad Lughowi",
-      fullName: "Program Persiapan Bahasa Arab",
+      fullName: "Program I'dad Lughowi (Persiapan Bahasa Arab)",
       description:
-        "Program intensif persiapan bahasa Arab untuk jenjang lebih tinggi.",
-      image: "/images/il.webp",
-      theme: "gold" },
+        "Program intensif penguasaan Bahasa Arab aktif, Tahfidz 16 Juz, dan ilmu syar'i persiapan jenjang Aliyah / SMA.",
+      image: "/images/kelas-dari-dalam.webp",
+      theme: "gold",
+      kuotaPutra: 24,
+      kuotaPutri: 24,
+    },
   ],
 
-  // 💰 BIAYA PENDAFTARAN (GANTI SESUAI)
+  // 💰 BIAYA PENDIDIKAN & PENDAFTARAN (FORMULA SEMENTARA)
   pricing: [
     {
-      label: "Uang Pendaftaran",
+      label: "Biaya Pendaftaran",
       amount: "Rp 250.000",
-      note: "Tidak dapat dikembalikan" },
+      note: "Biaya pendaftaran dan tes seleksi",
+    },
     {
       label: "Uang Pangkal",
-      amount: "Rp 9.800.000",
-      note: "Pembayaran dapat dicicil" },
+      amount: "Rp 9.900.000",
+      note: "Dibayarkan saat daftar ulang (dapat dicicil)",
+    },
     {
-      label: "Iuran Taawun/Tahun",
-      amount: "Rp 13.200.000",
-      note: "All in (SPP + Makan + Asrama)" },
-    {
-      label: "Cicilan per Bulan",
-      amount: "Rp 1.100.000",
-      note: "Jika memilih sistem cicilan" },
+      label: "SPP / Iwatase Bulanan",
+      amount: "Rp 1.200.000",
+      note: "Per bulan (Pendidikan + Asrama + Makan)",
+    },
   ],
 
-  // 📋 PERSYARATAN BERKAS (SESUAIKAN!)
+  // 🏦 REKENING BANK RESMI
+  bank: {
+    namaBank: "Bank Syariah Indonesia (BSI)",
+    nomorRekening: "7253701263",
+    atasNama: "Al Andalus Ulul Albaab 1",
+    kodeBank: "451",
+  },
+
+  // 📅 JADWAL PPSB 2027/2028
+  schedule: {
+    tahunAjaran: "2027/2028",
+    pembukaan: "05 September 2026",
+    penutupan: "30 November 2026",
+    jadwalTes: "05 September – 30 November 2026",
+  },
+
+  // 👥 DEWAN PEMBINA
+  dewanPembina: [
+    "Ustadz Dr. Nurdin Apud Sarbini, Lc., M.Pd",
+    "Ustadz Dr. Muhammad Arifin Badri, Lc., MA",
+    "Ustadz Wahab Rajasam, M.Pd",
+    "K.H Dudun Abdul Gofar",
+    "Bpk. Tarmen Tascha, S.E",
+    "Ustadz Dwi Wahyu Iskandar",
+  ],
+
+  // 🎯 VISI & MISI
+  visi: "KADERISASI UMMAT RABBANI, CENDEKIA & MANDIRI",
+  misi: [
+    "Menyelenggarakan Pendidikan Berbasis TICE (Tahfidz, Islamic Curriculum, Entrepreneurship)",
+    "Mencetak HAMALATUL QUR'AN dengan bekal ilmu syar'i yang mumpuni",
+    "Menanamkan jiwa Entrepreneur Muslim yang berwawasan global",
+  ],
+
+  // 📋 PERSYARATAN BERKAS
   requirements: [
     "Fotocopy Kartu Keluarga (1 lembar)",
     "Fotocopy Akta Kelahiran (1 lembar)",
@@ -94,25 +132,29 @@ export const PPDB_CONFIG = {
     "Pas Foto 3x4 (4 lembar)",
   ],
 
-  // 🔗 KONTAK & SOSMED (GANTI SESUAI!)
+  // 🔗 KONTAK & SOSMED
   contact: {
     whatsapp: "+6281285300800",
+    phone: "0812-8530-0800",
     instagram: "@alandalusululalbaab",
     facebook: "Pesantren Al Andalus Ulul Albaab",
-    youtube: "Al Andalus Ulul Albaab" },
+    youtube: "Al Andalus Ulul Albaab",
+  },
 
   tahunAjaran: "2027/2028",
-  angkatan: "Angkatan IX",
+  angkatan: "Angkatan I (Era Baru)",
 
-  // ⚙️ SETTING TEKNIS (UMUMNYA TIDAK PERLU DIUBAH)
+  // ⚙️ SETTING TEKNIS
   technical: {
     appName: "PPDB Al Andalus Ulul Albaab",
-    appDescription: "Sistem Penerimaan Peserta Didik Baru",
+    appDescription: "Sistem Penerimaan Santri Baru (PSB) 2027/2028",
     version: "2.0.0",
-    author: "Rieza Eka Tomara" } };
+    author: "Rieza Eka Tomara",
+  },
+};
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-//   HELPER FUNCTIONS (Jangan diubah)
+//   HELPER FUNCTIONS
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 export const getPesantrenInfo = () => PPDB_CONFIG.pesantren;
@@ -121,14 +163,15 @@ export const getPricing = () => PPDB_CONFIG.pricing;
 export const getRequirements = () => PPDB_CONFIG.requirements;
 export const getContact = () => PPDB_CONFIG.contact;
 export const getColors = () => PPDB_CONFIG.colors;
+export const getBank = () => PPDB_CONFIG.bank;
+export const getSchedule = () => PPDB_CONFIG.schedule;
+export const getDewanPembina = () => PPDB_CONFIG.dewanPembina;
 
-// Untuk generate CSS variables otomatis
 export const generateCSSVariables = () => {
   const { colors } = PPDB_CONFIG;
-
   return {
     primary: colors.primary,
     secondary: colors.secondary,
-    accent: colors.accent };
+    accent: colors.accent,
+  };
 };
-

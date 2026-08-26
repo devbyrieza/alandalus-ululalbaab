@@ -219,9 +219,9 @@ export default function ContactPage() {
             <ContactInfoCard
               icon={MessageCircle}
               title="Nomor WhatsApp CS"
-              content="+62 812-85-300800"
+              content="0812-8530-0800"
               href="https://wa.me/6281285300800"
-              subContent="Layanan Informasi Pelayanan"
+              subContent="Layanan Informasi PSB 2027/2028"
               delay={0.2}
             />
             <ContactInfoCard

@@ -5,20 +5,32 @@ import { Container } from "@/components/layout/Container";
 import { motion } from "framer-motion";
 import Image from "next/image";
 
-// ─── Data ────────────────────────────────────────────
+// ─── Data Dewan Pembina ─────────────────────────────
 const BOARD_MEMBERS = [
   {
-    name: "Ustadz Nurdin Apud Sabrini, Lc, M.Pd",
-    image: "/images/nurdin-apud-sabrini.webp" },
+    name: "Ustadz Dr. Nurdin Apud Sarbini, Lc., M.Pd",
+    image: "/images/nurdin-apud-sabrini.webp",
+  },
   {
-    name: "Ustadz Dr. Muhammad Arifin Badri, Lc, M.A",
-    image: "/images/muhammad-arifin-badri.webp" },
-  { name: "Ustadz Wahab Rajasam, M.Pd", image: "/images/wahab-rajasam.webp" },
-  { name: "KH. Dudun Abdul Gofar", image: "" },
-  { name: "Bpk. Tarmen Tascha, SE", image: "/images/tarmen-tascha.webp" },
+    name: "Ustadz Dr. Muhammad Arifin Badri, Lc., MA",
+    image: "/images/muhammad-arifin-badri.webp",
+  },
   {
-    name: "Ustadz Dwi Wahyu Iskandar, M.Pd",
-    image: "" },
+    name: "Ustadz Wahab Rajasam, M.Pd",
+    image: "/images/wahab-rajasam.webp",
+  },
+  {
+    name: "K.H Dudun Abdul Gofar",
+    image: "",
+  },
+  {
+    name: "Bpk. Tarmen Tascha, S.E",
+    image: "/images/tarmen-tascha.webp",
+  },
+  {
+    name: "Ustadz Dwi Wahyu Iskandar",
+    image: "",
+  },
 ] as const;
 
 // ─── Animation ───────────────────────────────────────
@@ -28,7 +40,8 @@ const EASE = [0.16, 1, 0.3, 1] as const;
 function MemberCard({
   name,
   image,
-  index }: {
+  index,
+}: {
   name: string;
   image: string;
   index: number;
@@ -39,10 +52,10 @@ function MemberCard({
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: true, margin: "-40px" }}
       transition={{ delay: index * 0.07, duration: 0.6, ease: EASE }}
-      className="group flex items-center gap-5 p-4 md:p-5 bg-white rounded-lg border border-primary-100 shadow-premium-sm hover:shadow-premium-md hover:border-primary-300 transition-all duration-400"
+      className="group flex items-center gap-4 md:gap-5 p-4 md:p-5 bg-white rounded-2xl border border-primary-100 shadow-xs hover:shadow-md hover:border-primary-300 transition-all duration-300"
     >
       {/* Avatar */}
-      <div className="relative w-[72px] h-[72px] md:w-20 md:h-20 rounded-lg overflow-hidden shrink-0 bg-primary-50 border border-primary-100 shadow-xs transition-transform duration-500 group-hover:scale-[1.04]">
+      <div className="relative w-16 h-16 md:w-20 md:h-20 rounded-2xl overflow-hidden shrink-0 bg-primary-50 border border-primary-100 shadow-xs transition-transform duration-500 group-hover:scale-105">
         {image ? (
           <Image
             src={image}
@@ -53,24 +66,22 @@ function MemberCard({
             className="object-cover"
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center bg-primary-50 group-hover:bg-primary-100 transition-colors duration-400">
-            <User className="w-7 h-7 text-primary-300" />
+          <div className="w-full h-full flex items-center justify-center bg-primary-50 group-hover:bg-primary-100 transition-colors">
+            <User className="w-8 h-8 text-primary-400" />
           </div>
         )}
-        {/* Hover tint */}
-        <div className="absolute inset-0 bg-primary-900/0 group-hover:bg-primary-900/8 transition-colors duration-400" />
       </div>
 
       {/* Name */}
       <div className="min-w-0 flex-1">
-        <h4 className="font-bold text-[0.9rem] md:text-[0.9375rem] text-ink-900 leading-snug tracking-tight group-hover:text-primary-700 transition-colors duration-300">
+        <span className="text-[10px] font-bold text-primary-600 uppercase tracking-widest block mb-1">
+          Dewan Pembina
+        </span>
+        <h4 className="font-bold text-sm md:text-base text-slate-900 leading-snug tracking-tight group-hover:text-primary-700 transition-colors">
           {name}
         </h4>
-        {/* Brand accent bar */}
-        <div className="mt-2 h-[2px] w-5 rounded-full bg-primary-100 group-hover:w-10 group-hover:bg-primary-500 transition-all duration-500" />
+        <div className="mt-2 h-0.5 w-6 rounded-full bg-primary-200 group-hover:w-12 group-hover:bg-primary-600 transition-all duration-300" />
       </div>
-
-
     </motion.div>
   );
 }
@@ -78,19 +89,20 @@ function MemberCard({
 // ─── Main ─────────────────────────────────────────────
 export default function BoardSection() {
   return (
-    <section id="pembina" className="section-std relative overflow-hidden">
-      {/* Background glows — biru kanan atas, kuning kiri bawah */}
+    <section id="pembina" className="py-20 md:py-28 bg-surface-50 relative overflow-hidden">
       <div
         className="absolute -top-32 -right-32 w-[480px] h-[480px] pointer-events-none"
         style={{
           background:
-            "radial-gradient(circle, rgba(220,237,255,0.5) 0%, transparent 65%)" }}
+            "radial-gradient(circle, rgba(220,237,255,0.5) 0%, transparent 65%)",
+        }}
       />
       <div
         className="absolute -bottom-24 -left-24 w-[360px] h-[360px] pointer-events-none"
         style={{
           background:
-            "radial-gradient(circle, rgba(254,243,199,0.4) 0%, transparent 65%)" }}
+            "radial-gradient(circle, rgba(254,243,199,0.4) 0%, transparent 65%)",
+        }}
       />
 
       <Container className="relative z-10">
@@ -101,9 +113,9 @@ export default function BoardSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, ease: EASE }}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary-50 border border-primary-100 text-primary-700 text-[0.65rem] font-bold uppercase tracking-[0.12em] mb-5 shadow-xs"
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary-50 border border-primary-100 text-primary-700 text-xs font-bold uppercase tracking-widest mb-4 shadow-xs"
           >
-            <Users className="w-3 h-3 shrink-0" strokeWidth={2} />
+            <Users className="w-3.5 h-3.5 shrink-0" />
             <span>Struktur Organisasi</span>
           </motion.div>
 
@@ -112,9 +124,9 @@ export default function BoardSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.08, duration: 0.6, ease: EASE }}
-            className="section-title mb-4"
+            className="text-3xl md:text-5xl font-black text-slate-900 tracking-tight mb-4"
           >
-            Dewan <span className="text-gradient-primary">Pembina</span>
+            Dewan <span className="text-primary-700">Pembina</span>
           </motion.h2>
 
           <motion.p
@@ -122,15 +134,14 @@ export default function BoardSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.15, duration: 0.6, ease: EASE }}
-            className="section-subtitle max-w-xl mx-auto"
+            className="text-slate-600 text-base md:text-lg max-w-xl mx-auto leading-relaxed"
           >
-            Dibimbing oleh para asatidz dan tokoh yang berpengalaman dalam
-            membangun peradaban Islam melalui jalur pendidikan dan dakwah.
+            Dibimbing langsung oleh para asatidz dan tokoh yang berpengalaman luas dalam membangun peradaban Islam melalui jalur dakwah dan pendidikan berkualitas.
           </motion.p>
         </div>
 
         {/* ── Grid ── */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3.5 md:gap-4 max-w-5xl mx-auto">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 max-w-6xl mx-auto">
           {BOARD_MEMBERS.map((member, idx) => (
             <MemberCard
               key={idx}

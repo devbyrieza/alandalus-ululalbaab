@@ -28,34 +28,35 @@ interface ProgramItem {
 
 const PROGRAMS: ProgramItem[] = [
   {
-    title: "SMP IT (Sekolah Menengah Pertama IT)",
+    title: "Madrasah Tsanawiyah (MTs)",
     subtitle: "Tingkat Menengah · Setara SMP",
-    desc: "Memadukan tahfizh Al-Qur'an, kurikulum pendidikan nasional, kurikulum khas Andalus berbasis Kitab Turots, dan entrepreneurship. Bahasa pengantar Bahasa Arab.",
+    desc: "Memadukan tahfizh Al-Qur'an 12 Juz mutqin, kurikulum pendidikan nasional, kurikulum khas Andalus berbasis Kitab Turots, dan entrepreneurship.",
     features: [
-      "Target Hafalan Al-Qur'an Minimal 12 Juz",
-      "Kitab Turots & Ilmu Syar'i",
-      "Bahasa Arab Aktif sebagai Pengantar",
+      "Target Hafalan Al-Qur'an Minimal 12 Juz Mutqin",
+      "Kajian Kitab Turots & Ilmu Syar'i",
+      "Bahasa Arab Aktif sebagai Bahasa Pengantar",
       "Perpaduan Kurikulum Nasional & Kurikulum Khas Andalus",
-      "Islamic Entrepreneurship",
+      "Islamic Entrepreneurship (TICE)",
     ],
-    quotaLabel: "Putra 32 · Putri 32",
+    quotaLabel: "Putra 48 · Putri 24",
     icon: School,
-    variant: "blue" },
+    variant: "blue",
+  },
   {
     title: "I'dad Lughowi (IL)",
-    subtitle: "Persiapan + Menengah Atas · Total 4 Tahun",
-    desc: "Untuk santri yang belum lancar berbahasa Arab. Tahun pertama: persiapan Bahasa Arab intensif. Dilanjutkan 3 tahun SMA berbasis pesantren. Total durasi pendidikan: 4 tahun.",
+    subtitle: "Program Persiapan Bahasa Arab · Menuju Aliyah / SMA",
+    desc: "Program intensif persiapan Bahasa Arab dan ilmu syar'i bagi santri lulusan SMP/MTs menuju jenjang Aliyah berbasis pesantren.",
     features: [
       "Target Hafalan Al-Qur'an Minimal 16 Juz",
-      "Kitab Turots & Ilmu Syar'i",
-      "Bahasa Arab Aktif sebagai Pengantar",
-      "Perpaduan Kurikulum Nasional & Kurikulum Khas Andalus",
-      "Islamic Entrepreneurship",
-      "Persiapan PTN & Universitas Timur Tengah",
+      "Pendalaman Bahasa Arab Intensif (Nahwu, Sharaf, Muhadatsah)",
+      "Kajian Kitab Turots Lanjutan & Fiqih",
+      "Kaderisasi Kepemimpinan & Entrepreneurship",
+      "Persiapan Masuk PTN & Universitas Timur Tengah",
     ],
-    quotaLabel: "Putra 32 · Putri 32",
+    quotaLabel: "Putra 24 · Putri 24",
     icon: BookOpen,
-    variant: "amber" },
+    variant: "amber",
+  },
 ];
 
 const containerVariants: Variants = {

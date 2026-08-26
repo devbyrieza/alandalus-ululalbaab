@@ -15,9 +15,38 @@ import {
   Send,
   ShieldCheck,
   Building2,
-  GraduationCap
+  GraduationCap,
+  User,
+  Briefcase
 } from "lucide-react";
 import { motion } from "framer-motion";
+
+const BOARD_MEMBERS = [
+  {
+    name: "Ustadz Dr. Nurdin Apud Sarbini, Lc., M.Pd",
+    image: "/images/nurdin-apud-sabrini.webp",
+  },
+  {
+    name: "Ustadz Dr. Muhammad Arifin Badri, Lc., MA",
+    image: "/images/muhammad-arifin-badri.webp",
+  },
+  {
+    name: "Ustadz Wahab Rajasam, M.Pd",
+    image: "/images/wahab-rajasam.webp",
+  },
+  {
+    name: "K.H Dudun Abdul Gofar",
+    image: "",
+  },
+  {
+    name: "Bpk. Tarmen Tascha, S.E",
+    image: "/images/tarmen-tascha.webp",
+  },
+  {
+    name: "Ustadz Dwi Wahyu Iskandar",
+    image: "",
+  },
+];
 
 export default function TentangPage() {
   useEffect(() => {
@@ -61,7 +90,7 @@ export default function TentangPage() {
             className="text-base sm:text-lg md:text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed font-medium mb-12 px-4"
           >
             Pesantren Islam Internasional Al-Andalus Ulul Albaab Sukabumi, cabang resmi Managed by Al Andalus IIBS.
-            Memadukan intensitas Tahfidz Al-Qur'an dengan keunggulan akademik dan adab islami untuk
+            Memadukan intensitas Tahfidz Al-Qur'an dengan keunggulan akademik, sains, dan entrepreneurship islami untuk
             mencetak kader ummat Rabbani, Cendekia, dan Mandiri.
           </motion.p>
         </Container>
@@ -142,16 +171,16 @@ export default function TentangPage() {
                 <span className="text-primary-700 font-bold">
                   Managed by Al Andalus IIBS
                 </span>
-                , kami menerapkan standar operasional, kurikulum terpadu, dan sistem pengasuhan bermutu tinggi yang identik dengan kampus pusat.
+                , kami menerapkan standar mutu operasional, kurikulum terpadu, dan sistem pengasuhan unggul yang identik dengan kampus pusat.
               </p>
               <p>
-                Kami berkomitmen mencetak kader ulama rabbani yang beraqidah lurus berdasarkan Al-Qur'an dan As-Sunnah, berakhlak mulia, dan berwawasan sains modern dengan dukungan fasilitas representatif serta barisan asatidzah yang kompeten.
+                Kami berkomitmen mencetak kader ulama rabbani yang beraqidah lurus berdasarkan Al-Qur'an dan As-Sunnah, berakhlak mulia, dan berwawasan sains modern dengan dukungan fasilitas representatif serta barisan asatidzah yang kompeten di bidangnya.
               </p>
               <p>
-                Memasuki Tahun Ajaran 2027/2028, Pesantren Al-Andalus Ulul Albaab siap menyambut santri baru dengan kurikulum intensif, pembelajaran bahasa Arab aktif, serta pembinaan karakter mandiri.
+                Menyongsong Tahun Ajaran 2027/2028, Pesantren Al-Andalus Ulul Albaab membuka Penerimaan Santri Baru (PSB) untuk jenjang Madrasah Tsanawiyah (MTs) dan I'dad Lughowi (IL) dengan fokus kurikulum berbasis TICE (Tahfidz, Islamic Curriculum, & Entrepreneurship).
               </p>
               <p className="font-bold text-primary-800 bg-primary-50 p-5 rounded-xl border border-primary-100 italic text-center text-base md:text-lg mt-6">
-                "Standar Pendidikan Berkualitas Tinggi, Kini Hadir di Sukabumi"
+                "Kaderisasi Ummat Rabbani, Cendekia & Mandiri"
               </p>
             </motion.div>
 
@@ -167,7 +196,7 @@ export default function TentangPage() {
                   <Building2 className="w-6 h-6" />
                 </div>
                 <h4 className="font-black text-slate-900 text-lg mb-1">Fasilitas Representatif</h4>
-                <p className="text-xs text-slate-500">Sarana ibadah, kelas, lab, asrama, dan olahraga lengkap.</p>
+                <p className="text-xs text-slate-500">Masjid luas, asrama nyaman, lab komputer, & sarana olahraga lengkap.</p>
               </div>
 
               <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs flex flex-col items-center text-center group hover:shadow-md transition-shadow">
@@ -182,15 +211,15 @@ export default function TentangPage() {
                 <div className="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center mb-3">
                   <GraduationCap className="w-6 h-6" />
                 </div>
-                <h4 className="font-black text-slate-900 text-lg mb-1">Tahfidz & Akademik</h4>
-                <p className="text-xs text-slate-500">Kombinasi hafalan Al-Qur'an bersanad dan kurikulum nasional.</p>
+                <h4 className="font-black text-slate-900 text-lg mb-1">Tahfidz & TICE</h4>
+                <p className="text-xs text-slate-500">Tahfidz bersanad, kurikulum Islam terpadu, dan entrepreneurship.</p>
               </div>
             </motion.div>
           </div>
         </Container>
       </section>
 
-      {/* 4. Vision Mission */}
+      {/* 4. Vision & Mission (Official PUAS) */}
       <section className="py-16 md:py-24 bg-white relative">
         <div className="absolute top-0 left-0 w-[400px] h-[400px] bg-secondary-100/50 rounded-full blur-[100px] -translate-y-1/2 -translate-x-1/2 opacity-50 pointer-events-none" />
         <Container className="relative z-10">
@@ -219,7 +248,7 @@ export default function TentangPage() {
               transition={{ delay: 0.2 }}
               className="text-slate-600 text-base md:text-lg"
             >
-              Komitmen berkelanjutan kami dalam mencetak generasi Rabbani berprestasi.
+              Arah dan komitmen luhur Pesantren Islam Internasional Al-Andalus Ulul Albaab.
             </motion.p>
           </div>
 
@@ -235,9 +264,9 @@ export default function TentangPage() {
                 <div className="w-12 h-12 rounded-xl bg-primary-100 text-primary-700 flex items-center justify-center mb-6">
                   <Compass className="w-6 h-6" />
                 </div>
-                <h3 className="text-2xl font-black text-slate-900 mb-4">Visi Kami</h3>
-                <p className="text-slate-700 leading-relaxed text-base">
-                  Menjadi lembaga pendidikan Islam unggulan yang melahirkan generasi penghafal Al-Qur'an yang beraqidah lurus, berakhlak mulia, berwawasan global, dan mandiri.
+                <h3 className="text-2xl font-black text-slate-900 mb-4">Visi Pesantren</h3>
+                <p className="text-slate-800 font-bold text-xl leading-relaxed bg-white p-6 rounded-xl border border-slate-200">
+                  "KADERISASI UMMAT RABBANI, CENDEKIA &amp; MANDIRI"
                 </p>
               </div>
             </motion.div>
@@ -253,19 +282,19 @@ export default function TentangPage() {
                 <div className="w-12 h-12 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center mb-6">
                   <Target className="w-6 h-6" />
                 </div>
-                <h3 className="text-2xl font-black text-slate-900 mb-4">Misi Kami</h3>
-                <ul className="space-y-3 text-slate-700 text-sm md:text-base">
-                  <li className="flex items-start gap-2.5">
+                <h3 className="text-2xl font-black text-slate-900 mb-4">Misi Pesantren</h3>
+                <ul className="space-y-4 text-slate-700 text-sm md:text-base">
+                  <li className="flex items-start gap-3">
                     <CheckCircle2 className="w-5 h-5 text-primary-600 shrink-0 mt-0.5" />
-                    <span>Menyelenggarakan program tahfidz Al-Qur'an intensif dan bersanad.</span>
+                    <span><strong>Menyelenggarakan Pendidikan Berbasis TICE</strong> (Tahfidz, Islamic Curriculum, &amp; Entrepreneurship).</span>
                   </li>
-                  <li className="flex items-start gap-2.5">
+                  <li className="flex items-start gap-3">
                     <CheckCircle2 className="w-5 h-5 text-primary-600 shrink-0 mt-0.5" />
-                    <span>Mengintegrasikan kurikulum kepesantrenan dengan kurikulum nasional.</span>
+                    <span><strong>Mencetak HAMALATUL QUR'AN</strong> dengan bekal ilmu syar'i yang mumpuni.</span>
                   </li>
-                  <li className="flex items-start gap-2.5">
+                  <li className="flex items-start gap-3">
                     <CheckCircle2 className="w-5 h-5 text-primary-600 shrink-0 mt-0.5" />
-                    <span>Menerapkan pembiasaan adab dan kemandirian dalam kehidupan berasrama.</span>
+                    <span><strong>Menanamkan jiwa Entrepreneur Muslim</strong> yang berwawasan global dan mandiri.</span>
                   </li>
                 </ul>
               </div>
@@ -274,7 +303,55 @@ export default function TentangPage() {
         </Container>
       </section>
 
-      {/* 5. CTA Footer */}
+      {/* 5. Dewan Pembina Section */}
+      <section className="py-16 md:py-24 bg-slate-50 border-t border-slate-200/60">
+        <Container>
+          <div className="text-center max-w-2xl mx-auto mb-12">
+            <span className="text-primary-700 font-bold tracking-[0.2em] uppercase text-xs mb-2 block">
+              Struktur Kepemimpinan
+            </span>
+            <h2 className="text-3xl md:text-4xl font-black text-slate-900 tracking-tight mb-4">
+              Dewan Pembina
+            </h2>
+            <p className="text-slate-600 text-sm md:text-base">
+              Dibimbing langsung oleh para asatidz dan tokoh yang berpengalaman luas di dunia pendidikan Islam dan dakwah.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 max-w-5xl mx-auto">
+            {BOARD_MEMBERS.map((member, idx) => (
+              <div
+                key={idx}
+                className="flex items-center gap-4 p-4 md:p-5 bg-white rounded-2xl border border-slate-200 shadow-xs hover:border-primary-300 hover:shadow-md transition-all duration-300"
+              >
+                <div className="relative w-16 h-16 rounded-2xl overflow-hidden shrink-0 bg-primary-50 border border-primary-100 flex items-center justify-center">
+                  {member.image ? (
+                    <Image
+                      src={member.image}
+                      alt={member.name}
+                      fill
+                      sizes="64px"
+                      className="object-cover"
+                    />
+                  ) : (
+                    <User className="w-8 h-8 text-primary-400" />
+                  )}
+                </div>
+                <div>
+                  <span className="text-[10px] font-bold text-primary-600 uppercase tracking-widest block mb-1">
+                    Dewan Pembina
+                  </span>
+                  <h4 className="font-bold text-sm md:text-base text-slate-900 leading-snug">
+                    {member.name}
+                  </h4>
+                </div>
+              </div>
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      {/* 6. CTA Footer */}
       <section className="py-20 bg-primary-950 text-white relative overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-primary-800/30 rounded-full blur-3xl pointer-events-none" />
         <Container className="relative z-10 text-center">
