@@ -152,7 +152,7 @@ function VerifyPinContent() {
                                               ? "border-red-300 bg-red-50 text-red-600 focus:border-red-500"
                                               : "border-stone-100 focus:border-indigo-500 focus:bg-white focus:shadow-sm"
                                         }`}
-                  placeholder="�"
+                  placeholder=""
                 />
               ))}
             </div>

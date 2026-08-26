@@ -28,7 +28,7 @@ interface ProgramItem {
 
 const PROGRAMS: ProgramItem[] = [
   {
-    title: "Madrasah Tsanawiyah (MTs)",
+    title: "SMP IT (Sekolah Menengah Pertama IT)",
     subtitle: "Tingkat Menengah · Setara SMP",
     desc: "Memadukan tahfizh Al-Qur'an, kurikulum pendidikan nasional, kurikulum khas Andalus berbasis Kitab Turots, dan entrepreneurship. Bahasa pengantar Bahasa Arab.",
     features: [

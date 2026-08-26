@@ -144,7 +144,7 @@ export default function AiChatWidget({
               <span className="flex w-2 h-2 rounded-full bg-green-400"></span>
             </h3>
             <p className="text-[11px] text-primary-200 mt-0.5 font-medium">
-              Online � Bertenaga AI
+              Online  Bertenaga AI
             </p>
           </div>
         </div>

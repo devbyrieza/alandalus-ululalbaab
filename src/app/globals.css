@@ -1,9 +1,9 @@
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   AL-ANDALUS TEMPLATE — GLOBAL STYLES
-   Master Template · Brand-Agnostic · Fleksibel
-   Mobile-First · Linear-Inspired Premium UI
+/* ========================================
+   AL-ANDALUS TEMPLATE   GLOBAL STYLES
+   Master Template - Brand-Agnostic - Fleksibel
+   Mobile-First - Linear-Inspired Premium UI
    Tailwind CSS v4
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+   ======================================== */
 
 @import "tailwindcss";
 @layer base {
@@ -15,20 +15,20 @@
 }
 
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+/* ========================================
    1. CUSTOM THEME CONFIGURATION (@theme)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+   ======================================== */
 @theme {
-  /* ─── Typography ─── */
+  /* --- Typography --- */
   --font-sans: var(--font-inter), "Inter", system-ui, -apple-system, sans-serif;
   --font-display:
     var(--font-plus-jakarta), "Plus Jakarta Sans", system-ui, -apple-system,
     sans-serif;
   --font-arabic: "Amiri", "Traditional Arabic", "Arabic Typesetting", serif;
 
-  /* ━━━ BRAND COLOR PALETTE — LENGKAP SEMUA PESANTREN ━━━ */
+  /* === BRAND COLOR PALETTE   LENGKAP SEMUA PESANTREN === */
 
-  /* ─── Biru Cerah (Ulul Albaab Primary) ─── */
+  /* --- Biru Cerah (Ulul Albaab Primary) --- */
   --color-blue-50: #f0f8ff;
   --color-blue-100: #dcedff;
   --color-blue-200: #b3d7ff;
@@ -41,19 +41,19 @@
   --color-blue-900: #0c4a6e;  /* Biru very deep */
   --color-blue-950: #082f49;  /* Biru gelap pekat */
 
-  /* ─── Kuning (Ulul Albaab Secondary) ─── */
+  /* --- Kuning (Ulul Albaab Secondary) --- */
   --color-amber-50: #fffbeb;
   --color-amber-100: #fef3c7;
   --color-amber-200: #fde68a;
   --color-amber-300: #fcd34d;  /* Kuning cerah */
-  --color-amber-400: #fbbf24;  /* Amber vibrant — sama dengan pai-next */
-  --color-amber-500: #f59e0b;  /* Amber warm — sama pai-next */
+  --color-amber-400: #fbbf24;  /* Amber vibrant   sama dengan pai-next */
+  --color-amber-500: #f59e0b;  /* Amber warm   sama pai-next */
   --color-amber-600: #d97706;  /* Amber medium */
   --color-amber-700: #b45309;
   --color-amber-800: #92400e;
   --color-amber-900: #713b12;
 
-  /* ─── Gold (Accent premium) ─── */
+  /* --- Gold (Accent premium) --- */
   --color-gold-50: #fffbeb;
   --color-gold-100: #fef3c7;
   --color-gold-200: #fde68a;
@@ -63,7 +63,7 @@
   --color-gold-600: #d97706;
   --color-gold-700: #b45309;
 
-  /* ─── Maroon (Al Imam Primary) ─── */
+  /* --- Maroon (Al Imam Primary) --- */
   --color-maroon-50: #fdf5f5;
   --color-maroon-100: #f7e6e6;
   --color-maroon-200: #edcaca;
@@ -76,7 +76,7 @@
   --color-maroon-900: #3d0707;
   --color-maroon-950: #800000;
 
-  /* ─── Cream (Al Imam Secondary) ─── */
+  /* --- Cream (Al Imam Secondary) --- */
   --color-cream-50: #fefcf7;
   --color-cream-100: #fdf8ee;
   --color-cream-200: #faf0d7;
@@ -85,7 +85,7 @@
   --color-cream-500: #e4c16f;
   --color-cream-600: #c9a84c;
 
-  /* ─── Surface / White ─── */
+  /* --- Surface / White --- */
   --color-white: #ffffff;
   --color-surface-50: #F8FAFC;
   --color-surface-100: #F1F5F9;
@@ -93,7 +93,7 @@
   --color-surface-blue: #f0f9ff;  /* Sky-50 equivalent */
   --color-surface-amber: #fffbeb; /* Amber-50 */
 
-  /* ─── Ink (Text — neutral gray, fresh & clean) ─── */
+  /* --- Ink (Text   neutral gray, fresh & clean) --- */
   --color-ink-950: #111827;
   --color-ink-900: #374151;
   --color-ink-800: #374151;
@@ -107,7 +107,7 @@
   --color-ink-50: #f8f8f8;
 
   
-  /* ━━━ SEMANTIC THEME ━━━ */
+  /* === SEMANTIC THEME === */
   --color-primary-50: var(--color-blue-50);
   --color-primary-100: var(--color-blue-100);
   --color-primary-200: var(--color-blue-200);
@@ -138,7 +138,7 @@
   --color-secondary-light: var(--color-amber-50);
   --color-secondary-dark: var(--color-amber-800);
 
-  /* ─── Status Colors ─── */
+  /* --- Status Colors --- */
   --color-success-500: #16a34a;
   --color-success-100: #dcfce7;
   --color-success-50: #f0fdf4;
@@ -152,26 +152,26 @@
   --color-info-100: #dcedff;
   --color-info-50: #f0f8ff;
 
-  /* ━━━ TEMPLATE SEMANTIC TOKENS ━━━
+  /* === TEMPLATE SEMANTIC TOKENS ===
      Override ini di masing-masing project untuk ganti branding.
      Default: Hijau Islami + Gold (Template-Demo)
      Untuk Ulul Albaab: teal + sand
      Untuk Al Imam: maroon + cream
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+   ================================== */
 
-  /* ─── Islamic Color Palette — Semantic Tokens ─── */
+  /* --- Islamic Color Palette   Semantic Tokens --- */
   --color-primary: var(--color-blue-500);
-  /* Blue utama — vibrant */
+  /* Blue utama   vibrant */
   --color-primary-light: var(--color-blue-50);
   /* Blue muda / background aksen */
   --color-secondary: var(--color-amber-500);
-  /* Amber Secondary — warm vibrant */
+  /* Amber Secondary   warm vibrant */
   --color-background: #f0f9ff;
-  /* Background utama — Sky-50 fresh blue hint */
+  /* Background utama   Sky-50 fresh blue hint */
   --color-text: #374151;
   /* Teks utama */
 
-  /* ─── Shadows — neutral, tidak condong ke brand mana pun ─── */
+  /* --- Shadows   neutral, tidak condong ke brand mana pun --- */
   --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.04);
   --shadow-sm:
     0 1px 4px 0 rgba(0, 0, 0, 0.06), 0 1px 2px -1px rgba(0, 0, 0, 0.04);
@@ -184,7 +184,7 @@
   --shadow-2xl:
     0 40px 72px -8px rgba(0, 0, 0, 0.15), 0 16px 32px -8px rgba(0, 0, 0, 0.09);
 
-  /* Premium shadows — bias-neutral */
+  /* Premium shadows   bias-neutral */
   --shadow-premium-sm:
     0 2px 10px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
   --shadow-premium-md:
@@ -196,7 +196,7 @@
   --shadow-premium-2xl:
     0 40px 80px rgba(0, 0, 0, 0.16), 0 16px 36px rgba(0, 0, 0, 0.09);
 
-  /* Colored shadows — tersedia untuk semua brand */
+  /* Colored shadows   tersedia untuk semua brand */
   --shadow-blue:
     0 4px 16px -2px rgba(3, 105, 199, 0.32), 0 2px 6px rgba(3, 105, 199, 0.16);
   --shadow-blue-lg:
@@ -222,7 +222,7 @@
   /* Inner shadow */
   --shadow-inner: inset 0 2px 6px rgba(0, 0, 0, 0.06);
 
-  /* ─── Border Radius — Watzap-style Ceria & Rounded ─── */
+  /* --- Border Radius   Watzap-style Ceria & Rounded --- */
   --radius-xs: 0.25rem;
   --radius-sm: 0.5rem;
   --radius-md: 1rem;
@@ -233,11 +233,11 @@
   --radius-full: 9999px;
   --radius-pill: 9999px;
 
-  /* ─── Spacing Scale ─── */
+  /* --- Spacing Scale --- */
   --space-section-y: clamp(4rem, 10vw, 7rem);
   --space-section-y-sm: clamp(3rem, 7vw, 5rem);
 
-  /* ─── Transitions — Linear-style easing ─── */
+  /* --- Transitions   Linear-style easing --- */
   --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
   --ease-out: cubic-bezier(0, 0, 0.2, 1);
@@ -248,9 +248,9 @@
   --duration-slower: 600ms;
 }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+/* ========================================
    2. BASE STYLES
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+   ======================================== */
 @layer base {
   :root {
   /* TIER SILVER: Modern SaaS Minimalist (Flat & Clean) */
@@ -322,7 +322,7 @@
     cursor: pointer;
   }
 
-  /* ─── Fluid Typography — Linear-style tight & intentional ─── */
+  /* --- Fluid Typography   Linear-style tight & intentional --- */
   h1 {
     font-family: var(--font-display);
     font-weight: 900;
@@ -404,13 +404,13 @@
     overflow-wrap: break-word;
   }
 
-  /* ─── Selection — teal-tinted ─── */
+  /* --- Selection   teal-tinted --- */
   ::selection {
     background: var(--color-primary-light);
     color: var(--color-primary);
   }
 
-  /* ─── Custom Scrollbar ─── */
+  /* --- Custom Scrollbar --- */
   ::-webkit-scrollbar {
     width: 6px;
     height: 6px;
@@ -433,14 +433,14 @@
     background-clip: content-box;
   }
 
-  /* ─── Focus Ring ─── */
+  /* --- Focus Ring --- */
   :focus-visible {
     outline: 2px solid var(--color-primary);
     outline-offset: 3px;
     border-radius: var(--radius-sm);
   }
 
-  /* ─── Touch targets — mobile-first ─── */
+  /* --- Touch targets   mobile-first --- */
   @media (max-width: 768px) {
 
     button,
@@ -461,16 +461,16 @@
   }
 }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+/* ========================================
    3. COMPONENTS
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+   ======================================== */
 @layer components {
-  /* ━━━ BUTTONS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  /* === BUTTONS =============================
      Template menyediakan SEMUA varian.
      Template-Demo default: teal/sand
-  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+  ======================================== */
 
-  /* ─── Primary Blue (Ulul Albaab — overrides template-demo gold default) ─── */
+  /* --- Primary Blue (Ulul Albaab   overrides template-demo gold default) --- */
   .btn-primary {
     display: inline-flex;
     align-items: center;
@@ -522,7 +522,7 @@
     }
   }
 
-  /* ─── Primary Blue (Ulul Albaab variant) ─── */
+  /* --- Primary Blue (Ulul Albaab variant) --- */
   .btn-primary-blue {
     display: inline-flex;
     align-items: center;
@@ -574,7 +574,7 @@
     }
   }
 
-  /* ─── Primary Maroon (Al Imam variant) ─── */
+  /* --- Primary Maroon (Al Imam variant) --- */
   .btn-primary-maroon {
     display: inline-flex;
     align-items: center;
@@ -625,7 +625,7 @@
     }
   }
 
-  /* ─── Secondary Blue (Ulul Albaab variant) ─── */
+  /* --- Secondary Blue (Ulul Albaab variant) --- */
   .btn-secondary {
     display: inline-flex;
     align-items: center;
@@ -661,7 +661,7 @@
     }
   }
 
-  /* ─── Secondary Blue (Ulul Albaab variant) ─── */
+  /* --- Secondary Blue (Ulul Albaab variant) --- */
   .btn-secondary-blue {
     display: inline-flex;
     align-items: center;
@@ -697,7 +697,7 @@
     }
   }
 
-  /* ─── Secondary Maroon (Al Imam variant) ─── */
+  /* --- Secondary Maroon (Al Imam variant) --- */
   .btn-secondary-maroon {
     display: inline-flex;
     align-items: center;
@@ -733,7 +733,7 @@
     }
   }
 
-  /* ─── sand accent (Template-Demo) ─── */
+  /* --- sand accent (Template-Demo) --- */
   .btn-sand {
     display: inline-flex;
     align-items: center;
@@ -770,7 +770,7 @@
     }
   }
 
-  /* ─── Yellow / Cream accent ─── */
+  /* --- Yellow / Cream accent --- */
   .btn-yellow {
     display: inline-flex;
     align-items: center;
@@ -838,7 +838,7 @@
     }
   }
 
-  /* ─── Gold ─── */
+  /* --- Gold --- */
   .btn-gold {
     display: inline-flex;
     align-items: center;
@@ -869,7 +869,7 @@
     }
   }
 
-  /* ─── Ghost ─── */
+  /* --- Ghost --- */
   .btn-ghost {
     display: inline-flex;
     align-items: center;
@@ -896,7 +896,7 @@
     }
   }
 
-  /* ─── Outline Blue (Ulul Albaab variant) ─── */
+  /* --- Outline Blue (Ulul Albaab variant) --- */
   .btn-outline-blue {
     display: inline-flex;
     align-items: center;
@@ -925,7 +925,7 @@
     }
   }
 
-  /* ─── Outline Maroon (Al Imam variant) ─── */
+  /* --- Outline Maroon (Al Imam variant) --- */
   .btn-outline-maroon {
     display: inline-flex;
     align-items: center;
@@ -954,7 +954,7 @@
     }
   }
 
-  /* ━━━ CARDS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+  /* === CARDS =============================== */
 
   .app-card {
     background-color: var(--color-white);
@@ -1005,7 +1005,7 @@
     }
   }
 
-  /* Dark blue (Ulul Albaab — hero/CTA) */
+  /* Dark blue (Ulul Albaab   hero/CTA) */
   .card-dark-blue {
     background: linear-gradient(135deg,
         var(--color-blue-800) 0%,
@@ -1049,7 +1049,7 @@
     }
   }
 
-  /* Dark maroon (Al Imam — hero/CTA) */
+  /* Dark maroon (Al Imam   hero/CTA) */
   .card-maroon {
     background: linear-gradient(135deg,
         var(--color-maroon-900) 0%,
@@ -1075,7 +1075,7 @@
     }
   }
 
-  /* ━━━ INPUTS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+  /* === INPUTS ============================== */
 
   .input-clean {
     width: 100%;
@@ -1172,7 +1172,7 @@
     }
   }
 
-  /* ━━━ BADGES ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+  /* === BADGES ============================== */
 
   .badge {
     display: inline-flex;
@@ -1246,7 +1246,7 @@
     border: 1px solid rgba(3, 105, 199, 0.15);
   }
 
-  /* ─── Status Pill (fintech style) ─── */
+  /* --- Status Pill (fintech style) --- */
   .status-pill {
     display: inline-flex;
     align-items: center;
@@ -1289,7 +1289,7 @@
     color: var(--color-info-500);
   }
 
-  /* ━━━ NAVIGATION ━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+  /* === NAVIGATION ========================== */
 
   .nav-link {
     display: flex;
@@ -1315,7 +1315,7 @@
     }
   }
 
-  /* ─── Bottom Navigation ─── */
+  /* --- Bottom Navigation --- */
   .bottom-nav {
     position: fixed;
     bottom: 0;
@@ -1367,7 +1367,7 @@
     }
   }
 
-  /* ─── App Header ─── */
+  /* --- App Header --- */
   .app-header {
     background: linear-gradient(135deg,
         var(--color-primary) 0%,
@@ -1403,7 +1403,7 @@
     }
   }
 
-  /* ─── Progress Bar ─── */
+  /* --- Progress Bar --- */
   .progress-track {
     width: 100%;
     height: 6px;
@@ -1435,7 +1435,7 @@
     }
   }
 
-  /* ━━━ SECTIONS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+  /* === SECTIONS ============================ */
 
   .section-std {
     padding-top: var(--space-section-y);
@@ -1454,7 +1454,7 @@
     overflow: hidden;
   }
 
-  /* Alt section — fresh sky tint */
+  /* Alt section   fresh sky tint */
   .section-alt {
     padding-top: var(--space-section-y);
     padding-bottom: var(--space-section-y);
@@ -1541,7 +1541,7 @@
     font-weight: 450;
   }
 
-  /* ━━━ SIDEBAR ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+  /* === SIDEBAR ============================= */
 
   /* Blue sidebar (Ulul Albaab) */
   .sidebar-blue {
@@ -1608,9 +1608,9 @@
   }
 }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+/* ========================================
    4. UTILITIES
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+   ======================================== */
 @layer utilities {
 
   .text-gradient-primary {
@@ -1669,7 +1669,7 @@
         var(--color-cream-50) 100%);
   }
 
-  /* ─── Glass ─── */
+  /* --- Glass --- */
   .glass {
     background: rgba(255, 255, 255, 0.75);
     backdrop-filter: blur(24px) saturate(1.8);
@@ -1698,11 +1698,11 @@
     border: 1px solid rgba(228, 193, 111, 0.25);
   }
 
-  /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  /* ========================================
      CIROAI PREMIUM ENTERPRISE AESTHETIC
      Terinspirasi dari UI www.ciroai.us
-     Brand-agnostic — Dipakai semua project
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+     Brand-agnostic   Dipakai semua project
+     ======================================== */
 
   .section-label {
     display: inline-flex;
@@ -1802,7 +1802,7 @@
     box-shadow: 0 2px 16px rgba(128, 0, 0, 0.08);
   }
 
-  /* ── Ambient Glow Blobs (CiroAI background orbs) ──
+  /* -- Ambient Glow Blobs (CiroAI background orbs) --
      Gunakan sebagai elemen dekoratif absolut di dalam section/hero
      Tidak memerlukan tailwind khusus, cukup pakai class ini
   */
@@ -1840,7 +1840,7 @@
     background: radial-gradient(ellipse, var(--color-amber-400) 0%, transparent 70%);
   }
 
-  /* ── Gradient Text (CiroAI "Platform." styling) ──
+  /* -- Gradient Text (CiroAI "Platform." styling) --
      Gunakan pada h1/h2 keyword penting agar lebih dramatis & premium
      Contoh: <span class="gradient-text-blue">Penerimaan Santri</span>
   */
@@ -1897,7 +1897,7 @@
     display: inline;
   }
 
-  /* ── Neon Accent Border (CiroAI blue button glow) ──
+  /* -- Neon Accent Border (CiroAI blue button glow) --
      Menambah glow effect pada elemen dengan brand color
   */
   .glow-ring-blue {
@@ -1918,7 +1918,7 @@
     }
   }
 
-  /* ── Shimmer Loading Effect (CiroAI sophistication) ── */
+  /* -- Shimmer Loading Effect (CiroAI sophistication) -- */
   .shimmer {
     background: linear-gradient(
       90deg,
@@ -1936,7 +1936,7 @@
     100% { background-position: 200% 0; }
   }
 
-  /* ── Top Shine Line (CiroAI card top highlight) ──
+  /* -- Top Shine Line (CiroAI card top highlight) --
      Tambahkan class ini pada card dark untuk efek "sheen" di bagian atas
      Requires: position:relative; overflow:hidden
   */
@@ -1951,7 +1951,7 @@
     pointer-events: none;
   }
 
-  /* ── Stat Number Style (CiroAI "20+ / Multi-LLM" stat blocks) ── */
+  /* -- Stat Number Style (CiroAI "20+ / Multi-LLM" stat blocks) -- */
   .stat-label {
     font-size: 0.625rem;
     font-weight: 800;
@@ -1970,7 +1970,7 @@
     color: var(--color-ink-900);
   }
 
-  /* ── Divider Line (CiroAI subtle separator) ── */
+  /* -- Divider Line (CiroAI subtle separator) -- */
   .divider-gradient {
     height: 1px;
     background: linear-gradient(90deg, transparent, var(--color-ink-200) 30%, var(--color-ink-200) 70%, transparent);
@@ -1992,7 +1992,7 @@
     border: none;
   }
 
-  /* ── Hover Lift (standard micro-interaction) ── */
+  /* -- Hover Lift (standard micro-interaction) -- */
   .hover-lift {
     transition: transform var(--duration-base) var(--ease-spring), box-shadow var(--duration-base) var(--ease-spring);
 
@@ -2022,7 +2022,7 @@
 
 
 
-  /* ── Icon Box (CiroAI feature icon container) ── */
+  /* -- Icon Box (CiroAI feature icon container) -- */
   .icon-box {
     display: inline-flex;
     align-items: center;
@@ -2048,9 +2048,9 @@
     box-shadow: var(--shadow-sm);
   }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   6. CEKAT.AI INSPIRED — PREMIUM ADDITIONS
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+/* ========================================
+   6. CEKAT.AI INSPIRED   PREMIUM ADDITIONS
+   ======================================== */
 
 @keyframes marquee-scroll {
   0% { transform: translateX(0); }
@@ -2141,7 +2141,7 @@
 }
 
 
-/* ━━━ QONTAK-INSPIRED UTILITIES ━━━ */
+/* === QONTAK-INSPIRED UTILITIES === */
 @layer components {
   .glass-panel-qontak {
     background: rgba(255, 255, 255, 0.85);
@@ -2174,7 +2174,7 @@
   }
 }
 
-/* ━━━ MOBILE RESPONSIVENESS OVERRIDES ━━━ */
+/* === MOBILE RESPONSIVENESS OVERRIDES === */
 html, body {
   overflow-x: hidden !important;
   width: 100%;
@@ -2212,7 +2212,7 @@ html, body {
   }
 }
 
-/* ── Viracun UI Adoptions ────────────────────────────────────────────────── */
+/* -- Viracun UI Adoptions -------------------------------------------------- */
 @layer base {
   body {
     background: var(--color-surface-50, #f8fafc) !important;
@@ -2250,24 +2250,24 @@ html, body {
 .stat-card:hover .stat-icon {
   transform: scale(1.06) !important;
 }
-/* ────────────────────────────────────────────────────────────────────────── */
+/* -------------------------------------------------------------------------- */
 
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   BLU BCA "CALM, NOT SELLS" — DESIGN ENHANCEMENT LAYER
+/* ===================================================================
+   BLU BCA "CALM, NOT SELLS"   DESIGN ENHANCEMENT LAYER
    Inspired by blu by BCA Digital's premium mobile app aesthetic.
    NON-DESTRUCTIVE: Zero color changes. Only refines feel & polish.
    Applied: radius, shadow depth, transitions, surface, typography rhythm.
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+   =================================================================== */
 
-/* ── 1. APP SURFACE BACKGROUND — Ice-Blue tint (BLU signature) ──────── */
+/* -- 1. APP SURFACE BACKGROUND   Ice-Blue tint (BLU signature) -------- */
 @layer base {
   /* Subtle ice-blue tint makes screens feel calm & premium vs. flat white */
   html, body {
     background-color: #F8FAFC;
   }
 
-  /* ── 2. TYPOGRAPHY RHYTHM — Plus Jakarta Sans, breathable ────────────
+  /* -- 2. TYPOGRAPHY RHYTHM   Plus Jakarta Sans, breathable ------------
      More generous line-height & letter-spacing for readability */
   body {
     line-height: 1.65;
@@ -2278,7 +2278,7 @@ html, body {
     font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
   }
 
-  /* Heading letter-spacing refinement — BLU uses tight, intentional tracking */
+  /* Heading letter-spacing refinement   BLU uses tight, intentional tracking */
   h1, h2 {
     letter-spacing: -0.03em;
     line-height: 1.1;
@@ -2298,7 +2298,7 @@ html, body {
     line-height: 1.75;
   }
 
-  /* ── 3. SCROLLBAR — Slim, pill-shaped, BLU-style ─────────────────── */
+  /* -- 3. SCROLLBAR   Slim, pill-shaped, BLU-style ------------------- */
   ::-webkit-scrollbar {
     width: 4px;
     height: 4px;
@@ -2315,7 +2315,7 @@ html, body {
     background: rgba(100, 116, 139, 0.65);
   }
 
-  /* ── 4. FOCUS RING — Elegant glow ring, BLU-style ──────────────────
+  /* -- 4. FOCUS RING   Elegant glow ring, BLU-style ------------------
      Replaces harsh outline with smooth ring + offset */
   :focus-visible {
     outline: none;
@@ -2324,19 +2324,19 @@ html, body {
     transition: box-shadow 0.15s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  /* ── 5. SELECTION — Soft brand-tinted ────────────────────────────── */
+  /* -- 5. SELECTION   Soft brand-tinted ------------------------------ */
   ::selection {
     background: rgba(var(--color-primary-rgb, 15 118 110), 0.15);
     color: inherit;
   }
 
-  /* ── 6. IMAGES — Smooth rendering ────────────────────────────────── */
+  /* -- 6. IMAGES   Smooth rendering ---------------------------------- */
   img {
     image-rendering: -webkit-optimize-contrast;
   }
 }
 
-/* ── 7. BUTTON MICRO-INTERACTIONS — BLU tactile press feel ────────── */
+/* -- 7. BUTTON MICRO-INTERACTIONS   BLU tactile press feel ---------- */
 @layer base {
   button,
   [role="button"],
@@ -2366,7 +2366,7 @@ html, body {
   }
 }
 
-/* ── 8. INPUT FIELD STATES — BLU's elegant floating label feel ──────── */
+/* -- 8. INPUT FIELD STATES   BLU's elegant floating label feel -------- */
 @layer base {
   input,
   textarea,
@@ -2397,7 +2397,7 @@ html, body {
   }
 }
 
-/* ── 9. CARD & PANEL REFINEMENTS — BLU floating card depth ─────────── */
+/* -- 9. CARD & PANEL REFINEMENTS   BLU floating card depth ----------- */
 @layer components {
   /* Standard card: white with refined shadow depth */
   .card,
@@ -2417,7 +2417,7 @@ html, body {
     transform: translateY(-1px);
   }
 
-  /* Glass card variant — BLU signature glassmorphism */
+  /* Glass card variant   BLU signature glassmorphism */
   .card-glass {
     background: rgba(255, 255, 255, 0.82);
     backdrop-filter: blur(16px) saturate(1.6);
@@ -2429,7 +2429,7 @@ html, body {
                 inset 0 1px 0 rgba(255, 255, 255, 0.7);
   }
 
-  /* Elevated floating card — for hero/feature panels */
+  /* Elevated floating card   for hero/feature panels */
   .card-elevated {
     background: #FFFFFF;
     border-radius: 20px;
@@ -2448,7 +2448,7 @@ html, body {
   }
 }
 
-/* ── 10. LINK TRANSITIONS — Smooth, intentional ──────────────────────── */
+/* -- 10. LINK TRANSITIONS   Smooth, intentional ------------------------ */
 @layer base {
   a {
     transition: color 0.15s cubic-bezier(0.4, 0, 0.2, 1),
@@ -2457,7 +2457,7 @@ html, body {
   }
 }
 
-/* ── 11. TABLE REFINEMENTS — BLU density with breathing room ─────────── */
+/* -- 11. TABLE REFINEMENTS   BLU density with breathing room ----------- */
 @layer components {
   table {
     border-collapse: separate;
@@ -2478,7 +2478,7 @@ html, body {
   thead th:last-child  { border-radius: 0 12px 0 0; }
 }
 
-/* ── 12. MODAL & BOTTOM SHEET — BLU slide-up rounded panels ──────────── */
+/* -- 12. MODAL & BOTTOM SHEET   BLU slide-up rounded panels ------------ */
 @layer components {
   .modal-panel,
   [role="dialog"] > div {
@@ -2495,7 +2495,7 @@ html, body {
   }
 }
 
-/* ── 13. BADGE & TAG REFINEMENTS ─────────────────────────────────────── */
+/* -- 13. BADGE & TAG REFINEMENTS --------------------------------------- */
 @layer components {
   .badge,
   .tag {
@@ -2506,7 +2506,7 @@ html, body {
   }
 }
 
-/* ── 14. ANIMATION UTILITIES — BLU micro-interaction helpers ─────────── */
+/* -- 14. ANIMATION UTILITIES   BLU micro-interaction helpers ----------- */
 @layer utilities {
   .transition-smooth {
     transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
@@ -2545,9 +2545,9 @@ html, body {
   }
 }
 
-/* ── 15. SIDEBAR/NAV REFINEMENTS for Dashboard Projects ─────────────── */
+/* -- 15. SIDEBAR/NAV REFINEMENTS for Dashboard Projects --------------- */
 @layer components {
-  /* Sidebar active item — BLU's clear but calm active state */
+  /* Sidebar active item   BLU's clear but calm active state */
   .sidebar-item-active,
   [data-active="true"] {
     border-radius: 12px;
@@ -2565,7 +2565,7 @@ html, body {
   }
 }
 
-/* ── 16. LOADING & SKELETON — BLU animated shimmer ──────────────────── */
+/* -- 16. LOADING & SKELETON   BLU animated shimmer -------------------- */
 @layer utilities {
   @keyframes shimmer {
     0% { background-position: -400px 0; }
@@ -2585,7 +2585,7 @@ html, body {
   }
 }
 
-/* ── 17. FORM SECTION GROUPING — Breathing room like BLU ────────────── */
+/* -- 17. FORM SECTION GROUPING   Breathing room like BLU -------------- */
 @layer components {
   .form-section {
     background: #FFFFFF;
@@ -2608,11 +2608,11 @@ html, body {
     margin-bottom: 0.375rem;
   }
 }
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+/* ===================================================================
    END BLU BCA DESIGN ENHANCEMENT LAYER
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+   =================================================================== */
 
-/* ── Custom Soft Scrollbar & Modal Overscroll Utilities ── */
+/* -- Custom Soft Scrollbar & Modal Overscroll Utilities -- */
 .custom-scrollbar {
   scrollbar-width: thin;
   scrollbar-color: #cbd5e1 #f8fafc;
