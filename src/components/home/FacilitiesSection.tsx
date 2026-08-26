@@ -42,35 +42,40 @@ const FACILITIES = [
 
 const FACILITY_IMAGES = [
   {
-    src: "/images/masjid-utama.jpg",
+    src: "/images/masjid-1.jpg",
     label: "Masjid Jami'",
-    sub: "Kapasitas 900 Jamaah",
+    sub: "Pusat Ibadah & Tahfidz",
     span: "col-span-2 row-span-2",
-    priority: true },
+    priority: true,
+  },
   {
-    src: "/images/drone-campus.jpg",
-    label: "Gedung Utama",
-    sub: "& Lapangan Basket",
+    src: "/images/perpustakaan-1.jpg",
+    label: "Perpustakaan",
+    sub: "Koleksi Kitab & Buku",
     span: "col-span-1 row-span-1",
-    priority: true },
+    priority: true,
+  },
   {
     src: "/images/ruang-kelas.jpg",
-    label: "Gedung Kelas",
-    sub: "Modern & Representatif",
-    span: "col-span-1 row-span-1",
-    priority: false },
-  {
-    src: "/images/gedung-asrama.jpg",
-    label: "Asrama Santri",
-    sub: "Nyaman & Teratur",
-    span: "col-span-1 row-span-1",
-    priority: false },
-  {
-    src: "/images/ruang-kelas-2.jpg",
     label: "Ruang Kelas",
-    sub: "Kondusif & Lengkap",
+    sub: "Modern & Nyaman",
     span: "col-span-1 row-span-1",
-    priority: false },
+    priority: false,
+  },
+  {
+    src: "/images/asrama.jpg",
+    label: "Asrama Santri",
+    sub: "Representatif & Asri",
+    span: "col-span-1 row-span-1",
+    priority: false,
+  },
+  {
+    src: "/images/lab-komputer-1.jpg",
+    label: "Lab Komputer",
+    sub: "Praktikum IT & CBT",
+    span: "col-span-1 row-span-1",
+    priority: false,
+  },
 ] as const;
 
 /* ── Icon colour mapping — blue/amber branding ── */
