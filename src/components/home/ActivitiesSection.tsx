@@ -45,25 +45,29 @@ const ACTIVITIES: Activity[] = [
     badge: "Akademik & Syar'i",
     description:
       "Metode pembelajaran interaktif yang memadukan keunggulan akademik umum dengan pendalaman bahasa Arab dan ilmu syar'i secara komprehensif.",
-    image: "/images/pembelajaran-kitab-turotz.webp" },
+    image: "/images/kelas-dari-dalam.webp",
+  },
   {
     name: "Kegiatan Rutin Harian",
     badge: "Spiritual",
     description:
       "Pembiasaan ibadah melalui sholat berjamaah tepat waktu dan halaqah tahfidz Al-Qur'an setiap hari secara konsisten.",
-    image: "/images/tahfidz.webp" },
+    image: "/images/masjid-1.jpg",
+  },
   {
     name: "Ekstrakurikuler Unggulan",
     badge: "15+ Pilihan",
     description:
       "Tersedia 15+ pilihan kegiatan mulai dari beladiri hingga Desain Grafis untuk mengasah minat dan bakat santri.",
-    image: "/images/extra-karate.webp" },
+    image: "/images/extra-karate.webp",
+  },
   {
     name: "Kemandirian & Skill",
     badge: "Life Skills",
     description:
       "Program pelatihan entrepreneurship dan keterampilan hidup mandiri guna mencetak santri yang siap berdikari di masa depan.",
-    image: "/images/luar-kelas.webp" },
+    image: "/images/lapangan-badminton.jpg",
+  },
 ];
 
 const EXTRA_ACTIVITIES: ExtraActivity[] = [
