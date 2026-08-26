@@ -350,7 +350,7 @@ export default function KegiatanPage() {
 
   const kegiatanUtama: KegiatanUtama[] = [
     {
-      image: "/images/pembelajaran-kitab-turotz.webp",
+      image: "/images/PERPUSTAKAAN A.jpg",
       title: "Pembelajaran Kitab Turots",
       description:
         "Bukan sekadar hafalan! Santri kami PAHAM isi kitab, mampu berdiskusi ilmiah, dan disiapkan menjadi ilmuwan muda.",
@@ -382,12 +382,12 @@ export default function KegiatanPage() {
       accentColor: "bg-gold-500",
       bgColor: "bg-gold-500",
       stats: [
-        { label: "Target Utama", value: "28 Juz" },
+        { label: "Target Tahfidz", value: "12-16 Juz" },
         { label: "Metode Proven", value: "Talaqqi" },
         { label: "Setoran", value: "Harian" },
       ],
       results: [
-        { icon: TrendingUp, text: "Target Hafalan Terukur (± 4 Juz/Tahun)" },
+        { icon: TrendingUp, text: "Target Hafalan Terukur (12 Juz MTs · 16 Juz IL)" },
         { icon: Award, text: "Standar Bacaan Bersanad & Tartil" },
         { icon: CheckCircle2, text: "Mampu Menjadi Imam Shalat Berjamaah" },
       ],
@@ -396,7 +396,7 @@ export default function KegiatanPage() {
           "Sinergi kurikulum nasional dan tahfidznya sangat menenangkan. Anak kami tidak hanya mengejar target hafalan, tapi juga PAHAM maknanya melalui bimbingan asatidz yang kompeten.",
         parent: "Ibu Siti Aminah (Wali Santri)" } },
     {
-      image: "/images/extra-karate.webp",
+      image: "/images/lapangan-voli.jpg",
       title: "Pengembangan Bakat & Prestasi",
       description:
         "Menyiapkan santri multitalenta yang juara di bidang olimpiade, olahraga, hingga public speaking.",
@@ -404,14 +404,14 @@ export default function KegiatanPage() {
       accentColor: "bg-primary-500",
       bgColor: "bg-primary-600",
       stats: [
-        { label: "Pilihan Ekskul", value: "10+" },
+        { label: "Pilihan Ekskul", value: "15+" },
         { label: "Pelatih Ahli", value: "15+" },
         { label: "Jam/Pekan", value: "6+" },
       ],
       results: [
         { icon: Trophy, text: "Juara Kompetisi Sains & Ketangkasan Fisik" },
         { icon: Award, text: "Pembicara Publik Handal dalam 3 Bahasa" },
-        { icon: Users, text: "Berjiwa Leadership & Mandiri" },
+        { icon: Users, text: "Berkarakter Mandiri & Berprestasi" },
       ],
       testimonial: {
         quote:
@@ -427,12 +427,12 @@ export default function KegiatanPage() {
       sublabel: "Kajian Mendalam" },
     {
       icon: BookMarked,
-      value: "28 Juz",
+      value: "12-16 Juz",
       label: "Target Tahfidz",
       sublabel: "Metode Talaqqi" },
     {
       icon: Target,
-      value: "10+",
+      value: "15+",
       label: "Ekstrakurikuler",
       sublabel: "Asah bakat santri" },
   ];
