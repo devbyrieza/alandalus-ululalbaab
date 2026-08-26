@@ -18,7 +18,8 @@ const FEATURES = [
       "Matematika & Sains modern",
       "Program bahasa Arab & Inggris aktif"
     ],
-    image: "/images/kelas-dari-dalam.webp" },
+    image: "/images/ruang-kelas.jpg"
+  },
   {
     id: "pengasuhan",
     title: "Pengasuhan Berbasis Keteladanan",
@@ -30,7 +31,8 @@ const FEATURES = [
       "Konseling psikologi berkala",
       "Pengembangan kecerdasan emosional"
     ],
-    image: "/images/masjid.webp" },
+    image: "/images/masjid-1.jpg"
+  },
   {
     id: "fasilitas",
     title: "Fasilitas Modern & Nyaman",
@@ -42,7 +44,8 @@ const FEATURES = [
       "Asrama bersih standar hotel",
       "Area olahraga lengkap"
     ],
-    image: "/images/gedung-utama-dan-lapangan-basket.webp" }
+    image: "/images/lapangan-futsal-1.webp"
+  }
 ];
 
 export default function StickyFeatureSection() {
