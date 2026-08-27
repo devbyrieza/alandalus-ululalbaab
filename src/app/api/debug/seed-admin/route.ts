@@ -16,7 +16,7 @@ export async function GET() {
     });
     
     const hashedPassword = await bcrypt.hash(password, 10);
-    const wahabPassword = await bcrypt.hash("2026#@", 10);
+    const wahabPassword = await bcrypt.hash("Puas2026!", 10);
     
     if (!profile) {
       profile = await prisma.profile.create({
@@ -55,7 +55,7 @@ export async function GET() {
     } else {
       await prisma.profile.update({
         where: { id: wahab.id },
-        data: { password_hash: wahabPassword, plain_password: "2026#@" }
+        data: { password_hash: wahabPassword, plain_password: "Puas2026!" }
       });
     }
 

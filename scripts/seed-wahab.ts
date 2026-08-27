@@ -4,7 +4,7 @@ import bcrypt from 'bcryptjs';
 const prisma = new PrismaClient();
 
 async function main() {
-  const password_hash = await bcrypt.hash('2026#@', 10);
+  const password_hash = await bcrypt.hash("2026#@", 10);
   
   const existing = await prisma.profile.findFirst({
     where: { username: 'wahabrajasam' }
@@ -24,7 +24,7 @@ async function main() {
       phone: '-',
       password_hash,
       must_change_password: false,
-      plain_password: '2026#@'
+      plain_password: "2026#@"
     }
   });
 
