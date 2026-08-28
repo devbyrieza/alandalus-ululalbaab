@@ -280,7 +280,6 @@ export async function POST(request: Request) {
 
       // 2. Note: Notifikasi ke Penguji dibuat Silent saat booking (menghindari chat spam ke asatidz).
       // Penguji akan menerima pengingat terjadwal via Cron H-1 / 4 jam sebelum ujian serta dapat memantau langsung via /dashboard/penguji.
-      }
 
       // 3. SCHEDULE 4-HOUR REMINDERS (Sent 4 hours before exam)
       try {
@@ -430,6 +429,7 @@ export async function POST(request: Request) {
       } catch (error) {
         console.error("Error scheduling H1 reminders:", error);
       }
+
     }
 
     return NextResponse.json({ success: true, data: jadwal });
