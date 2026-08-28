@@ -104,7 +104,7 @@ export default function InputNilaiManualModal({
         </div>
 
         {/* Body */}
-        <div className="p-6 overflow-y-auto no-scrollbar bg-ink-50/50 overscroll-contain custom-scrollbar">
+        <div className="p-6 overflow-y-auto  bg-ink-50/50 overscroll-contain custom-scrollbar">
           {errorMsg && (
             <div className="mb-6 p-4 bg-red-50 text-red-700 border border-red-200 rounded-lg text-sm font-bold">
               {errorMsg}
