@@ -297,7 +297,7 @@ export default function ProgramPage() {
               href="/daftar"
               className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-primary-600 hover:bg-primary-500 text-white font-bold text-base shadow-lg shadow-primary-600/30 transition-all hover:-translate-y-0.5"
             >
-              Daftar PPDB Sekarang <ArrowRight className="w-4 h-4" />
+              Daftar SPMB Sekarang <ArrowRight className="w-4 h-4" />
             </Link>
             <Link
               href="/kontak"

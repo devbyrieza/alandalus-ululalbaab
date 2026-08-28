@@ -48,10 +48,10 @@ export default function BankSoalPanitiaPage() {
 
         <div className="relative z-10 space-y-3">
           <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/20  rounded-full text-xs font-bold text-teal-100 border border-white/30">
-            <Sparkles className="w-3.5 h-3.5" /> PORTAL EKSKLUSIF PANITIA & PENGUJI PPDB
+            <Sparkles className="w-3.5 h-3.5" /> PORTAL EKSKLUSIF PANITIA & PENGUJI SPMB
           </div>
           <h1 className="text-2xl md:text-4xl font-extrabold tracking-tight">
-            Bank Soal Seleksi & Form Penilaian PPDB
+            Bank Soal Seleksi & Form Penilaian SPMB
           </h1>
           <p className="text-teal-100 text-xs md:text-sm max-w-2xl leading-relaxed">
             Pusat peninjauan instrumen tes seleksi (Akademik, Kesiapan, Kepribadian) dan rubrik penilaian penguji (Al-Qur'an, Wawancara Santri & Orang Tua) Pesantren Al-Andalus Ulul Albaab.
@@ -503,10 +503,10 @@ export default function BankSoalPanitiaPage() {
         <div className="bg-white p-6 rounded-lg border border-slate-200 shadow-sm space-y-6">
           <div className="space-y-2">
             <h3 className="font-extrabold text-lg text-slate-900">
-              <Settings className="w-5 h-5 inline-block mr-1 text-slate-700" /> Bobot Rumus Nilai Akhir & Penentuan Kelulusan Sistem PPDB
+              <Settings className="w-5 h-5 inline-block mr-1 text-slate-700" /> Bobot Rumus Nilai Akhir & Penentuan Kelulusan Sistem SPMB
             </h3>
             <p className="text-xs text-slate-500">
-              Sistem PPDB mengkalkulasi nilai secara otomatis begitu penguji memasukkan nilai pada portal penguji.
+              Sistem SPMB mengkalkulasi nilai secara otomatis begitu penguji memasukkan nilai pada portal penguji.
             </p>
           </div>
 

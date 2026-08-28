@@ -1,5 +1,5 @@
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-//   PPDB CONFIGURATION - AL ANDALUS ULUL ALBAAB
+//   SPMB CONFIGURATION - AL ANDALUS ULUL ALBAAB
 //   Tahun Ajaran 2027/2028 (PSB / PPDB)
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -146,7 +146,7 @@ export const PPDB_CONFIG = {
 
   // ⚙️ SETTING TEKNIS
   technical: {
-    appName: "PPDB Al Andalus Ulul Albaab",
+    appName: "SPMB Al Andalus Ulul Albaab",
     appDescription: "Sistem Penerimaan Santri Baru (PSB) 2027/2028",
     version: "2.0.0",
     author: "Rieza Eka Tomara",

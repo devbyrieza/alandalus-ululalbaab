@@ -388,7 +388,7 @@ function JadwalUjianContent() {
                 <span className="text-purple-600">Jadwal Seleksi</span>
               </h1>
               <p className="text-emerald-900/60 font-medium">
-                Panel Pengaturan Jadwal Seleksi PPDB Ulul Albaab
+                Panel Pengaturan Jadwal Seleksi SPMB Ulul Albaab
               </p>
             </div>
           </div>
