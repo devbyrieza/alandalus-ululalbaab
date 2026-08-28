@@ -14,9 +14,7 @@ export const BRANDING = {
   secondaryColor: process.env.NEXT_PUBLIC_SECONDARY_COLOR || "#f59e0b", // Default Amber Ulul Albaab
   logoPath: process.env.NEXT_PUBLIC_LOGO_PATH || "/images/logo.png",
   faviconPath: process.env.NEXT_PUBLIC_FAVICON_PATH || "/favicon.ico",
-  websiteUrl:
-    process.env.NEXT_PUBLIC_WEBSITE_URL ||
-    "https://ppdb.alandalus-ululalbaab.com",
+  websiteUrl: process.env.NEXT_PUBLIC_APP_URL || process.env.NEXT_PUBLIC_WEBSITE_URL || "https://pesantren-ululalbaab.com",
   dashboardTitle:
     process.env.NEXT_PUBLIC_DASHBOARD_TITLE || "Panel Admin SPMB Ulul Albaab",
   address:
