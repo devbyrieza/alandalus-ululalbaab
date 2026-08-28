@@ -19,7 +19,7 @@ export const PDF_BRANDING = {
     address:
       "Jl. Pelabuhan II KM 18 Kampung Pupunjul, RT./RW/RW.01, 02, Cikembar, Kec. Cikembar, Kabupaten Sukabumi, Jawa Barat 43157",
     contact:
-      "Website: https://pesantren-alimam.com | Email: alandalusalimam@gmail.com",
+      "Website: https://ppdb.alandalus-ululalbaab.com | Email: alandalusalimam@gmail.com",
     phones: "WhatsApp: 0851-1152-4441" },
 
   // Resource Paths
