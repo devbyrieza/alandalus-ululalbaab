@@ -30,7 +30,7 @@ const WABLAS_TOKEN = process.env.WABLAS_TOKEN || "";
 const WABLAS_SECRET_KEY = process.env.WABLAS_SECRET_KEY || "";
 
 const DEFAULT_APP_URL = "/daftar";
-const DEFAULT_CONTACT = "0851-1152-4441";
+const DEFAULT_CONTACT = "0812-8530-0800";
 
 if (!WABLAS_DOMAIN || !WABLAS_TOKEN) {
   console.warn(

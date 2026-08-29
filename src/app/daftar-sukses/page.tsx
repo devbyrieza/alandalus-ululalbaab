@@ -186,7 +186,7 @@ function DaftarSuksesContent() {
           Butuh Bantuan Login?
         </p>
         <a
-          href="https://wa.me/622667345601"
+          href="https://wa.me/6281285300800"
           target="_blank"
           rel="noopener noreferrer"
           className="text-xs bg-secondary-50 text-primary-700 px-4 py-1.5 rounded-full font-black border border-secondary-200 hover:bg-secondary-100 transition-colors inline-block"

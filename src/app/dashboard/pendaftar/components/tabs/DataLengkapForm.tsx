@@ -921,7 +921,7 @@ export default function DataLengkapForm({
               </p>
               <div className="mt-4 flex flex-wrap gap-3">
                 <a
-                  href="https://wa.me/6281234567801?text=Bismillah,%20saya%20ingin%20mengajukan%20perubahan%20data%20pendaftaran%20untuk%20nomor%20pendaftaran:%20"
+                  href="https://wa.me/6281285300800?text=Bismillah,%20saya%20ingin%20mengajukan%20perubahan%20data%20pendaftaran%20untuk%20nomor%20pendaftaran:%20"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-500 text-white rounded-lg text-xs font-bold shadow-sm hover:bg-emerald-600 transition-colors"
@@ -930,7 +930,7 @@ export default function DataLengkapForm({
                   Admin Pendaftaran 1
                 </a>
                 <a
-                  href="https://wa.me/6281234567899?text=Bismillah,%20saya%20ingin%20mengajukan%20perubahan%20data%20pendaftaran%20untuk%20nomor%20pendaftaran:%20"
+                  href="https://wa.me/6281285300800?text=Bismillah,%20saya%20ingin%20mengajukan%20perubahan%20data%20pendaftaran%20untuk%20nomor%20pendaftaran:%20"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-500 text-white rounded-lg text-xs font-bold shadow-sm hover:bg-emerald-600 transition-colors"
