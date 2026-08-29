@@ -21,6 +21,7 @@ export const BRANDING = {
     process.env.NEXT_PUBLIC_ADDRESS ||
     "Jl. KH Mama Oyon, Cihaur, Kec. Cicantayan, Kabupaten Sukabumi, Jawa Barat 43155",
   phone: process.env.NEXT_PUBLIC_PHONE || "+62 812-8530-0800",
+  financePhone: "+62 812-8530-0800",
   email: process.env.NEXT_PUBLIC_EMAIL || "alandalusululalbaab2@gmail.com",
   igUrl:
     process.env.NEXT_PUBLIC_IG_URL ||
