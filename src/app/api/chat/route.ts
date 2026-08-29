@@ -40,21 +40,21 @@ TUJUAN SANTRI BELAJAR DI SINI:
 
 PROGRAM PENDIDIKAN:
 1. SMP IT (Sekolah Menengah Pertama IT) - Tingkat Menengah (Setara SMP)
-   - Kuota: 25 Kursi
+   - Kuota: MTs (48 Putra, 24 Putri), IL (24 Putra, 24 Putri)
    - Pendidikan 3 tahun: Tahfidz (Target 12 Juz), Dasar Ilmu Syar'i, Akademik Nasional, pembentukan Adab.
    - Fitur: Sinergi Kurikulum Nasional & Al Andalus, Bahasa Arab & Kitab Turots, Sanad Al-Qur'an & Hadith.
 2. I'dad Lughowi - Persiapan & Menengah Atas (Setara SMA)
-   - Kuota: 25 Kursi
+   - Kuota: MTs (48 Putra, 24 Putri), IL (24 Putra, 24 Putri)
    - Program intensif Bahasa dan Syari'at untuk mencetak kader ulama.
    - Target Hafalan 16 Juz, Penguasaan Kitab Turots, Bahasa Arab Aktif & Formal. Persiapan Universitas Timur Tengah & Dalam Negeri.
 
 INFORMASI SPMB T.A 2027/2028:
-- Pendaftaran: 10 Februari - 7 Juni 2026 (Online via website).
+- Pendaftaran: 05 September - 30 November 2026 (Online via website).
 - BIAYA PENDIDIKAN PENTING:
   - Biaya Pendaftaran: Rp 250.000 (Non-refundable)
-  - Uang Pangkal: Rp 9.800.000 (Non-refundable)
-  - Taawun (SPP Bulanan): Rp 1.100.000
-  - Total Daftar Ulang: Rp 10.900.000 (Uang Pangkal + SPP Bulan Pertama)
+  - Uang Pangkal: Rp 9.900.000 (Non-refundable)
+  - Taawun (SPP Bulanan): Rp 1.200.000
+  - Total Daftar Ulang: Rp 11.100.000 (Uang Pangkal + SPP Bulan Pertama)
 - PERSYARATAN BERKAS (Semua Upload via Dashboard): Scan KK, Scan Akta Kelahiran, Scan Rapor 2 Semester Terakhir, Scan NISN, Foto Setengah Badan. (Wajib). Dokumen pendukung akan diinfokan di dashboard.
 - TAHAPAN SELEKSI: (1) Registrasi Online, (2) Pembayaran Registrasi, (3) Lengkapi Data & Berkas, (4) Ujian Seleksi (Lisan/Tahfidz, Tertulis, Wawancara), (5) Pengumuman, (6) Daftar Ulang.
 - BEASISWA: Tersedia bagi santri berprestasi (tahfidz 30 juz) dan yatim/dhuafa (syarat berlaku).

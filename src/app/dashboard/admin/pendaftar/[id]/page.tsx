@@ -650,7 +650,7 @@ export default function PendaftarDetailPage() {
           html: `
             <div class="text-left text-sm mb-4 text-stone-600 bg-amber-50 p-3 rounded-lg border border-amber-200">
               Masukkan nominal <b>POTONGAN (Diskon)</b> (bukan sisa tagihan).<br/><br/>
-              Contoh: Jika Uang Pangkal normal Rp 7.500.000, dan wali santri hanya sanggup bayar Rp 6.000.000, berarti <b>potongannya adalah Rp 1.500.000</b>. <br/>Ketik: <b>1500000</b>.
+              Contoh: Jika Uang Pangkal normal Rp 9.900.000, dan wali santri hanya sanggup bayar Rp 6.000.000, berarti <b>potongannya adalah Rp 1.500.000</b>. <br/>Ketik: <b>1500000</b>.
             </div>
             <div class="mb-3 text-left w-full">
               <label class="block text-xs font-bold mb-1 uppercase tracking-wider text-slate-500 ml-1">Keterangan Label</label>

@@ -125,16 +125,16 @@ function PPDBContent() {
   const jenjang = searchParams.get("jenjang");
 
   const stats = [
-    { label: "Kuota MTs Putra", value: "32 Santri", icon: Users },
-    { label: "Kuota MTs Putri", value: "30 Santri", icon: Users },
-    { label: "Kuota IL Putra", value: "32 Santri", icon: Users },
-    { label: "Kuota IL Putri", value: "30 Santri", icon: Users },
+    { label: "Kuota MTs Putra", value: "48 Santri", icon: Users },
+    { label: "Kuota MTs Putri", value: "24 Santri", icon: Users },
+    { label: "Kuota IL Putra", value: "24 Santri", icon: Users },
+    { label: "Kuota IL Putri", value: "24 Santri", icon: Users },
   ];
 
   const timeline = [
     {
       phase: "Registrasi Online",
-      date: "31 Agustus - 30 Oktober 2026",
+      date: "05 September - 30 November 2026",
       desc: "Daftar dan buat akun pendaftar melalui website resmi atau scan barcode di brosur.",
       status: "active" },
     {
@@ -196,8 +196,8 @@ function PPDBContent() {
 
   const biaya = [
     { label: "Biaya Pendaftaran", value: "Rp 250rb", icon: CreditCard },
-    { label: "Uang Pangkal", value: "Rp 9,8 Jt", icon: Shield },
-    { label: "SPP/Taawun (All In)", value: "Rp 1,1Jt/bln", icon: Star },
+    { label: "Uang Pangkal", value: "Rp 9,9 Jt", icon: Shield },
+    { label: "SPP/Taawun (All In)", value: "Rp 1,2Jt/bln", icon: Star },
   ];
 
   return (
@@ -537,10 +537,10 @@ function PPDBContent() {
                       a: "Ya, seluruh santri di Pesantren Al Andalus Ulul Albaab wajib tinggal di asrama untuk mengikuti seluruh rangkaian kegiatan tarbiyah, halaqah tahfidz, dan pembelajaran kitab turots secara maksimal." },
                     {
                       q: "Kapan batas akhir pendaftaran SPMB 2027/2028?",
-                      a: "Pendaftaran SPMB Tahun Ajaran 2027/2028 dibuka mulai 31 Agustus sampai dengan 30 Oktober 2026. Hanya 2 bulan! Pendaftaran dapat ditutup lebih awal jika kuota terpenuhi. Segera daftar!" },
+                      a: "Pendaftaran SPMB Tahun Ajaran 2027/2028 dibuka mulai 05 September sampai dengan 30 November 2026. Pendaftaran dapat ditutup lebih awal jika kuota terpenuhi. Segera daftar!" },
                     {
                       q: "Berapa total biaya yang harus disiapkan?",
-                      a: "Biaya pendaftaran Rp 250.000, Uang Pangkal Rp 9.800.000, dan SPP/Taawun Rp 1.100.000/bulan (All In = Rp 13.200.000/tahun sudah termasuk makan, asrama, dan seluruh kegiatan pesantren)." },
+                      a: "Biaya pendaftaran Rp 250.000, Uang Pangkal Rp 9.900.000, dan SPP/Taawun Rp 1.200.000/bulan (All In = Rp 14.400.000/tahun sudah termasuk makan, asrama, dan seluruh kegiatan pesantren)." },
                   ].map((faq, i) => (
                     <motion.div key={i} className="group">
                       <details className="bg-white rounded-lg border border-surface-100 shadow-premium-sm transition-all duration-300 open:shadow-premium-lg">

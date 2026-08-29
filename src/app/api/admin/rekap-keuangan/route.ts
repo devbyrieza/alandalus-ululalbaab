@@ -118,7 +118,7 @@ export async function GET(request: NextRequest) {
       const potonganSPP = Number(keringananJson.potongan_spp || 0);
 
       const nominalPotongan = potonganUP + potonganSPP;
-      const expectedUP = 7500000 - potonganUP;
+      const expectedUP = 9900000 - potonganUP;
       const expectedSPP = 1000000 - potonganSPP;
       const requiredAmount = expectedUP + expectedSPP;
 

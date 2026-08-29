@@ -239,7 +239,7 @@ export async function PATCH(request: NextRequest) {
         const pendaftarData = await prisma.pendaftar.findUnique({
           where: { id: pembayaran.pendaftar_id },
           select: { data_lengkap: true } });
-        let expectedDU = 7500000;
+        let expectedDU = 9900000;
         if (pendaftarData?.data_lengkap) {
           try {
             const dl = typeof pendaftarData.data_lengkap === "string"

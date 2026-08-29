@@ -266,7 +266,7 @@ function VerifikasiPembayaranContent() {
       const data = Object.values(groups).map((g) => {
         let expectedTagihan = 0;
         if ((activeTab as string) === "UANG_PANGKAL" || activeTab === "DAFTAR_ULANG") {
-          expectedTagihan = 7500000 - g.beasiswa;
+          expectedTagihan = 9900000 - g.beasiswa;
         } else if (activeTab === "SPP") {
           expectedTagihan = 1000000;
         } else if (activeTab === "PENDAFTARAN") {
