@@ -25,7 +25,7 @@ const misi = [
     text: "Mendidik pribadi yang mampu mengambil keputusan dan menyelesaikan tugas secara mandiri." },
   {
     label: "Dakwah",
-    text: "Menanamkan jiwa dakwah melalui keteladanan para pendidik serta bimbingan tanpa kekerasan dan luka pengasuhan." },
+    text: "Menanamkan jiwa dakwah melalui keteladanan asatidzah serta pembinaan karakter Rabbani yang kokoh dan beradab mulia." },
 ];
 
 const containerVariants: Variants = {
@@ -95,7 +95,7 @@ export default function AboutSection() {
               <span className="font-semibold text-primary-800">
                 Pesantren Al Andalus Ulul Albaab Sukabumi.
               </span>{" "}
-              Lembaga pendidikan Islam yang mengedepankan keteladanan para pendidik serta mendidik tanpa kekerasan dan luka pengasuhan — mengusung visi Kaderisasi Ummat Rabbani, Cendekia, dan Mandiri.
+              Lembaga pendidikan Islam yang memadukan keunggulan tahfidz Al-Qur'an, ilmu syar'i, dan kemandirian wirausaha — mengusung visi Kaderisasi Ummat Rabbani, Cendekia, dan Mandiri.
             </motion.p>
           </motion.div>
 

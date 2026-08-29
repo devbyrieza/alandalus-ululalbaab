@@ -124,7 +124,7 @@ export default function HeroSection() {
             >
               Bukan sekadar tempat belajar — sebuah ekosistem pendidikan yang{" "}
               <strong className="font-bold text-primary-700">
-                mengedepankan keteladanan para pendidik serta mendidik tanpa kekerasan dan luka pengasuhan
+                berorientasi pada pembentukan Hamalatul Qur'an dan karakter entrepreneur muslim yang mandiri
               </strong>, memadukan Intensitas Tahfidz Al-Qur'an, Ilmu Syar'i, Sains Akademik, dan Islamic Entrepreneurship berbasis TICE.
             </motion.p>
 
