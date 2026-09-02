@@ -467,7 +467,7 @@ export default function ContactPage() {
                 <div className="flex items-center gap-2 text-primary-100/70">
                   <Award className="w-4 h-4 text-secondary-400" />
                   <span className="text-xs font-bold uppercase tracking-widest">
-                    Sejak 1995 • 30 Tahun Melayani
+                    Angkatan ke-5 • TA 2027/2028
                   </span>
                 </div>
                 <div className="flex items-center gap-2 text-primary-100/70">

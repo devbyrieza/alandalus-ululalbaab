@@ -216,7 +216,7 @@ function PPDBContent() {
               className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-surface-200 text-primary-700 text-xs font-black uppercase tracking-widest mb-10 shadow-premium-sm"
             >
               <Sparkles className="w-3.5 h-3.5" />
-              <span>Penerimaan Santri Baru T.A 2027/2028 • Angkatan ke-4</span>
+              <span>Penerimaan Santri Baru T.A 2027/2028 • Angkatan ke-5</span>
             </motion.div>
 
             <motion.h1
@@ -252,11 +252,11 @@ function PPDBContent() {
               </div>
               <div>
                 <h3 className="text-xl md:text-2xl font-display font-black text-primary-900 mb-2">
-                  Angkatan ke-4: Lebih Matang, Lebih Teruji
+                  Angkatan ke-5: Lebih Matang, Lebih Teruji
                 </h3>
                 <p className="text-primary-800 font-medium leading-relaxed">
                   Menjadi bagian dari angkatan 2027/2028 adalah keistimewaan.
-                  Ananda akan bergabung dengan generasi ke-4 yang{" "}
+                  Ananda akan bergabung dengan generasi ke-5 yang{" "}
                   <strong>
                     lebih matang sistemnya, lebih teruji kurikulumnya
                   </strong>
@@ -621,7 +621,7 @@ function PPDBContent() {
                 <div className="flex items-center gap-2 text-primary-100/70">
                   <Award className="w-4 h-4 text-secondary-400" />
                   <span className="text-xs font-bold uppercase tracking-widest">
-                    Angkatan ke-4 • TA 2027/2028
+                    Angkatan ke-5 • TA 2027/2028
                   </span>
                 </div>
                 <div className="flex items-center gap-2 text-primary-100/70">

@@ -127,11 +127,11 @@ export default function FeaturesSection() {
               <div className="space-y-4 lg:space-y-6 mt-12">
                 <div className="app-card p-6 sm:p-8 min-h-56 md:h-64 flex flex-col justify-end items-start group">
                   <p className="text-4xl lg:text-5xl font-black text-primary-900 mb-2 tracking-tighter uppercase">
-                    TA 26/27
+                    TA 27/28
                   </p>
                   <div className="space-y-1">
                     <p className="text-sm font-bold text-ink-700 uppercase tracking-wider">
-                      Angkatan Ke-4
+                      Angkatan Ke-5
                     </p>
                     <p className="text-xs leading-tight text-ink-500 font-medium">
                       Meneruskan Tradisi Kebaikan <br />

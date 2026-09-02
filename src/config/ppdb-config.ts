@@ -142,7 +142,7 @@ export const PPDB_CONFIG = {
   },
 
   tahunAjaran: "2027/2028",
-  angkatan: "Angkatan I (Era Baru)",
+  angkatan: "Angkatan ke-5 (2027/2028)",
 
   // ⚙️ SETTING TEKNIS
   technical: {
