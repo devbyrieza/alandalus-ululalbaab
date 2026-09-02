@@ -1,4 +1,4 @@
-export const BRANDING = {
+﻿export const BRANDING = {
   schoolName:
     process.env.NEXT_PUBLIC_SCHOOL_NAME || "Pesantren Al Andalus Ulul Albaab",
   schoolShortName:
@@ -16,7 +16,7 @@ export const BRANDING = {
   faviconPath: process.env.NEXT_PUBLIC_FAVICON_PATH || "/favicon.ico",
   websiteUrl: process.env.NEXT_PUBLIC_APP_URL || process.env.NEXT_PUBLIC_WEBSITE_URL || "https://pesantren-ululalbaab.com",
   dashboardTitle:
-    process.env.NEXT_PUBLIC_DASHBOARD_TITLE || "Panel Admin SPMB Ulul Albaab",
+    process.env.NEXT_PUBLIC_DASHBOARD_TITLE || "Panel Admin PPDB Ulul Albaab",
   address:
     process.env.NEXT_PUBLIC_ADDRESS ||
     "Jl. KH Mama Oyon, Cihaur, Kec. Cicantayan, Kabupaten Sukabumi, Jawa Barat 43155",
@@ -33,3 +33,4 @@ export const BRANDING = {
     process.env.NEXT_PUBLIC_FB_URL ||
     "https://www.facebook.com/alandalus.ululalbaab/",
   twitterUrl: process.env.NEXT_PUBLIC_TWITTER_URL || "#" };
+

@@ -1,4 +1,4 @@
-// app/admin/verifikasi-manual/page.tsx
+﻿// app/admin/verifikasi-manual/page.tsx
 "use client";
 
 import { useState, useEffect } from "react";
@@ -80,7 +80,7 @@ export default function VerifikasiManualPage() {
   const openWhatsApp = (phone: string, kode: string) => {
     const cleanPhone = phone.replace(/\D/g, "");
     const message = encodeURIComponent(
-      `Kode verifikasi SPMB Ponpes Al Andalus Ulul Albaab: ${kode}`,
+      `Kode verifikasi PPDB Ponpes Al Andalus Ulul Albaab: ${kode}`,
     );
     window.open(`https://wa.me/${cleanPhone}?text=${message}`, "_blank");
   };
@@ -233,3 +233,4 @@ export default function VerifikasiManualPage() {
     </div>
   );
 }
+

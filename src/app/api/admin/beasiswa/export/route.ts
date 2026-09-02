@@ -35,7 +35,7 @@ export async function GET(req: NextRequest) {
     const keringananPotongan = listBeasiswa.filter(item => item.jenis_pengajuan === "KERINGANAN_BIAYA");
 
     const workbook = new ExcelJS.Workbook();
-    workbook.creator = "SPMB Al-Andalus";
+    workbook.creator = "PPDB Al-Andalus";
     workbook.created = new Date();
 
     const normalTotal = 8500000;
@@ -345,4 +345,5 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "Terjadi kesalahan server saat membuat laporan" }, { status: 500 });
   }
 }
+
 

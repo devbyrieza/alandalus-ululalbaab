@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
@@ -352,7 +352,7 @@ function JadwalUjianContent() {
   const formatTimeRange = (start: string, end: string) => {
     const s = new Date(start);
     const e = new Date(end);
-    return `${s.toLocaleDateString("id-ID", { weekday: "long", day: "numeric", month: "short" })} • ${s.toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit" })} - ${e.toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit" })}`;
+    return `${s.toLocaleDateString("id-ID", { weekday: "long", day: "numeric", month: "short" })} â€¢ ${s.toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit" })} - ${e.toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit" })}`;
   };
 
   const filteredPendaftar = pendaftar.filter(
@@ -388,7 +388,7 @@ function JadwalUjianContent() {
                 <span className="text-purple-600">Jadwal Seleksi</span>
               </h1>
               <p className="text-emerald-900/60 font-medium">
-                Panel Pengaturan Jadwal Seleksi SPMB Ulul Albaab
+                Panel Pengaturan Jadwal Seleksi PPDB Ulul Albaab
               </p>
             </div>
           </div>
@@ -910,3 +910,4 @@ export default function JadwalUjianPage() {
     </Suspense>
   );
 }
+

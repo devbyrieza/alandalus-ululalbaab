@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import { RefreshCw, Check, Smartphone, User, Key, ClipboardList, Sparkles, FileText, BarChart, Calendar, PartyPopper, BarChart2, CheckCircle2 } from "lucide-react";
@@ -81,8 +81,8 @@ export default function AdminSMSDashboard() {
             <ol className="list-decimal list-inside text-primary-700 space-y-1">
               <li>Salin nomor HP dan OTP di bawah</li>
               <li>Kirim SMS dari HP Admin ke nomor tersebut</li>
-              <li>Pesan: "SPMB ULUL ALBAAB: Kode OTP: [OTP] untuk [NAMA]"</li>
-              <li>Klik tombol "✓ Sudah Dikirim" setelah selesai</li>
+              <li>Pesan: "PPDB ULUL ALBAAB: Kode OTP: [OTP] untuk [NAMA]"</li>
+              <li>Klik tombol "âœ“ Sudah Dikirim" setelah selesai</li>
             </ol>
           </div>
 
@@ -155,7 +155,7 @@ export default function AdminSMSDashboard() {
                       <FileText className="w-4 h-4 inline-block mr-1" /> Pesan yang dikirim:
                     </p>
                     <pre className="bg-gray-900 text-white p-4 rounded-lg text-sm">
-                      {`SPMB ULUL ALBAAB
+                      {`PPDB ULUL ALBAAB
 Kode OTP: ${item.otp}
 Untuk: ${item.nama}
 
@@ -210,3 +210,4 @@ Hubungi 0812-8530-0800 jika ada masalah.`}
     </div>
   );
 }
+

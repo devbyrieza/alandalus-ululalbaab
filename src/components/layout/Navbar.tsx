@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
@@ -141,7 +141,7 @@ export default function Navbar() {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
-            {/* ── Logo ── */}
+            {/* â”€â”€ Logo â”€â”€ */}
             <Link
               href="/"
               onClick={handleBerandaClick}
@@ -165,7 +165,7 @@ export default function Navbar() {
                     sizes="44px"
                   />
                 </div>
-                {/* Status dot — blue green */}
+                {/* Status dot â€” blue green */}
                 <div className="absolute -bottom-1 -right-1 w-3.5 h-3.5 bg-[var(--color-primary-600)] border-2 border-white rounded-full z-10 shadow-sm" />
               </div>
 
@@ -185,7 +185,7 @@ export default function Navbar() {
               </div>
             </Link>
 
-            {/* ── Desktop Nav (lg+) ── */}
+            {/* â”€â”€ Desktop Nav (lg+) â”€â”€ */}
             <nav
               className={`hidden lg:flex items-center gap-0.5 p-1.5 rounded-full border transition-all duration-300 ${
                 isScrolled
@@ -272,7 +272,7 @@ export default function Navbar() {
               })}
             </nav>
 
-            {/* ── CTA Buttons (lg+) ── */}
+            {/* â”€â”€ CTA Buttons (lg+) â”€â”€ */}
             <div className="hidden lg:flex items-center gap-2 xl:gap-3 shrink-0">
               <LanguageSwitcher />
               {session ? (
@@ -291,7 +291,7 @@ export default function Navbar() {
                     href="/ppdb"
                     className="btn-primary flex items-center gap-1.5 group text-xs xl:text-sm font-black px-3.5 xl:px-5 py-2 rounded-full shadow-md hover:scale-105 transition-all glow-ring-primary"
                   >
-                    <span>Daftar SPMB</span>
+                    <span>Daftar PPDB</span>
                     <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
                   </Link>
                 </div>
@@ -307,14 +307,14 @@ export default function Navbar() {
                     href="/ppdb"
                     className="btn-primary flex items-center gap-1.5 group text-xs xl:text-sm font-black px-3.5 xl:px-5 py-2 rounded-full shadow-md hover:scale-105 transition-all glow-ring-primary"
                   >
-                    <span>Daftar SPMB</span>
+                    <span>Daftar PPDB</span>
                     <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
                   </Link>
                 </div>
               )}
             </div>
 
-            {/* ── Hamburger (below lg) ── */}
+            {/* â”€â”€ Hamburger (below lg) â”€â”€ */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className={`lg:hidden p-3 rounded-lg transition-all duration-300 min-h-[48px] min-w-[48px] flex items-center justify-center border ${
@@ -352,7 +352,7 @@ export default function Navbar() {
         </div>
       </header>
 
-      {/* ── Mobile Menu — Bottom Sheet ── */}
+      {/* â”€â”€ Mobile Menu â€” Bottom Sheet â”€â”€ */}
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
@@ -475,7 +475,7 @@ export default function Navbar() {
                         className="btn-primary w-full justify-center gap-2 min-h-[48px]"
                       >
                         <GraduationCap className="w-4 h-4" />
-                        Daftar SPMB Online
+                        Daftar PPDB Online
                       </Link>
                     </>
                   ) : (
@@ -493,7 +493,7 @@ export default function Navbar() {
                         className="btn-primary w-full justify-center gap-2 min-h-[48px]"
                       >
                         <GraduationCap className="w-4 h-4" />
-                        Daftar SPMB Online
+                        Daftar PPDB Online
                       </Link>
                     </>
                   )}
@@ -508,3 +508,4 @@ export default function Navbar() {
     </>
   );
 }
+

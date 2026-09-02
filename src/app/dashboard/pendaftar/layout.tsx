@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
@@ -450,7 +450,7 @@ export default function DashboardLayout({
                       />
                     </div>
                     <span className="font-black text-lg text-primary-950 tracking-tight">
-                      SPMB {BRANDING.schoolName}
+                      PPDB {BRANDING.schoolName}
                     </span>
                   </div>
                   <button
@@ -686,4 +686,5 @@ export default function DashboardLayout({
     </>
   );
 }
+
 

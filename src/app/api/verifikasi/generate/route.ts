@@ -1,4 +1,4 @@
-// app/api/verifikasi/generate/route.ts
+﻿// app/api/verifikasi/generate/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
@@ -41,15 +41,15 @@ export async function POST(request: NextRequest) {
       message: "OTP generated and saved successfully",
       whatsappTemplate: `Assalamu'alaikum ${nama},
 
-Kode verifikasi SPMB Ponpes Al Andalus Ulul Albaab
+Kode verifikasi PPDB Ponpes Al Andalus Ulul Albaab
 
-🔐 *${otp}*
+ðŸ” *${otp}*
 
-⏰ Berlaku 5 menit
+â° Berlaku 5 menit
 
-⚠️ PENTING:
-• Jangan berikan kode ini kepada siapapun
-• Gunakan kode ini untuk verifikasi di website
+âš ï¸ PENTING:
+â€¢ Jangan berikan kode ini kepada siapapun
+â€¢ Gunakan kode ini untuk verifikasi di website
 
 Wassalamu'alaikum wr wb` });
   } catch (error: any) {
@@ -60,3 +60,4 @@ Wassalamu'alaikum wr wb` });
     );
   }
 }
+

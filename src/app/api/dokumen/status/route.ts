@@ -1,8 +1,8 @@
-import { NextRequest, NextResponse } from "next/server";
+﻿import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { prisma } from "@/lib/prisma";
 
-// Daftar semua jenis dokumen sesuai persyaratan SPMB Ulul Albaab
+// Daftar semua jenis dokumen sesuai persyaratan PPDB Ulul Albaab
 const JENIS_DOKUMEN = [
   { key: "kartu_keluarga", label: "Scan Kartu Keluarga", required: true },
   { key: "akta_kelahiran", label: "Scan Akte Kelahiran", required: true },
@@ -139,3 +139,4 @@ export async function GET(request: NextRequest) {
     );
   }
 }
+

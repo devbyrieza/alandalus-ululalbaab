@@ -1,4 +1,4 @@
-/**
+﻿/**
  * CTA BUTTON COMPONENTS
  * Reusable CTA buttons dengan conversion funnel strategy yang benar
  *
@@ -12,13 +12,13 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Sparkles, Phone, FileText, Clock, ArrowRight, Target } from "lucide-react";
 
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
 // AWARENESS STAGE - untuk Homepage, About, Features, dll
 // User belum informed, perlu education first
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
 
 /**
- * Primary CTA - Info SPMB (Soft, Educational)
+ * Primary CTA - Info PPDB (Soft, Educational)
  * Use in: Hero, About, Features, Gallery
  */
 export function CTAInfoPPDB({
@@ -54,7 +54,7 @@ export function CTAInfoPPDB({
       >
         <Link href="/ppdb" className="flex items-center justify-center gap-2">
           <FileText className="w-5 h-5" />
-          <span>Pelajari SPMB 2027/2028</span>
+          <span>Pelajari PPDB 2027/2028</span>
         </Link>
       </Button>
 
@@ -148,10 +148,10 @@ export function CTAKonsultasi({
   );
 }
 
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// DECISION STAGE - untuk SPMB Info Page ONLY!
+// â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
+// DECISION STAGE - untuk PPDB Info Page ONLY!
 // User sudah informed, siap untuk action
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
 
 /**
  * Aggressive CTA - Daftar Sekarang (High Urgency)
@@ -213,7 +213,7 @@ export function CTADaftarSekarang({
 }
 
 /**
- * Sticky Bottom CTA - untuk SPMB Page
+ * Sticky Bottom CTA - untuk PPDB Page
  * Always visible di bottom screen
  */
 export function CTAStickyDaftar() {
@@ -248,9 +248,9 @@ export function CTAStickyDaftar() {
   );
 }
 
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
 // NAVBAR SPECIFIC CTAs
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
 
 /**
  * Navbar Primary CTA - Compact version
@@ -264,7 +264,7 @@ export function NavbarCTAPPDB() {
     >
       <Link href="/ppdb" className="flex items-center gap-2">
         <Sparkles className="w-3.5 h-3.5" />
-        Info SPMB 2026
+        Info PPDB 2026
       </Link>
     </Button>
   );
@@ -292,9 +292,9 @@ export function NavbarCTALogin() {
   );
 }
 
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
 // MOBILE SPECIFIC CTAs
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
 
 /**
  * Mobile Menu CTA - Full width version
@@ -327,16 +327,16 @@ export function MobileCTAPPDB() {
       >
         <Link href="/ppdb" className="flex items-center justify-center gap-2">
           <Sparkles className="w-4 h-4" />
-          <span>Pelajari SPMB 2026</span>
+          <span>Pelajari PPDB 2026</span>
         </Link>
       </Button>
     </div>
   );
 }
 
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
 // USAGE EXAMPLES & DOCUMENTATION
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
 
 /**
  * EXAMPLE USAGE IN HERO SECTION:
@@ -358,7 +358,7 @@ export function MobileCTAPPDB() {
  */
 
 /**
- * EXAMPLE USAGE IN SPMB INFO PAGE:
+ * EXAMPLE USAGE IN PPDB INFO PAGE:
  *
  * import { CTADaftarSekarang, CTAStickyDaftar } from "@/components/cta/CTAButtons";
  *
@@ -379,4 +379,5 @@ export function MobileCTAPPDB() {
  *   <NavbarCTALogin />
  * </div>
  */
+
 

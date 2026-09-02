@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import {
@@ -119,7 +119,7 @@ export default function RecapFeePage() {
       sheets: [
         {
           name: "Rekap Honor",
-          title: "REKAP HONOR PENGUJI SPMB",
+          title: "REKAP HONOR PENGUJI PPDB",
           subTitle: `Tanggal Ekspor: ${new Date().toLocaleDateString("id-ID")}`,
           header: headers,
           data: data }
@@ -204,7 +204,7 @@ export default function RecapFeePage() {
                 </span>
               </h1>
               <p className="text-ink-500 font-medium mt-1 uppercase text-[10px] tracking-widest leading-none">
-                Manajemen Insentif Petugas Seleksi SPMB
+                Manajemen Insentif Petugas Seleksi PPDB
               </p>
             </div>
           </div>
@@ -267,7 +267,7 @@ export default function RecapFeePage() {
               </span>
             </p>
           </div>
-          {/* Total Estimasi Fee — full width on mobile, normal on md+ */}
+          {/* Total Estimasi Fee â€” full width on mobile, normal on md+ */}
           <div className="col-span-2 md:col-span-1 bg-linear-to-br from-primary-700 to-primary-900 rounded-[1.5rem] md:rounded-[2rem] p-5 md:p-6 shadow-clay-md relative overflow-hidden">
             <div className="absolute top-0 right-0 p-4 opacity-20">
               <DollarSign className="w-16 h-16 text-white" />
@@ -513,7 +513,7 @@ export default function RecapFeePage() {
                   </div>
                 </div>
 
-                {/* Fee Badge — full width, prominent */}
+                {/* Fee Badge â€” full width, prominent */}
                 <div className="mb-3 bg-linear-to-r from-primary-700 to-primary-800 rounded-lg px-4 py-3 flex items-center justify-between">
                   <div>
                     <p className="text-[9px] font-black text-white/60 uppercase tracking-widest">
@@ -526,7 +526,7 @@ export default function RecapFeePage() {
                   <TrendingUp className="w-5 h-5 text-secondary-300" />
                 </div>
 
-                {/* Stats Grid — 3 columns */}
+                {/* Stats Grid â€” 3 columns */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
                   <div className="bg-ink-50 rounded-lg p-3 text-center">
                     <p className="text-lg font-black text-ink-900 leading-none">
@@ -586,3 +586,4 @@ export default function RecapFeePage() {
     </div>
   );
 }
+

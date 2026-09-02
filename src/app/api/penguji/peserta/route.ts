@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+﻿import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { prisma } from "@/lib/prisma";
 
@@ -23,7 +23,7 @@ export async function GET() {
   const userId = session.user_id || session.id;
   const full_name = session.full_name || session.name || "Reviewer";
   console.log(
-    `🔍 [API /penguji/peserta] userId: ${userId} | name: ${full_name}`,
+    `ðŸ” [API /penguji/peserta] userId: ${userId} | name: ${full_name}`,
   );
 
   try {
@@ -137,7 +137,7 @@ export async function GET() {
           if (hasHafalanMatch) roles.push("hafalan");
           if (hasLisanArabMatch) roles.push("lisan_arab");
 
-          // Fallback if title is generic like "Tes SPMB", just push based on jenjang so the card isn't blank
+          // Fallback if title is generic like "Tes PPDB", just push based on jenjang so the card isn't blank
           if (roles.length === 0) {
             const jenjang = (item.pendaftar.jenjang || "").toUpperCase();
             if (jenjang.includes("MA")) {
@@ -362,3 +362,4 @@ export async function GET() {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
+

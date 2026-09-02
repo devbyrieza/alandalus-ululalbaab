@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import { useEffect } from "react";
 
 import Image from "next/image";
@@ -68,7 +68,7 @@ export default function TentangPage() {
             className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary-50 border border-primary-100 text-primary-700 text-xs font-bold uppercase tracking-widest mb-8 shadow-xs"
           >
             <Sparkles className="w-3.5 h-3.5" />
-            <span>Mengenal Al Andalus Ulul Albaab • Managed by Al Andalus IIBS</span>
+            <span>Mengenal Al Andalus Ulul Albaab â€¢ Managed by Al Andalus IIBS</span>
           </motion.div>
 
           <motion.h1
@@ -366,7 +366,7 @@ export default function TentangPage() {
               href="/daftar"
               className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-primary-600 hover:bg-primary-500 text-white font-bold text-base shadow-lg shadow-primary-600/30 transition-all hover:-translate-y-0.5"
             >
-              Daftar SPMB Sekarang <Send className="w-4 h-4" />
+              Daftar PPDB Sekarang <Send className="w-4 h-4" />
             </Link>
             <Link
               href="/kontak"
@@ -380,3 +380,4 @@ export default function TentangPage() {
     </main>
   );
 }
+

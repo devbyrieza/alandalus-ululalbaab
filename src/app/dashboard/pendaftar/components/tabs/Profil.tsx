@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import {
@@ -296,14 +296,14 @@ export default function ProfilTab() {
             <h4 className="font-bold text-primary-900 mb-2">Informasi Penting</h4>
             <ul className="text-sm text-primary-800 space-y-1">
               <li>
-                • Pastikan data Anda sudah benar dan sesuai dengan dokumen resmi
+                â€¢ Pastikan data Anda sudah benar dan sesuai dengan dokumen resmi
               </li>
               <li>
-                • Jika ada perubahan data, hubungi panitia SPMB di nomor yang
+                â€¢ Jika ada perubahan data, hubungi panitia PPDB di nomor yang
                 tertera
               </li>
               <li>
-                • Simpan nomor pendaftaran Anda untuk keperluan verifikasi
+                â€¢ Simpan nomor pendaftaran Anda untuk keperluan verifikasi
               </li>
             </ul>
           </div>
@@ -331,3 +331,4 @@ function InfoItem({
     </div>
   );
 }
+

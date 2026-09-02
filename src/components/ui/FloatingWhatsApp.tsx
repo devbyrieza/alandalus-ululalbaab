@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -6,7 +6,7 @@ import { X, Smile, MessageSquare } from "lucide-react";
 import { BRANDING } from "@/config/branding";
 
 const WA_NUMBER = "6281285300800";
-const WA_MESSAGE = `Assalamu'alaikum, saya ingin bertanya tentang SPMB ${BRANDING.schoolName} Tahun Ajaran 2027/2028.`;
+const WA_MESSAGE = `Assalamu'alaikum, saya ingin bertanya tentang PPDB ${BRANDING.schoolName} Tahun Ajaran 2027/2028.`;
 
 const SPRING = { type: "spring", stiffness: 400, damping: 28 } as const;
 
@@ -81,4 +81,5 @@ export default function FloatingWhatsApp() {
     </div>
   );
 }
+
 

@@ -1,4 +1,4 @@
-// lib/verification/whatsapp.ts
+﻿// lib/verification/whatsapp.ts
 import { normalizePhone } from "./multi-channel";
 import { sendMessage } from "@/lib/wablas";
 
@@ -10,16 +10,16 @@ export async function sendWhatsAppMessage(
     const phone = normalizePhone(to);
 
     // Create OTP message
-    const message = `🔐 *Kode Verifikasi SPMB Al Andalus Ulul Albaab*
+    const message = `ðŸ” *Kode Verifikasi PPDB Al Andalus Ulul Albaab*
 
 Kode OTP Anda adalah: *${otp}*
 
 Kode ini berlaku selama 5 menit.
 
-⚠️ Jangan berikan kode ini kepada siapapun!
+âš ï¸ Jangan berikan kode ini kepada siapapun!
 
 Jazakumullahu khairan,
-Panitia SPMB Al Andalus Ulul Albaab`;
+Panitia PPDB Al Andalus Ulul Albaab`;
 
     // Kirim via Wablas API
     const result = await sendMessage({ phone, message });
@@ -32,7 +32,7 @@ Panitia SPMB Al Andalus Ulul Albaab`;
 
     // Fallback untuk development
     if (process.env.NODE_ENV === "development") {
-      console.log(`📱 [DEV] WhatsApp OTP ${otp} untuk ${phone}`);
+      console.log(`ðŸ“± [DEV] WhatsApp OTP ${otp} untuk ${phone}`);
       return { success: true, messageId: "dev-" + Date.now() };
     }
 
@@ -44,3 +44,4 @@ Panitia SPMB Al Andalus Ulul Albaab`;
     return { success: false, error: error.message };
   }
 }
+

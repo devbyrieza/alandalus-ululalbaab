@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
@@ -608,7 +608,7 @@ export default function ExaminerDashboard() {
           </div>
           <div>
             <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 bg-[#ddc192]/20 text-[#ddc192] text-[10px] font-bold rounded-full border border-[#ddc192]/40 mb-1">
-              <Sparkles className="w-3 h-3 text-[#ddc192]" /> AKSES & DISKUSI PANITIA SPMB 2027/2028
+              <Sparkles className="w-3 h-3 text-[#ddc192]" /> AKSES & DISKUSI PANITIA PPDB 2027/2028
             </div>
             <h3 className="font-extrabold text-base text-white">Bank Soal & Form Penilaian Panitia</h3>
             <p className="text-xs text-[#ddc192]/90 max-w-xl font-medium">
@@ -627,7 +627,7 @@ export default function ExaminerDashboard() {
           <button
             onClick={() => {
               const message = encodeURIComponent(
-                `*Assalamu’alaikum Warahmatullahi Wabarakatuh*\n\nYth. Ustadz / Ustadzah Panitia SPMB Pesantren Al-Andalus Ulul Albaab,\n\nBerikut link akses khusus Bank Soal Seleksi & Form Penilaian Penguji untuk peninjauan & evaluasi TA 2027/2028:\n\n https://ppdb.pesantren-ululalbaab.com/panitia/bank-soal\n\n_Mohon bantuan ustadz/ustadzah untuk meninjau relevansi soal dan rubrik wawancara._\n\nSyukron, Jazakumullahu Khairan.`
+                `*Assalamuâ€™alaikum Warahmatullahi Wabarakatuh*\n\nYth. Ustadz / Ustadzah Panitia PPDB Pesantren Al-Andalus Ulul Albaab,\n\nBerikut link akses khusus Bank Soal Seleksi & Form Penilaian Penguji untuk peninjauan & evaluasi TA 2027/2028:\n\n https://ppdb.pesantren-ululalbaab.com/panitia/bank-soal\n\n_Mohon bantuan ustadz/ustadzah untuk meninjau relevansi soal dan rubrik wawancara._\n\nSyukron, Jazakumullahu Khairan.`
               );
               window.open(`https://wa.me/?text=${message}`, "_blank");
             }}
@@ -1216,7 +1216,7 @@ export default function ExaminerDashboard() {
                       );
                     })()}
 
-                    {/* 6 Nilai Grid — 3x2 */}
+                    {/* 6 Nilai Grid â€” 3x2 */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
                       {[
                         {
@@ -1574,7 +1574,7 @@ export default function ExaminerDashboard() {
                     )}
                   </p>
                   <p className="text-xs font-bold text-ink-500 font-mono mt-0.5">
-                    {assignStudent.nomor_pendaftaran || "-"} •{" "}
+                    {assignStudent.nomor_pendaftaran || "-"} â€¢{" "}
                     {assignStudent.jenjang || "-"}
                   </p>
                 </div>
@@ -1687,7 +1687,7 @@ export default function ExaminerDashboard() {
                     )}
                   </p>
                   <p className="text-xs font-bold text-ink-500 font-mono mt-0.5">
-                    {selectedStudent.nomor_pendaftaran || "-"} •{" "}
+                    {selectedStudent.nomor_pendaftaran || "-"} â€¢{" "}
                     {selectedStudent.jenjang || "-"}
                   </p>
                 </div>
@@ -1852,4 +1852,5 @@ export default function ExaminerDashboard() {
     </div>
   );
 }
+
 

@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+﻿import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { prisma } from "@/lib/prisma";
 import ExcelJS from "exceljs";
@@ -167,7 +167,7 @@ export async function GET(request: NextRequest) {
       // Merged Title cell (17 columns)
       worksheet.mergeCells("A1:Q1");
       const titleCell = worksheet.getCell("A1");
-      titleCell.value = "LAPORAN PEMBAYARAN SPMB - PESANTREN AL-ANDALUS";
+      titleCell.value = "LAPORAN PEMBAYARAN PPDB - PESANTREN AL-ANDALUS";
       titleCell.font = { name: "Arial", size: 16, bold: true, color: { argb: brandColor } };
       titleCell.alignment = { vertical: "middle", horizontal: "center" };
       worksheet.getRow(1).height = 40;
@@ -370,4 +370,5 @@ export async function GET(request: NextRequest) {
     );
   }
 }
+
 

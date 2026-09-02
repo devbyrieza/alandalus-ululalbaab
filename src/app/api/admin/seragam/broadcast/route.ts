@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+﻿import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getServerSession } from "@/lib/session";
 import { createHmac } from "crypto";
@@ -73,11 +73,11 @@ Sebagai persiapan awal, kami memohon kesediaan Abu/Ummu untuk mengisikan data uk
 
 Mohon untuk mengisi ukuran seragam baju dan celana/rok melalui link khusus berikut:
 
-🔗 *Link Pengisian Khusus:*
+ðŸ”— *Link Pengisian Khusus:*
 ${magicLink}
 
 Jazakumullahu khairan.
-Panitia SPMB.`;
+Panitia PPDB.`;
       } else {
         magicLink = pendaftar.user_id ? `${baseUrl}/s/${shortCode}?t=seragam` : `${baseUrl}/isi-seragam/${shortCode}`;
         message = `*PENGINGAT PENGISIAN UKURAN SERAGAM*
@@ -88,14 +88,14 @@ Abu/Ummu dari Ananda *${pendaftar.nama_lengkap}* (${pendaftar.nomor_pendaftaran}
 Kami menginformasikan bahwa Ananda belum mengisi ukuran seragam.
 Mengingat Ananda telah melakukan pembayaran Daftar Ulang, mohon untuk segera mengisi ukuran seragam baju dan celana/rok melalui link berikut:
 
-🔗 *Link Pengisian (Otomatis Login):*
+ðŸ”— *Link Pengisian (Otomatis Login):*
 ${magicLink}
 
 Atau silakan login ke dashboard pendaftaran Anda dan buka menu "Ukuran Seragam".
 Pastikan untuk mengisinya secepatnya karena akan segera diproses.
 
 Jazakumullahu khairan.
-Panitia SPMB.`;
+Panitia PPDB.`;
       }
 
       try {
@@ -132,3 +132,4 @@ Panitia SPMB.`;
     );
   }
 }
+

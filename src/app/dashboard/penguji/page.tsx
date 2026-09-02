@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import {
@@ -104,7 +104,7 @@ export default function PengujiDashboardPage() {
                 Ikhtisar Dashboard
               </h1>
               <p className="text-primary-100 font-bold max-w-xl text-sm md:text-lg leading-relaxed opacity-90">
-                Selamat datang kembali di panel penilaian Seleksi SPMB Ulul
+                Selamat datang kembali di panel penilaian Seleksi PPDB Ulul
                 Albaab. Berikut ringkasan tugas Anda hari ini.
               </p>
             </div>
@@ -203,28 +203,28 @@ export default function PengujiDashboardPage() {
             </h4>
             <ul className="text-sm text-secondary-900/80 font-bold space-y-2">
               <li className="flex items-start gap-2">
-                <span className="text-secondary-500">•</span>
+                <span className="text-secondary-500">â€¢</span>
                 <span>
                   Nilai harus objektif dan sesuai rubrik penilaian yang
                   ditetapkan pesantren.
                 </span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-secondary-500">•</span>
+                <span className="text-secondary-500">â€¢</span>
                 <span>
                   Pastikan semua aspek dinilai dengan lengkap sebelum melakukan
                   simpan data.
                 </span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-secondary-500">•</span>
+                <span className="text-secondary-500">â€¢</span>
                 <span>
                   Berikan catatan deskriptif jika diperlukan untuk referensi
                   panitia pusat.
                 </span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-secondary-500">•</span>
+                <span className="text-secondary-500">â€¢</span>
                 <span>
                   Nilai yang sudah diinput dapat diubah kembali sebelum masa
                   penilaian ditutup.
@@ -237,3 +237,4 @@ export default function PengujiDashboardPage() {
     </div>
   );
 }
+

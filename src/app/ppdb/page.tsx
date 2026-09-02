@@ -276,7 +276,7 @@ function PPDBContent() {
                 href={`/daftar${jenjang ? `?jenjang=${jenjang}` : ""}`}
                 className="inline-flex items-center justify-center gap-3 px-6 md:px-10 py-5 rounded-pill bg-primary-900 text-white font-black text-xl hover:bg-primary-800 shadow-premium-lg transition-all"
               >
-                Daftar SPMB
+                Daftar PPDB
               </Link>
               <a
                 href="#alur"
@@ -536,8 +536,8 @@ function PPDBContent() {
                       q: "Apakah santri wajib asrama?",
                       a: "Ya, seluruh santri di Pesantren Al Andalus Ulul Albaab wajib tinggal di asrama untuk mengikuti seluruh rangkaian kegiatan tarbiyah, halaqah tahfidz, dan pembelajaran kitab turots secara maksimal." },
                     {
-                      q: "Kapan batas akhir pendaftaran SPMB 2027/2028?",
-                      a: "Pendaftaran SPMB Tahun Ajaran 2027/2028 dibuka mulai 05 September sampai dengan 30 November 2026. Pendaftaran dapat ditutup lebih awal jika kuota terpenuhi. Segera daftar!" },
+                      q: "Kapan batas akhir pendaftaran PPDB 2027/2028?",
+                      a: "Pendaftaran PPDB Tahun Ajaran 2027/2028 dibuka mulai 05 September sampai dengan 30 November 2026. Pendaftaran dapat ditutup lebih awal jika kuota terpenuhi. Segera daftar!" },
                     {
                       q: "Berapa total biaya yang harus disiapkan?",
                       a: "Biaya pendaftaran Rp 250.000, Uang Pangkal Rp 9.900.000, dan SPP/Taawun Rp 1.200.000/bulan (All In = Rp 14.400.000/tahun sudah termasuk makan, asrama, dan seluruh kegiatan pesantren)." },
@@ -600,7 +600,7 @@ function PPDBContent() {
                   className="w-full sm:w-auto inline-flex items-center justify-center gap-2 sm:gap-3 px-6 sm:px-5 md:px-8 py-3.5 sm:py-4 md:py-5 rounded-pill bg-white/10 text-white font-bold border border-white/20 hover:bg-white/20 transition-all text-sm sm:text-base md:text-lg min-h-[48px] sm:min-h-[52px]"
                 >
                   <Phone className="w-4 h-4 sm:w-5 sm:h-5" />
-                  Hubungi Admin SPMB
+                  Hubungi Admin PPDB
                 </a>
               </div>
 
@@ -650,7 +650,7 @@ function LoadingFallback() {
         <Loader2 className="w-12 h-12" />
       </motion.div>
       <p className="text-ink-500 font-black uppercase tracking-widest text-xs animate-pulse">
-        Memuat Info SPMB...
+        Memuat Info PPDB...
       </p>
     </div>
   );
@@ -663,5 +663,6 @@ export default function PPDBPage() {
     </Suspense>
   );
 }
+
 
 

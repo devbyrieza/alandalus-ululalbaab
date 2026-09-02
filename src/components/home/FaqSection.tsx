@@ -10,7 +10,7 @@ const FAQS = [
   {
     question: "Kapan pendaftaran santri baru angkatan 2027/2028 dibuka?",
     answer:
-      "Pendaftaran SPMB Tahun Ajaran 2027/2028 dibuka mulai tanggal 05 September sampai dengan 30 November 2026. Namun, pendaftaran dapat ditutup lebih awal jika kuota santri baru sudah terpenuhi." },
+      "Pendaftaran PPDB Tahun Ajaran 2027/2028 dibuka mulai tanggal 05 September sampai dengan 30 November 2026. Namun, pendaftaran dapat ditutup lebih awal jika kuota santri baru sudah terpenuhi." },
   {
     question: "Apakah santri diwajibkan untuk tinggal di asrama?",
     answer:
@@ -225,4 +225,5 @@ export default function FaqSection() {
     </section>
   );
 }
+
 

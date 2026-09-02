@@ -1,10 +1,10 @@
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-//   SPMB CONFIGURATION - AL ANDALUS ULUL ALBAAB
+﻿// â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
+//   PPDB CONFIGURATION - AL ANDALUS ULUL ALBAAB
 //   Tahun Ajaran 2027/2028 (PSB / PPDB)
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
 
 export const PPDB_CONFIG = {
-  // 🏫 INFO PESANTREN
+  // ðŸ« INFO PESANTREN
   pesantren: {
     nama: "Pesantren Islam Internasional Al-Andalus Ulul Albaab",
     singkatan: "Al Andalus Ulul Albaab",
@@ -17,7 +17,7 @@ export const PPDB_CONFIG = {
     website: "https://pesantren-ululalbaab.com",
   },
 
-  // 🎨 BRAND COLORS
+  // ðŸŽ¨ BRAND COLORS
   colors: {
     primary: {
       50: "#f0f9ff",
@@ -45,7 +45,7 @@ export const PPDB_CONFIG = {
     },
   },
 
-  // 📱 PROGRAM PENDIDIKAN
+  // ðŸ“± PROGRAM PENDIDIKAN
   programs: [
     {
       id: "mts",
@@ -71,7 +71,7 @@ export const PPDB_CONFIG = {
     },
   ],
 
-  // 💰 BIAYA PENDIDIKAN & PENDAFTARAN (FORMULA SEMENTARA)
+  // ðŸ’° BIAYA PENDIDIKAN & PENDAFTARAN (FORMULA SEMENTARA)
   pricing: [
     {
       label: "Biaya Pendaftaran",
@@ -90,7 +90,7 @@ export const PPDB_CONFIG = {
     },
   ],
 
-  // 🏦 REKENING BANK RESMI
+  // ðŸ¦ REKENING BANK RESMI
   bank: {
     namaBank: "Bank Syariah Indonesia (BSI)",
     nomorRekening: "7253701263",
@@ -98,15 +98,15 @@ export const PPDB_CONFIG = {
     kodeBank: "451",
   },
 
-  // 📅 JADWAL PPSB 2027/2028
+  // ðŸ“… JADWAL PPSB 2027/2028
   schedule: {
     tahunAjaran: "2027/2028",
     pembukaan: "05 September 2026",
     penutupan: "30 November 2026",
-    jadwalTes: "05 September – 30 November 2026",
+    jadwalTes: "05 September â€“ 30 November 2026",
   },
 
-  // 👥 DEWAN PEMBINA
+  // ðŸ‘¥ DEWAN PEMBINA
   dewanPembina: [
     "Ustadz Dr. Muhammad Arifin Badri, Lc., MA",
     "Ustadz Dr. Nurdin Apud Sarbini, Lc., M.Pd",
@@ -116,7 +116,7 @@ export const PPDB_CONFIG = {
     "Ustadz Dwi Wahyu Iskandar",
   ],
 
-  // 🎯 VISI & MISI
+  // ðŸŽ¯ VISI & MISI
   visi: "KADERISASI UMMAT RABBANI, CENDEKIA & MANDIRI",
   misi: [
     "Menyelenggarakan Pendidikan Berbasis TICE (Tahfidz, Islamic Curriculum, Entrepreneurship)",
@@ -124,7 +124,7 @@ export const PPDB_CONFIG = {
     "Menanamkan jiwa Entrepreneur Muslim yang berwawasan global",
   ],
 
-  // 📋 PERSYARATAN BERKAS
+  // ðŸ“‹ PERSYARATAN BERKAS
   requirements: [
     "Fotocopy Kartu Keluarga (1 lembar)",
     "Fotocopy Akta Kelahiran (1 lembar)",
@@ -132,7 +132,7 @@ export const PPDB_CONFIG = {
     "Pas Foto 3x4 (4 lembar)",
   ],
 
-  // 🔗 KONTAK & SOSMED
+  // ðŸ”— KONTAK & SOSMED
   contact: {
     whatsapp: "+6281285300800",
     phone: "0812-8530-0800",
@@ -144,18 +144,18 @@ export const PPDB_CONFIG = {
   tahunAjaran: "2027/2028",
   angkatan: "Angkatan ke-5 (2027/2028)",
 
-  // ⚙️ SETTING TEKNIS
+  // âš™ï¸ SETTING TEKNIS
   technical: {
-    appName: "SPMB Al Andalus Ulul Albaab",
+    appName: "PPDB Al Andalus Ulul Albaab",
     appDescription: "Sistem Penerimaan Santri Baru (PSB) 2027/2028",
     version: "2.0.0",
     author: "Rieza Eka Tomara",
   },
 };
 
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
 //   HELPER FUNCTIONS
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
 
 export const getPesantrenInfo = () => PPDB_CONFIG.pesantren;
 export const getPrograms = () => PPDB_CONFIG.programs;
@@ -175,3 +175,4 @@ export const generateCSSVariables = () => {
     accent: colors.accent,
   };
 };
+

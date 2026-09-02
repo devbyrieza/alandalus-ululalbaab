@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useRef, useEffect } from "react";
 import { MessageCircle, X, Bot, Headphones, MessageSquare } from "lucide-react";
@@ -67,7 +67,7 @@ export default function ChatSystem() {
   const openWhatsApp = () => {
     const waNumber = "6281285300800";
     const waMessage = encodeURIComponent(
-      "Halo Panitia SPMB Pesantren Al Andalus Ulul Albaab, saya ingin bertanya...",
+      "Halo Panitia PPDB Pesantren Al Andalus Ulul Albaab, saya ingin bertanya...",
     );
     window.open(`https://wa.me/${waNumber}?text=${waMessage}`, "_blank");
     setIsMenuOpen(false);
@@ -116,7 +116,7 @@ export default function ChatSystem() {
             >
               <div className="px-3 pb-3 pt-2 mb-2 border-b border-surface-100 flex items-center justify-between">
                 <span className="text-[10px] uppercase font-black tracking-widest text-secondary-500 mb-0.5">
-                  SPMB Ulul Albaab
+                  PPDB Ulul Albaab
                 </span>
                 <button
                   onClick={() => setIsMenuOpen(false)}
@@ -142,7 +142,7 @@ export default function ChatSystem() {
                       ?? Tanya AI Assistant
                     </h4>
                     <p className="text-[11px] text-ink-500 font-medium">
-                      Bantuan cepat informasi SPMB 24/7
+                      Bantuan cepat informasi PPDB 24/7
                     </p>
                   </div>
                 </button>
@@ -198,7 +198,7 @@ export default function ChatSystem() {
                     Butuh Bantuan?
                   </p>
                   <p className="text-xs text-ink-400 font-medium tracking-wide">
-                    Ulul Albaab SPMB
+                    Ulul Albaab PPDB
                   </p>
                 </div>
                 <button
@@ -255,3 +255,4 @@ export default function ChatSystem() {
     </>
   );
 }
+

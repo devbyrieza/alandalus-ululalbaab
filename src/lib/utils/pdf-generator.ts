@@ -230,7 +230,7 @@ const drawFooterSync = (doc: jsPDF, institutionName?: string) => {
     : pageHeight - 5;
 
   doc.text(
-    `Dicetak secara sistem melalui website SPMB ${name} pada: ${new Date().toLocaleString("id-ID")}`,
+    `Dicetak secara sistem melalui website PPDB ${name} pada: ${new Date().toLocaleString("id-ID")}`,
     pageWidth / 2,
     yPos,
     { align: "center" },
@@ -1235,4 +1235,5 @@ export const generatePaktaIntegritas = async (data: PendaftarPdfData) => {
   }
   return doc;
 };
+
 

@@ -1,15 +1,15 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import { Calendar, Download, Clock, ArrowUpRight } from "lucide-react";
 import { Container } from "@/components/layout/Container";
 import { motion } from "framer-motion";
 
-// ─── Data ────────────────────────────────────────────
+// â”€â”€â”€ Data â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const IMPORTANT_DATES = [
   {
     date: "05 Sep - 30 Nov 2026",
-    title: "Pendaftaran SPMB",
+    title: "Pendaftaran PPDB",
     description:
       "Pendaftaran santri baru dibuka secara online melalui website resmi.",
     accent: "blue" as const },
@@ -39,7 +39,7 @@ const ACCENT_MAP = {
     badge: "bg-secondary-50 text-secondary-700 border-secondary-200",
     title: "group-hover:text-secondary-700" } };
 
-// ─── Main ─────────────────────────────────────────────
+// â”€â”€â”€ Main â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 export default function CalendarSection() {
   return (
     <section
@@ -174,3 +174,4 @@ export default function CalendarSection() {
     </section>
   );
 }
+

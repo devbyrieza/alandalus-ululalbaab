@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 
@@ -68,7 +68,7 @@ export default function HeroSection() {
   return (
     <section
       ref={ref}
-      aria-label="Hero — Beranda Ulul Albaab"
+      aria-label="Hero â€” Beranda Ulul Albaab"
       className="relative pt-24 pb-16 lg:pt-12 xl:pt-16 lg:pb-20 overflow-hidden"
       style={{
         background:
@@ -122,7 +122,7 @@ export default function HeroSection() {
               transition={{ delay: 0.3 }}
               className="text-base lg:text-[1.075rem] leading-[1.85] max-w-[42rem] mx-auto lg:mx-0 text-center lg:text-left text-pretty text-slate-600 font-medium"
             >
-              Bukan sekadar tempat belajar — sebuah ekosistem pendidikan yang{" "}
+              Bukan sekadar tempat belajar â€” sebuah ekosistem pendidikan yang{" "}
               <strong className="font-bold text-primary-700">
                 berorientasi pada pembentukan Hamalatul Qur'an dan karakter entrepreneur muslim yang mandiri
               </strong>, memadukan Intensitas Tahfidz Al-Qur'an, Ilmu Syar'i, Sains Akademik, dan Islamic Entrepreneurship berbasis TICE.
@@ -179,7 +179,7 @@ export default function HeroSection() {
                         className="btn-primary shine-hover w-full sm:w-auto px-8 lg:px-10 py-4 lg:py-[1.125rem] min-h-[56px] text-[0.9375rem] flex items-center justify-center gap-2.5 group font-bold"
                         style={{ boxShadow: "var(--shadow-primary-lg)" }}
                       >
-                        Daftar SPMB Sekarang
+                        Daftar PPDB Sekarang
                         <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
                       </button>
                     </Link>
@@ -223,7 +223,7 @@ export default function HeroSection() {
                   >
                     Angkatan Ke-5
                   </span>
-                  {" • "}Pesantren Ulul Albaab
+                  {" â€¢ "}Pesantren Ulul Albaab
                 </p>
               </div>
 
@@ -267,3 +267,4 @@ export default function HeroSection() {
     </section>
   );
 }
+

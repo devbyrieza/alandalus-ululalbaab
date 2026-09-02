@@ -1,9 +1,9 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
 
-// ─── ICONS ───
+// â”€â”€â”€ ICONS â”€â”€â”€
 import {
   User,
   CheckCircle,
@@ -15,7 +15,7 @@ import {
   FileText,
   Target } from "lucide-react";
 
-// ─── COMPONENTS & UTILS ───
+// â”€â”€â”€ COMPONENTS & UTILS â”€â”€â”€
 import ProgressTracker from "./components/ProgressTracker";
 import {
   getNextStep,
@@ -99,7 +99,7 @@ export default function DashboardPendaftarPage() {
   );
 }
 
-// ─── INTERNAL COMPONENTS ───
+// â”€â”€â”€ INTERNAL COMPONENTS â”€â”€â”€
 
 function HeroBanner({ nama, nomorPendaftaran, lastUpdate }: any) {
   return (
@@ -245,7 +245,7 @@ function SupportCenter() {
           <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-white/10 rounded-full border border-white/10">
             <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
             <span className="text-[10px] font-black uppercase tracking-widest text-amber-200">
-              PUSAT BANTUAN SPMB
+              PUSAT BANTUAN PPDB
             </span>
           </div>
           <h3 className="font-black text-2xl sm:text-3xl md:text-4xl font-display leading-tight">
@@ -272,7 +272,7 @@ function SupportCenter() {
   );
 }
 
-// ─── HELPERS ───
+// â”€â”€â”€ HELPERS â”€â”€â”€
 
 function LoadingState() {
   return (
@@ -289,3 +289,4 @@ function ErrorState({ message }: { message: string }) {
     </div>
   );
 }
+
