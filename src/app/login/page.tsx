@@ -309,49 +309,113 @@ export default function LoginPage() {
   };
 
   return (
-    <main className="min-h-screen bg-primary-950 bg-gradient-to-br from-primary-950 via-primary-900 to-primary-950 flex items-center justify-center p-6 relative overflow-hidden">
-      {/* Background Decor - Deep Blue & Gold Glows */}
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-secondary-500/20 rounded-full blur-[120px] -translate-y-1/3 translate-x-1/3 pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-500/10 rounded-full blur-[100px] -translate-x-1/3 translate-y-1/3 pointer-events-none" />
-      <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-10 mix-blend-overlay pointer-events-none" />
+    <main className="min-h-screen bg-gradient-to-b from-[#F0F9FF] via-[#F8FAFC] to-white flex flex-col items-center justify-center p-4 sm:p-6 py-10 sm:py-16 relative overflow-hidden font-sans">
+      {/* Background Micro Grid */}
+      <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgc3Ryb2tlPSIjMDAwMDAwIiBzdHJva2Utb3BhY2l0eT0iMC4wMiIgZmlsbD0ibm9uZSI+PHBhdGggZD0iTTAgNjBoNjBNNjAgMGwwIDYwIi8+PC9nPjwvc3ZnPg==')] opacity-70 pointer-events-none" />
 
-      <Container className="relative z-10 flex flex-col items-center">
-        {/* Logo / Header */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-10"
+      {/* TOP NAVIGATION PILLS (OMI DESKTOP STANDARD) */}
+      <div className="w-full max-w-5xl lg:max-w-6xl flex items-center justify-between gap-3 mb-4 z-10">
+        <Link
+          href="/"
+          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-white/95 border border-slate-200/90 shadow-2xs text-xs font-extrabold uppercase tracking-wider text-slate-700 hover:text-[#0284c7] hover:border-[#0284c7]/40 transition-all hover:-translate-y-0.5"
         >
-          <Link href="/">
-            <div className="app-card inline-flex items-center justify-center w-24 h-24 bg-white/10  rounded-[2rem] shadow-sm border border-white/20 mb-6 hover:scale-110 hover:bg-white/20 transition-all duration-300 group overflow-hidden">
+          <ArrowLeft className="w-3.5 h-3.5" />
+          <span>Kembali ke Beranda</span>
+        </Link>
+        <div className="inline-flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-white/95 border border-slate-200/90 shadow-2xs text-xs font-bold text-slate-700">
+          <span className="w-2 h-2 rounded-full bg-sky-500 animate-pulse" />
+          <span>Portal Resmi SPMB Ulul Albaab 2027</span>
+        </div>
+      </div>
+
+      {/* TWO-PANEL OMI LOGIN CARD (DESKTOP SPLIT / MOBILE STACKED) */}
+      <div className="w-full max-w-5xl lg:max-w-6xl rounded-3xl overflow-hidden shadow-xl shadow-sky-950/10 border border-slate-200 bg-white grid grid-cols-1 lg:grid-cols-12 relative z-10">
+        
+        {/* SISI KIRI: PANEL IDENTITAS & 2 BENTO UNGGULAN (DESKTOP: 5 COLUMNS) */}
+        <div className="lg:col-span-5 bg-gradient-to-br from-[#082f49] via-[#0369a1] to-[#0284c7] p-6 sm:p-8 lg:p-10 text-white relative overflow-hidden flex flex-col justify-between">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-amber-400/10 rounded-full blur-3xl pointer-events-none" />
+          
+          <div className="relative z-10 space-y-6">
+            <div className="inline-flex items-center gap-3 bg-white px-3.5 py-2 rounded-2xl shadow-sm">
               <img
                 src={BRANDING.logoPath}
                 alt={"Logo " + BRANDING.schoolName}
-                className="w-[85%] h-[85%] object-contain group-hover:scale-110 transition-transform duration-500"
+                className="w-7 h-7 object-contain"
               />
+              <span className="text-xs font-extrabold text-slate-900 tracking-tight">
+                {BRANDING.schoolShortName}
+              </span>
             </div>
-          </Link>
-          <h1 className="text-3xl md:text-5xl font-display font-black text-white mb-2 tracking-tight drop-shadow-sm">
-            Portal{" "}
-            <span className="text-secondary-400 font-black drop-shadow-sm">
-              {BRANDING.schoolShortName}
-            </span>
-          </h1>
-          <p className="text-lg text-primary-100/80 font-medium">
-            Sistem Administrasi & Penerimaan Santri Baru
-          </p>
-        </motion.div>
 
-        {/* Main Card - Glassmorphism */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95, y: 20 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{ delay: 0.1, duration: 0.5, ease: "easeOut" }}
-          className="w-full max-w-[480px] bg-white backdrop-blur-2xl rounded-[2.5rem] md:rounded-[3rem] shadow-premium-2xl border border-white p-6 md:p-12 relative overflow-hidden"
-        >
-          {/* Subtle inside glow */}
-          <div className="absolute top-0 right-0 w-64 h-64 bg-secondary-300/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+            <div>
+              <span className="text-[10px] font-extrabold uppercase tracking-widest text-sky-200 bg-white/10 px-3 py-1 rounded-full border border-white/15 inline-block mb-3">
+                Penerimaan Santri Baru {BRANDING.academicYear}
+              </span>
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight leading-snug">
+                Pesantren Islam Ulul Albaab
+              </h2>
+              <p className="text-xs sm:text-sm text-sky-100/90 font-normal mt-2 leading-relaxed">
+                Pusat pendidikan santri berkarakter Qur'ani, mandiri, dan berakhlak mulia dengan integrasi kurikulum nasional dan kepesantrenan.
+              </p>
+            </div>
 
+            {/* 2 KARTU BENTO FITUR UNGGULAN */}
+            <div className="space-y-3 pt-2">
+              <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/15 flex items-center gap-3.5 shadow-sm">
+                <div className="w-11 h-11 rounded-xl bg-sky-400/20 border border-sky-400/30 flex items-center justify-center shrink-0 text-sky-200">
+                  <Sparkles className="w-5 h-5" />
+                </div>
+                <div>
+                  <h4 className="text-xs sm:text-sm font-extrabold text-white">
+                    Pesantren Terpadu Mandiri
+                  </h4>
+                  <p className="text-[11px] text-sky-100 font-normal">
+                    Lingkungan belajar asri &amp; kondusif
+                  </p>
+                </div>
+              </div>
+
+              <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/15 flex items-center gap-3.5 shadow-sm">
+                <div className="w-11 h-11 rounded-xl bg-amber-400/20 border border-amber-400/30 flex items-center justify-center shrink-0 text-amber-300">
+                  <BookOpen className="w-5 h-5" />
+                </div>
+                <div>
+                  <h4 className="text-xs sm:text-sm font-extrabold text-white">
+                    Kurikulum Terpadu Modern
+                  </h4>
+                  <p className="text-[11px] text-sky-100 font-normal">
+                    Sains, agama &amp; bahasa Arab/Inggris aktif
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="relative z-10 pt-6 mt-6 border-t border-white/10 text-[11px] text-sky-200/80 font-medium flex items-center justify-between">
+            <span>Panitia SPMB &bull; Pesantren Ulul Albaab</span>
+            <span className="text-sky-200">&bull; Kampus Asri</span>
+          </div>
+        </div>
+
+        {/* SISI KANAN: WHITE FORM BODY (DESKTOP: 7 COLUMNS) */}
+        <div className="lg:col-span-7 p-6 sm:p-8 lg:p-10 bg-white space-y-6 flex flex-col justify-center">
+          
+          <div>
+            <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight leading-snug">
+              Masuk Portal SPMB Ulul Albaab
+            </h3>
+            <p className="text-xs sm:text-sm text-slate-500 font-normal mt-1 leading-relaxed">
+              Silakan masukkan NIK / No. Pendaftaran calon santri atau kredensial akun staf Anda.
+            </p>
+          </div>
+
+          <div className="p-3 bg-sky-50/70 border border-sky-100 rounded-2xl flex items-center justify-between gap-3 text-xs">
+            <span className="text-sky-900 font-medium">Belum memiliki akun pendaftar?</span>
+            <Link href="/daftar" className="font-extrabold text-[#0284c7] hover:underline flex items-center gap-1 shrink-0">
+              <span>Daftar Santri Baru</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
           {/* Tab Switcher - Premium "Pill" style */}
           {!roleSelectionData && (
             <div className="bg-slate-100 p-2 rounded-[2rem] flex relative mb-12 border border-slate-200">
@@ -626,28 +690,14 @@ export default function LoginPage() {
               )}
             </AnimatePresence>
           </div>
+        </div>
 
-                  </motion.div>
+      </div>
 
-        {/* Footer Link */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
-          className="mt-12"
-        >
-          <Link
-            href="/"
-            className="group flex items-center gap-3 text-ink-600 hover:text-primary-700 font-black uppercase tracking-[0.2em] text-[10px] transition-all"
-          >
-            <div className="w-8 h-8 rounded-full bg-secondary-50 border border-secondary-100 flex items-center justify-center group-hover:scale-110 transition-transform">
-              <ArrowLeft className="w-4 h-4" />
-            </div>
-            Kembali ke Beranda
-          </Link>
-        </motion.div>
-      </Container>
+      <div className="text-center text-xs text-slate-400 mt-6 font-medium space-y-1">
+        <p>&copy; 2026 {BRANDING.schoolLegalName}. Hak Cipta Dilindungi Undang-Undang.</p>
+        <p className="text-[11px] text-slate-400/80">Panitia SPMB Ulul Albaab v2.0</p>
+      </div>
     </main>
   );
 }
-
