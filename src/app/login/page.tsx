@@ -573,8 +573,11 @@ export default function LoginPage() {
                     rightElement={
                       <button
                         type="button"
+                        tabIndex={-1}
+                        onMouseDown={(e) => e.preventDefault()}
                         onClick={() => setShowPassword(!showPassword)}
                         className="text-ink-500 hover:text-ink-800 transition-colors duration-300 p-2"
+                        aria-label="Tampilkan atau sembunyikan kata sandi"
                       >
                         {showPassword ? (
                           <EyeOff className="w-5 h-5" />
