@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { Suspense, useEffect } from "react";
 import Link from "next/link";
@@ -223,10 +223,12 @@ function PPDBContent() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              className="text-2xl md:text-4xl sm:text-6xl lg:text-8xl font-display font-black mb-8 md:mb-10 tracking-tight leading-[0.9] text-ink-950"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-black mb-6 md:mb-8 tracking-tight text-slate-900 leading-[1.15]"
             >
-              Siapkan Generasi <br />
-              <span className="text-gradient-primary">Terbaik Kita</span>
+              <span className="block">Kaderisasi Generasi Robbani,</span>
+              <span className="block mt-1 text-[#0284c7]">
+                Cendekia &amp; Berakhlak Mulia
+              </span>
             </motion.h1>
 
             <motion.p
@@ -663,6 +665,7 @@ export default function PPDBPage() {
     </Suspense>
   );
 }
+
 
 
 
