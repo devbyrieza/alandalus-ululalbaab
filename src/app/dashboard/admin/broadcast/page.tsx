@@ -207,9 +207,9 @@ export default function BroadcastPage() {
                       </p>
                       <div className="flex items-center gap-2 text-xs font-medium text-ink-500">
                         <span className="font-mono">{p.nomor_pendaftaran}</span>
-                        <span>â€¢</span>
+                        <span>•</span>
                         <span>{p.no_hp || "Tanpa No. HP"}</span>
-                        <span>â€¢</span>
+                        <span>•</span>
                         <span className="px-2 py-0.5 bg-secondary-200 rounded-full">
                           {p.status_pendaftaran}
                         </span>

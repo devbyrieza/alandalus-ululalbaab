@@ -13,7 +13,7 @@ import {
 import { Container } from "@/components/layout/Container";
 import { motion } from "framer-motion";
 
-// â”€â”€â”€ Data â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Data ────────────────────────────────────────────
 const STEPS = [
   {
     icon: UserPlus,
@@ -64,7 +64,7 @@ const ACCENT_MAP = {
     badge: "bg-secondary-500 text-white",
     title: "group-hover:text-secondary-700" } };
 
-// â”€â”€â”€ Step Card â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Step Card ────────────────────────────────────────
 function StepCard({
   icon: Icon,
   title,
@@ -124,7 +124,7 @@ function StepCard({
   );
 }
 
-// â”€â”€â”€ Main â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Main ─────────────────────────────────────────────
 export default function ProcessSection() {
   return (
     <section

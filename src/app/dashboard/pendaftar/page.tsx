@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 
-// â”€â”€â”€ ICONS â”€â”€â”€
+// ─── ICONS ───
 import {
   User,
   CheckCircle,
@@ -15,7 +15,7 @@ import {
   FileText,
   Target } from "lucide-react";
 
-// â”€â”€â”€ COMPONENTS & UTILS â”€â”€â”€
+// ─── COMPONENTS & UTILS ───
 import ProgressTracker from "./components/ProgressTracker";
 import {
   getNextStep,
@@ -99,7 +99,7 @@ export default function DashboardPendaftarPage() {
   );
 }
 
-// â”€â”€â”€ INTERNAL COMPONENTS â”€â”€â”€
+// ─── INTERNAL COMPONENTS ───
 
 function HeroBanner({ nama, nomorPendaftaran, lastUpdate }: any) {
   return (
@@ -272,7 +272,7 @@ function SupportCenter() {
   );
 }
 
-// â”€â”€â”€ HELPERS â”€â”€â”€
+// ─── HELPERS ───
 
 function LoadingState() {
   return (

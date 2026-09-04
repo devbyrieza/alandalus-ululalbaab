@@ -82,7 +82,7 @@ export default function AdminSMSDashboard() {
               <li>Salin nomor HP dan OTP di bawah</li>
               <li>Kirim SMS dari HP Admin ke nomor tersebut</li>
               <li>Pesan: "PPDB ULUL ALBAAB: Kode OTP: [OTP] untuk [NAMA]"</li>
-              <li>Klik tombol "âœ“ Sudah Dikirim" setelah selesai</li>
+              <li>Klik tombol "✓ Sudah Dikirim" setelah selesai</li>
             </ol>
           </div>
 

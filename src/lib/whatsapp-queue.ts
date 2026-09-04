@@ -1,5 +1,5 @@
 ﻿/**
- * WhatsApp Queue Service â€” 6-Layer Anti-BAN Protection
+ * WhatsApp Queue Service — 6-Layer Anti-BAN Protection
  *
  * Layer 1: Database flag check (anti-duplicate)
  * Layer 2: Sequential queue via DB (anti-spike)
@@ -65,7 +65,7 @@ const RETRY_DELAY_MINUTES = 5;
 const DEFAULT_APP_URL = BRANDING.websiteUrl;
 
 // ============================================================================
-// LAYER 1: Anti-Duplicate â€” Check flag before enqueue
+// LAYER 1: Anti-Duplicate — Check flag before enqueue
 // ============================================================================
 
 /**
@@ -98,7 +98,7 @@ async function isDuplicate(
                 pendaftar[flagColumn as keyof typeof pendaftar] as boolean;
             if (flagValue) {
                 console.log(
-                    `ðŸš« [Layer 1] Duplicate blocked: ${jenisNotif} for ${pendaftarId} (flag already true)`
+                    `🚫 [Layer 1] Duplicate blocked: ${jenisNotif} for ${pendaftarId} (flag already true)`
                 );
                 return true;
             }
@@ -120,7 +120,7 @@ async function isDuplicate(
 
     if (existingLog) {
         console.log(
-            `ðŸš« [Layer 1] Duplicate blocked: ${jenisNotif} for ${pendaftarId} (existing log: ${existingLog.status})`
+            `🚫 [Layer 1] Duplicate blocked: ${jenisNotif} for ${pendaftarId} (existing log: ${existingLog.status})`
         );
         return true;
     }
@@ -160,7 +160,7 @@ async function checkRateLimits(): Promise<{
     if (cooldown.cooldown_until && cooldown.cooldown_until > now) {
         const waitMs = cooldown.cooldown_until.getTime() - now.getTime();
         console.log(
-            `â¸ï¸ [Layer 4] Global cooldown active, ${Math.round(waitMs / 1000)}s remaining`
+            `⏸️ [Layer 4] Global cooldown active, ${Math.round(waitMs / 1000)}s remaining`
         );
         return {
             canSend: false,
@@ -181,7 +181,7 @@ async function checkRateLimits(): Promise<{
     } else if (cooldown.hourly_count >= MAX_MESSAGES_PER_HOUR) {
         const waitMs = (1 - hoursSinceReset) * 60 * 60 * 1000;
         console.log(
-            `â¸ï¸ [Layer 3] Hourly limit reached (${cooldown.hourly_count}/${MAX_MESSAGES_PER_HOUR})`
+            `⏸️ [Layer 3] Hourly limit reached (${cooldown.hourly_count}/${MAX_MESSAGES_PER_HOUR})`
         );
         return {
             canSend: false,
@@ -207,7 +207,7 @@ async function checkRateLimits(): Promise<{
                 cooldown_until: cooldownUntil,
                 sent_count_10m: recentSentCount } });
         console.log(
-            `â¸ï¸ [Layer 4] 10-minute threshold hit (${recentSentCount}/${MAX_MESSAGES_PER_10MIN}), cooldown until ${cooldownUntil.toISOString()}`
+            `⏸️ [Layer 4] 10-minute threshold hit (${recentSentCount}/${MAX_MESSAGES_PER_10MIN}), cooldown until ${cooldownUntil.toISOString()}`
         );
         return {
             canSend: false,
@@ -241,7 +241,7 @@ function getRandomDelay(): number {
 
 async function waitRandomDelay(): Promise<void> {
     const delay = getRandomDelay();
-    console.log(`â³ [Layer 3] Random jitter delay: ${delay}ms`);
+    console.log(`⏳ [Layer 3] Random jitter delay: ${delay}ms`);
     await new Promise((resolve) => setTimeout(resolve, delay));
 }
 
@@ -259,7 +259,7 @@ async function isNumberBlocked(phone: string): Promise<boolean> {
 
     if (failedCount >= MAX_RETRY_ATTEMPTS) {
         console.log(
-            `ðŸš« [Layer 5] Number ${phone} blocked: ${failedCount} failures in 24h`
+            `🚫 [Layer 5] Number ${phone} blocked: ${failedCount} failures in 24h`
         );
         return true;
     }
@@ -275,7 +275,7 @@ let isFlushing = false;
 
 export async function autoFlushWhatsappQueue(): Promise<void> {
     if (isFlushing) {
-        console.log("ðŸ”„ [Queue] autoFlush already running, skipping parallel execution");
+        console.log("🔄 [Queue] autoFlush already running, skipping parallel execution");
         return;
     }
 
@@ -297,9 +297,9 @@ export async function autoFlushWhatsappQueue(): Promise<void> {
             count++;
             await new Promise((resolve) => setTimeout(resolve, 500));
         }
-        console.log(`âœ… [Queue] autoFlush finished. Processed ${count} messages.`);
+        console.log(`✅ [Queue] autoFlush finished. Processed ${count} messages.`);
     } catch (err) {
-        console.error("âŒ [Queue] autoFlush error:", err);
+        console.error("❌ [Queue] autoFlush error:", err);
     } finally {
         isFlushing = false;
     }
@@ -307,7 +307,7 @@ export async function autoFlushWhatsappQueue(): Promise<void> {
 
 /**
  * Enqueue a WhatsApp notification with all Layer 1 checks.
- * Does NOT send immediately â€” the cron worker will process the queue.
+ * Does NOT send immediately — the cron worker will process the queue.
  */
 export async function enqueueWhatsapp(
     params: EnqueueParams
@@ -324,7 +324,7 @@ export async function enqueueWhatsapp(
         where: { id: pendaftarId },
         select: { deleted_at: true } });
     if (!pendaftar || pendaftar.deleted_at !== null) {
-        console.log(`ðŸš« [Enqueue] Blocked: pendaftar ${pendaftarId} is deleted or not found.`);
+        console.log(`🚫 [Enqueue] Blocked: pendaftar ${pendaftarId} is deleted or not found.`);
         return { queued: false, reason: "Pendaftar telah dihapus (soft-deleted atau tidak ditemukan)" };
     }
 
@@ -353,13 +353,13 @@ export async function enqueueWhatsapp(
             scheduled_at: scheduledAt || new Date() } });
 
     console.log(
-        `ðŸ“¥ [Enqueue] ${jenisNotif} for ${pendaftarId} queued as ${log.id}`
+        `📥 [Enqueue] ${jenisNotif} for ${pendaftarId} queued as ${log.id}`
     );
 
     // Trigger auto-flush in the background using Next.js after() to survive Vercel serverless freeze
     if (sendNow) {
         try {
-            console.log(`ðŸš€ [Enqueue] sendNow is true. Sending ${jenisNotif} immediately to ${phone}`);
+            console.log(`🚀 [Enqueue] sendNow is true. Sending ${jenisNotif} immediately to ${phone}`);
             const sendResult = await sendMessage({ phone, message: messageContent });
             
             if (sendResult.status) {
@@ -371,12 +371,12 @@ export async function enqueueWhatsapp(
                         response_data: JSON.stringify(sendResult)
                     }
                 });
-                console.log(`âœ… [Enqueue] sent successfully: ${log.id}`);
+                console.log(`✅ [Enqueue] sent successfully: ${log.id}`);
             } else {
-                console.warn(`âš ï¸ [Enqueue] sendNow returned false status, leaving as pending. Result:`, sendResult);
+                console.warn(`⚠️ [Enqueue] sendNow returned false status, leaving as pending. Result:`, sendResult);
             }
         } catch (err: any) {
-            console.error(`âŒ [Enqueue] sendNow error:`, err);
+            console.error(`❌ [Enqueue] sendNow error:`, err);
             // Will fallback to the queue naturally
         }
     } else {
@@ -452,7 +452,7 @@ export async function processWhatsappQueue(): Promise<{
                 status: "failed",
                 error_message: "Message expired (stuck in queue for > 24h)",
                 updated_at: now } });
-        console.log(`ðŸš« [Queue] Discarded obsolete message ${pendingMessage.id} (created: ${pendingMessage.created_at})`);
+        console.log(`🚫 [Queue] Discarded obsolete message ${pendingMessage.id} (created: ${pendingMessage.created_at})`);
         return {
             processed: true,
             logId: pendingMessage.id,
@@ -474,7 +474,7 @@ export async function processWhatsappQueue(): Promise<{
                     status: "failed",
                     error_message: "Pendaftar telah dihapus (soft-deleted atau tidak ditemukan)",
                     updated_at: new Date() } });
-            console.log(`ðŸš« [Queue] Skipped sending message ${pendingMessage.id}: pendaftar ${pendingMessage.pendaftar_id} is deleted or not found.`);
+            console.log(`🚫 [Queue] Skipped sending message ${pendingMessage.id}: pendaftar ${pendingMessage.pendaftar_id} is deleted or not found.`);
             return {
                 processed: true,
                 logId: pendingMessage.id,
@@ -532,7 +532,7 @@ export async function processWhatsappQueue(): Promise<{
             message: pendingMessage.message_content || "" });
 
         if (result.status) {
-            // SUCCESS â€” Update log and flags
+            // SUCCESS — Update log and flags
             await prisma.whatsappLog.update({
                 where: { id: pendingMessage.id },
                 data: {
@@ -562,14 +562,14 @@ export async function processWhatsappQueue(): Promise<{
                     hourly_count: 1,
                     hourly_reset: new Date() } });
 
-            console.log(`âœ… [Sent] ${pendingMessage.jenis_notif} to ${pendingMessage.phone}`);
+            console.log(`✅ [Sent] ${pendingMessage.jenis_notif} to ${pendingMessage.phone}`);
 
             return {
                 processed: true,
                 logId: pendingMessage.id,
                 status: "sent" };
         } else {
-            // FAILED â€” Wablas returned error
+            // FAILED — Wablas returned error
             await prisma.whatsappLog.update({
                 where: { id: pendingMessage.id },
                 data: {
@@ -583,7 +583,7 @@ export async function processWhatsappQueue(): Promise<{
                     updated_at: new Date() } });
 
             console.error(
-                `âŒ [Failed] ${pendingMessage.jenis_notif} to ${pendingMessage.phone}: ${result.message}`
+                `❌ [Failed] ${pendingMessage.jenis_notif} to ${pendingMessage.phone}: ${result.message}`
             );
 
             return {
@@ -606,7 +606,7 @@ export async function processWhatsappQueue(): Promise<{
                 updated_at: new Date() } });
 
         console.error(
-            `âŒ [Error] ${pendingMessage.jenis_notif} to ${pendingMessage.phone}: ${error.message}`
+            `❌ [Error] ${pendingMessage.jenis_notif} to ${pendingMessage.phone}: ${error.message}`
         );
 
         return {
@@ -640,7 +640,7 @@ async function updateNotifFlag(
             where: { id: pendaftarId },
             data: { [flagColumn]: true } });
         console.log(
-            `ðŸ·ï¸ [Flag] Set ${flagColumn} = true for ${pendaftarId}`
+            `🏷️ [Flag] Set ${flagColumn} = true for ${pendaftarId}`
         );
     } catch (e) {
         console.error(`Failed to update flag ${flagColumn}:`, e);
@@ -660,7 +660,7 @@ function pickOpening(): string {
 }
 
 export function buildMessageOTP(nama: string, otp: string): string {
-    return `ðŸ” *Kode Verifikasi PPDB ${BRANDING.schoolName}*
+    return `🔐 *Kode Verifikasi PPDB ${BRANDING.schoolName}*
 
 Assalamu'alaikum Abu/Ummu,
 
@@ -670,9 +670,9 @@ Kode OTP pendaftaran ananda adalah:
 
 Kode ini berlaku selama *5 menit*.
 
-âš ï¸ *PENTING:*
-â€¢ Jangan berikan kode ini kepada siapapun
-â€¢ Tim ${BRANDING.schoolName} tidak akan pernah meminta kode OTP Anda
+⚠️ *PENTING:*
+• Jangan berikan kode ini kepada siapapun
+• Tim ${BRANDING.schoolName} tidak akan pernah meminta kode OTP Anda
 
 Jazakumullahu khairan
 
@@ -692,23 +692,23 @@ export function buildMessageRegistrationSuccess(
     else if (normJ.includes("SMA") || normJ.includes("MA")) jenjangStr = "SMA (Sekolah Menengah Atas) Langsung (Tanpa IL)";
     else jenjangStr = jenjang || "MTs";
 
-    return `ðŸŽ‰ *Pendaftaran Berhasil!*
+    return `🎉 *Pendaftaran Berhasil!*
 
 Assalamu'alaikum Abu/Ummu,
 
 Alhamdulillah, pendaftaran Ananda *${nama}* di ${BRANDING.schoolName} telah berhasil!
 
-ðŸ“‹ *Detail Pendaftaran:*
-â€¢ Nomor Pendaftaran: ${nomor_pendaftaran}
-â€¢ Jenjang: ${jenjangStr}
+📋 *Detail Pendaftaran:*
+• Nomor Pendaftaran: ${nomor_pendaftaran}
+• Jenjang: ${jenjangStr}
 
-ðŸ“ *Langkah Selanjutnya:*
+📝 *Langkah Selanjutnya:*
 1. Login ke dashboard: ${BRANDING.websiteUrl}/dashboard/pendaftar
    *(Gunakan Nomor Pendaftaran & NIK untuk Login)*
 2. Lakukan Pembayaran Pendaftaran (Transfer)
 3. Lengkapi biodata & upload dokumen (setelah pembayaran diverifikasi)
 
-ðŸ’¡ *Butuh Bantuan?*
+💡 *Butuh Bantuan?*
 Hubungi kami di ${BRANDING.phone}
 
 Jazakumullahu khairan
@@ -718,16 +718,16 @@ Jazakumullahu khairan
 }
 
 export function buildMessageDocumentVerified(nama: string, dokumenList: string): string {
-    return `âœ… *Dokumen Telah Diverifikasi*
+    return `✅ *Dokumen Telah Diverifikasi*
 
 Assalamu'alaikum Abu/Ummu,
 
 Alhamdulillah, dokumen Ananda *${nama}* telah diverifikasi dan *DITERIMA*.
 
-ðŸ“„ *Dokumen yang Diverifikasi:*
+📄 *Dokumen yang Diverifikasi:*
 Semua Dokumen Lengkap
 
-ðŸ“ *Langkah Selanjutnya:*
+📝 *Langkah Selanjutnya:*
 Silakan pilih jadwal tes masuk melalui dashboard (Menu Jadwal Ujian).
 
 Dashboard: ${BRANDING.websiteUrl}/dashboard/pendaftar/undangan-seleksi
@@ -739,24 +739,24 @@ Jazakumullahu khairan
 }
 
 export function buildMessageDocumentRejected(nama: string, dokumenList: string, catatan: string): string {
-    return `âŒ *Dokumen Perlu Diperbaiki*
+    return `❌ *Dokumen Perlu Diperbaiki*
 
 Assalamu'alaikum Abu/Ummu,
 
 Mohon maaf, dokumen Ananda *${nama}* perlu diperbaiki.
 
-ðŸ“„ *Dokumen yang Ditolak:*
+📄 *Dokumen yang Ditolak:*
 ${dokumenList}
 
-ðŸ“ *Catatan:*
+📝 *Catatan:*
 ${catatan}
 
-ðŸ”„ *Langkah Selanjutnya:*
+🔄 *Langkah Selanjutnya:*
 1. Login ke dashboard: ${BRANDING.websiteUrl}/dashboard/pendaftar/upload-berkas
 2. Upload ulang dokumen yang ditolak
 3. Pastikan dokumen jelas dan sesuai ketentuan
 
-ðŸ’¡ *Butuh Bantuan?*
+💡 *Butuh Bantuan?*
 Hubungi kami di ${BRANDING.phone}
 
 Jazakumullahu khairan
@@ -766,18 +766,18 @@ Jazakumullahu khairan
 }
 
 export function buildMessagePaymentVerified(nama: string, jumlah: string, metode: string, tanggal: string): string {
-    return `âœ… *Pembayaran Diterima*
+    return `✅ *Pembayaran Diterima*
 
 Assalamu'alaikum Abu/Ummu,
 
 Alhamdulillah, pembayaran Ananda *${nama}* telah kami terima dan verifikasi.
 
-ðŸ’° *Detail Pembayaran:*
+💰 *Detail Pembayaran:*
 * Jumlah: ${jumlah}
 * Metode: ${metode}
 * Tanggal: ${tanggal}
 
-ðŸ“ *Langkah Selanjutnya:*
+📝 *Langkah Selanjutnya:*
 Silakan login ke dashboard untuk melengkapi Data Santri & Upload Berkas.
 Setelah data lengkap, Anda bisa memilih jadwal tes.
 
@@ -791,22 +791,22 @@ Jazakumullahu khairan
 
 export function buildMessageDaftarUlangVerified(nama: string, jumlah: string, metode: string, tanggal: string, uniformLink?: string): string {
     const uniformSection = uniformLink
-        ? `\n\nðŸ‘• *Pengisian Ukuran Seragam:*\nSilakan klik tautan berikut untuk mengisi ukuran seragam Ananda:\n${uniformLink}`
+        ? `\n\n👕 *Pengisian Ukuran Seragam:*\nSilakan klik tautan berikut untuk mengisi ukuran seragam Ananda:\n${uniformLink}`
         : "";
 
-    return `âœ… *Pembayaran Uang Pangkal Diterima*
+    return `✅ *Pembayaran Uang Pangkal Diterima*
 
 Assalamu'alaikum Abu/Ummu,
 
 Alhamdulillah, pembayaran Uang Pangkal Ananda *${nama}* telah kami terima dan verifikasi.
 
-ðŸ’° *Detail Pembayaran:*
+💰 *Detail Pembayaran:*
 * Jumlah: ${jumlah}
 * Metode: ${metode}
 * Status: Terkonfirmasi
 * Tanggal: ${tanggal}${uniformSection}
 
-ðŸ’¡ *Informasi Selanjutnya:*
+💡 *Informasi Selanjutnya:*
 Ananda kini tercatat sebagai calon santri yang telah melakukan pembayaran Uang Pangkal. Mohon nantikan informasi selanjutnya terkait persiapan masuk pesantren melalui dashboard atau grup resmi.
 
 Jazakumullahu khairan
@@ -816,21 +816,21 @@ Jazakumullahu khairan
 }
 
 export function buildMessagePaymentRejected(nama: string, catatan: string): string {
-    return `âŒ *Pembayaran Perlu Diperbaiki*
+    return `❌ *Pembayaran Perlu Diperbaiki*
 
 Assalamu'alaikum Abu/Ummu,
 
 Mohon maaf, bukti pembayaran Ananda *${nama}* perlu diperbaiki.
 
-ðŸ“ *Catatan:*
+📝 *Catatan:*
 ${catatan}
 
-ðŸ”„ *Langkah Selanjutnya:*
+🔄 *Langkah Selanjutnya:*
 1. Login ke dashboard: ${BRANDING.websiteUrl}/dashboard/pendaftar/pembayaran-pendaftaran
 2. Upload ulang bukti pembayaran yang jelas
 3. Pastikan nominal dan rekening tujuan sesuai
 
-ðŸ’¡ *Butuh Bantuan?*
+💡 *Butuh Bantuan?*
 Hubungi kami di ${BRANDING.phone}
 
 Jazakumullahu khairan
@@ -912,9 +912,9 @@ export function buildMessageKonfirmasiJadwal(
 
 Jadwal *${jenisUjian}* Ananda telah terkonfirmasi:
 
-ðŸ“… *Hari/Tanggal:* ${tanggal}
-â° *Waktu:* ${waktu} WIB
-ðŸ“ *Lokasi/Link:* ${lokasi}
+📅 *Hari/Tanggal:* ${tanggal}
+⏰ *Waktu:* ${waktu} WIB
+📍 *Lokasi/Link:* ${lokasi}
 
 Kami akan mengirimkan pengingat kembali beberapa saat sebelum jadwal tiba.
 
@@ -936,14 +936,14 @@ export function buildMessageKonfirmasiJadwalPendaftar(
     waktu: string,
     lokasi: string // Parameter kept for signature compatibility
 ): string {
-    return `ðŸ“… *Konfirmasi Pemilihan Jadwal*
+    return `📅 *Konfirmasi Pemilihan Jadwal*
 
 Assalamu'alaikum Abu/Ummu,
 
 Jadwal *${jenisUjian}* untuk Ananda *${namaSantri}* telah berhasil disimpan ke dalam sistem:
 
-ðŸ“… *Tanggal:* ${tanggal}
-â° *Waktu:* ${waktu} WIB
+📅 *Tanggal:* ${tanggal}
+⏰ *Waktu:* ${waktu} WIB
 
 Link ujian dan pesan pengingat akan dikirimkan menyusul mendekati waktu pelaksanaan.
 
@@ -964,9 +964,9 @@ Assalamu'alaikum Abu/Ummu,
 
 Ini adalah pengingat bahwa Ananda *${nama}* dijadwalkan mengikuti *${jenisUjian}* pada:
 
-ðŸ“… *Hari/Tanggal:* ${tanggal}
-â° *Waktu:* ${waktu} WIB
-ðŸ“ *Lokasi/Link:* ${lokasi}
+📅 *Hari/Tanggal:* ${tanggal}
+⏰ *Waktu:* ${waktu} WIB
+📍 *Lokasi/Link:* ${lokasi}
 
 Mohon persiapkan diri dengan baik dan pastikan koneksi internet stabil. Sampai jumpa!
 
@@ -982,12 +982,12 @@ export function buildMessageReminderH0(
     lokasi: string,
     jenisUjian: string
 ): string {
-    return `â° *PENGINGAT: ${jenisUjian} dimulai 1 jam lagi!*
+    return `⏰ *PENGINGAT: ${jenisUjian} dimulai 1 jam lagi!*
 
 Assalamu'alaikum Abu/Ummu,
 
-ðŸ• *Waktu:* ${waktu} WIB
-ðŸ“ *Lokasi/Link:* ${lokasi}
+🕐 *Waktu:* ${waktu} WIB
+📍 *Lokasi/Link:* ${lokasi}
 
 Mohon segera bersiap. Pastikan koneksi internet stabil.
 
@@ -1000,13 +1000,13 @@ Jazakumullahu khairan
 }
 
 export function buildMessageHasilTes(nama: string): string {
-    return `ðŸ“¢ *Pengumuman Hasil Seleksi*
+    return `📢 *Pengumuman Hasil Seleksi*
 
 Assalamu'alaikum Abu/Ummu,
 
 Alhamdulillah, hasil seleksi Ananda *${nama}* sudah tersedia dan dapat dilihat di dashboard PPDB.
 
-ðŸ”— *Lihat Hasil Seleksi:*
+🔗 *Lihat Hasil Seleksi:*
 ${BRANDING.websiteUrl}/dashboard/pendaftar/pengumuman
 
 *Panduan Daftar Ulang (bagi yang Diterima):*
@@ -1019,11 +1019,11 @@ Jazakumullahu khairan
 *Panitia PPDB ${BRANDING.schoolName}*`;
 }
 
-/** Alias baru â€” sama dengan buildMessageHasilTes */
+/** Alias baru — sama dengan buildMessageHasilTes */
 export const buildMessageHasilSeleksi = buildMessageHasilTes;
 
 /**
- * Build Message for Interviewer/Penguji â€” Notifikasi Jadwal Baru
+ * Build Message for Interviewer/Penguji — Notifikasi Jadwal Baru
  */
 export function buildMessageKonfirmasiJadwalInterviewer(
     namaInterviewer: string,
@@ -1055,8 +1055,8 @@ ${opening} ${title} *${namaInterviewer}*,
 
 Santri atas nama *${namaSantri}* baru saja memilih jadwal *${agendaText}* pada:
 
-ðŸ“… *Tanggal:* ${tanggal}
-â° *Waktu:* ${waktu} WIB
+📅 *Tanggal:* ${tanggal}
+⏰ *Waktu:* ${waktu} WIB
 
 Pesan pengingat beserta link meeting dan link input nilai akan dikirimkan otomatis menyusul mendekati waktu pelaksanaan.
 
@@ -1124,9 +1124,9 @@ Assalamu'alaikum Abu/Ummu,
 
 Ini adalah pengingat bahwa Ananda *${nama}* dijadwalkan mengikuti *${agendaTitle}* pada:
 
-ðŸ“… *Hari/Tanggal:* ${finalHariTanggal}
-â° *Waktu:* ${finalJam}
-ðŸ“ *Lokasi/Link:* ${lokasi}
+📅 *Hari/Tanggal:* ${finalHariTanggal}
+⏰ *Waktu:* ${finalJam}
+📍 *Lokasi/Link:* ${lokasi}
 
 Mohon persiapkan diri dengan baik dan pastikan koneksi internet stabil. Sampai jumpa!
 
@@ -1160,9 +1160,9 @@ Assalamu'alaikum Abu/Ummu dari Ananda *${namaSantri}*,
 
 Ini adalah pengingat bahwa Abu/Ummu dijadwalkan mengikuti *Wawancara Calon Orangtua/Wali Santri* pada:
 
-ðŸ“… *Hari/Tanggal:* ${finalHariTanggal}
-â° *Waktu:* ${finalJam}
-ðŸ“ *Lokasi/Link:* ${lokasi}
+📅 *Hari/Tanggal:* ${finalHariTanggal}
+⏰ *Waktu:* ${finalJam}
+📍 *Lokasi/Link:* ${lokasi}
 
 Mohon persiapkan diri dengan baik dan pastikan koneksi internet stabil. Sampai jumpa!
 
@@ -1217,12 +1217,12 @@ Assalamu'alaikum ${title} *${namaPenguji}*,
 
 Mengingatkan jadwal ${agendaText.includes("Wawancara") ? "wawancara" : "menguji"} ${title}:
 
-ðŸ“ *Agenda:* ${agendaText}
-ðŸ‘¤ *Nama Santri:* *${namaSantri}*
-ðŸ“… *Hari/Tanggal:* ${finalHariTanggal}
-â° *Waktu:* ${finalJam}
-ðŸ“ *Lokasi/Link:* ${lokasi}
-ðŸ”— *Input Hasil:* ${inputNilaiLink || "-"}
+📝 *Agenda:* ${agendaText}
+👤 *Nama Santri:* *${namaSantri}*
+📅 *Hari/Tanggal:* ${finalHariTanggal}
+⏰ *Waktu:* ${finalJam}
+📍 *Lokasi/Link:* ${lokasi}
+🔗 *Input Hasil:* ${inputNilaiLink || "-"}
 
 Mohon kehadirannya tepat waktu. Jazakumullahu khairan.
 
@@ -1235,26 +1235,26 @@ export function buildMessageCombinedFinal(
     status: 'DITERIMA' | 'CADANGAN' | 'DITOLAK',
     jenjang: string
 ): string {
-    let msg = `âœ… *Hasil Seleksi PPDB ${BRANDING.schoolName}*
+    let msg = `✅ *Hasil Seleksi PPDB ${BRANDING.schoolName}*
 
 Assalamu'alaikum Abu/Ummu,
 
 Alhamdulillah, rangkaian Seleksi Ananda *${nama}* telah selesai dan hasil evaluasi telah diputuskan.
 
-ðŸ“¢ *HASIL SELEKSI:*
+📢 *HASIL SELEKSI:*
 Status: *${status}*
 Jenjang: ${jenjang}
 
 `;
 
     if (status === 'DITERIMA') {
-        msg += `ðŸ“ *Langkah Selanjutnya:*
+        msg += `📝 *Langkah Selanjutnya:*
 Silakan login ke dashboard untuk melakukan *Daftar Ulang* dan melengkapi administrasi.
 Batas waktu daftar ulang adalah 7 hari setelah pengumuman ini.
 
 Dashboard: ${BRANDING.websiteUrl}/dashboard/pendaftar/daftar-ulang`;
     } else if (status === 'CADANGAN') {
-        msg += `ðŸ“ *Informasi:*
+        msg += `📝 *Informasi:*
 Ananda berada dalam daftar cadangan. Kami akan menghubungi Abu/Ummu jika ada kuota yang tersedia di kemudian hari. Terus pantau dashboard.
 
 Dashboard: ${BRANDING.websiteUrl}/dashboard/pendaftar/pengumuman`;
@@ -1285,8 +1285,8 @@ Assalamu'alaikum Abu/Ummu dari Ananda *${namaSantri}*,
 
 Kami menginformasikan bahwa jadwal *${jenisUjian}* pada:
 
-ðŸ“… *Tanggal:* ${tanggal}
-â° *Waktu:* ${jam} WIB
+📅 *Tanggal:* ${tanggal}
+⏰ *Waktu:* ${jam} WIB
 
 Telah *DIBATALKAN* oleh Penguji karena alasan: *${alasan}*.
 
@@ -1300,13 +1300,13 @@ Dashboard: ${BRANDING.websiteUrl}/dashboard/pendaftar/undangan-seleksi
 
 
 export function buildMessageSPPVerified(nama: string, jumlah: string, metode: string, tanggal: string): string {
-    return `âœ… *Pembayaran SPP Diterima*
+    return `✅ *Pembayaran SPP Diterima*
 
 Assalamu'alaikum Abu/Ummu,
 
 Alhamdulillah, pembayaran SPP Ananda *${nama}* telah kami terima dan verifikasi.
 
-ðŸ’° *Detail Pembayaran:*
+💰 *Detail Pembayaran:*
 * Jumlah: ${jumlah}
 * Metode: ${metode}
 * Status: Terkonfirmasi

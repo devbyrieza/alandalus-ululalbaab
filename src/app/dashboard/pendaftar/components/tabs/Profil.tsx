@@ -296,14 +296,14 @@ export default function ProfilTab() {
             <h4 className="font-bold text-primary-900 mb-2">Informasi Penting</h4>
             <ul className="text-sm text-primary-800 space-y-1">
               <li>
-                â€¢ Pastikan data Anda sudah benar dan sesuai dengan dokumen resmi
+                • Pastikan data Anda sudah benar dan sesuai dengan dokumen resmi
               </li>
               <li>
-                â€¢ Jika ada perubahan data, hubungi panitia PPDB di nomor yang
+                • Jika ada perubahan data, hubungi panitia PPDB di nomor yang
                 tertera
               </li>
               <li>
-                â€¢ Simpan nomor pendaftaran Anda untuk keperluan verifikasi
+                • Simpan nomor pendaftaran Anda untuk keperluan verifikasi
               </li>
             </ul>
           </div>

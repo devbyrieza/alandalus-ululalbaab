@@ -117,11 +117,11 @@ export default function FasilitasPage() {
 Saya ingin mengajukan Jadwal Kunjungan ke Pesantren Islam Internasional Al-Andalus Ulul Albaab.
 
 *Rincian Rencana Kunjungan:*
-â€¢ Nama: ${visitForm.nama}
-â€¢ WhatsApp: ${visitForm.wa}
-â€¢ Tanggal: ${visitForm.tanggal}
-â€¢ Waktu: ${visitForm.jam} WIB
-â€¢ Jumlah Pengunjung: ${visitForm.jumlah} orang
+• Nama: ${visitForm.nama}
+• WhatsApp: ${visitForm.wa}
+• Tanggal: ${visitForm.tanggal}
+• Waktu: ${visitForm.jam} WIB
+• Jumlah Pengunjung: ${visitForm.jumlah} orang
 
 Mohon konfirmasi kesediaan waktu kunjungan tersebut. Terima kasih.`;
 

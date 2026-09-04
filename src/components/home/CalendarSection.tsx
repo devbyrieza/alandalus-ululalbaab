@@ -5,7 +5,7 @@ import { Calendar, Download, Clock, ArrowUpRight } from "lucide-react";
 import { Container } from "@/components/layout/Container";
 import { motion } from "framer-motion";
 
-// â”€â”€â”€ Data â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Data ────────────────────────────────────────────
 const IMPORTANT_DATES = [
   {
     date: "05 Sep - 30 Nov 2026",
@@ -39,7 +39,7 @@ const ACCENT_MAP = {
     badge: "bg-secondary-50 text-secondary-700 border-secondary-200",
     title: "group-hover:text-secondary-700" } };
 
-// â”€â”€â”€ Main â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Main ─────────────────────────────────────────────
 export default function CalendarSection() {
   return (
     <section

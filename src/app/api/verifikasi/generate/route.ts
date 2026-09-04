@@ -43,13 +43,13 @@ export async function POST(request: NextRequest) {
 
 Kode verifikasi PPDB Ponpes Al Andalus Ulul Albaab
 
-ðŸ” *${otp}*
+🔐 *${otp}*
 
-â° Berlaku 5 menit
+⏰ Berlaku 5 menit
 
-âš ï¸ PENTING:
-â€¢ Jangan berikan kode ini kepada siapapun
-â€¢ Gunakan kode ini untuk verifikasi di website
+⚠️ PENTING:
+• Jangan berikan kode ini kepada siapapun
+• Gunakan kode ini untuk verifikasi di website
 
 Wassalamu'alaikum wr wb` });
   } catch (error: any) {

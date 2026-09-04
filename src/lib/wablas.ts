@@ -34,7 +34,7 @@ const DEFAULT_CONTACT = "0812-8530-0800";
 
 if (!WABLAS_DOMAIN || !WABLAS_TOKEN) {
   console.warn(
-    "âš ï¸ Wablas credentials not configured. WhatsApp notifications will be disabled.",
+    "⚠️ Wablas credentials not configured. WhatsApp notifications will be disabled.",
   );
 }
 
@@ -92,7 +92,7 @@ export async function sendMessage({
     formData.append("phone", formattedPhone);
     formData.append("message", message);
 
-    console.log(`ðŸ“¡ Sending Wablas to ${formattedPhone} via ${WABLAS_DOMAIN}`);
+    console.log(`📡 Sending Wablas to ${formattedPhone} via ${WABLAS_DOMAIN}`);
 
     const response = await fetch(url, {
       method: "POST",
@@ -106,14 +106,14 @@ export async function sendMessage({
     try {
       data = JSON.parse(rawText);
     } catch (e) {
-      console.error("âŒ Wablas Non-JSON Response:", rawText);
+      console.error("❌ Wablas Non-JSON Response:", rawText);
       return {
         status: false,
         message: `Wablas Error: ${response.status} ${response.statusText}` };
     }
 
     if (!response.ok || !data.status) {
-      console.error("âŒ Wablas API Error:", data);
+      console.error("❌ Wablas API Error:", data);
       return {
         status: false,
         message: data.message || `Wablas Failed: ${response.status}` };
@@ -121,7 +121,7 @@ export async function sendMessage({
 
     return { status: true, message: "Message sent successfully", data };
   } catch (error: any) {
-    console.error("âŒ Wablas Network Error:", error);
+    console.error("❌ Wablas Network Error:", error);
     return { status: false, message: `Network Error: ${error.message}` };
   }
 }
@@ -169,40 +169,40 @@ export async function sendBroadcast(
 
 const TEMPLATES: Record<string, string> = {
   // Pendaftaran berhasil
-  registration_success: `ðŸŽ‰ *Pendaftaran Berhasil!*
+  registration_success: `🎉 *Pendaftaran Berhasil!*
 
 Assalamu'alaikum {{nama}},
 
 Alhamdulillah, pendaftaran Anda di Pesantren Al Andalus Ulul Albaab telah berhasil!
 
-ðŸ“‹ *Detail Pendaftaran:*
-â€¢ Nomor Pendaftaran: {{nomor_pendaftaran}}
-â€¢ Jenjang: {{jenjang}}
-â€¢ Nama: {{nama}}
+📋 *Detail Pendaftaran:*
+• Nomor Pendaftaran: {{nomor_pendaftaran}}
+• Jenjang: {{jenjang}}
+• Nama: {{nama}}
 
-ðŸ“ *Langkah Selanjutnya:*
+📝 *Langkah Selanjutnya:*
 1. Login ke dashboard: {{dashboard_url}}
    *(Gunakan Nomor Pendaftaran & NIK untuk Login)*
 2. Lakukan Pembayaran Pendaftaran (Transfer)
 3. Lengkapi biodata & upload dokumen (setelah pembayaran diverifikasi)
 
-ðŸ’¡ *Butuh Bantuan?*
+💡 *Butuh Bantuan?*
 Hubungi kami di {{kontak}}
 
 Jazakumullahu khairan,
 Panitia PPDB Al Andalus Ulul Albaab`,
 
   // Dokumen diverifikasi - Approved
-  document_verified: `âœ… *Dokumen Diverifikasi*
+  document_verified: `✅ *Dokumen Diverifikasi*
 
 Assalamu'alaikum {{nama}},
 
 Alhamdulillah, dokumen Anda telah diverifikasi dan *DITERIMA*.
 
-ðŸ“„ *Dokumen yang Diverifikasi:*
+📄 *Dokumen yang Diverifikasi:*
 {{dokumen_list}}
 
-ðŸ“ *Langkah Selanjutnya:*
+📝 *Langkah Selanjutnya:*
 Silakan pilih jadwal seleksi masuk melalui dashboard Anda (Menu Jadwal Seleksi).
 
 Dashboard: {{dashboard_url}}
@@ -211,42 +211,42 @@ Jazakumullahu khairan,
 Panitia PPDB Al Andalus Ulul Albaab`,
 
   // Dokumen ditolak
-  document_rejected: `âŒ *Dokumen Perlu Diperbaiki*
+  document_rejected: `❌ *Dokumen Perlu Diperbaiki*
 
 Assalamu'alaikum {{nama}},
 
 Mohon maaf, dokumen Anda perlu diperbaiki.
 
-ðŸ“„ *Dokumen yang Ditolak:*
+📄 *Dokumen yang Ditolak:*
 {{dokumen_list}}
 
-ðŸ“ *Catatan:*
+📝 *Catatan:*
 {{catatan}}
 
-ðŸ”„ *Langkah Selanjutnya:*
+🔄 *Langkah Selanjutnya:*
 1. Login ke dashboard: {{dashboard_url}}
 2. Upload ulang dokumen yang ditolak
 3. Pastikan dokumen jelas dan sesuai ketentuan
 
-ðŸ’¡ *Butuh Bantuan?*
+💡 *Butuh Bantuan?*
 Hubungi kami di {{kontak}}
 
 Jazakumullahu khairan,
 Panitia PPDB Al Andalus Ulul Albaab`,
 
   // Pembayaran diverifikasi - Approved
-  payment_verified: `âœ… *Pembayaran Diterima*
+  payment_verified: `✅ *Pembayaran Diterima*
 
 Assalamu'alaikum {{nama}},
 
 Alhamdulillah, pembayaran Anda telah kami terima dan verifikasi.
 
-ðŸ’° *Detail Pembayaran:*
+💰 *Detail Pembayaran:*
 * Jumlah: {{jumlah}}
 * Metode: {{metode}}
 * Tanggal: {{tanggal}}
 
-ðŸ“ *Langkah Selanjutnya:*
+📝 *Langkah Selanjutnya:*
 Silakan login ke dashboard untuk melengkapi Data Santri & Upload Berkas.
 Setelah data lengkap, Anda bisa memilih jadwal tes.
 
@@ -256,39 +256,39 @@ Jazakumullahu khairan,
 Panitia PPDB Al Andalus Ulul Albaab`,
 
   // Pembayaran ditolak
-  payment_rejected: `âŒ *Pembayaran Perlu Diperbaiki*
+  payment_rejected: `❌ *Pembayaran Perlu Diperbaiki*
 
 Assalamu'alaikum {{nama}},
 
 Mohon maaf, bukti pembayaran Anda perlu diperbaiki.
 
-ðŸ“ *Catatan:*
+📝 *Catatan:*
 {{catatan}}
 
-ðŸ”„ *Langkah Selanjutnya:*
+🔄 *Langkah Selanjutnya:*
 1. Login ke dashboard: {{dashboard_url}}
 2. Upload ulang bukti pembayaran yang jelas
 3. Pastikan nominal dan rekening tujuan sesuai
 
-ðŸ’¡ *Butuh Bantuan?*
+💡 *Butuh Bantuan?*
 Hubungi kami di {{kontak}}
 
 Jazakumullahu khairan,
 Panitia PPDB Al Andalus Ulul Albaab`,
 
   // Reminder deadline
-  deadline_reminder: `â° *Pengingat Deadline*
+  deadline_reminder: `⏰ *Pengingat Deadline*
 
 Assalamu'alaikum {{nama}},
 
 Ini adalah pengingat bahwa deadline {{jenis_deadline}} akan berakhir pada:
 
-ðŸ“… *{{tanggal_deadline}}*
+📅 *{{tanggal_deadline}}*
 
-ðŸ“ *Status Anda:*
+📝 *Status Anda:*
 {{status}}
 
-ðŸ”„ *Yang Perlu Dilakukan:*
+🔄 *Yang Perlu Dilakukan:*
 {{action_needed}}
 
 Dashboard: {{dashboard_url}}
@@ -297,24 +297,24 @@ Jazakumullahu khairan,
 Panitia PPDB Al Andalus Ulul Albaab`,
 
   // Jadwal seleksi masuk
-  test_schedule: `ðŸ“… *Jadwal seleksi masuk*
+  test_schedule: `📅 *Jadwal seleksi masuk*
 
 Assalamu'alaikum {{nama}},
 
 Berikut jadwal seleksi masuk Anda:
 
-ðŸ“… *Tanggal:* {{tanggal}}
-ðŸ• *Waktu:* {{waktu}}
-ðŸ“ *Tempat:* {{tempat}}
+📅 *Tanggal:* {{tanggal}}
+🕐 *Waktu:* {{waktu}}
+📍 *Tempat:* {{tempat}}
 
-ðŸ“ *Persiapan:*
-â€¢ Kartu peserta (download di dashboard)
-â€¢ Alat tulis
+📝 *Persiapan:*
+• Kartu peserta (download di dashboard)
+• Alat tulis
 
-âš ï¸ *Penting:*
-â€¢ Hadir 30 menit sebelum tes
-â€¢ Berpakaian sopan dan rapi
-â€¢ Berdoa dan persiapkan diri
+⚠️ *Penting:*
+• Hadir 30 menit sebelum tes
+• Berpakaian sopan dan rapi
+• Berdoa dan persiapkan diri
 
 Dashboard: {{dashboard_url}}
 
@@ -322,40 +322,40 @@ Jazakumullahu khairan,
 Panitia PPDB Al Andalus Ulul Albaab`,
 
   // Pengumuman kelulusan - Diterima
-  announcement_accepted: `ðŸŽ‰ *SELAMAT! Anda DITERIMA*
+  announcement_accepted: `🎉 *SELAMAT! Anda DITERIMA*
 
 Assalamu'alaikum {{nama}},
 
 Alhamdulillah, kami dengan senang hati mengumumkan bahwa Anda *DITERIMA* di Pesantren Al Andalus Ulul Albaab!
 
-ðŸ“‹ *Detail:*
-â€¢ Jenjang: {{jenjang}}
-â€¢ Tahun Ajaran: {{tahun_ajaran}}
+📋 *Detail:*
+• Jenjang: {{jenjang}}
+• Tahun Ajaran: {{tahun_ajaran}}
 
-ðŸ“ *Langkah Selanjutnya:*
+📝 *Langkah Selanjutnya:*
 1. Daftar ulang (info di dashboard)
 2. Persiapan masuk pesantren
 3. Orientasi santri baru
 
 Dashboard: {{dashboard_url}}
 
-Selamat bergabung di keluarga besar Al Andalus Ulul Albaab! ðŸŽ“
+Selamat bergabung di keluarga besar Al Andalus Ulul Albaab! 🎓
 
 Jazakumullahu khairan,
 Panitia PPDB Al Andalus Ulul Albaab`,
 
   // Pengumuman kelulusan - Cadangan
-  announcement_reserve: `ðŸ“‹ *PENGUMUMAN HASIL SELEKSI*
+  announcement_reserve: `📋 *PENGUMUMAN HASIL SELEKSI*
 
 Assalamu'alaikum {{nama}},
 
 Berdasarkan hasil seleksi PPDB Pesantren Al Andalus Ulul Albaab, kami informasikan bahwa Anda dinyatakan *CADANGAN*.
 
-ðŸ“‹ *Detail:*
-â€¢ Jenjang: {{jenjang}}
-â€¢ Tahun Ajaran: {{tahun_ajaran}}
+📋 *Detail:*
+• Jenjang: {{jenjang}}
+• Tahun Ajaran: {{tahun_ajaran}}
 
-ðŸ“ *Informasi Selanjutnya:*
+📝 *Informasi Selanjutnya:*
 Anda berada dalam daftar cadangan. Kami akan menghubungi Anda jika ada kuota yang tersedia.
 Pantau terus dashboard Anda untuk update terbaru.
 
@@ -365,15 +365,15 @@ Jazakumullahu khairan,
 Panitia PPDB Al Andalus Ulul Albaab`,
 
   // Pengumuman kelulusan - Ditolak
-  announcement_rejected: `ðŸ“‹ *PENGUMUMAN HASIL SELEKSI*
+  announcement_rejected: `📋 *PENGUMUMAN HASIL SELEKSI*
 
 Assalamu'alaikum {{nama}},
 
 Berdasarkan hasil seleksi PPDB Pesantren Al Andalus Ulul Albaab, kami informasikan bahwa Anda *BELUM DITERIMA* pada periode ini.
 
-ðŸ“‹ *Detail:*
-â€¢ Jenjang: {{jenjang}}
-â€¢ Tahun Ajaran: {{tahun_ajaran}}
+📋 *Detail:*
+• Jenjang: {{jenjang}}
+• Tahun Ajaran: {{tahun_ajaran}}
 
 Kami mengapresiasi semangat dan usaha Anda. Semoga dimudahkan jalannya untuk menuntut ilmu di manapun.
 
@@ -381,16 +381,16 @@ Jazakumullahu khairan,
 Panitia PPDB Al Andalus Ulul Albaab`,
 
   // Google Form Link
-  google_form_link: `ðŸ“ *LINK FORMULIR TAMBAHAN*
+  google_form_link: `📝 *LINK FORMULIR TAMBAHAN*
 
 Assalamu'alaikum {{nama}},
 
 Silakan lengkapi formulir berikut sebagai kelengkapan data {{keterangan}}:
 
-ðŸ”— *Link Formulir:*
+🔗 *Link Formulir:*
 {{form_link}}
 
-â° *Batas Waktu:* {{batas_waktu}}
+⏰ *Batas Waktu:* {{batas_waktu}}
 
 Pastikan mengisi dengan data yang benar dan lengkap.
 
@@ -400,21 +400,21 @@ Jazakumullahu khairan,
 Panitia PPDB Al Andalus Ulul Albaab`,
 
   // Zoom/Online Meeting Link
-  zoom_meeting: `ðŸŽ¥ *UNDANGAN TES ONLINE*
+  zoom_meeting: `🎥 *UNDANGAN TES ONLINE*
 
 Assalamu'alaikum {{nama}},
 
 Berikut jadwal {{jenis_ujian}} secara online:
 
-ðŸ“… *Tanggal:* {{tanggal}}
-ðŸ• *Waktu:* {{waktu}}
-ðŸ”— *Link Zoom:* {{zoom_link}}
+📅 *Tanggal:* {{tanggal}}
+🕐 *Waktu:* {{waktu}}
+🔗 *Link Zoom:* {{zoom_link}}
 
-ðŸ“ *Persiapan:*
-â€¢ Pastikan koneksi internet stabil
-â€¢ Gunakan perangkat dengan kamera dan mikrofon
-â€¢ Bergabung 10 menit sebelum waktu tes
-â€¢ Berpakaian sopan dan rapi
+📝 *Persiapan:*
+• Pastikan koneksi internet stabil
+• Gunakan perangkat dengan kamera dan mikrofon
+• Bergabung 10 menit sebelum waktu tes
+• Berpakaian sopan dan rapi
 
 Dashboard: {{dashboard_url}}
 
@@ -422,13 +422,13 @@ Jazakumullahu khairan,
 Panitia PPDB Al Andalus Ulul Albaab`,
 
   // Data Lengkap -> Unlock Upload Berkas
-  data_complete: `âœ… *DATA LENGKAP*
+  data_complete: `✅ *DATA LENGKAP*
 
 Assalamu'alaikum {{nama}},
 
 Alhamdulillah, data diri Anda sudah lengkap.
 
-ðŸ”“ *Tahap Selanjutnya Terbuka:*
+🔓 *Tahap Selanjutnya Terbuka:*
 Anda sekarang bisa melanjutkan ke tahap *Upload Berkas*.
 
 Silakan login ke dashboard dan unggah dokumen yang diperlukan (KK, Akta, dll).
@@ -439,16 +439,16 @@ Jazakumullahu khairan,
 Panitia PPDB Al Andalus Ulul Albaab`,
 
   // Semua Ujian Selesai
-  all_exams_complete: `ðŸŽ‰ *RANGKAIAN SELEKSI SELESAI*
+  all_exams_complete: `🎉 *RANGKAIAN SELEKSI SELESAI*
 
 Assalamu'alaikum {{nama}},
 
 Alhamdulillah, Anda telah menyelesaikan seluruh rangkaian ujian/seleksi masuk Pesantren Al Andalus Ulul Albaab.
 
-ðŸ” *Status Terkini:*
+🔐 *Status Terkini:*
 Halaman Pengumuman Hasil Seleksi kini telah terbuka di dashboard Anda.
 
-âš ï¸ *Catatan:*
+⚠️ *Catatan:*
 Pengumuman kelulusan belum tersedia saat ini. Mohon menunggu update selanjutnya dari panitia. Kami akan mengirimkan notifikasi saat hasil seleksi diumumkan.
 
 Dashboard: {{dashboard_url}}
@@ -583,12 +583,12 @@ export async function notifyTestSchedule(data: {
   // Append meeting link if available
   if (data.meeting_link) {
     message = message.replace(
-      /ðŸ“ \*Tempat:\* .*/,
-      `ðŸ“ *Tempat:* ${data.tempat}\nðŸ”— *Link Meeting:* ${data.meeting_link}`,
+      /📍 \*Tempat:\* .*/,
+      `📍 *Tempat:* ${data.tempat}\n🔗 *Link Meeting:* ${data.meeting_link}`,
     );
     // Fallback if regex fails or just append
     if (!message.includes(data.meeting_link)) {
-      message += `\n\nðŸ”— *Link Meeting:* ${data.meeting_link}`;
+      message += `\n\n🔗 *Link Meeting:* ${data.meeting_link}`;
     }
   }
 
@@ -686,7 +686,7 @@ export async function sendDocumentMessage(params: {
     formData.append("document", params.documentUrl);
     formData.append("caption", params.message);
 
-    console.log(`ðŸ“Ž Sending document to ${formattedPhone} via Wablas`);
+    console.log(`📎 Sending document to ${formattedPhone} via Wablas`);
 
     const response = await fetch(url, {
       method: "POST",
@@ -700,12 +700,12 @@ export async function sendDocumentMessage(params: {
     try {
       data = JSON.parse(rawText);
     } catch {
-      console.error("âŒ Wablas Non-JSON Response:", rawText);
+      console.error("❌ Wablas Non-JSON Response:", rawText);
       return { status: false, message: `Wablas Error: ${response.status}` };
     }
 
     if (!response.ok || !data.status) {
-      console.error("âŒ Wablas send-document Error:", data);
+      console.error("❌ Wablas send-document Error:", data);
       return {
         status: false,
         message: data.message || "Failed to send document" };
@@ -713,7 +713,7 @@ export async function sendDocumentMessage(params: {
 
     return { status: true, message: "Document sent successfully", data };
   } catch (error: any) {
-    console.error("âŒ Wablas send-document Network Error:", error);
+    console.error("❌ Wablas send-document Network Error:", error);
     return { status: false, message: `Network Error: ${error.message}` };
   }
 }
@@ -730,7 +730,7 @@ export async function sendButtonMessage(params: {
 }): Promise<WablasResponse> {
   // Wablas tidak support button secara native di semua device,
   // jadi kita append link ke message sebagai fallback universal
-  const fullMessage = `${params.message}\n\nðŸ”— *${params.buttonText}:*\n${params.buttonUrl}`;
+  const fullMessage = `${params.message}\n\n🔗 *${params.buttonText}:*\n${params.buttonUrl}`;
 
   return sendMessage({
     phone: params.phone,
@@ -790,7 +790,7 @@ export async function blastWithQueue(params: {
     errors: [] };
 
   console.log(
-    `ðŸ“¢ Starting blast to ${recipients.length} recipients (delay: ${delayMs}ms)`,
+    `📢 Starting blast to ${recipients.length} recipients (delay: ${delayMs}ms)`,
   );
 
   for (let i = 0; i < recipients.length; i++) {
@@ -847,7 +847,7 @@ export async function blastWithQueue(params: {
   }
 
   console.log(
-    `ðŸ“¢ Blast completed: ${result.success} success, ${result.failed} failed out of ${result.total}`,
+    `📢 Blast completed: ${result.success} success, ${result.failed} failed out of ${result.total}`,
   );
   return result;
 }
@@ -890,7 +890,7 @@ export async function notifySelectionResult(data: {
     const suratUrl = `${currentAppUrl}/api/files/${data.suratPath}`;
     await sendDocumentMessage({
       phone: data.phone,
-      message: `ðŸ“„ Surat Keputusan Hasil Seleksi â€” ${data.nama}`,
+      message: `📄 Surat Keputusan Hasil Seleksi — ${data.nama}`,
       documentUrl: suratUrl });
   }
 
@@ -1020,16 +1020,16 @@ export async function notifyNewStaffAccess(data: {
   const cleanPhone = data.phone.replace(/\D/g, "");
   const pin = cleanPhone.slice(-4) || "1234";
 
-  const message = `ðŸ”‘ *Akses Masuk Baru Staf PPDB ${BRANDING.schoolName}*
+  const message = `🔑 *Akses Masuk Baru Staf PPDB ${BRANDING.schoolName}*
 
 Assalamu'alaikum *${data.nama}*,
 
 Selamat, Anda telah didaftarkan/diperbarui aksesnya sebagai *${roleLabel}* pada sistem PPDB ${BRANDING.schoolName}.
 
 Berikut adalah tautan masuk cepat Anda:
-ðŸ”— ${shortUrl}
+🔗 ${shortUrl}
 
-âš ï¸ *PENGAMANAN PIN:*
+⚠️ *PENGAMANAN PIN:*
 Demi keamanan, saat pertama kali mengakses link di atas or saat berganti sesi, Anda akan diminta memasukkan *4-digit PIN keamanan*.
 PIN Keamanan Anda adalah: *${pin}* (4 digit terakhir nomor WhatsApp Anda).
 

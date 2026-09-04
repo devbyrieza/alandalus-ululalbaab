@@ -21,7 +21,7 @@ export async function sendSms(
 
     // Fallback untuk development
     if (process.env.NODE_ENV === "development") {
-      console.log(`ðŸ“¨ [DEV] SMS OTP ${otp} untuk ${phone}`);
+      console.log(`📨 [DEV] SMS OTP ${otp} untuk ${phone}`);
       return { success: true, messageId: "dev-sms-" + Date.now() };
     }
 

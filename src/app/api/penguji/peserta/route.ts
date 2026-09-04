@@ -23,7 +23,7 @@ export async function GET() {
   const userId = session.user_id || session.id;
   const full_name = session.full_name || session.name || "Reviewer";
   console.log(
-    `ðŸ” [API /penguji/peserta] userId: ${userId} | name: ${full_name}`,
+    `🔍 [API /penguji/peserta] userId: ${userId} | name: ${full_name}`,
   );
 
   try {

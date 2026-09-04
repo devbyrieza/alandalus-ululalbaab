@@ -237,7 +237,7 @@ export default function DataPendaftaranTab() {
         </div>
       </div>
 
-      {/* Action Cards - Flow PPDB: Pembayaran â†’ Data Pribadi â†’ Upload Dokumen */}
+      {/* Action Cards - Flow PPDB: Pembayaran → Data Pribadi → Upload Dokumen */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Step 1: Pembayaran */}
         <Link

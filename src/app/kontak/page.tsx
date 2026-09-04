@@ -452,8 +452,8 @@ export default function ContactPage() {
 
               {/* Trust microcopy */}
               <p className="mt-6 text-[11px] text-primary-300 font-bold uppercase tracking-widest">
-                âœ¦ Pendaftaran Gratis&nbsp;&nbsp;â€¢&nbsp;&nbsp;Proses
-                Mudah&nbsp;&nbsp;â€¢&nbsp;&nbsp;Langsung Konfirmasi
+                ✦ Pendaftaran Gratis&nbsp;&nbsp;•&nbsp;&nbsp;Proses
+                Mudah&nbsp;&nbsp;•&nbsp;&nbsp;Langsung Konfirmasi
               </p>
 
               {/* Legalitas badges */}
@@ -461,13 +461,13 @@ export default function ContactPage() {
                 <div className="flex items-center gap-2 text-primary-100/70">
                   <ShieldCheck className="w-4 h-4 text-green-400" />
                   <span className="text-xs font-bold uppercase tracking-widest">
-                    Terakreditasi A â€” BAN-PDM
+                    Terakreditasi A — BAN-PDM
                   </span>
                 </div>
                 <div className="flex items-center gap-2 text-primary-100/70">
                   <Award className="w-4 h-4 text-secondary-400" />
                   <span className="text-xs font-bold uppercase tracking-widest">
-                    Angkatan ke-5 â€¢ TA 2027/2028
+                    Angkatan ke-5 • TA 2027/2028
                   </span>
                 </div>
                 <div className="flex items-center gap-2 text-primary-100/70">

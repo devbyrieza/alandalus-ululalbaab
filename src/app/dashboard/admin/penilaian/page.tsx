@@ -627,7 +627,7 @@ export default function ExaminerDashboard() {
           <button
             onClick={() => {
               const message = encodeURIComponent(
-                `*Assalamuâ€™alaikum Warahmatullahi Wabarakatuh*\n\nYth. Ustadz / Ustadzah Panitia PPDB Pesantren Al-Andalus Ulul Albaab,\n\nBerikut link akses khusus Bank Soal Seleksi & Form Penilaian Penguji untuk peninjauan & evaluasi TA 2027/2028:\n\n https://ppdb.pesantren-ululalbaab.com/panitia/bank-soal\n\n_Mohon bantuan ustadz/ustadzah untuk meninjau relevansi soal dan rubrik wawancara._\n\nSyukron, Jazakumullahu Khairan.`
+                `*Assalamu’alaikum Warahmatullahi Wabarakatuh*\n\nYth. Ustadz / Ustadzah Panitia PPDB Pesantren Al-Andalus Ulul Albaab,\n\nBerikut link akses khusus Bank Soal Seleksi & Form Penilaian Penguji untuk peninjauan & evaluasi TA 2027/2028:\n\n https://ppdb.pesantren-ululalbaab.com/panitia/bank-soal\n\n_Mohon bantuan ustadz/ustadzah untuk meninjau relevansi soal dan rubrik wawancara._\n\nSyukron, Jazakumullahu Khairan.`
               );
               window.open(`https://wa.me/?text=${message}`, "_blank");
             }}
@@ -1216,7 +1216,7 @@ export default function ExaminerDashboard() {
                       );
                     })()}
 
-                    {/* 6 Nilai Grid â€” 3x2 */}
+                    {/* 6 Nilai Grid — 3x2 */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
                       {[
                         {
@@ -1574,7 +1574,7 @@ export default function ExaminerDashboard() {
                     )}
                   </p>
                   <p className="text-xs font-bold text-ink-500 font-mono mt-0.5">
-                    {assignStudent.nomor_pendaftaran || "-"} â€¢{" "}
+                    {assignStudent.nomor_pendaftaran || "-"} •{" "}
                     {assignStudent.jenjang || "-"}
                   </p>
                 </div>
@@ -1687,7 +1687,7 @@ export default function ExaminerDashboard() {
                     )}
                   </p>
                   <p className="text-xs font-bold text-ink-500 font-mono mt-0.5">
-                    {selectedStudent.nomor_pendaftaran || "-"} â€¢{" "}
+                    {selectedStudent.nomor_pendaftaran || "-"} •{" "}
                     {selectedStudent.jenjang || "-"}
                   </p>
                 </div>

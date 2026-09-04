@@ -44,7 +44,7 @@ const PROGRAMS = [
       "Bahasa Arab & Inggris sebagai Bahasa Pengantar Yaumiyah",
       "Kajian Kitab Turots Dasar & Fiqih Ibadah",
       "Kurikulum Nasional Madrasah Tsanawiyah Lengkap",
-      "Kuota: 48 Santri Putra Â· 24 Santriwati Putri",
+      "Kuota: 48 Santri Putra · 24 Santriwati Putri",
     ],
     image: "/images/ruang-kelas.jpg",
     theme: "blue",
@@ -70,7 +70,7 @@ const PROGRAMS = [
       "Pondasi Kitab Turots Dasar & Fiqih Ibadah",
       "Pembiasaan Bahasa Arab Aktif di Kelas & Asrama",
       "Islamic Entrepreneurship & Kemandirian Santri",
-      "Kuota: 24 Santri Putra Â· 24 Santriwati Putri",
+      "Kuota: 24 Santri Putra · 24 Santriwati Putri",
     ],
     image: "/images/kelas-dari-dalam.webp",
     theme: "amber",
@@ -123,7 +123,7 @@ export default function ProgramPage() {
             className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary-50 border border-primary-100 text-primary-700 text-xs font-bold uppercase tracking-widest mb-8 shadow-xs"
           >
             <GraduationCap className="w-3.5 h-3.5" />
-            <span>Jenjang Pendidikan â€¢ Tahun Ajaran 2027/2028</span>
+            <span>Jenjang Pendidikan • Tahun Ajaran 2027/2028</span>
           </motion.div>
 
           <motion.h1

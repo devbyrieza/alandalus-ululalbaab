@@ -141,7 +141,7 @@ export default function Navbar() {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
-            {/* â”€â”€ Logo â”€â”€ */}
+            {/* ── Logo ── */}
             <Link
               href="/"
               onClick={handleBerandaClick}
@@ -165,7 +165,7 @@ export default function Navbar() {
                     sizes="44px"
                   />
                 </div>
-                {/* Status dot â€” blue green */}
+                {/* Status dot — blue green */}
                 <div className="absolute -bottom-1 -right-1 w-3.5 h-3.5 bg-[var(--color-primary-600)] border-2 border-white rounded-full z-10 shadow-sm" />
               </div>
 
@@ -185,7 +185,7 @@ export default function Navbar() {
               </div>
             </Link>
 
-            {/* â”€â”€ Desktop Nav (lg+) â”€â”€ */}
+            {/* ── Desktop Nav (lg+) ── */}
             <nav
               className={`hidden lg:flex items-center gap-0.5 p-1.5 rounded-full border transition-all duration-300 ${
                 isScrolled
@@ -272,7 +272,7 @@ export default function Navbar() {
               })}
             </nav>
 
-            {/* â”€â”€ CTA Buttons (lg+) â”€â”€ */}
+            {/* ── CTA Buttons (lg+) ── */}
             <div className="hidden lg:flex items-center gap-2 xl:gap-3 shrink-0">
               <LanguageSwitcher />
               {session ? (
@@ -314,7 +314,7 @@ export default function Navbar() {
               )}
             </div>
 
-            {/* â”€â”€ Hamburger (below lg) â”€â”€ */}
+            {/* ── Hamburger (below lg) ── */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className={`lg:hidden p-3 rounded-lg transition-all duration-300 min-h-[48px] min-w-[48px] flex items-center justify-center border ${
@@ -352,7 +352,7 @@ export default function Navbar() {
         </div>
       </header>
 
-      {/* â”€â”€ Mobile Menu â€” Bottom Sheet â”€â”€ */}
+      {/* ── Mobile Menu — Bottom Sheet ── */}
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div

@@ -290,7 +290,7 @@ export default function BankSoalPanitiaPage() {
                       </div>
                       <div className="flex items-center gap-2 text-xs font-bold bg-rose-50 text-rose-700 px-3 py-1.5 rounded-lg border border-rose-100">
                         <span>{item.labelMin}</span>
-                        <span>âž”</span>
+                        <span>➔</span>
                         <span>{item.labelMax}</span>
                       </div>
                     </div>
@@ -399,10 +399,10 @@ export default function BankSoalPanitiaPage() {
                 { id: "Q2", text: "2. Bagaimana pandangan Abu/Ummu tentang sistem pendidikan berbasis pesantren?", a: "Pilihan utama untuk agama, akhlak, dan karakter (100)", b: "Pilihan utama untuk akhlak (75)", c: "Pesantren juga mengajarkan pelajaran umum (50)" },
                 { id: "Q3", text: "3. Ananda mau bersekolah di Pesantren atas keinginan siapa?", a: "Orang tua & anak (100)", b: "Anak saja (75)", c: "Orang tua / ikut teman (50)" },
                 { id: "Q4", text: "4. Apa yang Abu/Ummu lakukan sehingga ananda mau sekolah di pesantren?", a: "Memberikan pengertian (100)", b: "Memberikan hadiah/iming-iming (75)", c: "Memaksa (50)" },
-                { id: "Q5", text: "5. Sejauh apa pendidikan agama/Al-Qurâ€™an ananda sebelumnya?", a: "Intensif (tahfizh, sekolah Islam) (100)", b: "Non intensif (swasta biasa) (75)", c: "Seadanya (sekolah negeri) (50)" },
+                { id: "Q5", text: "5. Sejauh apa pendidikan agama/Al-Qur’an ananda sebelumnya?", a: "Intensif (tahfizh, sekolah Islam) (100)", b: "Non intensif (swasta biasa) (75)", c: "Seadanya (sekolah negeri) (50)" },
                 { id: "Q6", text: "6. Keberhasilan proses pendidikan anak merupakan tanggung jawab siapa?", a: "Bersama (Pesantren & Ortu) (100)", b: "Orang Tua saja (75)", c: "Sekolah saja (50)" },
                 { id: "Q7", text: "7. Sejauh apa kesiapan Abu/Ummu memenuhi kewajiban SPP?", a: "Yakin (100)", b: "Ragu-ragu (75)", c: "Tidak tahu (50)" },
-                { id: "Q8", text: "8. Bagaimana pandangan Abu/Ummu tentang pendidikan agama & tahfizh Al-Qurâ€™an?", a: "Sangat penting (100)", b: "Cukup penting (75)", c: "Penting (50)" },
+                { id: "Q8", text: "8. Bagaimana pandangan Abu/Ummu tentang pendidikan agama & tahfizh Al-Qur’an?", a: "Sangat penting (100)", b: "Cukup penting (75)", c: "Penting (50)" },
                 { id: "Q9", text: "9. Dukungan terhadap program Pesantren?", a: "Mendukung & evaluasi positif (100)", b: "Menyerahkan semua ke sekolah (75)", c: "Tidak tahu (50)" },
                 { id: "Q10", text: "10. Seberapa sering Abu/Ummu akan menjenguk ananda?", a: "Berkala (sesuai aturan) (100)", b: "Tidak menjenguk karena jauh (75)", c: "Sesempatnya saja (50)" },
                 { id: "Q11", text: "11. Langkah jika ananda diganggu teman (iseng/jail/bully)?", a: "Klarifikasi & beri semangat pada anak (100)", b: "Serahkan ke pesantren (75)", c: "Komplain ke pesantren (50)" },
@@ -470,7 +470,7 @@ export default function BankSoalPanitiaPage() {
                 <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-600" /> Kekuatan Muraja'ah (Lama)</li>
                 <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-600" /> Sambung Ayat Al-Qur'an (Min 4 Juz Mutqin)</li>
                 <li className="flex items-center gap-2 font-bold text-emerald-800 pt-2 border-t">
-                  Skor Nilai: 0 â€“ 100 & Catatan Penguji Hafalan
+                  Skor Nilai: 0 – 100 & Catatan Penguji Hafalan
                 </li>
               </ul>
             </div>
@@ -490,7 +490,7 @@ export default function BankSoalPanitiaPage() {
                 <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-amber-600" /> Kafa'ah Lughawiyyah (Grammar/Nahwu)</li>
                 <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-amber-600" /> Fahmul Maqru' (Pemahaman Bacaan Kitab)</li>
                 <li className="flex items-center gap-2 font-bold text-amber-800 pt-2 border-t">
-                  Skor Nilai: 0 â€“ 100 & Catatan Penguji Bahasa Arab
+                  Skor Nilai: 0 – 100 & Catatan Penguji Bahasa Arab
                 </li>
               </ul>
             </div>
@@ -514,21 +514,21 @@ export default function BankSoalPanitiaPage() {
             <div className="bg-slate-50 p-4 rounded-lg border border-slate-200 space-y-2">
               <h4 className="font-bold text-sm text-teal-800 flex items-center gap-1"><BarChart className="w-4 h-4" /> Bobot Komponen Penilaian (100%):</h4>
               <ul className="text-xs space-y-1.5 text-slate-700">
-                <li>â€¢ <strong>Tes Akademik (Online):</strong> 30%</li>
-                <li>â€¢ <strong>Tes Al-Qur'an (Tahfizh & Tajwid):</strong> 30%</li>
-                <li>â€¢ <strong>Wawancara Calon Santri:</strong> 10%</li>
-                <li>â€¢ <strong>Wawancara Orang Tua:</strong> 10%</li>
-                <li>â€¢ <strong>Tes Kepribadian Santri:</strong> 10%</li>
-                <li>â€¢ <strong>Tes Kesiapan Santri:</strong> 10%</li>
+                <li>• <strong>Tes Akademik (Online):</strong> 30%</li>
+                <li>• <strong>Tes Al-Qur'an (Tahfizh & Tajwid):</strong> 30%</li>
+                <li>• <strong>Wawancara Calon Santri:</strong> 10%</li>
+                <li>• <strong>Wawancara Orang Tua:</strong> 10%</li>
+                <li>• <strong>Tes Kepribadian Santri:</strong> 10%</li>
+                <li>• <strong>Tes Kesiapan Santri:</strong> 10%</li>
               </ul>
             </div>
 
             <div className="bg-slate-50 p-4 rounded-lg border border-slate-200 space-y-2">
               <h4 className="font-bold text-sm text-emerald-800 flex items-center gap-1"><CheckCircle2 className="w-4 h-4" /> Kriteria Keputusan Sistem:</h4>
               <ul className="text-xs space-y-1.5 text-slate-700">
-                <li>â€¢ <strong>DITERIMA:</strong> Jika Nilai Akhir &ge; 75 dan Rekomendasi Al-Qur'an Status A/B.</li>
-                <li>â€¢ <strong>CADANGAN:</strong> Jika Nilai Akhir 65â€“74 atau kuota gelombang penuh.</li>
-                <li>â€¢ <strong>DITOLAK:</strong> Jika Nilai Akhir &lt; 65 atau Rekomendasi Al-Qur'an Status C (Perlu Perbaikan Berat).</li>
+                <li>• <strong>DITERIMA:</strong> Jika Nilai Akhir &ge; 75 dan Rekomendasi Al-Qur'an Status A/B.</li>
+                <li>• <strong>CADANGAN:</strong> Jika Nilai Akhir 65–74 atau kuota gelombang penuh.</li>
+                <li>• <strong>DITOLAK:</strong> Jika Nilai Akhir &lt; 65 atau Rekomendasi Al-Qur'an Status C (Perlu Perbaikan Berat).</li>
               </ul>
             </div>
           </div>

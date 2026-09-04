@@ -73,7 +73,7 @@ Sebagai persiapan awal, kami memohon kesediaan Abu/Ummu untuk mengisikan data uk
 
 Mohon untuk mengisi ukuran seragam baju dan celana/rok melalui link khusus berikut:
 
-ðŸ”— *Link Pengisian Khusus:*
+🔗 *Link Pengisian Khusus:*
 ${magicLink}
 
 Jazakumullahu khairan.
@@ -88,7 +88,7 @@ Abu/Ummu dari Ananda *${pendaftar.nama_lengkap}* (${pendaftar.nomor_pendaftaran}
 Kami menginformasikan bahwa Ananda belum mengisi ukuran seragam.
 Mengingat Ananda telah melakukan pembayaran Daftar Ulang, mohon untuk segera mengisi ukuran seragam baju dan celana/rok melalui link berikut:
 
-ðŸ”— *Link Pengisian (Otomatis Login):*
+🔗 *Link Pengisian (Otomatis Login):*
 ${magicLink}
 
 Atau silakan login ke dashboard pendaftaran Anda dan buka menu "Ukuran Seragam".

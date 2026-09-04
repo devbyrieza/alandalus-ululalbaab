@@ -203,28 +203,28 @@ export default function PengujiDashboardPage() {
             </h4>
             <ul className="text-sm text-secondary-900/80 font-bold space-y-2">
               <li className="flex items-start gap-2">
-                <span className="text-secondary-500">â€¢</span>
+                <span className="text-secondary-500">•</span>
                 <span>
                   Nilai harus objektif dan sesuai rubrik penilaian yang
                   ditetapkan pesantren.
                 </span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-secondary-500">â€¢</span>
+                <span className="text-secondary-500">•</span>
                 <span>
                   Pastikan semua aspek dinilai dengan lengkap sebelum melakukan
                   simpan data.
                 </span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-secondary-500">â€¢</span>
+                <span className="text-secondary-500">•</span>
                 <span>
                   Berikan catatan deskriptif jika diperlukan untuk referensi
                   panitia pusat.
                 </span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-secondary-500">â€¢</span>
+                <span className="text-secondary-500">•</span>
                 <span>
                   Nilai yang sudah diinput dapat diubah kembali sebelum masa
                   penilaian ditutup.

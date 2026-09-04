@@ -68,7 +68,7 @@ export default function TentangPage() {
             className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary-50 border border-primary-100 text-primary-700 text-xs font-bold uppercase tracking-widest mb-8 shadow-xs"
           >
             <Sparkles className="w-3.5 h-3.5" />
-            <span>Mengenal Al Andalus Ulul Albaab â€¢ Managed by Al Andalus IIBS</span>
+            <span>Mengenal Al Andalus Ulul Albaab • Managed by Al Andalus IIBS</span>
           </motion.div>
 
           <motion.h1
