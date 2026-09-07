@@ -187,7 +187,7 @@ export default function Navbar() {
 
             {/* ── Desktop Nav (lg+) ── */}
             <nav
-              className={`hidden lg:flex items-center gap-0.5 p-1.5 rounded-full border transition-all duration-300 ${
+              className={`hidden xl:flex items-center gap-0.5 p-1.5 rounded-full border transition-all duration-300 ${
                 isScrolled
                   ? "bg-white border-[var(--color-primary-100)] shadow-sm"
                   : "bg-white  border-white/65 shadow-[0_2px_16px_rgba(3,105,199,0.10)]"
@@ -273,7 +273,7 @@ export default function Navbar() {
             </nav>
 
             {/* ── CTA Buttons (lg+) ── */}
-            <div className="hidden lg:flex items-center gap-2 xl:gap-3 shrink-0">
+            <div className="hidden xl:flex items-center gap-2 xl:gap-3 shrink-0">
               <LanguageSwitcher />
               {session ? (
                 <div className="flex items-center gap-2 xl:gap-2.5">
@@ -317,7 +317,7 @@ export default function Navbar() {
             {/* ── Hamburger (below lg) ── */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className={`lg:hidden p-3 rounded-lg transition-all duration-300 min-h-[48px] min-w-[48px] flex items-center justify-center border ${
+              className={`xl:hidden p-3 rounded-lg transition-all duration-300 min-h-[48px] min-w-[48px] flex items-center justify-center border ${
                 isScrolled
                   ? "bg-white border-[var(--color-primary-100)] text-[var(--color-primary-700)] hover:bg-[var(--color-primary-50)] shadow-[var(--shadow-xs)]"
                   : "bg-white/85  border-white/70 text-[var(--color-ink-800)] hover:bg-white/95 shadow-[0_2px_12px_rgba(3,105,199,0.10)]"
@@ -360,7 +360,7 @@ export default function Navbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-40 lg:hidden overscroll-contain"
+            className="fixed inset-0 z-40 xl:hidden overscroll-contain"
             role="dialog"
             aria-modal="true"
             aria-label="Menu navigasi"
