@@ -185,9 +185,6 @@ export default function DaftarPindahanPage() {
 
     if (!formData.jenis_kelamin) {
       errors.jenis_kelamin = "Pilih jenis kelamin santri";
-    } else if (formData.jenis_kelamin === "L" && formData.jenjang === "MTs") {
-      errors.jenis_kelamin =
-        "Mohon maaf, pendaftaran MTs Putra sudah ditutup.";
     }
 
     if (!formData.jenjang) {
@@ -419,7 +416,7 @@ export default function DaftarPindahanPage() {
                       subtitle: "Pindahan tingkat SMA/MA" },
                   ].map((option) => {
                     const isPutra = formData.jenis_kelamin === "L";
-                    const isClosed = isPutra && option.value === "MTs";
+                    const isClosed = false;
                     const closedLabel = "Pendaftaran MTs Putra Sudah Ditutup";
 
                     return (
