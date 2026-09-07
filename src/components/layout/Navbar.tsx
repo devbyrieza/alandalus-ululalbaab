@@ -157,7 +157,7 @@ export default function Navbar() {
             <Link
               href="/"
               onClick={handleBerandaClick}
-              className="flex items-center gap-3 group min-h-[44px]"
+              className="flex items-center gap-2.5 sm:gap-3 group shrink-0"
             >
               <div className="relative">
                 <div
@@ -181,9 +181,9 @@ export default function Navbar() {
                 <div className="absolute -bottom-1 -right-1 w-3.5 h-3.5 bg-[var(--color-primary-600)] border-2 border-white rounded-full z-10 shadow-sm" />
               </div>
 
-              <div className="block">
+              <div className="shrink-0 whitespace-nowrap">
                 <h1
-                  className={`text-base sm:text-lg font-black leading-none tracking-tight transition-colors duration-300 ${
+                  className={`text-sm sm:text-base font-black leading-tight tracking-tight transition-colors duration-300 ${
                     isScrolled
                       ? "text-[var(--color-ink-900)]"
                       : "text-[var(--color-ink-950)]"
@@ -191,7 +191,7 @@ export default function Navbar() {
                 >
                   {BRANDING.schoolShortName}
                 </h1>
-                <p className="text-[9px] sm:text-[10px] font-bold text-[var(--color-ink-400)] uppercase tracking-widest mt-0.5 leading-tight">
+                <p className="text-[8.5px] sm:text-[9.5px] font-bold text-[var(--color-ink-400)] uppercase tracking-wider mt-0.5 leading-none">
                   Managed by Al Andalus IIBS
                 </p>
               </div>
