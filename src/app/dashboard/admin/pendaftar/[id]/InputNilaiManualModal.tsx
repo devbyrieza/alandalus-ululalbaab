@@ -15,6 +15,17 @@ export default function InputNilaiManualModal({
   onClose,
   pendaftarId,
   onSuccess }: InputNilaiManualModalProps) {
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isOpen]);
+
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     score_akademik: "",
@@ -78,7 +89,7 @@ export default function InputNilaiManualModal({
   };
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-start md:items-center pt-10 md:pt-0 pb-20 md:pb-0 justify-center bg-primary-950/40  p-4 overflow-y-auto overflow-x-hidden overscroll-contain custom-scrollbar">
+    <div role="dialog" aria-modal="true" data-modal="true" className="fixed inset-0 z-[100] flex items-start md:items-center pt-10 md:pt-0 pb-20 md:pb-0 justify-center bg-primary-950/40  p-4 overflow-y-auto overflow-x-hidden overscroll-contain custom-scrollbar">
       <div className="bg-white w-full max-w-4xl rounded-[2rem] shadow-sm overflow-hidden flex flex-col max-h-[90vh]">
         {/* Header */}
         <div className="p-6 border-b border-ink-100 flex items-center justify-between bg-primary-50">
