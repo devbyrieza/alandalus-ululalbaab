@@ -532,13 +532,13 @@ export default function VerifikasiDokumenDetailPage() {
             }`}
           >
             {/* Document Preview */}
-            <div className="relative aspect-[4/3] bg-stone-100 whitespace-nowrap inline-block shrink-0">
+            <div className="w-full relative aspect-[4/3] bg-stone-100 overflow-hidden">
               {dok.file_url ? (
                 isImageFile(dok) ? (
                     <img
                       src={dok.file_url}
                       alt={dok.jenis_dokumen}
-                      className="absolute inset-0 w-full h-full object-contain bg-stone-100 cursor-pointer p-2 whitespace-nowrap inline-block shrink-0"
+                      className="absolute inset-0 w-full h-full object-cover cursor-pointer"
                       onClick={() =>
                         openPreview(
                           dok.file_url!,
