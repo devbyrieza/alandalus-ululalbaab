@@ -263,7 +263,7 @@ export default function TentangPage() {
               className="bg-slate-50 p-8 rounded-2xl border border-slate-200 flex flex-col justify-between"
             >
               <div>
-                <div className="w-12 h-12 rounded-xl bg-primary-100 text-primary-700 flex items-center justify-center mb-6 whitespace-nowrap inline-block shrink-0">
+                <div className="w-12 h-12 rounded-xl bg-primary-100 text-primary-700 flex items-center justify-center mb-6 whitespace-nowrap shrink-0">
                   <Compass className="w-6 h-6" />
                 </div>
                 <h3 className="text-2xl font-black text-slate-900 mb-4">Visi Pesantren</h3>
@@ -281,7 +281,7 @@ export default function TentangPage() {
               className="bg-slate-50 p-8 rounded-2xl border border-slate-200 flex flex-col justify-between"
             >
               <div>
-                <div className="w-12 h-12 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center mb-6 whitespace-nowrap inline-block shrink-0">
+                <div className="w-12 h-12 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center mb-6 whitespace-nowrap shrink-0">
                   <Target className="w-6 h-6" />
                 </div>
                 <h3 className="text-2xl font-black text-slate-900 mb-4">Misi Pesantren</h3>
@@ -372,7 +372,7 @@ export default function TentangPage() {
             </Link>
             <Link
               href="/kontak"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-white text-slate-900 hover:bg-slate-100 font-bold text-base transition-all hover:-translate-y-0.5 whitespace-nowrap inline-block shrink-0"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-white text-slate-900 hover:bg-slate-100 font-bold text-base transition-all hover:-translate-y-0.5 whitespace-nowrap shrink-0"
             >
               Hubungi Panitia
             </Link>

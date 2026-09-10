@@ -164,7 +164,7 @@ export default function DownloadBerkasTab() {
             ) : doc.status === "locked" ? (
               <button
                 disabled
-                className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-stone-100 text-stone-400 rounded-lg font-medium cursor-not-allowed text-xs lg:text-sm border border-stone-200 whitespace-nowrap inline-block shrink-0"
+                className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-stone-100 text-stone-400 rounded-lg font-medium cursor-not-allowed text-xs lg:text-sm border border-stone-200 whitespace-nowrap shrink-0"
               >
                 <AlertCircle className="w-4 h-4" />
                 Belum Tersedia

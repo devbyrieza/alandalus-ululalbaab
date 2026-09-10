@@ -456,7 +456,7 @@ export default function DaftarPage() {
                     </p>
                     <Link
                       href="/daftar-pindahan"
-                      className="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-widest text-amber-800 hover:text-amber-950 transition-colors bg-amber-100 hover:bg-amber-200/80 px-4 py-2.5 rounded-full border border-amber-200/50 whitespace-nowrap inline-block shrink-0"
+                      className="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-widest text-amber-800 hover:text-amber-950 transition-colors bg-amber-100 hover:bg-amber-200/80 px-4 py-2.5 rounded-full border border-amber-200/50 whitespace-nowrap shrink-0"
                     >
                       Daftar Lewat Jalur Pindahan <ArrowRight className="w-3.5 h-3.5" />
                     </Link>

@@ -719,7 +719,7 @@ function InputNilaiContent() {
                 {isSaved ? "Edit Nilai" : "Input Nilai Hafalan"}
               </button>
             ) : (
-              <div className="inline-flex items-center gap-2 px-6 py-3.5 bg-stone-100 text-stone-400 rounded-lg sm:rounded-lg text-[10px] sm:text-xs font-black uppercase tracking-widest border border-stone-200 whitespace-nowrap inline-block shrink-0">
+              <div className="inline-flex items-center gap-2 px-6 py-3.5 bg-stone-100 text-stone-400 rounded-lg sm:rounded-lg text-[10px] sm:text-xs font-black uppercase tracking-widest border border-stone-200 whitespace-nowrap shrink-0">
                 <LockIcon className="w-3.5 h-3.5" /> Edit Terkunci
               </div>
             )}
@@ -834,7 +834,7 @@ function InputNilaiContent() {
                 {isSaved ? "Edit Nilai" : "Input Nilai B. Arab"}
               </button>
             ) : (
-              <div className="inline-flex items-center gap-2 px-6 py-3.5 bg-stone-100 text-stone-400 rounded-lg sm:rounded-lg text-[10px] sm:text-xs font-black uppercase tracking-widest border border-stone-200 whitespace-nowrap inline-block shrink-0">
+              <div className="inline-flex items-center gap-2 px-6 py-3.5 bg-stone-100 text-stone-400 rounded-lg sm:rounded-lg text-[10px] sm:text-xs font-black uppercase tracking-widest border border-stone-200 whitespace-nowrap shrink-0">
                 <LockIcon className="w-3.5 h-3.5" /> Edit Terkunci
               </div>
             )}
@@ -979,7 +979,7 @@ function InputNilaiContent() {
                 {isSaved ? "Edit Nilai" : "Input Nilai"}
               </button>
             ) : (
-              <div className="mt-5 sm:mt-6 inline-flex items-center gap-2 px-6 py-3.5 bg-stone-100 text-stone-400 rounded-lg sm:rounded-lg text-[10px] sm:text-xs font-black uppercase tracking-widest border border-stone-200 whitespace-nowrap inline-block shrink-0">
+              <div className="mt-5 sm:mt-6 inline-flex items-center gap-2 px-6 py-3.5 bg-stone-100 text-stone-400 rounded-lg sm:rounded-lg text-[10px] sm:text-xs font-black uppercase tracking-widest border border-stone-200 whitespace-nowrap shrink-0">
                 <LockIcon className="w-3.5 h-3.5" /> Edit Terkunci
               </div>
             )}
@@ -1122,7 +1122,7 @@ function InputNilaiContent() {
                 {isSaved ? "Edit Nilai" : "Input Nilai"}
               </button>
             ) : (
-              <div className="mt-5 sm:mt-6 inline-flex items-center gap-2 px-6 py-3.5 bg-stone-100 text-stone-400 rounded-lg sm:rounded-lg text-[10px] sm:text-xs font-black uppercase tracking-widest border border-stone-200 whitespace-nowrap inline-block shrink-0">
+              <div className="mt-5 sm:mt-6 inline-flex items-center gap-2 px-6 py-3.5 bg-stone-100 text-stone-400 rounded-lg sm:rounded-lg text-[10px] sm:text-xs font-black uppercase tracking-widest border border-stone-200 whitespace-nowrap shrink-0">
                 <LockIcon className="w-3.5 h-3.5" /> Edit Terkunci
               </div>
             )}
@@ -1311,7 +1311,7 @@ function InputNilaiContent() {
                 {isSaved ? "Edit Hasil" : "Input Hasil"}
               </button>
             ) : (
-              <div className="mt-5 sm:mt-6 inline-flex items-center gap-2 px-6 py-3.5 bg-stone-100 text-stone-400 rounded-lg sm:rounded-lg text-[10px] sm:text-xs font-black uppercase tracking-widest border border-stone-200 whitespace-nowrap inline-block shrink-0">
+              <div className="mt-5 sm:mt-6 inline-flex items-center gap-2 px-6 py-3.5 bg-stone-100 text-stone-400 rounded-lg sm:rounded-lg text-[10px] sm:text-xs font-black uppercase tracking-widest border border-stone-200 whitespace-nowrap shrink-0">
                 <LockIcon className="w-3.5 h-3.5" /> Edit Terkunci
               </div>
             )}

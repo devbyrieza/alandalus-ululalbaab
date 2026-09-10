@@ -397,7 +397,7 @@ function JadwalUjianContent() {
             {isAdmin && (
               <button
                 onClick={() => setShowBroadcastModal(true)}
-                className="flex items-center gap-3 px-6 py-3 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-lg font-black border border-indigo-200 transition-all whitespace-nowrap inline-block shrink-0"
+                className="flex items-center gap-3 px-6 py-3 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-lg font-black border border-indigo-200 transition-all whitespace-nowrap shrink-0"
               >
                 <Send className="w-5 h-5" />
                 Pulse Notifikasi

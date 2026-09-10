@@ -238,7 +238,7 @@ export default function ProgramPage() {
                         key={sIdx}
                         className="bg-slate-50 p-4 rounded-xl border border-slate-200 text-center"
                       >
-                        <div className="w-8 h-8 rounded-lg bg-primary-100 text-primary-700 flex items-center justify-center mx-auto mb-2 whitespace-nowrap inline-block shrink-0">
+                        <div className="w-8 h-8 rounded-lg bg-primary-100 text-primary-700 flex items-center justify-center mx-auto mb-2 whitespace-nowrap shrink-0">
                           <stat.icon className="w-4 h-4" />
                         </div>
                         <p className="text-[10px] text-slate-500 font-bold uppercase tracking-wider mb-0.5">
@@ -303,7 +303,7 @@ export default function ProgramPage() {
             </Link>
             <Link
               href="/kontak"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-white text-slate-900 hover:bg-slate-100 font-bold text-base transition-all hover:-translate-y-0.5 whitespace-nowrap inline-block shrink-0"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-white text-slate-900 hover:bg-slate-100 font-bold text-base transition-all hover:-translate-y-0.5 whitespace-nowrap shrink-0"
             >
               Hubungi Admissions
             </Link>

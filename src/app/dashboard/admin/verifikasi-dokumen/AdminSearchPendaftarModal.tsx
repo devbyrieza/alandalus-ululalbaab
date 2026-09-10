@@ -110,7 +110,7 @@ export default function AdminSearchPendaftarModal({ isOpen, onClose }: AdminSear
                         <span>{p.no_hp || "-"}</span>
                       </div>
                     </div>
-                    <div className="w-8 h-8 rounded-full bg-primary-100 text-primary-600 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap inline-block shrink-0">
+                    <div className="w-8 h-8 rounded-full bg-primary-100 text-primary-600 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap shrink-0">
                       <FileText className="w-4 h-4" />
                     </div>
                   </button>

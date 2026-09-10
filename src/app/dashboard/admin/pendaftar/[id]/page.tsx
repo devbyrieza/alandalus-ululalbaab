@@ -1312,7 +1312,7 @@ export default function PendaftarDetailPage() {
                       setTimeout(() => docInputRef.current?.click(), 100);
                     }}
                     disabled={!!uploadingDoc}
-                    className="px-3 py-2 bg-primary-50 hover:bg-primary-100 text-primary-700 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 border border-primary-100 disabled:opacity-50 whitespace-nowrap inline-block shrink-0"
+                    className="px-3 py-2 bg-primary-50 hover:bg-primary-100 text-primary-700 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 border border-primary-100 disabled:opacity-50 whitespace-nowrap shrink-0"
                   >
                     {uploadingDoc === item.id ? (
                       <Loader2 className="w-3 h-3 animate-spin" />
@@ -2186,7 +2186,7 @@ export default function PendaftarDetailPage() {
                           setNewPhone(pendaftar.no_hp || "");
                           setEditingPhone(true);
                         }}
-                        className="p-1.5 text-primary-500 hover:text-primary-700 bg-primary-50 hover:bg-primary-100 rounded-lg transition-colors flex items-center gap-1 whitespace-nowrap inline-block shrink-0"
+                        className="p-1.5 text-primary-500 hover:text-primary-700 bg-primary-50 hover:bg-primary-100 rounded-lg transition-colors flex items-center gap-1 whitespace-nowrap shrink-0"
                         title="Edit Nomor HP"
                       >
                         <Edit className="w-3.5 h-3.5" />

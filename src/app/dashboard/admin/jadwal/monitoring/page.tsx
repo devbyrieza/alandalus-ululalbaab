@@ -311,7 +311,7 @@ export default function MonitoringJadwalPage() {
 
                     {/* View Switcher & Actions */}
                     <div className="flex items-center gap-2">
-                        <div className="flex-1 md:flex-none flex bg-slate-100 p-1.5 rounded-lg h-12 min-w-fit whitespace-nowrap inline-block shrink-0">
+                        <div className="flex-1 md:flex-none flex bg-slate-100 p-1.5 rounded-lg h-12 min-w-fit whitespace-nowrap shrink-0">
                             {[
                                 { id: "flat", label: "List" },
                                 { id: "grouped", label: "Ustadz" },

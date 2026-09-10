@@ -65,7 +65,7 @@ function MemberCard({
             className="object-cover"
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center bg-primary-50 group-hover:bg-primary-100 transition-colors whitespace-nowrap inline-block shrink-0">
+          <div className="w-full h-full flex items-center justify-center bg-primary-50 group-hover:bg-primary-100 transition-colors whitespace-nowrap shrink-0">
             <User className="w-8 h-8 text-primary-400" />
           </div>
         )}

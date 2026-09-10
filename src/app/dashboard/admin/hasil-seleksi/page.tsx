@@ -282,7 +282,7 @@ export default function HasilSeleksiPage() {
                         CADANGAN
                       </span>
                     ) : (
-                      <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-rose-100 text-rose-700 text-[10px] font-black uppercase border border-rose-200 whitespace-nowrap inline-block shrink-0">
+                      <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-rose-100 text-rose-700 text-[10px] font-black uppercase border border-rose-200 whitespace-nowrap shrink-0">
                         DITOLAK
                       </span>
                     )}
@@ -434,7 +434,7 @@ export default function HasilSeleksiPage() {
                             CADANGAN
                           </span>
                         ) : (
-                          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-rose-100 text-rose-700 text-xs font-bold border border-rose-200 whitespace-nowrap inline-block shrink-0">
+                          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-rose-100 text-rose-700 text-xs font-bold border border-rose-200 whitespace-nowrap shrink-0">
                             DITOLAK
                           </span>
                         )}

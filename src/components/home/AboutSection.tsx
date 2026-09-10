@@ -191,7 +191,7 @@ export default function AboutSection() {
                       className="flex gap-4 items-start p-6 md:p-8 group/item hover:bg-primary-50/50 transition-colors duration-200"
                     >
                       <div className="mt-0.5 shrink-0">
-                        <div className="w-7 h-7 rounded-full bg-primary-50 border border-primary-100 flex items-center justify-center group-hover/item:bg-primary-100 transition-colors duration-200 whitespace-nowrap inline-block shrink-0">
+                        <div className="w-7 h-7 rounded-full bg-primary-50 border border-primary-100 flex items-center justify-center group-hover/item:bg-primary-100 transition-colors duration-200 whitespace-nowrap shrink-0">
                           <CheckCircle
                             className="w-3.5 h-3.5 text-primary-600"
                             strokeWidth={2.25}

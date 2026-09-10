@@ -478,7 +478,7 @@ export default function KeuanganPage() {
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-1 bg-slate-100 p-1 rounded-lg w-fit whitespace-nowrap inline-block shrink-0">
+      <div className="flex gap-1 bg-slate-100 p-1 rounded-lg w-fit whitespace-nowrap shrink-0">
         <button
           onClick={() => {
             setActiveTab("pendaftaran");

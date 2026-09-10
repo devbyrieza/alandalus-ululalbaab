@@ -502,7 +502,7 @@ function VerifikasiPembayaranContent() {
             </div>
           )}
 
-          <div className="flex flex-wrap bg-stone-100 p-1.5 rounded-[1.25rem] w-full sm:w-fit shadow-inner ring-1 ring-stone-200/50 justify-center whitespace-nowrap inline-block shrink-0">
+          <div className="flex flex-wrap bg-stone-100 p-1.5 rounded-[1.25rem] w-full sm:w-fit shadow-inner ring-1 ring-stone-200/50 justify-center whitespace-nowrap shrink-0">
             <button
               onClick={() => updateFilters(undefined, "PENDAFTARAN")}
               className={`flex items-center gap-2 px-6 py-2.5 rounded-lg text-xs font-black uppercase tracking-widest transition-all duration-300 ${
@@ -817,7 +817,7 @@ function VerifikasiPembayaranContent() {
                     {statusFilter === "verified" && (
                       <button
                         onClick={() => openModal(pay)}
-                        className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-3 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded-lg font-bold text-sm border border-emerald-100 transition-all whitespace-nowrap inline-block shrink-0"
+                        className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-3 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded-lg font-bold text-sm border border-emerald-100 transition-all whitespace-nowrap shrink-0"
                       >
                         <CheckCircle className="w-4 h-4" />
                         Terverifikasi
@@ -979,7 +979,7 @@ function VerifikasiPembayaranContent() {
                     <button
                       onClick={handleUploadClick}
                       disabled={uploadingProof === selectedPembayaran.id}
-                      className="flex items-center gap-1.5 px-3 py-1.5 bg-primary-50 text-primary-600 hover:bg-primary-100 rounded-lg text-xs font-bold transition-colors disabled:opacity-50 whitespace-nowrap inline-block shrink-0"
+                      className="flex items-center gap-1.5 px-3 py-1.5 bg-primary-50 text-primary-600 hover:bg-primary-100 rounded-lg text-xs font-bold transition-colors disabled:opacity-50 whitespace-nowrap shrink-0"
                     >
                       {uploadingProof === selectedPembayaran.id ? (
                         <Loader2 className="w-3.5 h-3.5 animate-spin" />
@@ -1026,7 +1026,7 @@ function VerifikasiPembayaranContent() {
                   <button
                     onClick={handleUploadClick}
                     disabled={uploadingProof === selectedPembayaran.id}
-                    className="mx-auto flex items-center justify-center gap-2 px-4 py-2 bg-primary-50 text-primary-600 hover:bg-primary-100 rounded-lg text-sm font-bold transition-colors disabled:opacity-50 whitespace-nowrap inline-block shrink-0"
+                    className="mx-auto flex items-center justify-center gap-2 px-4 py-2 bg-primary-50 text-primary-600 hover:bg-primary-100 rounded-lg text-sm font-bold transition-colors disabled:opacity-50 whitespace-nowrap shrink-0"
                   >
                     {uploadingProof === selectedPembayaran.id ? (
                       <Loader2 className="w-4 h-4 animate-spin" />

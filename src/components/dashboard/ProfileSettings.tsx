@@ -220,7 +220,7 @@ export default function ProfileSettings({ user }: { user: UserSession }) {
           {/* Avatar Section */}
           <div className="flex items-center gap-5 mb-4">
             <div className="relative group">
-              <div className="w-20 h-20 rounded-full overflow-hidden bg-primary-100 flex items-center justify-center text-primary-600 ring-4 ring-primary-50 whitespace-nowrap inline-block shrink-0">
+              <div className="w-20 h-20 rounded-full overflow-hidden bg-primary-100 flex items-center justify-center text-primary-600 ring-4 ring-primary-50 whitespace-nowrap shrink-0">
                 {photoPreview ? (
                   <img
                     src={photoPreview}

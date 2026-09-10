@@ -305,11 +305,11 @@ export default function PengumumanPage() {
                             <CheckCircle2 className="w-3 h-3" /> Lulus
                           </span>
                         ) : c.status_pendaftaran === "scheduled" ? (
-                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-primary-100 text-primary-700 text-[10px] font-black uppercase whitespace-nowrap inline-block shrink-0">
+                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-primary-100 text-primary-700 text-[10px] font-black uppercase whitespace-nowrap shrink-0">
                             Siap
                           </span>
                         ) : (
-                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-stone-100 text-stone-600 text-[10px] font-black uppercase whitespace-nowrap inline-block shrink-0">
+                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-stone-100 text-stone-600 text-[10px] font-black uppercase whitespace-nowrap shrink-0">
                             {c.status_pendaftaran}
                           </span>
                         )}
@@ -455,11 +455,11 @@ export default function PengumumanPage() {
                             <CheckCircle2 className="w-3 h-3" /> Lulus
                           </span>
                         ) : c.status_pendaftaran === "scheduled" ? (
-                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-primary-100 text-primary-700 text-xs font-bold whitespace-nowrap inline-block shrink-0">
+                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-primary-100 text-primary-700 text-xs font-bold whitespace-nowrap shrink-0">
                             Siap Diumumkan
                           </span>
                         ) : (
-                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-stone-100 text-stone-700 text-xs font-bold whitespace-nowrap inline-block shrink-0">
+                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-stone-100 text-stone-700 text-xs font-bold whitespace-nowrap shrink-0">
                             {c.status_pendaftaran}
                           </span>
                         )}

@@ -466,7 +466,7 @@ export default function GaleriPage() {
             </Link>
             <Link
               href="/daftar"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-white text-slate-900 hover:bg-slate-100 font-bold text-base transition-all hover:-translate-y-0.5 whitespace-nowrap inline-block shrink-0"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-white text-slate-900 hover:bg-slate-100 font-bold text-base transition-all hover:-translate-y-0.5 whitespace-nowrap shrink-0"
             >
               Daftar PPDB Sekarang
             </Link>

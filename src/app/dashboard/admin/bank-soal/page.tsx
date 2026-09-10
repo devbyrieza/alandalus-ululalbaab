@@ -277,7 +277,7 @@ export default function BankSoalPanitiaPage() {
           <div className="bg-white rounded-lg border border-slate-200 overflow-hidden shadow-sm">
             {KESIAPAN_QUESTIONS.map((sec, sIdx) => (
               <div key={sIdx} className="border-b border-slate-200 last:border-b-0">
-                <div className="bg-slate-100 px-5 py-3 font-bold text-slate-800 text-sm flex items-center gap-2 whitespace-nowrap inline-block shrink-0">
+                <div className="bg-slate-100 px-5 py-3 font-bold text-slate-800 text-sm flex items-center gap-2 whitespace-nowrap shrink-0">
                   <span className="w-6 h-6 rounded-full bg-rose-200 text-rose-800 flex items-center justify-center text-xs font-extrabold">
                     {sIdx + 1}
                   </span>
