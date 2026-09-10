@@ -1113,7 +1113,7 @@ export default function WelcomeDayPage() {
 
       {/* Lightbox Modal */}
       {lightbox && (
-        <div 
+        <div onWheel={(e) => e.stopPropagation()} data-modal="true" aria-modal="true" role="dialog" 
           className="fixed inset-0 z-[100] bg-ink-950/95 flex flex-col items-center justify-center p-4 md:p-8  overscroll-contain"
           onClick={() => setLightbox(null)}
         >

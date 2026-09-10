@@ -1266,7 +1266,7 @@ export default function KelengkapanBerkasTab() {
       )}
 
       {showConfirmModal && (
-        <div className="fixed inset-0 z-[100] flex items-start md:items-center pt-10 md:pt-0 pb-20 md:pb-0 justify-center p-4 bg-ink-900/60  animate-in fade-in duration-200 overflow-y-auto overflow-x-hidden overscroll-contain custom-scrollbar">
+        <div onWheel={(e) => e.stopPropagation()} data-modal="true" aria-modal="true" role="dialog" className="fixed inset-0 z-[100] flex items-start md:items-center pt-10 md:pt-0 pb-20 md:pb-0 justify-center p-4 bg-ink-900/60  animate-in fade-in duration-200 overflow-y-auto overflow-x-hidden overscroll-contain custom-scrollbar">
           <div className="bg-white rounded-[2rem] shadow-sm max-w-md w-full overflow-hidden animate-in zoom-in-95 duration-200 p-5 md:p-8 text-center relative">
             <div className="w-20 h-20 bg-secondary-50 rounded-lg flex items-center justify-center mx-auto mb-6 shadow-inner border border-secondary-100 rotate-3">
               <AlertTriangle className="w-10 h-10 text-secondary-500" />

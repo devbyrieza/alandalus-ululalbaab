@@ -71,6 +71,18 @@ export default function TrashPage() {
     }
   };
 
+  
+  useEffect(() => {
+    if (isRestoreModalOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isRestoreModalOpen]);
+
   useEffect(() => {
     fetchTrash();
   }, [pagination.page, search, jenjangFilter]);
@@ -351,7 +363,7 @@ export default function TrashPage() {
 
       {/* Restore Confirmation Modal */}
       {isRestoreModalOpen && restoringItem && (
-        <div className="fixed inset-0 z-50 flex items-start md:items-center pt-10 md:pt-0 pb-20 md:pb-0 justify-center bg-black/50  p-4 overflow-y-auto overflow-x-hidden overscroll-contain custom-scrollbar">
+        <div onWheel={(e) => e.stopPropagation()} data-modal="true" aria-modal="true" role="dialog" className="fixed inset-0 z-50 flex items-start md:items-center pt-10 md:pt-0 pb-20 md:pb-0 justify-center bg-black/50  p-4 overflow-y-auto overflow-x-hidden overscroll-contain custom-scrollbar">
           <div className="bg-white rounded-lg shadow-sm w-full max-w-md border-2 border-green-100 animate-in fade-in zoom-in duration-200">
             <div className="flex justify-between items-center p-6 border-b border-green-100">
               <div className="flex items-center gap-3">
