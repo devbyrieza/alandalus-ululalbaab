@@ -1,4 +1,6 @@
-﻿"use client";
+"use client";
+
+"use client";
 
 import { useState, useRef, useEffect } from "react";
 import { MessageCircle, X, Bot, Headphones, MessageSquare } from "lucide-react";

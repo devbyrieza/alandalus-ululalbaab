@@ -1,4 +1,6 @@
-﻿"use client";
+"use client";
+
+"use client";
 
 import { useState } from "react";
 import { BookOpen, Brain, Heart, Users, UserCheck, BookOpenCheck, Search, Printer, Clock, CheckCircle2, FileText, AlertCircle, Sparkles, HelpCircle, Filter, Flame, Award, AlertTriangle, Star, MessageCircle, Settings, BarChart, User, BarChart2 } from "lucide-react";

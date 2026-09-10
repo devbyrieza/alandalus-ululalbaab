@@ -1,6 +1,6 @@
-// src/app/page.tsx — alandalus-ululalbaab
 "use client";
 
+// src/app/page.tsx — alandalus-ululalbaab
 import { useEffect } from "react";
 import { LazyMotion, domAnimation } from "framer-motion";
 

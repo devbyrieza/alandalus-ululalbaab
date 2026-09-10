@@ -1,6 +1,6 @@
-// src/components/ui/InfiniteMarquee.tsx
 "use client";
 
+// src/components/ui/InfiniteMarquee.tsx
 import { useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 

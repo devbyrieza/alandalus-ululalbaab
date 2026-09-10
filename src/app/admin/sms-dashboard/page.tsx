@@ -1,4 +1,6 @@
-﻿"use client";
+"use client";
+
+"use client";
 
 import { useState, useEffect } from "react";
 import { RefreshCw, Check, Smartphone, User, Key, ClipboardList, Sparkles, FileText, BarChart, Calendar, PartyPopper, BarChart2, CheckCircle2 } from "lucide-react";
