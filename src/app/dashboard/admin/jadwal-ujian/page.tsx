@@ -1,7 +1,5 @@
 "use client";
 
-"use client";
-
 import { useState, useEffect, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import {
@@ -70,17 +68,6 @@ function JadwalUjianContent() {
   );
 
   // Automatic End Time Calculation Logic
-  
-  useEffect(() => {
-    if (showAddSession || showBroadcastModal) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
-    return () => {
-      document.body.style.overflow = "unset";
-    };
-  }, [showAddSession, showBroadcastModal]);
 
   useEffect(() => {
     if (newSession.start_time) {
