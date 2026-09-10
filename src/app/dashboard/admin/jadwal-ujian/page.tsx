@@ -54,6 +54,7 @@ function JadwalUjianContent() {
 
   const [sessions, setSessions] = useState<ExamSession[]>([]);
   const [pendaftar, setPendaftar] = useState<Pendaftar[]>([]);
+  const [examiners, setExaminers] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
 
@@ -80,7 +81,9 @@ function JadwalUjianContent() {
     start_time: "",
     duration: 60,
     location: "",
-    notes: "Jadwal khusus sesuai permintaan orang tua"
+    notes: "Jadwal khusus sesuai permintaan orang tua",
+    penguji_ortu_id: "",
+    penguji_santri_id: ""
   });
 
   const handleCreateDirectJadwalKhusus = async (e: React.FormEvent) => {
@@ -136,7 +139,9 @@ function JadwalUjianContent() {
         body: JSON.stringify({
           pendaftar_id: directForm.pendaftar_id,
           exam_session_id: newSessionId,
-          tahun_ajaran_id: selectedCandidate.tahun_ajaran_id
+          tahun_ajaran_id: selectedCandidate.tahun_ajaran_id,
+        penguji_ortu_id: directForm.penguji_ortu_id || undefined,
+        penguji_santri_id: directForm.penguji_santri_id || undefined
         })
       });
 
@@ -278,14 +283,19 @@ function JadwalUjianContent() {
       if (sessions.length === 0) setLoading(true);
       else setRefreshing(true);
 
-      const [sessionsRes, pendaftarRes] = await Promise.all([
+      const [sessionsRes, pendaftarRes, usersRes] = await Promise.all([
         fetch("/api/admin/exam-sessions"),
         fetch("/api/admin/pendaftar/list?status=paid,docs_verified&limit=100"),
+        fetch("/api/admin/users")
       ]);
 
       if (sessionsRes.ok) {
         const data = await sessionsRes.json();
         setSessions(data.data);
+      }
+            if (usersRes.ok) {
+        const uData = await usersRes.json();
+        setExaminers(uData.data || []);
       }
       if (pendaftarRes.ok) {
         const data = await pendaftarRes.json();
