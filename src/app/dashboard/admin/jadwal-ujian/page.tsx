@@ -428,7 +428,7 @@ function JadwalUjianContent() {
               <p className="text-sm font-bold opacity-80 uppercase tracking-widest">
                 Pendaftar Butuh Jadwal
               </p>
-              <h3 className="text-2xl md:text-4xl font-black leading-none mt-1">
+              <h3 className="text-2xl md:text-4xl font-black text-white leading-none mt-1">
                 {availStats.eligibleCount}{" "}
                 <span className="text-lg opacity-60">Orang</span>
               </h3>
@@ -521,7 +521,7 @@ function JadwalUjianContent() {
                       </button>
                     ) : (
                       <div className="flex flex-col gap-3 w-full md:w-64 items-end">
-                        <div className="w-full bg-secondary-100 h-2.5 rounded-full overflow-hidden border border-white">
+                        <div className="w-full bg-stone-100 h-2.5 rounded-full overflow-hidden border border-stone-200/50">
                           <div
                             className="h-full bg-gradient-to-r from-purple-500 to-indigo-600"
                             style={{
@@ -555,7 +555,7 @@ function JadwalUjianContent() {
           </h2>
 
           <div className="bg-white rounded-lg shadow-clay-md border border-white/40 overflow-hidden flex flex-col h-[600px] sticky top-28">
-            <div className="p-4 border-b border-ink-100 bg-secondary-50/50">
+            <div className="p-4 border-b border-stone-100 bg-stone-50/70">
               <div className="relative">
                 <Search className="absolute left-3 top-2.5 w-4 h-4 text-ink-400" />
                 <input
