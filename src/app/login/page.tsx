@@ -418,7 +418,7 @@ export default function LoginPage() {
           </div>
           {/* Tab Switcher - Premium "Pill" style */}
           {!roleSelectionData && (
-            <div className="bg-slate-100 p-2 rounded-[2rem] flex relative mb-12 border border-slate-200">
+            <div className="bg-slate-100 p-2 rounded-[2rem] flex relative mb-12 border border-slate-200 whitespace-nowrap inline-block shrink-0">
               {/* Animated Background Pill */}
               <motion.div
                 layoutId="auth-tab"

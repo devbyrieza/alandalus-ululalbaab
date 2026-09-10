@@ -313,7 +313,7 @@ function AdminBerkasSection({
                         href={`/api/files/${currentPath}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="p-1.5 text-primary-600 hover:bg-primary-100 rounded-lg transition-colors"
+                        className="p-1.5 text-primary-600 hover:bg-primary-100 rounded-lg transition-colors whitespace-nowrap inline-block shrink-0"
                         title="Lihat berkas"
                       >
                         <Eye className="w-3.5 h-3.5" />
@@ -322,7 +322,7 @@ function AdminBerkasSection({
                         type="button"
                         onClick={() => handleDelete(item.fieldKey)}
                         disabled={isLoading}
-                        className="p-1.5 text-rose-500 hover:bg-rose-100 rounded-lg transition-colors disabled:opacity-40"
+                        className="p-1.5 text-rose-500 hover:bg-rose-100 rounded-lg transition-colors disabled:opacity-40 whitespace-nowrap inline-block shrink-0"
                         title="Hapus berkas"
                       >
                         {isDeleting ? (
@@ -672,7 +672,7 @@ export default function AdminBeasiswaBlock({
           
           <button
             onClick={handleDelete}
-            className="w-full mt-2 bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200 py-2.5 rounded-lg text-xs font-bold transition-colors flex items-center justify-center gap-2"
+            className="w-full mt-2 bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200 py-2.5 rounded-lg text-xs font-bold transition-colors flex items-center justify-center gap-2 whitespace-nowrap inline-block shrink-0"
           >
             <Trash2 className="w-4 h-4" />
             Hapus Bantuan
@@ -688,7 +688,7 @@ export default function AdminBeasiswaBlock({
       {!current && !activeSection && (
         <button
           onClick={openForm}
-          className="w-full flex flex-col items-center justify-center gap-2 p-4 bg-primary-50 hover:bg-primary-100 border-2 border-primary-200 rounded-lg transition-all group"
+          className="w-full flex flex-col items-center justify-center gap-2 p-4 bg-primary-50 hover:bg-primary-100 border-2 border-primary-200 rounded-lg transition-all group whitespace-nowrap inline-block shrink-0"
         >
           <HandCoins className="w-7 h-7 text-primary-500 group-hover:scale-110 transition-transform" />
           <span className="font-black text-sm text-primary-900">Atur Bantuan Biaya</span>
@@ -703,7 +703,7 @@ export default function AdminBeasiswaBlock({
               <HandCoins className="w-5 h-5 text-primary-600" />
               <h4 className="font-black text-primary-900">Form Bantuan Biaya</h4>
             </div>
-            <button onClick={closeSection} className="p-1.5 hover:bg-primary-100 rounded-lg transition-colors">
+            <button onClick={closeSection} className="p-1.5 hover:bg-primary-100 rounded-lg transition-colors whitespace-nowrap inline-block shrink-0">
               <X className="w-4 h-4 text-primary-600" />
             </button>
           </div>
@@ -814,7 +814,7 @@ export default function AdminBeasiswaBlock({
           </div>
 
           <div className="flex gap-3 justify-end pt-2 border-t border-primary-100">
-            <button type="button" onClick={closeSection} className="px-5 py-2.5 text-sm font-bold text-stone-500 hover:bg-stone-100 rounded-lg transition-colors">
+            <button type="button" onClick={closeSection} className="px-5 py-2.5 text-sm font-bold text-stone-500 hover:bg-stone-100 rounded-lg transition-colors whitespace-nowrap inline-block shrink-0">
               Batal
             </button>
             <button

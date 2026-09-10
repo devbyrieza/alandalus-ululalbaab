@@ -135,7 +135,7 @@ export default function DataPendaftaranTab() {
 
         <div className="bg-white rounded-lg p-4 border-2 border-stone-200 shadow-sm">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center">
+            <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center whitespace-nowrap inline-block shrink-0">
               <FileText className="w-6 h-6 text-primary-600" />
             </div>
             <div>
@@ -159,7 +159,7 @@ export default function DataPendaftaranTab() {
 
         <div className="bg-white rounded-lg p-4 border-2 border-stone-200 shadow-sm">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+            <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center whitespace-nowrap inline-block shrink-0">
               <Award className="w-6 h-6 text-purple-600" />
             </div>
             <div>

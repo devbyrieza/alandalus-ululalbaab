@@ -305,7 +305,7 @@ export default function DashboardLayout({
   return (
     <>
       <IdleTimeoutTracker />
-      <div className="min-h-screen bg-surface-50 font-sans selection:bg-primary-100 selection:text-primary-900">
+      <div className="min-h-screen bg-surface-50 font-sans selection:bg-primary-100 selection:text-primary-900 whitespace-nowrap inline-block shrink-0">
         {/* Mobile Header (Fintech Style) */}
         <div className="lg:hidden bg-white  sticky top-0 z-40 px-4 sm:px-5 py-3 sm:py-4 flex items-center justify-between border-b border-gold-200 shadow-sm">
           <div className="flex items-center gap-2 sm:gap-3">

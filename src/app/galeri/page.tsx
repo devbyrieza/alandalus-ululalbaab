@@ -282,7 +282,7 @@ export default function GaleriPage() {
                 className="group relative bg-white rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 overflow-hidden cursor-pointer flex flex-col"
               >
                 {/* Image Cover */}
-                <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100">
+                <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100 whitespace-nowrap inline-block shrink-0">
                   <Image
                     src={album.cover}
                     alt={album.title}
@@ -476,7 +476,7 @@ export default function GaleriPage() {
             </Link>
             <Link
               href="/daftar"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-white text-slate-900 hover:bg-slate-100 font-bold text-base transition-all hover:-translate-y-0.5"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-white text-slate-900 hover:bg-slate-100 font-bold text-base transition-all hover:-translate-y-0.5 whitespace-nowrap inline-block shrink-0"
             >
               Daftar PPDB Sekarang
             </Link>

@@ -255,7 +255,7 @@ export default function DaftarUlangTab() {
               {formatCurrency(expectedUangPangkal)}
             </span>
             {potonganUP > 0 && (
-              <span className="text-xs bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full font-bold ml-2">
+              <span className="text-xs bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full font-bold ml-2 whitespace-nowrap inline-block shrink-0">
                 Potongan {formatCurrency(potonganUP)}
               </span>
             )}
@@ -573,7 +573,7 @@ export default function DaftarUlangTab() {
 
       {message && message.type === "success" && (
         <div className="p-5 bg-emerald-50 border border-emerald-200 rounded-lg flex flex-col sm:flex-row items-center sm:items-start gap-4 shadow-sm">
-          <div className="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center shrink-0 mt-0.5">
+          <div className="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center shrink-0 mt-0.5 whitespace-nowrap inline-block shrink-0">
             <MessageCircle className="w-6 h-6 text-emerald-600" />
           </div>
           <div className="text-center sm:text-left flex-1">
@@ -863,7 +863,7 @@ export default function DaftarUlangTab() {
             <hr className="border-slate-100" />
 
             {/* Pernyataan */}
-            <label className="flex items-start gap-4 p-4 rounded-lg border border-slate-200 bg-slate-50 cursor-pointer hover:bg-slate-100 transition-colors">
+            <label className="flex items-start gap-4 p-4 rounded-lg border border-slate-200 bg-slate-50 cursor-pointer hover:bg-slate-100 transition-colors whitespace-nowrap inline-block shrink-0">
               <input
                 type="checkbox"
                 checked={pernyataan}

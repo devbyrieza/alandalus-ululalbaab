@@ -385,7 +385,7 @@ function VerifikasiDokumenContent() {
                           <h3 className="font-black text-primary-950 truncate group-hover:text-primary-700 transition-colors leading-tight mb-1">
                             {toTitleCase(pendaftar.nama_lengkap)}
                             {pendaftar.tipe_pendaftaran === "PINDAHAN" && (
-                              <span className="ml-2 px-2 py-0.5 bg-violet-100 text-violet-700 rounded-full text-[10px] font-black uppercase tracking-wider border border-violet-200 align-middle">
+                              <span className="ml-2 px-2 py-0.5 bg-violet-100 text-violet-700 rounded-full text-[10px] font-black uppercase tracking-wider border border-violet-200 align-middle whitespace-nowrap inline-block shrink-0">
                                 PINDAHAN
                               </span>
                             )}

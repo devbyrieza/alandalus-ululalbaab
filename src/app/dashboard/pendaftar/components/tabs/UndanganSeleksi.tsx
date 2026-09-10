@@ -371,7 +371,7 @@ export default function UndanganSeleksiTab() {
       {/* ========== GRUP A: TES ONLINE INSTAN ========== */}
       <div className="space-y-4">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 bg-primary-100 rounded-lg flex items-center justify-center">
+          <div className="w-8 h-8 bg-primary-100 rounded-lg flex items-center justify-center whitespace-nowrap inline-block shrink-0">
             <BookOpen className="w-4 h-4 text-primary-600" />
           </div>
           <div>
@@ -410,11 +410,11 @@ export default function UndanganSeleksiTab() {
                     />
                   </div>
                   {item.completed ? (
-                    <span className="flex items-center gap-1 px-2.5 py-1 bg-emerald-100 text-emerald-700 text-xs font-black rounded-full">
+                    <span className="flex items-center gap-1 px-2.5 py-1 bg-emerald-100 text-emerald-700 text-xs font-black rounded-full whitespace-nowrap inline-block shrink-0">
                       <CheckCircle className="w-3 h-3" /> Selesai
                     </span>
                   ) : (
-                    <span className="px-2.5 py-1 bg-primary-100 text-primary-700 text-xs font-black rounded-full">
+                    <span className="px-2.5 py-1 bg-primary-100 text-primary-700 text-xs font-black rounded-full whitespace-nowrap inline-block shrink-0">
                       Tersedia
                     </span>
                   )}

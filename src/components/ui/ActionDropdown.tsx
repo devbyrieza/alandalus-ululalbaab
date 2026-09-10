@@ -79,7 +79,7 @@ export function ActionDropdown({ items }: ActionDropdownProps) {
           e.stopPropagation();
           setIsOpen(!isOpen);
         }}
-        className="p-1.5 rounded-lg hover:bg-stone-100 text-stone-500 hover:text-stone-800 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500"
+        className="p-1.5 rounded-lg hover:bg-stone-100 text-stone-500 hover:text-stone-800 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 whitespace-nowrap inline-block shrink-0"
         aria-expanded={isOpen}
         aria-haspopup="true"
       >

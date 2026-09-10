@@ -215,7 +215,7 @@ export default function ProfilTab() {
         {/* Kontak */}
         <div className="bg-white rounded-lg shadow-sm p-6 border-2 border-primary-100">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 bg-primary-100 rounded-lg">
+            <div className="p-2 bg-primary-100 rounded-lg whitespace-nowrap inline-block shrink-0">
               <Phone className="w-6 h-6 text-primary-600" />
             </div>
             <h3 className="text-lg font-bold text-stone-900">
@@ -267,7 +267,7 @@ export default function ProfilTab() {
         {/* Asal Sekolah */}
         <div className="bg-white rounded-lg shadow-sm p-6 border-2 border-purple-100">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 bg-purple-100 rounded-lg">
+            <div className="p-2 bg-purple-100 rounded-lg whitespace-nowrap inline-block shrink-0">
               <School className="w-6 h-6 text-purple-600" />
             </div>
             <h3 className="text-lg font-bold text-stone-900">Asal Sekolah</h3>

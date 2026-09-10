@@ -869,7 +869,7 @@ export default function PembayaranPendaftaranTab({
             <PaymentTimeline paymentStatus={data.status} />
             {isPaymentPending && (
               <div className="mt-8 p-5 bg-emerald-50 border border-emerald-200 rounded-lg flex flex-col sm:flex-row items-center sm:items-start gap-4">
-                <div className="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center shrink-0">
+                <div className="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center shrink-0 whitespace-nowrap inline-block shrink-0">
                   <MessageCircle className="w-6 h-6 text-emerald-600" />
                 </div>
                 <div className="text-center sm:text-left flex-1">
@@ -1225,7 +1225,7 @@ export default function PembayaranPendaftaranTab({
           {/* Success View (hanya di halaman Pembayaran) */}
           {!isStatusOnly && isPaymentCompleted && (
             <div className="bg-emerald-50 border border-emerald-200 rounded-[2rem] p-5 md:p-8 text-center">
-              <div className="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-6 animate-in zoom-in duration-300">
+              <div className="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-6 animate-in zoom-in duration-300 whitespace-nowrap inline-block shrink-0">
                 <CheckCircle className="w-10 h-10 text-emerald-600" />
               </div>
               <h3 className="text-2xl font-black text-emerald-900 mb-2">

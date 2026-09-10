@@ -351,7 +351,7 @@ function DokumenCard({
                   e.stopPropagation();
                   window.open(`/api/dokumen/download/surat-kesehatan?v=${Date.now()}`, "_blank");
                 }}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-primary-100 hover:bg-primary-600 text-primary-700 hover:text-white rounded-lg text-[10px] font-black border border-primary-200 transition-colors shadow-sm"
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-primary-100 hover:bg-primary-600 text-primary-700 hover:text-white rounded-lg text-[10px] font-black border border-primary-200 transition-colors shadow-sm whitespace-nowrap inline-block shrink-0"
                 title="Download Format Surat Keterangan Kesehatan Panitia"
               >
                 <Download className="w-3.5 h-3.5" />
@@ -364,7 +364,7 @@ function DokumenCard({
                   e.stopPropagation();
                   window.open(`/api/dokumen/download/pakta-integritas-santri?v=${Date.now()}`, "_blank");
                 }}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-primary-100 hover:bg-primary-600 text-primary-700 hover:text-white rounded-lg text-[10px] font-black border border-primary-200 transition-colors shadow-sm"
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-primary-100 hover:bg-primary-600 text-primary-700 hover:text-white rounded-lg text-[10px] font-black border border-primary-200 transition-colors shadow-sm whitespace-nowrap inline-block shrink-0"
                 title="Download Format Pakta Integritas Calon Santri"
               >
                 <Download className="w-3.5 h-3.5" />
@@ -377,7 +377,7 @@ function DokumenCard({
                   e.stopPropagation();
                   window.open(`/api/dokumen/download/pakta-integritas-ortu?v=${Date.now()}`, "_blank");
                 }}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-primary-100 hover:bg-primary-600 text-primary-700 hover:text-white rounded-lg text-[10px] font-black border border-primary-200 transition-colors shadow-sm"
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-primary-100 hover:bg-primary-600 text-primary-700 hover:text-white rounded-lg text-[10px] font-black border border-primary-200 transition-colors shadow-sm whitespace-nowrap inline-block shrink-0"
                 title="Download Format Pakta Integritas Calon Orangtua/Wali"
               >
                 <Download className="w-3.5 h-3.5" />
@@ -390,7 +390,7 @@ function DokumenCard({
                   e.stopPropagation();
                   window.open(`/api/dokumen/download/pakta-integritas?v=${Date.now()}`, "_blank");
                 }}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-primary-100 hover:bg-primary-600 text-primary-700 hover:text-white rounded-lg text-[10px] font-black border border-primary-200 transition-colors shadow-sm"
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-primary-100 hover:bg-primary-600 text-primary-700 hover:text-white rounded-lg text-[10px] font-black border border-primary-200 transition-colors shadow-sm whitespace-nowrap inline-block shrink-0"
                 title="Download Format Pakta Integritas Panitia"
               >
                 <Download className="w-3.5 h-3.5" />
@@ -403,7 +403,7 @@ function DokumenCard({
                   e.stopPropagation();
                   window.open(`/api/dokumen/download/surat-pernyataan?v=${Date.now()}`, "_blank");
                 }}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-primary-100 hover:bg-primary-600 text-primary-700 hover:text-white rounded-lg text-[10px] font-black border border-primary-200 transition-colors shadow-sm"
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-primary-100 hover:bg-primary-600 text-primary-700 hover:text-white rounded-lg text-[10px] font-black border border-primary-200 transition-colors shadow-sm whitespace-nowrap inline-block shrink-0"
                 title="Download Format Surat Pernyataan Bebas Perilaku Buruk Panitia"
               >
                 <Download className="w-3.5 h-3.5" />
@@ -1221,7 +1221,7 @@ export default function UploadBerkasTab() {
                 </div>
 
                 <div className="mt-4 p-4 bg-emerald-50 border border-emerald-200 rounded-lg flex flex-col sm:flex-row items-center sm:items-start gap-3 text-left">
-                  <div className="w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center shrink-0 mt-0.5">
+                  <div className="w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center shrink-0 mt-0.5 whitespace-nowrap inline-block shrink-0">
                     <MessageCircle className="w-5 h-5 text-emerald-600" />
                   </div>
                   <div>

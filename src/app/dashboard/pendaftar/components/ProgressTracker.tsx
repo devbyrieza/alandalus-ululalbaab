@@ -109,7 +109,7 @@ export default function ProgressTracker({
         {/* PROGRESS STEPS - HORIZONTAL ON DESKTOP */}
         <div className="relative">
           {/* Main Connector Line (Desktop) */}
-          <div className="absolute top-10 left-0 w-full h-1 bg-stone-100 rounded-full hidden md:block overflow-hidden">
+          <div className="absolute top-10 left-0 w-full h-1 bg-stone-100 rounded-full hidden md:block overflow-hidden whitespace-nowrap inline-block shrink-0">
             <motion.div
               className="h-full bg-linear-to-r from-primary-600 to-primary-800"
               initial={{ width: 0 }}
@@ -192,7 +192,7 @@ export default function ProgressTracker({
 
                   {/* Vertikal Connector for Mobile Only */}
                   {idx < phases.length - 1 && (
-                    <div className="absolute top-14 left-7 w-0.5 h-10 bg-stone-100 md:hidden -z-10" />
+                    <div className="absolute top-14 left-7 w-0.5 h-10 bg-stone-100 md:hidden -z-10 whitespace-nowrap inline-block shrink-0" />
                   )}
                 </div>
               );

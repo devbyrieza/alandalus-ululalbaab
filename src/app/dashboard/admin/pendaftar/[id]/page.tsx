@@ -1312,7 +1312,7 @@ export default function PendaftarDetailPage() {
                       setTimeout(() => docInputRef.current?.click(), 100);
                     }}
                     disabled={!!uploadingDoc}
-                    className="px-3 py-2 bg-primary-50 hover:bg-primary-100 text-primary-700 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 border border-primary-100 disabled:opacity-50"
+                    className="px-3 py-2 bg-primary-50 hover:bg-primary-100 text-primary-700 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 border border-primary-100 disabled:opacity-50 whitespace-nowrap inline-block shrink-0"
                   >
                     {uploadingDoc === item.id ? (
                       <Loader2 className="w-3 h-3 animate-spin" />
@@ -1565,7 +1565,7 @@ export default function PendaftarDetailPage() {
                         Tes Hafalan
                       </span>
                       {!pendaftar.nilai_ujian ? (
-                        <span className="text-sm font-bold text-stone-400 italic inline-block mt-2 px-3 py-1 bg-stone-100 rounded">
+                        <span className="text-sm font-bold text-stone-400 italic inline-block mt-2 px-3 py-1 bg-stone-100 rounded whitespace-nowrap inline-block shrink-0">
                           Belum Ada
                         </span>
                       ) : pendaftar.nilai_ujian?.nilai_tes_hafalan || (pendaftar.nilai_ujian as any)?.score_hafalan ? (
@@ -1587,7 +1587,7 @@ export default function PendaftarDetailPage() {
                           )}
                         </div>
                       ) : (
-                        <span className="text-sm font-bold text-stone-400 italic inline-block mt-2 px-3 py-1 bg-stone-100 rounded">
+                        <span className="text-sm font-bold text-stone-400 italic inline-block mt-2 px-3 py-1 bg-stone-100 rounded whitespace-nowrap inline-block shrink-0">
                           Belum Dinilai
                         </span>
                       )}
@@ -1608,7 +1608,7 @@ export default function PendaftarDetailPage() {
                         Lisan B. Arab
                       </span>
                       {!pendaftar.nilai_ujian ? (
-                        <span className="text-sm font-bold text-stone-400 italic inline-block mt-2 px-3 py-1 bg-stone-100 rounded">
+                        <span className="text-sm font-bold text-stone-400 italic inline-block mt-2 px-3 py-1 bg-stone-100 rounded whitespace-nowrap inline-block shrink-0">
                           Belum Ada
                         </span>
                       ) : pendaftar.nilai_ujian?.nilai_tes_lisan_arab || (pendaftar.nilai_ujian as any)?.score_lisan_arab ? (
@@ -1630,7 +1630,7 @@ export default function PendaftarDetailPage() {
                           )}
                         </div>
                       ) : (
-                        <span className="text-sm font-bold text-stone-400 italic inline-block mt-2 px-3 py-1 bg-stone-100 rounded">
+                        <span className="text-sm font-bold text-stone-400 italic inline-block mt-2 px-3 py-1 bg-stone-100 rounded whitespace-nowrap inline-block shrink-0">
                           Belum Dinilai
                         </span>
                       )}
@@ -1684,7 +1684,7 @@ export default function PendaftarDetailPage() {
                       Wawancara: Calon Orangtua/Wali Santri
                     </span>
                     {!pendaftar.nilai_ujian ? (
-                      <span className="text-sm font-bold text-stone-400 italic inline-block mt-2 px-3 py-1 bg-stone-100 rounded">
+                      <span className="text-sm font-bold text-stone-400 italic inline-block mt-2 px-3 py-1 bg-stone-100 rounded whitespace-nowrap inline-block shrink-0">
                         Belum Ada
                       </span>
                     ) : pendaftar.nilai_ujian?.nilai_wawancara_ortu ||
@@ -1700,13 +1700,13 @@ export default function PendaftarDetailPage() {
                           <span className="text-sm text-rose-400 font-medium">/ 100</span>
                         </div>
                         {(pendaftar.nilai_ujian as any)?.detail_cawalsan?.rekomendasi && (
-                          <span className="text-xs font-black text-rose-700 bg-rose-100 border border-rose-200 px-2 py-0.5 rounded uppercase tracking-widest inline-block max-w-full break-words whitespace-normal">
+                          <span className="text-xs font-black text-rose-700 bg-rose-100 border border-rose-200 px-2 py-0.5 rounded uppercase tracking-widest inline-block max-w-full break-words whitespace-normal whitespace-nowrap inline-block shrink-0">
                             {(pendaftar.nilai_ujian as any).detail_cawalsan.rekomendasi}
                           </span>
                         )}
                       </div>
                     ) : (
-                      <span className="text-sm font-bold text-stone-400 italic inline-block mt-2 px-3 py-1 bg-stone-100 rounded">
+                      <span className="text-sm font-bold text-stone-400 italic inline-block mt-2 px-3 py-1 bg-stone-100 rounded whitespace-nowrap inline-block shrink-0">
                         Belum Ada
                       </span>
                     )}
@@ -2186,7 +2186,7 @@ export default function PendaftarDetailPage() {
                           setNewPhone(pendaftar.no_hp || "");
                           setEditingPhone(true);
                         }}
-                        className="p-1.5 text-primary-500 hover:text-primary-700 bg-primary-50 hover:bg-primary-100 rounded-lg transition-colors flex items-center gap-1"
+                        className="p-1.5 text-primary-500 hover:text-primary-700 bg-primary-50 hover:bg-primary-100 rounded-lg transition-colors flex items-center gap-1 whitespace-nowrap inline-block shrink-0"
                         title="Edit Nomor HP"
                       >
                         <Edit className="w-3.5 h-3.5" />
@@ -2441,7 +2441,7 @@ export default function PendaftarDetailPage() {
           {!isKeuangan && (
             <div className="bg-white rounded-lg shadow-sm p-6 border-2 border-primary-100">
               <div className="flex items-center gap-3 mb-4">
-                <div className="p-2 bg-primary-100 rounded-lg">
+                <div className="p-2 bg-primary-100 rounded-lg whitespace-nowrap inline-block shrink-0">
                   <FileText className="w-6 h-6 text-primary-700" />
                 </div>
                 <h3 className="text-lg font-bold text-stone-900">Dokumen</h3>
@@ -2502,7 +2502,7 @@ export default function PendaftarDetailPage() {
           {!isKeuangan && !isBerkas && !isPenguji && (
             <div className="bg-white rounded-lg shadow-sm p-6 border-2 border-primary-100">
               <div className="flex items-center gap-3 mb-4">
-                <div className="p-2 bg-emerald-100 rounded-lg">
+                <div className="p-2 bg-emerald-100 rounded-lg whitespace-nowrap inline-block shrink-0">
                   <CreditCard className="w-6 h-6 text-emerald-600" />
                 </div>
                 <h3 className="text-lg font-bold text-stone-900">Pembayaran</h3>
@@ -2561,7 +2561,7 @@ export default function PendaftarDetailPage() {
           {/* Timestamps */}
           <div className="bg-white rounded-lg shadow-sm p-6 border-2 border-primary-100">
             <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 bg-stone-100 rounded-lg">
+              <div className="p-2 bg-stone-100 rounded-lg whitespace-nowrap inline-block shrink-0">
                 <Calendar className="w-6 h-6 text-stone-600" />
               </div>
               <h3 className="text-lg font-bold text-stone-900">Timeline</h3>
@@ -3410,7 +3410,7 @@ export default function PendaftarDetailPage() {
                 <button
                   type="button"
                   onClick={() => setIsEditModalOpen(false)}
-                  className="px-6 py-3 bg-stone-100 hover:bg-stone-200 text-stone-800 rounded-lg font-black text-sm uppercase transition-all"
+                  className="px-6 py-3 bg-stone-100 hover:bg-stone-200 text-stone-800 rounded-lg font-black text-sm uppercase transition-all whitespace-nowrap inline-block shrink-0"
                 >
                   Batal
                 </button>

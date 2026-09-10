@@ -138,7 +138,7 @@ export default function DownloadBerkasTab() {
           >
             <div className="flex items-start justify-between mb-4">
               <div className="flex items-center gap-3">
-                <div className="p-3 bg-primary-50 rounded-lg group-hover:bg-primary-100 transition-colors">
+                <div className="p-3 bg-primary-50 rounded-lg group-hover:bg-primary-100 transition-colors whitespace-nowrap inline-block shrink-0">
                   <FileText className="w-6 h-6 text-primary-600" />
                 </div>
                 <div>
@@ -164,7 +164,7 @@ export default function DownloadBerkasTab() {
             ) : doc.status === "locked" ? (
               <button
                 disabled
-                className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-stone-100 text-stone-400 rounded-lg font-medium cursor-not-allowed text-xs lg:text-sm border border-stone-200"
+                className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-stone-100 text-stone-400 rounded-lg font-medium cursor-not-allowed text-xs lg:text-sm border border-stone-200 whitespace-nowrap inline-block shrink-0"
               >
                 <AlertCircle className="w-4 h-4" />
                 Belum Tersedia

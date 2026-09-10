@@ -455,7 +455,7 @@ export default function WilayahSelector({
     <div className="space-y-5">
       {/* ── Progress bar — biru ke kuning (khas Ulul Albaab) ── */}
       <div className="flex items-center gap-3">
-        <div className="flex-1 h-1 bg-primary-100 rounded-full overflow-hidden">
+        <div className="flex-1 h-1 bg-primary-100 rounded-full overflow-hidden whitespace-nowrap inline-block shrink-0">
           <motion.div
             className="h-full rounded-full bg-gradient-to-r from-primary-500 to-secondary-500"
             initial={{ width: 0 }}

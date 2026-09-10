@@ -311,7 +311,7 @@ export default function MonitoringJadwalPage() {
 
                     {/* View Switcher & Actions */}
                     <div className="flex items-center gap-2">
-                        <div className="flex-1 md:flex-none flex bg-slate-100 p-1.5 rounded-lg h-12 min-w-fit">
+                        <div className="flex-1 md:flex-none flex bg-slate-100 p-1.5 rounded-lg h-12 min-w-fit whitespace-nowrap inline-block shrink-0">
                             {[
                                 { id: "flat", label: "List" },
                                 { id: "grouped", label: "Ustadz" },
@@ -373,7 +373,7 @@ export default function MonitoringJadwalPage() {
                                                 {s?.pendaftar?.nama.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase())}
                                             </h3>
                                             <div className="flex items-center gap-2 mt-1.5">
-                                                <span className="text-[10px] font-mono font-bold px-2 py-0.5 bg-slate-100 text-slate-500 rounded uppercase tracking-wider">
+                                                <span className="text-[10px] font-mono font-bold px-2 py-0.5 bg-slate-100 text-slate-500 rounded uppercase tracking-wider whitespace-nowrap inline-block shrink-0">
                                                     {s.pendaftar.nomor}
                                                 </span>
                                                 <span className={`text-[10px] font-bold px-2 py-0.5 rounded uppercase ${
@@ -459,7 +459,7 @@ export default function MonitoringJadwalPage() {
                                                             {s?.pendaftar?.nama.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase())}
                                                         </span>
                                                         <div className="flex items-center gap-2 mt-1.5">
-                                                            <span className="text-[10px] font-mono font-bold px-2 py-0.5 bg-slate-100 text-slate-500 rounded uppercase tracking-wider">
+                                                            <span className="text-[10px] font-mono font-bold px-2 py-0.5 bg-slate-100 text-slate-500 rounded uppercase tracking-wider whitespace-nowrap inline-block shrink-0">
                                                                 {s.pendaftar.nomor}
                                                             </span>
                                                         </div>

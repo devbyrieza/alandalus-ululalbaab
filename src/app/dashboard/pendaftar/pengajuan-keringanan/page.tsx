@@ -303,7 +303,7 @@ export default function PengajuanKeringananPage() {
           <div className="space-y-4">
             <h3 className="font-black text-lg text-slate-900 border-b border-slate-100 pb-2 flex items-center justify-between">
               2. Upload Dokumen Persyaratan
-              <span className="text-xs font-medium text-slate-500 bg-slate-100 px-2 py-1 rounded-md">
+              <span className="text-xs font-medium text-slate-500 bg-slate-100 px-2 py-1 rounded-md whitespace-nowrap inline-block shrink-0">
                 Format: PDF/JPG/PNG (Max 10MB)
               </span>
             </h3>

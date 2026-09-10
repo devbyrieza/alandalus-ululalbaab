@@ -175,7 +175,7 @@ export default function TrashPage() {
               />
               <button
                 onClick={handleSearch}
-                className="bg-stone-100 p-2 rounded-lg border-2 border-stone-200 hover:border-red-500 hover:text-red-600 transition-colors"
+                className="bg-stone-100 p-2 rounded-lg border-2 border-stone-200 hover:border-red-500 hover:text-red-600 transition-colors whitespace-nowrap inline-block shrink-0"
               >
                 <Search className="w-5 h-5" />
               </button>
@@ -270,7 +270,7 @@ export default function TrashPage() {
                         </div>
                       </td>
                       <td className="px-4 py-3">
-                        <span className="px-3 py-1 bg-stone-100 text-stone-600 rounded-full text-xs font-bold">
+                        <span className="px-3 py-1 bg-stone-100 text-stone-600 rounded-full text-xs font-bold whitespace-nowrap inline-block shrink-0">
                           {item.jenjang}
                         </span>
                       </td>
@@ -369,7 +369,7 @@ export default function TrashPage() {
               </div>
               <button
                 onClick={() => setIsRestoreModalOpen(false)}
-                className="p-2 hover:bg-stone-100 rounded-full transition-colors text-stone-400 hover:text-stone-600"
+                className="p-2 hover:bg-stone-100 rounded-full transition-colors text-stone-400 hover:text-stone-600 whitespace-nowrap inline-block shrink-0"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -389,7 +389,7 @@ export default function TrashPage() {
                 <button
                   type="button"
                   onClick={() => setIsRestoreModalOpen(false)}
-                  className="px-5 py-2.5 font-bold text-stone-500 hover:bg-stone-100 rounded-lg transition-colors"
+                  className="px-5 py-2.5 font-bold text-stone-500 hover:bg-stone-100 rounded-lg transition-colors whitespace-nowrap inline-block shrink-0"
                   disabled={isRestoring}
                 >
                   Batal

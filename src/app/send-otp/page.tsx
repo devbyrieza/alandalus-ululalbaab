@@ -220,7 +220,7 @@ export default function SendOtpPage() {
                       className={`font-black ${selectedChannel === "email" ? "text-primary-900" : "text-ink-900"}`}
                     >
                       Email{" "}
-                      <span className="text-primary-600 bg-primary-100 px-2 py-0.5 rounded text-[10px] font-bold ml-1">
+                      <span className="text-primary-600 bg-primary-100 px-2 py-0.5 rounded text-[10px] font-bold ml-1 whitespace-nowrap inline-block shrink-0">
                         GRATIS
                       </span>
                     </span>

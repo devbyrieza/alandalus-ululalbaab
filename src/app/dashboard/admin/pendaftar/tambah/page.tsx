@@ -106,7 +106,7 @@ export default function AdminTambahPendaftar() {
       <div className="flex items-center gap-4">
         <Link
           href="/dashboard/admin/pendaftar"
-          className="p-2 hover:bg-stone-100 rounded-full transition-colors"
+          className="p-2 hover:bg-stone-100 rounded-full transition-colors whitespace-nowrap inline-block shrink-0"
         >
           <ArrowLeft className="w-5 h-5 text-stone-600" />
         </Link>

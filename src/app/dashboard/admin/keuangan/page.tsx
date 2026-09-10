@@ -441,7 +441,7 @@ export default function KeuanganPage() {
               <select
                 value={selectedTahunAjaranId}
                 onChange={(e) => setSelectedTahunAjaranId(e.target.value)}
-                className="bg-slate-100 text-slate-700 text-xs font-bold rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer hover:bg-slate-200 transition-all border-none"
+                className="bg-slate-100 text-slate-700 text-xs font-bold rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer hover:bg-slate-200 transition-all border-none whitespace-nowrap inline-block shrink-0"
               >
                 {tahunAjaranList.map((ta: any) => (
                   <option key={ta.id} value={ta.id}>
@@ -478,7 +478,7 @@ export default function KeuanganPage() {
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-1 bg-slate-100 p-1 rounded-lg w-fit">
+      <div className="flex gap-1 bg-slate-100 p-1 rounded-lg w-fit whitespace-nowrap inline-block shrink-0">
         <button
           onClick={() => {
             setActiveTab("pendaftaran");
@@ -786,7 +786,7 @@ export default function KeuanganPage() {
                               </td>
                               <td className="px-6 py-3 text-center">
                                 <button
-                                  className="p-1.5 rounded-full hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition-colors"
+                                  className="p-1.5 rounded-full hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition-colors whitespace-nowrap inline-block shrink-0"
                                   onClick={(e) => {
                                     e.stopPropagation();
                                     setExpandedStudentId(expandedStudentId === row.id ? null : row.id);

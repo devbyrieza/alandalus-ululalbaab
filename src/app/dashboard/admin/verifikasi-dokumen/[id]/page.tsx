@@ -532,13 +532,13 @@ export default function VerifikasiDokumenDetailPage() {
             }`}
           >
             {/* Document Preview */}
-            <div className="relative aspect-[4/3] bg-stone-100">
+            <div className="relative aspect-[4/3] bg-stone-100 whitespace-nowrap inline-block shrink-0">
               {dok.file_url ? (
                 isImageFile(dok) ? (
                     <img
                       src={dok.file_url}
                       alt={dok.jenis_dokumen}
-                      className="absolute inset-0 w-full h-full object-contain bg-stone-100 cursor-pointer p-2"
+                      className="absolute inset-0 w-full h-full object-contain bg-stone-100 cursor-pointer p-2 whitespace-nowrap inline-block shrink-0"
                       onClick={() =>
                         openPreview(
                           dok.file_url!,
@@ -791,7 +791,7 @@ export default function VerifikasiDokumenDetailPage() {
 
             {/* Modal Content */}
             <div
-              className="flex-1 overflow-auto bg-stone-100 flex items-center justify-center p-2 relative"
+              className="flex-1 overflow-auto bg-stone-100 flex items-center justify-center p-2 relative whitespace-nowrap inline-block shrink-0"
               onClick={(e) => e.stopPropagation()}
             >
               {previewDoc.type === "application/pdf" ? (

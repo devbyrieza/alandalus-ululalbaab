@@ -56,7 +56,7 @@ export default function AboutSection() {
         aria-hidden
         className="pointer-events-none absolute inset-0 overflow-hidden"
       >
-        <div className="absolute -top-32 -left-32 w-[480px] h-[480px] rounded-full bg-primary-100/25 blur-3xl" />
+        <div className="absolute -top-32 -left-32 w-[480px] h-[480px] rounded-full bg-primary-100/25 blur-3xl whitespace-nowrap inline-block shrink-0" />
         <div className="absolute -bottom-24 -right-24 w-[360px] h-[360px] rounded-full bg-secondary-100/30 blur-3xl" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] rounded-full bg-primary-50/30 blur-3xl" />
       </div>
@@ -191,7 +191,7 @@ export default function AboutSection() {
                       className="flex gap-4 items-start p-6 md:p-8 group/item hover:bg-primary-50/50 transition-colors duration-200"
                     >
                       <div className="mt-0.5 shrink-0">
-                        <div className="w-7 h-7 rounded-full bg-primary-50 border border-primary-100 flex items-center justify-center group-hover/item:bg-primary-100 transition-colors duration-200">
+                        <div className="w-7 h-7 rounded-full bg-primary-50 border border-primary-100 flex items-center justify-center group-hover/item:bg-primary-100 transition-colors duration-200 whitespace-nowrap inline-block shrink-0">
                           <CheckCircle
                             className="w-3.5 h-3.5 text-primary-600"
                             strokeWidth={2.25}

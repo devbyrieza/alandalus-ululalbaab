@@ -343,7 +343,7 @@ export default function DashboardPage() {
                 <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center text-blue-600 border border-blue-100 shadow-sm">
                   <LayoutDashboard className="w-6 h-6" />
                 </div>
-                <div className="h-0.5 w-12 bg-blue-100 rounded-full" />
+                <div className="h-0.5 w-12 bg-blue-100 rounded-full whitespace-nowrap inline-block shrink-0" />
                 <span className="text-[10px] font-black uppercase tracking-[0.3em] text-blue-600">
                   Portal Santri
                 </span>

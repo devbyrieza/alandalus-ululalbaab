@@ -1795,7 +1795,7 @@ function AdminPendaftarContent() {
         ) : pendaftar.length === 0 ? (
           <div className="text-center py-20">
             <div className="relative inline-flex mb-6">
-              <div className="absolute inset-0 bg-primary-100 rounded-full blur-xl opacity-50"></div>
+              <div className="absolute inset-0 bg-primary-100 rounded-full blur-xl opacity-50 whitespace-nowrap inline-block shrink-0"></div>
               <div className="relative bg-white p-4 rounded-full shadow-sm border border-primary-50">
                 <Users className="w-12 h-12 text-primary-300" />
               </div>
@@ -1832,14 +1832,14 @@ function AdminPendaftarContent() {
                         <span className="font-mono text-xs font-bold text-primary-700 bg-primary-50 px-2 py-0.5 rounded">
                           {item.nomor_pendaftaran}
                         </span>
-                        <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 bg-purple-100 text-purple-700 rounded-full">
+                        <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 bg-purple-100 text-purple-700 rounded-full whitespace-nowrap inline-block shrink-0">
                           {item.jenjang}
                         </span>
                       </div>
                       <p className="font-black text-primary-950 leading-tight text-sm flex items-center gap-1.5 flex-wrap">
                         <span>{toTitleCase(item.nama_lengkap)}</span>
                         {item.tipe_pendaftaran === "PINDAHAN" && (
-                          <span className="px-1.5 py-0.5 bg-violet-100 text-violet-700 rounded-md text-[9px] font-black uppercase tracking-wider">
+                          <span className="px-1.5 py-0.5 bg-violet-100 text-violet-700 rounded-md text-[9px] font-black uppercase tracking-wider whitespace-nowrap inline-block shrink-0">
                             PINDAHAN
                           </span>
                         )}
@@ -2029,7 +2029,7 @@ function AdminPendaftarContent() {
                           <div className="font-bold text-stone-900 flex items-center gap-1.5 flex-wrap">
                             <span>{toTitleCase(item.nama_lengkap)}</span>
                             {item.tipe_pendaftaran === "PINDAHAN" && (
-                              <span className="px-1.5 py-0.5 bg-violet-100 text-violet-700 rounded-md text-[9px] font-black uppercase tracking-wider">
+                              <span className="px-1.5 py-0.5 bg-violet-100 text-violet-700 rounded-md text-[9px] font-black uppercase tracking-wider whitespace-nowrap inline-block shrink-0">
                                 PINDAHAN
                               </span>
                             )}
@@ -2067,7 +2067,7 @@ function AdminPendaftarContent() {
                         </td>
                       )}
                       <td className="px-4 py-3">
-                        <span className="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-bold">
+                        <span className="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-bold whitespace-nowrap inline-block shrink-0">
                           {item.jenjang}
                         </span>
                       </td>
@@ -2222,7 +2222,7 @@ function AdminPendaftarContent() {
               </div>
               <button
                 onClick={() => setIsAnnouncementModalOpen(false)}
-                className="p-2 hover:bg-stone-100 rounded-full transition-colors text-stone-400 hover:text-stone-600"
+                className="p-2 hover:bg-stone-100 rounded-full transition-colors text-stone-400 hover:text-stone-600 whitespace-nowrap inline-block shrink-0"
               >
                 <X className="w-6 h-6" />
               </button>
@@ -2308,7 +2308,7 @@ function AdminPendaftarContent() {
                 <button
                   type="button"
                   onClick={() => setIsAnnouncementModalOpen(false)}
-                  className="px-6 py-2.5 font-bold text-stone-500 hover:bg-stone-100 rounded-lg transition-colors"
+                  className="px-6 py-2.5 font-bold text-stone-500 hover:bg-stone-100 rounded-lg transition-colors whitespace-nowrap inline-block shrink-0"
                   disabled={isSubmittingAnnouncement}
                 >
                   Batal
@@ -2356,7 +2356,7 @@ function AdminPendaftarContent() {
               </div>
               <button
                 onClick={() => setIsDeleteModalOpen(false)}
-                className="p-2 hover:bg-stone-100 rounded-full transition-colors text-stone-400 hover:text-stone-600"
+                className="p-2 hover:bg-stone-100 rounded-full transition-colors text-stone-400 hover:text-stone-600 whitespace-nowrap inline-block shrink-0"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -2394,7 +2394,7 @@ function AdminPendaftarContent() {
                 <button
                   type="button"
                   onClick={() => setIsDeleteModalOpen(false)}
-                  className="px-5 py-2.5 font-bold text-stone-500 hover:bg-stone-100 rounded-lg transition-colors"
+                  className="px-5 py-2.5 font-bold text-stone-500 hover:bg-stone-100 rounded-lg transition-colors whitespace-nowrap inline-block shrink-0"
                   disabled={isDeleting}
                 >
                   Batal

@@ -1133,7 +1133,7 @@ Mohon konfirmasi kesediaan waktu kunjungan tersebut. Terima kasih.`;
                       </p>
                       <button 
                         onClick={() => setFormStatus('idle')}
-                        className="px-6 py-3 rounded-lg bg-primary-50 text-primary-700 font-bold hover:bg-primary-100 transition-colors"
+                        className="px-6 py-3 rounded-lg bg-primary-50 text-primary-700 font-bold hover:bg-primary-100 transition-colors whitespace-nowrap inline-block shrink-0"
                       >
                         Isi Form Kembali
                       </button>

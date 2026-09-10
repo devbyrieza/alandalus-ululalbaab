@@ -289,7 +289,7 @@ export default function UserManagementPage() {
               className="w-full pl-16 pr-8 py-5 bg-white border-2 border-secondary-100 rounded-[2.5rem] focus:outline-none focus:border-primary-500 font-bold shadow-sm shadow-emerald-900/20 placeholder:text-stone-300"
             />
           </div>
-          <p className="text-[10px] font-black uppercase tracking-widest text-stone-500 bg-stone-100 px-4 py-2 rounded-full">
+          <p className="text-[10px] font-black uppercase tracking-widest text-stone-500 bg-stone-100 px-4 py-2 rounded-full whitespace-nowrap inline-block shrink-0">
             Total: {users.length} Data Pengguna
           </p>
         </div>
@@ -319,7 +319,7 @@ export default function UserManagementPage() {
                   >
                     <td className="p-5 md:p-8">
                       <div className="flex items-center gap-5">
-                        <div className="w-12 h-12 rounded-lg bg-primary-100 flex items-center justify-center text-primary-700 font-black text-xs border-2 border-white shadow-sm shadow-emerald-900/20">
+                        <div className="w-12 h-12 rounded-lg bg-primary-100 flex items-center justify-center text-primary-700 font-black text-xs border-2 border-white shadow-sm shadow-emerald-900/20 whitespace-nowrap inline-block shrink-0">
                           {user.full_name.charAt(0)}
                         </div>
                         <div>
@@ -344,7 +344,7 @@ export default function UserManagementPage() {
                             .map((r, i) => (
                               <span
                                 key={i}
-                                className="px-4 py-1.5 bg-stone-100 text-stone-600 text-[10px] font-black rounded-lg border border-stone-200 uppercase tracking-widest shadow-sm shadow-emerald-900/20"
+                                className="px-4 py-1.5 bg-stone-100 text-stone-600 text-[10px] font-black rounded-lg border border-stone-200 uppercase tracking-widest shadow-sm shadow-emerald-900/20 whitespace-nowrap inline-block shrink-0"
                               >
                                 {ROLE_LABELS[r as UserRole] ||
                                   r.replace("_", " ")}
@@ -420,7 +420,7 @@ export default function UserManagementPage() {
               </div>
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="text-stone-300 hover:text-rose-600 transition-colors p-2 bg-stone-100 rounded-full hover:bg-rose-50"
+                className="text-stone-300 hover:text-rose-600 transition-colors p-2 bg-stone-100 rounded-full hover:bg-rose-50 whitespace-nowrap inline-block shrink-0"
               >
                 <XCircle className="w-10 h-10" />
               </button>
@@ -438,7 +438,7 @@ export default function UserManagementPage() {
                     onChange={(e) =>
                       setFormData({ ...formData, full_name: e.target.value })
                     }
-                    className="w-full px-4 md:px-5 py-4 bg-stone-100/50 border-2 border-transparent focus:border-primary-600 focus:bg-white focus:outline-none font-bold rounded-lg transition-all"
+                    className="w-full px-4 md:px-5 py-4 bg-stone-100/50 border-2 border-transparent focus:border-primary-600 focus:bg-white focus:outline-none font-bold rounded-lg transition-all whitespace-nowrap inline-block shrink-0"
                   />
                 </div>
                 <div className="col-span-1 md:col-span-2">
@@ -452,7 +452,7 @@ export default function UserManagementPage() {
                     onChange={(e) =>
                       setFormData({ ...formData, email: e.target.value })
                     }
-                    className="w-full px-4 md:px-5 py-4 bg-stone-100/50 border-2 border-transparent focus:border-primary-600 focus:bg-white focus:outline-none font-bold rounded-lg transition-all"
+                    className="w-full px-4 md:px-5 py-4 bg-stone-100/50 border-2 border-transparent focus:border-primary-600 focus:bg-white focus:outline-none font-bold rounded-lg transition-all whitespace-nowrap inline-block shrink-0"
                   />
                 </div>
                 <div className="col-span-1 md:col-span-2">
@@ -466,7 +466,7 @@ export default function UserManagementPage() {
                       setFormData({ ...formData, username: e.target.value })
                     }
                     placeholder="Contoh: ustadz_fulan"
-                    className="w-full px-4 md:px-5 py-4 bg-stone-100/50 border-2 border-transparent focus:border-primary-600 focus:bg-white focus:outline-none font-bold rounded-lg transition-all"
+                    className="w-full px-4 md:px-5 py-4 bg-stone-100/50 border-2 border-transparent focus:border-primary-600 focus:bg-white focus:outline-none font-bold rounded-lg transition-all whitespace-nowrap inline-block shrink-0"
                   />
                 </div>
                 <div>
@@ -499,7 +499,7 @@ export default function UserManagementPage() {
                       onChange={(e) =>
                         setFormData({ ...formData, password: e.target.value })
                       }
-                      className="w-full px-4 md:px-5 py-4 bg-stone-100/50 border-2 border-transparent focus:border-primary-600 focus:bg-white focus:outline-none font-bold rounded-lg transition-all pr-16"
+                      className="w-full px-4 md:px-5 py-4 bg-stone-100/50 border-2 border-transparent focus:border-primary-600 focus:bg-white focus:outline-none font-bold rounded-lg transition-all pr-16 whitespace-nowrap inline-block shrink-0"
                       placeholder={
                         isEditing ? "(Abaikan jika sama)" : "••••••••"
                       }
@@ -528,7 +528,7 @@ export default function UserManagementPage() {
                     onChange={(e) =>
                       setFormData({ ...formData, phone: e.target.value })
                     }
-                    className="w-full px-4 md:px-5 py-4 bg-stone-100/50 border-2 border-transparent focus:border-primary-600 focus:bg-white focus:outline-none font-bold rounded-lg transition-all"
+                    className="w-full px-4 md:px-5 py-4 bg-stone-100/50 border-2 border-transparent focus:border-primary-600 focus:bg-white focus:outline-none font-bold rounded-lg transition-all whitespace-nowrap inline-block shrink-0"
                   />
                 </div>
                 <div className="col-span-1 md:col-span-2">
@@ -540,7 +540,7 @@ export default function UserManagementPage() {
                     onChange={(e) =>
                       setFormData({ ...formData, jenis_kelamin: e.target.value })
                     }
-                    className="w-full px-4 md:px-5 py-4 bg-stone-100/50 border-2 border-transparent focus:border-primary-600 focus:bg-white focus:outline-none font-bold rounded-lg transition-all cursor-pointer"
+                    className="w-full px-4 md:px-5 py-4 bg-stone-100/50 border-2 border-transparent focus:border-primary-600 focus:bg-white focus:outline-none font-bold rounded-lg transition-all cursor-pointer whitespace-nowrap inline-block shrink-0"
                   >
                     <option value="">Pilih Jenis Kelamin</option>
                     <option value="L">Laki-Laki (Ustadz)</option>
@@ -560,7 +560,7 @@ export default function UserManagementPage() {
                       onChange={(e) =>
                         setFormData({ ...formData, google_meet_link: e.target.value })
                       }
-                      className="w-full px-4 md:px-5 py-4 bg-stone-100/50 border-2 border-transparent focus:border-primary-600 focus:bg-white focus:outline-none font-bold rounded-xl transition-all font-mono text-sm"
+                      className="w-full px-4 md:px-5 py-4 bg-stone-100/50 border-2 border-transparent focus:border-primary-600 focus:bg-white focus:outline-none font-bold rounded-xl transition-all font-mono text-sm whitespace-nowrap inline-block shrink-0"
                     />
                   </div>
                   <p className="text-[11px] text-stone-400 font-medium mt-1.5">

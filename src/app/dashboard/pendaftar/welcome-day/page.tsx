@@ -268,7 +268,7 @@ export default function WelcomeDayPage() {
       {/* ─── INFO PENGINAPAN ─── */}
       <div className="bg-blue-50 border border-blue-200 rounded-lg p-5 md:p-6 shadow-sm">
         <div className="flex flex-col sm:flex-row gap-4 sm:items-start">
-          <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0 text-blue-600">
+          <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0 text-blue-600 whitespace-nowrap inline-block shrink-0">
             <Home className="w-6 h-6" />
           </div>
           <div>
@@ -297,7 +297,7 @@ export default function WelcomeDayPage() {
           rel="noopener noreferrer"
           className="flex items-center gap-3 bg-white hover:bg-emerald-50 rounded-lg p-4 border border-ink-100 hover:border-emerald-200 transition-all shadow-sm group"
         >
-          <div className="w-10 h-10 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+          <div className="w-10 h-10 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform whitespace-nowrap inline-block shrink-0">
             <Download className="w-5 h-5" />
           </div>
           <div>
@@ -388,7 +388,7 @@ export default function WelcomeDayPage() {
         {isEditing ? (
           <div className="p-6 relative">
             <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200/60 rounded-lg px-5 py-4 mb-8 flex items-start gap-3 shadow-sm">
-              <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+              <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 whitespace-nowrap inline-block shrink-0">
                 <Info className="w-4 h-4 text-blue-700" />
               </div>
               <p className="text-sm text-blue-900 font-medium leading-relaxed pt-1">
@@ -737,7 +737,7 @@ export default function WelcomeDayPage() {
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           <div className="bg-white rounded-lg p-4 border border-amber-100 flex gap-3">
-            <div className="w-10 h-10 bg-amber-100 rounded-lg flex items-center justify-center flex-shrink-0">
+            <div className="w-10 h-10 bg-amber-100 rounded-lg flex items-center justify-center flex-shrink-0 whitespace-nowrap inline-block shrink-0">
               <Shirt className="w-5 h-5 text-amber-700" />
             </div>
             <div>
@@ -746,7 +746,7 @@ export default function WelcomeDayPage() {
             </div>
           </div>
           <div className="bg-white rounded-lg p-4 border border-amber-100 flex gap-3">
-            <div className="w-10 h-10 bg-amber-100 rounded-lg flex items-center justify-center flex-shrink-0">
+            <div className="w-10 h-10 bg-amber-100 rounded-lg flex items-center justify-center flex-shrink-0 whitespace-nowrap inline-block shrink-0">
               <Users className="w-5 h-5 text-amber-700" />
             </div>
             <div>
@@ -755,7 +755,7 @@ export default function WelcomeDayPage() {
             </div>
           </div>
           <div className="bg-white rounded-lg p-4 border border-amber-100 flex gap-3">
-            <div className="w-10 h-10 bg-amber-100 rounded-lg flex items-center justify-center flex-shrink-0">
+            <div className="w-10 h-10 bg-amber-100 rounded-lg flex items-center justify-center flex-shrink-0 whitespace-nowrap inline-block shrink-0">
               <Package className="w-5 h-5 text-amber-700" />
             </div>
             <div>
@@ -764,7 +764,7 @@ export default function WelcomeDayPage() {
             </div>
           </div>
           <div className="bg-white rounded-lg p-4 border border-amber-100 flex gap-3">
-            <div className="w-10 h-10 bg-amber-100 rounded-lg flex items-center justify-center flex-shrink-0">
+            <div className="w-10 h-10 bg-amber-100 rounded-lg flex items-center justify-center flex-shrink-0 whitespace-nowrap inline-block shrink-0">
               <Clock className="w-5 h-5 text-amber-700" />
             </div>
             <div>
@@ -779,7 +779,7 @@ export default function WelcomeDayPage() {
       {/* ─── INFOGRAFIS & PANDUAN VISUAL ─── */}
       <div className="bg-white rounded-lg border border-ink-100 shadow-sm overflow-hidden mb-6">
         <div className="px-6 py-4 border-b border-emerald-100 bg-emerald-50 flex items-center gap-3">
-          <div className="w-9 h-9 bg-emerald-100 rounded-lg flex items-center justify-center">
+          <div className="w-9 h-9 bg-emerald-100 rounded-lg flex items-center justify-center whitespace-nowrap inline-block shrink-0">
             <Calendar className="w-5 h-5 text-emerald-700" />
           </div>
           <div>
@@ -791,7 +791,7 @@ export default function WelcomeDayPage() {
           {/* Alur Kedatangan */}
           <div>
             <div className="flex items-center gap-2 mb-3">
-              <div className="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center font-black text-xs shadow-sm">
+              <div className="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center font-black text-xs shadow-sm whitespace-nowrap inline-block shrink-0">
                 1
               </div>
               <h3 className="font-black text-ink-900 text-sm">Alur Kedatangan</h3>
@@ -823,7 +823,7 @@ export default function WelcomeDayPage() {
           {/* Rundown Acara */}
           <div>
             <div className="flex items-center gap-2 mb-3">
-              <div className="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center font-black text-xs shadow-sm">
+              <div className="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center font-black text-xs shadow-sm whitespace-nowrap inline-block shrink-0">
                 2
               </div>
               <h3 className="font-black text-ink-900 text-sm">Rundown Acara</h3>
@@ -845,7 +845,7 @@ export default function WelcomeDayPage() {
       {/* ─── JADWAL ACARA ─── */}
       <div className="bg-white rounded-lg border border-ink-100 shadow-sm overflow-hidden">
         <div className="px-6 py-4 border-b border-ink-100 bg-primary-50 flex items-center gap-3">
-          <div className="w-9 h-9 bg-primary-100 rounded-lg flex items-center justify-center">
+          <div className="w-9 h-9 bg-primary-100 rounded-lg flex items-center justify-center whitespace-nowrap inline-block shrink-0">
             <Calendar className="w-5 h-5 text-primary-700" />
           </div>
           <div>
@@ -893,7 +893,7 @@ export default function WelcomeDayPage() {
       {/* ─── BERKAS PERSYARATAN ─── */}
       <div className="bg-white rounded-lg border border-ink-100 shadow-sm overflow-hidden mt-6">
         <div className="px-6 py-4 border-b border-ink-100 bg-blue-50 flex items-center gap-3">
-          <div className="w-9 h-9 bg-blue-100 rounded-lg flex items-center justify-center">
+          <div className="w-9 h-9 bg-blue-100 rounded-lg flex items-center justify-center whitespace-nowrap inline-block shrink-0">
             <FileCheck className="w-5 h-5 text-blue-700" />
           </div>
           <div>
@@ -921,7 +921,7 @@ export default function WelcomeDayPage() {
       {/* ─── BERKAS PERSYARATAN ─── */}
       <div className="bg-white rounded-lg border border-ink-100 shadow-sm overflow-hidden mt-6">
         <div className="px-6 py-4 border-b border-ink-100 bg-blue-50 flex items-center gap-3">
-          <div className="w-9 h-9 bg-blue-100 rounded-lg flex items-center justify-center">
+          <div className="w-9 h-9 bg-blue-100 rounded-lg flex items-center justify-center whitespace-nowrap inline-block shrink-0">
             <FileCheck className="w-5 h-5 text-blue-700" />
           </div>
           <div>
@@ -950,7 +950,7 @@ export default function WelcomeDayPage() {
       <div className="bg-white rounded-lg border border-ink-100 shadow-sm overflow-hidden mt-6">
         <div className="px-6 py-5 border-b border-ink-100 bg-emerald-50 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 bg-emerald-100 rounded-lg flex items-center justify-center">
+            <div className="w-9 h-9 bg-emerald-100 rounded-lg flex items-center justify-center whitespace-nowrap inline-block shrink-0">
               <Package className="w-5 h-5 text-emerald-700" />
             </div>
             <div>
@@ -1031,7 +1031,7 @@ export default function WelcomeDayPage() {
       {/* ─── FAQ ─── */}
       <div className="bg-white rounded-lg border border-ink-100 shadow-sm overflow-hidden">
         <div className="px-6 py-4 border-b border-ink-100 bg-blue-50 flex items-center gap-3">
-          <div className="w-9 h-9 bg-blue-100 rounded-lg flex items-center justify-center">
+          <div className="w-9 h-9 bg-blue-100 rounded-lg flex items-center justify-center whitespace-nowrap inline-block shrink-0">
             <MessageCircle className="w-5 h-5 text-blue-700" />
           </div>
           <div>

@@ -502,7 +502,7 @@ function VerifikasiPembayaranContent() {
             </div>
           )}
 
-          <div className="flex flex-wrap bg-stone-100 p-1.5 rounded-[1.25rem] w-full sm:w-fit shadow-inner ring-1 ring-stone-200/50 justify-center">
+          <div className="flex flex-wrap bg-stone-100 p-1.5 rounded-[1.25rem] w-full sm:w-fit shadow-inner ring-1 ring-stone-200/50 justify-center whitespace-nowrap inline-block shrink-0">
             <button
               onClick={() => updateFilters(undefined, "PENDAFTARAN")}
               className={`flex items-center gap-2 px-6 py-2.5 rounded-lg text-xs font-black uppercase tracking-widest transition-all duration-300 ${
@@ -602,7 +602,7 @@ function VerifikasiPembayaranContent() {
 
       {/* Stats / Filter Bar */}
       <div className="flex flex-wrap items-center gap-3 bg-white p-4 rounded-lg shadow-sm border border-stone-100">
-        <div className="px-4 py-2 bg-stone-100 rounded-lg text-sm font-bold text-stone-600">
+        <div className="px-4 py-2 bg-stone-100 rounded-lg text-sm font-bold text-stone-600 whitespace-nowrap inline-block shrink-0">
           Total: {filteredPembayaran.length}
         </div>
 
@@ -717,13 +717,13 @@ function VerifikasiPembayaranContent() {
                             ? toTitleCase(pay?.pendaftar?.nama_lengkap || "")
                             : "Tanpa Nama"}
                           {pay.pendaftar?.tipe_pendaftaran === "PINDAHAN" && (
-                            <span className="ml-2 px-2 py-0.5 bg-violet-100 text-violet-700 rounded-full text-[10px] font-black uppercase tracking-wider border border-violet-200">
+                            <span className="ml-2 px-2 py-0.5 bg-violet-100 text-violet-700 rounded-full text-[10px] font-black uppercase tracking-wider border border-violet-200 whitespace-nowrap inline-block shrink-0">
                               PINDAHAN
                             </span>
                           )}
                         </h3>
                         <div className="flex flex-wrap items-center gap-3 text-sm mt-1">
-                          <span className="font-mono bg-stone-100 px-2 py-0.5 rounded text-stone-600 font-bold">
+                          <span className="font-mono bg-stone-100 px-2 py-0.5 rounded text-stone-600 font-bold whitespace-nowrap inline-block shrink-0">
                             {pay.pendaftar?.nomor_pendaftaran}
                           </span>
                           <span className="text-stone-400 text-xs">|</span>
@@ -770,7 +770,7 @@ function VerifikasiPembayaranContent() {
                           <p className="text-xs font-bold text-stone-400 uppercase tracking-widest mb-1">
                             Status Cicilan
                           </p>
-                          <span className="px-2.5 py-1 bg-violet-100 text-violet-700 rounded-lg text-[10px] font-black uppercase tracking-widest border border-violet-200">
+                          <span className="px-2.5 py-1 bg-violet-100 text-violet-700 rounded-lg text-[10px] font-black uppercase tracking-widest border border-violet-200 whitespace-nowrap inline-block shrink-0">
                             Cicilan Ke-{pay.cicilan_ke}
                           </span>
                         </div>
@@ -817,7 +817,7 @@ function VerifikasiPembayaranContent() {
                     {statusFilter === "verified" && (
                       <button
                         onClick={() => openModal(pay)}
-                        className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-3 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded-lg font-bold text-sm border border-emerald-100 transition-all"
+                        className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-3 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded-lg font-bold text-sm border border-emerald-100 transition-all whitespace-nowrap inline-block shrink-0"
                       >
                         <CheckCircle className="w-4 h-4" />
                         Terverifikasi
@@ -979,7 +979,7 @@ function VerifikasiPembayaranContent() {
                     <button
                       onClick={handleUploadClick}
                       disabled={uploadingProof === selectedPembayaran.id}
-                      className="flex items-center gap-1.5 px-3 py-1.5 bg-primary-50 text-primary-600 hover:bg-primary-100 rounded-lg text-xs font-bold transition-colors disabled:opacity-50"
+                      className="flex items-center gap-1.5 px-3 py-1.5 bg-primary-50 text-primary-600 hover:bg-primary-100 rounded-lg text-xs font-bold transition-colors disabled:opacity-50 whitespace-nowrap inline-block shrink-0"
                     >
                       {uploadingProof === selectedPembayaran.id ? (
                         <Loader2 className="w-3.5 h-3.5 animate-spin" />
@@ -1026,7 +1026,7 @@ function VerifikasiPembayaranContent() {
                   <button
                     onClick={handleUploadClick}
                     disabled={uploadingProof === selectedPembayaran.id}
-                    className="mx-auto flex items-center justify-center gap-2 px-4 py-2 bg-primary-50 text-primary-600 hover:bg-primary-100 rounded-lg text-sm font-bold transition-colors disabled:opacity-50"
+                    className="mx-auto flex items-center justify-center gap-2 px-4 py-2 bg-primary-50 text-primary-600 hover:bg-primary-100 rounded-lg text-sm font-bold transition-colors disabled:opacity-50 whitespace-nowrap inline-block shrink-0"
                   >
                     {uploadingProof === selectedPembayaran.id ? (
                       <Loader2 className="w-4 h-4 animate-spin" />
@@ -1094,7 +1094,7 @@ function VerifikasiPembayaranContent() {
                 <button
                   onClick={() => handleVerify(selectedPembayaran.id, "pending")}
                   disabled={processing}
-                  className="px-6 py-4 bg-stone-100 hover:bg-stone-200 text-stone-600 rounded-lg font-bold transition-all disabled:opacity-50 border border-stone-200"
+                  className="px-6 py-4 bg-stone-100 hover:bg-stone-200 text-stone-600 rounded-lg font-bold transition-all disabled:opacity-50 border border-stone-200 whitespace-nowrap inline-block shrink-0"
                 >
                   {processing ? (
                     <Loader2 className="w-5 h-5 animate-spin mx-auto" />

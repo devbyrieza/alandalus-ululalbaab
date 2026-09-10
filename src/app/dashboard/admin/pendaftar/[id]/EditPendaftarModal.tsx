@@ -978,7 +978,7 @@ export default function EditPendaftarModal({
             <button
               type="button"
               onClick={onClose}
-              className="px-6 py-3 bg-stone-100 hover:bg-stone-200 text-stone-800 rounded-lg font-black text-sm uppercase transition-all"
+              className="px-6 py-3 bg-stone-100 hover:bg-stone-200 text-stone-800 rounded-lg font-black text-sm uppercase transition-all whitespace-nowrap inline-block shrink-0"
             >
               Batal
             </button>

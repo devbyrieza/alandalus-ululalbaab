@@ -97,7 +97,7 @@ function FaqItem({
               transition={{ duration: 0.28, ease: [0.4, 0, 0.2, 1] }}
             >
               <div className="px-6 pb-6 md:px-7 md:pb-7">
-                <div className="h-px w-12 bg-primary-100 mb-5" />
+                <div className="h-px w-12 bg-primary-100 mb-5 whitespace-nowrap inline-block shrink-0" />
                 <p className="text-[0.875rem] md:text-[0.9375rem] text-ink-600 font-[450] leading-relaxed">
                   {answer}
                 </p>

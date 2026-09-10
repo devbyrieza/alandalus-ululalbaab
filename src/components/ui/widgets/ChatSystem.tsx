@@ -134,7 +134,7 @@ export default function ChatSystem() {
                   }}
                   className="w-full flex items-center gap-3 p-3 hover:bg-primary-50 rounded-lg transition-colors group text-left"
                 >
-                  <div className="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center shrink-0 group-hover:bg-primary-600 transition-colors">
+                  <div className="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center shrink-0 group-hover:bg-primary-600 transition-colors whitespace-nowrap inline-block shrink-0">
                     <Bot className="w-5 h-5 text-primary-600 group-hover:text-white transition-colors" />
                   </div>
                   <div className="flex-1">
@@ -152,7 +152,7 @@ export default function ChatSystem() {
                                     onClick={openTawkTo}
                                     className="w-full flex items-center gap-3 p-3 hover:bg-primary-50 rounded-lg transition-colors group text-left"
                                 >
-                                    <div className="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center shrink-0 group-hover:bg-primary-600 transition-colors">
+                                    <div className="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center shrink-0 group-hover:bg-primary-600 transition-colors whitespace-nowrap inline-block shrink-0">
                                         <Headphones className="w-5 h-5 text-primary-600 group-hover:text-white transition-colors" />
                                     </div>
                                     <div>

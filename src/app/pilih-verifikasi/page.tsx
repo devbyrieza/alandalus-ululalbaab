@@ -182,7 +182,7 @@ function PilihVerifikasiContent() {
                 >
                   WhatsApp
                 </h3>
-                <span className="text-[10px] font-black tracking-widest px-3 py-1 bg-primary-100 text-primary-800 rounded-full">
+                <span className="text-[10px] font-black tracking-widest px-3 py-1 bg-primary-100 text-primary-800 rounded-full whitespace-nowrap inline-block shrink-0">
                   REKOMENDASI
                 </span>
               </div>

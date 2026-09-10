@@ -76,7 +76,7 @@ export default function AdminSearchPendaftarModal({ isOpen, onClose }: AdminSear
             <h3 className="text-xl font-black text-primary-950">Cari Pendaftar</h3>
             <p className="text-sm text-stone-500 font-medium">Pilih pendaftar untuk melihat/mengupload dokumen</p>
           </div>
-          <button onClick={onClose} className="p-2 hover:bg-stone-100 rounded-full transition-colors text-stone-500">
+          <button onClick={onClose} className="p-2 hover:bg-stone-100 rounded-full transition-colors text-stone-500 whitespace-nowrap inline-block shrink-0">
             <X className="w-5 h-5" />
           </button>
         </div>
@@ -112,7 +112,7 @@ export default function AdminSearchPendaftarModal({ isOpen, onClose }: AdminSear
                     <div>
                       <div className="flex items-center gap-2 mb-1">
                         <span className="font-bold text-stone-800">{p.nama_lengkap}</span>
-                        <span className="text-xs font-black text-primary-600 bg-primary-100 px-2 py-0.5 rounded-lg">
+                        <span className="text-xs font-black text-primary-600 bg-primary-100 px-2 py-0.5 rounded-lg whitespace-nowrap inline-block shrink-0">
                           {p.jenjang}
                         </span>
                       </div>
@@ -122,7 +122,7 @@ export default function AdminSearchPendaftarModal({ isOpen, onClose }: AdminSear
                         <span>{p.no_hp || "-"}</span>
                       </div>
                     </div>
-                    <div className="w-8 h-8 rounded-full bg-primary-100 text-primary-600 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div className="w-8 h-8 rounded-full bg-primary-100 text-primary-600 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap inline-block shrink-0">
                       <FileText className="w-4 h-4" />
                     </div>
                   </button>

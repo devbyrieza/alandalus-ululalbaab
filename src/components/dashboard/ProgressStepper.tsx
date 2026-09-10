@@ -81,7 +81,7 @@ export default function ProgressStepper({
             >
               {/* Connector Line */}
               {idx < STEPS.length - 1 && (
-                <div className="absolute top-5 left-[50%] right-[-50%] h-0.5 bg-stone-100 z-0">
+                <div className="absolute top-5 left-[50%] right-[-50%] h-0.5 bg-stone-100 z-0 whitespace-nowrap inline-block shrink-0">
                   <div
                     className={`h-full bg-primary-600 transition-all duration-700 ${idx < activeIndex ? "w-full" : "w-0"}`}
                   />

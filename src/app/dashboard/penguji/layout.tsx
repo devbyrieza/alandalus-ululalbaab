@@ -157,7 +157,7 @@ export default function PengujiDashboardLayout({
   return (
     <>
       <IdleTimeoutTracker />
-      <div className="min-h-screen bg-surface-50 font-sans selection:bg-primary-100 selection:text-primary-900">
+      <div className="min-h-screen bg-surface-50 font-sans selection:bg-primary-100 selection:text-primary-900 whitespace-nowrap inline-block shrink-0">
         {/* Mobile Header - branding only, NO hamburger */}
         <header
           data-ui-version="2"

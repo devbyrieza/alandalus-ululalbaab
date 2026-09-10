@@ -263,7 +263,7 @@ export default function PengumumanPage() {
                       <h4 className="font-black text-stone-900 leading-tight uppercase text-sm truncate">
                         {toTitleCase(c.nama_lengkap)}
                       </h4>
-                      <span className="px-2 py-0.5 bg-stone-100 text-stone-600 rounded text-[9px] font-black uppercase shrink-0">
+                      <span className="px-2 py-0.5 bg-stone-100 text-stone-600 rounded text-[9px] font-black uppercase shrink-0 whitespace-nowrap inline-block shrink-0">
                         {c.jenjang}
                       </span>
                     </div>
@@ -305,11 +305,11 @@ export default function PengumumanPage() {
                             <CheckCircle2 className="w-3 h-3" /> Lulus
                           </span>
                         ) : c.status_pendaftaran === "scheduled" ? (
-                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-primary-100 text-primary-700 text-[10px] font-black uppercase">
+                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-primary-100 text-primary-700 text-[10px] font-black uppercase whitespace-nowrap inline-block shrink-0">
                             Siap
                           </span>
                         ) : (
-                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-stone-100 text-stone-600 text-[10px] font-black uppercase">
+                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-stone-100 text-stone-600 text-[10px] font-black uppercase whitespace-nowrap inline-block shrink-0">
                             {c.status_pendaftaran}
                           </span>
                         )}
@@ -426,7 +426,7 @@ export default function PengumumanPage() {
                         </div>
                       </td>
                       <td className="px-6 py-4">
-                        <span className="px-2 py-1 bg-stone-100 text-stone-600 rounded text-xs font-bold">
+                        <span className="px-2 py-1 bg-stone-100 text-stone-600 rounded text-xs font-bold whitespace-nowrap inline-block shrink-0">
                           {c.jenjang}
                         </span>
                       </td>
@@ -455,11 +455,11 @@ export default function PengumumanPage() {
                             <CheckCircle2 className="w-3 h-3" /> Lulus
                           </span>
                         ) : c.status_pendaftaran === "scheduled" ? (
-                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-primary-100 text-primary-700 text-xs font-bold">
+                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-primary-100 text-primary-700 text-xs font-bold whitespace-nowrap inline-block shrink-0">
                             Siap Diumumkan
                           </span>
                         ) : (
-                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-stone-100 text-stone-700 text-xs font-bold">
+                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-stone-100 text-stone-700 text-xs font-bold whitespace-nowrap inline-block shrink-0">
                             {c.status_pendaftaran}
                           </span>
                         )}

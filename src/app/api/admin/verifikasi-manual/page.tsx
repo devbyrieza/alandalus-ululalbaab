@@ -155,7 +155,7 @@ export default function VerifikasiManualPage() {
                   {/* Info Pendaftar */}
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-2">
-                      <span className="px-3 py-1 bg-primary-100 text-primary-800 rounded-full text-sm">
+                      <span className="px-3 py-1 bg-primary-100 text-primary-800 rounded-full text-sm whitespace-nowrap inline-block shrink-0">
                         {item.tahun_ajaran.nama}
                       </span>
                       <span className="px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-sm">

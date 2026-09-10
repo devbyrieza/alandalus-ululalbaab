@@ -118,7 +118,7 @@ export default function AdminSMSDashboard() {
                 >
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                     <div className="flex items-center gap-3">
-                      <div className="p-2 bg-primary-100 rounded-lg">
+                      <div className="p-2 bg-primary-100 rounded-lg whitespace-nowrap inline-block shrink-0">
                         <Smartphone className="w-5 h-5 text-primary-600" />
                       </div>
                       <div>
