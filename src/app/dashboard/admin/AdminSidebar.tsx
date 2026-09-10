@@ -205,7 +205,7 @@ export default function AdminSidebar({
   };
 
   return (
-    <div className="min-h-screen bg-[#fafaf9] font-sans selection:bg-primary-100 selection:text-primary-900 whitespace-nowrap inline-block shrink-0">
+    <div className="min-h-screen bg-[#fafaf9] font-sans selection:bg-primary-100 selection:text-primary-900">
       {/* ─── MOBILE HEADER (Hanya muncul di layar < 1024px) ─── */}
       <div className="lg:hidden fixed top-0 left-0 right-0 z-[60] bg-white backdrop-blur-2xl border-b border-ink-200/60 px-6 py-4 flex items-center justify-between shadow-sm">
         <button
@@ -245,7 +245,13 @@ export default function AdminSidebar({
               exit={{ x: "-100%" }}
               transition={{ type: "spring", damping: 30, stiffness: 300 }}
               className="fixed top-0 left-0 bottom-0 z-[80] w-80 bg-white shadow-sm lg:hidden flex flex-col rounded-r-[3rem] overflow-hidden"
-            >
+              onWheel={(e) => {
+        const scrollMenu = e.currentTarget.querySelector('.sidebar-scroll-menu') || e.currentTarget;
+        if (scrollMenu) {
+          scrollMenu.scrollTop += e.deltaY;
+        }
+        e.stopPropagation();
+      }}>
               <div className="p-5 md:p-8 flex items-center justify-between border-b border-ink-50 bg-linear-to-b from-ink-50 to-white">
                 <div className="flex items-center gap-4">
                   <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center shadow-clay-sm border border-ink-100">
@@ -267,7 +273,7 @@ export default function AdminSidebar({
                 </button>
               </div>
 
-              <nav className="flex-1 overflow-y-auto p-6 space-y-2 custom-scrollbar overscroll-contain custom-scrollbar">
+              <nav className="sidebar-scroll-menu flex-1 overflow-y-auto p-6 space-y-2 custom-scrollbar overscroll-contain custom-scrollbar">
                 {menuItems.map((item) => (
                   <Link
                     key={item.name}
@@ -331,10 +337,15 @@ export default function AdminSidebar({
       </AnimatePresence>
 
       {/* ─── DESKTOP SIDEBAR (Premium Slim Design) ─── */}
-      <aside
-        data-sidebar="true"
+      <aside data-sidebar="true"
         className={`hidden lg:flex fixed inset-y-0 left-0 z-50 flex-col bg-white border-r border-ink-100 transition-all duration-500 ease-in-out overscroll-contain ${collapsed ? "w-24" : "w-72"}`}
-      >
+        onWheel={(e) => {
+        const scrollMenu = e.currentTarget.querySelector('.sidebar-scroll-menu') || e.currentTarget;
+        if (scrollMenu) {
+          scrollMenu.scrollTop += e.deltaY;
+        }
+        e.stopPropagation();
+      }}>
         {/* Logo & Branding Area */}
         <div className="h-24 flex items-center px-5 md:px-8">
           <Link
@@ -366,7 +377,7 @@ export default function AdminSidebar({
         </div>
 
         {/* Navigation Links Area */}
-        <div className="flex-1 overflow-y-auto py-4 px-4 space-y-8 custom-scrollbar overscroll-contain custom-scrollbar">
+        <div className="sidebar-scroll-menu flex-1 overflow-y-auto py-4 px-4 space-y-8 custom-scrollbar overscroll-contain custom-scrollbar">
           {/* Role Selector (Integrated inside sidebar) */}
           {!collapsed && availableRoles && availableRoles.length > 1 && (
             <div className="px-2 mb-2">
