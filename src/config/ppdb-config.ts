@@ -102,8 +102,8 @@ export const PPDB_CONFIG = {
   schedule: {
     tahunAjaran: "2027/2028",
     pembukaan: "05 September 2026",
-    penutupan: "30 November 2026",
-    jadwalTes: "05 September – 30 November 2026",
+    penutupan: "30 Desember 2026",
+    jadwalTes: "10 September – 30 Desember 2026",
   },
 
   // 👥 DEWAN PEMBINA

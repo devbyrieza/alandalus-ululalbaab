@@ -134,7 +134,7 @@ function PPDBContent() {
   const timeline = [
     {
       phase: "Registrasi Online",
-      date: "05 September - 30 November 2026",
+      date: "10 September - 30 Desember 2026",
       desc: "Daftar dan buat akun pendaftar melalui website resmi atau scan barcode di brosur.",
       status: "active" },
     {
@@ -539,7 +539,7 @@ function PPDBContent() {
                       a: "Ya, seluruh santri di Pesantren Al Andalus Ulul Albaab wajib tinggal di asrama untuk mengikuti seluruh rangkaian kegiatan tarbiyah, halaqah tahfidz, dan pembelajaran kitab turots secara maksimal." },
                     {
                       q: "Kapan batas akhir pendaftaran PPDB 2027/2028?",
-                      a: "Pendaftaran PPDB Tahun Ajaran 2027/2028 dibuka mulai 05 September sampai dengan 30 November 2026. Pendaftaran dapat ditutup lebih awal jika kuota terpenuhi. Segera daftar!" },
+                      a: "Pendaftaran PPDB Tahun Ajaran 2027/2028 dibuka mulai 10 September sampai dengan 30 Desember 2026. Pendaftaran dapat ditutup lebih awal jika kuota terpenuhi. Segera daftar!" },
                     {
                       q: "Berapa total biaya yang harus disiapkan?",
                       a: "Biaya pendaftaran Rp 250.000, Uang Pangkal Rp 9.900.000, dan SPP/Taawun Rp 1.200.000/bulan (All In = Rp 14.400.000/tahun sudah termasuk makan, asrama, dan seluruh kegiatan pesantren)." },
