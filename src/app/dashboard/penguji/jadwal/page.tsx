@@ -1645,7 +1645,7 @@ export default function JadwalPengujiPage() {
       {isBulkEditModalOpen && (
         <div onWheel={(e) => e.stopPropagation()} data-modal="true" aria-modal="true" role="dialog" className="fixed inset-0 z-[60] flex items-start md:items-center pt-10 md:pt-0 pb-20 md:pb-0 justify-center p-4 bg-primary-950/40  animate-in fade-in duration-300 overflow-y-auto overflow-x-hidden overscroll-contain custom-scrollbar">
           <div className="bg-white rounded-[32px] shadow-sm w-full max-w-md overflow-hidden border border-white/20 animate-in zoom-in-95 duration-300">
-            <div className="p-6 border-b border-stone-100 flex justify-between items-center bg-stone-50/50">
+            <div className="p-5 md:p-6 border-b border-stone-100 flex justify-between items-center bg-white/95 backdrop-blur rounded-t-[32px] shrink-0 sticky top-0 z-30 shadow-xs">
               <div>
                 <h3 className="text-xl font-black text-primary-950 tracking-tight leading-none">
                   Edit Massal
@@ -1657,13 +1657,13 @@ export default function JadwalPengujiPage() {
               </div>
               <button
                 onClick={() => setIsBulkEditModalOpen(false)}
-                className="p-2 hover:bg-stone-200 rounded-full transition-colors text-stone-400"
+                type="button" className="p-2 hover:bg-stone-200 rounded-full transition-colors text-stone-400 shrink-0"
               >
                 <XCircle className="w-6 h-6" />
               </button>
             </div>
 
-            <form onSubmit={handleBulkEdit} className="p-5 md:p-8 space-y-5">
+            <form onSubmit={handleBulkEdit} className="p-5 md:p-8 space-y-5 overflow-y-auto overscroll-contain custom-scrollbar flex-1">
               {/* Waktu */}
               <div
                 className={`p-4 rounded-lg border-2 transition-all ${bulkEditForm.changeTime ? "border-primary-300 bg-primary-50/30" : "border-stone-100 bg-stone-50/50"}`}
@@ -1812,7 +1812,7 @@ export default function JadwalPengujiPage() {
       {isEditModalOpen && editingSlot && (
         <div onWheel={(e) => e.stopPropagation()} data-modal="true" aria-modal="true" role="dialog" className="fixed inset-0 z-[60] flex items-start md:items-center pt-10 md:pt-0 pb-20 md:pb-0 justify-center p-4 bg-primary-950/40  animate-in fade-in duration-300 overflow-y-auto overflow-x-hidden overscroll-contain custom-scrollbar">
           <div className="bg-white rounded-[32px] shadow-sm w-full max-w-md overflow-hidden border border-white/20 animate-in zoom-in-95 duration-300">
-            <div className="p-6 border-b border-stone-100 flex justify-between items-center bg-stone-50/50">
+            <div className="p-5 md:p-6 border-b border-stone-100 flex justify-between items-center bg-white/95 backdrop-blur rounded-t-[32px] shrink-0 sticky top-0 z-30 shadow-xs">
               <div>
                 <h3 className="text-xl font-black text-primary-950 tracking-tight leading-none">
                   Edit Sesi
@@ -1826,13 +1826,13 @@ export default function JadwalPengujiPage() {
                   setIsEditModalOpen(false);
                   setEditingSlot(null);
                 }}
-                className="p-2 hover:bg-stone-200 rounded-full transition-colors text-stone-400"
+                type="button" className="p-2 hover:bg-stone-200 rounded-full transition-colors text-stone-400 shrink-0"
               >
                 <XCircle className="w-6 h-6" />
               </button>
             </div>
 
-            <form onSubmit={handleEditSlot} className="p-5 md:p-8 space-y-5">
+            <form onSubmit={handleEditSlot} className="p-5 md:p-8 space-y-5 overflow-y-auto overscroll-contain custom-scrollbar flex-1">
               {/* Tanggal */}
               <div>
                 <label className="block text-xs font-black text-ink-400 uppercase tracking-widest mb-2">
@@ -1955,7 +1955,7 @@ export default function JadwalPengujiPage() {
         <div onWheel={(e) => e.stopPropagation()} data-modal="true" aria-modal="true" role="dialog" className="fixed inset-0 z-[60] flex items-start md:items-center pt-10 md:pt-0 pb-20 md:pb-0 justify-center p-4 bg-primary-950/40  animate-in fade-in duration-300 overflow-y-auto overflow-x-hidden overscroll-contain custom-scrollbar">
           <div className="bg-white rounded-[32px] shadow-sm w-full max-w-md overflow-hidden border border-white/20 animate-in zoom-in-95 duration-300">
             {/* Header */}
-            <div className="p-6 border-b border-stone-100 flex justify-between items-center bg-stone-50/50">
+            <div className="p-5 md:p-6 border-b border-stone-100 flex justify-between items-center bg-white/95 backdrop-blur rounded-t-[32px] shrink-0 sticky top-0 z-30 shadow-xs">
               <div>
                 <h3 className="text-xl font-black text-primary-950 tracking-tight leading-none">
                   Buat Sesi Baru
@@ -1966,13 +1966,13 @@ export default function JadwalPengujiPage() {
               </div>
               <button
                 onClick={() => setIsSlotModalOpen(false)}
-                className="p-2 hover:bg-stone-200 rounded-full transition-colors text-stone-400"
+                type="button" className="p-2 hover:bg-stone-200 rounded-full transition-colors text-stone-400 shrink-0"
               >
                 <XCircle className="w-6 h-6" />
               </button>
             </div>
 
-            <form onSubmit={handleCreateSlot} className="p-5 md:p-8 space-y-6">
+            <form onSubmit={handleCreateSlot} className="p-5 md:p-8 space-y-6 overflow-y-auto overscroll-contain custom-scrollbar flex-1">
               {/* Select Penguji (Admin Super / Admin Only) */}
               {["admin_super", "admin"].includes(activeRole) && (
                 <div>
@@ -2110,7 +2110,7 @@ export default function JadwalPengujiPage() {
                 </div>
               </div>
               <p className="text-[10px] text-ink-300 italic -mt-4">
-                ⏱ Durasi sesi: {getDurationFromTitle(slotForm.title)} menit.
+                <Clock className="w-3 h-3 inline-block mr-1 text-ink-300" /> Durasi sesi: {getDurationFromTitle(slotForm.title)} menit.
               </p>
 
               {/* Alerts */}
