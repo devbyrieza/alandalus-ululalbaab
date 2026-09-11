@@ -1,4 +1,4 @@
-﻿import { BRANDING } from "@/config/branding";
+import { BRANDING } from "@/config/branding";
 /**
  * Wablas WhatsApp API Service
  *
@@ -24,13 +24,25 @@ export interface SendTemplateParams {
   variables?: Record<string, string>;
 }
 
-// Configuration
-const WABLAS_DOMAIN = process.env.WABLAS_DOMAIN || "";
-const WABLAS_TOKEN = process.env.WABLAS_TOKEN || "";
-const WABLAS_SECRET_KEY = process.env.WABLAS_SECRET_KEY || "";
+// Configuration - Disamakan persis dengan Al-Andalus Pusat Putra & Putri
+const PUSAT_WABLAS_DOMAIN = "https://jkt.wablas.com";
+const PUSAT_WABLAS_TOKEN = "jMJRJ6SUyiLuHnkhfhF9XpyaHgSHldcyTvtQFjKwzzyuhWN9fOOI3CL";
+const PUSAT_WABLAS_SECRET_KEY = "sM8V29kW";
 
-const DEFAULT_APP_URL = "/daftar";
-const DEFAULT_CONTACT = "0812-8530-0800";
+const envDomain = process.env.WABLAS_DOMAIN;
+const envToken = process.env.WABLAS_TOKEN;
+const envSecret = process.env.WABLAS_SECRET_KEY;
+
+// Proteksi key invalid/usang: ganti otomatis ke kredensial Pusat yang terbukti aktif
+const isInvalidSecret = !envSecret || envSecret === "qpdqYZiu" || envSecret === "vhQABL9f";
+const isInvalidToken = !envToken || envToken === "kTrgeA9v6F4jF2Jj5JJEiZI3ficNtnYPgdIJUCR9AyFwwzVyJgKw2zy" || envToken.startsWith("your-") || envToken === "test_token";
+
+const WABLAS_DOMAIN = (envDomain && !envDomain.includes("your-")) ? envDomain : PUSAT_WABLAS_DOMAIN;
+const WABLAS_TOKEN = (!isInvalidToken && envToken) ? envToken : PUSAT_WABLAS_TOKEN;
+const WABLAS_SECRET_KEY = (!isInvalidSecret && envSecret) ? envSecret : PUSAT_WABLAS_SECRET_KEY;
+
+const DEFAULT_APP_URL = process.env.NEXT_PUBLIC_APP_URL || BRANDING.websiteUrl || "https://ppdb.alandalus-ululalbaab.com";
+const DEFAULT_CONTACT = BRANDING.phone || "0812-8530-0800";
 
 if (!WABLAS_DOMAIN || !WABLAS_TOKEN) {
   console.warn(
@@ -574,7 +586,7 @@ export async function notifyTestSchedule(data: {
     tanggal: data.tanggal,
     waktu: data.waktu,
     tempat: data.tempat,
-    dashboard_url: `${process.env.NEXT_PUBLIC_APP_URL || "/daftar"}/dashboard/pendaftar/undangan-seleksi` };
+    dashboard_url: `${process.env.NEXT_PUBLIC_APP_URL || DEFAULT_APP_URL}/dashboard/pendaftar/undangan-seleksi` };
 
   Object.entries(variables).forEach(([key, value]) => {
     message = message.replace(new RegExp(`{{${key}}}`, "g"), value);

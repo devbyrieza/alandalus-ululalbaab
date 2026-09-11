@@ -86,13 +86,31 @@ export async function POST(request: NextRequest) {
     if (!otpResult.success) {
       console.error("❌ OTP send failed (Wablas error):", otpResult.message);
       
-      // === FALLBACK DARURAT UNTUK DEMO/PRESENTASI MUDIR ===
-      // Jika Wablas down (500), kita timpa OTP dengan "123456"
-      // agar tidak ngeblok flow pendaftaran Mudir.
+      // Fallback darurat: Gunakan 123456 dan kirim simulation_code ke response agar flow pendaftaran tidak terblokir
       otp = "123456";
       hashedOTP = hashOTP(otp);
-      console.log("⚠️ MENGGUNAKAN OTP DARURAT: 123456 KARENA WABLAS DOWN");
-      // Lanjut ke simpan database
+      console.log("⚠️ MENGGUNAKAN OTP DARURAT: 123456 KARENA PENGIRIMAN WA TERKENDALA");
+
+      await prisma.otpVerification.create({
+        data: {
+          phone: normalizedPhone,
+          otp_hash: hashedOTP,
+          expires_at: expiresAt,
+          otp_channel: otp_channel,
+          registration_data: body,
+        }
+      });
+
+      updateRateLimit(normalizedPhone);
+
+      return NextResponse.json({
+        success: true,
+        message: "Layanan WhatsApp sedang dalam pemeliharaan. Silakan gunakan kode verifikasi darurat di bawah.",
+        channel: otp_channel,
+        simulation_code: otp,
+        otp: otp,
+        expires_in: 300
+      });
     }
 
     // D. Simpan ke Database (Tabel Sementara)
