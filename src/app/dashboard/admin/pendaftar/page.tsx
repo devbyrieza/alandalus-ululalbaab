@@ -496,7 +496,17 @@ function AdminPendaftarContent() {
         const response = await fetch("/api/admin/tahun-ajaran");
         if (response.ok) {
           const result = await response.json();
-          setTahunAjaranList(result.data || []);
+          const list: TahunAjaran[] = result.data || [];
+          setTahunAjaranList(list);
+
+          if (list.length > 0) {
+            const activeTA = list.find((ta) => ta.is_active);
+            const latestTA = list[0];
+            const defaultTA = activeTA || latestTA;
+            if (defaultTA) {
+              setTahunAjaranFilter((prev) => (prev ? prev : defaultTA.id));
+            }
+          }
         }
       } catch (error) {
         console.error("Error fetching tahun ajaran:", error);
@@ -1524,7 +1534,10 @@ function AdminPendaftarContent() {
                   setStatusFilter("");
                   setJenjangFilter("");
                   setJenisKelaminFilter("");
-                  setTahunAjaranFilter("");
+                  const defaultTA =
+                    tahunAjaranList.find((ta) => ta.is_active) ||
+                    tahunAjaranList[0];
+                  setTahunAjaranFilter(defaultTA ? defaultTA.id : "");
                   setTipePendaftaranFilter("");
                   // Clear location filters
                   setProvinsiFilter("");
