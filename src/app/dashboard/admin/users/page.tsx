@@ -157,16 +157,36 @@ export default function UserManagementPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Client-side validation: enforce phone number for examiners and interviewers
+    // Client-side validation: enforce phone number & Google Meet link for examiners and interviewers (primary or secondary)
     const isExaminerOrInterviewer = 
-      ["penguji", "pewawancara_calsan", "pewawancara_cawalsan"].includes(formData.role) ||
-      formData.secondary_roles.some(role => ["penguji", "pewawancara_calsan", "pewawancara_cawalsan"].includes(role));
+      (formData.role || "").includes("penguji") || 
+      (formData.role || "").includes("pewawancara") ||
+      formData.secondary_roles.some(role => role.includes("penguji") || role.includes("pewawancara"));
 
     if (isExaminerOrInterviewer && (!formData.phone || formData.phone === "-" || formData.phone.trim().length < 6)) {
       Swal.fire({
-        title: "Gagal!",
-        text: "Penguji/Pewawancara wajib memiliki nomor WhatsApp aktif untuk verifikasi PIN 4 digit terakhir.",
+        title: "Nomor WhatsApp Wajib!",
+        text: "Penguji / Pewawancara wajib memiliki nomor WhatsApp aktif untuk verifikasi PIN 4 digit terakhir.",
         icon: "error",
+        confirmButtonColor: "#e11d48" });
+      return;
+    }
+
+    const cleanMeet = (formData.google_meet_link || "").trim();
+    if (isExaminerOrInterviewer && (!cleanMeet || cleanMeet === "-")) {
+      Swal.fire({
+        title: "Link Google Meet Wajib!",
+        text: "Pengguna dengan peran Penguji / Pewawancara (baik role utama atau role tambahan) wajib memiliki Link Google Meet aktif. Akun pengguna tidak bisa dibuat tanpa Link Google Meet.",
+        icon: "warning",
+        confirmButtonColor: "#e11d48" });
+      return;
+    }
+
+    if (isExaminerOrInterviewer && (!cleanMeet.startsWith("http://") && !cleanMeet.startsWith("https://") && !cleanMeet.includes("meet.google.com"))) {
+      Swal.fire({
+        title: "Format Link Tidak Valid!",
+        text: "Harap masukkan tautan Google Meet yang benar (contoh: https://meet.google.com/xxx-yyyy-zzz).",
+        icon: "warning",
         confirmButtonColor: "#e11d48" });
       return;
     }
@@ -247,6 +267,11 @@ export default function UserManagementPage() {
       (u.full_name?.toLowerCase() || "").includes(search.toLowerCase()) ||
       (u.email?.toLowerCase() || "").includes(search.toLowerCase()),
   );
+
+  const isSelectedRoleExaminer = 
+    (formData.role || "").includes("penguji") || 
+    (formData.role || "").includes("pewawancara") ||
+    formData.secondary_roles.some(r => r.includes("penguji") || r.includes("pewawancara"));
 
   if (loading && users.length === 0)
     return (
@@ -553,22 +578,44 @@ export default function UserManagementPage() {
                 </div>
                 <div className="col-span-1 md:col-span-2">
                   <label className="block text-[10px] font-black uppercase text-stone-500 mb-3 tracking-widest flex items-center justify-between">
-                    <span>Link Google Meet (Khusus Penguji / Wawancara Online)</span>
-                    <span className="text-primary-600 font-bold normal-case text-xs">Wajib untuk Penguji</span>
+                    <span className="flex items-center gap-1.5">
+                      <Video className="w-3.5 h-3.5 text-primary-600" />
+                      Link Google Meet (Wawancara Online)
+                    </span>
+                    {isSelectedRoleExaminer ? (
+                      <span className="text-rose-600 font-black normal-case text-xs flex items-center gap-1 bg-rose-50 px-2.5 py-0.5 rounded-full border border-rose-200">
+                        * WAJIB DIISI UNTUK PENGUJI / PEWAWANCARA
+                      </span>
+                    ) : (
+                      <span className="text-stone-400 font-medium normal-case text-xs">
+                        Opsional untuk staf non-penguji
+                      </span>
+                    )}
                   </label>
                   <div className="relative">
                     <input
                       type="url"
                       placeholder="Contoh: https://meet.google.com/abc-defg-hij"
                       value={formData.google_meet_link}
+                      required={isSelectedRoleExaminer}
                       onChange={(e) =>
                         setFormData({ ...formData, google_meet_link: e.target.value })
                       }
-                      className="w-full px-4 md:px-5 py-4 bg-stone-100/50 border-2 border-transparent focus:border-primary-600 focus:bg-white focus:outline-none font-bold rounded-xl transition-all font-mono text-sm whitespace-nowrap inline-block shrink-0"
+                      className={`w-full px-4 md:px-5 py-4 border-2 font-bold rounded-xl transition-all font-mono text-sm whitespace-nowrap inline-block shrink-0 ${
+                        isSelectedRoleExaminer && !formData.google_meet_link?.trim()
+                          ? "bg-rose-50/40 border-rose-300 focus:border-rose-600 focus:bg-white"
+                          : "bg-stone-100/50 border-transparent focus:border-primary-600 focus:bg-white focus:outline-none"
+                      }`}
                     />
                   </div>
                   <p className="text-[11px] text-stone-400 font-medium mt-1.5">
-                    Link Google Meet permanen penguji untuk sesi wawancara online santri/wali.
+                    {isSelectedRoleExaminer ? (
+                      <span className="text-rose-600 font-bold">
+                        Akun penguji/pewawancara tidak dapat dibuat tanpa tautan Google Meet aktif.
+                      </span>
+                    ) : (
+                      "Link Google Meet permanen penguji untuk sesi wawancara online santri/wali."
+                    )}
                   </p>
                 </div>
                 <div className="col-span-1 md:col-span-2">
