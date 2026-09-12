@@ -62,15 +62,11 @@ const ROLE_INFO: Record<
     desc: "Wawancara calon santri",
     color: "from-rose-50 to-pink-50 border-rose-200" },
   penguji: {
-    label: "Penguji Al-Qur'an",
+    label: "Penguji Al-Qur'an (Bacaan & Hafalan)",
     icon: BookOpen,
-    desc: "Penguji tes Al-Qur'an",
+    desc: "Penguji tes Al-Qur'an (Bacaan & Hafalan)",
     color: "from-green-50 to-lime-50 border-green-200" },
-  penguji_hafalan: {
-    label: "Penguji Hafalan",
-    icon: BookOpen,
-    desc: "Penguji tes Hafalan Al-Qur'an",
-    color: "from-teal-50 to-emerald-50 border-teal-200" },
+  
   penguji_bahasa_arab: {
     label: "Penguji Lisan B. Arab",
     icon: MessageSquare,
