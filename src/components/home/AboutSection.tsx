@@ -56,7 +56,7 @@ export default function AboutSection() {
         aria-hidden
         className="pointer-events-none absolute inset-0 overflow-hidden"
       >
-        <div className="absolute -top-32 -left-32 w-[480px] h-[480px] rounded-full bg-primary-100/25 blur-3xl whitespace-nowrap inline-block shrink-0" />
+        <div className="absolute -top-32 -left-32 w-[480px] h-[480px] rounded-full bg-primary-100/25 blur-3xl" />
         <div className="absolute -bottom-24 -right-24 w-[360px] h-[360px] rounded-full bg-secondary-100/30 blur-3xl" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] rounded-full bg-primary-50/30 blur-3xl" />
       </div>

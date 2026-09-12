@@ -296,7 +296,7 @@ export default function HasilSeleksiPage() {
         {/* Desktop View: Table */}
         <div className="hidden md:block overflow-x-auto">
           <table className="w-full">
-            <thead className="bg-stone-100/50 border-b border-stone-200 whitespace-nowrap inline-block shrink-0">
+            <thead className="bg-stone-100/50 border-b border-stone-200">
               <tr>
                 <th className="px-6 py-4 text-left text-xs font-black text-stone-500 uppercase tracking-wider">
                   Nama & Detail Nilai

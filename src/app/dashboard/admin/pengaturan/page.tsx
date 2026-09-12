@@ -275,7 +275,7 @@ export default function PengaturanPage() {
               {tahunAjaranList.length === 0 ? (
                 <div className="text-center py-10">
                   <div className="relative inline-flex mb-4">
-                    <div className="absolute inset-0 bg-primary-100 rounded-full blur-xl opacity-50 whitespace-nowrap inline-block shrink-0"></div>
+                    <div className="absolute inset-0 bg-primary-100 rounded-full blur-xl opacity-50"></div>
                     <div className="relative bg-white p-4 rounded-full shadow-sm border border-primary-50">
                       <Calendar className="w-10 h-10 text-primary-300" />
                     </div>

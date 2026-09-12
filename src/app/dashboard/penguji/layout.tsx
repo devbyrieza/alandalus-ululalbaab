@@ -157,7 +157,7 @@ export default function PengujiDashboardLayout({
   return (
     <>
       <IdleTimeoutTracker />
-      <div className="min-h-screen bg-surface-50 font-sans selection:bg-primary-100 selection:text-primary-900 whitespace-nowrap inline-block shrink-0">
+      <div className="min-h-screen bg-surface-50 font-sans selection:bg-primary-100 selection:text-primary-900 w-full">
         {/* Mobile Header - branding only, NO hamburger */}
         <header
           data-ui-version="2"
@@ -387,7 +387,7 @@ export default function PengujiDashboardLayout({
             </header>
 
             {/* Content Area */}
-            <main className="flex-1 p-6 lg:p-6 md:p-10">
+            <main className="flex-1 p-6 lg:p-6 md:p-10 pb-28 lg:pb-8">
               <div className="max-w-7xl mx-auto">
                 <AnimatePresence mode="wait">
                   <motion.div

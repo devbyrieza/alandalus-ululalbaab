@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { X, Save, Calculator, Loader2, BookOpen, GraduationCap, Users } from "lucide-react";
 
 interface InputNilaiManualModalProps {
@@ -27,6 +27,17 @@ export default function InputNilaiManualModal({
     override_status: "",
     catatan_bypass: "" });
   const [errorMsg, setErrorMsg] = useState("");
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isOpen]);
 
   const totalScore = useMemo(() => {
     const ak = parseFloat(formData.score_akademik) || 0;

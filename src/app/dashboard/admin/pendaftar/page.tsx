@@ -1808,7 +1808,7 @@ function AdminPendaftarContent() {
         ) : pendaftar.length === 0 ? (
           <div className="text-center py-20">
             <div className="relative inline-flex mb-6">
-              <div className="absolute inset-0 bg-primary-100 rounded-full blur-xl opacity-50 whitespace-nowrap inline-block shrink-0"></div>
+              <div className="absolute inset-0 bg-primary-100 rounded-full blur-xl opacity-50"></div>
               <div className="relative bg-white p-4 rounded-full shadow-sm border border-primary-50">
                 <Users className="w-12 h-12 text-primary-300" />
               </div>
@@ -1971,7 +1971,7 @@ function AdminPendaftarContent() {
             </div>
 
             {/* Desktop Table View — disembunyikan di mobile */}
-            <div className="hidden md:block overflow-x-auto">
+            <div className="hidden md:block overflow-x-auto custom-scrollbar">
               <table className="w-full">
                 <thead className="bg-linear-to-r from-primary-50 to-primary-100 border-b border-primary-200">
                   <tr>
