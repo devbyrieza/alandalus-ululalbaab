@@ -85,7 +85,7 @@ export const STEP_REQUIREMENTS: Record<TabName, { minimumStatus: StatusProses | 
   "upload-berkas": { minimumStatus: "data_completed", label: "Upload Berkas", description: "Isi data terlebih dahulu" },
   "download-berkas": { minimumStatus: "docs_uploaded", label: "Download Berkas", description: "Unggah berkas terlebih dahulu" },
   "undangan-seleksi": { minimumStatus: "docs_verified", label: "Jadwal Seleksi", description: "Menunggu verifikasi dokumen" },
-  pengumuman: { minimumStatus: "announced", label: "Pengumuman", description: "Selesaikan semua tahapan seleksi terlebih dahulu" },
+  pengumuman: { minimumStatus: "tested", label: "Pengumuman", description: "Selesaikan semua tahapan seleksi terlebih dahulu" },
   "daftar-ulang": { minimumStatus: "accepted", label: "Daftar Ulang", description: "Hanya tersedia bagi pendaftar yang diterima" },
   "ukuran-seragam": { minimumStatus: "accepted", label: "Ukuran Seragam", description: "Hanya tersedia bagi pendaftar yang diterima" },
   "welcome-day": { minimumStatus: "accepted", label: "Welcome Day", description: "Hanya tersedia bagi pendaftar yang diterima" } };
@@ -183,7 +183,7 @@ export function formatStatusDisplay(status: StatusProses) {
     tested: { label: "Proses Seleksi", color: "bg-violet-100 text-violet-700" },
     announced: { label: "Hasil Pengumuman", color: "bg-cyan-100 text-cyan-700" },
     accepted: { label: "Diterima", color: "bg-green-100 text-green-700" },
-    enrolled: { label: "Proses Daftar Ulang", color: "bg-emerald-100 text-emerald-700" },
+    enrolled: { label: "Proses Daftar Ulang", color: "bg-pink-100 text-pink-700" },
     enrolled_full: { label: "Lunas Daftar Ulang", color: "bg-primary-100 text-primary-700" },
     pindah_keluar: { label: "Pindah Keluar", color: "bg-slate-100 text-slate-600" } };
   return statusMap[status] || { label: status, color: "bg-stone-100 text-stone-700" };
@@ -290,6 +290,7 @@ export function getMenuItemsForRole(role: UserRole) {
       { name: "Rekap Seragam", href: "/dashboard/admin/seragam", icon: "Shirt", group: "OPERASIONAL" },
       { name: "Fee Penguji", href: "/dashboard/admin/fee-penguji", icon: "Wallet", group: "OPERASIONAL" },
             { name: "Penilaian & Kelulusan", href: "/dashboard/admin/penilaian", icon: "ClipboardEdit", group: "HASIL SELEKSI" },
+      { name: "Import Massal CSV", href: "/dashboard/admin/penilaian/import-csv", icon: "FileText", group: "HASIL SELEKSI" },
       { name: "Statistik Wilayah", href: "/dashboard/admin/statistik-wilayah", icon: "Map", group: "STATISTIK WILAYAH" },
     ],
     admin_super: [
@@ -300,6 +301,7 @@ export function getMenuItemsForRole(role: UserRole) {
       { name: "Rekap Seragam", href: "/dashboard/admin/seragam", icon: "Shirt", group: "OPERASIONAL" },
       { name: "Fee Penguji", href: "/dashboard/admin/fee-penguji", icon: "Wallet", group: "OPERASIONAL" },
             { name: "Penilaian & Kelulusan", href: "/dashboard/admin/penilaian", icon: "ClipboardEdit", group: "HASIL SELEKSI" },
+      { name: "Import Massal CSV", href: "/dashboard/admin/penilaian/import-csv", icon: "FileText", group: "HASIL SELEKSI" },
       { name: "Statistik Wilayah", href: "/dashboard/admin/statistik-wilayah", icon: "Map", group: "STATISTIK WILAYAH" },
       { name: "Broadcast WA", href: "/dashboard/admin/broadcast", icon: "Zap", group: "KOMUNIKASI" },
       { name: "Manajemen User", href: "/dashboard/admin/users", icon: "UserCog", group: "SISTEM" },

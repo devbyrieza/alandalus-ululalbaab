@@ -84,17 +84,20 @@ export default function PengumumanPage() {
     }
   };
 
-  const handlePublish = async () => {
+  const handlePublish = async (new_status: "accepted" | "cadangan" | "rejected") => {
     if (selectedIds.length === 0) return;
 
+    const actionText = new_status === "accepted" ? "MELULUSKAN" : new_status === "cadangan" ? "menjadikan CADANGAN" : "MENOLAK";
+    const btnColor = new_status === "accepted" ? "#059669" : new_status === "cadangan" ? "#d97706" : "#dc2626";
+
     const result = await Swal.fire({
-      title: "Umumkan Kelulusan?",
-      text: `Apakah Anda yakin ingin meluluskan ${selectedIds.length} santri ini? Status akan diperbarui dan pengumuman akan masuk antrean WhatsApp otomatis.`,
+      title: "Publikasi Pengumuman?",
+      text: `Apakah Anda yakin ingin ${actionText} ${selectedIds.length} santri ini? Pengumuman resmi akan diterbitkan dan pesan masuk antrean WhatsApp otomatis.`,
       icon: "question",
       showCancelButton: true,
-      confirmButtonColor: "#059669", // Emerald 600
+      confirmButtonColor: btnColor,
       cancelButtonColor: "#57534e", // Stone 600
-      confirmButtonText: "Ya, Umumkan!",
+      confirmButtonText: "Ya, Publikasikan!",
       cancelButtonText: "Batal",
       reverseButtons: true });
 
@@ -107,7 +110,7 @@ export default function PengumumanPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           pendaftar_ids: selectedIds,
-          new_status: "accepted",
+          new_status: new_status,
           // Removed hardcoded announcement_message to use buildMessageHasilTes on backend
         }) });
 
@@ -133,17 +136,17 @@ export default function PengumumanPage() {
     <div className="space-y-6">
       {/* Header Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-stone-100">
+        <div className="bg-white p-6 rounded-xl shadow-sm border border-stone-100">
           <p className="text-stone-500 text-sm font-medium">Kandidat Tampil</p>
           <h3 className="text-2xl font-bold text-stone-800">{stats.total}</h3>
         </div>
-        <div className="bg-primary-50 p-6 rounded-lg shadow-sm border border-primary-100">
+        <div className="bg-primary-50 p-6 rounded-xl shadow-sm border border-primary-100">
           <p className="text-primary-600 text-sm font-medium">
             Proses Seleksi (Belum Selesai)
           </p>
           <h3 className="text-2xl font-bold text-primary-700">{stats.ready}</h3>
         </div>
-        <div className="bg-green-50 p-6 rounded-lg shadow-sm border border-green-100">
+        <div className="bg-green-50 p-6 rounded-xl shadow-sm border border-green-100">
           <p className="text-green-600 text-sm font-medium">Sudah Lulus</p>
           <h3 className="text-2xl font-bold text-green-700">
             {stats.accepted}
@@ -152,9 +155,9 @@ export default function PengumumanPage() {
       </div>
 
       {/* Filters & Actions */}
-      <div className="bg-white p-4 rounded-lg shadow-sm border border-stone-100 flex flex-col md:flex-row justify-between items-center gap-4">
+      <div className="bg-white p-4 rounded-xl shadow-sm border border-stone-100 flex flex-col md:flex-row justify-between items-center gap-4">
         <div className="flex items-center gap-4 w-full md:w-auto">
-          <div className="flex items-center gap-2 px-3 py-2 bg-stone-50 rounded-lg border border-stone-200">
+          <div className="flex items-center gap-2 px-3 py-2 bg-stone-50 rounded-xl border border-stone-200">
             <Filter className="w-4 h-4 text-stone-500" />
             <select
               className="bg-transparent text-sm focus:outline-none"
@@ -164,12 +167,12 @@ export default function PengumumanPage() {
               }
             >
               <option value="">Semua Jenjang</option>
-              <option value="MTs">MTs</option>
+              <option value="MTs">SMP IT</option>
               <option value="SMA">SMA</option>
             </select>
           </div>
 
-          <div className="flex items-center gap-2 px-3 py-2 bg-stone-50 rounded-lg border border-stone-200">
+          <div className="flex items-center gap-2 px-3 py-2 bg-stone-50 rounded-xl border border-stone-200">
             <Search className="w-4 h-4 text-stone-500" />
             <select
               className="bg-transparent text-sm focus:outline-none"
@@ -183,24 +186,33 @@ export default function PengumumanPage() {
           </div>
         </div>
 
-        <button
-          onClick={handlePublish}
-          disabled={selectedIds.length === 0 || isPublishing}
-          className="flex items-center gap-2 px-6 py-2.5 bg-green-600 hover:bg-green-700 disabled:bg-stone-300 text-white rounded-lg font-bold transition-all shadow-sm shadow-green-200 disabled:shadow-none"
-        >
-          {isPublishing ? (
-            "Memproses..."
-          ) : (
-            <>
-              <Send className="w-4 h-4" />
-              Umumkan Kelulusan ({selectedIds.length})
-            </>
-          )}
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => handlePublish("accepted")}
+            disabled={selectedIds.length === 0 || isPublishing}
+            className="flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 disabled:bg-stone-300 text-white rounded-xl font-bold transition-all shadow-sm"
+          >
+            {isPublishing ? "Proses..." : `Luluskan (${selectedIds.length})`}
+          </button>
+          <button
+            onClick={() => handlePublish("cadangan")}
+            disabled={selectedIds.length === 0 || isPublishing}
+            className="flex items-center gap-2 px-4 py-2 bg-amber-500 hover:bg-amber-600 disabled:bg-stone-300 text-white rounded-xl font-bold transition-all shadow-sm"
+          >
+            {isPublishing ? "Proses..." : `Cadangkan (${selectedIds.length})`}
+          </button>
+          <button
+            onClick={() => handlePublish("rejected")}
+            disabled={selectedIds.length === 0 || isPublishing}
+            className="flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-700 disabled:bg-stone-300 text-white rounded-xl font-bold transition-all shadow-sm"
+          >
+            {isPublishing ? "Proses..." : `Tolak (${selectedIds.length})`}
+          </button>
+        </div>
       </div>
 
       {/* Table & Mobile View */}
-      <div className="bg-white rounded-lg shadow-sm border border-stone-200 overflow-hidden">
+      <div className="bg-white rounded-xl shadow-lg border border-stone-200 overflow-hidden">
         {/* Mobile View: Cards */}
         <div className="md:hidden divide-y divide-stone-100 select-none">
           {candidates.length === 0 ? (
@@ -228,7 +240,7 @@ export default function PengumumanPage() {
                   grade === "A"
                     ? "bg-green-500"
                     : grade === "B"
-                      ? "bg-sky-400"
+                      ? "bg-primary-400"
                       : "bg-secondary-400";
                 return (
                   <span
@@ -300,19 +312,36 @@ export default function PengumumanPage() {
                         </span>
                       </div>
                       <div>
-                        {c.status_pendaftaran === "accepted" ? (
-                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-green-100 text-green-700 text-[10px] font-black uppercase">
-                            <CheckCircle2 className="w-3 h-3" /> Lulus
-                          </span>
-                        ) : c.status_pendaftaran === "scheduled" ? (
-                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-primary-100 text-primary-700 text-[10px] font-black uppercase whitespace-nowrap shrink-0">
-                            Siap
-                          </span>
-                        ) : (
-                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-stone-100 text-stone-600 text-[10px] font-black uppercase whitespace-nowrap shrink-0">
-                            {c.status_pendaftaran}
-                          </span>
-                        )}
+                        {(() => {
+                          if (c.status_pendaftaran === "tested") {
+                            if (c.pengumuman) {
+                              const sL = c.pengumuman.status_kelulusan;
+                              const cls = sL === "Diterima" ? "bg-green-100 text-green-700" : sL === "Cadangan" ? "bg-amber-100 text-amber-700" : "bg-red-100 text-red-700";
+                              return (
+                                <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full ${cls} text-[10px] font-black uppercase whitespace-nowrap shrink-0`}>
+                                  DRAFT: {sL}
+                                </span>
+                              );
+                            }
+                            return (
+                              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-primary-100 text-primary-700 text-[10px] font-black uppercase whitespace-nowrap shrink-0">
+                                Menunggu Rapat
+                              </span>
+                            );
+                          }
+                          if (c.status_pendaftaran === "accepted") {
+                            return (
+                              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-green-100 text-green-700 text-[10px] font-black uppercase whitespace-nowrap shrink-0">
+                                <CheckCircle2 className="w-3 h-3" /> Lulus
+                              </span>
+                            );
+                          }
+                          return (
+                            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-stone-100 text-stone-600 text-[10px] font-black uppercase whitespace-nowrap shrink-0">
+                              {c.status_pendaftaran}
+                            </span>
+                          );
+                        })()}
                       </div>
                     </div>
                   </div>
@@ -348,7 +377,7 @@ export default function PengumumanPage() {
                   Total / Grade
                 </th>
                 <th className="px-6 py-4 text-center text-xs font-bold text-stone-500 uppercase">
-                  Status
+                  Rekomendasi / Status
                 </th>
               </tr>
             </thead>
@@ -383,7 +412,7 @@ export default function PengumumanPage() {
                       grade === "A"
                         ? "bg-green-500"
                         : grade === "B"
-                          ? "bg-sky-400"
+                          ? "bg-primary-400"
                           : "bg-secondary-400";
                     return (
                       <span
@@ -450,19 +479,36 @@ export default function PengumumanPage() {
                         </div>
                       </td>
                       <td className="px-6 py-4 text-center">
-                        {c.status_pendaftaran === "accepted" ? (
-                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-green-100 text-green-700 text-xs font-bold">
-                            <CheckCircle2 className="w-3 h-3" /> Lulus
-                          </span>
-                        ) : c.status_pendaftaran === "scheduled" ? (
-                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-primary-100 text-primary-700 text-xs font-bold whitespace-nowrap shrink-0">
-                            Siap Diumumkan
-                          </span>
-                        ) : (
-                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-stone-100 text-stone-700 text-xs font-bold whitespace-nowrap shrink-0">
-                            {c.status_pendaftaran}
-                          </span>
-                        )}
+                        {(() => {
+                          if (c.status_pendaftaran === "tested") {
+                            if (c.pengumuman) {
+                              const sL = c.pengumuman.status_kelulusan;
+                              const cls = sL === "Diterima" ? "bg-green-100 text-green-700" : sL === "Cadangan" ? "bg-amber-100 text-amber-700" : "bg-red-100 text-red-700";
+                              return (
+                                <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full ${cls} text-xs font-bold whitespace-nowrap shrink-0`}>
+                                  DRAFT: {sL}
+                                </span>
+                              );
+                            }
+                            return (
+                              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-primary-100 text-primary-700 text-xs font-bold whitespace-nowrap shrink-0">
+                                Menunggu Rapat
+                              </span>
+                            );
+                          }
+                          if (c.status_pendaftaran === "accepted") {
+                            return (
+                              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-green-100 text-green-700 text-xs font-bold">
+                                <CheckCircle2 className="w-3 h-3" /> Lulus
+                              </span>
+                            );
+                          }
+                          return (
+                            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-stone-100 text-stone-700 text-xs font-bold whitespace-nowrap shrink-0">
+                              {c.status_pendaftaran}
+                            </span>
+                          );
+                        })()}
                       </td>
                     </tr>
                   );
