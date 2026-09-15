@@ -276,7 +276,9 @@ export async function POST(request: Request) {
       // 2. Note: Notifikasi ke Penguji dibuat Silent saat booking (menghindari chat spam ke asatidz).
       // Penguji akan menerima pengingat terjadwal via Cron H-1 / 4 jam sebelum ujian serta dapat memantau langsung via /dashboard/penguji.
 
-      return NextResponse.json({ success: true, data: jadwal });
+    }
+
+    return NextResponse.json({ success: true, data: jadwal });
   } catch (error: any) {
     console.error("POST pendaftar/jadwal error:", error);
     return NextResponse.json(
