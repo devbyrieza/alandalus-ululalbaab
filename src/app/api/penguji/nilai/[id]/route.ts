@@ -187,7 +187,7 @@ export async function PATCH(
       if (body.score_quran !== undefined)
         updateData.score_quran = body.score_quran;
       if (body.nilai_tes_hafalan !== undefined)
-        updateData.nilai_tes_hafalan = body.nilai_tes_hafalan;
+        updateData.nilai_hafalan_total = body.nilai_tes_hafalan;
       if (body.score_hafalan !== undefined)
         updateData.score_hafalan = body.score_hafalan;
       if (body.detail_hafalan !== undefined)
