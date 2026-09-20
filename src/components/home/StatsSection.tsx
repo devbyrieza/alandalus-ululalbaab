@@ -17,7 +17,7 @@ import { BRANDING } from "@/config/branding";
 import InfiniteMarquee from "@/components/ui/InfiniteMarquee";
 
 // ─── Types ───────────────────────────────────────────
-type StatColor = "blue" | "amber";
+type StatColor = "blue" | "amber" | "pink";
 
 interface Stat {
   id: string;
