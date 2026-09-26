@@ -1,238 +1,272 @@
 "use client";
 
-// src/components/home/HeroSection.tsx
+"use client";
+
 import { useState, useEffect } from "react";
+
 import Link from "next/link";
 import Image from "next/image";
 import {
   ArrowRight,
   GraduationCap,
-  Award,
-  BookOpen,
-  Download,
-  ShieldCheck,
+  Globe,
+  CheckCircle2,
+  Gift
 } from "lucide-react";
 import { Container } from "@/components/layout/Container";
+import { motion, useReducedMotion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 import { BRANDING } from "@/config/branding";
 
-function useCountdown(targetDate: string) {
-  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-  useEffect(() => {
-    const target = new Date(targetDate).getTime();
-    function tick() {
-      const diff = Math.max(0, target - Date.now());
-      setTimeLeft({
-        days: Math.floor(diff / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
-        minutes: Math.floor((diff / 1000 / 60) % 60),
-        seconds: Math.floor((diff / 1000) % 60),
-      });
-    }
-    tick();
-    const id = setInterval(tick, 1000);
-    return () => clearInterval(id);
-  }, [targetDate]);
-  return timeLeft;
-}
+const fadeUp = {
+  hidden: { opacity: 0, y: 28, filter: "blur(4px)" },
+  visible: {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: {
+      duration: 0.75,
+      ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
+    },
+  },
+};
 
-function pad(n: number) {
-  return String(n).padStart(2, "0");
-}
+const fadeIn = {
+  hidden: { opacity: 0, scale: 0.97 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: {
+      duration: 0.9,
+      ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
+    },
+  },
+};
 
 export default function HeroSection() {
   const [session, setSession] = useState<any>(null);
-  const countdown = useCountdown("2026-12-28T23:59:59+07:00");
 
   useEffect(() => {
-    fetch("/api/auth/session")
-      .then((res) => res.json())
-      .then((data) => {
-        if (data?.session) setSession(data.session);
-      })
-      .catch(() => {});
+    const fetchSession = async () => {
+      try {
+        const res = await fetch("/api/auth/session");
+        if (res.ok) {
+          const data = await res.json();
+          if (data.session) {
+            setSession(data.session);
+          }
+        }
+      } catch (error) {
+        console.error("Failed to fetch session:", error);
+      }
+    };
+    fetchSession();
   }, []);
+
+  const shouldReduceMotion = useReducedMotion();
+  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.08 });
+  const animate = inView ? "visible" : "hidden";
 
   return (
     <section
-      id="beranda"
-      className="relative w-full overflow-hidden bg-gradient-to-b from-[#FDFCF9] via-[#F8FAFC] to-white pt-6 sm:pt-8 lg:pt-3 xl:pt-6 pb-12 sm:pb-16 lg:pb-20"
+      ref={ref}
+      aria-label="Hero — Beranda Ulul Albaab"
+      className="relative pt-24 pb-16 lg:pt-12 xl:pt-16 lg:pb-20 overflow-hidden"
+      style={{
+        background:
+          "linear-gradient(160deg, var(--color-surface-50) 0%, var(--color-white) 55%, var(--color-primary-50) 100%)",
+      }}
     >
-      {/* Background micro grid */}
-      <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgc3Ryb2tlPSIjMDAwMDAwIiBzdHJva2Utb3BhY2l0eT0iMC4wMiIgZmlsbD0ibm9uZSI+PHBhdGggZD0iTTAgNjBoNjBNNjAgMGwwIDYwIi8+PC9nPjwvc3ZnPg==')] opacity-70 pointer-events-none" />
+      {/* Background Blobs */}
+      <div className="glow-blob glow-blob-primary w-[60%] h-[70%] -top-[20%] -left-[10%] opacity-20" aria-hidden="true" />
+      <div className="glow-blob glow-blob-primary w-[40%] h-[40%] bottom-[-10%] left-[20%] opacity-10" aria-hidden="true" />
 
-      {/* Ambient glow — pakai token brand, bukan hex manual */}
-      <div className="glow-blob glow-blob-primary w-[420px] h-[420px] -top-32 -right-24" aria-hidden="true" />
-      <div className="glow-blob glow-blob-secondary w-[320px] h-[320px] bottom-0 -left-20" aria-hidden="true" />
-
-      <Container className="relative z-10 max-w-7xl mx-auto px-4 md:px-6">
-        <div className="grid lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-12 items-center">
-          {/* ═════════ LEFT COLUMN ═════════ */}
-          <div className="lg:col-span-7 space-y-4 sm:space-y-5 lg:space-y-4 xl:space-y-6 text-center lg:text-left">
-            {/* Eyebrow pill — pakai token secondary/primary */}
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-secondary/20 border border-secondary/50 shadow-xs">
-              <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-              <span className="text-xs font-extrabold uppercase tracking-wider text-primary">
-                Portal Resmi SPMB Tahun Ajaran {BRANDING.academicYear}
+      <Container className="relative z-10">
+        <div className="grid lg:grid-cols-[1.3fr_1fr] gap-12 lg:gap-16 xl:gap-20 items-center lg:items-start">
+          {/* CONTENT SIDE */}
+          <div className="flex flex-col gap-6 lg:gap-7 text-center lg:text-left items-center lg:items-start w-full">
+            {/* Opening Badge */}
+            <motion.div
+              variants={fadeUp}
+              initial="hidden"
+              animate={animate}
+              transition={{ delay: 0.1 }}
+              className="flex justify-center lg:justify-start w-full"
+            >
+              <span className="section-label section-label-primary">
+                Selamat Datang di {BRANDING.schoolShortName}
               </span>
-            </div>
+            </motion.div>
 
             {/* Headline */}
-            <h1 className="text-3xl sm:text-5xl lg:text-[2.75rem] xl:text-[3.25rem] 2xl:text-[3.5rem] font-extrabold text-slate-900 tracking-tight leading-[1.12]">
-              Kaderisasi Ummat <br />
-              <span className="text-primary">Hanif, Kontributif, &amp; Adaptif</span>
-            </h1>
+            <motion.div
+              variants={fadeUp}
+              initial="hidden"
+              animate={animate}
+              transition={{ delay: 0.2 }}
+              className="space-y-3"
+            >
+              <h1 className="leading-[1.1] tracking-[-0.03em] mx-auto lg:mx-0 max-w-2xl lg:max-w-none font-black text-center lg:text-left text-4xl md:text-5xl lg:text-6xl xl:text-[4.5rem]">
+                <span className="text-ink-950 block mb-1">
+                  Kaderisasi Ummat
+                </span>
+                <span className="gradient-text-blue">
+                  Rabbani, Cendekia, dan Mandiri
+                </span>
+              </h1>
+            </motion.div>
 
-            {/* Description */}
-            <p className="text-slate-600 text-sm sm:text-base lg:text-[0.95rem] xl:text-lg max-w-xl mx-auto lg:mx-0 leading-relaxed font-normal">
-              Bukan sekadar tempat belajar — sebuah ekosistem kaderisasi ummat yang hanif, kontributif, dan adaptif,{" "}
-              <strong className="font-semibold text-slate-900">
-                mendidik dengan keteladanan tanpa luka pengasuhan
-              </strong>
-              . Menyelaraskan penguasaan <strong className="font-semibold text-slate-900">Bahasa Arab intensif</strong>, Tahfidz
-              Al-Qur&apos;an, pendalaman ilmu syar&apos;i, keunggulan sains akademik umum, serta penempaan{" "}
-              <em>leadership</em> dan <em>entrepreneurship</em> berlandaskan Al-Qur&apos;an dan Sunnah.
-            </p>
+            {/* Body Copy */}
+            <motion.p
+              variants={fadeUp}
+              initial="hidden"
+              animate={animate}
+              transition={{ delay: 0.3 }}
+              className="text-base lg:text-[1.075rem] leading-[1.85] max-w-[42rem] mx-auto lg:mx-0 text-center lg:text-left text-pretty text-slate-600 font-medium"
+            >
+              Bukan sekadar tempat belajar — sebuah ekosistem pendidikan yang{" "}
+              <strong className="font-bold text-primary-700">
+                berorientasi pada pembentukan Hamalatul Qur'an dan karakter entrepreneur muslim yang mandiri
+              </strong>, memadukan Intensitas Tahfidz Al-Qur'an, Ilmu Syar'i, Sains Akademik, dan Islamic Entrepreneurship berbasis TICE.
+            </motion.p>
 
-            {/* Tagline */}
-            <div className="flex items-center gap-3 justify-center lg:justify-start max-w-xl mx-auto lg:mx-0 py-1">
-              <div className="h-px w-8 bg-secondary" />
-              <p className="text-xs sm:text-sm font-semibold italic text-primary">&ldquo;{BRANDING.schoolTagline}&rdquo;</p>
-              <div className="h-px w-8 bg-secondary" />
-            </div>
+            {/* Tagline Divider */}
+            <motion.div
+              variants={fadeUp}
+              initial="hidden"
+              animate={animate}
+              transition={{ delay: 0.38 }}
+              className="flex items-center gap-3 justify-center lg:justify-start"
+            >
+              <div
+                className="h-px flex-1 max-w-[3rem]"
+                style={{ background: "var(--color-primary-200)" }}
+              />
+              <p className="text-sm font-semibold italic text-primary-700">
+                &ldquo;{BRANDING.schoolTagline}&rdquo;
+              </p>
+              <div
+                className="h-px flex-1 max-w-[3rem]"
+                style={{ background: "var(--color-primary-200)" }}
+              />
+            </motion.div>
 
-            {/* 3 Action Buttons — pakai .btn-primary yang sudah ada di globals.css */}
-            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-2.5 sm:gap-3 pt-1 sm:pt-1.5 w-full">
-              {session ? (
-                <a href="https://spmb.pesantren-alimam.com/dashboard" className="btn-primary w-full sm:w-auto">
-                  <span>Buka Dashboard</span>
-                  <ArrowRight className="w-4 h-4" />
-                </a>
-              ) : (
-                <a href="https://spmb.pesantren-alimam.com/daftar" className="btn-primary w-full sm:w-auto">
-                  <span>Daftar SPMB 2027</span>
-                  <ArrowRight className="w-4 h-4" />
-                </a>
-              )}
+            {/* CTA Group */}
+            <motion.div
+              variants={fadeUp}
+              initial="hidden"
+              animate={animate}
+              transition={{ delay: 0.45 }}
+              className="flex flex-col gap-4 items-center lg:items-start"
+            >
+              <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+                {session ? (
+                  <Link href="/dashboard" className="w-full sm:w-auto">
+                    <button
+                      className="btn-primary w-full sm:w-auto px-10 lg:px-12 py-4 lg:py-[1.125rem] min-h-[56px] text-[0.9375rem] flex items-center justify-center gap-3 hover:scale-[1.02] active:scale-98 transition-all relative overflow-hidden group font-bold"
+                      style={{ boxShadow: "var(--shadow-primary-lg)" }}
+                    >
+                      <span className="flex h-2.5 w-2.5 relative">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-300 opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-400"></span>
+                      </span>
+                      <span>Lanjutkan Ke Dashboard</span>
+                      <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+                    </button>
+                  </Link>
+                ) : (
+                  <>
+                    <Link href="/ppdb" className="w-full sm:w-auto">
+                      <button
+                        className="btn-primary shine-hover w-full sm:w-auto px-8 lg:px-10 py-4 lg:py-[1.125rem] min-h-[56px] text-[0.9375rem] flex items-center justify-center gap-2.5 group font-bold"
+                        style={{ boxShadow: "var(--shadow-primary-lg)" }}
+                      >
+                        Daftar PPDB Sekarang
+                        <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+                      </button>
+                    </Link>
+                    <Link href="/program" className="w-full sm:w-auto">
+                      <button className="btn-secondary w-full sm:w-auto px-8 lg:px-10 py-4 lg:py-[1.125rem] min-h-[56px] text-[0.9375rem] flex items-center justify-center gap-2 group">
+                        Lihat Program Kami
+                        <ArrowRight className="w-4 h-4 opacity-50 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0.5" />
+                      </button>
+                    </Link>
+                  </>
+                )}
+              </div>
 
-              <Link href="/program" className="btn-secondary w-full sm:w-auto">
-                <span>Lihat Program</span>
-              </Link>
-
-              <a
-                href="/documents/Brosur-SPMB-Al-Imam-2027-2028.pdf"
-                download="Brosur-SPMB-Pesantren-Al-Imam-2027-2028.pdf"
-                className="btn-cream w-full sm:w-auto"
-              >
-                <Download className="w-4 h-4" />
-                <span>Unduh Brosur</span>
-              </a>
-            </div>
-
-            {/* Live Countdown Card */}
-            <div className="pt-2 sm:pt-2.5 max-w-lg mx-auto lg:mx-0">
-              <div className="bg-white border border-slate-200 rounded-2xl p-4 sm:p-5 shadow-sm">
-                <div className="flex items-center justify-between text-xs font-extrabold text-slate-600 uppercase tracking-wider mb-2.5 sm:mb-3">
-                  <span>Pendaftaran Dibuka: 5 Sep - 28 Des 2026</span>
-                  <span className="text-primary font-bold flex items-center gap-1.5">
-                    <span className="w-2 h-2 rounded-full bg-primary" />
-                    Status: Aktif
-                  </span>
-                </div>
-                <div className="grid grid-cols-4 gap-2.5 sm:gap-3 text-center">
+              <div className="flex items-center gap-3 mt-1">
+                <div className="flex -space-x-2.5">
                   {[
-                    { value: countdown.days, label: "Hari" },
-                    { value: countdown.hours, label: "Jam" },
-                    { value: countdown.minutes, label: "Menit" },
-                    { value: countdown.seconds, label: "Detik" },
-                  ].map((unit) => (
-                    <div key={unit.label} className="bg-slate-50 border border-slate-200 rounded-xl p-2.5 sm:p-3">
-                      <div className="stat-value text-xl sm:text-2xl md:text-3xl text-primary tabular-nums">
-                        {pad(unit.value)}
-                      </div>
-                      <div className="stat-label mt-1">{unit.label}</div>
-                    </div>
+                    { bg: "var(--color-primary-200)" },
+                    { bg: "var(--color-secondary-300)" },
+                    { bg: "var(--color-primary-300)" },
+                    { bg: "var(--color-secondary-200)" },
+                  ].map((item, i) => (
+                    <div
+                      key={i}
+                      className="w-7 h-7 rounded-full border-2 flex-shrink-0"
+                      style={{
+                        background: item.bg,
+                        borderColor: "var(--color-white)",
+                        boxShadow: "var(--shadow-xs)",
+                      }}
+                      aria-hidden="true"
+                    />
                   ))}
                 </div>
+                <p
+                  className="text-[11px] font-semibold leading-tight"
+                  style={{ color: "var(--color-ink-500)" }}
+                >
+                  <span
+                    className="font-bold uppercase tracking-wide"
+                    style={{ color: "var(--color-primary-700)" }}
+                  >
+                    Angkatan Ke-5
+                  </span>
+                  {" • "}Pesantren Ulul Albaab
+                </p>
               </div>
-            </div>
+
+              <div className="flex flex-wrap gap-x-5 gap-y-2 justify-center lg:justify-start mt-1">
+                {[
+                  "MTs & IL Putra/Putri",
+                  "Kurikulum TICE Terpadu",
+                  "Boarding Asrama Representatif",
+                ].map((item, i) => (
+                  <div key={i} className="flex items-center gap-1.5 text-xs text-slate-500 font-medium">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-primary-600 shrink-0" />
+                    <span>{item}</span>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
           </div>
 
-          {/* ═════════ RIGHT COLUMN: PHOTO + FLOATING BADGES ═════════ */}
-          <div className="lg:col-span-5 relative">
-            <div className="relative rounded-3xl overflow-hidden shadow-xl border-4 border-white group bg-white aspect-[4/5] sm:aspect-square lg:aspect-[4/5] max-h-[500px] xl:max-h-[560px]">
+          {/* IMAGE SIDE */}
+          <motion.div
+            variants={fadeIn}
+            initial="hidden"
+            animate={animate}
+            transition={{ delay: 0.25 }}
+            className="relative w-full max-w-[480px] lg:max-w-none mx-auto"
+          >
+            <div className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
               <Image
                 src="/images/hero.jpg"
-                alt="Santri Pesantren Al Imam Al Islami"
+                alt="Pesantren Islam Internasional Al-Andalus Ulul Albaab"
                 fill
                 priority
-                sizes="(max-width: 768px) 100vw, 40vw"
-                className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-cover"
               />
-
-              {/* Top-Left Floating Badge */}
-              <div className="absolute top-4 left-4 bg-white/95 backdrop-blur-md rounded-2xl p-3 border border-slate-200 shadow-lg flex items-center gap-3">
-                <div className="icon-box icon-box-secondary w-10 h-10">
-                  <Award className="w-5 h-5" />
-                </div>
-                <div>
-                  <p className="text-xs font-extrabold text-slate-900">Standar Mutu</p>
-                  <p className="text-[10px] text-slate-500 font-semibold">Al Andalus IIBS</p>
-                </div>
-              </div>
-
-              {/* Bottom-Right Floating Badge */}
-              <div className="absolute bottom-4 right-4 bg-white/95 backdrop-blur-md rounded-2xl p-3 border border-slate-200 shadow-lg flex items-center gap-3">
-                <div className="icon-box icon-box-primary w-10 h-10">
-                  <BookOpen className="w-5 h-5" />
-                </div>
-                <div>
-                  <p className="text-xs font-extrabold text-slate-900">Tahfidz Mutqin</p>
-                  <p className="text-[10px] text-slate-500 font-semibold">Tajwid &amp; Bersanad</p>
-                </div>
-              </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
             </div>
-          </div>
-        </div>
-
-        {/* ═════════ 3 FEATURE CARDS ═════════ */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6 mt-12 lg:mt-16">
-          <div className="app-card p-6 hover:border-secondary">
-            <div className="icon-box icon-box-secondary w-12 h-12 mb-4">
-              <BookOpen className="w-6 h-6" />
-            </div>
-            <span className="text-xs font-extrabold text-primary uppercase tracking-wider">Fokus Utama</span>
-            <h3 className="text-xl sm:text-2xl font-extrabold text-slate-900 mt-1">Bahasa Arab &amp; Syar&apos;i</h3>
-            <p className="text-xs text-slate-500 mt-1.5 leading-relaxed">
-              Penguasaan bahasa Arab intensif harian, tahfidz Al-Qur&apos;an mutqin, dan pendalaman kitab turots sesuai
-              bimbingan Sunnah.
-            </p>
-          </div>
-
-          <div className="app-card p-6 hover:border-primary/40">
-            <div className="icon-box icon-box-primary w-12 h-12 mb-4">
-              <GraduationCap className="w-6 h-6" />
-            </div>
-            <span className="text-xs font-extrabold text-primary uppercase tracking-wider">Karakter &amp; Kemandirian</span>
-            <h3 className="text-xl sm:text-2xl font-extrabold text-slate-900 mt-1">Sains &amp; Leadership</h3>
-            <p className="text-xs text-slate-500 mt-1.5 leading-relaxed">
-              Pelajaran umum dan sains tetap pintar berdaya saing, berpadu dengan penempaan jiwa kepemimpinan dan
-              kewirausahaan.
-            </p>
-          </div>
-
-          <div className="app-card p-6 hover:border-emerald-300">
-            <div className="icon-box w-12 h-12 mb-4 bg-emerald-50 text-emerald-600 border border-emerald-200">
-              <ShieldCheck className="w-6 h-6" />
-            </div>
-            <span className="text-xs font-extrabold text-emerald-600 uppercase tracking-wider">Pola Pengasuhan</span>
-            <h3 className="text-xl sm:text-2xl font-extrabold text-slate-900 mt-1">Mendidik Tanpa Luka</h3>
-            <p className="text-xs text-slate-500 mt-1.5 leading-relaxed">
-              Keteladanan asatidz 24 jam tanpa kekerasan fisik, lingkungan aman terlindungi dari rokok, perundungan, dan
-              penyimpangan.
-            </p>
-          </div>
+          </motion.div>
         </div>
       </Container>
     </section>
   );
 }
+
