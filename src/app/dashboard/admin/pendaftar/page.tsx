@@ -147,8 +147,7 @@ function AdminPendaftarContent() {
   */
 
   const [jenjangFilter, setJenjangFilter] = useState("");
-  const [jenisKelaminFilter, setJenisKelaminFilter] = useState("");
-  const [tahunAjaranFilter, setTahunAjaranFilter] = useState("");
+    const [tahunAjaranFilter, setTahunAjaranFilter] = useState("");
   const [tipePendaftaranFilter, setTipePendaftaranFilter] = useState("");
   const [tahunAjaranList, setTahunAjaranList] = useState<TahunAjaran[]>([]);
   // Location filters
@@ -449,9 +448,7 @@ function AdminPendaftarContent() {
       if (search) params.append("search", search);
       if (statusFilter) params.append("status", statusFilter);
       if (jenjangFilter) params.append("jenjang", jenjangFilter);
-      if (jenisKelaminFilter)
-        params.append("jenis_kelamin", jenisKelaminFilter);
-      if (tipePendaftaranFilter)
+            if (tipePendaftaranFilter)
         params.append("tipe_pendaftaran", tipePendaftaranFilter);
       if (tahunAjaranFilter) params.append("tahun_ajaran", tahunAjaranFilter);
       if (provinsiFilter) params.append("provinsi", provinsiFilter);
@@ -480,8 +477,7 @@ function AdminPendaftarContent() {
     search,
     statusFilter,
     jenjangFilter,
-    jenisKelaminFilter,
-    tipePendaftaranFilter,
+        tipePendaftaranFilter,
     tahunAjaranFilter,
     provinsiFilter,
     kabupatenFilter,
@@ -935,9 +931,7 @@ function AdminPendaftarContent() {
       if (search) params.append("search", search);
       if (statusFilter) params.append("status", statusFilter);
       if (jenjangFilter) params.append("jenjang", jenjangFilter);
-      if (jenisKelaminFilter)
-        params.append("jenis_kelamin", jenisKelaminFilter);
-      if (tahunAjaranFilter) params.append("tahun_ajaran", tahunAjaranFilter);
+            if (tahunAjaranFilter) params.append("tahun_ajaran", tahunAjaranFilter);
       if (provinsiFilter) params.append("provinsi", provinsiFilter);
       if (kabupatenFilter) params.append("kabupaten", kabupatenFilter);
       if (kecamatanFilter) params.append("kecamatan", kecamatanFilter);
@@ -1441,23 +1435,7 @@ function AdminPendaftarContent() {
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-4">
           {/* Gender Filter */}
-          <div>
-            <label className="block text-[10px] font-black text-primary-900 mb-2 leading-none uppercase tracking-widest">
-              Filter Putra / Putri
-            </label>
-            <select
-              value={jenisKelaminFilter}
-              onChange={(e) => {
-                setJenisKelaminFilter(e.target.value);
-                setPagination((prev) => ({ ...prev, page: 1 }));
-              }}
-              className="w-full px-4 py-3 bg-gold-50/50 border border-gold-100 rounded-lg focus:border-primary-500 focus:bg-white focus:outline-none font-bold text-primary-950"
-            >
-              <option value="">Semua (Putra & Putri)</option>
-              <option value="L">Putra (Laki-laki)</option>
-              <option value="P">Putri (Perempuan)</option>
-            </select>
-          </div>
+          
 
           {/* Jenjang Filter */}
           <div>
@@ -1533,8 +1511,7 @@ function AdminPendaftarContent() {
                   setSearchInput("");
                   setStatusFilter("");
                   setJenjangFilter("");
-                  setJenisKelaminFilter("");
-                  const defaultTA =
+                                    const defaultTA =
                     tahunAjaranList.find((ta) => ta.is_active) ||
                     tahunAjaranList[0];
                   setTahunAjaranFilter(defaultTA ? defaultTA.id : "");
@@ -1858,9 +1835,7 @@ function AdminPendaftarContent() {
                         )}
                       </p>
                       <p className="text-xs text-stone-500 mt-0.5">
-                        {["L", "Laki-laki"].includes(item.jenis_kelamin)
-                          ? "Laki-laki"
-                          : "Perempuan"}
+                        "Laki-laki"
                         {item.no_hp && <> &bull; {item.no_hp}</>}
                       </p>
                       <div className="flex flex-wrap items-center gap-2 mt-2">
@@ -2048,9 +2023,7 @@ function AdminPendaftarContent() {
                             )}
                           </div>
                           <div className="text-xs text-stone-600 font-medium">
-                            {["L", "Laki-laki"].includes(item.jenis_kelamin)
-                              ? "Laki-laki"
-                              : "Perempuan"}
+                            "Laki-laki"
                           </div>
                         </div>
                       </td>
