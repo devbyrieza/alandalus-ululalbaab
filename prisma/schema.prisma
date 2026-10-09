@@ -3,6 +3,7 @@ generator client {
   engineType = "library"
 }
 
+
 datasource db {
   provider  = "postgresql"
   url       = env("DATABASE_URL")
@@ -13,9 +14,9 @@ model Profile {
   id                    String                @id @default(uuid()) @db.Uuid
   role                  String                @default("pendaftar")
   secondary_roles       String[]              @default([])
+  username              String?               @unique
   full_name             String
     jenis_kelamin         String?
-  username              String?               @unique
   email                 String?
   phone                 String
   google_meet_link      String?
@@ -78,7 +79,8 @@ model Pendaftar {
   id                             String                 @id @default(uuid()) @db.Uuid
   user_id                        String?                @db.Uuid
   tahun_ajaran_id                String                 @db.Uuid
-  nomor_pendaftaran              String                 @unique
+  nomor_pendaftaran              String                 @unique @db.VarChar(50)
+  nis                            String?                @unique @db.VarChar(50)
   nik                            String
   nama_lengkap                   String
   jenis_kelamin                  String
@@ -737,6 +739,4 @@ model PengajuanBeasiswa {
 
   @@map("pengajuan_beasiswa")
 }
-
-
 
