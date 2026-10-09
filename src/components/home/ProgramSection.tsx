@@ -38,7 +38,7 @@ const PROGRAMS: ProgramItem[] = [
       "Perpaduan Kurikulum Nasional & Kurikulum Khas Andalus",
       "Islamic Entrepreneurship (TICE)",
     ],
-    quotaLabel: "Putra 48 · Putri 24",
+    quotaLabel: "Putra 48",
     icon: School,
     variant: "blue",
   },
@@ -53,7 +53,7 @@ const PROGRAMS: ProgramItem[] = [
       "Kaderisasi Kepemimpinan & Entrepreneurship",
       "Persiapan Masuk PTN & Universitas Timur Tengah",
     ],
-    quotaLabel: "Putra 24 · Putri 24",
+    quotaLabel: "Putra 24",
     icon: BookOpen,
     variant: "amber",
   },
@@ -181,7 +181,7 @@ export default function ProgramSection() {
                   transition: { duration: 0.3, ease: EASE } }}
                 className="group h-full"
               >
-                <div className="relative h-full flex flex-col bg-white rounded-[1.5rem] border border-primary-100 overflow-hidden shadow-premium-sm group-hover:shadow-premium-md group-hover:border-primary-200 transition-all duration-400">
+                <div className="relative h-full flex flex-col bg-white/80 backdrop-blur-sm rounded-3xl border border-primary-100 overflow-hidden shadow-2xl shadow-blue-500/15 group-hover:shadow-blue-500/30 group-hover:-translate-y-1 group-hover:border-primary-200 transition-all duration-300">
                   <div
                     className={`absolute top-0 left-0 right-0 h-[3px] ${tokens.accentBar}`}
                   />

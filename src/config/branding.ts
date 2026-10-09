@@ -1,6 +1,6 @@
-﻿export const BRANDING = {
+export const BRANDING = {
   schoolName:
-    process.env.NEXT_PUBLIC_SCHOOL_NAME || "Pesantren Al Andalus Ulul Albaab",
+    process.env.NEXT_PUBLIC_SCHOOL_NAME || "Pesantren Ulul Albaab",
   schoolShortName:
     process.env.NEXT_PUBLIC_SCHOOL_SHORT_NAME || "Al Andalus Ulul Albaab",
   schoolLegalName:
@@ -8,9 +8,13 @@
   schoolTagline:
     process.env.NEXT_PUBLIC_SCHOOL_TAGLINE ||
     "Kaderisasi Ummat Rabbani, Cendekia, dan Mandiri",
+  subtitle: "Pesantren Islam Internasional Khusus Putra",
+  gender: "Putra",
+  shaleh: "shaleh",
+  santri: "santri",
   schoolNetwork:
     process.env.NEXT_PUBLIC_SCHOOL_NETWORK || "Perpaduan Kurikulum Nasional dan Khas Andalus",
-  primaryColor: process.env.NEXT_PUBLIC_PRIMARY_COLOR || "#0284c7", // Default Blue Ulul Albaab
+  primaryColor: process.env.NEXT_PUBLIC_PRIMARY_COLOR || "#0369a1", // Default Blue Ulul Albaab
   secondaryColor: process.env.NEXT_PUBLIC_SECONDARY_COLOR || "#f59e0b", // Default Amber Ulul Albaab
   logoPath: process.env.NEXT_PUBLIC_LOGO_PATH || "/images/logo.png",
   faviconPath: process.env.NEXT_PUBLIC_FAVICON_PATH || "/favicon.ico",
@@ -32,5 +36,5 @@
   fbUrl:
     process.env.NEXT_PUBLIC_FB_URL ||
     "https://www.facebook.com/alandalus.ululalbaab/",
-  twitterUrl: process.env.NEXT_PUBLIC_TWITTER_URL || "#" };
-
+  twitterUrl: process.env.NEXT_PUBLIC_TWITTER_URL || "#" 
+};

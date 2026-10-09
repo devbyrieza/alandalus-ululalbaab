@@ -93,7 +93,7 @@ export default function HeroSection() {
               transition={{ delay: 0.1 }}
               className="flex justify-center lg:justify-start w-full"
             >
-              <span className="section-label section-label-primary">
+              <span className="section-label section-label-primary shadow-blue-500/20 border-blue-300">
                 Selamat Datang di {BRANDING.schoolShortName}
               </span>
             </motion.div>
@@ -124,7 +124,7 @@ export default function HeroSection() {
               transition={{ delay: 0.3 }}
               className="text-base lg:text-[1.075rem] leading-[1.85] max-w-[42rem] mx-auto lg:mx-0 text-center lg:text-left text-pretty text-slate-600 font-medium"
             >
-              Bukan sekadar tempat belajar — sebuah ekosistem pendidikan yang{" "}
+              Pesantren Khusus Putra — Bukan sekadar tempat belajar, namun sebuah ekosistem pendidikan maskulin yang{" "}
               <strong className="font-bold text-primary-700">
                 berorientasi pada pembentukan Hamalatul Qur'an dan karakter entrepreneur muslim yang mandiri
               </strong>, memadukan Intensitas Tahfidz Al-Qur'an, Ilmu Syar'i, Sains Akademik, dan Islamic Entrepreneurship berbasis TICE.
@@ -163,7 +163,7 @@ export default function HeroSection() {
                 {session ? (
                   <Link href="/dashboard" className="w-full sm:w-auto">
                     <button
-                      className="btn-primary w-full sm:w-auto px-10 lg:px-12 py-4 lg:py-[1.125rem] min-h-[56px] text-[0.9375rem] flex items-center justify-center gap-3 hover:scale-[1.02] active:scale-98 transition-all relative overflow-hidden group font-bold"
+                      className="btn-primary w-full shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 sm:w-auto px-10 lg:px-12 py-4 lg:py-[1.125rem] min-h-[56px] text-[0.9375rem] flex items-center justify-center gap-3 hover:scale-[1.02] active:scale-98 transition-all relative overflow-hidden group font-bold"
                       style={{ boxShadow: "var(--shadow-primary-lg)" }}
                     >
                       <span className="flex h-2.5 w-2.5 relative">
@@ -178,7 +178,7 @@ export default function HeroSection() {
                   <>
                     <Link href="/ppdb" className="w-full sm:w-auto">
                       <button
-                        className="btn-primary shine-hover w-full sm:w-auto px-8 lg:px-10 py-4 lg:py-[1.125rem] min-h-[56px] text-[0.9375rem] flex items-center justify-center gap-2.5 group font-bold"
+                        className="btn-primary shine-hover w-full shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 sm:w-auto px-8 lg:px-10 py-4 lg:py-[1.125rem] min-h-[56px] text-[0.9375rem] flex items-center justify-center gap-2.5 group font-bold"
                         style={{ boxShadow: "var(--shadow-primary-lg)" }}
                       >
                         Daftar PPDB Sekarang
@@ -231,7 +231,7 @@ export default function HeroSection() {
 
               <div className="flex flex-wrap gap-x-5 gap-y-2 justify-center lg:justify-start mt-1">
                 {[
-                  "MTs & IL Putra/Putri",
+                  "MTs & IL Putra",
                   "Kurikulum TICE Terpadu",
                   "Boarding Asrama Representatif",
                 ].map((item, i) => (
@@ -252,7 +252,7 @@ export default function HeroSection() {
             transition={{ delay: 0.25 }}
             className="relative w-full max-w-[480px] lg:max-w-none mx-auto"
           >
-            <div className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
+            <div className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl shadow-blue-600/30 rounded-3xl border-4 border-white">
               <Image
                 src="/images/hero.jpg"
                 alt="Pesantren Islam Internasional Al-Andalus Ulul Albaab"
