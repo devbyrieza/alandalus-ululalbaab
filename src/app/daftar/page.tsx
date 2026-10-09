@@ -161,6 +161,9 @@ export default function DaftarPage() {
     }
     if (!formData.jenis_kelamin) {
       errors.jenis_kelamin = "Pilih jenis kelamin santri";
+    } else if (formData.jenis_kelamin === "P") {
+      errors.jenis_kelamin =
+        "Mohon maaf, pendaftaran Santri Putri (Perempuan) kini dilakukan melalui website SPMB Pesantren Al-Imam Al-Islami lil Banat. Ulul Albaab sekarang resmi KHUSUS PUTRA.";
     }
 
     if (!formData.jenjang) {
@@ -374,9 +377,9 @@ export default function DaftarPage() {
                   ].map((option) => {
                     const isPutra = formData.jenis_kelamin === "L";
                     const isPutri = formData.jenis_kelamin === "P";
-                    // Saat ini: Semua pendaftaran Putra dan Putri DIBUKA
-                    const isClosed = false;
-                    const closedLabel = "Pendaftaran Putra Sudah Ditutup";
+                    // Ulul Albaab: KHUSUS PUTRA - Putri dialihkan ke Al-Imam
+                    const isClosed = isPutri;
+                    const closedLabel = "Pendaftaran Putri tidak tersedia di sini. Silakan daftar via website Al-Imam.";
 
                     return (
                       <motion.div
