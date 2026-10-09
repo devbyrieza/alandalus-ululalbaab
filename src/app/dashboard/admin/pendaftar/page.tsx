@@ -1502,8 +1502,7 @@ function AdminPendaftarContent() {
             statusFilter ||
             jenjangFilter ||
             tipePendaftaranFilter ||
-            tahunAjaranFilter ||
-            jenisKelaminFilter) && (
+            tahunAjaranFilter) && (
             <div className="flex items-end">
               <button
                 onClick={() => {
