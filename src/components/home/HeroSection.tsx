@@ -160,8 +160,8 @@ export default function HeroSection() {
           <div className="lg:col-span-5 relative">
             <div className="relative rounded-3xl overflow-hidden shadow-2xl shadow-blue-600/30 border-4 border-white group bg-white/60 backdrop-blur-sm aspect-[4/5] sm:aspect-square lg:aspect-[4/5] max-h-[500px] xl:max-h-[560px]">
               <Image
-                src="/images/hero.jpg"
-                alt="Santri Pesantren Ulul Albaab"
+                src="/images/talent-santri.png"
+                alt="Santri Putra Pesantren Ulul Albaab"
                 fill
                 priority
                 sizes="(max-width: 768px) 100vw, 40vw"

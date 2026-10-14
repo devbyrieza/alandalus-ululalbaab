@@ -63,7 +63,7 @@ const FACILITY_IMAGES = [
     priority: false,
   },
   {
-    src: "/images/asrama.jpg",
+    src: "/images/asrama-baru.png",
     label: "Asrama Santri",
     sub: "Representatif & Asri",
     span: "col-span-1 row-span-1",

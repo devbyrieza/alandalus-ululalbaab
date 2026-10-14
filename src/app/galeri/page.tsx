@@ -41,6 +41,7 @@ const ALBUMS: Album[] = [
     items: [
       { src: "/images/masjid-1.jpg", label: "Tampak Luar & Bangunan Masjid Ulul Albaab" },
       { src: "/images/masjid-2.jpg", label: "Interior Ruang Utama Sholat & Ibadah Berjamaah" },
+      { src: "/images/masjid-baru.png", label: "Masjid Baru Ulul Albaab - Tampak Depan" },
     ],
   },
   {
@@ -65,6 +66,9 @@ const ALBUMS: Album[] = [
     items: [
       { src: "/images/gedung-kelas.jpg", label: "Kompleks Gedung Pembelajaran Santri" },
       { src: "/images/ruang-kelas.jpg", label: "Ruang Kelas Modern dengan Sarana Lengkap" },
+      { src: "/images/gedung-kelas-baru.png", label: "Gedung Kelas Baru - Tampak Depan" },
+      { src: "/images/gedung-sma.png", label: "Gedung SMA / IL Ulul Albaab" },
+      { src: "/images/gerbang-mts.png", label: "Gerbang Utama MTs Ulul Albaab" },
     ],
   },
   {
@@ -76,6 +80,7 @@ const ALBUMS: Album[] = [
     items: [
       { src: "/images/lab-komputer-1.jpg", label: "Ruang Lab Komputer & Jaringan Internet Cepat" },
       { src: "/images/lab-komputer-2.jpg", label: "Sarana Praktikum IT & Ujian Berbasis Komputer" },
+      { src: "/images/lab-komputer-baru.png", label: "Laboratorium Komputer Baru (Gedung Baru)" },
     ],
   },
   {
@@ -100,6 +105,9 @@ const ALBUMS: Album[] = [
       { src: "/images/lapangan-badminton-2.jpg", label: "Lapangan Badminton Santri" },
       { src: "/images/lapangan-voli.jpg", label: "Lapangan Voli Santri" },
       { src: "/images/gedung-utama-dan-lapangan-basket.webp", label: "Lapangan Basket & Gedung Utama" },
+      { src: "/images/lapangan-futsal-baru.png", label: "Lapangan Futsal Outdoor Baru" },
+      { src: "/images/lapangan-badminton-baru.png", label: "Lapangan Badminton Indoor Baru" },
+      { src: "/images/ekskul-basket.jpg", label: "Ekskul Basket Santri Putra" },
     ],
   },
   {
@@ -110,19 +118,20 @@ const ALBUMS: Album[] = [
     cover: "/images/asrama.jpg",
     items: [
       { src: "/images/asrama.jpg", label: "Gedung Asrama & Tempat Tinggal Santri yang Nyaman" },
+      { src: "/images/asrama-baru.png", label: "Asrama Baru Santri - Gedung Bertingkat Modern" },
     ],
   },
   {
     id: "sanitasi",
     title: "Fasilitas Sanitasi & Toilet Bersih",
     category: "Kebersihan & Kesehatan",
-    desc: "Sarana MCK dan sanitasi terpisah antara santri putra dan santri putri dengan standar higienis tinggi.",
+    desc: "Sarana MCK dan sanitasi dengan standar higienis tinggi dan kebersihan terjaga.",
     cover: "/images/toilet-putra-1.jpg",
     items: [
       { src: "/images/toilet-putra-1.jpg", label: "Fasilitas Sanitasi & Toilet Putra (Area Depan)" },
       { src: "/images/toilet-putra-2.jpg", label: "Bilik & Wastafel Bersih Toilet Putra" },
-      { src: "/images/toilet-putri-1.jpg", label: "Fasilitas Sanitasi & Toilet Putri (Area Depan)" },
-      { src: "/images/toilet-putri-2.jpg", label: "Bilik & Wastafel Bersih Toilet Putri" },
+      { src: "/images/toilet-baru.png", label: "Fasilitas Sanitasi & Toilet Baru (Standar Higienis)" },
+      
     ],
   },
   {
@@ -156,6 +165,8 @@ const ALBUMS: Album[] = [
     cover: "/images/drone-campus.webp",
     items: [
       { src: "/images/drone-campus.webp", label: "Panorama Lanskap Udara Pesantren Islam Internasional Al-Andalus Ulul Albaab" },
+      { src: "/images/view-drone.png", label: "View Drone Terbaru - Kampus Ulul Albaab Dari Atas" },
+      { src: "/images/view-puas.png", label: "Pemandangan Kawasan PUAS - Aerial View" },
     ],
   },
 ];

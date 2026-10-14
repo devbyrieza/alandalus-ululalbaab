@@ -350,7 +350,7 @@ export default function KegiatanPage() {
 
   const kegiatanUtama: KegiatanUtama[] = [
     {
-      image: "/images/PERPUSTAKAAN A.jpg",
+      image: "/images/perpustakaan-baru.png",
       title: "Pembelajaran Kitab Turots",
       description:
         "Bukan sekadar hafalan! Santri kami PAHAM isi kitab, mampu berdiskusi ilmiah, dan disiapkan menjadi ilmuwan muda.",
@@ -374,7 +374,7 @@ export default function KegiatanPage() {
           "Prioritas utama kami adalah pendidikan agama. Di sini, kami melihat langsung bagaimana anak dididik menjaga adab dan shalat berjamaah tepat waktu. Investasi akhirat yang luar biasa.",
         parent: "Bapak Surwanto (Wali Santri)" } },
     {
-      image: "/images/tahfidz.webp",
+      image: "/images/kegiatan-outdoor-quran.png",
       title: "Tahfidz Al-Qur'an Intensif",
       description:
         "Metode menghafal terukur sesuai kemampuan santri dengan target yang jelas setiap jenjang pendidikan.",
@@ -396,7 +396,7 @@ export default function KegiatanPage() {
           "Sinergi kurikulum nasional dan tahfidznya sangat menenangkan. Anak kami tidak hanya mengejar target hafalan, tapi juga PAHAM maknanya melalui bimbingan asatidz yang kompeten.",
         parent: "Ibu Siti Aminah (Wali Santri)" } },
     {
-      image: "/images/lapangan-voli.jpg",
+      image: "/images/ekskul-karate-baru.png",
       title: "Pengembangan Bakat & Prestasi",
       description:
         "Menyiapkan santri multitalenta yang juara di bidang olimpiade, olahraga, hingga public speaking.",
@@ -597,19 +597,19 @@ export default function KegiatanPage() {
       desc: "Melatih ketangkasan dan koordinasi motorik.",
       benefit: "Kelincahan Fisik" },
     {
-      name: "Pertanian",
+      name: "Pertanian (Greenhouse)",
       icon: Home,
-      desc: "Edukasi kemandirian pangan dan cinta alam.",
-      benefit: "Kemandirian Hidup" },
+      desc: "Praktik agrobisnis modern, hidroponik, dan greenhouse pesantren.",
+      benefit: "Agro-Entrepreneur" },
     {
-      name: "Periklanan",
+      name: "Perikanan (Akuakultur)",
       icon: MessageCircle,
-      desc: "Belajar strategi komunikasi visual dan pemasaran.",
-      benefit: "Jiwa Entrepreneur" },
+      desc: "Budidaya ikan & akuakultur pesantren sebagai edukasi kemandirian pangan santri.",
+      benefit: "Kemandirian Pangan" },
     {
-      name: "Kewirausahaan",
+      name: "Kewirausahaan Islami",
       icon: Zap,
-      desc: "Praktik dasar bisnis syariah, manajemen usaha, dan mental kemandirian entrepreneur muslim.",
+      desc: "Praktik dasar bisnis syariah, manajemen toko Pandu, dan mental kemandirian entrepreneur muslim.",
       benefit: "Jiwa Entrepreneur" },
   ];
 
