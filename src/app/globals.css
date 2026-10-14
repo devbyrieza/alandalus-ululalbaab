@@ -253,32 +253,32 @@
    ======================================== */
 @layer base {
   :root {
-  /* TIER SILVER: Modern SaaS Minimalist (Flat & Clean) */
-  --primary:        #0284c7; /* Sky 600 */
-  --primary-dark:   #0369a1; /* Sky 700 */
-  --primary-light:  #38bdf8; /* Sky 400 */
+  /* TIER PLATINUM: The Best of Both Worlds - Ulul Albaab */
+  --primary:        #0369a1; /* Blue 700 - Royal Blue */
+  --primary-dark:   #075985; /* Blue 800 */
+  --primary-light:  #0ea5e9; /* Blue 500 - vibrant */
   --secondary:      #f59e0b; /* Amber 500 */
   --secondary-light: #fbbf24; /* Amber 400 */
-  --secondary-pale: #f0f9ff;
-  --bg:             #ffffff; /* Pure white bg for flat look */
+  --secondary-pale: #fffbeb;
+  --bg:             #f0f9ff; /* Sky-50 */
   --bg-card:        #ffffff;
-  --text-main:      #111827;
+  --text-main:      #0c4a6e;
   --text-muted:     #6b7280;
-  --border:         #e5e7eb; /* Stronger borders to separate content */
+  --border:         #e0f2fe; /* Blue-100 border */
   --success:        #16a34a;
   --warning:        #d97706;
   --danger:         #dc2626;
-  --info:           #0284c7;
+  --info:           #2563eb;
   
-  /* GEOMETRY: Neat, sharp/slightly rounded */
-  --radius:         8px;
+  /* GEOMETRY: Ultra Rounded (Glass & Breathable - PLATINUM) */
+  --radius:         20px;
   
-  /* ELEVATION: Flat UI (Borders over shadows, very light shadow) */
-  --shadow-sm:      0 1px 2px rgba(0,0,0,.03);
-  --shadow-md:      0 1px 3px rgba(0,0,0,.04); /* Almost no shadow */
-  --shadow-lg:      0 4px 6px -1px rgba(0,0,0,.05);
+  /* ELEVATION: Glowing / Deep 3D Shadows */
+  --shadow-sm:      0 2px 8px rgba(3,105,161,.06), 0 1px 2px rgba(0,0,0,.03);
+  --shadow-md:      0 8px 24px rgba(3,105,161,.10), 0 2px 6px rgba(0,0,0,.04);
+  --shadow-lg:      0 16px 40px rgba(3,105,161,.12), 0 4px 12px rgba(0,0,0,.05);
   
-  --font-sans:      'Inter', system-ui, sans-serif; /* Clean sans */
+  --font-sans:      'Plus Jakarta Sans', system-ui, sans-serif;
   --font-arabic:    'Amiri', serif;
 
     color-scheme: light;

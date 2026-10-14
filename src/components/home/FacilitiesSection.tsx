@@ -187,7 +187,7 @@ export default function FacilitiesSection() {
                 duration: 0.6,
                 delay: idx * 0.08,
                 ease: SPRING_EASE }}
-              className={`${img.span} relative rounded-[1.5rem] overflow-hidden group shadow-premium-sm ring-1 ring-primary-100`}
+              className={`${img.span} relative rounded-[1.5rem] overflow-hidden group shadow-2xl shadow-blue-500/15 ring-1 ring-primary-100`}
             >
               <Image
                 src={img.src}
@@ -243,10 +243,10 @@ export default function FacilitiesSection() {
             <motion.div
               key={idx}
               variants={itemVariants}
-              className="group flex items-center gap-3.5 p-3.5 rounded-lg bg-white border border-primary-100 hover:border-primary-200 shadow-premium-sm hover:shadow-premium-md transition-all duration-300 ease-out cursor-default"
+              className="group flex items-center gap-3.5 p-3.5 rounded-2xl bg-white/80 backdrop-blur-sm border border-blue-100 hover:border-primary-200 shadow-md shadow-blue-500/5 hover:shadow-xl hover:shadow-blue-500/10 transition-all duration-300 ease-out cursor-default hover:-translate-y-0.5"
             >
               <div
-                className={`w-10 h-10 rounded-[10px] flex items-center justify-center shrink-0 ring-1 shadow-xs transition-transform duration-300 group-hover:scale-105 ${iconClasses[facility.color] ?? iconClasses.ink}`}
+                className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ring-1 shadow-xs transition-transform duration-300 group-hover:scale-105 ${iconClasses[facility.color] ?? iconClasses.ink}`}
               >
                 <facility.icon className="w-4 h-4" strokeWidth={2} />
               </div>

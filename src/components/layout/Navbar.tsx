@@ -144,15 +144,9 @@ export default function Navbar() {
 
   return (
     <>
-      <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          isScrolled
-            ? "glass-panel border-b border-[var(--color-primary-100)] py-2"
-            : "bg-transparent py-4 lg:py-5"
-        }`}
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between">
+      <header id="main-header" className="fixed w-full top-0 left-0 pt-2 sm:pt-3 z-50 transition-all duration-300">
+        <div className="container mx-auto px-4 md:px-6 max-w-7xl">
+          <div className="bg-white/80 backdrop-blur-xl border border-white/40 rounded-full px-5 py-2 sm:px-6 sm:py-2.5 shadow-2xl shadow-blue-500/10 transition-all duration-300 flex items-center justify-between">
             {/* ── Logo ── */}
             <Link
               href="/"
@@ -301,7 +295,7 @@ export default function Navbar() {
                   </Link>
                   <Link
                     href="/ppdb"
-                    className="btn-primary flex items-center gap-1.5 group text-xs xl:text-sm font-black px-3.5 xl:px-5 py-2 rounded-full shadow-md hover:scale-105 transition-all glow-ring-primary"
+                    className="btn-primary flex items-center gap-1.5 group text-xs xl:text-sm font-black px-3.5 xl:px-5 py-2 rounded-xl shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 hover:scale-105 transition-all glow-ring-primary"
                   >
                     <span>Daftar PPDB</span>
                     <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
@@ -329,7 +323,7 @@ export default function Navbar() {
             {/* ── Hamburger (below lg) ── */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className={`xl:hidden p-3 rounded-lg transition-all duration-300 min-h-[48px] min-w-[48px] flex items-center justify-center border ${
+              className={`xl:hidden p-2 sm:p-2.5 rounded-xl transition-all duration-300 min-h-[40px] min-w-[40px] flex items-center justify-center border ${
                 isScrolled
                   ? "bg-white border-[var(--color-primary-100)] text-[var(--color-primary-700)] hover:bg-[var(--color-primary-50)] shadow-[var(--shadow-xs)]"
                   : "bg-white/85  border-white/70 text-[var(--color-ink-800)] hover:bg-white/95 shadow-[0_2px_12px_rgba(3,105,199,0.10)]"
@@ -409,7 +403,7 @@ export default function Navbar() {
 
               {/* School identity strip */}
               <div className="flex items-center gap-3 px-6 py-3 border-b border-[var(--color-primary-50)] flex-shrink-0">
-                <div className="w-9 h-9 rounded-lg bg-[var(--color-primary-50)] border border-[var(--color-primary-100)] flex items-center justify-center overflow-hidden">
+                <div className="w-9 h-9 rounded-2xl bg-[var(--color-primary-50)] border border-[var(--color-primary-100)] flex items-center justify-center overflow-hidden">
                   <Image
                     src={BRANDING.logoPath}
                     alt=""
@@ -448,7 +442,7 @@ export default function Navbar() {
                           handleNavClick(e, link.href);
                           setIsMenuOpen(false);
                         }}
-                        className={`px-4 py-4 rounded-lg text-base font-bold transition-all min-h-[56px] flex items-center justify-between group ${
+                        className={`px-4 py-4 rounded-2xl text-base font-bold transition-all min-h-[56px] flex items-center justify-between group ${
                           isActive(link.href)
                             ? "bg-primary-50 text-primary-900 font-extrabold shadow-sm"
                             : "text-[var(--color-ink-800)] hover:bg-[var(--color-primary-50)] hover:text-[var(--color-primary-800)]"

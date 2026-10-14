@@ -87,10 +87,10 @@ export default function FeaturesSection() {
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: idx * 0.1 }}
-                    className="bg-white  p-6 rounded-lg flex gap-5 group items-start border border-primary-50 hover:border-primary-200 hover:shadow-premium-md transition-all duration-400 cursor-default hover:-translate-y-1"
+                    className="bg-white/80 backdrop-blur-sm p-6 rounded-2xl flex gap-5 group items-start border border-blue-100 shadow-md shadow-blue-500/5 hover:border-primary-200 hover:shadow-xl hover:shadow-blue-500/10 transition-all duration-300 cursor-default hover:-translate-y-1"
                   >
                     {/* CiroAI Icon Box */}
-                    <div className="icon-box icon-box-primary w-14 h-14 rounded-lg shrink-0">
+                    <div className="icon-box icon-box-primary w-14 h-14 rounded-2xl shrink-0">
                       <feature.icon className="w-7 h-7" />
                     </div>
                     <div>
@@ -142,12 +142,12 @@ export default function FeaturesSection() {
                   </div>
                 </div>
 
-                <div className="bg-linear-to-br from-primary-600 via-primary-700 to-primary-900 shine-top border border-white/10 p-6 sm:p-8 rounded-lg shadow-sm min-h-64 md:h-72 flex flex-col justify-center items-center text-center relative overflow-hidden group hover:shadow-sm hover:-translate-y-2 transition-all duration-500">
+                <div className="bg-linear-to-br from-primary-600 via-primary-700 to-primary-900 shine-top border border-white/10 p-6 sm:p-8 rounded-3xl shadow-2xl shadow-blue-900/30 min-h-64 md:h-72 flex flex-col justify-center items-center text-center relative overflow-hidden group hover:shadow-sm hover:-translate-y-2 transition-all duration-500">
                   {/* CiroAI-style ambient glow inside dark card */}
                   <div className="absolute -top-16 -right-16 w-40 h-40 bg-secondary-400/25 blur-[60px] rounded-full pointer-events-none group-hover:bg-secondary-400/40 transition-colors duration-700" />
                   <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-primary-300/10 blur-[50px] rounded-full pointer-events-none" />
 
-                  <div className="icon-box icon-box-secondary w-20 h-20 rounded-lg mb-6 group-hover:scale-110 transition-transform duration-500">
+                  <div className="icon-box icon-box-secondary w-20 h-20 rounded-2xl mb-6 group-hover:scale-110 transition-transform duration-500">
                     <BookOpenCheck className="w-10 h-10" />
                   </div>
                   <h3 className="font-black text-2xl text-white tracking-tight leading-tight group-hover:text-secondary-100 transition-colors">
@@ -161,7 +161,7 @@ export default function FeaturesSection() {
 
               <div className="space-y-4 lg:space-y-6">
                 <div className="app-card p-6 sm:p-8 min-h-64 md:h-72 flex flex-col justify-center items-center text-center group">
-                  <div className="w-20 h-20 bg-primary-50 rounded-lg flex items-center justify-center mb-6 shadow-sm group-hover:scale-110 transition-transform duration-500">
+                  <div className="w-20 h-20 bg-primary-50 rounded-2xl flex items-center justify-center mb-6 shadow-md group-hover:scale-110 transition-transform duration-500">
                     <ShieldCheck className="w-10 h-10 text-primary-600" />
                   </div>
                   <p className="font-black text-2xl text-primary-900">
@@ -171,7 +171,7 @@ export default function FeaturesSection() {
                   </p>
                 </div>
 
-                <div className="bg-primary-50/80  border border-primary-100 p-6 sm:p-8 rounded-[2rem] shadow-sm min-h-56 md:h-64 flex flex-col justify-end items-start hover:shadow-sm transition-all duration-300">
+                <div className="bg-white/70 backdrop-blur-sm border border-blue-100 p-6 sm:p-8 rounded-3xl shadow-xl shadow-blue-500/10 min-h-56 md:h-64 flex flex-col justify-end items-start hover:shadow-sm transition-all duration-300">
                   <p className="text-4xl font-black mb-1 text-primary-800 tracking-tighter">
                     RESMI
                   </p>

@@ -1,7 +1,5 @@
 "use client";
 
-"use client";
-
 import Link from "next/link";
 import { Send, ShieldCheck, Award, BookOpen } from "lucide-react";
 import { Container } from "@/components/layout/Container";
@@ -28,7 +26,7 @@ export default function CtaSection() {
 
           <div className="relative z-10 max-w-3xl mx-auto flex flex-col items-center">
             <div className="section-label section-label-white mb-6">
-              <span className="text-secondary-300">✦</span> Pendaftaran Dibuka
+              Pendaftaran Dibuka
             </div>
 
             <h3 className="text-[2rem] sm:text-[2.5rem] md:text-[3rem] lg:text-[3.5rem] font-display font-black mb-5 tracking-tight leading-[1.1]">
