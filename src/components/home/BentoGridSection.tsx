@@ -84,7 +84,7 @@ export default function BentoGridSection() {
             className="col-span-1 row-span-1 bento-card relative group overflow-hidden"
           >
             <Image 
-              src="/images/asrama.jpg" 
+              src="/images/asrama-baru.png" 
               alt="Gedung Asrama Santri" 
               fill 
               className="object-cover transition-transform duration-700 group-hover:scale-105" 
