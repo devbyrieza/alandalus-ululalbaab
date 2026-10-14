@@ -129,6 +129,7 @@ export async function POST(request: NextRequest) {
         "admin_super",
         "admin_berkas",
         "admin_keuangan",
+        "pewawancara",
         "pewawancara_calsan",
         "pewawancara_cawalsan",
         "penguji_quran",

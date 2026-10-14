@@ -133,12 +133,16 @@ export async function PATCH(
       isWawancara ||
       isWawancaraFallback ||
       baseRole.includes("calsan") ||
+      baseRole.includes("wawancara") ||
+      baseRole === "pewawancara" ||
       baseRole === "pewawancara_calsan";
     const canEditOrtu =
       isAdmin ||
       isOrtu ||
       isOrtuFallback ||
       baseRole.includes("cawalsan") ||
+      baseRole.includes("wawancara") ||
+      baseRole === "pewawancara" ||
       baseRole === "pewawancara_cawalsan";
     const canEditHafalan =
       isAdmin ||

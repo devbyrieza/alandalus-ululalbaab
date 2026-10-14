@@ -255,6 +255,8 @@ const isJenjangLangsungNonIL = (jenjang?: string | null): boolean => {
 
 const ROLE_TO_FORM_TYPES: Record<string, string[]> = {
   penguji: ['quran'],
+  penguji_quran: ['quran'],
+  pewawancara: ['wawancara', 'ortu'],
   pewawancara_calsan: ['wawancara'],
   pewawancara_cawalsan: ['ortu'],
   penguji_hafalan: ['quran'],

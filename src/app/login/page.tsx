@@ -266,6 +266,7 @@ export default function LoginPage() {
       } else if (
         [
           "penguji",
+          "pewawancara",
           "pewawancara_calsan",
           "pewawancara_cawalsan",
           "penguji_quran",
