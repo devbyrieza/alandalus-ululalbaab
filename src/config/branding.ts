@@ -14,8 +14,8 @@ export const BRANDING = {
   santri: "santri",
   schoolNetwork:
     process.env.NEXT_PUBLIC_SCHOOL_NETWORK || "Perpaduan Kurikulum Nasional dan Khas Andalus",
-  primaryColor: process.env.NEXT_PUBLIC_PRIMARY_COLOR || "#0369a1", // Default Blue Ulul Albaab
-  secondaryColor: process.env.NEXT_PUBLIC_SECONDARY_COLOR || "#f59e0b", // Default Amber Ulul Albaab
+  primaryColor: process.env.NEXT_PUBLIC_PRIMARY_COLOR || "#0977E6", // Electric Royal Blue Ulul Albaab
+  secondaryColor: process.env.NEXT_PUBLIC_SECONDARY_COLOR || "#EAB308", // Golden Yellow Ulul Albaab
   logoPath: process.env.NEXT_PUBLIC_LOGO_PATH || "/images/logo.png",
   faviconPath: process.env.NEXT_PUBLIC_FAVICON_PATH || "/favicon.ico",
   websiteUrl: process.env.NEXT_PUBLIC_APP_URL || process.env.NEXT_PUBLIC_WEBSITE_URL || "https://pesantren-ululalbaab.com",

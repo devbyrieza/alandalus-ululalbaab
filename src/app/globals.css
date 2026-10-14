@@ -34,7 +34,7 @@
   --color-blue-200: #b3d7ff;
   --color-blue-300: #7dbeff;
   --color-blue-400: #38bdf8;  /* Biru cerah lebih segar */
-  --color-blue-500: #0ea5e9;  /* Biru primary vibrant */
+  --color-blue-500: #0977E6;  /* Biru primary vibrant */
   --color-blue-600: #0284c7;  /* Biru medium strong */
   --color-blue-700: #0369a1;  /* Biru agak gelap */
   --color-blue-800: #075985;  /* Biru dalam */
@@ -47,7 +47,7 @@
   --color-amber-200: #fde68a;
   --color-amber-300: #fcd34d;  /* Kuning cerah */
   --color-amber-400: #fbbf24;  /* Amber vibrant   sama dengan pai-next */
-  --color-amber-500: #f59e0b;  /* Amber warm   sama pai-next */
+  --color-amber-500: #eab308;  /* Amber warm   sama pai-next */
   --color-amber-600: #d97706;  /* Amber medium */
   --color-amber-700: #b45309;
   --color-amber-800: #92400e;
@@ -254,10 +254,10 @@
 @layer base {
   :root {
   /* TIER PLATINUM: The Best of Both Worlds - Ulul Albaab */
-  --primary:        #0369a1; /* Blue 700 - Royal Blue */
+  --primary:        #0977E6; /* Electric Royal Blue Ulul Albaab */
   --primary-dark:   #075985; /* Blue 800 */
-  --primary-light:  #0ea5e9; /* Blue 500 - vibrant */
-  --secondary:      #f59e0b; /* Amber 500 */
+  --primary-light:  #38bdf8; /* Sky Blue vibrant */
+  --secondary:      #eab308; /* Canary Golden Yellow Ulul Albaab */
   --secondary-light: #fbbf24; /* Amber 400 */
   --secondary-pale: #fffbeb;
   --bg:             #f0f9ff; /* Sky-50 */
@@ -274,9 +274,9 @@
   --radius:         20px;
   
   /* ELEVATION: Glowing / Deep 3D Shadows */
-  --shadow-sm:      0 2px 8px rgba(3,105,161,.06), 0 1px 2px rgba(0,0,0,.03);
-  --shadow-md:      0 8px 24px rgba(3,105,161,.10), 0 2px 6px rgba(0,0,0,.04);
-  --shadow-lg:      0 16px 40px rgba(3,105,161,.12), 0 4px 12px rgba(0,0,0,.05);
+  --shadow-sm:      0 2px 8px rgba(9,119,230,.08), 0 1px 2px rgba(0,0,0,.03);
+  --shadow-md:      0 8px 24px rgba(9,119,230,.14), 0 2px 6px rgba(0,0,0,.04);
+  --shadow-lg:      0 16px 40px rgba(9,119,230,.18), 0 4px 12px rgba(0,0,0,.05);
   
   --font-sans:      'Plus Jakarta Sans', system-ui, sans-serif;
   --font-arabic:    'Amiri', serif;
