@@ -103,7 +103,7 @@ function ActivityCard({
         delay: index * 0.09,
         duration: 0.6,
         ease: [0.16, 1, 0.3, 1] }}
-      className="group flex flex-col bg-white rounded-lg border border-primary-100 shadow-premium-sm overflow-hidden transition-all duration-500 ease-spring hover:-translate-y-2 hover:shadow-premium-md hover:border-primary-200"
+      className="group flex flex-col bg-white/80 backdrop-blur-sm rounded-3xl border border-blue-100 shadow-xl shadow-blue-500/10 overflow-hidden transition-all duration-500 ease-spring hover:-translate-y-2 hover:shadow-premium-md hover:border-primary-200"
     >
       {/* Image */}
       <div className="relative h-52 overflow-hidden shrink-0 bg-primary-50">
@@ -167,11 +167,11 @@ function ExtraChip({ item, index }: { item: ExtraActivity; index: number }) {
         delay: index * 0.025,
         duration: 0.4,
         ease: [0.16, 1, 0.3, 1] }}
-      className="group flex flex-col items-center justify-center gap-3 p-5 md:p-6 bg-white rounded-lg border border-primary-100 hover:border-primary-200 hover:shadow-premium-sm hover:bg-surface-50 transition-all duration-400 cursor-default"
+      className="group flex flex-col items-center justify-center gap-3 p-5 md:p-6 bg-white/80 backdrop-blur-sm rounded-2xl border border-blue-100 hover:border-primary-200 hover:shadow-xl hover:shadow-blue-500/10 hover:bg-surface-50 transition-all duration-400 cursor-default"
     >
       <div
         className={[
-          "w-12 h-12 md:w-13 md:h-13 rounded-lg flex items-center justify-center shadow-xs",
+          "w-12 h-12 md:w-13 md:h-13 rounded-xl flex items-center justify-center shadow-xs",
           "transition-all duration-400 group-hover:scale-110",
           "ring-1 ring-transparent group-hover:ring-2",
           colorMap[item.color],
@@ -301,9 +301,9 @@ export default function ActivitiesSection() {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.1 + idx * 0.05 }}
-                  className="flex flex-col items-center gap-3 p-4 bg-white rounded-lg border border-primary-50 shadow-sm hover:border-primary-100 hover:shadow-sm transition-all group text-center"
+                  className="flex flex-col items-center gap-3 p-4 bg-white/80 backdrop-blur-sm rounded-2xl border border-blue-100 shadow-sm hover:border-primary-100 hover:shadow-md transition-all group text-center"
                 >
-                  <div className="w-10 h-10 rounded-lg bg-primary-50 flex items-center justify-center text-primary-600 group-hover:bg-primary-600 group-hover:text-white transition-colors">
+                  <div className="w-10 h-10 rounded-xl bg-primary-50 flex items-center justify-center text-primary-600 group-hover:bg-primary-600 group-hover:text-white transition-colors">
                     <Icon className="w-5 h-5" />
                   </div>
                   <span className="text-[11px] font-bold text-ink-950 uppercase tracking-wider">
@@ -339,7 +339,7 @@ export default function ActivitiesSection() {
 
                 <div className="shrink-0">
                   <Link href="/kegiatan">
-                    <button className="group relative inline-flex items-center gap-3 px-8 py-4 bg-secondary-500 text-primary-950 font-black text-sm uppercase tracking-widest rounded-lg overflow-hidden transition-all duration-300 hover:shadow-sm hover:scale-105 active:scale-95">
+                    <button className="group relative inline-flex items-center gap-3 px-8 py-4 bg-secondary-500 text-primary-950 font-black text-sm uppercase tracking-widest rounded-xl overflow-hidden transition-all duration-300 shadow-lg shadow-blue-500/20 hover:scale-105 active:scale-95">
                       <span className="relative z-10">Eksplorasi Seluruh Kegiatan</span>
                       <CalendarIcon className="relative z-10 w-5 h-5 transition-transform duration-300 group-hover:rotate-12" />
                       <div className="absolute inset-0 bg-secondary-400 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />

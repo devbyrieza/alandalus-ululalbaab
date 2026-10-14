@@ -234,9 +234,9 @@ export default function Navbar() {
                             <div className="mega-menu-content p-6 grid grid-cols-1 sm:grid-cols-2 gap-6 relative">
                               <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-white rotate-45 border-l border-t border-surface-100" />
                               
-                              <Link href="/program#mts" className="group/item p-4 rounded-lg hover:bg-primary-50 transition-colors border border-transparent hover:border-primary-100">
+                              <Link href="/program#mts" className="group/item p-3.5 rounded-2xl hover:bg-primary-50 transition-colors border border-transparent hover:border-primary-100">
                                 <div className="flex items-center gap-3 mb-2">
-                                  <div className="w-10 h-10 rounded-lg bg-primary-100 text-primary-700 flex items-center justify-center group-hover/item:scale-110 transition-transform whitespace-nowrap shrink-0">
+                                  <div className="w-9 h-9 rounded-xl bg-primary-100 text-primary-700 flex items-center justify-center group-hover/item:scale-110 transition-transform whitespace-nowrap shrink-0">
                                     <BookOpen className="w-5 h-5" />
                                   </div>
                                   <h4 className="font-bold text-ink-900 group-hover/item:text-primary-700">MTs (Setara SMP)</h4>
@@ -244,9 +244,9 @@ export default function Navbar() {
                                 <p className="text-sm text-ink-500">Program menengah pertama berfokus pada tahfidz dan adab dasar.</p>
                               </Link>
                               
-                              <Link href="/program#il" className="group/item p-4 rounded-lg hover:bg-primary-50 transition-colors border border-transparent hover:border-primary-100">
+                              <Link href="/program#il" className="group/item p-3.5 rounded-2xl hover:bg-primary-50 transition-colors border border-transparent hover:border-primary-100">
                                 <div className="flex items-center gap-3 mb-2">
-                                  <div className="w-10 h-10 rounded-lg bg-secondary-100 text-secondary-700 flex items-center justify-center group-hover/item:scale-110 transition-transform">
+                                  <div className="w-9 h-9 rounded-xl bg-secondary-100 text-secondary-700 flex items-center justify-center group-hover/item:scale-110 transition-transform">
                                     <Star className="w-5 h-5" />
                                   </div>
                                   <h4 className="font-bold text-ink-900 group-hover/item:text-primary-700">I'dad Lughowi (IL)</h4>
@@ -311,7 +311,7 @@ export default function Navbar() {
                   </Link>
                   <Link
                     href="/ppdb"
-                    className="btn-primary flex items-center gap-1.5 group text-xs xl:text-sm font-black px-3.5 xl:px-5 py-2 rounded-full shadow-md hover:scale-105 transition-all glow-ring-primary"
+                    className="btn-primary flex items-center gap-1.5 group text-xs xl:text-sm font-black px-3.5 xl:px-5 py-2 rounded-xl shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 hover:scale-105 transition-all glow-ring-primary"
                   >
                     <span>Daftar PPDB</span>
                     <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />

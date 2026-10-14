@@ -61,7 +61,7 @@ function TestimonialCard({
       viewport={{ once: true, margin: "-32px" }}
       transition={{ delay: idx * 0.08, duration: 0.6, ease: EASE }}
       whileHover={{ y: -4 }}
-      className="group relative bg-white flex flex-col h-full rounded-lg border border-primary-100 shadow-premium-sm hover:shadow-premium-md hover:border-primary-200 overflow-hidden transition-all duration-400"
+      className="group relative bg-white/80 backdrop-blur-sm flex flex-col h-full rounded-3xl border border-blue-100 shadow-xl shadow-blue-500/10 hover:shadow-2xl hover:shadow-blue-500/20 hover:border-primary-200 overflow-hidden transition-all duration-400"
     >
       <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-primary-50/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
@@ -92,7 +92,7 @@ function TestimonialCard({
 
         <div className="border-t border-primary-50 pt-5">
           <div className="flex items-center gap-3.5">
-            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary-600 to-primary-800 flex items-center justify-center shrink-0 text-white font-black text-sm shadow-xs group-hover:-rotate-3 transition-all duration-400">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-600 to-primary-800 flex items-center justify-center shrink-0 text-white font-black text-sm shadow-xs group-hover:-rotate-3 transition-all duration-400">
               {initial}
             </div>
             <div className="min-w-0 flex-1">
@@ -175,7 +175,7 @@ export default function TestimonialsSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.22, duration: 0.5, ease: EASE }}
-            className="inline-flex items-center gap-2 bg-primary-50 text-primary-800 px-4 py-2 rounded-lg border border-primary-100 font-bold text-[0.8125rem] shadow-xs"
+            className="inline-flex items-center gap-2 bg-primary-50 text-primary-800 px-4 py-2 rounded-full border border-blue-200 font-bold text-[0.8125rem] shadow-sm"
           >
             <span className="text-secondary-500">✦</span> Reputasi Global
             yang Teruji
