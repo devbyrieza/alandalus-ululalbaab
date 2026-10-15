@@ -203,46 +203,48 @@ export default function HeroSection() {
           </div>
 
           {/* ═════════ RIGHT COLUMN: PHOTO + FLOATING BADGES ═════════ */}
-          <div className={`lg:col-span-5 relative ${enter}`} style={delay(200)}>
+          {/* Yang dibatasi lebarnya, bukan tingginya: rasio 4:5 selalu terjaga sehingga foto tidak terdistorsi */}
+          <div
+            className={`relative w-full max-w-[26rem] sm:max-w-[28rem] mx-auto lg:mx-0 lg:max-w-[28.75rem] lg:col-span-5 lg:justify-self-end ${enter}`}
+            style={delay(200)}
+          >
             {/* Bingkai dekoratif di belakang foto */}
             <div
               className="absolute -inset-3 rounded-[2rem] bg-gradient-to-br from-blue-200/60 via-transparent to-amber-200/60 blur-sm"
               aria-hidden="true"
             />
 
-            <div className="relative rounded-3xl overflow-hidden shadow-2xl shadow-blue-600/30 border-4 border-white group bg-white/60 backdrop-blur-sm aspect-[4/5] sm:aspect-square lg:aspect-[4/5] max-h-[500px] xl:max-h-[560px]">
+            {/* Foto: rasio 4:5 di semua ukuran layar. Titik fokus crop diatur lewat kelas object-* pada <Image> */}
+            <div className="relative aspect-[4/5] rounded-3xl overflow-hidden border-4 border-white bg-white/60 shadow-2xl shadow-blue-600/30 group">
               <Image
                 src="/images/talent-santri.png"
                 alt="Santri Putra Pesantren Ulul Albaab"
                 fill
                 priority
-                sizes="(max-width: 768px) 100vw, 40vw"
-                className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 motion-reduce:transition-none"
+                sizes="(max-width: 1024px) 90vw, 460px"
+                className="object-cover object-top transform group-hover:scale-105 transition-transform duration-700 motion-reduce:transition-none"
               />
+            </div>
 
-              {/* Gradasi tipis di bawah agar badge tetap terbaca di atas foto */}
-              <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-slate-900/30 to-transparent pointer-events-none" aria-hidden="true" />
-
-              {/* Top-Left Floating Badge */}
-              <div className="absolute top-4 left-4 bg-white/85 backdrop-blur-sm rounded-2xl p-3 border border-slate-200 shadow-xl flex items-center gap-3">
-                <div className="icon-box icon-box-secondary w-10 h-10">
-                  <Award className="w-5 h-5" aria-hidden="true" />
-                </div>
-                <div>
-                  <p className="text-xs font-extrabold text-slate-900">Standar Mutu</p>
-                  <p className="text-[10px] text-slate-500 font-semibold">Al Andalus IIBS</p>
-                </div>
+            {/* Badge kiri-atas: menjorok sedikit keluar bingkai agar wajah di foto tidak tertutup */}
+            <div className="absolute top-6 sm:top-8 -left-2 sm:-left-4 z-10 bg-white/90 backdrop-blur-md rounded-2xl p-3 pr-4 border border-slate-200 shadow-xl flex items-center gap-3">
+              <div className="icon-box icon-box-secondary w-10 h-10">
+                <Award className="w-5 h-5" aria-hidden="true" />
               </div>
+              <div>
+                <p className="text-xs font-extrabold text-slate-900">Standar Mutu</p>
+                <p className="text-[10px] text-slate-500 font-semibold">Al Andalus IIBS</p>
+              </div>
+            </div>
 
-              {/* Bottom-Right Floating Badge */}
-              <div className="absolute bottom-4 right-4 bg-white/85 backdrop-blur-sm rounded-2xl p-3 border border-slate-200 shadow-xl flex items-center gap-3">
-                <div className="icon-box icon-box-primary w-10 h-10">
-                  <BookOpen className="w-5 h-5" aria-hidden="true" />
-                </div>
-                <div>
-                  <p className="text-xs font-extrabold text-slate-900">Tahfidz Mutqin</p>
-                  <p className="text-[10px] text-slate-500 font-semibold">Tajwid &amp; Bersanad</p>
-                </div>
+            {/* Badge kanan-bawah: menjorok keluar bingkai, tidak menimpa subjek foto */}
+            <div className="absolute bottom-6 sm:bottom-8 -right-2 sm:-right-4 z-10 bg-white/90 backdrop-blur-md rounded-2xl p-3 pr-4 border border-slate-200 shadow-xl flex items-center gap-3">
+              <div className="icon-box icon-box-primary w-10 h-10">
+                <BookOpen className="w-5 h-5" aria-hidden="true" />
+              </div>
+              <div>
+                <p className="text-xs font-extrabold text-slate-900">Tahfidz Mutqin</p>
+                <p className="text-[10px] text-slate-500 font-semibold">Tajwid &amp; Bersanad</p>
               </div>
             </div>
           </div>

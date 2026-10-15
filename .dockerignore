@@ -1,5 +1,15 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+# git & repository metadata (menghemat 1.1+ GB context build)
+.git
+.github
+*.md
+.vscode
+.idea
+*.ps1
+*.sh
+*.bat
+
 # dependencies
 /node_modules
 /.pnp
@@ -35,6 +45,7 @@ ts-debug.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# Docker
+# Docker & local storage
 postgres_data
 storage_data
+Bahan*
