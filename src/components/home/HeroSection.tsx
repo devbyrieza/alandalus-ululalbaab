@@ -255,39 +255,54 @@ export default function HeroSection() {
 
         {/* ═════════ 3 FEATURE CARDS ═════════ */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6 mt-12 lg:mt-16">
-          <div className={`app-card p-6 hover:border-secondary ${enter}`} style={delay(460)}>
-            <div className="icon-box icon-box-secondary w-12 h-12 mb-4">
-              <BookOpen className="w-6 h-6" aria-hidden="true" />
+          <div className={`app-card p-5 sm:p-6 rounded-3xl hover:border-secondary transition-all duration-300 ${enter}`} style={delay(460)}>
+            <div className="flex items-center gap-3.5 sm:gap-4 mb-4">
+              <div className="icon-box icon-box-secondary w-11 h-11 sm:w-12 sm:h-12 shrink-0 rounded-2xl shadow-xs">
+                <BookOpen className="w-5 h-5 sm:w-6 sm:h-6" aria-hidden="true" />
+              </div>
+              <span className="text-xs font-extrabold text-primary uppercase tracking-wider">
+                Fokus Utama
+              </span>
             </div>
-            <span className="text-xs font-extrabold text-primary uppercase tracking-wider">Fokus Utama</span>
-            <h3 className="text-xl sm:text-2xl font-extrabold text-slate-900 mt-1">Bahasa Arab &amp; Syar&apos;i</h3>
-            <p className="text-xs text-slate-500 mt-1.5 leading-relaxed">
-              Penguasaan bahasa Arab intensif harian, tahfidz Al-Qur&apos;an mutqin, dan pendalaman kitab turots sesuai
-              bimbingan Sunnah.
+            <h3 className="text-lg sm:text-xl xl:text-2xl font-extrabold text-slate-900 mt-1 leading-snug">
+              Bahasa Arab &amp; Syar&apos;i
+            </h3>
+            <p className="text-xs sm:text-sm text-slate-500 mt-2 leading-relaxed">
+              Penguasaan bahasa Arab intensif harian, tahfidz Al-Qur&apos;an mutqin, dan pendalaman kitab turots sesuai bimbingan Sunnah.
             </p>
           </div>
 
-          <div className={`app-card p-6 hover:border-primary/40 ${enter}`} style={delay(540)}>
-            <div className="icon-box icon-box-primary w-12 h-12 mb-4">
-              <GraduationCap className="w-6 h-6" aria-hidden="true" />
+          <div className={`app-card p-5 sm:p-6 rounded-3xl hover:border-primary/40 transition-all duration-300 ${enter}`} style={delay(540)}>
+            <div className="flex items-center gap-3.5 sm:gap-4 mb-4">
+              <div className="icon-box icon-box-primary w-11 h-11 sm:w-12 sm:h-12 shrink-0 rounded-2xl shadow-xs">
+                <GraduationCap className="w-5 h-5 sm:w-6 sm:h-6" aria-hidden="true" />
+              </div>
+              <span className="text-xs font-extrabold text-primary uppercase tracking-wider">
+                Karakter &amp; Kemandirian
+              </span>
             </div>
-            <span className="text-xs font-extrabold text-primary uppercase tracking-wider">Karakter &amp; Kemandirian</span>
-            <h3 className="text-xl sm:text-2xl font-extrabold text-slate-900 mt-1">Sains &amp; Leadership</h3>
-            <p className="text-xs text-slate-500 mt-1.5 leading-relaxed">
-              Pelajaran umum dan sains tetap pintar berdaya saing, berpadu dengan penempaan jiwa kepemimpinan dan
-              Islamic Entrepreneurship.
+            <h3 className="text-lg sm:text-xl xl:text-2xl font-extrabold text-slate-900 mt-1 leading-snug">
+              Sains &amp; Leadership
+            </h3>
+            <p className="text-xs sm:text-sm text-slate-500 mt-2 leading-relaxed">
+              Pelajaran umum dan sains tetap pintar berdaya saing, berpadu dengan penempaan jiwa kepemimpinan dan Islamic Entrepreneurship.
             </p>
           </div>
 
-          <div className={`app-card p-6 hover:border-emerald-300 ${enter}`} style={delay(620)}>
-            <div className="icon-box w-12 h-12 mb-4 bg-emerald-50 text-emerald-600 border border-emerald-200">
-              <ShieldCheck className="w-6 h-6" aria-hidden="true" />
+          <div className={`app-card p-5 sm:p-6 rounded-3xl hover:border-emerald-300 transition-all duration-300 ${enter}`} style={delay(620)}>
+            <div className="flex items-center gap-3.5 sm:gap-4 mb-4">
+              <div className="icon-box w-11 h-11 sm:w-12 sm:h-12 shrink-0 rounded-2xl bg-emerald-50 text-emerald-600 border border-emerald-200 shadow-xs">
+                <ShieldCheck className="w-5 h-5 sm:w-6 sm:h-6" aria-hidden="true" />
+              </div>
+              <span className="text-xs font-extrabold text-emerald-600 uppercase tracking-wider">
+                Pola Pengasuhan
+              </span>
             </div>
-            <span className="text-xs font-extrabold text-emerald-600 uppercase tracking-wider">Pola Pengasuhan</span>
-            <h3 className="text-xl sm:text-2xl font-extrabold text-slate-900 mt-1">Mendidik Tanpa Luka</h3>
-            <p className="text-xs text-slate-500 mt-1.5 leading-relaxed">
-              Keteladanan asatidz 24 jam tanpa kekerasan fisik, lingkungan aman terlindungi dari rokok, perundungan, dan
-              penyimpangan.
+            <h3 className="text-lg sm:text-xl xl:text-2xl font-extrabold text-slate-900 mt-1 leading-snug">
+              Mendidik Tanpa Luka
+            </h3>
+            <p className="text-xs sm:text-sm text-slate-500 mt-2 leading-relaxed">
+              Keteladanan asatidz 24 jam tanpa kekerasan fisik, lingkungan aman terlindungi dari rokok, perundungan, dan penyimpangan.
             </p>
           </div>
         </div>
