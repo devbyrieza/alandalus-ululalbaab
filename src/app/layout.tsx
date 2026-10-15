@@ -1,11 +1,7 @@
-﻿import { CheckCircle2 } from "lucide-react";
-import type { Metadata } from "next";
+﻿import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
-// <CheckCircle2 size={20} className="inline-block mr-2" /> IMPORT NAVBAR & FOOTER YANG SUDAH ADA
-import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
 import LayoutWrapper from "@/components/layout/LayoutWrapper";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import SmoothScrollProvider from "@/components/providers/SmoothScrollProvider";
@@ -14,10 +10,9 @@ import ProgressBarProvider from "@/components/providers/ProgressBarProvider";
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // FONT CONFIGURATIONS - Harisenin & Watzap Style
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-import { Plus_Jakarta_Sans, Inter } from "next/font/google";
+import { Plus_Jakarta_Sans, Inter, Amiri } from "next/font/google";
 import { BRANDING } from "@/config/branding";
 import SplashScreen from "@/components/ui/SplashScreen";
-
 
 const plusJakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -29,6 +24,23 @@ const inter = Inter({
   display: "swap",
   variable: "--font-inter" });
 
+// Font Arab (dipakai lewat --font-arabic di globals.css)
+const amiri = Amiri({
+  subsets: ["arabic", "latin"],
+  weight: ["400", "700"],
+  display: "swap",
+  variable: "--font-amiri" });
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// VIEWPORT (menggantikan <meta name="viewport"> manual)
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: BRANDING.primaryColor,
+  colorScheme: "light" };
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // METADATA CONFIGURATION
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 export const metadata: Metadata = {
@@ -41,7 +53,7 @@ export const metadata: Metadata = {
   keywords: [
     BRANDING.schoolName,
     "pesantren sukabumi",
-    "ppdb 2026",
+    "ppdb 2027",
     "pendaftaran santri",
     "pesantren salafi",
     "tahfidz quran",
@@ -96,8 +108,11 @@ export const metadata: Metadata = {
     images: ["/twitter-image.jpg"],
     creator: "@alandalus_ppdb" },
 
-  verification: {
-    google: "your-google-verification-code" },
+  // Kode verifikasi Google Search Console: isi lewat env, jangan pakai placeholder.
+  // NEXT_PUBLIC_GOOGLE_VERIFICATION=xxxxxxxx
+  verification: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION
+    ? { google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION }
+    : undefined,
 
   alternates: {
     canonical: BRANDING.websiteUrl,
@@ -108,7 +123,8 @@ export const metadata: Metadata = {
   classification: "Islamic Education" };
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// ROOT LAYOUT COMPONENT (<CheckCircle2 size={20} className="inline-block mr-2" /> DENGAN NAVBAR & FOOTER)
+// ROOT LAYOUT COMPONENT
+// Navbar & Footer dirender di dalam LayoutWrapper
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 export default function RootLayout({
   children }: Readonly<{
@@ -118,8 +134,6 @@ export default function RootLayout({
     <html lang="id" translate="no" className="notranslate" data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
         <meta name="google" content="notranslate" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content={BRANDING.primaryColor} />
         <meta
           name="msapplication-navbutton-color"
           content={BRANDING.primaryColor}
@@ -128,7 +142,6 @@ export default function RootLayout({
           name="apple-mobile-web-app-status-bar-style"
           content="black-translucent"
         />
-        <meta name="color-scheme" content="light only" />
         <style
           dangerouslySetInnerHTML={{
             __html: `
@@ -140,26 +153,23 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${plusJakarta.variable} ${inter.variable} font-sans antialiased bg-white text-ink-900 overflow-x-hidden transition-colors duration-500`}
+        className={`${plusJakarta.variable} ${inter.variable} ${amiri.variable} font-sans antialiased bg-white text-ink-900 overflow-x-clip transition-colors duration-500`}
         suppressHydrationWarning
       >
         <SplashScreen />
         <ProgressBarProvider>
-        <SmoothScrollProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="light"
-            enableSystem={false}
-            disableTransitionOnChange
-          >
-            <LayoutWrapper>{children}</LayoutWrapper>
-          </ThemeProvider>
-        </SmoothScrollProvider>
+          <SmoothScrollProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="light"
+              enableSystem={false}
+              disableTransitionOnChange
+            >
+              <LayoutWrapper>{children}</LayoutWrapper>
+            </ThemeProvider>
+          </SmoothScrollProvider>
         </ProgressBarProvider>
       </body>
     </html>
   );
 }
-
-
-
