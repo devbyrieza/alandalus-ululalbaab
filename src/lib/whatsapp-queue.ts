@@ -1,4 +1,4 @@
-﻿/**
+/**
  * WhatsApp Queue Service — 6-Layer Anti-BAN Protection
  *
  * Layer 1: Database flag check (anti-duplicate)
@@ -84,26 +84,262 @@ async function isDuplicate(
     );
 
     if (isRealPendaftar) {
+        // Check Pendaftar flag columns for persistent flags
         const flagMap: Partial<Record<string, string>> = {
             jadwal_belum: "notif_belum_jadwal_terkirim",
             jadwal_tersedia: "notif_jadwal_tersedia_terkirim",
             jadwal_langsung_tersedia: "notif_jadwal_tersedia_terkirim",
-            hasil_tes: "notif_hasil_tes_terkirim"
-        };
+            hasil_tes: "notif_hasil_tes_terkirim" };
 
         const flagColumn = flagMap[jenisNotif];
         if (flagColumn) {
-            const isRealPendaftar = !!(
+            const pendaftar = await prisma.pendaftar.findUnique({
+                where: { id: pendaftarId! },
+                select: {
+                    notif_belum_jadwal_terkirim: true,
+                    notif_jadwal_tersedia_terkirim: true,
+                    notif_hasil_tes_terkirim: true } });
+
+            if (pendaftar) {
+                const flagValue =
+                    pendaftar[flagColumn as keyof typeof pendaftar] as boolean;
+                if (flagValue) {
+                    console.log(
+                        `🚫 [Layer 1] Duplicate blocked: ${jenisNotif} for ${pendaftarId} (flag already true)`
+                    );
+                    return true;
+                }
+            }
+        }
+    }
+
+    // For non-flag types (konfirmasi_jadwal, reminder_h1), check WhatsappLog
+    // Added phone check & 48h limit to allow multiple examiners per student and re-tests
+    const windowHours = isRealPendaftar ? 48 : 0.5;
+    const recentWindow = new Date(Date.now() - windowHours * 60 * 60 * 1000);
+
+    const existingLog = await prisma.whatsappLog.findFirst({
+        where: {
+            ...(isRealPendaftar ? { pendaftar_id: pendaftarId } : {}),
+            phone: phone, // Check phone too!
+            jenis_notif: jenisNotif,
+            status: { in: ["pending", "processing", "sent"] },
+            created_at: { gte: recentWindow }
+        } });
+
+    if (existingLog) {
+        console.log(
+            `🚫 [Layer 1] Duplicate blocked: ${jenisNotif} for ${phone} (existing log: ${existingLog.status})`
+        );
+        return true;
+    }
+
+    return false;
+}
+
+// ============================================================================
+// LAYER 3+4: Rate Limiting & Cooldown Check
+// ============================================================================
+
+/**
+ * Check all rate limits before sending.
+ * Returns { canSend, reason, waitMs }
+ */
+async function checkRateLimits(): Promise<{
+    canSend: boolean;
+    reason?: string;
+    waitMs?: number;
+}> {
+    const now = new Date();
+
+    // Ensure cooldown record exists
+    let cooldown = await prisma.whatsappCooldown.findUnique({
+        where: { id: "global" } });
+
+    if (!cooldown) {
+        cooldown = await prisma.whatsappCooldown.create({
+            data: {
+                id: "global",
+                sent_count_10m: 0,
+                hourly_count: 0,
+                hourly_reset: now } });
+    }
+
+    // Layer 4: Check active cooldown
+    if (cooldown.cooldown_until && cooldown.cooldown_until > now) {
+        const waitMs = cooldown.cooldown_until.getTime() - now.getTime();
+        console.log(
+            `⏸️ [Layer 4] Global cooldown active, ${Math.round(waitMs / 1000)}s remaining`
+        );
+        return {
+            canSend: false,
+            reason: `Cooldown aktif, tunggu ${Math.round(waitMs / 60000)} menit`,
+            waitMs };
+    }
+
+    // Layer 3: Check hourly limit
+    const hourlyReset = cooldown.hourly_reset || now;
+    const hoursSinceReset =
+        (now.getTime() - hourlyReset.getTime()) / (1000 * 60 * 60);
+
+    if (hoursSinceReset >= 1) {
+        // Reset hourly counter
+        await prisma.whatsappCooldown.update({
+            where: { id: "global" },
+            data: { hourly_count: 0, hourly_reset: now } });
+    } else if (cooldown.hourly_count >= MAX_MESSAGES_PER_HOUR) {
+        const waitMs = (1 - hoursSinceReset) * 60 * 60 * 1000;
+        console.log(
+            `⏸️ [Layer 3] Hourly limit reached (${cooldown.hourly_count}/${MAX_MESSAGES_PER_HOUR})`
+        );
+        return {
+            canSend: false,
+            reason: `Limit ${MAX_MESSAGES_PER_HOUR} pesan/jam tercapai`,
+            waitMs };
+    }
+
+    // Layer 4: Check 10-minute window
+    const tenMinAgo = new Date(now.getTime() - 10 * 60 * 1000);
+    const recentSentCount = await prisma.whatsappLog.count({
+        where: {
+            status: "sent",
+            sent_at: { gte: tenMinAgo } } });
+
+    if (recentSentCount >= MAX_MESSAGES_PER_10MIN) {
+        // Activate cooldown
+        const cooldownUntil = new Date(
+            now.getTime() + COOLDOWN_MINUTES * 60 * 1000
+        );
+        await prisma.whatsappCooldown.update({
+            where: { id: "global" },
+            data: {
+                cooldown_until: cooldownUntil,
+                sent_count_10m: recentSentCount } });
+        console.log(
+            `⏸️ [Layer 4] 10-minute threshold hit (${recentSentCount}/${MAX_MESSAGES_PER_10MIN}), cooldown until ${cooldownUntil.toISOString()}`
+        );
+        return {
+            canSend: false,
+            reason: `${MAX_MESSAGES_PER_10MIN} pesan dalam 10 menit, cooldown ${COOLDOWN_MINUTES} menit`,
+            waitMs: COOLDOWN_MINUTES * 60 * 1000 };
+    }
+
+    // Layer 3: Check minimum delay between messages
+    if (cooldown.last_sent_at) {
+        const timeSinceLastMs = now.getTime() - cooldown.last_sent_at.getTime();
+        if (timeSinceLastMs < MIN_DELAY_MS) {
+            return {
+                canSend: false,
+                reason: "Jeda minimal belum tercapai",
+                waitMs: MIN_DELAY_MS - timeSinceLastMs };
+        }
+    }
+
+    return { canSend: true };
+}
+
+// ============================================================================
+// LAYER 3: Random Jitter Delay
+// ============================================================================
+
+function getRandomDelay(): number {
+    return Math.floor(
+        Math.random() * (MAX_DELAY_MS - MIN_DELAY_MS) + MIN_DELAY_MS
+    );
+}
+
+async function waitRandomDelay(): Promise<void> {
+    const delay = getRandomDelay();
+    console.log(`⏳ [Layer 3] Random jitter delay: ${delay}ms`);
+    await new Promise((resolve) => setTimeout(resolve, delay));
+}
+
+// ============================================================================
+// LAYER 5: Check if number is problematic
+// ============================================================================
+
+async function isNumberBlocked(phone: string): Promise<boolean> {
+    const failedCount = await prisma.whatsappLog.count({
+        where: {
+            phone,
+            status: "failed",
+            created_at: { gte: new Date(Date.now() - 24 * 60 * 60 * 1000) }, // Last 24h
+        } });
+
+    if (failedCount >= MAX_RETRY_ATTEMPTS) {
+        console.log(
+            `🚫 [Layer 5] Number ${phone} blocked: ${failedCount} failures in 24h`
+        );
+        return true;
+    }
+
+    return false;
+}
+
+// ============================================================================
+// MAIN: Enqueue WhatsApp Message
+// ============================================================================
+
+let isFlushing = false;
+
+export async function autoFlushWhatsappQueue(): Promise<void> {
+    if (isFlushing) {
+        console.log("🔄 [Queue] autoFlush already running, skipping parallel execution");
+        return;
+    }
+
+    isFlushing = true;
+    try {
+        let count = 0;
+        while (count < 50) {
+            const result = await processWhatsappQueue();
+            if (!result.processed) {
+                if (result.waitMs && result.waitMs <= 5000) {
+                    await new Promise(resolve => setTimeout(resolve, result.waitMs));
+                    continue;
+                }
+                break;
+            }
+            if (result.status === "blocked" || result.reason?.includes("Limit") || result.reason?.includes("Cooldown")) {
+                break;
+            }
+            count++;
+            await new Promise((resolve) => setTimeout(resolve, 500));
+        }
+        console.log(`✅ [Queue] autoFlush finished. Processed ${count} messages.`);
+    } catch (err) {
+        console.error("❌ [Queue] autoFlush error:", err);
+    } finally {
+        isFlushing = false;
+    }
+}
+
+/**
+ * Enqueue a WhatsApp notification with all Layer 1 checks.
+ * Does NOT send immediately — the cron worker will process the queue.
+ */
+export async function enqueueWhatsapp(
+    params: EnqueueParams
+): Promise<{ queued: boolean; reason?: string; logId?: string }> {
+    // In Vercel serverless environment without active Cron, background queues get killed.
+    // We force sendNow to true by default to ensure ALL notifications actually send.
+    const sendNow = params.sendNow !== undefined ? params.sendNow : true;
+    
+    const { pendaftarId, phone, jenisNotif, messageContent, scheduledAt, force } =
+        params;
+
+    const isRealPendaftar = !!(
         pendaftarId &&
         /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(pendaftarId)
     );
 
+    // Verify that the pendaftar is active and not soft-deleted (only if a real pendaftar ID is provided)
     if (isRealPendaftar) {
         const pendaftar = await prisma.pendaftar.findUnique({
             where: { id: pendaftarId! },
-            select: { deleted_at: true }
-        });
+            select: { deleted_at: true } });
         if (!pendaftar || pendaftar.deleted_at !== null) {
+            console.log(`🚫 [Enqueue] Blocked: pendaftar ${pendaftarId} is deleted or not found.`);
             return { queued: false, reason: "Pendaftar telah dihapus (soft-deleted atau tidak ditemukan)" };
         }
     }
@@ -133,7 +369,7 @@ async function isDuplicate(
             scheduled_at: scheduledAt || new Date() } });
 
     console.log(
-        `📥 [Enqueue] ${jenisNotif} for ${pendaftarId} queued as ${log.id}`
+        `📥 [Enqueue] ${jenisNotif} for ${pendaftarId || phone} queued as ${log.id}`
     );
 
     // Trigger auto-flush in the background using Next.js after() to survive Vercel serverless freeze
