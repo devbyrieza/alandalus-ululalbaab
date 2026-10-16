@@ -51,8 +51,8 @@ export async function GET(request: NextRequest) {
 
     const skip = (page - 1) * limit;
 
-    // Build filter
-    const baseWhere = (await getAdminWhereClause(tahunAjaran || "all")) as any;
+    // Build filter - default to active tahun ajaran if none specified
+    const baseWhere = (await getAdminWhereClause(tahunAjaran || undefined)) as any;
     const where: Prisma.PendaftarWhereInput = {
       ...baseWhere,
     };
@@ -151,7 +151,11 @@ export async function GET(request: NextRequest) {
     if (jenisKelamin) {
       where.jenis_kelamin = { contains: jenisKelamin, mode: "insensitive" };
     }
-    if (tahunAjaran && tahunAjaran !== "all") where.tahun_ajaran_id = tahunAjaran;
+    if (tahunAjaran === "all") {
+      delete where.tahun_ajaran_id;
+    } else if (tahunAjaran) {
+      where.tahun_ajaran_id = tahunAjaran;
+    }
     if (provinsi) where.provinsi = provinsi;
     if (kabupaten) where.kabupaten = kabupaten;
     if (kecamatan) where.kecamatan = kecamatan;
