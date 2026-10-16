@@ -1255,6 +1255,9 @@ export function buildMessageCombinedFinal(
     status: 'DITERIMA' | 'CADANGAN' | 'DITOLAK',
     jenjang: string
 ): string {
+    const santriWord = BRANDING.santri || 'santri';
+    const shalehWord = BRANDING.shaleh || 'shaleh';
+
     if (status === 'DITERIMA') {
         return `*PENGUMUMAN KELULUSAN SELEKSI*
 
@@ -1262,34 +1265,34 @@ export function buildMessageCombinedFinal(
 
 Assalamu'alaikum Abu/Ummu,
 
-Alhamdulillah, rangkaian Seleksi Ananda *\${nama}* telah selesai.
+Alhamdulillah, rangkaian Seleksi Ananda *${nama}* telah selesai.
 Berdasarkan hasil evaluasi, Ananda dinyatakan:
 
-*DITERIMA* di jenjang \${jenjang}
+*DITERIMA* di jenjang ${jenjang}
 
-Semoga Allah ﷻ menjadikan Ananda santri yang *shaleh, berilmu, berakhlak mulia, dan bermanfaat bagi umat*.
+Semoga Allah ﷻ menjadikan Ananda ${santriWord} yang *${shalehWord}, berilmu, berakhlak mulia, dan bermanfaat bagi umat*.
 
 📝 *Langkah Selanjutnya:*
 Silakan login ke dashboard untuk melakukan *Daftar Ulang* dan melengkapi administrasi.
 Batas waktu daftar ulang adalah 7 hari setelah pengumuman ini.
 
-Dashboard: \${BRANDING.websiteUrl}/dashboard/pendaftar/daftar-ulang
+Dashboard: ${BRANDING.websiteUrl}/dashboard/pendaftar/daftar-ulang
 
 Jazakumullahu khairan
 
 ---
-*Panitia PPDB \${BRANDING.schoolName}*`;
+*Panitia PPDB ${BRANDING.schoolName}*`;
     }
 
-    let msg = `✅ *Hasil Seleksi PPDB \${BRANDING.schoolName}*
+    let msg = `✅ *Hasil Seleksi PPDB ${BRANDING.schoolName}*
 
 Assalamu'alaikum Abu/Ummu,
 
-Alhamdulillah, rangkaian Seleksi Ananda *\${nama}* telah selesai dan hasil evaluasi telah diputuskan.
+Alhamdulillah, rangkaian Seleksi Ananda *${nama}* telah selesai dan hasil evaluasi telah diputuskan.
 
 📢 *HASIL SELEKSI:*
-Status: *\${status}*
-Jenjang: \${jenjang}
+Status: *${status}*
+Jenjang: ${jenjang}
 
 `;
 
@@ -1297,7 +1300,7 @@ Jenjang: \${jenjang}
         msg += `📝 *Informasi:*
 Ananda berada dalam daftar cadangan. Kami akan menghubungi Abu/Ummu jika ada kuota yang tersedia di kemudian hari. Terus pantau dashboard.
 
-Dashboard: \${BRANDING.websiteUrl}/dashboard/pendaftar/pengumuman`;
+Dashboard: ${BRANDING.websiteUrl}/dashboard/pendaftar/pengumuman`;
     } else {
         msg += `Kami mengapresiasi semangat dan usaha Ananda. Semoga dimudahkan jalannya untuk menuntut ilmu di manapun berada.`;
     }
@@ -1307,7 +1310,7 @@ Dashboard: \${BRANDING.websiteUrl}/dashboard/pendaftar/pengumuman`;
 Jazakumullahu khairan
 
 ---
-*Panitia PPDB \${BRANDING.schoolName}*`;
+*Panitia PPDB ${BRANDING.schoolName}*`;
 
     return msg;
 }
