@@ -8,7 +8,7 @@ export const BRANDING = {
   schoolTagline:
     process.env.NEXT_PUBLIC_SCHOOL_TAGLINE ||
     "Kaderisasi Ummat Rabbani, Cendekia, dan Mandiri",
-  subtitle: "Pesantren Islam Internasional Khusus Putra",
+  subtitle: "Pesantren Islam Khusus Putra",
   gender: "Putra",
   shaleh: "shaleh",
   santri: "santri",

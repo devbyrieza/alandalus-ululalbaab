@@ -106,7 +106,7 @@ export default function Footer() {
                   className="text-[10px] font-bold uppercase tracking-widest mt-1.5"
                   style={{ color: "var(--color-secondary-400)" }}
                 >
-                  Pesantren Modern International
+                  Pesantren Islam Khusus Putra
                 </p>
               </div>
             </Link>

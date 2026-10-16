@@ -96,7 +96,7 @@ export default function HeroSection() {
             >
               <span className="w-2 h-2 rounded-full bg-primary motion-safe:animate-pulse" />
               <span className="text-xs font-extrabold uppercase tracking-wider text-primary">
-                Portal Resmi PPDB Tahun Ajaran {BRANDING.academicYear}
+                Portal Resmi PPDB TA {BRANDING.academicYear} • KHUSUS PUTRA
               </span>
             </div>
 
@@ -215,6 +215,13 @@ export default function HeroSection() {
 
             {/* Foto: rasio 4:5 di semua ukuran layar. Titik fokus crop diatur lewat kelas object-* pada <Image> */}
             <div className="relative aspect-[4/5] rounded-3xl overflow-hidden border-4 border-white bg-white/60 shadow-2xl shadow-blue-600/30 group">
+              {/* Badge Khusus Putra di dalam bingkai foto */}
+              <div className="absolute top-4 left-4 z-10 bg-white/90 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-blue-200 shadow-md flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-blue-600 animate-pulse" />
+                <span className="text-[11px] font-black tracking-wider text-blue-900 uppercase">
+                  Khusus Putra
+                </span>
+              </div>
               <Image
                 src="/images/talent-santri.png"
                 alt="Santri Putra Pesantren Ulul Albaab"

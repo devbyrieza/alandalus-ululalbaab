@@ -295,9 +295,14 @@ export default function Navbar() {
 
               <div className="min-w-0 xl:shrink-0">
                 {/* <span>, bukan <h1>: judul utama halaman milik konten halaman */}
-                <span className="block truncate text-sm sm:text-base font-black leading-tight tracking-tight text-[var(--color-ink-900)] xl:whitespace-normal xl:line-clamp-2 xl:max-w-[10rem] xl:leading-[1.15]">
-                  {BRANDING.schoolShortName}
-                </span>
+                <div className="flex items-center gap-1.5">
+                  <span className="block truncate text-sm sm:text-base font-black leading-tight tracking-tight text-[var(--color-ink-900)] xl:whitespace-normal xl:line-clamp-2 xl:max-w-[10rem] xl:leading-[1.15]">
+                    {BRANDING.schoolShortName}
+                  </span>
+                  <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[9.5px] font-black tracking-wide bg-blue-100 text-blue-800 border border-blue-200 shrink-0 shadow-xs">
+                    KHUSUS PUTRA
+                  </span>
+                </div>
                 <span className="block truncate max-[359px]:hidden xl:max-w-[10rem] text-[8.5px] sm:text-[9.5px] font-bold text-[var(--color-ink-400)] uppercase tracking-wider mt-0.5 leading-none">
                   {MANAGED_BY}
                 </span>
@@ -548,9 +553,14 @@ export default function Navbar() {
                   />
                 </div>
                 <div className="min-w-0">
-                  <p className="text-sm font-black text-[var(--color-ink-900)] leading-none">
-                    {BRANDING.schoolShortName}
-                  </p>
+                  <div className="flex items-center gap-2">
+                    <p className="text-sm font-black text-[var(--color-ink-900)] leading-none">
+                      {BRANDING.schoolShortName}
+                    </p>
+                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[9px] font-black tracking-wide bg-blue-100 text-blue-800 border border-blue-200 shrink-0">
+                      KHUSUS PUTRA
+                    </span>
+                  </div>
                   <p className="text-[10px] sm:text-xs text-black/50 truncate mt-1">
                     {MANAGED_BY}
                   </p>

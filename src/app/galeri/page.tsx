@@ -164,7 +164,7 @@ const ALBUMS: Album[] = [
     desc: "Pemandangan lanskap kawasan Pesantren Ulul Albaab dari sudut udara (drone).",
     cover: "/images/drone-campus.webp",
     items: [
-      { src: "/images/drone-campus.webp", label: "Panorama Lanskap Udara Pesantren Islam Internasional Al-Andalus Ulul Albaab" },
+      { src: "/images/drone-campus.webp", label: "Panorama Lanskap Udara Pesantren Ulul Albaab" },
       { src: "/images/view-drone.png", label: "View Drone Terbaru - Kampus Ulul Albaab Dari Atas" },
       { src: "/images/view-puas.png", label: "Pemandangan Kawasan PUAS - Aerial View" },
     ],

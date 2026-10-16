@@ -292,7 +292,7 @@ export default function ProgramPage() {
             Konsultasi &amp; Pendaftaran Santri Baru
           </h2>
           <p className="text-primary-200/80 max-w-xl mx-auto mb-8 text-base md:text-lg">
-            Daftarkan putra-putri Anda sekarang untuk Tahun Ajaran 2027/2028 di Pesantren Islam Internasional Al-Andalus Ulul Albaab.
+            Daftarkan putra-putri Anda sekarang untuk Tahun Ajaran 2027/2028 di Pesantren Ulul Albaab.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link

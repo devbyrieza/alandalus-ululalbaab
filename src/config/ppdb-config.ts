@@ -6,7 +6,7 @@
 export const PPDB_CONFIG = {
   // 🏫 INFO PESANTREN
   pesantren: {
-    nama: "Pesantren Islam Internasional Al-Andalus Ulul Albaab",
+    nama: "Pesantren Islam Al-Andalus Ulul Albaab",
     singkatan: "Al Andalus Ulul Albaab",
     legal: "Pesantren Ulul Albaab Sukabumi Managed by Al Andalus IIBS",
     alamat:

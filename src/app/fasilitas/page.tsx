@@ -116,7 +116,7 @@ export default function FasilitasPage() {
     
     const message = `Assalamu'alaikum Warahmatullahi Wabarakatuh.
 
-Saya ingin mengajukan Jadwal Kunjungan ke Pesantren Islam Internasional Al-Andalus Ulul Albaab.
+Saya ingin mengajukan Jadwal Kunjungan ke Pesantren Ulul Albaab.
 
 *Rincian Rencana Kunjungan:*
 • Nama: ${visitForm.nama}
@@ -317,7 +317,7 @@ Mohon konfirmasi kesediaan waktu kunjungan tersebut. Terima kasih.`;
               className="section-subtitle"
             >
               Sarana vital yang menjadi jantung aktivitas harian di{" "}
-              <br className="hidden md:block" /> Pesantren Islam Internasional Al-Andalus Ulul Albaab
+              <br className="hidden md:block" /> Pesantren Ulul Albaab
               untuk kenyamanan dan kekhusyukan.
             </motion.p>
           </div>
@@ -1056,7 +1056,7 @@ Mohon konfirmasi kesediaan waktu kunjungan tersebut. Terima kasih.`;
                     Kunjungi <span className="text-gradient-primary">Kami</span>
                   </h2>
                   <p className="text-lg text-ink-600 mb-8 leading-relaxed font-medium">
-                    Masih banyak fasilitas pendukung lainnya di dalam Pesantren Islam Internasional Al-Andalus Ulul Albaab.
+                    Masih banyak fasilitas pendukung lainnya di dalam Pesantren Ulul Albaab.
                     Ingin melihat langsung? Jadwalkan kunjungan Anda melalui formulir ini.
                   </p>
                   
@@ -1098,7 +1098,7 @@ Mohon konfirmasi kesediaan waktu kunjungan tersebut. Terima kasih.`;
                         allowFullScreen
                         loading="lazy"
                         referrerPolicy="no-referrer-when-downgrade"
-                        title="Lokasi Pesantren Islam Internasional Al-Andalus Ulul Albaab"
+                        title="Lokasi Pesantren Ulul Albaab"
                         className="grayscale group-hover:grayscale-0 transition-all duration-700 opacity-80 group-hover:opacity-100"
                       />
                       <div className="absolute bottom-3 left-3 bg-white  px-4 py-2 rounded-lg shadow-sm border border-primary-100 flex items-center gap-2 z-10 pointer-events-none">

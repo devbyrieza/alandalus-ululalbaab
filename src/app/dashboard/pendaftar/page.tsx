@@ -111,7 +111,7 @@ function HeroBanner({ nama, nomorPendaftaran, lastUpdate }: any) {
         <div className="flex-1 space-y-4 sm:space-y-6">
           <div className="flex flex-wrap items-center gap-3">
             <span className="px-4 py-1.5 bg-white/10  rounded-full text-[9px] sm:text-[10px] tracking-[0.2em] font-black uppercase border border-white/20 text-amber-200">
-              PENDIDIKAN INTERNASIONAL
+              MANAGED BY AL-ANDALUS IIBS
             </span>
             <span className="flex items-center gap-2 text-xs font-bold text-blue-100/70">
               <Clock className="w-4 h-4" />

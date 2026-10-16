@@ -137,7 +137,7 @@ export default function ProgramSection() {
             className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-secondary-200 text-primary-700 text-[0.65rem] font-bold uppercase tracking-[0.12em] shadow-xs mb-5"
           >
             <GraduationCap className="w-3 h-3" strokeWidth={2} />
-            <span>Jenjang Pendidikan</span>
+            <span>Jenjang Pendidikan • Khusus Putra</span>
           </motion.div>
 
           <motion.h2
@@ -148,7 +148,7 @@ export default function ProgramSection() {
             className="section-title mb-4"
           >
             Program Studi{" "}
-            <span className="text-gradient-primary">Unggulan</span>
+            <span className="text-gradient-primary">Unggulan Khusus Putra</span>
           </motion.h2>
 
           <motion.p

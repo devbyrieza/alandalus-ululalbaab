@@ -91,7 +91,7 @@ export default function TentangPage() {
             transition={{ delay: 0.2 }}
             className="text-base sm:text-lg md:text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed font-medium mb-12 px-4"
           >
-            Pesantren Islam Internasional Al-Andalus Ulul Albaab Sukabumi, cabang resmi Managed by Al Andalus IIBS.
+            Pesantren Islam Al-Andalus Ulul Albaab Sukabumi, cabang resmi Managed by Al Andalus IIBS.
             Memadukan intensitas Tahfidz Al-Qur'an dengan keunggulan akademik, sains, dan entrepreneurship islami untuk
             mencetak kader ummat Rabbani, Cendekia, dan Mandiri.
           </motion.p>
@@ -167,7 +167,7 @@ export default function TentangPage() {
             >
               <p>
                 <span className="text-slate-900 font-bold">
-                  Pesantren Islam Internasional Al-Andalus Ulul Albaab
+                  Pesantren Islam Al-Andalus Ulul Albaab
                 </span>{" "}
                 hadir sebagai babak baru dalam dunia pendidikan Islam di Sukabumi. Sebagai bagian resmi dari jaringan{" "}
                 <span className="text-primary-700 font-bold">
@@ -250,7 +250,7 @@ export default function TentangPage() {
               transition={{ delay: 0.2 }}
               className="text-slate-600 text-base md:text-lg"
             >
-              Arah dan komitmen luhur Pesantren Islam Internasional Al-Andalus Ulul Albaab.
+              Arah dan komitmen luhur Pesantren Islam Al-Andalus Ulul Albaab.
             </motion.p>
           </div>
 
