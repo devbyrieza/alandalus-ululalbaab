@@ -7,7 +7,6 @@ import Image from "next/image";
 import {
   ArrowRight,
   GraduationCap,
-  Award,
   BookOpen,
   ShieldCheck,
   CheckCircle2,
@@ -224,31 +223,6 @@ export default function HeroSection() {
                 sizes="(max-width: 1024px) 90vw, 460px"
                 className="object-cover object-top transform group-hover:scale-105 transition-transform duration-700 motion-reduce:transition-none"
               />
-
-              {/* Gradasi halus di bagian bawah agar badge tetap terbaca jelas */}
-              <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-slate-900/30 to-transparent pointer-events-none" aria-hidden="true" />
-
-              {/* Badge Kiri-Atas: Standar Mutu Al Andalus IIBS (rapi di dalam sudut bingkai) */}
-              <div className="absolute top-3.5 left-3.5 sm:top-5 sm:left-5 z-10 bg-white/90 backdrop-blur-md rounded-2xl p-2.5 sm:p-3 pr-3.5 sm:pr-4 border border-white/60 shadow-lg shadow-black/5 flex items-center gap-2.5 sm:gap-3 transition-transform duration-300 hover:scale-105">
-                <div className="icon-box icon-box-secondary w-9 h-9 sm:w-10 sm:h-10 shrink-0">
-                  <Award className="w-5 h-5" aria-hidden="true" />
-                </div>
-                <div>
-                  <p className="text-xs font-extrabold text-slate-900 leading-tight">Standar Mutu</p>
-                  <p className="text-[10px] sm:text-[11px] text-slate-500 font-semibold">Al Andalus IIBS</p>
-                </div>
-              </div>
-
-              {/* Badge Kanan-Bawah: Tahfidz Mutqin (rapi di dalam sudut bingkai) */}
-              <div className="absolute bottom-3.5 right-3.5 sm:bottom-5 sm:right-5 z-10 bg-white/90 backdrop-blur-md rounded-2xl p-2.5 sm:p-3 pr-3.5 sm:pr-4 border border-white/60 shadow-lg shadow-black/5 flex items-center gap-2.5 sm:gap-3 transition-transform duration-300 hover:scale-105">
-                <div className="icon-box icon-box-primary w-9 h-9 sm:w-10 sm:h-10 shrink-0">
-                  <BookOpen className="w-5 h-5" aria-hidden="true" />
-                </div>
-                <div>
-                  <p className="text-xs font-extrabold text-slate-900 leading-tight">Tahfidz Mutqin</p>
-                  <p className="text-[10px] sm:text-[11px] text-slate-500 font-semibold">Tajwid &amp; Bersanad</p>
-                </div>
-              </div>
             </div>
           </div>
         </div>
