@@ -15,8 +15,8 @@ import { Container } from "@/components/layout/Container";
 import { BRANDING } from "@/config/branding";
 
 // Jadwal pendaftaran: satu sumber agar label dan countdown selalu sinkron
-const REG_CLOSE_ISO = "2026-12-28T23:59:59+07:00";
-const REG_PERIOD_LABEL = "5 Sep - 28 Des 2026";
+const REG_CLOSE_ISO = "2026-12-20T23:59:59+07:00";
+const REG_PERIOD_LABEL = "16 Okt - 20 Des 2026";
 
 function useCountdown(targetDate: string) {
   const [timeLeft, setTimeLeft] = useState({

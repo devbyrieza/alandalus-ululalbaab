@@ -1,4 +1,4 @@
-﻿// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 //   PPDB CONFIGURATION - AL ANDALUS ULUL ALBAAB
 //   Tahun Ajaran 2027/2028 (PSB / PPDB)
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -101,9 +101,9 @@ export const PPDB_CONFIG = {
   // 📅 JADWAL PPSB 2027/2028
   schedule: {
     tahunAjaran: "2027/2028",
-    pembukaan: "05 September 2026",
-    penutupan: "30 Desember 2026",
-    jadwalTes: "10 September – 30 Desember 2026",
+    pembukaan: "16 Oktober 2026",
+    penutupan: "20 Desember 2026",
+    jadwalTes: "16 Oktober – 20 Desember 2026",
   },
 
   // 👥 DEWAN PEMBINA
