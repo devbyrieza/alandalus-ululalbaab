@@ -10,25 +10,41 @@ export default function SplashScreen() {
 
   useEffect(() => {
     // Jika sudah pernah muncul di sesi ini, langsung sembunyikan
-    if (sessionStorage.getItem('splashShown')) {
-      setShow(false);
-      return;
+    try {
+      if (sessionStorage.getItem('splashShown')) {
+        setShow(false);
+        return;
+      }
+    } catch {
+      // Ignore sessionStorage error in restricted environments
     }
 
-    // Hide splash screen after window loaded and a slight delay
+    let timer: NodeJS.Timeout;
+
+    // Sembunyikan splash screen
     const hideSplash = () => {
-      setTimeout(() => {
+      timer = setTimeout(() => {
         setShow(false);
-        sessionStorage.setItem('splashShown', 'true');
-      }, 800);
+        try {
+          sessionStorage.setItem('splashShown', 'true');
+        } catch {}
+      }, 400);
     };
+
+    // Hard fallback: Maksimal 1.2 detik splash screen WAJIB hilang agar tidak pernah stuck loading
+    const hardTimeout = setTimeout(hideSplash, 1200);
 
     if (document.readyState === 'complete') {
       hideSplash();
     } else {
-      window.addEventListener('load', hideSplash);
-      return () => window.removeEventListener('load', hideSplash);
+      window.addEventListener('load', hideSplash, { once: true });
     }
+
+    return () => {
+      clearTimeout(timer);
+      clearTimeout(hardTimeout);
+      window.removeEventListener('load', hideSplash);
+    };
   }, []);
 
   return (
@@ -42,7 +58,7 @@ export default function SplashScreen() {
         >
           <div className="relative flex items-center justify-center">
             {/* Spinning Ring */}
-            <div className="absolute w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-slate-100 border-t-emerald-600 animate-spin"></div>
+            <div className="absolute w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-slate-100 border-t-[#0369a1] animate-spin"></div>
             
             {/* Logo */}
             <div className="relative w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden bg-white shadow-sm flex items-center justify-center p-2">
@@ -58,7 +74,7 @@ export default function SplashScreen() {
           <motion.div 
              initial={{ opacity: 0, y: 10 }}
              animate={{ opacity: 1, y: 0 }}
-             transition={{ delay: 0.3 }}
+             transition={{ delay: 0.2 }}
              className="mt-8 text-slate-500 font-medium text-sm tracking-widest uppercase"
           >
             Memuat Sistem...
