@@ -8,7 +8,7 @@ import { X, Smile, MessageSquare } from "lucide-react";
 import { BRANDING } from "@/config/branding";
 
 const WA_NUMBER = "6281285300800";
-const WA_MESSAGE = `Assalamu'alaikum, saya ingin bertanya tentang PPDB ${BRANDING.schoolName} Tahun Ajaran 2027/2028.`;
+const WA_MESSAGE = `Assalamu'alaikum, saya ingin bertanya tentang SPMB ${BRANDING.schoolName} Tahun Ajaran 2027/2028.`;
 
 const SPRING = { type: "spring", stiffness: 400, damping: 28 } as const;
 
@@ -52,7 +52,7 @@ export default function FloatingWhatsApp() {
               <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse shrink-0" />
               <span className="text-[0.625rem] font-bold text-green-600 uppercase tracking-widest">Online sekarang</span>
             </div>
-            <p className="text-[0.75rem] font-bold text-ink-800 leading-snug pr-3">Ada pertanyaan seputar PPDB? Chat kami! <Smile className="w-3 h-3 inline-block ml-1" /></p>
+            <p className="text-[0.75rem] font-bold text-ink-800 leading-snug pr-3">Ada pertanyaan seputar SPMB? Chat kami! <Smile className="w-3 h-3 inline-block ml-1" /></p>
             <p className="text-[0.65rem] text-ink-500 mt-1">Biasanya membalas dalam beberapa menit</p>
             <div className="absolute -bottom-2 right-5 w-4 h-4 bg-white border-r border-b border-surface-100 rotate-45" aria-hidden />
           </motion.div>

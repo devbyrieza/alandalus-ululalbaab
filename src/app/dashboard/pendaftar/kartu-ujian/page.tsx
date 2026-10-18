@@ -259,7 +259,7 @@ export default function ExamCardPage() {
                     year: "numeric" })}
                 </p>
                 <p className="font-bold underline uppercase">
-                  Panitia PPDB Ulul Albaab
+                  Panitia SPMB Ulul Albaab
                 </p>
               </div>
             </div>

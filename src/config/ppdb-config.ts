@@ -14,7 +14,7 @@ export const PPDB_CONFIG = {
     telepon: "+62 812-8530-0800",
     email: "alandalusululalbaab2@gmail.com",
     emailPpdb: "alandalusululalbaab2@gmail.com",
-    website: "https://pesantren-ululalbaab.com",
+    website: "https://spmb.pesantren-ululalbaab.com",
   },
 
   // 🎨 BRAND COLORS
@@ -146,8 +146,8 @@ export const PPDB_CONFIG = {
 
   // ⚙️ SETTING TEKNIS
   technical: {
-    appName: "PPDB Al Andalus Ulul Albaab",
-    appDescription: "Sistem Penerimaan Santri Baru (PSB) 2027/2028",
+    appName: "SPMB Al Andalus Ulul Albaab",
+    appDescription: "Sistem Penerimaan Murid Baru (SPMB) 2027/2028",
     version: "2.0.0",
     author: "Rieza Eka Tomara",
   },

@@ -41,7 +41,7 @@ const WABLAS_DOMAIN = (envDomain && !envDomain.includes("your-")) ? envDomain : 
 const WABLAS_TOKEN = (!isInvalidToken && envToken) ? envToken : PUSAT_WABLAS_TOKEN;
 const WABLAS_SECRET_KEY = (!isInvalidSecret && envSecret) ? envSecret : PUSAT_WABLAS_SECRET_KEY;
 
-const DEFAULT_APP_URL = process.env.NEXT_PUBLIC_APP_URL || BRANDING.websiteUrl || "https://ppdb.alandalus-ululalbaab.com";
+const DEFAULT_APP_URL = process.env.NEXT_PUBLIC_APP_URL || BRANDING.websiteUrl || "https://spmb.pesantren-ululalbaab.com";
 const DEFAULT_CONTACT = BRANDING.phone || "0812-8530-0800";
 
 if (!WABLAS_DOMAIN || !WABLAS_TOKEN) {

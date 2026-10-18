@@ -96,7 +96,7 @@ export default function HeroSection() {
             >
               <span className="w-2 h-2 rounded-full bg-primary motion-safe:animate-pulse" />
               <span className="text-xs font-extrabold uppercase tracking-wider text-primary">
-                Portal Resmi PPDB TA {BRANDING.academicYear} • KHUSUS PUTRA
+                Portal Resmi SPMB TA {BRANDING.academicYear} • KHUSUS PUTRA
               </span>
             </div>
 
@@ -156,7 +156,7 @@ export default function HeroSection() {
                 </Link>
               ) : (
                 <Link href="/ppdb" className="btn-primary w-full sm:w-auto shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 flex items-center justify-center gap-2">
-                  <span>Daftar PPDB 2027</span>
+                  <span>Daftar SPMB 2027</span>
                   <ArrowRight className="w-4 h-4" aria-hidden="true" />
                 </Link>
               )}

@@ -676,7 +676,7 @@ function pickOpening(): string {
 }
 
 export function buildMessageOTP(nama: string, otp: string): string {
-    return `🔐 *Kode Verifikasi PPDB ${BRANDING.schoolName}*
+    return `🔐 *Kode Verifikasi SPMB ${BRANDING.schoolName}*
 
 Assalamu'alaikum Abu/Ummu,
 
@@ -693,7 +693,7 @@ Kode ini berlaku selama *5 menit*.
 Jazakumullahu khairan
 
 ---
-*Panitia PPDB ${BRANDING.schoolName}*`;
+*Panitia SPMB ${BRANDING.schoolName}*`;
 }
 
 export function buildMessageRegistrationSuccess(
@@ -730,7 +730,7 @@ Hubungi kami di ${BRANDING.phone}
 Jazakumullahu khairan
 
 ---
-*Panitia PPDB ${BRANDING.schoolName}*`;
+*Panitia SPMB ${BRANDING.schoolName}*`;
 }
 
 export function buildMessageDocumentVerified(nama: string, dokumenList: string): string {
@@ -751,7 +751,7 @@ Dashboard: ${BRANDING.websiteUrl}/dashboard/pendaftar/undangan-seleksi
 Jazakumullahu khairan
 
 ---
-*Panitia PPDB ${BRANDING.schoolName}*`;
+*Panitia SPMB ${BRANDING.schoolName}*`;
 }
 
 export function buildMessageDocumentRejected(nama: string, dokumenList: string, catatan: string): string {
@@ -778,7 +778,7 @@ Hubungi kami di ${BRANDING.phone}
 Jazakumullahu khairan
 
 ---
-*Panitia PPDB ${BRANDING.schoolName}*`;
+*Panitia SPMB ${BRANDING.schoolName}*`;
 }
 
 export function buildMessagePaymentVerified(nama: string, jumlah: string, metode: string, tanggal: string): string {
@@ -802,7 +802,7 @@ Dashboard: ${BRANDING.websiteUrl}/dashboard/pendaftar/kelengkapan-berkas
 Jazakumullahu khairan
 
 ---
-*Panitia PPDB ${BRANDING.schoolName}*`;
+*Panitia SPMB ${BRANDING.schoolName}*`;
 }
 
 export function buildMessageDaftarUlangVerified(nama: string, jumlah: string, metode: string, tanggal: string, uniformLink?: string): string {
@@ -828,7 +828,7 @@ Ananda kini tercatat sebagai calon santri yang telah melakukan pembayaran Uang P
 Jazakumullahu khairan
 
 ---
-*Panitia PPDB ${BRANDING.schoolName}*`;
+*Panitia SPMB ${BRANDING.schoolName}*`;
 }
 
 export function buildMessagePaymentRejected(nama: string, catatan: string): string {
@@ -852,7 +852,7 @@ Hubungi kami di ${BRANDING.phone}
 Jazakumullahu khairan
 
 ---
-*Panitia PPDB ${BRANDING.schoolName}*`;
+*Panitia SPMB ${BRANDING.schoolName}*`;
 }
 
 export function buildMessageJadwalBelum(nama: string): string {
@@ -872,7 +872,7 @@ Dashboard: ${BRANDING.websiteUrl}/dashboard/pendaftar/undangan-seleksi
 Jazakumullahu khairan
 
 ---
-*Panitia PPDB ${BRANDING.schoolName}*`;
+*Panitia SPMB ${BRANDING.schoolName}*`;
 }
 
 export function buildMessageJadwalTersedia(nama: string): string {
@@ -892,7 +892,7 @@ Dashboard: ${BRANDING.websiteUrl}/dashboard/pendaftar/undangan-seleksi
 Jazakumullahu khairan
 
 ---
-*Panitia PPDB ${BRANDING.schoolName}*`;
+*Panitia SPMB ${BRANDING.schoolName}*`;
 }
 
 export function buildMessageJadwalLangsungTersedia(nama: string): string {
@@ -914,7 +914,7 @@ Dashboard: ${BRANDING.websiteUrl}/dashboard/pendaftar/undangan-seleksi
 Jazakumullahu khairan
 
 ---
-*Panitia PPDB ${BRANDING.schoolName}*`;
+*Panitia SPMB ${BRANDING.schoolName}*`;
 }
 
 export function buildMessageKonfirmasiJadwal(
@@ -939,7 +939,7 @@ Dashboard: ${BRANDING.websiteUrl}/dashboard/pendaftar/undangan-seleksi
 Jazakumullahu khairan
 
 ---
-*Panitia PPDB ${BRANDING.schoolName}*`;
+*Panitia SPMB ${BRANDING.schoolName}*`;
 }
 
 /**
@@ -964,7 +964,7 @@ Jadwal *${jenisUjian}* untuk Ananda *${namaSantri}* telah berhasil disimpan ke d
 Link ujian dan pesan pengingat akan dikirimkan menyusul mendekati waktu pelaksanaan.
 
 Jazakumullahu khairan.
-*Panitia PPDB ${BRANDING.schoolName}*`;
+*Panitia SPMB ${BRANDING.schoolName}*`;
 }
 
 export function buildMessageReminderH1(
@@ -989,7 +989,7 @@ Mohon persiapkan diri dengan baik dan pastikan koneksi internet stabil. Sampai j
 Jazakumullahu khairan
 
 ---
-*Panitia PPDB ${BRANDING.schoolName}*`;
+*Panitia SPMB ${BRANDING.schoolName}*`;
 }
 
 export function buildMessageReminderH0(
@@ -1012,7 +1012,7 @@ Semoga dimudahkan dan diberkahi.
 Jazakumullahu khairan
 
 ---
-*Panitia PPDB ${BRANDING.schoolName}*`;
+*Panitia SPMB ${BRANDING.schoolName}*`;
 }
 
 export function buildMessageHasilTes(nama: string): string {
@@ -1020,7 +1020,7 @@ export function buildMessageHasilTes(nama: string): string {
 
 Assalamu'alaikum Abu/Ummu,
 
-Alhamdulillah, hasil seleksi Ananda *${nama}* sudah tersedia dan dapat dilihat di dashboard PPDB.
+Alhamdulillah, hasil seleksi Ananda *${nama}* sudah tersedia dan dapat dilihat di dashboard SPMB.
 
 🔗 *Lihat Hasil Seleksi:*
 ${BRANDING.websiteUrl}/dashboard/pendaftar/pengumuman
@@ -1032,7 +1032,7 @@ Untuk informasi lebih lanjut, hubungi kami di ${BRANDING.phone}.
 Jazakumullahu khairan
 
 ---
-*Panitia PPDB ${BRANDING.schoolName}*`;
+*Panitia SPMB ${BRANDING.schoolName}*`;
 }
 
 /** Alias baru — sama dengan buildMessageHasilTes */
@@ -1081,7 +1081,7 @@ Santri atas nama *${namaSantri}* baru saja memilih jadwal *${agendaText}* pada:
 Pesan pengingat beserta link meeting dan link input nilai akan dikirimkan otomatis menyusul mendekati waktu pelaksanaan.
 
 Jazakumullahu khairan.
-*Sistem PPDB ${BRANDING.schoolName}*`;
+*Sistem SPMB ${BRANDING.schoolName}*`;
     return msg;
 }
 
@@ -1153,7 +1153,7 @@ Mohon persiapkan diri dengan baik dan pastikan koneksi internet stabil. Sampai j
 Jazakumullahu khairan
 
 ---
-*Panitia PPDB ${BRANDING.schoolName}*`;
+*Panitia SPMB ${BRANDING.schoolName}*`;
 }
 
 /**
@@ -1189,7 +1189,7 @@ Mohon persiapkan diri dengan baik dan pastikan koneksi internet stabil. Sampai j
 Jazakumullahu khairan
 
 ---
-*Panitia PPDB ${BRANDING.schoolName}*`;
+*Panitia SPMB ${BRANDING.schoolName}*`;
 }
 
 /**
@@ -1247,7 +1247,7 @@ Mengingatkan jadwal ${agendaText.includes("Wawancara") ? "wawancara" : "menguji"
 Mohon kehadirannya tepat waktu. Jazakumullahu khairan.
 
 ---
-*Sistem PPDB ${BRANDING.schoolName}*`;
+*Sistem SPMB ${BRANDING.schoolName}*`;
 }
 
 export function buildMessageCombinedFinal(
@@ -1281,10 +1281,10 @@ Dashboard: ${BRANDING.websiteUrl}/dashboard/pendaftar/daftar-ulang
 Jazakumullahu khairan
 
 ---
-*Panitia PPDB ${BRANDING.schoolName}*`;
+*Panitia SPMB ${BRANDING.schoolName}*`;
     }
 
-    let msg = `✅ *Hasil Seleksi PPDB ${BRANDING.schoolName}*
+    let msg = `✅ *Hasil Seleksi SPMB ${BRANDING.schoolName}*
 
 Assalamu'alaikum Abu/Ummu,
 
@@ -1310,7 +1310,7 @@ Dashboard: ${BRANDING.websiteUrl}/dashboard/pendaftar/pengumuman`;
 Jazakumullahu khairan
 
 ---
-*Panitia PPDB ${BRANDING.schoolName}*`;
+*Panitia SPMB ${BRANDING.schoolName}*`;
 
     return msg;
 }
@@ -1333,12 +1333,12 @@ Kami menginformasikan bahwa jadwal *${jenisUjian}* pada:
 
 Telah *DIBATALKAN* oleh Penguji karena alasan: *${alasan}*.
 
-Mohon segera login ke Dashboard PPDB untuk memilih kembali jadwal pengganti yang tersedia di menu Jadwal Seleksi.
+Mohon segera login ke Dashboard SPMB untuk memilih kembali jadwal pengganti yang tersedia di menu Jadwal Seleksi.
 
 Dashboard: ${BRANDING.websiteUrl}/dashboard/pendaftar/undangan-seleksi
 
 ---
-*Panitia PPDB ${BRANDING.schoolName}*`;
+*Panitia SPMB ${BRANDING.schoolName}*`;
 }
 
 
@@ -1358,6 +1358,6 @@ Alhamdulillah, pembayaran SPP Ananda *${nama}* telah kami terima dan verifikasi.
 Jazakumullahu khairan
 
 ---
-*Panitia PPDB ${BRANDING.schoolName}*`;
+*Panitia SPMB ${BRANDING.schoolName}*`;
 }
 

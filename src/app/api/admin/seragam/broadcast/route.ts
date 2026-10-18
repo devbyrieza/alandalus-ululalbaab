@@ -1,4 +1,4 @@
-﻿import { NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getServerSession } from "@/lib/session";
 import { createHmac } from "crypto";
@@ -41,7 +41,7 @@ export async function POST(req: Request) {
     let successCount = 0;
     let failCount = 0;
 
-    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://ppdb.alandalus-ululalbaab.com";
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://spmb.pesantren-ululalbaab.com";
 
     for (const pendaftar of pendaftarList) {
       // Determine the phone number to use

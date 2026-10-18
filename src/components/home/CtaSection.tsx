@@ -35,7 +35,7 @@ export default function CtaSection() {
             </h3>
 
             <p className="text-[0.9375rem] md:text-[1.0625rem] text-secondary-50/90 mb-10 leading-relaxed font-[450] text-center max-w-2xl mx-auto">
-              Telah dibuka Pendaftaran Santri Baru (PPDB) Tahun Ajaran
+              Telah dibuka Pendaftaran Santri Baru (SPMB) Tahun Ajaran
               2027/2028. Kuota sangat terbatas untuk menjaga kualitas pendidikan
               secara optimal.
             </p>

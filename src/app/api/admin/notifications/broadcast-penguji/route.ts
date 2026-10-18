@@ -55,7 +55,7 @@ export async function POST(request: Request) {
     const proto = request.headers.get("x-forwarded-proto") || "https";
     const appBaseUrl = host 
       ? `${proto}://${host}` 
-      : (process.env.NEXT_PUBLIC_APP_URL || "https://ppdb.alandalus-ululalbaab.com");
+      : (process.env.NEXT_PUBLIC_APP_URL || "https://spmb.pesantren-ululalbaab.com");
 
     let successCount = 0;
 

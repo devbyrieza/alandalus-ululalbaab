@@ -36,25 +36,36 @@ export async function middleware(request: NextRequest) {
   const isLocalhost = host.includes("localhost") || host.includes("127.0.0.1") || host.includes("192.168.");
   
   if (!isLocalhost) {
-    const isPpdbDomain = host.startsWith("ppdb.");
-    const isSafinaDomain = host.startsWith("safina.") || host.startsWith("keuangan.");
-    const isAppDomain = isPpdbDomain || isSafinaDomain;
+    const hostLower = host.split(":")[0].toLowerCase();
+    const isPpdbLegacyDomain = hostLower.startsWith("ppdb.");
+    const isSpmbDomain = hostLower.startsWith("spmb.") || isPpdbLegacyDomain;
+    const isSafinaDomain = hostLower.startsWith("safina.") || hostLower.startsWith("keuangan.");
+    const isAppDomain = isSpmbDomain || isSafinaDomain;
 
-    const ppdbPaths = [
-      "/ppdb", "/login", "/daftar", "/daftar-pindahan", "/daftar-sukses", 
+    const pathLower = pathname.toLowerCase();
+    const appPaths = [
+      "/ppdb", "/spmb", "/login", "/daftar", "/daftar-pindahan", "/daftar-sukses", 
       "/dashboard", "/admin", "/auth", "/pilih-verifikasi", "/send-otp", "/verifikasi-otp",
       "/panitia", "/bank-soal"
     ];
-    const isPpdbPath = ppdbPaths.some(p => pathname === p || pathname.startsWith(p + "/"));
+    const isAppPath = appPaths.some(p => pathLower === p || pathLower.startsWith(p + "/"));
     
     // Only redirect if not an API or internal Next.js path
     const isStaticOrApi = pathname.startsWith("/_next") || pathname.startsWith("/api") || pathname.includes(".");
     
     if (!isStaticOrApi) {
+      // 1. Auto-redirect legacy ppdb.* to spmb.*
+      if (isPpdbLegacyDomain) {
+        const newHost = hostLower.replace(/^ppdb\./, "spmb.");
+        const redirectUrl = new URL(pathname, `https://${newHost}`);
+        redirectUrl.search = request.nextUrl.search;
+        return NextResponse.redirect(redirectUrl, 301);
+      }
+
       if (isSafinaDomain) {
         // Auto-redirect keuangan.* to safina.* for brand consistency
-        if (host.startsWith("keuangan.")) {
-          const redirectUrl = new URL(pathname, `https://${host.replace("keuangan.", "safina.")}`);
+        if (hostLower.startsWith("keuangan.")) {
+          const redirectUrl = new URL(pathname, `https://${hostLower.replace("keuangan.", "safina.")}`);
           redirectUrl.search = request.nextUrl.search;
           return NextResponse.redirect(redirectUrl);
         }
@@ -67,32 +78,32 @@ export async function middleware(request: NextRequest) {
         }
       }
 
-      if (isAppDomain && !isPpdbPath && pathname !== "/") {
-        // If on App domain (PPDB/Safina) but trying to access non-App path (like /tentang), redirect to main website
-        const mainDomain = host.replace("ppdb.", "").replace("safina.", "").replace("keuangan.", "");
+      if (isAppDomain && !isAppPath && pathname !== "/") {
+        // If on App domain (SPMB/Safina) but trying to access non-App path (like /tentang), redirect to main website
+        const mainDomain = hostLower.replace(/^spmb\./, "").replace(/^ppdb\./, "").replace(/^safina\./, "").replace(/^keuangan\./, "");
         const redirectUrl = new URL(pathname, `https://${mainDomain}`);
         redirectUrl.search = request.nextUrl.search;
         return NextResponse.redirect(redirectUrl);
       }
       
-      if (!isAppDomain && isPpdbPath) {
-        // If on main website domain but trying to access App path, redirect to PPDB domain
-        const baseHost = host.replace(/^www\./, "");
-        const newPathname = pathname === "/ppdb" ? "/" : pathname;
-        const redirectUrl = new URL(newPathname, `https://ppdb.${baseHost}`);
+      if (!isAppDomain && isAppPath) {
+        // If on main website domain but trying to access SPMB path, redirect to SPMB domain
+        const baseHost = hostLower.replace(/^www\./, "");
+        const newPathname = (pathLower === "/ppdb" || pathLower === "/spmb") ? "/" : pathname;
+        const redirectUrl = new URL(newPathname, `https://spmb.${baseHost}`);
         redirectUrl.search = request.nextUrl.search;
         return NextResponse.redirect(redirectUrl);
       }
       
-      if (isPpdbDomain) {
-        if (pathname === "/ppdb") {
+      if (isSpmbDomain) {
+        if (pathLower === "/ppdb" || pathLower === "/spmb") {
           const redirectUrl = new URL("/", request.url);
           redirectUrl.search = request.nextUrl.search;
           return NextResponse.redirect(redirectUrl);
         }
 
         if (pathname === "/") {
-          // Rewrite root of PPDB domain to /ppdb
+          // Rewrite root of SPMB domain to /ppdb
           return NextResponse.rewrite(new URL("/ppdb", request.url));
         }
       }

@@ -54,7 +54,7 @@ export function CTAInfoPPDB({
       >
         <Link href="/ppdb" className="flex items-center justify-center gap-2">
           <FileText className="w-5 h-5" />
-          <span>Pelajari PPDB 2027/2028</span>
+          <span>Pelajari SPMB 2027/2028</span>
         </Link>
       </Button>
 
@@ -264,7 +264,7 @@ export function NavbarCTAPPDB() {
     >
       <Link href="/ppdb" className="flex items-center gap-2">
         <Sparkles className="w-3.5 h-3.5" />
-        Info PPDB 2026
+        Info SPMB 2027/2028
       </Link>
     </Button>
   );
@@ -327,7 +327,7 @@ export function MobileCTAPPDB() {
       >
         <Link href="/ppdb" className="flex items-center justify-center gap-2">
           <Sparkles className="w-4 h-4" />
-          <span>Pelajari PPDB 2026</span>
+          <span>Pelajari SPMB 2027/2028</span>
         </Link>
       </Button>
     </div>
