@@ -1,4 +1,4 @@
-﻿// app/api/verifikasi/generate/route.ts
+// app/api/verifikasi/generate/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 

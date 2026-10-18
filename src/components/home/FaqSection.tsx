@@ -27,7 +27,11 @@ const FAQS = [
   {
     question: "Bagaimana sistem seleksi yang diterapkan?",
     answer:
-      "Sistem seleksi meliputi tes lisan (tahfidz/bacaan Al-Qur'an), tes tertulis (pengetahuan dasar agama dan akademik), serta Seleksi Wawancara Calon Santri dan orang tua." },
+      "Sistem seleksi meliputi tes Al-Qur'an (Tahsin & Tahfidz), Kemampuan Dasar Akademik, Identifikasi Kepribadian, Tes Kesiapan & Kemandirian Santri, serta Wawancara Calon Santri dan Wali Santri." },
+  {
+    question: "Berapa rincian biaya masuk dan bagaimana skema cicilannya?",
+    answer:
+      "Biaya pendaftaran sebesar Rp 250.000. Uang Pangkal sebesar Rp 9.900.000 dapat dicicil 3x: cicilan pertama 50% (Rp 4.950.000) sepekan setelah menerima pengumuman hasil seleksi, dan sisanya boleh dicicil 2x dengan batas waktu hingga Mei 2027. SPP bulanan Rp 1.100.000 (Rp 13.200.000/tahun All-In sudah termasuk asrama, makan, dan seluruh kegiatan). Rekening resmi: Bank Syariah Indonesia (BSI) No. Rek. 7253701263 a/n Al Andalus Ulul Albaab 1." },
 ] as const;
 
 const EASE = [0.16, 1, 0.3, 1] as const;

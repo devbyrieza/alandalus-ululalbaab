@@ -131,15 +131,7 @@ const StatWidget = ({ label, value, icon: Icon, color, trend, breakdown, highlig
                 }`}>MTs Putra</span>
                 <span className={`text-base font-black leading-none ${
                   highlighted ? "text-white" : "text-blue-700"
-                }`}>{breakdown.mts_l || 0}</span>
-              </div>
-              <div className="flex flex-col">
-                <span className={`text-[9px] font-black uppercase tracking-widest mb-1 ${
-                  highlighted ? "text-blue-300" : "text-blue-400"
-                }`}>MTs Putri</span>
-                <span className={`text-base font-black leading-none ${
-                  highlighted ? "text-amber-300" : "text-amber-500"
-                }`}>{breakdown.mts_p || 0}</span>
+                }`}>{breakdown.mts || 0}</span>
               </div>
             </div>
             <div className={`space-y-4 border-l pl-4 ${
@@ -151,15 +143,7 @@ const StatWidget = ({ label, value, icon: Icon, color, trend, breakdown, highlig
                 }`}>IL Putra</span>
                 <span className={`text-base font-black leading-none ${
                   highlighted ? "text-white" : "text-blue-700"
-                }`}>{breakdown.il_l || 0}</span>
-              </div>
-              <div className="flex flex-col">
-                <span className={`text-[9px] font-black uppercase tracking-widest mb-1 ${
-                  highlighted ? "text-blue-300" : "text-blue-400"
-                }`}>IL Putri</span>
-                <span className={`text-base font-black leading-none ${
-                  highlighted ? "text-amber-300" : "text-amber-500"
-                }`}>{breakdown.il_p || 0}</span>
+                }`}>{breakdown.il || 0}</span>
               </div>
             </div>
           </div>
@@ -347,19 +331,19 @@ export default function AdminDashboardPage() {
   };
 
   const getBreakdown = (type: "total" | "lulus" | "ulang" | "ulang_sedang" | "ulang_selesai" | "cadangan" | "ditolak" | "berkas" | "bayar" | "data" | "seleksi") => {
-    const mts = stats.stats_per_jenjang.find((j: any) => j.jenjang === "MTS") || {};
-    const il = stats.stats_per_jenjang.find((j: any) => j.jenjang === "IL") || {};
-    if (type === "total") return { mts_l: mts.pendaftar_putra || 0, mts_p: mts.pendaftar_putri || 0, il_l: il.pendaftar_putra || 0, il_p: il.pendaftar_putri || 0 };
-    if (type === "lulus") return { mts_l: mts.diterima_putra || 0, mts_p: mts.diterima_putri || 0, il_l: il.diterima_putra || 0, il_p: il.diterima_putri || 0 };
-    if (type === "ulang") return { mts_l: mts.ulang_putra || 0, mts_p: mts.ulang_putri || 0, il_l: il.ulang_putra || 0, il_p: il.ulang_putri || 0 };
-    if (type === "ulang_sedang") return { mts_l: mts.ulang_sedang_putra || 0, mts_p: mts.ulang_sedang_putri || 0, il_l: il.ulang_sedang_putra || 0, il_p: il.ulang_sedang_putri || 0 };
-    if (type === "ulang_selesai") return { mts_l: mts.ulang_selesai_putra || 0, mts_p: mts.ulang_selesai_putri || 0, il_l: il.ulang_selesai_putra || 0, il_p: il.ulang_selesai_putri || 0 };
-    if (type === "cadangan") return { mts_l: mts.cadangan_putra || 0, mts_p: mts.cadangan_putri || 0, il_l: il.cadangan_putra || 0, il_p: il.cadangan_putri || 0 };
-    if (type === "ditolak") return { mts_l: mts.ditolak_putra || 0, mts_p: mts.ditolak_putri || 0, il_l: il.ditolak_putra || 0, il_p: il.ditolak_putri || 0 };
-    if (type === "berkas") return { mts_l: mts.berkas_putra || 0, mts_p: mts.berkas_putri || 0, il_l: il.berkas_putra || 0, il_p: il.berkas_putri || 0 };
-    if (type === "seleksi") return { mts_l: mts.seleksi_putra || 0, mts_p: mts.seleksi_putri || 0, il_l: il.seleksi_putra || 0, il_p: il.seleksi_putri || 0 };
-    if (type === "bayar") return { mts_l: mts.bayar_putra || 0, mts_p: mts.bayar_putri || 0, il_l: il.bayar_putra || 0, il_p: il.bayar_putri || 0 };
-    if (type === "data") return { mts_l: mts.data_putra || 0, mts_p: mts.data_putri || 0, il_l: il.data_putra || 0, il_p: il.data_putri || 0 };
+    const mts = stats.stats_per_jenjang?.find((j: any) => j.jenjang === "MTS") || {};
+    const il = stats.stats_per_jenjang?.find((j: any) => j.jenjang === "IL") || {};
+    if (type === "total") return { mts: mts.total_pendaftar ?? ((mts.pendaftar_putra || 0) + (mts.pendaftar_putri || 0)), il: il.total_pendaftar ?? ((il.pendaftar_putra || 0) + (il.pendaftar_putri || 0)) };
+    if (type === "lulus") return { mts: mts.diterima ?? ((mts.diterima_putra || 0) + (mts.diterima_putri || 0)), il: il.diterima ?? ((il.diterima_putra || 0) + (il.diterima_putri || 0)) };
+    if (type === "ulang") return { mts: mts.daftar_ulang ?? ((mts.ulang_putra || 0) + (mts.ulang_putri || 0)), il: il.daftar_ulang ?? ((il.ulang_putra || 0) + (il.ulang_putri || 0)) };
+    if (type === "ulang_sedang") return { mts: mts.ulang_sedang ?? ((mts.ulang_sedang_putra || 0) + (mts.ulang_sedang_putri || 0)), il: il.ulang_sedang ?? ((il.ulang_sedang_putra || 0) + (il.ulang_sedang_putri || 0)) };
+    if (type === "ulang_selesai") return { mts: mts.ulang_selesai ?? ((mts.ulang_selesai_putra || 0) + (mts.ulang_selesai_putri || 0)), il: il.ulang_selesai ?? ((il.ulang_selesai_putra || 0) + (il.ulang_selesai_putri || 0)) };
+    if (type === "cadangan") return { mts: mts.cadangan ?? ((mts.cadangan_putra || 0) + (mts.cadangan_putri || 0)), il: il.cadangan ?? ((il.cadangan_putra || 0) + (il.cadangan_putri || 0)) };
+    if (type === "ditolak") return { mts: mts.ditolak ?? ((mts.ditolak_putra || 0) + (mts.ditolak_putri || 0)), il: il.ditolak ?? ((il.ditolak_putra || 0) + (il.ditolak_putri || 0)) };
+    if (type === "berkas") return { mts: mts.berkas ?? ((mts.berkas_putra || 0) + (mts.berkas_putri || 0)), il: il.berkas ?? ((il.berkas_putra || 0) + (il.berkas_putri || 0)) };
+    if (type === "seleksi") return { mts: mts.seleksi ?? ((mts.seleksi_putra || 0) + (mts.seleksi_putri || 0)), il: il.seleksi ?? ((il.seleksi_putra || 0) + (il.seleksi_putri || 0)) };
+    if (type === "bayar") return { mts: mts.bayar ?? ((mts.bayar_putra || 0) + (mts.bayar_putri || 0)), il: il.bayar ?? ((il.bayar_putra || 0) + (il.bayar_putri || 0)) };
+    if (type === "data") return { mts: mts.data ?? ((mts.data_putra || 0) + (mts.data_putri || 0)), il: il.data ?? ((il.data_putra || 0) + (il.data_putri || 0)) };
     return null;
   };
 

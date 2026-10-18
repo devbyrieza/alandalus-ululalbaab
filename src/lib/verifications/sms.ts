@@ -1,4 +1,4 @@
-﻿// lib/verification/sms.ts
+// lib/verification/sms.ts
 import { normalizePhone } from "./multi-channel";
 import { sendMessage } from "@/lib/wablas";
 

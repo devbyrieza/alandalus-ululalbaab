@@ -617,12 +617,7 @@ export default function DataLengkapForm({
           setJenjang(loadedJenjang);
 
           // Auto-determine gender based on jenjang
-          let autoGender = result.data.santri.jenis_kelamin;
-          if (loadedJenjang.toLowerCase().includes("putra")) {
-            autoGender = "Laki-laki";
-          } else if (loadedJenjang.toLowerCase().includes("putri")) {
-            autoGender = "Perempuan";
-          }
+          let autoGender = "Laki-laki";
 
           // ==============================
           // LOAD DRAFT DARI LOCALSTORAGE JIKA ADA
@@ -1020,19 +1015,15 @@ export default function DataLengkapForm({
                     required
                   />
                   <InputField
-                    label="Jenis Kelamin"
+                    label="Jenis Kelamin (Khusus Putra)"
                     name="jenis_kelamin"
-                    value={formData.santri.jenis_kelamin}
-                    onChange={(v) => updateSantri("jenis_kelamin", v)}
+                    value={formData.santri.jenis_kelamin || "Laki-laki"}
+                    onChange={(v) => updateSantri("jenis_kelamin", "Laki-laki")}
                     options={[
                       { label: "Laki-laki", value: "Laki-laki" },
-                      { label: "Perempuan", value: "Perempuan" },
                     ]}
                     required
-                    disabled={
-                      jenjang.toLowerCase().includes("putra") ||
-                      jenjang.toLowerCase().includes("putri")
-                    }
+                    disabled={true}
                   />
                   <InputField
                     label="Kewarganegaraan"

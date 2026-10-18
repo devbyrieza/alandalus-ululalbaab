@@ -1,4 +1,4 @@
-﻿// lib/verification/whatsapp.ts
+// lib/verification/whatsapp.ts
 import { normalizePhone } from "./multi-channel";
 import { sendMessage } from "@/lib/wablas";
 

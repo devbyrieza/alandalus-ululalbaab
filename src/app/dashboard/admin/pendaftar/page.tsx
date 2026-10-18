@@ -1433,10 +1433,7 @@ function AdminPendaftarContent() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-4">
-          {/* Gender Filter */}
-          
-
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
           {/* Jenjang Filter */}
           <div>
             <label className="block text-[10px] font-black text-primary-900 mb-2 leading-none uppercase tracking-widest">

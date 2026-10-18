@@ -187,11 +187,7 @@ export default function ProfilTab() {
             <InfoItem label="NIK" value={profile.nik} />
             <InfoItem
               label="Jenis Kelamin"
-              value={
-                ["L", "Laki-laki"].includes(profile.jenis_kelamin)
-                  ? "Laki-laki"
-                  : "Perempuan"
-              }
+              value="Laki-laki (Putra)"
             />
             <InfoItem label="Jenjang" value={profile.jenjang} />
             <InfoItem label="NISN" value={profile.nisn} />

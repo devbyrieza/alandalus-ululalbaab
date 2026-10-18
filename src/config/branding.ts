@@ -7,7 +7,7 @@ export const BRANDING = {
     process.env.NEXT_PUBLIC_SCHOOL_LEGAL_NAME || "Pesantren Ulul Albaab Managed by Al Andalus IIBS",
   schoolTagline:
     process.env.NEXT_PUBLIC_SCHOOL_TAGLINE ||
-    "Kaderisasi Ummat Rabbani, Cendekia, dan Mandiri",
+    "Kaderisasi Ummat Hanif, Kontributif, dan Adaptif",
   subtitle: "Pesantren Islam Khusus Putra",
   gender: "Putra",
   shaleh: "shaleh",

@@ -87,7 +87,7 @@ export default function DaftarPage() {
     nama_lengkap: "",
     tanggal_lahir: "",
     no_hp: "",
-    jenis_kelamin: "",
+    jenis_kelamin: "L",
     jenjang: jenjangFromUrl });
 
   const [countryCode, setCountryCode] = useState("+62");
@@ -587,71 +587,32 @@ export default function DaftarPage() {
                       label="Jenis Kelamin"
                       error={fieldErrors.jenis_kelamin}
                     >
-                      <div className="flex gap-4">
-                        {[
-                          { val: "L", label: "Santri Putra (Laki-laki)", sub: "Tersedia di Ulul Albaab" },
-                          { val: "P", label: "Santri Putri (Perempuan)", sub: "Dialihkan ke Al-Imam" },
-                        ].map((jk) => (
-                          <motion.label
-                            key={jk.val}
-                            whileTap={{ scale: 0.98 }}
-                            className={`flex-1 flex flex-col items-center justify-center text-center px-4 md:px-6 py-3.5 md:py-4 rounded-[1.5rem] md:rounded-[2rem] border-2 cursor-pointer transition-all duration-300 text-sm md:text-base ${
-                              formData.jenis_kelamin === jk.val
-                                ? jk.val === "L"
-                                  ? "bg-blue-600 border-blue-600 text-white font-black shadow-lg"
-                                  : "bg-[#800a0a] border-[#800a0a] text-white font-black shadow-lg"
-                                : "bg-secondary-50 border-secondary-200 text-ink-800 hover:border-blue-200 hover:bg-white font-bold"
-                            }`}
-                          >
-                            <input
-                              type="radio"
-                              name="jk"
-                              value={jk.val}
-                              checked={formData.jenis_kelamin === jk.val}
-                              onChange={() =>
-                                setFormData((p) => ({
-                                  ...p,
-                                  jenis_kelamin: jk.val as any,
-                                }))
-                              }
-                              className="hidden"
-                            />
-                            <span>{jk.label}</span>
-                            <span
-                              className={`text-[10px] sm:text-xs mt-0.5 ${
-                                formData.jenis_kelamin === jk.val
-                                  ? "text-white/80 font-medium"
-                                  : "text-slate-500 font-medium"
-                              }`}
-                            >
-                              {jk.sub}
-                            </span>
-                          </motion.label>
-                        ))}
-                      </div>
-
-                      {/* Callout jika memilih Putri */}
-                      {formData.jenis_kelamin === "P" && (
-                        <div className="mt-3.5 p-4 rounded-2xl bg-rose-50 border border-rose-200 text-rose-950 text-xs sm:text-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 animate-fadeIn">
+                      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 p-4 md:p-5 rounded-2xl bg-blue-50/70 border border-blue-200">
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-black shadow-md shadow-blue-600/20 text-sm">
+                            L
+                          </div>
                           <div>
-                            <p className="font-extrabold text-rose-950">
-                              Pendaftaran Santri Putri dialihkan ke Pesantren Al-Imam Al-Islami (Managed by Al-Andalus IIBS).
+                            <p className="font-extrabold text-blue-950 text-sm md:text-base">
+                              Khusus Santri Putra (Laki-laki)
                             </p>
-                            <p className="text-slate-600 text-xs mt-0.5">
-                              Ulul Albaab khusus santri Putra. Kedua pesantren dikelola bersama di bawah naungan manajemen & kurikulum Al-Andalus IIBS.
+                            <p className="text-xs text-blue-700/80 font-medium">
+                              Pesantren Ulul Albaab Sukabumi khusus mendidik santri Putra
                             </p>
                           </div>
+                        </div>
+                        <div className="sm:text-right text-xs text-slate-500 font-medium border-t sm:border-t-0 sm:border-l border-blue-200/80 pt-2 sm:pt-0 sm:pl-4">
+                          <span>Untuk calon santri putri?</span>
                           <a
-                            href="https://pesantren-alimam.com/daftar"
+                            href="https://spmb.pesantren-alimam.com/daftar"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#800a0a] text-white font-bold text-xs uppercase tracking-wider hover:bg-[#600808] shadow-sm transition-all shrink-0 w-full sm:w-auto justify-center"
+                            className="block font-bold text-rose-600 hover:text-rose-700 hover:underline"
                           >
-                            <span>Ke Pendaftaran Putri</span>
-                            <ExternalLink className="w-3.5 h-3.5" />
+                            Daftar di Al-Imam (Putri) →
                           </a>
                         </div>
-                      )}
+                      </div>
                     </InputField>
                   </div>
                 </div>

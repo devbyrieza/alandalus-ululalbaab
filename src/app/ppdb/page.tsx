@@ -126,9 +126,9 @@ function PPDBContent() {
 
   const stats = [
     { label: "Kuota MTs Putra", value: "48 Santri", icon: Users },
-    { label: "Kuota MTs Putri", value: "24 Santri", icon: Users },
+    { label: "Total Kuota Penerimaan", value: "72 Santri", icon: GraduationCap },
     { label: "Kuota IL Putra", value: "24 Santri", icon: Users },
-    { label: "Kuota IL Putri", value: "24 Santri", icon: Users },
+    { label: "Tahun Ajaran", value: "2027/2028", icon: Calendar },
   ];
 
   const timeline = [
@@ -197,7 +197,7 @@ function PPDBContent() {
   const biaya = [
     { label: "Biaya Pendaftaran", value: "Rp 250rb", icon: CreditCard },
     { label: "Uang Pangkal", value: "Rp 9,9 Jt", icon: Shield },
-    { label: "SPP/Taawun (All In)", value: "Rp 1,2Jt/bln", icon: Star },
+    { label: "SPP Bulanan (All In)", value: "Rp 1,1Jt/bln", icon: Star },
   ];
 
   return (
@@ -401,8 +401,8 @@ function PPDBContent() {
                 Catatan Penting: Biaya pendaftaran dan uang pangkal bersifat
                 non-refundable. Uang pangkal (daftar ulang) dapat dicicil
                 maksimal 3x pembayaran, dengan{" "}
-                <strong>syarat pembayaran pertama minimal 50%</strong>, dan
-                wajib dilunasi sebelum Juli 2026.
+                <strong>cicilan pertama yaitu 50% (Rp 4.950.000) sepekan setelah menerima surat pengumuman hasil seleksi</strong>, kemudian
+                sisanya boleh dicicil 2x dengan batas waktu yaitu hingga Mei 2027.
               </p>
             </div>
           </motion.div>
@@ -542,7 +542,7 @@ function PPDBContent() {
                       a: "Pendaftaran SPMB Tahun Ajaran 2027/2028 dibuka mulai 16 Oktober sampai dengan 20 Desember 2026. Pendaftaran dapat ditutup lebih awal jika kuota terpenuhi. Segera daftar!" },
                     {
                       q: "Berapa total biaya yang harus disiapkan?",
-                      a: "Biaya pendaftaran Rp 250.000, Uang Pangkal Rp 9.900.000, dan SPP/Taawun Rp 1.200.000/bulan (All In = Rp 14.400.000/tahun sudah termasuk makan, asrama, dan seluruh kegiatan pesantren)." },
+                      a: "Biaya pendaftaran Rp 250.000, Uang Pangkal Rp 9.900.000 (dapat dicicil 3x: 50% sepekan setelah menerima pengumuman seleksi, sisanya boleh dicicil 2x hingga Mei 2027), dan SPP bulanan Rp 1.100.000/bulan (Total 1 tahun: Rp 13.200.000 All In mencakup makan, asrama, dan seluruh kegiatan pesantren)." },
                   ].map((faq, i) => (
                     <motion.div key={i} className="group">
                       <details className="bg-white rounded-lg border border-surface-100 shadow-premium-sm transition-all duration-300 open:shadow-premium-lg">

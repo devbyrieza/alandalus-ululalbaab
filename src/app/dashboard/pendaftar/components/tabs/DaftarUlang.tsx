@@ -112,7 +112,7 @@ export default function DaftarUlangTab() {
     keringanan?.potongan_spp ?? 0;
 
   const expectedUangPangkal = 9900000 - potonganUP;
-  const expectedSpp = 1200000 - potonganSPP;
+  const expectedSpp = 1100000 - potonganSPP;
   const expectedTagihan =
     subTab === "uang_pangkal" ? expectedUangPangkal : expectedSpp;
   const totalPaid =
@@ -340,7 +340,7 @@ export default function DaftarUlangTab() {
             {formatCurrency(Math.max(0, expectedTagihan - totalPaid))}
           </span>
           <p className="text-[10px] text-slate-400 mt-3 font-medium">
-            Wajib lunas sebelum Juli 2026
+            Wajib lunas hingga Mei 2027
           </p>
         </div>
       </div>
@@ -519,7 +519,7 @@ export default function DaftarUlangTab() {
               )}
               <li>
                 SPP bulan pertama wajib lunas{" "}
-                <strong>sebelum Juli 2026</strong>.
+                <strong>hingga Mei 2027</strong>.
               </li>
               <li className="text-emerald-700 font-bold">
                 Tersedia kebijakan <strong>Keringanan Khusus</strong> bagi wali

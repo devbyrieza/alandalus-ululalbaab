@@ -15,17 +15,17 @@ const SPRING: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 const misi = [
   {
-    label: "Rabbani",
-    text: "Membina generasi yang taat kepada Allah sesuai sunnah dengan pemahaman salafushalih." },
+    label: "Aqidah & Ibadah",
+    text: "Melaksanakan pendidikan aqidah yang shohihah dan ibadah yang sesuai sunnah." },
   {
-    label: "Cendekia",
-    text: "Menjadikan santri pribadi yang cerdas, cepat mengerti situasi, dan pandai mencari solusi." },
+    label: "Soft Skill",
+    text: "Menumbuhkembangkan soft skill berupa fitrah potensi dan growth mindset." },
   {
-    label: "Mandiri",
-    text: "Mendidik pribadi yang mampu mengambil keputusan dan menyelesaikan tugas secara mandiri." },
+    label: "Hard Skill",
+    text: "Mengembangkan hard skill berupa jiwa kewirausahaan dan life skills." },
   {
-    label: "Dakwah",
-    text: "Menanamkan jiwa dakwah melalui keteladanan asatidzah serta pembinaan karakter Rabbani yang kokoh dan beradab mulia." },
+    label: "Jiwa Dakwah",
+    text: "Membentuk generasi yang berjiwa dakwah dan mau'idzoh hasanah." },
 ];
 
 const containerVariants: Variants = {
@@ -95,7 +95,7 @@ export default function AboutSection() {
               <span className="font-semibold text-primary-800">
                 Pesantren Al Andalus Ulul Albaab Sukabumi.
               </span>{" "}
-              Lembaga pendidikan Islam yang memadukan keunggulan tahfidz Al-Qur'an, ilmu syar'i, dan kemandirian wirausaha — mengusung visi Kaderisasi Ummat Rabbani, Cendekia, dan Mandiri.
+              Lembaga pendidikan Islam yang memadukan keunggulan tahfidz Al-Qur'an, ilmu syar'i, dan kemandirian wirausaha — mengusung visi Kaderisasi Ummat Hanif, Kontributif, dan Adaptif.
             </motion.p>
           </motion.div>
 
