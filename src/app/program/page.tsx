@@ -46,7 +46,7 @@ const PROGRAMS = [
       "Bahasa Arab & Inggris sebagai Bahasa Pengantar Yaumiyah",
       "Kajian Kitab Turots Dasar & Fiqih Ibadah",
       "Kurikulum Nasional Madrasah Tsanawiyah Lengkap",
-      "Kuota: 48 Santri Putra · 24 Santriwati Putri",
+      "Kuota: 48 Santri Putra",
     ],
     image: "/images/ruang-kelas.jpg",
     theme: "blue",
@@ -60,7 +60,7 @@ const PROGRAMS = [
     fullName: "Program I'dad Lughowi (IL)",
     badge: "Persiapan Bahasa Arab (1 Tahun)",
     description:
-      "Program pendalaman dan pemantapan Bahasa Arab intensif selama 1 tahun bagi santri lulusan SMP/MTs umum sebelum melanjutkan ke jenjang Sekolah Menengah Atas (SMA) selama 3 tahun di pesantren. Program ini membekali santri agar mampu menggunakan bahasa Arab secara aktif sebagai bahasa pengantar di kelas maupun percakapan harian. Bagi calon santri yang sudah lancar berbahasa Arab aktif dan memiliki hafalan Al-Qur'an minimal 4 Juz mutqin, dapat langsung masuk jenjang SMA tanpa melalui kelas persiapan I'dad Lughowi.",
+      "Program pendalaman dan pemantapan Bahasa Arab intensif selama 1 tahun bagi santri lulusan SMP/MTs umum sebelum melanjutkan ke jenjang Sekolah Menengah Atas (SMA) selama 3 tahun di pesantren. Program ini membekali santri agar mampu menggunakan bahasa Arab secara aktif sebagai bahasa pengantar di kelas maupun percakapan harian.",
     stats: [
       { label: "Tahfidz", value: "Target 16 Juz", icon: BookOpen },
       { label: "Fokus Utama", value: "Bahasa Arab Aktif", icon: Globe },
@@ -72,12 +72,38 @@ const PROGRAMS = [
       "Pondasi Kitab Turots Dasar & Fiqih Ibadah",
       "Pembiasaan Bahasa Arab Aktif di Kelas & Asrama",
       "Islamic Entrepreneurship & Kemandirian Santri",
-      "Kuota: 24 Santri Putra · 24 Santriwati Putri",
+      "Kuota: 24 Santri Putra (Gabungan IL / SMA)",
     ],
     image: "/images/kelas-dari-dalam.webp",
     theme: "amber",
     accent: "text-amber-600",
     bg: "bg-amber-50",
+  },
+  {
+    id: "sma",
+    name: "SMA Langsung",
+    buttonLabel: "Daftar SMA Langsung",
+    fullName: "Program Sekolah Menengah Atas (SMA) Langsung",
+    badge: "Jalur Langsung (3 Tahun Tanpa IL)",
+    description:
+      "Program SMA 3 tahun jalur langsung tanpa melalui I'dad Lughowi bagi santri lulusan SMP/MTs yang telah memiliki kemahiran bahasa Arab aktif dan hafalan Al-Qur'an mutqin. Memadukan kurikulum pendidikan nasional dengan pendalaman kitab turots tingkat lanjut dan persiapan intensif menuju PTN ternama serta universitas di Timur Tengah.",
+    stats: [
+      { label: "Tahfidz", value: "Target 16 Juz Mutqin", icon: BookOpen },
+      { label: "Fokus Utama", value: "Turots & PTN/LN", icon: GraduationCap },
+      { label: "Masa Studi", value: "3 Tahun Langsung", icon: Clock },
+    ],
+    curriculum: [
+      "Target Hafalan 16 Juz Al-Qur'an Mutqin & Bersanad",
+      "Pendalaman Kitab Turots Lanjutan (Aqidah, Hadits, Fiqih, Ushul)",
+      "Bimbingan Intensif UTBK/SNBT & Seleksi Universitas Timur Tengah",
+      "Bahasa Arab & Inggris Aktif sebagai Bahasa Pengantar",
+      "Kaderisasi Kepemimpinan & Entrepreneurship Islami",
+      "Kuota: 24 Santri Putra (Gabungan IL / SMA)",
+    ],
+    image: "/images/ruang-kelas.jpg",
+    theme: "blue",
+    accent: "text-primary-600",
+    bg: "bg-primary-50",
   },
 ];
 
@@ -292,7 +318,7 @@ export default function ProgramPage() {
             Konsultasi &amp; Pendaftaran Santri Baru
           </h2>
           <p className="text-primary-200/80 max-w-xl mx-auto mb-8 text-base md:text-lg">
-            Daftarkan putra-putri Anda sekarang untuk Tahun Ajaran 2027/2028 di Pesantren Ulul Albaab.
+            Daftarkan putra Anda sekarang untuk Tahun Ajaran 2027/2028 di Pesantren Ulul Albaab.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link

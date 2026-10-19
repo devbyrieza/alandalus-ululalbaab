@@ -138,7 +138,7 @@ function PPDBContent() {
   const stats = [
     { label: "Kuota MTs Putra", value: "48 Santri", icon: Users },
     { label: "Total Kuota Penerimaan", value: "72 Santri", icon: GraduationCap },
-    { label: "Kuota IL Putra", value: "24 Santri", icon: Users },
+    { label: "Kuota IL / SMA Putra", value: "24 Santri", icon: Users },
     { label: "Tahun Ajaran", value: "2027/2028", icon: Calendar },
   ];
 
@@ -839,7 +839,7 @@ function PPDBContent() {
                 <span className="text-secondary-400">Ananda Di Sini</span>
               </h2>
               <p className="text-sm sm:text-base md:text-lg lg:text-xl text-primary-100 max-w-2xl mx-auto mb-6 sm:mb-8 md:mb-10 lg:mb-12 font-medium leading-relaxed px-2">
-                Pendaftaran santri baru terbatas hanya untuk 50 santri pilihan.
+                Kuota terbatas: MTs Putra (48 Santri) dan IL / SMA Putra (24 Santri).
                 Segera daftarkan ananda sebelum kuota terpenuhi.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 md:gap-6 justify-center px-4">
@@ -859,8 +859,8 @@ function PPDBContent() {
 
               {/* Trust microcopy */}
               <p className="mt-6 text-[11px] text-primary-300 font-bold uppercase tracking-widest">
-                ✦ Pendaftaran Gratis&nbsp;&nbsp;•&nbsp;&nbsp;Proses
-                Mudah&nbsp;&nbsp;•&nbsp;&nbsp;Langsung Konfirmasi
+                ✦ Biaya Pendaftaran Rp 250.000&nbsp;&nbsp;•&nbsp;&nbsp;Proses
+                Online Mudah&nbsp;&nbsp;•&nbsp;&nbsp;Langsung Konfirmasi
               </p>
 
               {/* Legalitas badges */}

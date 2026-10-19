@@ -396,19 +396,19 @@ export default function DaftarPage() {
                   {[
                     {
                       value: "MTs",
-                      title: "SMP IT",
-                      subtitle: "Lulusan SD/Sederajat",
-                      desc: "Jenjang pendidikan dasar setingkat SMP." },
+                      title: "Madrasah Tsanawiyah (MTs)",
+                      subtitle: "Lulusan SD/MI Sederajat",
+                      desc: "Pendidikan setara SMP memadukan kurikulum kepesantrenan turots, Tahfidz Al-Qur'an, dan kurikulum nasional." },
                     {
                       value: "IL",
-                      title: "I'dad Lughowi",
-                      subtitle: "Lulusan SMP/Sederajat",
-                      desc: "Kelas persiapan bahasa Arab sebelum masuk MA." },
+                      title: "I'dad Lughowi (Persiapan Bahasa)",
+                      subtitle: "Lulusan SMP/MTs Sederajat",
+                      desc: "Program persiapan bahasa Arab intensif 1 tahun sebelum masuk jenjang SMA." },
                     {
-                      value: "MA",
+                      value: "SMA",
                       title: "Sekolah Menengah Atas (SMA) Langsung",
-                      subtitle: "Lulusan SMP/Sederajat",
-                      desc: "Jalur langsung tanpa IL. Khusus yang lancar berbahasa Arab & hafal minimal 5 juz mutqin." },
+                      subtitle: "Lulusan SMP/MTs Sederajat",
+                      desc: "Jalur langsung 3 tahun tanpa IL bagi santri yang lancar berbahasa Arab aktif & hafalan Al-Qur'an mutqin." },
                   ].map((option) => {
                     const isPutra = formData.jenis_kelamin === "L";
                     const isPutri = formData.jenis_kelamin === "P";

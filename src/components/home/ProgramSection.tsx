@@ -57,6 +57,21 @@ const PROGRAMS: ProgramItem[] = [
     icon: BookOpen,
     variant: "amber",
   },
+  {
+    title: "SMA Langsung (Tanpa IL)",
+    subtitle: "Tingkat Menengah Atas · 3 Tahun Langsung",
+    desc: "Program SMA 3 tahun langsung tanpa IL bagi santri lulusan SMP/MTs yang telah lancar berbahasa Arab aktif dan memiliki hafalan Al-Qur'an mutqin.",
+    features: [
+      "Hafalan Al-Qur'an Mutqin & Bersanad",
+      "Pendalaman Kitab Turots Tingkat Lanjut",
+      "Persiapan UTBK PTN & Beasiswa Timur Tengah",
+      "Bahasa Arab & Inggris Aktif Harian",
+      "Kepemimpinan & Entrepreneurship Islami",
+    ],
+    quotaLabel: "Putra 24",
+    icon: GraduationCap,
+    variant: "blue",
+  },
 ];
 
 const containerVariants: Variants = {
@@ -164,7 +179,7 @@ export default function ProgramSection() {
         </div>
 
         <motion.div
-          className="grid md:grid-cols-2 gap-5 lg:gap-8 max-w-5xl mx-auto"
+          className="grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-8 max-w-7xl mx-auto"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-60px" }}

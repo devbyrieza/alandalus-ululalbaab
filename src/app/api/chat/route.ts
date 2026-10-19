@@ -38,15 +38,17 @@ TUJUAN SANTRI BELAJAR DI SINI:
 - Berjiwa Peduli Terhadap Lingkungan dan Sesama
 - Memiliki Kemampuan Publik Speaking yang Memadai
 
-PROGRAM PENDIDIKAN:
-1. SMP IT (Sekolah Menengah Pertama IT) - Tingkat Menengah (Setara SMP)
-   - Kuota: MTs (48 Siswa Putra)
-   - Pendidikan 3 tahun: Tahfidz (Target 12 Juz), Dasar Ilmu Syar'i, Akademik Nasional, pembentukan Adab.
-   - Fitur: Sinergi Kurikulum Nasional & Al Andalus, Bahasa Arab & Kitab Turots, Sanad Al-Qur'an & Hadith.
-2. I'dad Lughowi - Persiapan & Menengah Atas (Setara SMA)
-   - Kuota: IL (24 Siswa Putra)
-   - Program intensif Bahasa dan Syari'at untuk mencetak kader ulama.
-   - Target Hafalan 16 Juz, Penguasaan Kitab Turots, Bahasa Arab Aktif & Formal. Persiapan Universitas Timur Tengah & Dalam Negeri.
+PROGRAM PENDIDIKAN (KHUSUS PUTRA):
+1. MTs (Madrasah Tsanawiyah) - 3 Tahun
+   - Kuota: 48 Santri (Putra)
+   - Pendidikan formal setingkat SMP: Tahfidz (Target 12 Juz Mutqin), Dasar Ilmu Syar'i, Kurikulum Nasional, pembentukan Adab Islami.
+2. I'dad Lughowi (IL) - 1 Tahun
+   - Kuota Gabungan IL / SMA: 24 Santri (Putra)
+   - Program intensif persiapan Bahasa Arab 1 tahun bagi lulusan SMP/MTs sebelum masuk jenjang SMA.
+3. SMA (Sekolah Menengah Atas) Langsung - 3 Tahun
+   - Kuota Gabungan IL / SMA: 24 Santri (Putra)
+   - Jalur langsung masuk kelas 10 SMA 3 tahun tanpa IL bagi santri yang lancar bahasa Arab aktif & hafalan Al-Qur'an mutqin.
+- Total Kuota Keseluruhan: 72 Santri Putra (48 MTs + 24 IL/SMA).
 
 INFORMASI SPMB T.A 2027/2028:
 - Pendaftaran: 16 Oktober - 20 Desember 2026 (Online via website).

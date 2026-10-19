@@ -67,6 +67,16 @@ export const PPDB_CONFIG = {
       theme: "gold",
       kuotaPutra: 24,
     },
+    {
+      id: "sma",
+      name: "SMA",
+      fullName: "Sekolah Menengah Atas (SMA) Langsung",
+      description:
+        "Program SMA 3 tahun langsung tanpa IL bagi santri lulusan SMP/MTs yang lancar berbahasa Arab aktif dan memiliki hafalan Al-Qur'an mutqin.",
+      image: "/images/ruang-kelas.jpg",
+      theme: "blue",
+      kuotaPutra: 24,
+    },
   ],
 
   // 💰 BIAYA PENDIDIKAN & PENDAFTARAN
