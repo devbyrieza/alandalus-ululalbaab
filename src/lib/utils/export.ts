@@ -143,8 +143,11 @@ export const exportToExcelProfessional = async ({
           colIndex === 1 || // No
           colIndex === 2 || // No. Pendaftaran
           (val && typeof val === "string" && (
-            val.trim().startsWith("MTA26") || 
-            val.trim().startsWith("ILA26") ||
+            val.trim().startsWith("MTA") || 
+            val.trim().startsWith("ILA") || 
+            val.trim().startsWith("SMA") || 
+            val.trim().startsWith("MTI") || 
+            val.trim().startsWith("ILI") ||
             val.trim().toLowerCase() === "laki-laki" || 
             val.trim().toLowerCase() === "perempuan" ||
             val.trim().toLowerCase() === "l" || 

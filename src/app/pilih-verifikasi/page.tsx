@@ -35,21 +35,17 @@ function PilihVerifikasiContent() {
   );
   const [isLoading, setIsLoading] = useState(false);
 
-  // Function untuk generate nomor pendaftaran (sama seperti di backend)
+  // Function untuk generate nomor pendaftaran (Ulul Albaab: Khusus Putra -> MTA, ILA, SMA)
   const generateNomorPendaftaran = () => {
-    const year = new Date().getFullYear();
-    const prefix =
-      jenis_kelamin === "L"
-        ? jenjang === "MTs"
-          ? "MTI"
-          : "ILI"
-        : jenjang === "MTs"
-          ? "MTA"
-          : "ILA";
+    const year = String(new Date().getFullYear()).slice(-2);
+    const normJenjang = (jenjang || "").toUpperCase();
+    let prefix = "MTA";
+    if (normJenjang.includes("IL")) prefix = "ILA";
+    else if (normJenjang.includes("SMA") || normJenjang.includes("MA")) prefix = "SMA";
+    else prefix = "MTA";
 
-    // Random 4 digit untuk demo
-    const randomNum = Math.floor(1000 + Math.random() * 9000);
-
+    // Random 5 digit untuk demo
+    const randomNum = Math.floor(10000 + Math.random() * 90000);
     return `${prefix}${year}${randomNum}`;
   };
 

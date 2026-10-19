@@ -103,13 +103,12 @@ export async function generateNomorPendaftaran(
  * @param jenis_kelamin - L (Laki-laki) or P (Perempuan)
  * @returns Prefix string (MTI, MTA, ILI, ILA, MAI, MAA)
  */
-export function generatePrefix(jenjang: string, jenis_kelamin: string): string {
+export function generatePrefix(jenjang: string, jenis_kelamin?: string): string {
   const normJenjang = (jenjang || "").toUpperCase().replace(/[\s\-_]/g, "");
-  const isPutri = (jenis_kelamin || "").toUpperCase() === "P" || (jenis_kelamin || "").toUpperCase() === "PUTRI";
-  if (normJenjang.includes("MTS") || normJenjang.includes("SMP")) return isPutri ? "MTI" : "MTA";
-  if (normJenjang.includes("IL") || normJenjang.includes("IDAD") || normJenjang.includes("LUGHAW")) return isPutri ? "ILI" : "ILA";
-  if (normJenjang.includes("SMA") || normJenjang.includes("MA")) return isPutri ? "SMI" : "SMA";
-  return isPutri ? "MTI" : "MTA";
+  // Ulul Albaab adalah pesantren khusus Putra: MTA (MTs), ILA (IL), SMA (SMA)
+  if (normJenjang.includes("IL") || normJenjang.includes("IDAD") || normJenjang.includes("LUGHAW")) return "ILA";
+  if (normJenjang.includes("SMA") || normJenjang.includes("MA")) return "SMA";
+  return "MTA";
 }
 
 // ===================================

@@ -34,6 +34,59 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
+    // Auto-sync prefix: Pastikan seluruh pendaftar di Ulul Albaab (Putra) menggunakan prefix MTA, ILA, SMA
+    try {
+      const mismatched = await prisma.pendaftar.findMany({
+        where: {
+          OR: [
+            { nomor_pendaftaran: { startsWith: "MTI" } },
+            { nomor_pendaftaran: { startsWith: "ILI" } },
+            { nomor_pendaftaran: { startsWith: "MAI" } },
+            { nomor_pendaftaran: { startsWith: "MAA" } },
+            { nomor_pendaftaran: { startsWith: "SMI" } },
+            { jenis_kelamin: "P" },
+          ],
+        },
+        select: { id: true, nomor_pendaftaran: true, jenjang: true, jenis_kelamin: true },
+        take: 100,
+      });
+
+      if (mismatched.length > 0) {
+        for (const item of mismatched) {
+          let targetPrefix = "MTA";
+          const normJ = (item.jenjang || "").toUpperCase();
+          if (normJ.includes("IL")) targetPrefix = "ILA";
+          else if (normJ.includes("SMA") || normJ.includes("MA")) targetPrefix = "SMA";
+          else targetPrefix = "MTA";
+
+          let newNomor = item.nomor_pendaftaran;
+          if (item.nomor_pendaftaran && /^(MTI|ILI|MAI|MAA|SMI)/.test(item.nomor_pendaftaran)) {
+            newNomor = `${targetPrefix}${item.nomor_pendaftaran.slice(3)}`;
+          }
+
+          const updateData: any = {};
+          if (newNomor !== item.nomor_pendaftaran) {
+            const conflict = await prisma.pendaftar.findUnique({ where: { nomor_pendaftaran: newNomor } });
+            if (!conflict) {
+              updateData.nomor_pendaftaran = newNomor;
+            }
+          }
+          if (item.jenis_kelamin !== "L") {
+            updateData.jenis_kelamin = "L";
+          }
+
+          if (Object.keys(updateData).length > 0) {
+            await prisma.pendaftar.update({
+              where: { id: item.id },
+              data: updateData,
+            });
+          }
+        }
+      }
+    } catch (e: any) {
+      console.warn("[AUTO-SYNC-PREFIX-ULUL] Warning:", e?.message);
+    }
+
     // Get query params
     const searchParams = request.nextUrl.searchParams;
     const page = parseInt(searchParams.get("page") || "1");

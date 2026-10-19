@@ -186,7 +186,7 @@ export default function LoginPage() {
     }
 
     if (!/^[A-Z]{2,6}\d{6,9}$/i.test(no)) {
-      setError("Format nomor pendaftaran tidak valid (contoh: SPA2700001, SPI2700001, atau ILA2700001)");
+      setError("Format nomor pendaftaran tidak valid (contoh: MTA2700001, ILA2700001, atau SMA2700001)");
       setIsLoading(false);
       return;
     }
