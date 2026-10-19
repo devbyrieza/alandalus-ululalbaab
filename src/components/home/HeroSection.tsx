@@ -10,6 +10,7 @@ import {
   BookOpen,
   ShieldCheck,
   CheckCircle2,
+  MessageCircle,
 } from "lucide-react";
 import { Container } from "@/components/layout/Container";
 import { BRANDING } from "@/config/branding";
@@ -17,6 +18,8 @@ import { BRANDING } from "@/config/branding";
 // Jadwal pendaftaran: satu sumber agar label dan countdown selalu sinkron
 const REG_CLOSE_ISO = "2026-12-20T23:59:59+07:00";
 const REG_PERIOD_LABEL = "16 Okt - 20 Des 2026";
+const WA_CONSULT_URL =
+  "https://wa.me/6281285300800?text=Halo%20Admin%20SPMB%20Pesantren%20Ulul%20Albaab%2C%20saya%20ingin%20konsultasi%20pendaftaran%20santri%20baru";
 
 function useCountdown(targetDate: string) {
   const [timeLeft, setTimeLeft] = useState({
@@ -133,10 +136,46 @@ export default function HeroSection() {
               <div className="h-px w-8 bg-secondary" />
             </div>
 
+            {/* Quick-Value Objection/Confidence Pills (Al-Ma'tuq & SUNI Standard) */}
+            <div
+              className={`grid grid-cols-1 sm:grid-cols-3 gap-2.5 max-w-xl mx-auto lg:mx-0 pt-1 ${enter}`}
+              style={delay(260)}
+            >
+              <div className="flex items-center gap-2.5 p-2.5 rounded-xl bg-white/80 border border-blue-100 shadow-xs backdrop-blur-xs text-left">
+                <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 border border-emerald-200">
+                  <ShieldCheck className="w-4 h-4" />
+                </div>
+                <div>
+                  <div className="text-xs font-bold text-slate-900 leading-tight">Mendidik Tanpa Luka</div>
+                  <div className="text-[10px] text-slate-500 font-medium leading-tight">Nol kekerasan & perundungan</div>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2.5 p-2.5 rounded-xl bg-white/80 border border-blue-100 shadow-xs backdrop-blur-xs text-left">
+                <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 border border-blue-200">
+                  <BookOpen className="w-4 h-4" />
+                </div>
+                <div>
+                  <div className="text-xs font-bold text-slate-900 leading-tight">Bahasa Arab &amp; Tahfidz</div>
+                  <div className="text-[10px] text-slate-500 font-medium leading-tight">Sanad mutqin & aktif harian</div>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2.5 p-2.5 rounded-xl bg-white/80 border border-blue-100 shadow-xs backdrop-blur-xs text-left">
+                <div className="w-8 h-8 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center shrink-0 border border-amber-200">
+                  <GraduationCap className="w-4 h-4" />
+                </div>
+                <div>
+                  <div className="text-xs font-bold text-slate-900 leading-tight">Ijazah Formal Resmi</div>
+                  <div className="text-[10px] text-slate-500 font-medium leading-tight">Kemenag & Kemendikbud</div>
+                </div>
+              </div>
+            </div>
+
             {/* Trust checklist */}
             <ul
               className={`flex flex-wrap gap-x-5 gap-y-2 justify-center lg:justify-start ${enter}`}
-              style={delay(280)}
+              style={delay(300)}
             >
               {["MTs & IL Putra", "Kurikulum TICE Terpadu", "Boarding Asrama Representatif"].map((item) => (
                 <li key={item} className="flex items-center gap-1.5 text-xs text-slate-500 font-medium">
@@ -148,7 +187,7 @@ export default function HeroSection() {
 
             {/* CTA Buttons */}
             <div
-              className={`flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-2.5 sm:gap-3 pt-1 sm:pt-1.5 w-full ${enter}`}
+              className={`flex flex-wrap items-center justify-center lg:justify-start gap-2.5 sm:gap-3 pt-1 sm:pt-1.5 w-full ${enter}`}
               style={delay(340)}
             >
               {session ? (
@@ -162,6 +201,16 @@ export default function HeroSection() {
                   <ArrowRight className="w-4 h-4" aria-hidden="true" />
                 </Link>
               )}
+
+              <a
+                href={WA_CONSULT_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-bold text-xs sm:text-sm bg-emerald-50 text-emerald-700 border border-emerald-300 hover:bg-emerald-600 hover:text-white hover:border-emerald-600 shadow-sm transition-all duration-200"
+              >
+                <MessageCircle className="w-4 h-4 shrink-0" />
+                <span>Konsultasi Panitia</span>
+              </a>
 
               <Link href="/program" className="btn-secondary w-full sm:w-auto flex items-center justify-center gap-2">
                 <span>Lihat Program</span>

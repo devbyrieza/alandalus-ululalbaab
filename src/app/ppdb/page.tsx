@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useEffect } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import {
@@ -24,7 +24,9 @@ import {
   Shield,
   Star,
   MapPin,
-  Clock } from "lucide-react";
+  Clock,
+  Copy,
+} from "lucide-react";
 import { Container } from "@/components/layout/Container";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -117,6 +119,13 @@ const TimelineItem = ({ item, index }: { item: any; index: number }) => (
 // ========================================
 
 function PPDBContent() {
+  const [copiedBank, setCopiedBank] = useState(false);
+  const handleCopyRekening = (rek: string) => {
+    navigator.clipboard.writeText(rek);
+    setCopiedBank(true);
+    setTimeout(() => setCopiedBank(false), 2000);
+  };
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -346,64 +355,205 @@ function PPDBContent() {
         </Container>
       </section>
 
-      {/* 3. Costs Section */}
-      <section className="py-24 md:py-32 bg-white">
+      {/* 3. Costs Section (Visual 3-Step Installment Stepper & Bank Card) */}
+      <section className="py-20 md:py-28 bg-gradient-to-b from-white via-slate-50/60 to-white border-y border-surface-100">
         <Container>
-          <div className="text-center mb-16 md:mb-24">
-            <h2 className="text-3xl md:text-6xl font-display font-black text-ink-950 mb-6">
-              Informasi Investasi <br />
-              <span className="text-primary-600">Pendidikan</span>
+          <div className="text-center mb-14 md:mb-16">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-primary text-xs font-black uppercase tracking-widest mb-4 shadow-2xs">
+              <CreditCard className="w-3.5 h-3.5" />
+              <span>Investasi Masa Depan Santri</span>
+            </div>
+            <h2 className="text-3xl md:text-5xl font-display font-black text-ink-950 mb-4 tracking-tight">
+              Informasi Pembiayaan <br />
+              <span className="text-primary-600">Pendidikan T.A 2027/2028</span>
             </h2>
-            <p className="text-xl text-ink-600 max-w-2xl mx-auto font-medium">
-              Informasi pembiayaan lengkap untuk Tahun Ajaran 2027/2028.
+            <p className="text-base md:text-lg text-ink-600 max-w-2xl mx-auto font-medium">
+              Transparan, terjangkau, dan berkah dengan skema cicilan fleksibel untuk santri putra.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 md:gap-12 max-w-6xl mx-auto">
-            {biaya.map((item, idx) => {
-              const Icon = item.icon;
-              return (
-                <motion.div
-                  key={idx}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: idx * 0.1 }}
-                  className="bg-white p-5 md:p-8 sm:p-6 rounded-[2rem] md:rounded-[3.5rem] border border-surface-100 shadow-premium-lg flex flex-col items-center text-center group hover:bg-primary-900 transition-all duration-500"
-                >
-                  <div className="w-20 h-20 bg-surface-50 rounded-[2rem] flex items-center justify-center text-primary-600 mb-8 group-hover:bg-white/10 group-hover:text-white transition-all shadow-premium-sm">
-                    <Icon className="w-10 h-10" />
-                  </div>
-                  <h3 className="text-xl text-ink-400 font-black uppercase tracking-widest mb-3 group-hover:text-white/60 transition-colors">
-                    {item.label}
-                  </h3>
-                  <p className="text-2xl md:text-4xl font-display font-black text-ink-950 group-hover:text-white transition-colors">
-                    {item.value}
-                  </p>
-                </motion.div>
-              );
-            })}
+          {/* 3 Overview Cards */}
+          <div className="grid md:grid-cols-3 gap-6 md:gap-8 max-w-6xl mx-auto mb-12">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="bg-white p-7 sm:p-8 rounded-[2rem] border border-blue-100 shadow-premium-sm hover:shadow-premium-md transition-all flex flex-col items-center text-center group"
+            >
+              <div className="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center text-primary-600 mb-6 group-hover:scale-110 transition-transform shadow-2xs">
+                <CreditCard className="w-8 h-8" />
+              </div>
+              <h3 className="text-xs text-ink-400 font-black uppercase tracking-widest mb-2">
+                Biaya Pendaftaran
+              </h3>
+              <p className="text-3xl sm:text-4xl font-display font-black text-ink-950 mb-3">
+                Rp 250.000
+              </p>
+              <p className="text-xs text-ink-500 font-medium leading-relaxed">
+                Biaya registrasi &amp; seleksi masuk santri baru (Tahsin, Tahfidz, Akademik &amp; Wawancara). Bersifat non-refundable.
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="bg-gradient-to-b from-blue-50/70 via-white to-white p-7 sm:p-8 rounded-[2rem] border-2 border-primary-500 shadow-premium-md hover:shadow-premium-lg transition-all flex flex-col items-center text-center relative group"
+            >
+              <div className="absolute -top-3.5 px-4 py-1 rounded-full bg-primary-600 text-white text-[11px] font-black uppercase tracking-wider shadow-sm">
+                Bisa Dicicil 3x
+              </div>
+              <div className="w-16 h-16 bg-primary-50 rounded-2xl flex items-center justify-center text-primary-600 mb-6 group-hover:scale-110 transition-transform shadow-2xs">
+                <Shield className="w-8 h-8" />
+              </div>
+              <h3 className="text-xs text-primary-700 font-black uppercase tracking-widest mb-2">
+                Uang Pangkal (Daftar Ulang)
+              </h3>
+              <p className="text-3xl sm:text-4xl font-display font-black text-primary-700 mb-3">
+                Rp 9.900.000
+              </p>
+              <p className="text-xs text-ink-500 font-medium leading-relaxed">
+                Termasuk sarana prasarana, seragam, kasur lemari asrama, buku &amp; modul kurikulum. Cicilan bertahap s/d Mei 2027.
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="bg-white p-7 sm:p-8 rounded-[2rem] border border-blue-100 shadow-premium-sm hover:shadow-premium-md transition-all flex flex-col items-center text-center group"
+            >
+              <div className="w-16 h-16 bg-amber-50 rounded-2xl flex items-center justify-center text-amber-600 mb-6 group-hover:scale-110 transition-transform shadow-2xs">
+                <Star className="w-8 h-8" />
+              </div>
+              <h3 className="text-xs text-ink-400 font-black uppercase tracking-widest mb-2">
+                SPP Bulanan (All-In)
+              </h3>
+              <p className="text-3xl sm:text-4xl font-display font-black text-ink-950 mb-3">
+                Rp 1.100.000
+              </p>
+              <p className="text-xs text-ink-500 font-medium leading-relaxed">
+                Per bulan (Total Rp 13.200.000/tahun All-In sudah termasuk asrama, makan 3x sehari, laundry, &amp; seluruh kegiatan).
+              </p>
+            </motion.div>
           </div>
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="mt-16 max-w-4xl mx-auto bg-primary-50 border border-primary-100 rounded-[2.5rem] p-5 md:p-8 flex flex-col md:flex-row items-center gap-8 text-center md:text-left"
-          >
-            <div className="w-16 h-16 bg-white rounded-lg flex items-center justify-center text-primary-600 shadow-premium-sm shrink-0">
-              <HelpCircle className="w-8 h-8" />
+          {/* Visual 3-Step Installment Stepper */}
+          <div className="max-w-5xl mx-auto bg-white rounded-3xl border border-blue-200 p-6 sm:p-10 shadow-premium-sm mb-10">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pb-8 mb-8 border-b border-surface-100 text-center sm:text-left">
+              <div>
+                <span className="text-[11px] font-black uppercase tracking-widest text-primary-600 bg-primary-50 px-3 py-1 rounded-full border border-primary-200 inline-block mb-1">
+                  Skema Pembayaran Transparan
+                </span>
+                <h3 className="text-xl sm:text-2xl font-display font-black text-ink-950">
+                  Tahapan Cicilan Uang Pangkal (Rp 9.900.000)
+                </h3>
+              </div>
+              <div className="text-xs font-bold text-slate-500 bg-surface-50 px-4 py-2 rounded-xl border border-surface-200">
+                Maksimal 3 Kali Pembayaran
+              </div>
             </div>
-            <div>
-              <p className="text-lg text-primary-900 font-bold leading-relaxed">
-                Catatan Penting: Biaya pendaftaran dan uang pangkal bersifat
-                non-refundable. Uang pangkal (daftar ulang) dapat dicicil
-                maksimal 3x pembayaran, dengan{" "}
-                <strong>cicilan pertama yaitu 50% (Rp 4.950.000) sepekan setelah menerima surat pengumuman hasil seleksi</strong>, kemudian
-                sisanya boleh dicicil 2x dengan batas waktu yaitu hingga Mei 2027.
+
+            <div className="grid md:grid-cols-3 gap-6 relative">
+              {/* Step 1 */}
+              <div className="bg-gradient-to-b from-blue-50/80 to-white rounded-2xl p-6 border-2 border-primary-500 shadow-sm relative space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="w-8 h-8 rounded-full bg-primary-600 text-white font-black text-sm flex items-center justify-center shadow-xs">
+                    1
+                  </span>
+                  <span className="text-[10px] font-black uppercase tracking-wider text-primary-700 bg-primary-100/80 px-2.5 py-1 rounded-full">
+                    Kunci Kuota
+                  </span>
+                </div>
+                <div>
+                  <div className="text-xs font-bold text-ink-500">Cicilan 1 (50%)</div>
+                  <div className="text-2xl font-display font-black text-ink-950">Rp 4.950.000</div>
+                </div>
+                <p className="text-xs text-ink-600 leading-relaxed font-normal">
+                  Wajib dibayarkan paling lambat <strong>sepekan (7 hari)</strong> setelah menerima Surat Pengumuman Kelulusan Seleksi sebagai konfirmasi daftar ulang santri.
+                </p>
+              </div>
+
+              {/* Step 2 */}
+              <div className="bg-surface-50/60 rounded-2xl p-6 border border-surface-200 shadow-xs space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="w-8 h-8 rounded-full bg-surface-200 text-ink-700 font-black text-sm flex items-center justify-center">
+                    2
+                  </span>
+                  <span className="text-[10px] font-black uppercase tracking-wider text-ink-600 bg-surface-200/80 px-2.5 py-1 rounded-full">
+                    Fleksibel
+                  </span>
+                </div>
+                <div>
+                  <div className="text-xs font-bold text-ink-500">Cicilan 2 (25%)</div>
+                  <div className="text-2xl font-display font-black text-ink-950">Rp 2.475.000</div>
+                </div>
+                <p className="text-xs text-ink-600 leading-relaxed font-normal">
+                  Dapat diangsur secara bertahap setelah pembayaran Cicilan 1 untuk memberikan kenyamanan dan kelonggaran bagi orang tua.
+                </p>
+              </div>
+
+              {/* Step 3 */}
+              <div className="bg-surface-50/60 rounded-2xl p-6 border border-surface-200 shadow-xs space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="w-8 h-8 rounded-full bg-surface-200 text-ink-700 font-black text-sm flex items-center justify-center">
+                    3
+                  </span>
+                  <span className="text-[10px] font-black uppercase tracking-wider text-amber-700 bg-amber-100 px-2.5 py-1 rounded-full">
+                    Batas Akhir Mei 2027
+                  </span>
+                </div>
+                <div>
+                  <div className="text-xs font-bold text-ink-500">Cicilan 3 (Pelunasan 25%)</div>
+                  <div className="text-2xl font-display font-black text-ink-950">Rp 2.475.000</div>
+                </div>
+                <p className="text-xs text-ink-600 leading-relaxed font-normal">
+                  Pelunasan sisa uang pangkal sebelum santri mulai masuk asrama, dengan batas waktu maksimal <strong>hingga Mei 2027</strong>.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Rekening Resmi BSI Card with Copy Button */}
+          <div className="max-w-5xl mx-auto bg-slate-900 text-white rounded-3xl p-6 sm:p-8 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="space-y-1.5 text-center md:text-left">
+              <span className="text-xs font-black uppercase tracking-widest text-blue-300">
+                Rekening Resmi Pembayaran SPMB Ulul Albaab (Khusus Putra)
+              </span>
+              <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 pt-0.5">
+                <span className="text-lg font-bold text-slate-200">Bank Syariah Indonesia (BSI):</span>
+                <span className="text-xl sm:text-2xl font-mono font-extrabold text-blue-400">7253701263</span>
+              </div>
+              <p className="text-xs text-slate-400">
+                Atas Nama: <strong className="text-white">Al Andalus Ulul Albaab 1</strong> • Kode Bank: <span className="font-mono text-slate-300">451</span>
               </p>
             </div>
-          </motion.div>
+
+            <div className="flex flex-col sm:flex-row items-center gap-3 shrink-0">
+              <button
+                type="button"
+                onClick={() => handleCopyRekening("7253701263")}
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-2xl font-bold text-xs bg-white/10 hover:bg-white/20 text-white border border-white/20 transition-all active:scale-95 shadow-sm"
+              >
+                {copiedBank ? (
+                  <>
+                    <Check className="w-4 h-4 text-emerald-400" />
+                    <span className="text-emerald-400">Tersalin ke Clipboard!</span>
+                  </>
+                ) : (
+                  <>
+                    <Copy className="w-4 h-4 text-blue-300" />
+                    <span>Salin No. Rekening</span>
+                  </>
+                )}
+              </button>
+              <div className="text-[11px] text-slate-400 bg-white/5 px-3.5 py-2.5 rounded-xl border border-white/10 text-center">
+                Konfirmasi otomatis di Dashboard
+              </div>
+            </div>
+          </div>
         </Container>
       </section>
 

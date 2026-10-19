@@ -24,6 +24,7 @@ import ContactSection from "@/components/home/ContactSection";
 import CtaSection from "@/components/home/CtaSection";
 import StickyFeatureSection from "@/components/home/StickyFeatureSection";
 import BentoGridSection from "@/components/home/BentoGridSection";
+import FloatingCta from "@/components/home/FloatingCta";
 
 export default function HomePage() {
   useEffect(() => {
@@ -100,6 +101,9 @@ export default function HomePage() {
             <ContactSection />
           </ScrollAnimation>
         </section>
+
+        {/* Floating CTA */}
+        <FloatingCta />
       </main>
     </LazyMotion>
   );

