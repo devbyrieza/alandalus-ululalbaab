@@ -1803,23 +1803,29 @@ function AdminPendaftarContent() {
                     </button>
                     <div className="flex-1 min-w-0">
                       <div className="flex flex-wrap items-center gap-2 mb-1">
-                        <span className="font-mono text-xs font-bold text-primary-700 bg-primary-50 px-2 py-0.5 rounded">
+                        <Link
+                          href={`/dashboard/admin/pendaftar/${item.id}`}
+                          className="font-mono text-xs font-bold text-primary-700 bg-primary-50 hover:bg-primary-100 px-2 py-0.5 rounded transition-colors"
+                        >
                           {item.nomor_pendaftaran}
-                        </span>
+                        </Link>
                         <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 bg-purple-100 text-purple-700 rounded-full whitespace-nowrap inline-block shrink-0">
                           {item.jenjang}
                         </span>
                       </div>
-                      <p className="font-black text-primary-950 leading-tight text-sm flex items-center gap-1.5 flex-wrap">
-                        <span>{toTitleCase(item.nama_lengkap)}</span>
+                      <Link
+                        href={`/dashboard/admin/pendaftar/${item.id}`}
+                        className="font-black text-primary-950 hover:text-primary-700 leading-tight text-sm flex items-center gap-1.5 flex-wrap group transition-colors"
+                      >
+                        <span className="group-hover:underline underline-offset-2">{toTitleCase(item.nama_lengkap)}</span>
                         {item.tipe_pendaftaran === "PINDAHAN" && (
                           <span className="px-1.5 py-0.5 bg-violet-100 text-violet-700 rounded-md text-[9px] font-black uppercase tracking-wider whitespace-nowrap inline-block shrink-0">
                             PINDAHAN
                           </span>
                         )}
-                      </p>
+                      </Link>
                       <p className="text-xs text-stone-500 mt-0.5">
-                        "Laki-laki"
+                        Laki-laki
                         {item.no_hp && <> &bull; {item.no_hp}</>}
                       </p>
                       <div className="flex flex-wrap items-center gap-2 mt-2">
@@ -1878,10 +1884,16 @@ function AdminPendaftarContent() {
                             </button>
                           )}
                       </div>
-                      <div className="flex justify-end mt-3 border-t border-gold-50 pt-3">
+                      <div className="flex items-center justify-between mt-3 border-t border-gold-50 pt-3">
+                        <Link
+                          href={`/dashboard/admin/pendaftar/${item.id}`}
+                          className="px-3 py-1.5 bg-primary-700 hover:bg-primary-800 text-white rounded-xl text-xs font-black uppercase tracking-wider flex items-center gap-1.5 shadow-sm transition-all active:scale-95"
+                        >
+                          <Eye className="w-3.5 h-3.5" /> Buka Detail
+                        </Link>
 
-                          <ActionDropdown 
-                            items={[
+                        <ActionDropdown 
+                          items={[
                               {
                                 label: "Buka Detail",
                                 icon: <Eye className="w-4 h-4" />,
@@ -1990,22 +2002,28 @@ function AdminPendaftarContent() {
                         </button>
                       </td>
                       <td className="px-4 py-3 whitespace-nowrap">
-                        <span className="font-mono text-sm font-bold text-primary-700 bg-primary-50 px-2 py-1 rounded">
+                        <Link
+                          href={`/dashboard/admin/pendaftar/${item.id}`}
+                          className="font-mono text-sm font-bold text-primary-700 bg-primary-50 hover:bg-primary-100 px-2 py-1 rounded transition-colors inline-block"
+                        >
                           {item.nomor_pendaftaran}
-                        </span>
+                        </Link>
                       </td>
                       <td className="px-4 py-3">
                         <div>
-                          <div className="font-bold text-stone-900 flex items-center gap-1.5 flex-wrap">
-                            <span>{toTitleCase(item.nama_lengkap)}</span>
+                          <Link
+                            href={`/dashboard/admin/pendaftar/${item.id}`}
+                            className="font-bold text-stone-900 hover:text-primary-700 flex items-center gap-1.5 flex-wrap group transition-colors"
+                          >
+                            <span className="group-hover:underline underline-offset-2">{toTitleCase(item.nama_lengkap)}</span>
                             {item.tipe_pendaftaran === "PINDAHAN" && (
                               <span className="px-1.5 py-0.5 bg-violet-100 text-violet-700 rounded-md text-[9px] font-black uppercase tracking-wider whitespace-nowrap inline-block shrink-0">
                                 PINDAHAN
                               </span>
                             )}
-                          </div>
+                          </Link>
                           <div className="text-xs text-stone-600 font-medium">
-                            "Laki-laki"
+                            Laki-laki
                           </div>
                         </div>
                       </td>
@@ -2044,7 +2062,15 @@ function AdminPendaftarContent() {
                       </td>
                       
                       <td className="px-4 py-3 whitespace-nowrap sticky right-0 bg-white/95 backdrop-blur z-10 shadow-[-10px_0_15px_-3px_rgba(0,0,0,0.05)] group-hover:bg-primary-50 transition-colors">
-                        <div className="flex justify-end gap-2">
+                        <div className="flex items-center justify-end gap-2">
+                          <Link
+                            href={`/dashboard/admin/pendaftar/${item.id}`}
+                            className="px-2.5 py-1.5 bg-primary-50 hover:bg-primary-100 text-primary-700 rounded-xl text-xs font-bold flex items-center gap-1 border border-primary-200 transition-all active:scale-95"
+                            title="Buka Detail"
+                          >
+                            <Eye className="w-3.5 h-3.5" />
+                            <span>Detail</span>
+                          </Link>
 
                           <ActionDropdown 
                             items={[
