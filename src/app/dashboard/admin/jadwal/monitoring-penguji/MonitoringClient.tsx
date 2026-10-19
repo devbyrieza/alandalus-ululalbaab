@@ -115,7 +115,7 @@ export default function MonitoringClient({ data }: { data: ExaminerStat[] }) {
             <button
               key={type}
               onClick={() => setFilterType(type)}
-              className={`px-6 py-3 rounded-2xl text-xs font-black uppercase tracking-widest whitespace-nowrap transition-all ${ filterType === type ? "bg-primary-950 text-white shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10" : "bg-ink-50 text-ink-500 hover:bg-ink-100" }`}
+              className={`px-6 py-3 rounded-2xl text-xs font-black uppercase tracking-widest whitespace-nowrap transition-all ${ filterType === type ? "bg-primary-950 text-white shadow-2xl   " : "bg-ink-50 text-ink-500 hover:bg-ink-100" }`}
             >
               {type}
             </button>
@@ -185,7 +185,7 @@ export default function MonitoringClient({ data }: { data: ExaminerStat[] }) {
                             target="_blank" 
                             rel="noreferrer"
                             onClick={(e) => e.stopPropagation()}
-                            className="w-10 h-10 bg-green-500 text-white rounded-2xl flex items-center justify-center hover:bg-green-600 transition-colors shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 shadow-green-500/20"
+                            className="w-10 h-10 bg-green-500 text-white rounded-2xl flex items-center justify-center hover:bg-green-600 transition-colors shadow-2xl shadow-green-500/20"
                             title="Ingatkan via WA"
                           >
                             <MessageCircle className="w-5 h-5" />

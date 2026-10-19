@@ -84,28 +84,16 @@ export default function CalendarSection() {
                       className="relative flex items-start gap-5 sm:gap-7 group"
                     >
                       <div
-                        className={[
-                          "w-11 h-11 rounded-xl flex items-center justify-center relative z-10 shrink-0 shadow-xs",
-                          "transition-transform duration-400 group-hover:scale-110",
-                          colors.number,
-                        ].join(" ")}
-                      >
-                        <span className="font-display font-black text-[1.0625rem]">
-                          {idx + 1}
+                        className={[ "w-11 h-11 rounded-xl flex items-center justify-center relative z-10 shrink-0 shadow-xs", "transition-transform duration-400 group-hover:scale-110", colors.number, ].join(" ")} > <span className="font-display font-black text-[1.0625rem]">{idx + 1}
                         </span>
                       </div>
 
-                      <div className="bg-white/80 backdrop-blur-sm p-6 md:p-7 rounded-2xl border border-blue-100 shadow-xl shadow-blue-500/10 hover:shadow-2xl hover:shadow-blue-500/20 hover:border-primary-200 transition-all duration-400 flex-grow relative overflow-hidden">
+                      <div className="bg-white/80 backdrop-blur-sm p-6 md:p-7 rounded-2xl border border-blue-100 shadow-xl hover:shadow-xl hover: hover:border-primary-200 transition-all duration-400 flex-grow relative overflow-hidden">
                         <div className="absolute inset-0 bg-gradient-to-br from-primary-50/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
 
                         <div className="relative z-10">
                           <span
-                            className={[
-                              "inline-block px-2.5 py-1 rounded-md text-[0.6rem] font-black uppercase tracking-widest mb-3 border shadow-xs",
-                              colors.badge,
-                            ].join(" ")}
-                          >
-                            {item.date}
+                            className={[ "inline-block px-2.5 py-1 rounded-md text-[0.6rem] font-black uppercase tracking-widest mb-3 border shadow-xs", colors.badge, ].join(" ")} >{item.date}
                           </span>
                           <h4
                             className={`font-bold text-ink-900 text-lg mb-1.5 tracking-tight transition-colors duration-200 ${colors.title}`}
@@ -154,7 +142,7 @@ export default function CalendarSection() {
 
                 <div className="space-y-3.5 w-full max-w-[240px]">
                   <Link href="/kalender" className="block w-full">
-                    <button className="btn-primary w-full justify-center py-3 shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10">
+                    <button className="btn-primary w-full justify-center py-3 shadow-md">
                       Cek Kalender
                       <ArrowUpRight className="w-4 h-4 ml-1" />
                     </button>

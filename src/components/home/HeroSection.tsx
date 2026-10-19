@@ -96,7 +96,7 @@ export default function HeroSection() {
         <div className="text-center space-y-6 sm:space-y-7 max-w-4xl mx-auto">
           {/* Eyebrow Pill */}
           <div
-            className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 border border-blue-300 shadow-xs shadow-blue-500/20 ${enter}`}
+            className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 border border-blue-300 shadow-xs ${enter}`}
             style={delay(0)}
           >
             <span className="w-2 h-2 rounded-full bg-primary motion-safe:animate-pulse" />
@@ -143,7 +143,7 @@ export default function HeroSection() {
             className={`grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-3xl mx-auto pt-1 ${enter}`}
             style={delay(240)}
           >
-            <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-white/90 border border-blue-100 shadow-xl shadow-primary/20 backdrop-blur-xs text-left">
+            <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-white/90 border border-blue-100 shadow-xl backdrop-blur-xs text-left">
               <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 border border-emerald-200 shadow-2xs">
                 <ShieldCheck className="w-5 h-5" />
               </div>
@@ -153,7 +153,7 @@ export default function HeroSection() {
               </div>
             </div>
 
-            <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-white/90 border border-blue-100 shadow-xl shadow-primary/20 backdrop-blur-xs text-left">
+            <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-white/90 border border-blue-100 shadow-xl backdrop-blur-xs text-left">
               <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 border border-blue-200 shadow-2xs">
                 <BookOpen className="w-5 h-5" />
               </div>
@@ -163,7 +163,7 @@ export default function HeroSection() {
               </div>
             </div>
 
-            <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-white/90 border border-blue-100 shadow-xl shadow-primary/20 backdrop-blur-xs text-left">
+            <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-white/90 border border-blue-100 shadow-xl backdrop-blur-xs text-left">
               <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0 border border-amber-200 shadow-2xs">
                 <GraduationCap className="w-5 h-5" />
               </div>
@@ -193,12 +193,12 @@ export default function HeroSection() {
             style={delay(320)}
           >
             {session ? (
-              <Link href="/dashboard" className="btn-primary w-full sm:w-auto px-8 py-4 text-base shadow-xl shadow-blue-500/25 hover:shadow-blue-500/40 flex items-center justify-center gap-2">
+              <Link href="/dashboard" className="btn-primary w-full sm:w-auto px-8 py-4 text-base shadow-xl hover: flex items-center justify-center gap-2">
                 <span>Buka Dashboard</span>
                 <ArrowRight className="w-5 h-5" aria-hidden="true" />
               </Link>
             ) : (
-              <Link href="/ppdb" className="btn-primary w-full sm:w-auto px-8 py-4 text-base shadow-xl shadow-blue-500/25 hover:shadow-blue-500/40 flex items-center justify-center gap-2">
+              <Link href="/ppdb" className="btn-primary w-full sm:w-auto px-8 py-4 text-base shadow-xl hover: flex items-center justify-center gap-2">
                 <span>Daftar SPMB 2027</span>
                 <ArrowRight className="w-5 h-5" aria-hidden="true" />
               </Link>
@@ -208,7 +208,7 @@ export default function HeroSection() {
               href={WA_CONSULT_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-4 rounded-2xl font-bold text-sm sm:text-base bg-[#25D366] text-white hover:bg-[#20ba59] shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/40 hover:-translate-y-0.5 transition-all duration-300"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-4 rounded-2xl font-bold text-sm sm:text-base bg-[#25D366] text-white hover:bg-[#20ba59] shadow-lg hover: hover:-translate-y-0.5 transition-all duration-300"
             >
               <MessageCircle className="w-5 h-5 shrink-0" />
               <span>Konsultasi Panitia</span>
@@ -225,7 +225,7 @@ export default function HeroSection() {
             style={delay(360)}
           >
             {/* Card 1: Uang Pangkal */}
-            <div className="bg-white/90 border border-blue-100 rounded-2xl p-4 shadow-xl shadow-primary/20 text-center space-y-1">
+            <div className="bg-white/90 border border-blue-100 rounded-2xl p-4 shadow-xl text-center space-y-1">
               <span className="text-[11px] font-extrabold uppercase tracking-wider text-slate-400">
                 Uang Pangkal
               </span>
@@ -238,7 +238,7 @@ export default function HeroSection() {
             </div>
 
             {/* Card 2: SPP Bulanan */}
-            <div className="bg-white/90 border border-blue-100 rounded-2xl p-4 shadow-xl shadow-primary/20 text-center space-y-1">
+            <div className="bg-white/90 border border-blue-100 rounded-2xl p-4 shadow-xl text-center space-y-1">
               <span className="text-[11px] font-extrabold uppercase tracking-wider text-slate-400">
                 SPP Bulanan
               </span>
@@ -251,7 +251,7 @@ export default function HeroSection() {
             </div>
 
             {/* Card 3: Gender */}
-            <div className="bg-white/90 border border-blue-100 rounded-2xl p-4 shadow-xl shadow-primary/20 text-center space-y-1">
+            <div className="bg-white/90 border border-blue-100 rounded-2xl p-4 shadow-xl text-center space-y-1">
               <span className="text-[11px] font-extrabold uppercase tracking-wider text-slate-400">
                 Ekosistem
               </span>
@@ -264,7 +264,7 @@ export default function HeroSection() {
             </div>
 
             {/* Card 4: Countdown Status */}
-            <div className="bg-white/90 border border-blue-100 rounded-2xl p-4 shadow-xl shadow-primary/20 text-center space-y-1">
+            <div className="bg-white/90 border border-blue-100 rounded-2xl p-4 shadow-xl text-center space-y-1">
               <span className="text-[11px] font-extrabold uppercase tracking-wider text-slate-400">
                 Pendaftaran
               </span>

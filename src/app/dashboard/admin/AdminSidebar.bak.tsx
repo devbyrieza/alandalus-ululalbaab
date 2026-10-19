@@ -207,7 +207,7 @@ export default function AdminSidebar({
   return (
     <div className="min-h-screen bg-[#fafaf9] font-sans selection:bg-primary-100 selection:text-primary-900 w-full">
       {/* ─── MOBILE HEADER (Hanya muncul di layar < 1024px) ─── */}
-      <div className="lg:hidden fixed top-0 left-0 right-0 z-[60] bg-white backdrop-blur-2xl border-b border-ink-200/60 px-6 py-4 flex items-center justify-between shadow-xl shadow-primary/20">
+      <div className="lg:hidden fixed top-0 left-0 right-0 z-[60] bg-white backdrop-blur-2xl border-b border-ink-200/60 px-6 py-4 flex items-center justify-between shadow-xl">
         <button
           onClick={() => setSidebarOpen(true)}
           className="p-2.5 -ml-2 text-ink-600 hover:bg-ink-100 rounded-2xl transition-all active:scale-95"
@@ -222,7 +222,7 @@ export default function AdminSidebar({
             Control Center
           </span>
         </div>
-        <div className="w-10 h-10 rounded-2xl bg-linear-to-br from-primary-700 to-primary-900 flex items-center justify-center text-white text-sm font-black shadow-sm shadow-primary-200">
+        <div className="w-10 h-10 rounded-2xl bg-linear-to-br from-primary-700 to-primary-900 flex items-center justify-center text-white text-sm font-black shadow-sm-200">
           {(adminName || "A").charAt(0)}
         </div>
       </div>
@@ -244,7 +244,7 @@ export default function AdminSidebar({
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
               transition={{ type: "spring", damping: 30, stiffness: 300 }}
-              className="fixed top-0 left-0 bottom-0 z-[80] w-80 bg-white shadow-xl shadow-primary/20 lg:hidden flex flex-col rounded-r-[3rem] overflow-hidden"
+              className="fixed top-0 left-0 bottom-0 z-[80] w-80 bg-white shadow-xl lg:hidden flex flex-col rounded-r-[3rem] overflow-hidden"
             >
               <div className="p-5 md:p-8 flex items-center justify-between border-b border-ink-50 bg-linear-to-b from-ink-50 to-white">
                 <div className="flex items-center gap-4">
@@ -273,7 +273,7 @@ export default function AdminSidebar({
                     key={item.name}
                     href={item.href}
                     onClick={() => setSidebarOpen(false)}
-                    className={`flex items-center justify-between px-4 py-4 rounded-2xl transition-all ${ item.isActive ? "bg-primary-700 text-white shadow-sm shadow-primary-200 font-bold" : "text-ink-500 hover:bg-ink-50 hover:text-primary-900" }`}
+                    className={`flex items-center justify-between px-4 py-4 rounded-2xl transition-all ${ item.isActive ? "bg-primary-700 text-white shadow-sm  font-bold" : "text-ink-500 hover:bg-ink-50 hover:text-primary-900" }`}
                   >
                     <div className="flex items-center gap-4">
                       <item.icon
@@ -336,7 +336,7 @@ export default function AdminSidebar({
             href="/dashboard/admin"
             className="flex items-center gap-4 overflow-hidden group"
           >
-            <div className="shrink-0 w-12 h-12 bg-white rounded-2xl flex items-center justify-center border border-ink-100 shadow-xl shadow-primary/20 group-hover:rotate-6 transition-all duration-500">
+            <div className="shrink-0 w-12 h-12 bg-white rounded-2xl flex items-center justify-center border border-ink-100 shadow-xl group-hover:rotate-6 transition-all duration-500">
               <img
                 src={BRANDING.logoPath}
                 alt="Logo"
@@ -458,7 +458,7 @@ export default function AdminSidebar({
           {/* Toggle Button */}
           <button
             onClick={() => setCollapsed(!collapsed)}
-            className={`w-full flex items-center justify-center p-3 rounded-2xl text-ink-400 hover:text-primary-950 hover:bg-white hover:shadow-xl shadow-primary/20 mb-4 transition-all duration-300 active:scale-95 ${collapsed ? "" : "gap-3"}`}
+            className={`w-full flex items-center justify-center p-3 rounded-2xl text-ink-400 hover:text-primary-950 hover:bg-white hover:shadow-xl mb-4 transition-all duration-300 active:scale-95 ${collapsed ? "" : "gap-3"}`}
           >
             <PanelLeft
               className={`w-5 h-5 shrink-0 transition-transform duration-700 ${collapsed ? "rotate-180" : ""}`}
@@ -472,9 +472,9 @@ export default function AdminSidebar({
 
           {/* Profile Card */}
           <div
-            className={`flex items-center gap-4 p-3 rounded-2xl transition-all group relative ${collapsed ? "justify-center" : "bg-white shadow-xl shadow-primary/20 border border-ink-100"}`}
+            className={`flex items-center gap-4 p-3 rounded-2xl transition-all group relative ${collapsed ? "justify-center" : "bg-white shadow-xl  border border-ink-100"}`}
           >
-            <div className="shrink-0 w-10 h-10 rounded-2xl bg-linear-to-br from-primary-700 to-primary-900 flex items-center justify-center text-white font-black text-sm shadow-sm shadow-primary-100 ring-4 ring-white border border-primary-500/20">
+            <div className="shrink-0 w-10 h-10 rounded-2xl bg-linear-to-br from-primary-700 to-primary-900 flex items-center justify-center text-white font-black text-sm shadow-sm-100 ring-4 ring-white border border-primary-500/20">
               {(adminName || "A").charAt(0)}
             </div>
             {!collapsed && (
@@ -529,7 +529,7 @@ export default function AdminSidebar({
             </button>
             <Link
               href="/"
-              className="px-5 md:px-8 py-3.5 bg-primary-950 text-white text-[11px] font-black uppercase tracking-[0.2em] rounded-2xl hover:bg-primary-800 transition-all shadow-sm shadow-primary-950/20 active:scale-95"
+              className="px-5 md:px-8 py-3.5 bg-primary-950 text-white text-[11px] font-black uppercase tracking-[0.2em] rounded-2xl hover:bg-primary-800 transition-all shadow-sm active:scale-95"
             >
               Kunjungi Situs
             </Link>

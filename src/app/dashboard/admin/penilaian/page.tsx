@@ -560,7 +560,7 @@ export default function ExaminerDashboard() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h1 className="text-3xl font-black text-ink-900 tracking-tight flex items-center gap-3">
-            <div className="p-4 bg-primary-600 rounded-3xl shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 shadow-primary-600/20">
+            <div className="p-4 bg-primary-600 rounded-3xl shadow-2xl">
               <ClipboardEdit className="w-6 h-6 text-white" />
             </div>
             Pusat <span className="text-primary-700">Penilaian</span>
@@ -595,7 +595,7 @@ export default function ExaminerDashboard() {
         </div>
       </div>
       {/* BARU: Banner Akses Khusus & Share WA Bank Soal Panitia (Ulul Albaab Maroon & Krem Emas) */}
-      <div style={{ background: "linear-gradient(135deg, #550000 0%, #360000 100%)" }} className="text-white p-5 sm:p-6 rounded-3xl shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 border border-[#6b0000]/60 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+      <div style={{ background: "linear-gradient(135deg, #550000 0%, #360000 100%)" }} className="text-white p-5 sm:p-6 rounded-3xl shadow-2xl border border-[#6b0000]/60 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div className="flex items-center gap-3.5">
           <div className="p-3.5 bg-white/10 rounded-2xl border border-white/20 flex-shrink-0 backdrop-blur-md">
             <FileText className="w-6 h-6 text-[#ddc192]" />
@@ -638,7 +638,7 @@ export default function ExaminerDashboard() {
           
         {/* Header Stats (Rekap Kelulusan) */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-          <div className="bg-green-50 p-6 rounded-3xl shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 border border-green-100 relative overflow-hidden">
+          <div className="bg-green-50 p-6 rounded-3xl shadow-2xl border border-green-100 relative overflow-hidden">
             <p className="text-[#550000] text-sm font-bold tracking-wider uppercase mb-1">Total Diterima</p>
             <div className="flex items-end gap-2">
               <h3 className="text-2xl md:text-4xl font-black text-[#550000]">
@@ -648,7 +648,7 @@ export default function ExaminerDashboard() {
             </div>
             <div className="absolute -right-4 -bottom-4 bg-green-200/50 w-24 h-24 rounded-full blur-xl"></div>
           </div>
-          <div className="bg-secondary-50 p-6 rounded-3xl shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 border border-secondary-100 relative overflow-hidden">
+          <div className="bg-secondary-50 p-6 rounded-3xl shadow-2xl border border-secondary-100 relative overflow-hidden">
             <p className="text-secondary-600 text-sm font-bold tracking-wider uppercase mb-1">Cadangan</p>
             <div className="flex items-end gap-2">
               <h3 className="text-2xl md:text-4xl font-black text-secondary-700">
@@ -658,7 +658,7 @@ export default function ExaminerDashboard() {
             </div>
             <div className="absolute -right-4 -bottom-4 bg-secondary-200/50 w-24 h-24 rounded-full blur-xl"></div>
           </div>
-          <div className="bg-rose-50 p-6 rounded-3xl shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 border border-rose-100 relative overflow-hidden">
+          <div className="bg-rose-50 p-6 rounded-3xl shadow-2xl border border-rose-100 relative overflow-hidden">
             <p className="text-rose-600 text-sm font-bold tracking-wider uppercase mb-1">Ditolak</p>
             <div className="flex items-end gap-2">
               <h3 className="text-2xl md:text-4xl font-black text-rose-700">
@@ -668,7 +668,7 @@ export default function ExaminerDashboard() {
             </div>
             <div className="absolute -right-4 -bottom-4 bg-rose-200/50 w-24 h-24 rounded-full blur-xl"></div>
           </div>
-          <div className="bg-ink-50 p-6 rounded-3xl shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 border border-ink-200 relative overflow-hidden">
+          <div className="bg-ink-50 p-6 rounded-3xl shadow-2xl border border-ink-200 relative overflow-hidden">
             <p className="text-ink-600 text-sm font-bold tracking-wider uppercase mb-1">Proses Penilaian</p>
             <div className="flex items-end gap-2">
               <h3 className="text-2xl md:text-4xl font-black text-ink-700">
@@ -847,7 +847,7 @@ export default function ExaminerDashboard() {
                               "bg-ink-100 text-ink-500 border-ink-200";
                             return (
                               <span
-                                className={`px-2.5 py-1 text-[10px] font-black rounded-full border shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 ${color}`}
+                                className={`px-2.5 py-1 text-[10px] font-black rounded-full border ${color}`}
                               >
                                 {examStatus || "MENUNGGU"}
                               </span>
@@ -868,7 +868,7 @@ export default function ExaminerDashboard() {
 
                             if (isSkipped) {
                               return (
-                                <span className="bg-amber-100 text-amber-800 text-[10px] font-black px-2 py-1 rounded shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 border border-amber-200 whitespace-nowrap inline-block shrink-0">
+                                <span className="bg-amber-100 text-amber-800 text-[10px] font-black px-2 py-1 rounded border border-amber-200 whitespace-nowrap inline-block shrink-0">
                                   SKIP
                                 </span>
                               );
@@ -887,7 +887,7 @@ export default function ExaminerDashboard() {
                                   : "bg-secondary-400";
                             return (
                               <span
-                                className={`${color} text-white text-[10px] font-black px-2 py-1 rounded shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10`}
+                                className={`${color} text-white text-[10px] font-black px-2 py-1 rounded    `}
                               >
                                 {grade}
                               </span>
@@ -907,7 +907,7 @@ export default function ExaminerDashboard() {
 
                             if (isSkipped) {
                               return (
-                                <span className="bg-amber-100 text-amber-800 text-[10px] font-black px-2 py-1 rounded shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 border border-amber-200 whitespace-nowrap inline-block shrink-0">
+                                <span className="bg-amber-100 text-amber-800 text-[10px] font-black px-2 py-1 rounded border border-amber-200 whitespace-nowrap inline-block shrink-0">
                                   SKIP
                                 </span>
                               );
@@ -926,7 +926,7 @@ export default function ExaminerDashboard() {
                                   : "bg-secondary-400";
                             return (
                               <span
-                                className={`${color} text-white text-[10px] font-black px-2 py-1 rounded shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10`}
+                                className={`${color} text-white text-[10px] font-black px-2 py-1 rounded    `}
                               >
                                 {grade}
                               </span>
@@ -946,7 +946,7 @@ export default function ExaminerDashboard() {
 
                             if (isSkipped) {
                               return (
-                                <span className="bg-amber-100 text-amber-800 text-[10px] font-black px-2 py-1 rounded shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 border border-amber-200 whitespace-nowrap inline-block shrink-0">
+                                <span className="bg-amber-100 text-amber-800 text-[10px] font-black px-2 py-1 rounded border border-amber-200 whitespace-nowrap inline-block shrink-0">
                                   SKIP
                                 </span>
                               );
@@ -965,7 +965,7 @@ export default function ExaminerDashboard() {
                                   : "bg-secondary-400";
                             return (
                               <span
-                                className={`${color} text-white text-[10px] font-black px-2 py-1 rounded shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10`}
+                                className={`${color} text-white text-[10px] font-black px-2 py-1 rounded    `}
                               >
                                 {grade}
                               </span>
@@ -987,7 +987,7 @@ export default function ExaminerDashboard() {
 
                             if (isWsSkipped && isWoSkipped) {
                               return (
-                                <span className="bg-amber-100 text-amber-800 text-[10px] font-black px-2 py-1 rounded shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 border border-amber-200 whitespace-nowrap inline-block shrink-0">
+                                <span className="bg-amber-100 text-amber-800 text-[10px] font-black px-2 py-1 rounded border border-amber-200 whitespace-nowrap inline-block shrink-0">
                                   SKIP
                                 </span>
                               );
@@ -998,14 +998,14 @@ export default function ExaminerDashboard() {
 
                             if (isWsSkipped && wo === 0) {
                               return (
-                                <span className="bg-amber-100 text-amber-800 text-[10px] font-black px-2 py-1 rounded shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 border border-amber-200 whitespace-nowrap inline-block shrink-0">
+                                <span className="bg-amber-100 text-amber-800 text-[10px] font-black px-2 py-1 rounded border border-amber-200 whitespace-nowrap inline-block shrink-0">
                                   S: SKIP
                                 </span>
                               );
                             }
                             if (isWoSkipped && ws === 0) {
                               return (
-                                <span className="bg-amber-100 text-amber-800 text-[10px] font-black px-2 py-1 rounded shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 border border-amber-200 whitespace-nowrap inline-block shrink-0">
+                                <span className="bg-amber-100 text-amber-800 text-[10px] font-black px-2 py-1 rounded border border-amber-200 whitespace-nowrap inline-block shrink-0">
                                   O: SKIP
                                 </span>
                               );
@@ -1026,7 +1026,7 @@ export default function ExaminerDashboard() {
                                   : "bg-secondary-400";
                             return (
                               <span
-                                className={`${color} text-white text-[10px] font-black px-2 py-1 rounded shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10`}
+                                className={`${color} text-white text-[10px] font-black px-2 py-1 rounded    `}
                               >
                                 {grade} {isWsSkipped ? "(S:SKIP)" : isWoSkipped ? "(O:SKIP)" : ""}
                               </span>
@@ -1046,7 +1046,7 @@ export default function ExaminerDashboard() {
 
                             if (isSkipped) {
                               return (
-                                <span className="bg-amber-100 text-amber-800 text-[10px] font-black px-2 py-1 rounded shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 border border-amber-200 whitespace-nowrap inline-block shrink-0">
+                                <span className="bg-amber-100 text-amber-800 text-[10px] font-black px-2 py-1 rounded border border-amber-200 whitespace-nowrap inline-block shrink-0">
                                   SKIP
                                 </span>
                               );
@@ -1065,7 +1065,7 @@ export default function ExaminerDashboard() {
                                   : "bg-secondary-400";
                             return (
                               <span
-                                className={`${color} text-white text-[10px] font-black px-2 py-1 rounded shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10`}
+                                className={`${color} text-white text-[10px] font-black px-2 py-1 rounded    `}
                               >
                                 {grade}
                               </span>
@@ -1088,13 +1088,13 @@ export default function ExaminerDashboard() {
                               <>
                                 <button
                                   onClick={() => handleOpenSkipDialog(s)}
-                                  className="flex items-center gap-1.5 bg-amber-500 text-white px-3 py-1.5 rounded-3xl text-[10px] font-black hover:bg-amber-600 transition-all shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 group-hover:scale-105"
+                                  className="flex items-center gap-1.5 bg-amber-500 text-white px-3 py-1.5 rounded-3xl text-[10px] font-black hover:bg-amber-600 transition-all shadow-2xl group-hover:scale-105"
                                 >
                                   <Zap className="w-3 h-3" /> BYPASS
                                 </button>
                                 <button
                                   onClick={() => handleOpenAssignDialog(s)}
-                                  className="flex items-center gap-1.5 bg-[#550000] text-white px-3 py-1.5 rounded-3xl text-[10px] font-black hover:bg-[#550000] transition-all shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 group-hover:scale-105"
+                                  className="flex items-center gap-1.5 bg-[#550000] text-white px-3 py-1.5 rounded-3xl text-[10px] font-black hover:bg-[#550000] transition-all shadow-2xl group-hover:scale-105"
                                 >
                                   <Users className="w-3 h-3" /> PLOT
                                 </button>
@@ -1102,7 +1102,7 @@ export default function ExaminerDashboard() {
                             )}
                             <button
                               onClick={() => handleOpenInput(s, "quran")}
-                              className="flex items-center gap-1.5 bg-ink-900 text-white px-3 py-1.5 rounded-3xl text-[10px] font-black hover:bg-primary-600 transition-all shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 group-hover:scale-105"
+                              className="flex items-center gap-1.5 bg-ink-900 text-white px-3 py-1.5 rounded-3xl text-[10px] font-black hover:bg-primary-600 transition-all shadow-2xl group-hover:scale-105"
                             >
                               <Zap className="w-3 h-3" /> QUR&apos;AN
                             </button>
@@ -1110,7 +1110,7 @@ export default function ExaminerDashboard() {
                               onClick={() =>
                                 handleOpenInput(s, "wawancara_santri")
                               }
-                              className="flex items-center gap-1.5 bg-white border border-ink-200 text-ink-700 px-3 py-1.5 rounded-3xl text-[10px] font-black hover:border-primary-600 transition-all shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 group-hover:scale-105"
+                              className="flex items-center gap-1.5 bg-white border border-ink-200 text-ink-700 px-3 py-1.5 rounded-3xl text-[10px] font-black hover:border-primary-600 transition-all shadow-2xl group-hover:scale-105"
                             >
                               <MessageSquare className="w-3 h-3" /> W.SANTRI
                             </button>
@@ -1118,7 +1118,7 @@ export default function ExaminerDashboard() {
                               onClick={() =>
                                 handleOpenInput(s, "wawancara_ortu")
                               }
-                              className="flex items-center gap-1.5 bg-gold-50 border border-gold-200 text-gold-800 px-3 py-1.5 rounded-3xl text-[10px] font-black hover:border-gold-400 transition-all shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 group-hover:scale-105"
+                              className="flex items-center gap-1.5 bg-gold-50 border border-gold-200 text-gold-800 px-3 py-1.5 rounded-3xl text-[10px] font-black hover:border-gold-400 transition-all shadow-2xl group-hover:scale-105"
                             >
                               <MessageSquare className="w-3 h-3" /> W.ORTU
                             </button>
@@ -1274,13 +1274,13 @@ export default function ExaminerDashboard() {
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 col-span-full">
                           <button
                             onClick={() => handleOpenSkipDialog(s)}
-                            className="flex items-center justify-center gap-2 bg-amber-500 text-white py-3 rounded-2xl text-[11px] font-black shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 shadow-amber-500/20 active:scale-95 transition-all"
+                            className="flex items-center justify-center gap-2 bg-amber-500 text-white py-3 rounded-2xl text-[11px] font-black shadow-2xl shadow-amber-500/20 active:scale-95 transition-all"
                           >
                             <Zap className="w-3.5 h-3.5" /> BYPASS
                           </button>
                           <button
                             onClick={() => handleOpenAssignDialog(s)}
-                            className="flex items-center justify-center gap-2 bg-[#550000] text-white py-3 rounded-2xl text-[11px] font-black shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 shadow-blue-500/20 active:scale-95 transition-all"
+                            className="flex items-center justify-center gap-2 bg-[#550000] text-white py-3 rounded-2xl text-[11px] font-black shadow-2xl active:scale-95 transition-all"
                           >
                             <Users className="w-3.5 h-3.5" /> PLOT
                           </button>
@@ -1288,13 +1288,13 @@ export default function ExaminerDashboard() {
                       )}
                       <button
                         onClick={() => handleOpenInput(s, "quran")}
-                        className="flex items-center justify-center gap-2 bg-ink-900 text-white py-3 rounded-2xl text-[11px] font-black shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 shadow-ink-900/10 active:scale-95 transition-all"
+                        className="flex items-center justify-center gap-2 bg-ink-900 text-white py-3 rounded-2xl text-[11px] font-black shadow-2xl shadow-ink-900/10 active:scale-95 transition-all"
                       >
                         <Zap className="w-3.5 h-3.5" /> TES QUR&apos;AN
                       </button>
                       <button
                         onClick={() => handleOpenInput(s, "wawancara_santri")}
-                        className="flex flex-col items-center justify-center bg-gold-400 text-primary-900 py-2 rounded-2xl text-[10px] sm:text-[11px] font-black shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 shadow-gold-400/20 active:scale-95 transition-all"
+                        className="flex flex-col items-center justify-center bg-gold-400 text-primary-900 py-2 rounded-2xl text-[10px] sm:text-[11px] font-black shadow-2xl shadow-gold-400/20 active:scale-95 transition-all"
                       >
                         <span className="flex items-center gap-1">
                           <MessageSquare className="w-3 h-3" /> SANTRI
@@ -1302,7 +1302,7 @@ export default function ExaminerDashboard() {
                       </button>
                       <button
                         onClick={() => handleOpenInput(s, "wawancara_ortu")}
-                        className="flex flex-col items-center justify-center bg-gold-200 text-gold-900 py-2 rounded-2xl text-[10px] sm:text-[11px] font-black shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 shadow-gold-200/20 active:scale-95 transition-all"
+                        className="flex flex-col items-center justify-center bg-gold-200 text-gold-900 py-2 rounded-2xl text-[10px] sm:text-[11px] font-black shadow-2xl shadow-gold-200/20 active:scale-95 transition-all"
                       >
                         <span className="flex items-center gap-1">
                           <MessageSquare className="w-3 h-3" /> ORTU
@@ -1320,7 +1320,7 @@ export default function ExaminerDashboard() {
         <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-500">
           {/* Progress Monitor if Processing */}
           {isProcessingQueue && (
-            <div className="bg-primary-600 rounded-3xl p-6 text-white shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 shadow-primary-600/20 overflow-hidden relative">
+            <div className="bg-primary-600 rounded-3xl p-6 text-white shadow-2xl overflow-hidden relative">
               <div className="absolute top-0 right-0 p-5 md:p-8 opacity-10">
                 <Send className="w-32 h-32 rotate-12" />
               </div>
@@ -1389,7 +1389,7 @@ export default function ExaminerDashboard() {
           
         {/* Header Stats (Rekap Kelulusan) */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-          <div className="bg-green-50 p-6 rounded-3xl shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 border border-green-100 relative overflow-hidden">
+          <div className="bg-green-50 p-6 rounded-3xl shadow-2xl border border-green-100 relative overflow-hidden">
             <p className="text-[#550000] text-sm font-bold tracking-wider uppercase mb-1">Total Diterima</p>
             <div className="flex items-end gap-2">
               <h3 className="text-2xl md:text-4xl font-black text-[#550000]">
@@ -1399,7 +1399,7 @@ export default function ExaminerDashboard() {
             </div>
             <div className="absolute -right-4 -bottom-4 bg-green-200/50 w-24 h-24 rounded-full blur-xl"></div>
           </div>
-          <div className="bg-secondary-50 p-6 rounded-3xl shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 border border-secondary-100 relative overflow-hidden">
+          <div className="bg-secondary-50 p-6 rounded-3xl shadow-2xl border border-secondary-100 relative overflow-hidden">
             <p className="text-secondary-600 text-sm font-bold tracking-wider uppercase mb-1">Cadangan</p>
             <div className="flex items-end gap-2">
               <h3 className="text-2xl md:text-4xl font-black text-secondary-700">
@@ -1409,7 +1409,7 @@ export default function ExaminerDashboard() {
             </div>
             <div className="absolute -right-4 -bottom-4 bg-secondary-200/50 w-24 h-24 rounded-full blur-xl"></div>
           </div>
-          <div className="bg-rose-50 p-6 rounded-3xl shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 border border-rose-100 relative overflow-hidden">
+          <div className="bg-rose-50 p-6 rounded-3xl shadow-2xl border border-rose-100 relative overflow-hidden">
             <p className="text-rose-600 text-sm font-bold tracking-wider uppercase mb-1">Ditolak</p>
             <div className="flex items-end gap-2">
               <h3 className="text-2xl md:text-4xl font-black text-rose-700">
@@ -1488,7 +1488,7 @@ export default function ExaminerDashboard() {
                       }
                     }}
                     disabled={isBroadcasting}
-                    className="w-full bg-primary-600 hover:bg-primary-700 text-white rounded-2xl py-6 font-black text-base shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 shadow-primary-600/20"
+                    className="w-full bg-primary-600 hover:bg-primary-700 text-white rounded-2xl py-6 font-black text-base shadow-2xl"
                   >
                     {isBroadcasting
                       ? "Memproses..."
@@ -1507,7 +1507,7 @@ export default function ExaminerDashboard() {
                   <Button
                     onClick={handleFlushQueue}
                     disabled={isProcessingQueue || !queueStats?.pending}
-                    className="w-full bg-[#550000] hover:bg-[#550000] text-white rounded-2xl py-6 font-black text-base shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 shadow-emerald-600/20 disabled:bg-slate-200 disabled:text-slate-400 disabled:shadow-none"
+                    className="w-full bg-[#550000] hover:bg-[#550000] text-white rounded-2xl py-6 font-black text-base shadow-md disabled:bg-slate-200 disabled:text-slate-400 disabled:shadow-none"
                   >
                     {isProcessingQueue
                       ? `Mengirim (${flushProgress}%)...`
@@ -1611,14 +1611,14 @@ export default function ExaminerDashboard() {
               <div className="bg-ink-50 px-6 py-6 sm:px-5 md:px-8 sm:flex sm:flex-row-reverse gap-3 border-t border-ink-100">
                 <Button
                   onClick={handleSaveAssignment}
-                  className="w-full sm:w-auto bg-primary-600 hover:bg-primary-700 text-white rounded-2xl px-5 md:px-8 py-3 font-black shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 shadow-primary-600/20"
+                  className="w-full sm:w-auto bg-primary-600 hover:bg-primary-700 text-white rounded-2xl px-5 md:px-8 py-3 font-black shadow-md"
                 >
                   Simpan Penugasan
                 </Button>
                 <button
                   type="button"
                   onClick={() => setAssignStudent(null)}
-                  className="mt-3 sm:mt-0 w-full sm:w-auto bg-white border border-ink-200 text-ink-600 hover:bg-ink-100 rounded-2xl px-5 md:px-8 py-3 font-black shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 transition-all"
+                  className="mt-3 sm:mt-0 w-full sm:w-auto bg-white border border-ink-200 text-ink-600 hover:bg-ink-100 rounded-2xl px-5 md:px-8 py-3 font-black shadow-2xl transition-all"
                 >
                   Batal
                 </button>
@@ -1827,14 +1827,14 @@ export default function ExaminerDashboard() {
                 <Button
                   onClick={handleSubmitScore}
                   disabled={isSubmitting}
-                  className="w-full sm:w-auto bg-primary-600 hover:bg-primary-700 text-white rounded-2xl px-5 md:px-8 py-3 font-black shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 shadow-primary-600/20 disabled:opacity-50"
+                  className="w-full sm:w-auto bg-primary-600 hover:bg-primary-700 text-white rounded-2xl px-5 md:px-8 py-3 font-black shadow-md disabled:opacity-50"
                 >
                   {isSubmitting ? "Menyimpan..." : "Simpan Nilai"}
                 </Button>
                 <button
                   type="button"
                   onClick={() => setSelectedStudent(null)}
-                  className="mt-3 sm:mt-0 w-full sm:w-auto bg-white border border-ink-200 text-ink-600 hover:bg-ink-100 rounded-2xl px-5 md:px-8 py-3 font-black shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 transition-all"
+                  className="mt-3 sm:mt-0 w-full sm:w-auto bg-white border border-ink-200 text-ink-600 hover:bg-ink-100 rounded-2xl px-5 md:px-8 py-3 font-black shadow-2xl transition-all"
                 >
                   Batal
                 </button>

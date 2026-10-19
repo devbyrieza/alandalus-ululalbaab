@@ -107,9 +107,7 @@ export default function ScrollAnimation({
         whileInView="visible"
         viewport={viewport}
         variants={containerVariants}
-        className={className}
-      >
-        {Array.isArray(children)
+        className={className} >{Array.isArray(children)
           ? children.map((child, index) => (
               <motion.div
                 key={index}
@@ -130,9 +128,7 @@ export default function ScrollAnimation({
       whileInView="visible"
       viewport={viewport}
       variants={getVariants()}
-      className={className}
-    >
-      {children}
+      className={className} >{children}
     </motion.div>
   );
 }

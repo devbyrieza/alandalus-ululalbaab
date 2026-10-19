@@ -119,7 +119,7 @@ export default function DataPendaftaranTab() {
 
       {/* Quick Stats */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="bg-white rounded-2xl p-4 border-2 border-stone-200 shadow-xl shadow-primary/20">
+        <div className="bg-white rounded-2xl p-4 border-2 border-stone-200 shadow-xl">
           <div className="flex items-center gap-3">
             <div className="w-12 h-12 bg-green-100 rounded-2xl flex items-center justify-center">
               <User className="w-6 h-6 text-green-600" />
@@ -135,7 +135,7 @@ export default function DataPendaftaranTab() {
           </div>
         </div>
 
-        <div className="bg-white rounded-2xl p-4 border-2 border-stone-200 shadow-xl shadow-primary/20">
+        <div className="bg-white rounded-2xl p-4 border-2 border-stone-200 shadow-xl">
           <div className="flex items-center gap-3">
             <div className="w-12 h-12 bg-primary-100 rounded-2xl flex items-center justify-center whitespace-nowrap shrink-0">
               <FileText className="w-6 h-6 text-primary-600" />
@@ -147,7 +147,7 @@ export default function DataPendaftaranTab() {
           </div>
         </div>
 
-        <div className="bg-white rounded-2xl p-4 border-2 border-stone-200 shadow-xl shadow-primary/20">
+        <div className="bg-white rounded-2xl p-4 border-2 border-stone-200 shadow-xl">
           <div className="flex items-center gap-3">
             <div className="w-12 h-12 bg-secondary-100 rounded-2xl flex items-center justify-center">
               <CreditCard className="w-6 h-6 text-secondary-600" />
@@ -159,7 +159,7 @@ export default function DataPendaftaranTab() {
           </div>
         </div>
 
-        <div className="bg-white rounded-2xl p-4 border-2 border-stone-200 shadow-xl shadow-primary/20">
+        <div className="bg-white rounded-2xl p-4 border-2 border-stone-200 shadow-xl">
           <div className="flex items-center gap-3">
             <div className="w-12 h-12 bg-purple-100 rounded-2xl flex items-center justify-center whitespace-nowrap shrink-0">
               <Award className="w-6 h-6 text-purple-600" />
@@ -173,7 +173,7 @@ export default function DataPendaftaranTab() {
       </div>
 
       {/* Data Diri Card */}
-      <div className="bg-white rounded-2xl p-6 border-2 border-stone-200 shadow-xl shadow-primary/20">
+      <div className="bg-white rounded-2xl p-6 border-2 border-stone-200 shadow-xl">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-xl font-bold text-stone-900">Data Pribadi</h2>
           <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-secondary-100 text-primary-900">
@@ -244,7 +244,7 @@ export default function DataPendaftaranTab() {
         {/* Step 1: Pembayaran */}
         <Link
           href="/dashboard/pendaftar/pembayaran-pendaftaran"
-          className="group bg-white rounded-2xl p-6 border-2 border-stone-200 hover:border-secondary-300 hover:shadow-xl shadow-primary/20 transition-all duration-300"
+          className="group bg-white rounded-2xl p-6 border-2 border-stone-200 hover:border-secondary-300 hover:shadow-xl transition-all duration-300"
         >
           <div className="flex flex-col gap-3">
             <div className="flex items-center justify-between">
@@ -270,7 +270,7 @@ export default function DataPendaftaranTab() {
         {/* Step 2: Isi Data Lengkap */}
         <Link
           href="/dashboard/pendaftar/kelengkapan-berkas"
-          className="group bg-white rounded-2xl p-6 border-2 border-stone-200 hover:border-primary-300 hover:shadow-xl shadow-primary/20 transition-all duration-300"
+          className="group bg-white rounded-2xl p-6 border-2 border-stone-200 hover:border-primary-300 hover:shadow-xl transition-all duration-300"
         >
           <div className="flex flex-col gap-3">
             <div className="flex items-center justify-between">
@@ -298,7 +298,7 @@ export default function DataPendaftaranTab() {
         {/* Step 3: Upload Dokumen */}
         <Link
           href="/dashboard/pendaftar/upload-berkas"
-          className="group bg-white rounded-2xl p-6 border-2 border-stone-200 hover:border-green-300 hover:shadow-xl shadow-primary/20 transition-all duration-300"
+          className="group bg-white rounded-2xl p-6 border-2 border-stone-200 hover:border-green-300 hover:shadow-xl transition-all duration-300"
         >
           <div className="flex flex-col gap-3">
             <div className="flex items-center justify-between">
@@ -325,7 +325,7 @@ export default function DataPendaftaranTab() {
       </div>
 
       {/* Progress Section */}
-      <div className="bg-white rounded-2xl p-6 border-2 border-stone-200 shadow-xl shadow-primary/20">
+      <div className="bg-white rounded-2xl p-6 border-2 border-stone-200 shadow-xl">
         <h2 className="text-xl font-bold text-stone-900 mb-4">
           Progress Pendaftaran
         </h2>

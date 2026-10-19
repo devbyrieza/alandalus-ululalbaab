@@ -706,7 +706,7 @@ export default function MonitoringJadwalPage() {
             {/* Simplified Header */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-primary-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-primary-600/20">
+                    <div className="w-12 h-12 bg-primary-600 rounded-xl flex items-center justify-center text-white shadow-lg">
                         <Calendar className="w-6 h-6" />
                     </div>
                     <div>
@@ -1120,7 +1120,7 @@ export default function MonitoringJadwalPage() {
                             <div key={group.name} className="bg-white rounded-[2rem] shadow-clay-m border border-slate-100 overflow-hidden">
                                 <div className="bg-slate-50 px-7 py-5 flex items-center justify-between border-b border-slate-100/50">
                                     <div className="flex items-center gap-4">
-                                        <div className={`w-11 h-11 rounded-xl flex items-center justify-center text-white shadow-lg ${group.name === 'Belum Ditentukan' ? 'bg-amber-500 shadow-amber-500/20' : 'bg-primary-600 shadow-primary-600/20'}`}>
+                                        <div className={`w-11 h-11 rounded-xl flex items-center justify-center text-white shadow-lg ${group.name === 'Belum Ditentukan' ? 'bg-amber-500 shadow-amber-500/20' : 'bg-primary-600 '}`}>
                                             <Users className="w-5 h-5" />
                                         </div>
                                         <div>
@@ -1520,7 +1520,7 @@ export default function MonitoringJadwalPage() {
                                     type="button"
                                     onClick={() => handleSaveAssignment(false)}
                                     disabled={savingAssignment}
-                                    className="px-6 py-2.5 rounded-xl text-xs font-bold bg-primary-600 hover:bg-primary-700 text-white shadow-lg shadow-primary-600/20 transition-all flex items-center gap-2 disabled:opacity-50"
+                                    className="px-6 py-2.5 rounded-xl text-xs font-bold bg-primary-600 hover:bg-primary-700 text-white shadow-lg transition-all flex items-center gap-2 disabled:opacity-50"
                                 >
                                     {savingAssignment ? (
                                         <>

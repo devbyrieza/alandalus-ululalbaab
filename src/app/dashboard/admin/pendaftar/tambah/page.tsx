@@ -128,7 +128,7 @@ export default function AdminTambahPendaftar() {
         </p>
       </div>
 
-      <div className="bg-white rounded-2xl shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 border border-stone-200 overflow-hidden">
+      <div className="bg-white rounded-2xl shadow-2xl border border-stone-200 overflow-hidden">
         <form onSubmit={handleSubmit} className="p-6 md:p-8 space-y-8">
           
           {/* Tipe Pendaftaran */}
@@ -242,7 +242,7 @@ export default function AdminTambahPendaftar() {
             <button
               type="submit"
               disabled={loading}
-              className="inline-flex items-center gap-2 px-5 md:px-8 py-3 bg-primary-600 hover:bg-primary-700 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-3xl font-bold transition-all shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 shadow-primary-600/20"
+              className="inline-flex items-center gap-2 px-5 md:px-8 py-3 bg-primary-600 hover:bg-primary-700 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-3xl font-bold transition-all shadow-md"
             >
               {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Save className="w-5 h-5" />}
               Daftarkan Santri

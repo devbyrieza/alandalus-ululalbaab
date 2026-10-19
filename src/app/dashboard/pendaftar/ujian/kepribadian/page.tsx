@@ -324,7 +324,7 @@ export default function KepribadianTestPage() {
         {page < totalPages - 1 ? (
           <button
             onClick={handleNext}
-            className="flex-1 py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-black uppercase tracking-widest text-xs rounded-xl shadow-md shadow-emerald-900/20 transition-all active:scale-95"
+            className="flex-1 py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-black uppercase tracking-widest text-xs rounded-xl shadow-md transition-all active:scale-95"
           >
             Lanjutkan ({page + 1}/{totalPages})
           </button>
@@ -332,7 +332,7 @@ export default function KepribadianTestPage() {
           <button
             onClick={handleSubmit}
             disabled={loading}
-            className="flex-1 py-4 bg-emerald-600 hover:bg-emerald-700 disabled:bg-stone-300 text-white font-black uppercase tracking-widest text-xs rounded-xl shadow-md shadow-emerald-900/20 transition-all active:scale-95 flex items-center justify-center gap-2"
+            className="flex-1 py-4 bg-emerald-600 hover:bg-emerald-700 disabled:bg-stone-300 text-white font-black uppercase tracking-widest text-xs rounded-xl shadow-md transition-all active:scale-95 flex items-center justify-center gap-2"
           >
             {loading ? (
               <>

@@ -239,7 +239,7 @@ export default function UndanganSeleksiTab() {
   if (data.locked && !isTestingAccount) {
     return (
       <div className="space-y-6">
-        <div className="bg-linear-to-r from-stone-600 to-stone-800 rounded-2xl p-6 md:p-8 text-white shadow-xl shadow-primary/20 relative overflow-hidden">
+        <div className="bg-linear-to-r from-stone-600 to-stone-800 rounded-2xl p-6 md:p-8 text-white shadow-xl relative overflow-hidden">
           <div className="relative z-10">
             <h1 className="text-2xl font-black mb-2 text-white flex items-center gap-3">
               <svg
@@ -265,7 +265,7 @@ export default function UndanganSeleksiTab() {
           </div>
         </div>
 
-        <div className={`border-2 rounded-2xl p-5 md:p-8 md:p-12 text-center shadow-xl shadow-primary/20 ${data.current_status?.includes('reject') || data.current_status?.includes('incomplete') ? 'border-red-200 bg-red-50' : 'bg-secondary-50 border-secondary-200'}`}>
+        <div className={`border-2 rounded-2xl p-5 md:p-8 md:p-12 text-center shadow-xl ${data.current_status?.includes('reject') || data.current_status?.includes('incomplete') ? 'border-red-200 bg-red-50' : 'bg-secondary-50 border-secondary-200'}`}>
           <div className={`w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 ${data.current_status?.includes('reject') || data.current_status?.includes('incomplete') ? 'bg-red-100' : 'bg-secondary-100'}`}>
             {data.current_status?.includes('reject') || data.current_status?.includes('incomplete') ? (
               <AlertCircle className="w-10 h-10 text-red-600" />
@@ -309,7 +309,7 @@ export default function UndanganSeleksiTab() {
   return (
     <div className="space-y-6">
       {/* ========== HEADER ========== */}
-      <div className="bg-linear-to-r from-primary-700 to-primary-900 rounded-2xl p-6 md:p-8 text-white shadow-xl shadow-primary/20 relative overflow-hidden">
+      <div className="bg-linear-to-r from-primary-700 to-primary-900 rounded-2xl p-6 md:p-8 text-white shadow-xl relative overflow-hidden">
         <div className="relative z-10">
           <h1 className="text-2xl font-black mb-2 text-white">
             Jadwal Seleksi
@@ -349,7 +349,7 @@ export default function UndanganSeleksiTab() {
       </div>
 
       {/* ========== PROGRESS BAR ========== */}
-      <div className="bg-white rounded-2xl border border-stone-200 p-5 shadow-xl shadow-primary/20">
+      <div className="bg-white rounded-2xl border border-stone-200 p-5 shadow-xl">
         <div className="flex items-center justify-between mb-3">
           <h3 className="font-bold text-ink-800 text-sm">Progress Seleksi</h3>
           <span className="text-sm font-black text-primary-600">
@@ -358,7 +358,7 @@ export default function UndanganSeleksiTab() {
         </div>
         <div className="w-full h-3 bg-surface-100 rounded-full overflow-hidden">
           <div
-            className="h-full bg-linear-to-r from-primary-500 to-primary-700 rounded-full transition-all duration-700 shadow-sm shadow-primary-500/20"
+            className="h-full bg-linear-to-r from-primary-500 to-primary-700 rounded-full transition-all duration-700 shadow-sm"
             style={{ width: `${data.progress.percentage}%` }}
           />
         </div>
@@ -389,7 +389,7 @@ export default function UndanganSeleksiTab() {
             return (
               <div
                 key={key}
-                className={`bg-white rounded-2xl border-2 p-5 transition-all ${ item.completed ? "border-emerald-200 bg-emerald-50/50" : "border-stone-100 hover:border-primary-200 hover:shadow-xl shadow-primary/20" }`}
+                className={`bg-white rounded-2xl border-2 p-5 transition-all ${ item.completed ? "border-emerald-200 bg-emerald-50/50" : "border-stone-100 hover:border-primary-200 hover:shadow-xl " }`}
               >
                 <div className="flex items-start justify-between mb-3">
                   <div
@@ -472,7 +472,7 @@ export default function UndanganSeleksiTab() {
                 return (
                   <div
                     key={item.id}
-                    className={`rounded-2xl shadow-xl shadow-primary/20 p-5 border-2 relative overflow-hidden ${ isSelesai ? "bg-stone-50 border-stone-200" : "bg-white border-primary-100" }`}
+                    className={`rounded-2xl shadow-xl p-5 border-2 relative overflow-hidden ${ isSelesai ? "bg-stone-50 border-stone-200" : "bg-white border-primary-100" }`}
                   >
                     <div className={`absolute top-0 right-0 p-2 rounded-bl-xl ${ isSelesai ? "bg-stone-200" : "bg-primary-50" }`}>
                       <CheckCircle className={`w-4 h-4 ${isSelesai ? "text-stone-500" : "text-primary-600"}`} />
@@ -630,7 +630,7 @@ export default function UndanganSeleksiTab() {
                     return (
                       <div
                         key={slot.id}
-                        className={`bg-white rounded-2xl shadow-xl shadow-primary/20 p-5 border-2 transition-all ${ slot.isFull ? "opacity-75 border-surface-200 bg-surface-50" : "border-surface-100 hover:border-primary-300 hover:shadow-xl shadow-primary/20" }`}
+                        className={`bg-white rounded-2xl shadow-xl p-5 border-2 transition-all ${ slot.isFull ? "opacity-75 border-surface-200 bg-surface-50" : "border-surface-100 hover:border-primary-300 hover:shadow-xl " }`}
                       >
                         <div className="flex justify-between items-start mb-3">
                           <div className="flex items-center gap-2">

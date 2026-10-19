@@ -105,7 +105,7 @@ export default function DashboardPendaftarPage() {
 
 function HeroBanner({ nama, nomorPendaftaran, lastUpdate }: any) {
   return (
-    <div className="relative overflow-hidden rounded-[2rem] sm:rounded-[2.5rem] md:rounded-[3.5rem] bg-linear-to-br from-blue-700 to-blue-900 text-white p-6 sm:p-5 md:p-8 shadow-xl shadow-primary/20 border border-blue-600/50">
+    <div className="relative overflow-hidden rounded-[2rem] sm:rounded-[2.5rem] md:rounded-[3.5rem] bg-linear-to-br from-blue-700 to-blue-900 text-white p-6 sm:p-5 md:p-8 shadow-xl border border-blue-600/50">
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-amber-400/10 rounded-full blur-3xl pointer-events-none -translate-y-1/2 translate-x-1/2" />
       <div className="relative z-10 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8 lg:gap-10">
         <div className="flex-1 space-y-4 sm:space-y-6">
@@ -147,7 +147,7 @@ function HeroBanner({ nama, nomorPendaftaran, lastUpdate }: any) {
 
 function GuidedActionCard({ nextStep }: any) {
   return (
-    <div className="bg-white rounded-[1.5rem] sm:rounded-[2rem] md:rounded-[2.5rem] border-2 border-blue-100 shadow-xl shadow-primary/20 shadow-blue/5 overflow-hidden group">
+    <div className="bg-white rounded-[1.5rem] sm:rounded-[2rem] md:rounded-[2.5rem] border-2 border-blue-100 shadow-xl overflow-hidden group">
       <div className="flex flex-col md:flex-row items-stretch">
         <div className="bg-amber-400 p-6 sm:p-5 md:p-8 flex flex-col items-center justify-center text-blue-950 min-w-[200px]">
           <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl bg-white/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
@@ -174,7 +174,7 @@ function GuidedActionCard({ nextStep }: any) {
           <div className="flex flex-wrap gap-4">
             <Link
               href={nextStep.href}
-              className="px-6 sm:px-6 md:px-10 py-4 sm:py-5 bg-blue-700 hover:bg-blue-800 text-white rounded-2xl font-black uppercase text-xs sm:text-sm shadow-sm shadow-blue/20 transition-all hover:scale-105 active:scale-95 flex items-center gap-3 group/btn w-full sm:w-auto justify-center"
+              className="px-6 sm:px-6 md:px-10 py-4 sm:py-5 bg-blue-700 hover:bg-blue-800 text-white rounded-2xl font-black uppercase text-xs sm:text-sm shadow-sm transition-all hover:scale-105 active:scale-95 flex items-center gap-3 group/btn w-full sm:w-auto justify-center"
             >
               Mulai Sekarang{" "}
               <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover/btn:translate-x-2 transition-transform" />
@@ -220,7 +220,7 @@ function StatusGrid({ status, statusLabel, pengumuman }: any) {
       {items.map((item, id) => (
         <div
           key={id}
-          className="bg-white rounded-[1.5rem] border border-surface-200 p-6 flex flex-col gap-4 shadow-xl shadow-primary/20 hover:shadow-xl shadow-primary/20 transition-shadow"
+          className="bg-white rounded-[1.5rem] border border-surface-200 p-6 flex flex-col gap-4 shadow-xl hover:shadow-xl transition-shadow"
         >
           <div className="flex items-center gap-4">
             <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${item.bg} ${item.color}`}>
@@ -240,7 +240,7 @@ function StatusGrid({ status, statusLabel, pengumuman }: any) {
 
 function SupportCenter() {
   return (
-    <div className="bg-blue-950 text-white rounded-[1.5rem] sm:rounded-[2rem] p-6 sm:p-8 md:p-12 relative overflow-hidden group shadow-xl shadow-primary/20">
+    <div className="bg-blue-950 text-white rounded-[1.5rem] sm:rounded-[2rem] p-6 sm:p-8 md:p-12 relative overflow-hidden group shadow-xl">
       <div className="absolute top-0 right-0 w-96 h-96 bg-amber-400 rounded-full blur-[120px] opacity-20 -translate-y-1/2 translate-x-1/2" />
       <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-10 text-center md:text-left">
         <div className="flex-1 space-y-3">
@@ -286,7 +286,7 @@ function LoadingState() {
 
 function ErrorState({ message }: { message: string }) {
   return (
-    <div className="p-20 text-center text-red-600 font-bold bg-white rounded-4xl border border-red-100 shadow-xl shadow-primary/20">
+    <div className="p-20 text-center text-red-600 font-bold bg-white rounded-4xl border border-red-100 shadow-xl">
       {message}
     </div>
   );

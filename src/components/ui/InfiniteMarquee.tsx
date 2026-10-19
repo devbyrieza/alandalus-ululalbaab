@@ -57,12 +57,7 @@ export default function InfiniteMarquee({
 
   return (
     <div
-      className={cn(
-        "relative overflow-hidden w-full",
-        variantClasses[variant],
-        className,
-      )}
-      onMouseEnter={() => pauseOnHover && setIsHovered(true)}
+      className={cn( "relative overflow-hidden w-full", variantClasses[variant], className, )} onMouseEnter={() => pauseOnHover && setIsHovered(true)}
       onMouseLeave={() => pauseOnHover && setIsHovered(false)}
     >
       {/* Fade Masks */}
@@ -105,14 +100,7 @@ export default function InfiniteMarquee({
         {duplicated.map((item, i) => (
           <div
             key={i}
-            className={cn(
-              "flex items-center gap-2 px-6 py-4 whitespace-nowrap text-sm font-semibold tracking-wide transition-opacity duration-300",
-              itemVariantClasses[variant],
-              isHovered && "opacity-70",
-              itemClassName,
-            )}
-          >
-            {item.prefix && (
+            className={cn( "flex items-center gap-2 px-6 py-4 whitespace-nowrap text-sm font-semibold tracking-wide transition-opacity duration-300", itemVariantClasses[variant], isHovered && "opacity-70", itemClassName, )} >{item.prefix && (
               <span className="text-[0.6rem] font-black uppercase tracking-[0.15em] opacity-50">
                 {item.prefix}
               </span>

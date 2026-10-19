@@ -47,8 +47,7 @@ export default function AnimatedCounter({
   }, [springValue, decimals]);
 
   return (
-    <span ref={ref} className={className}>
-      {prefix}
+    <span ref={ref} className={className}>{prefix}
       {displayValue}
       {suffix}
     </span>

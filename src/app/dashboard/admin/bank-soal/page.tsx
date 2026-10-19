@@ -44,7 +44,7 @@ export default function BankSoalPanitiaPage() {
   return (
     <div className="min-h-screen bg-slate-50 p-4 md:p-8 space-y-6">
       {/* HEADER BANNER */}
-      <div className="bg-gradient-to-r from-teal-800 via-teal-700 to-emerald-800 text-white rounded-2xl p-6 md:p-8 shadow-xl shadow-primary/20 relative overflow-hidden">
+      <div className="bg-gradient-to-r from-teal-800 via-teal-700 to-emerald-800 text-white rounded-2xl p-6 md:p-8 shadow-xl relative overflow-hidden">
         <div className="absolute right-0 top-0 opacity-10 pointer-events-none transform translate-x-8 -translate-y-8">
           <BookOpen className="w-96 h-96" />
         </div>
@@ -75,7 +75,7 @@ export default function BankSoalPanitiaPage() {
       </div>
 
       {/* ACTION & SEARCH BAR */}
-      <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-xl shadow-primary/20 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-xl flex flex-col md:flex-row items-center justify-between gap-4">
         <div className="relative w-full md:w-96">
           <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
           <input
@@ -116,7 +116,7 @@ export default function BankSoalPanitiaPage() {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id as any)}
-              className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl font-bold text-xs md:text-sm whitespace-nowrap transition-all cursor-pointer ${ isActive ? "bg-teal-700 text-white shadow-xl shadow-primary/20 shadow-teal-700/20" : "bg-white text-slate-600 border border-slate-200 hover:bg-slate-100" }`}
+              className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl font-bold text-xs md:text-sm whitespace-nowrap transition-all cursor-pointer ${ isActive ? "bg-teal-700 text-white shadow-xl  shadow-teal-700/20" : "bg-white text-slate-600 border border-slate-200 hover:bg-slate-100" }`}
             >
               <Icon className={`w-4 h-4 ${isActive ? "text-teal-200" : "text-slate-400"}`} />
               <span>{tab.label}</span>
@@ -144,7 +144,7 @@ export default function BankSoalPanitiaPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {filteredMts.map((q, idx) => (
-              <div key={q.id} className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xl shadow-primary/20 space-y-3">
+              <div key={q.id} className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xl space-y-3">
                 <div className="flex items-center justify-between">
                   <span className="text-[11px] font-extrabold px-2.5 py-1 bg-teal-100 text-teal-800 rounded-2xl">
                     SOAL #{idx + 1} (ID: {q.id})
@@ -185,7 +185,7 @@ export default function BankSoalPanitiaPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {filteredIl.map((q, idx) => (
-              <div key={idx} className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xl shadow-primary/20 space-y-3">
+              <div key={idx} className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xl space-y-3">
                 <div className="flex items-center justify-between">
                   <span className="text-[11px] font-extrabold px-2.5 py-1 bg-emerald-100 text-emerald-800 rounded-2xl whitespace-nowrap inline-block shrink-0">
                     SOAL #{idx + 1} (IL)
@@ -229,7 +229,7 @@ export default function BankSoalPanitiaPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {filteredMa.map((q, idx) => (
-              <div key={idx} className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xl shadow-primary/20 space-y-3">
+              <div key={idx} className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xl space-y-3">
                 <div className="flex items-center justify-between">
                   <span className="text-[11px] font-extrabold px-2.5 py-1 bg-amber-100 text-amber-800 rounded-2xl whitespace-nowrap inline-block shrink-0">
                     SOAL #{idx + 1} (MA / SMA)
@@ -269,7 +269,7 @@ export default function BankSoalPanitiaPage() {
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xl shadow-primary/20">
+          <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xl">
             {KESIAPAN_QUESTIONS.map((sec, sIdx) => (
               <div key={sIdx} className="border-b border-slate-200 last:border-b-0">
                 <div className="bg-slate-100 px-5 py-3 font-bold text-slate-800 text-sm flex items-center gap-2 whitespace-nowrap shrink-0">
@@ -303,7 +303,7 @@ export default function BankSoalPanitiaPage() {
       {activeTab === "kepribadian" && (
         <div className="space-y-4">
           <div
-            className="bg-blue-600 text-white border border-blue-500 p-4 sm:p-5 rounded-2xl shadow-2xl shadow-primary/30 border flex items-start gap-3.5"
+            className="bg-blue-600 text-white border border-blue-500 p-4 sm:p-5 rounded-2xl shadow-2xl border flex items-start gap-3.5"
             style={{ background: "linear-gradient(to right, #0977E6, #0255a3)" }}
           >
             <Brain className="w-5 h-5 text-amber-300 flex-shrink-0 mt-0.5" />
@@ -374,7 +374,7 @@ export default function BankSoalPanitiaPage() {
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xl shadow-primary/20 p-4 md:p-6 space-y-6">
+          <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xl p-4 md:p-6 space-y-6">
             <div className="space-y-4">
               <h3 className="font-extrabold text-base text-indigo-950 flex items-center gap-2 border-b pb-2">
                 <User className="w-5 h-5 inline-block mr-1 text-indigo-700" /> Kriteria Penilaian Calsan Putra (7 Indikator)
@@ -422,7 +422,7 @@ export default function BankSoalPanitiaPage() {
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xl shadow-primary/20">
+          <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xl">
             <div className="divide-y divide-slate-200">
               {[
                 { id: "Q1", text: "1. Abu/Ummu ingin ananda menjadi seperti apa di masa depan?", a: "Condong ke orientasi akhirat/agama (100)", b: "Condong ke orientasi dunia/umum (75)", c: "Hanya berorientasi dunia/umum (50)" },
@@ -470,7 +470,7 @@ export default function BankSoalPanitiaPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xl shadow-primary/20 space-y-3">
+            <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xl space-y-3">
               <span className="px-3 py-1 bg-teal-100 text-teal-800 rounded-full text-xs font-extrabold">
                 1. TES AL-QUR'AN (UTAMA)
               </span>
@@ -485,7 +485,7 @@ export default function BankSoalPanitiaPage() {
               </ul>
             </div>
 
-            <div className="bg-white p-5 rounded-2xl border border-emerald-300 shadow-xl shadow-primary/20 space-y-3 relative overflow-hidden">
+            <div className="bg-white p-5 rounded-2xl border border-emerald-300 shadow-xl space-y-3 relative overflow-hidden">
               <div className="absolute top-0 right-0 bg-emerald-600 text-white text-[9px] font-extrabold px-3 py-0.5 rounded-bl-lg">
                 KHUSUS MA/SMA LANGSUNG (TANPA IL)
               </div>
@@ -505,7 +505,7 @@ export default function BankSoalPanitiaPage() {
               </ul>
             </div>
 
-            <div className="bg-white p-5 rounded-2xl border border-amber-300 shadow-xl shadow-primary/20 space-y-3 relative overflow-hidden">
+            <div className="bg-white p-5 rounded-2xl border border-amber-300 shadow-xl space-y-3 relative overflow-hidden">
               <div className="absolute top-0 right-0 bg-amber-600 text-white text-[9px] font-extrabold px-3 py-0.5 rounded-bl-lg">
                 KHUSUS MA/SMA LANGSUNG (TANPA IL)
               </div>
@@ -530,7 +530,7 @@ export default function BankSoalPanitiaPage() {
 
       {/* TAB CONTENT: ATURAN & BOBOT NILAI */}
       {activeTab === "aturan" && (
-        <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xl shadow-primary/20 space-y-6">
+        <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xl space-y-6">
           <div className="space-y-2">
             <h3 className="font-extrabold text-lg text-slate-900">
               <Settings className="w-5 h-5 inline-block mr-1 text-slate-700" /> Bobot Rumus Nilai Akhir & Penentuan Kelulusan Sistem PPDB

@@ -55,7 +55,7 @@ export async function POST(request: Request) {
         // Actually, let's just make it purely JSON for simplicity,
         // or embed the original note inside it.
         if (existingCatatan.trim().length > 0 && !existingCatatan.trim().startsWith("{")) {
-          reschedulePayload["original_catatan"] = existingCatatan;
+          (reschedulePayload as any)["original_catatan"] = existingCatatan;
         }
         finalCatatan = JSON.stringify(reschedulePayload);
       }

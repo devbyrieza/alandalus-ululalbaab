@@ -1151,7 +1151,7 @@ function AdminPendaftarContent() {
       {/* Refreshing Overlay */}
       {refreshing && (
         <div onWheel={(e) => e.stopPropagation()} data-modal="true" aria-modal="true" role="dialog" className="fixed inset-0 bg-white/40 backdrop-blur-[1px] z-[100] flex items-start md:items-center pt-10 md:pt-0 pb-20 md:pb-0 justify-center pointer-events-none overflow-y-auto overflow-x-hidden p-4 overscroll-contain custom-scrollbar">
-          <div className="bg-white/80 px-6 py-3 rounded-2xl shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 border border-stone-100 flex items-center gap-3 animate-in fade-in zoom-in duration-300">
+          <div className="bg-white/80 px-6 py-3 rounded-2xl shadow-2xl border border-stone-100 flex items-center gap-3 animate-in fade-in zoom-in duration-300">
             <Loader2 className="w-5 h-5 animate-spin text-primary-600" />
             <span className="text-sm font-bold text-stone-700 tracking-tight">
               Memperbarui data...
@@ -1185,10 +1185,10 @@ function AdminPendaftarContent() {
       )}
 
       {/* Header */}
-      <div className="bg-white rounded-3xl shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 p-4 md:p-8 border border-gold-100">
+      <div className="bg-white rounded-3xl shadow-2xl p-4 md:p-8 border border-gold-100">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 flex-wrap">
           <div className="flex flex-wrap items-center gap-3 md:gap-5">
-            <div className="p-2.5 md:p-4 bg-linear-to-br from-primary-600 to-primary-900 rounded-2xl shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 shadow-primary-900/20 flex-shrink-0">
+            <div className="p-2.5 md:p-4 bg-linear-to-br from-primary-600 to-primary-900 rounded-2xl shadow-2xl flex-shrink-0">
               <Users className="w-6 h-6 md:w-8 md:h-8 text-gold-300" />
             </div>
             <div className="min-w-0">
@@ -1249,7 +1249,7 @@ function AdminPendaftarContent() {
             <button
               onClick={() => handleExport("pdf")}
               disabled={exporting}
-              className="flex items-center gap-2 px-3 md:px-4 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-3xl font-bold transition-all shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 hover:shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 disabled:opacity-50 text-sm"
+              className="flex items-center gap-2 px-3 md:px-4 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-3xl font-bold transition-all shadow-2xl hover:shadow-xl disabled:opacity-50 text-sm"
               title="Download PDF"
             >
               {exporting ? (
@@ -1262,7 +1262,7 @@ function AdminPendaftarContent() {
             <button
               onClick={() => fetchPendaftar()}
               disabled={refreshing}
-              className="flex items-center gap-2 px-3 md:px-4 py-2.5 bg-white hover:bg-stone-50 border border-stone-200 text-stone-700 rounded-3xl font-bold transition-all shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 hover:shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 text-sm disabled:opacity-50"
+              className="flex items-center gap-2 px-3 md:px-4 py-2.5 bg-white hover:bg-stone-50 border border-stone-200 text-stone-700 rounded-3xl font-bold transition-all shadow-2xl hover:shadow-xl text-sm disabled:opacity-50"
               title="Muat Ulang"
             >
               <RefreshCw
@@ -1273,7 +1273,7 @@ function AdminPendaftarContent() {
               <>
               <Link
                 href="/dashboard/admin/pendaftar/tambah?type=BARU"
-                className="flex items-center gap-2 px-3 md:px-4 py-2.5 bg-violet-700 hover:bg-violet-800 text-white rounded-3xl font-bold shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 shadow-violet-700/20 transition-all text-sm ml-1"
+                className="flex items-center gap-2 px-3 md:px-4 py-2.5 bg-violet-700 hover:bg-violet-800 text-white rounded-3xl font-bold shadow-2xl shadow-violet-700/20 transition-all text-sm ml-1"
                 title="Daftarkan Santri Reguler"
               >
                 <Plus className="w-4 h-4" />
@@ -1281,7 +1281,7 @@ function AdminPendaftarContent() {
               </Link>
               <Link
                 href="/dashboard/admin/pendaftar/tambah?type=PINDAHAN"
-                className="flex items-center gap-2 px-3 md:px-4 py-2.5 bg-purple-600 hover:bg-purple-700 text-white rounded-3xl font-bold shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 shadow-purple-600/20 transition-all text-sm"
+                className="flex items-center gap-2 px-3 md:px-4 py-2.5 bg-purple-600 hover:bg-purple-700 text-white rounded-3xl font-bold shadow-2xl shadow-purple-600/20 transition-all text-sm"
                 title="Daftarkan Santri Pindahan"
               >
                 <Shuffle className="w-4 h-4" />
@@ -1294,7 +1294,7 @@ function AdminPendaftarContent() {
       </div>
 
       {/* Filters */}
-      <div className="bg-white rounded-2xl shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 p-6 border border-gold-100">
+      <div className="bg-white rounded-2xl shadow-2xl p-6 border border-gold-100">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {/* Search */}
           <div className="md:col-span-2">
@@ -1313,7 +1313,7 @@ function AdminPendaftarContent() {
               />
               <button
                 onClick={handleSearch}
-                className="w-full sm:w-auto px-5 md:px-8 py-3 bg-primary-700 hover:bg-primary-800 text-white rounded-3xl font-black transition-all flex-shrink-0 text-sm md:text-base shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 shadow-primary-700/20 active:scale-95"
+                className="w-full sm:w-auto px-5 md:px-8 py-3 bg-primary-700 hover:bg-primary-800 text-white rounded-3xl font-black transition-all flex-shrink-0 text-sm md:text-base shadow-md active:scale-95"
               >
                 Cari
               </button>
@@ -1377,9 +1377,7 @@ function AdminPendaftarContent() {
                   <optgroup label="--- Ujian & Wawancara ---">
                     <option
                       value="terjadwal_ujian"
-                      className={isPenguji ? "font-bold bg-purple-50" : ""}
-                    >
-                      Terjadwal Ujian {isPenguji ? "(PRIORITAS)" : ""}
+                      className={isPenguji ? "font-bold bg-purple-50" : ""} > Terjadwal Ujian{isPenguji ? "(PRIORITAS)" : ""}
                     </option>
                     <option value="sedang_seleksi">Sedang Seleksi</option>
                     <option value="belum_ujian">Belum Ujian</option>
@@ -1626,7 +1624,7 @@ function AdminPendaftarContent() {
 
       {/* Bulk Actions */}
       {selectedIds.length > 0 && (
-        <div className="bg-gradient-to-r from-purple-50 to-primary-50 rounded-3xl shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 p-4 border-2 border-purple-200">
+        <div className="bg-gradient-to-r from-purple-50 to-primary-50 rounded-3xl shadow-2xl p-4 border-2 border-purple-200">
           <div className="flex items-center justify-between flex-wrap gap-4">
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-2">
@@ -1672,7 +1670,7 @@ function AdminPendaftarContent() {
               <button
                 onClick={handleBulkUpdate}
                 disabled={!bulkStatus || bulkUpdating}
-                className="flex items-center justify-center gap-2 px-5 md:px-8 py-2.5 bg-purple-600 hover:bg-purple-700 text-white rounded-3xl font-black transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 shadow-purple-600/20 active:scale-95 text-sm"
+                className="flex items-center justify-center gap-2 px-5 md:px-8 py-2.5 bg-purple-600 hover:bg-purple-700 text-white rounded-3xl font-black transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-md shadow-purple-600/20 active:scale-95 text-sm"
               >
                 {bulkUpdating ? (
                   <>
@@ -1723,7 +1721,7 @@ function AdminPendaftarContent() {
                     }
                   }}
                   disabled={bulkUpdating}
-                  className="flex items-center justify-center gap-2 px-5 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-3xl font-black transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 shadow-rose-600/20 active:scale-95 text-sm ml-auto"
+                  className="flex items-center justify-center gap-2 px-5 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-3xl font-black transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-2xl shadow-rose-600/20 active:scale-95 text-sm ml-auto"
                 >
                   <Trash2 className="w-4 h-4" />
                   <span className="hidden lg:inline">Ke Sampah</span>
@@ -1739,7 +1737,7 @@ function AdminPendaftarContent() {
                     return p && (p.status_pendaftaran === "announced" || p.status_pendaftaran === "cadangan");
                   }))}
                   disabled={isPromotingCadangan}
-                  className="flex items-center justify-center gap-2 px-5 md:px-8 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-3xl font-black transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 shadow-emerald-600/20 active:scale-95 text-sm"
+                  className="flex items-center justify-center gap-2 px-5 md:px-8 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-3xl font-black transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-2xl active:scale-95 text-sm"
                 >
                   {isPromotingCadangan ? (
                     <>
@@ -1760,7 +1758,7 @@ function AdminPendaftarContent() {
       )}
 
       {/* Table */}
-      <div className="bg-white rounded-3xl shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 border border-gold-100 overflow-hidden">
+      <div className="bg-white rounded-3xl shadow-2xl border border-gold-100 overflow-hidden">
         {loading ? (
           <div className="flex items-center justify-center py-20">
             <div className="text-center">
@@ -1772,7 +1770,7 @@ function AdminPendaftarContent() {
           <div className="text-center py-20">
             <div className="relative inline-flex mb-6">
               <div className="absolute inset-0 bg-primary-100 rounded-full blur-xl opacity-50"></div>
-              <div className="relative bg-white p-4 rounded-full shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 border border-primary-50">
+              <div className="relative bg-white p-4 rounded-full shadow-2xl border border-primary-50">
                 <Users className="w-12 h-12 text-primary-300" />
               </div>
             </div>
@@ -2176,7 +2174,7 @@ function AdminPendaftarContent() {
       {/* Announcement Modal */}
       {isAnnouncementModalOpen && selectedPendaftar && (
         <div onWheel={(e) => e.stopPropagation()} data-modal="true" aria-modal="true" role="dialog" className="fixed inset-0 z-50 flex items-start md:items-center pt-10 md:pt-0 pb-20 md:pb-0 justify-center bg-black/50 p-4 overflow-y-auto overscroll-contain custom-scrollbar backdrop-blur-sm">
-          <div className="bg-white rounded-2xl shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 w-full max-w-lg border-2 border-stone-100 animate-in fade-in zoom-in duration-200">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg border-2 border-stone-100 animate-in fade-in zoom-in duration-200">
             <div className="flex justify-between items-center p-6 border-b border-stone-100">
               <div>
                 <h3 className="text-xl font-bold text-stone-900">
@@ -2274,7 +2272,7 @@ function AdminPendaftarContent() {
                 <button
                   type="submit"
                   disabled={isSubmittingAnnouncement}
-                  className="flex items-center gap-2 px-6 py-2.5 bg-primary-700 hover:bg-primary-800 text-white font-bold rounded-3xl shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 shadow-primary-200 hover:shadow-primary-300 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex items-center gap-2 px-6 py-2.5 bg-primary-700 hover:bg-primary-800 text-white font-bold rounded-3xl shadow-md-200 hover: transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isSubmittingAnnouncement ? (
                     <>
@@ -2297,7 +2295,7 @@ function AdminPendaftarContent() {
       {/* Delete Confirmation Modal */}
       {isDeleteModalOpen && deletingPendaftar && (
         <div onWheel={(e) => e.stopPropagation()} data-modal="true" aria-modal="true" role="dialog" className="fixed inset-0 z-50 flex items-start md:items-center pt-10 md:pt-0 pb-20 md:pb-0 justify-center bg-black/50 p-4 overflow-y-auto overflow-x-hidden overscroll-contain custom-scrollbar backdrop-blur-sm">
-          <div className="bg-white rounded-2xl shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 w-full max-w-md border-2 border-red-100 animate-in fade-in zoom-in duration-200">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md border-2 border-red-100 animate-in fade-in zoom-in duration-200">
             <div className="flex justify-between items-center p-6 border-b border-red-100">
               <div className="flex items-center gap-3">
                 <div className="p-2 bg-red-100 rounded-2xl">
@@ -2364,7 +2362,7 @@ function AdminPendaftarContent() {
                     deleteConfirmName.trim().toLowerCase() !==
                       deletingPendaftar.nama_lengkap.trim().toLowerCase()
                   }
-                  className="flex items-center gap-2 px-5 py-2.5 bg-red-600 hover:bg-red-700 text-white font-bold rounded-3xl shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 shadow-red-200 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex items-center gap-2 px-5 py-2.5 bg-red-600 hover:bg-red-700 text-white font-bold rounded-3xl shadow-md shadow-red-200 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isDeleting ? (
                     <>

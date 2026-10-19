@@ -90,7 +90,7 @@
   --color-surface-50: #F8FAFC;
   --color-surface-100: #F1F5F9;
   --color-surface-200: #e5e7eb;
-  --color-surface-blue: #f0f9ff;  /* Sky-50 equivalent */
+  --color-surface-blue: #f8fafc;  /* Sky-50 equivalent */
   --color-surface-amber: #fffbeb; /* Amber-50 */
 
   /* --- Ink (Text   neutral gray, fresh & clean) --- */
@@ -166,7 +166,7 @@
   /* Blue muda / background aksen */
   --color-secondary: var(--color-amber-500);
   /* Amber Secondary   warm vibrant */
-  --color-background: #f0f9ff;
+  --color-background: #fafaf9;
   /* Background utama   Sky-50 fresh blue hint */
   --color-text: #374151;
   /* Teks utama */
@@ -260,11 +260,11 @@
   --secondary:      #eab308; /* Canary Golden Yellow Ulul Albaab */
   --secondary-light: #fbbf24; /* Amber 400 */
   --secondary-pale: #fffbeb;
-  --bg:             #f0f9ff; /* Sky-50 */
+  --bg:             #fafaf9; /* Fresh clean neutral white */
   --bg-card:        #ffffff;
-  --text-main:      #0c4a6e;
+  --text-main:      #111827;
   --text-muted:     #6b7280;
-  --border:         #e0f2fe; /* Blue-100 border */
+  --border:         #f3f4f6; /* Clean neutral soft border */
   --success:        #16a34a;
   --warning:        #d97706;
   --danger:         #dc2626;
@@ -274,9 +274,9 @@
   --radius:         20px;
   
   /* ELEVATION: Glowing / Deep 3D Shadows */
-  --shadow-sm:      0 2px 8px rgba(9,119,230,.08), 0 1px 2px rgba(0,0,0,.03);
-  --shadow-md:      0 8px 24px rgba(9,119,230,.14), 0 2px 6px rgba(0,0,0,.04);
-  --shadow-lg:      0 16px 40px rgba(9,119,230,.18), 0 4px 12px rgba(0,0,0,.05);
+  --shadow-sm:      0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
+  --shadow-md:      0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  --shadow-lg:      0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
   
   --font-sans:      'Plus Jakarta Sans', system-ui, sans-serif;
   --font-arabic:    'Amiri', serif;

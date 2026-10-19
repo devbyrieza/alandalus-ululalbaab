@@ -486,7 +486,7 @@ export default function VerifikasiDokumenDetailPage() {
 
   if (!pendaftar && !loading) {
     return (
-      <div className="bg-white rounded-3xl shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 p-6 md:p-10 border border-gold-200 text-center">
+      <div className="bg-white rounded-3xl shadow-2xl p-6 md:p-10 border border-gold-200 text-center">
         <AlertCircle className="w-16 h-16 text-primary-500 mx-auto mb-4" />
         <h2 className="text-2xl font-black text-primary-950 mb-2">
           Data Tidak Ditemukan
@@ -496,7 +496,7 @@ export default function VerifikasiDokumenDetailPage() {
         </p>
         <button
           onClick={() => router.back()}
-          className="px-6 py-3 bg-primary-700 hover:bg-primary-800 text-white rounded-3xl font-bold transition-all shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary-700/20 active:scale-95"
+          className="px-6 py-3 bg-primary-700 hover:bg-primary-800 text-white rounded-3xl font-bold transition-all shadow-2xl active:scale-95"
         >
           Kembali ke Daftar
         </button>
@@ -563,7 +563,7 @@ export default function VerifikasiDokumenDetailPage() {
         {dokumenList.map((dok) => (
           <div
             key={dok.id}
-            className={`bg-white border rounded-3xl overflow-hidden transition-all shadow-xs hover:shadow-2xl shadow-primary/30 hover:shadow-primary-900/5 ${ dok.status_verifikasi === "verified" ? "border-emerald-200" : dok.status_verifikasi === "rejected" ? "border-rose-200" : "border-gold-200" }`}
+            className={`bg-white border rounded-3xl overflow-hidden transition-all shadow-xs hover:shadow-xl hover: ${ dok.status_verifikasi === "verified" ? "border-emerald-200" : dok.status_verifikasi === "rejected" ? "border-rose-200" : "border-gold-200" }`}
           >
             {/* Document Preview */}
             <div className="w-full relative aspect-[4/3] bg-stone-100 overflow-hidden">
@@ -755,7 +755,7 @@ export default function VerifikasiDokumenDetailPage() {
                     processingDocs.has(dok.id) ||
                     dok.status_verifikasi === "verified"
                   }
-                  className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-3xl text-xs font-bold transition-all ${ dok.status_verifikasi === "verified" ? "bg-emerald-50 text-[#550000] border border-emerald-100 cursor-default" : "bg-[#550000] hover:bg-[#550000] text-white shadow-2xl shadow-primary/30 shadow-primary/20 shadow-emerald-600/20 active:scale-95 disabled:opacity-50" }`}
+                  className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-3xl text-xs font-bold transition-all ${ dok.status_verifikasi === "verified" ? "bg-emerald-50 text-[#550000] border border-emerald-100 cursor-default" : "bg-[#550000] hover:bg-[#550000] text-white shadow-2xl    active:scale-95 disabled:opacity-50" }`}
                 >
                   {processingDocs.has(dok.id) ? (
                     <Loader2 className="w-4 h-4 animate-spin" />
@@ -945,7 +945,7 @@ export default function VerifikasiDokumenDetailPage() {
                         href={previewDoc.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="w-full py-3 px-5 bg-primary-600 hover:bg-primary-700 text-white rounded-2xl text-xs font-bold shadow-lg shadow-primary-900/20 flex items-center justify-center gap-2 active:scale-95 transition-all"
+                        className="w-full py-3 px-5 bg-primary-600 hover:bg-primary-700 text-white rounded-2xl text-xs font-bold shadow-lg flex items-center justify-center gap-2 active:scale-95 transition-all"
                       >
                         <ExternalLink className="w-4 h-4" />
                         Buka Dokumen PDF Penuh
@@ -1087,7 +1087,7 @@ export default function VerifikasiDokumenDetailPage() {
                 disabled={
                   processingDocs.has(rejectModal.docId) || !rejectReason.trim()
                 }
-                className="px-5 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-3xl text-sm font-bold shadow-2xl shadow-primary/30 shadow-primary/20 shadow-rose-600/20 hover:shadow-rose-600/40 transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed transform active:scale-95"
+                className="px-5 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-3xl text-sm font-bold shadow-2xl shadow-rose-600/20 hover:shadow-rose-600/40 transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed transform active:scale-95"
               >
                 {processingDocs.has(rejectModal.docId) ? (
                   <Loader2 className="w-4 h-4 animate-spin" />

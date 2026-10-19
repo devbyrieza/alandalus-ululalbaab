@@ -239,26 +239,12 @@ export default function AddressInput({
             placeholder="Contoh: 001"
             disabled={disabled}
             maxLength={3}
-            className={inputClass}
-          />
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-stone-700 mb-1">
-            RW
-          </label>
-          <input
-            type="text"
-            value={value.rw}
+            className={inputClass} /> </div> <div> <label className="block text-sm font-medium text-stone-700 mb-1"> RW </label> <input type="text" value={value.rw}
             onChange={(e) => handleChange("rw", e.target.value)}
             placeholder="Contoh: 002"
             disabled={disabled}
             maxLength={3}
-            className={inputClass}
-          />
-        </div>
-      </div>
-
-      {/* Provinsi */}
+            className={inputClass} /> </div> </div>{/* Provinsi */}
       <div>
         <label className="block text-sm font-medium text-stone-700 mb-1">
           Provinsi
@@ -269,9 +255,7 @@ export default function AddressInput({
             value={selectedProvinsiId}
             onChange={handleProvinsiChange}
             disabled={disabled || loadingProvinsi}
-            className={selectClass}
-          >
-            <option value="" disabled={selectedProvinsiId !== ""}>
+            className={selectClass} > <option value="" disabled={selectedProvinsiId !== ""}>
               {loadingProvinsi ? "Memuat..." : "Pilih Provinsi"}
             </option>
             {provinsiList.map((p) => (
@@ -297,9 +281,7 @@ export default function AddressInput({
             value={selectedKabupatenId}
             onChange={handleKabupatenChange}
             disabled={disabled || !selectedProvinsiId || loadingKabupaten}
-            className={selectClass}
-          >
-            <option value="" disabled={selectedKabupatenId !== ""}>
+            className={selectClass} > <option value="" disabled={selectedKabupatenId !== ""}>
               {loadingKabupaten
                 ? "Memuat..."
                 : !selectedProvinsiId
@@ -329,9 +311,7 @@ export default function AddressInput({
             value={selectedKecamatanId}
             onChange={handleKecamatanChange}
             disabled={disabled || !selectedKabupatenId || loadingKecamatan}
-            className={selectClass}
-          >
-            <option value="" disabled={selectedKecamatanId !== ""}>
+            className={selectClass} > <option value="" disabled={selectedKecamatanId !== ""}>
               {loadingKecamatan
                 ? "Memuat..."
                 : !selectedKabupatenId
@@ -363,9 +343,7 @@ export default function AddressInput({
             }
             onChange={handleKelurahanChange}
             disabled={disabled || !selectedKecamatanId || loadingKelurahan}
-            className={selectClass}
-          >
-            <option value="" disabled={value.kelurahan !== ""}>
+            className={selectClass} > <option value="" disabled={value.kelurahan !== ""}>
               {loadingKelurahan
                 ? "Memuat..."
                 : !selectedKecamatanId

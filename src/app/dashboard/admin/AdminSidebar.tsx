@@ -268,7 +268,7 @@ export default function AdminSidebar({
             Control Center
           </span>
         </div>
-        <div className="w-10 h-10 rounded-2xl bg-linear-to-br from-primary-700 to-primary-900 flex items-center justify-center text-white text-sm font-black shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 shadow-primary-200">
+        <div className="w-10 h-10 rounded-2xl bg-linear-to-br from-primary-700 to-primary-900 flex items-center justify-center text-white text-sm font-black shadow-2xl-200">
           {(adminName || "A").charAt(0)}
         </div>
       </div>
@@ -319,7 +319,7 @@ export default function AdminSidebar({
                     key={item.name}
                     href={item.href}
                     onClick={() => setSidebarOpen(false)}
-                    className={`flex items-center justify-between px-4 py-4 rounded-2xl transition-all ${ item.isActive ? "bg-primary-700 text-white shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 shadow-primary-200 font-bold" : "text-ink-500 hover:bg-ink-50 hover:text-primary-900" }`}
+                    className={`flex items-center justify-between px-4 py-4 rounded-2xl transition-all ${ item.isActive ? "bg-primary-700 text-white shadow-2xl     font-bold" : "text-ink-500 hover:bg-ink-50 hover:text-primary-900" }`}
                   >
                     <div className="flex items-center gap-4">
                       <item.icon
@@ -519,7 +519,7 @@ export default function AdminSidebar({
           <div
             className={`flex items-center gap-4 p-3 rounded-2xl transition-all group relative ${collapsed ? "justify-center" : "bg-white shadow-sm border border-ink-100"}`}
           >
-            <div className="shrink-0 w-10 h-10 rounded-2xl bg-linear-to-br from-primary-700 to-primary-900 flex items-center justify-center text-white font-black text-sm shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 shadow-primary-100 ring-4 ring-white border border-primary-500/20">
+            <div className="shrink-0 w-10 h-10 rounded-2xl bg-linear-to-br from-primary-700 to-primary-900 flex items-center justify-center text-white font-black text-sm shadow-2xl-100 ring-4 ring-white border border-primary-500/20">
               {(adminName || "A").charAt(0)}
             </div>
             {!collapsed && (
@@ -574,7 +574,7 @@ export default function AdminSidebar({
             </button>
             <Link
               href="/"
-              className="px-5 md:px-8 py-3.5 bg-primary-950 text-white text-[11px] font-black uppercase tracking-[0.2em] rounded-2xl hover:bg-primary-800 transition-all shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 shadow-primary-950/20 active:scale-95"
+              className="px-5 md:px-8 py-3.5 bg-primary-950 text-white text-[11px] font-black uppercase tracking-[0.2em] rounded-2xl hover:bg-primary-800 transition-all shadow-2xl active:scale-95"
             >
               Kunjungi Situs
             </Link>

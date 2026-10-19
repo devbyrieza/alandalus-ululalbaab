@@ -455,7 +455,7 @@ function PPDBContent() {
 
             <div className="grid md:grid-cols-3 gap-6 relative">
               {/* Step 1 */}
-              <div className="bg-gradient-to-b from-blue-50/80 to-white rounded-2xl p-6 border-2 border-primary-500 shadow-xl shadow-primary/20 relative space-y-3">
+              <div className="bg-gradient-to-b from-blue-50/80 to-white rounded-2xl p-6 border-2 border-primary-500 shadow-xl relative space-y-3">
                 <div className="flex items-center justify-between">
                   <span className="w-8 h-8 rounded-full bg-primary-600 text-white font-black text-sm flex items-center justify-center shadow-xs">
                     1
@@ -633,7 +633,7 @@ function PPDBContent() {
               <button
                 type="button"
                 onClick={() => handleCopyRekening("7253701263")}
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-2xl font-bold text-xs bg-white/10 hover:bg-white/20 text-white border border-white/20 transition-all active:scale-95 shadow-xl shadow-primary/20"
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-2xl font-bold text-xs bg-white/10 hover:bg-white/20 text-white border border-white/20 transition-all active:scale-95 shadow-xl"
               >
                 {copiedBank ? (
                   <>

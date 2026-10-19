@@ -676,7 +676,7 @@ export default function SesiKetersediaanSection({
                     }
                     setIsSlotModalOpen(true);
                   }}
-                  className="flex items-center gap-2 px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-xl font-black text-xs shadow-md shadow-primary-600/20 transition-all active:scale-95 whitespace-nowrap"
+                  className="flex items-center gap-2 px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-xl font-black text-xs shadow-md transition-all active:scale-95 whitespace-nowrap"
                 >
                   <Plus className="w-3.5 h-3.5" />
                   Buat Sesi Tunggal
@@ -778,7 +778,7 @@ export default function SesiKetersediaanSection({
                 if (filterCreatorId) setSlotForm((p) => ({ ...p, creator_id: filterCreatorId }));
                 setIsSlotModalOpen(true);
               }}
-              className="px-4 py-2.5 bg-primary-600 hover:bg-primary-700 text-white rounded-xl font-black text-xs shadow-md shadow-primary-600/20 transition-all"
+              className="px-4 py-2.5 bg-primary-600 hover:bg-primary-700 text-white rounded-xl font-black text-xs shadow-md transition-all"
             >
               + Buat Sesi Tunggal
             </button>
@@ -1088,7 +1088,7 @@ export default function SesiKetersediaanSection({
                 <button
                   type="submit"
                   disabled={submittingSlot}
-                  className="flex-1 py-3 bg-primary-600 hover:bg-primary-700 disabled:opacity-50 text-white font-black rounded-xl text-xs shadow-lg shadow-primary-600/20 transition-all flex items-center justify-center gap-2"
+                  className="flex-1 py-3 bg-primary-600 hover:bg-primary-700 disabled:opacity-50 text-white font-black rounded-xl text-xs shadow-lg transition-all flex items-center justify-center gap-2"
                 >
                   {submittingSlot ? (
                     <Loader2 className="w-4 h-4 animate-spin" />
@@ -1347,7 +1347,7 @@ export default function SesiKetersediaanSection({
                 <button
                   type="submit"
                   disabled={submittingBulk}
-                  className="flex-1 py-3 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white font-black rounded-xl text-xs shadow-lg shadow-emerald-600/20 transition-all flex items-center justify-center gap-2"
+                  className="flex-1 py-3 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white font-black rounded-xl text-xs shadow-lg transition-all flex items-center justify-center gap-2"
                 >
                   {submittingBulk ? (
                     <Loader2 className="w-4 h-4 animate-spin" />
@@ -1461,7 +1461,7 @@ export default function SesiKetersediaanSection({
                 <button
                   type="submit"
                   disabled={submittingEdit}
-                  className="flex-1 py-3 bg-primary-600 hover:bg-primary-700 disabled:opacity-50 text-white font-black rounded-xl text-xs shadow-lg shadow-primary-600/20 transition-all flex items-center justify-center gap-2"
+                  className="flex-1 py-3 bg-primary-600 hover:bg-primary-700 disabled:opacity-50 text-white font-black rounded-xl text-xs shadow-lg transition-all flex items-center justify-center gap-2"
                 >
                   {submittingEdit ? (
                     <Loader2 className="w-4 h-4 animate-spin" />

@@ -140,7 +140,7 @@ export default function IsiSeragamClient({ code, pendaftar }: { code: string; pe
                   <button
                     type="submit"
                     disabled={saving}
-                    className="w-full flex items-center justify-center gap-2 px-6 py-3.5 bg-primary-700 text-white rounded-2xl font-black text-sm shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 shadow-primary-200 hover:bg-primary-800 disabled:opacity-50 transition-all cursor-pointer"
+                    className="w-full flex items-center justify-center gap-2 px-6 py-3.5 bg-primary-700 text-white rounded-2xl font-black text-sm shadow-md-200 hover:bg-primary-800 disabled:opacity-50 transition-all cursor-pointer"
                   >
                     {saving ? <Loader2 className="w-5 h-5 animate-spin" /> : <Save className="w-5 h-5" />}
                     {saving ? "Menyimpan..." : "Simpan Ukuran Seragam"}

@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
    BUTTON — Ulul Albaab Edition
    Token-aligned dengan globals.css ululalbaab:
    · Warna   : blue, amber, gold, ink
-   · Shadow  : --shadow-primary, --shadow-primary-lg, --shadow-yellow, --shadow-yellow-lg
+   · Shadow  : --, --shadow-lg, --shadow-yellow, --shadow-yellow-lg
    · Radius  : --radius-full (pill), --radius-md, --radius-lg
    · Easing  : --ease-spring, --ease-smooth
    · Duration: --duration-fast, --duration-base
@@ -42,13 +42,13 @@ const buttonVariants = cva(
           "relative overflow-hidden",
           "bg-gradient-to-br from-[var(--color-primary-500)] to-[var(--color-primary-800)]",
           "text-white",
-          "[box-shadow:var(--shadow-primary)]",
+          "[box-shadow:var(--)]",
           /* Shine overlay */
           "before:absolute before:inset-0 before:rounded-[inherit]",
           "before:bg-gradient-to-br before:from-white/[0.12] before:to-transparent",
           "before:pointer-events-none",
           "hover:-translate-y-[2px]",
-          "hover:[box-shadow:var(--shadow-primary-lg)]",
+          "hover:[box-shadow:var(--shadow-lg)]",
           "hover:brightness-[1.08]",
           "active:translate-y-0",
         ].join(" "),
@@ -104,7 +104,7 @@ const buttonVariants = cva(
           "hover:bg-[var(--color-primary-800)]",
           "hover:text-white",
           "hover:border-[var(--color-primary-800)]",
-          "hover:[box-shadow:var(--shadow-primary)]",
+          "hover:[box-shadow:var(--)]",
           "hover:-translate-y-[1px]",
           "active:translate-y-0",
         ].join(" "),
@@ -278,8 +278,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <button
         ref={ref}
-        className={computedClass}
-        disabled={isDisabled}
+        className={computedClass} disabled={isDisabled}
         aria-busy={isLoading}
         aria-disabled={isDisabled}
         {...props}

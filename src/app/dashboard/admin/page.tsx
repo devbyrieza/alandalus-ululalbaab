@@ -79,7 +79,7 @@ const StatWidget = ({ label, value, icon: Icon, color, trend, breakdown, highlig
             <button
               onClick={(e) => { e.stopPropagation(); onPromote(); }}
               disabled={isPromoting}
-              className="w-full flex items-center justify-center gap-2 py-2.5 px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl font-black text-xs uppercase tracking-widest transition-all shadow-sm shadow-blue-600/20 hover:scale-[1.02] active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full flex items-center justify-center gap-2 py-2.5 px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl font-black text-xs uppercase tracking-widest transition-all shadow-sm hover:scale-[1.02] active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isPromoting ? (
                 <>
@@ -360,15 +360,15 @@ export default function AdminDashboardPage() {
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 w-full lg:w-auto">
-             <div className="bg-white/10 p-4 sm:p-6 lg:p-5 md:p-8 rounded-[1.5rem] sm:rounded-[2rem] border border-white/20 shadow-xl shadow-primary/20 flex flex-col items-center group hover:bg-white/15 transition-all">
+             <div className="bg-white/10 p-4 sm:p-6 lg:p-5 md:p-8 rounded-[1.5rem] sm:rounded-[2rem] border border-white/20 shadow-xl flex flex-col items-center group hover:bg-white/15 transition-all">
                 <p className="text-[9px] sm:text-[10px] font-black text-white/80 uppercase tracking-widest mb-2 sm:mb-4 text-center group-hover:text-white transition-colors">Diterima</p>
                 <p className="text-2xl sm:text-2xl md:text-4xl font-black text-amber-300 drop-shadow-sm">{stats.diterima}</p>
              </div>
-             <div className="bg-white/10 p-4 sm:p-6 lg:p-5 md:p-8 rounded-[1.5rem] sm:rounded-[2rem] border border-white/20 shadow-xl shadow-primary/20 flex flex-col items-center group hover:bg-white/15 transition-all">
+             <div className="bg-white/10 p-4 sm:p-6 lg:p-5 md:p-8 rounded-[1.5rem] sm:rounded-[2rem] border border-white/20 shadow-xl flex flex-col items-center group hover:bg-white/15 transition-all">
                 <p className="text-[9px] sm:text-[10px] font-black text-white/80 uppercase tracking-widest mb-2 sm:mb-4 text-center group-hover:text-white transition-colors">Proses Daftar Ulang</p>
                 <p className="text-2xl sm:text-2xl md:text-4xl font-black text-amber-400 drop-shadow-sm">{stats.daftar_ulang_sedang}</p>
              </div>
-             <div className="bg-white/10 p-4 sm:p-6 lg:p-5 md:p-8 rounded-[1.5rem] sm:rounded-[2rem] border border-white/20 shadow-xl shadow-primary/20 flex flex-col items-center group hover:bg-white/15 transition-all md:col-span-2">
+             <div className="bg-white/10 p-4 sm:p-6 lg:p-5 md:p-8 rounded-[1.5rem] sm:rounded-[2rem] border border-white/20 shadow-xl flex flex-col items-center group hover:bg-white/15 transition-all md:col-span-2">
                 <p className="text-[9px] sm:text-[10px] font-black text-white/80 uppercase tracking-widest mb-2 sm:mb-4 text-center group-hover:text-white transition-colors">Lunas Daftar Ulang</p>
                 <p className="text-2xl sm:text-2xl md:text-4xl font-black text-amber-300 drop-shadow-sm">{stats.daftar_ulang_selesai}</p>
              </div>
@@ -457,7 +457,7 @@ export default function AdminDashboardPage() {
               <div className="space-y-4">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 sm:p-6 bg-primary-50 rounded-2xl sm:rounded-2xl border border-primary-100 hover:border-primary-200 transition-all cursor-default group/item gap-4">
                   <div className="flex items-center gap-4 sm:gap-5">
-                    <div className="w-12 h-12 rounded-2xl bg-white shadow-xl shadow-primary/20 flex items-center justify-center text-primary-600 transition-transform group-hover/item:scale-110 shrink-0">
+                    <div className="w-12 h-12 rounded-2xl bg-white shadow-xl flex items-center justify-center text-primary-600 transition-transform group-hover/item:scale-110 shrink-0">
                       <Users className="w-6 h-6" />
                     </div>
                     <div>
@@ -472,7 +472,7 @@ export default function AdminDashboardPage() {
                 </div>
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 sm:p-6 bg-primary-50 rounded-2xl sm:rounded-2xl border border-primary-100 hover:border-emerald-200 transition-all cursor-default group/item gap-4">
                   <div className="flex items-center gap-4 sm:gap-5">
-                    <div className="w-12 h-12 rounded-2xl bg-white shadow-xl shadow-primary/20 flex items-center justify-center text-emerald-600 transition-transform group-hover/item:scale-110 shrink-0">
+                    <div className="w-12 h-12 rounded-2xl bg-white shadow-xl flex items-center justify-center text-emerald-600 transition-transform group-hover/item:scale-110 shrink-0">
                       <Wallet className="w-6 h-6" />
                     </div>
                     <div>

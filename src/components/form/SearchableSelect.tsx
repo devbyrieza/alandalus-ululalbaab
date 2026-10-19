@@ -152,23 +152,7 @@ export default function SearchableSelect({
           aria-haspopup="listbox"
           aria-expanded={isOpen}
           aria-label={`${label}${value ? `: ${value}` : ""}`}
-          className={[
-            "w-full flex items-center justify-between gap-3",
-            "px-4 py-3 rounded-[var(--radius-md)]",
-            "text-left text-[0.9375rem] font-medium",
-            "border-[1.5px] outline-none",
-            "transition-all duration-[var(--duration-base)] [transition-timing-function:var(--ease-smooth)]",
-            "min-h-[48px]",
-            disabled
-              ? "bg-[var(--color-surface-100)] border-[var(--color-ink-100)] text-[var(--color-ink-300)] cursor-not-allowed"
-              : isOpen
-                ? "bg-[var(--color-white)] border-[var(--color-primary-500)] shadow-[0_0_0_3px_rgba(3,105,199,0.10),var(--shadow-xs)] text-[var(--color-ink-900)]"
-                : value
-                  ? "bg-[var(--color-white)] border-[var(--color-primary-200)] hover:border-[var(--color-primary-400)] shadow-[var(--shadow-xs)] text-[var(--color-ink-900)]"
-                  : "bg-[var(--color-white)] border-[var(--color-primary-100)] hover:border-[var(--color-primary-300)] shadow-[var(--shadow-xs)] text-[var(--color-ink-400)]",
-          ].join(" ")}
-        >
-          {/* Selected value or placeholder */}
+          className={[ "w-full flex items-center justify-between gap-3", "px-4 py-3 rounded-[var(--radius-md)]", "text-left text-[0.9375rem] font-medium", "border-[1.5px] outline-none", "transition-all duration-[var(--duration-base)] [transition-timing-function:var(--ease-smooth)]", "min-h-[48px]", disabled ? "bg-[var(--color-surface-100)] border-[var(--color-ink-100)] text-[var(--color-ink-300)] cursor-not-allowed" : isOpen ? "bg-[var(--color-white)] border-[var(--color-primary-500)] shadow-[0_0_0_3px_rgba(3,105,199,0.10),var(--shadow-xs)] text-[var(--color-ink-900)]" : value ? "bg-[var(--color-white)] border-[var(--color-primary-200)] hover:border-[var(--color-primary-400)] shadow-[var(--shadow-xs)] text-[var(--color-ink-900)]" : "bg-[var(--color-white)] border-[var(--color-primary-100)] hover:border-[var(--color-primary-300)] shadow-[var(--shadow-xs)] text-[var(--color-ink-400)]", ].join(" ")} >{/* Selected value or placeholder */}
           <span className="truncate flex-1">{value || placeholder}</span>
 
           {/* Right icon */}
@@ -312,18 +296,7 @@ export default function SearchableSelect({
                         role="option"
                         aria-selected={isSelected}
                         onClick={() => handleSelect(opt)}
-                        className={[
-                          "w-full flex items-center justify-between gap-3",
-                          "px-3.5 py-2.5 rounded-[var(--radius-md)]",
-                          "text-sm text-left font-medium",
-                          "transition-all duration-[var(--duration-fast)]",
-                          "[transition-timing-function:var(--ease-smooth)]",
-                          isSelected
-                            ? "bg-[var(--color-primary-50)] text-[var(--color-primary-800)]"
-                            : "text-[var(--color-ink-700)] hover:bg-[var(--color-surface-100)] hover:text-[var(--color-primary-700)]",
-                        ].join(" ")}
-                      >
-                        <span className="truncate flex-1">{opt}</span>
+                        className={[ "w-full flex items-center justify-between gap-3", "px-3.5 py-2.5 rounded-[var(--radius-md)]", "text-sm text-left font-medium", "transition-all duration-[var(--duration-fast)]", "[transition-timing-function:var(--ease-smooth)]", isSelected ? "bg-[var(--color-primary-50)] text-[var(--color-primary-800)]" : "text-[var(--color-ink-700)] hover:bg-[var(--color-surface-100)] hover:text-[var(--color-primary-700)]", ].join(" ")} > <span className="truncate flex-1">{opt}</span>
 
                         <AnimatePresence>
                           {isSelected && (

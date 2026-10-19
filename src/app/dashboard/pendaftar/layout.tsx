@@ -225,7 +225,7 @@ export default function DashboardLayout({
           </div>
 
           {/* Tooltip for locked state */}
-          <div className="absolute left-14 top-full z-50 w-64 p-3 mt-2 text-xs text-white bg-ink-900 rounded-2xl shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-2 group-hover:translate-y-0 lg:left-full lg:top-0 lg:ml-2">
+          <div className="absolute left-14 top-full z-50 w-64 p-3 mt-2 text-xs text-white bg-ink-900 rounded-2xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-2 group-hover:translate-y-0 lg:left-full lg:top-0 lg:ml-2">
             <div className="font-bold mb-1 flex items-center gap-2">
               <Lock className="w-3.5 h-3.5 text-gold-400" />
               <span>Akses Terkunci</span>
@@ -259,7 +259,7 @@ export default function DashboardLayout({
       <div className="px-3 py-1">
         <Link
           href={item.href}
-          className={`group flex items-center px-4 py-3.5 text-sm font-bold rounded-2xl transition-all duration-200 ${ item.active ? "bg-primary-900 text-white shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 border border-primary-800" : showAnyBadge ? "text-orange-700 bg-orange-50 hover:bg-orange-100 border border-orange-200" : "text-ink-600 hover:bg-gold-100 hover:text-primary-900" }`}
+          className={`group flex items-center px-4 py-3.5 text-sm font-bold rounded-2xl transition-all duration-200 ${ item.active ? "bg-primary-900 text-white shadow-2xl    border border-primary-800" : showAnyBadge ? "text-orange-700 bg-orange-50 hover:bg-orange-100 border border-orange-200" : "text-ink-600 hover:bg-gold-100 hover:text-primary-900" }`}
         >
           <item.icon
             className={`w-5 h-5 mr-3 flex-shrink-0 transition-colors ${item.active ? "text-gold-200" : showAnyBadge ? "text-orange-500" : "text-ink-400 group-hover:text-primary-700"}`}
@@ -383,7 +383,7 @@ export default function DashboardLayout({
             >
               {statusInfo.label}
             </div>
-            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-linear-to-br from-primary-700 to-primary-900 flex items-center justify-center text-white text-sm font-black shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 border border-gold-100">
+            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-linear-to-br from-primary-700 to-primary-900 flex items-center justify-center text-white text-sm font-black shadow-2xl border border-gold-100">
               {namaLengkap.charAt(0)}
             </div>
           </div>
@@ -396,7 +396,7 @@ export default function DashboardLayout({
               {/* Brand */}
               <div className="px-6 pt-8 pb-6 border-b border-gold-100/50 mb-2">
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 h-10 rounded-2xl bg-white flex items-center justify-center shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 ring-4 ring-gold-50 overflow-hidden">
+                  <div className="w-10 h-10 rounded-2xl bg-white flex items-center justify-center shadow-2xl ring-4 ring-gold-50 overflow-hidden">
                     <img
                       src={BRANDING.logoPath}
                       alt="Logo"
@@ -419,7 +419,7 @@ export default function DashboardLayout({
                 {/* User Card */}
                 <div className="p-4 rounded-[1.5rem] bg-gold-50/50 border border-gold-100 relative overflow-hidden group app-card">
                   {pasFoto && STATUS_ORDER.indexOf(statusProses) >= STATUS_ORDER.indexOf("docs_verified") ? (
-                    <div className="absolute top-4 right-4 w-12 h-12 rounded-full overflow-hidden border-2 border-white shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 z-10 shrink-0 bg-surface-100">
+                    <div className="absolute top-4 right-4 w-12 h-12 rounded-full overflow-hidden border-2 border-white shadow-2xl z-10 shrink-0 bg-surface-100">
                       <img src={pasFoto} alt="Foto Pendaftar" className="w-full h-full object-cover" />
                     </div>
                   ) : (

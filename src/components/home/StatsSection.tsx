@@ -123,7 +123,7 @@ function StatCard({
         ease: [0.16, 1, 0.3, 1] }}
       className="group relative h-full hover-lift-sm"
     >
-      <div className="glass-panel relative flex flex-col items-center rounded-3xl shadow-xl shadow-blue-500/10 bg-white/70 backdrop-blur-sm border border-blue-100 text-center px-6 py-8 md:px-8 md:py-10 overflow-hidden h-full">
+      <div className="glass-panel relative flex flex-col items-center rounded-3xl shadow-xl bg-white/70 backdrop-blur-sm border border-blue-100 text-center px-6 py-8 md:px-8 md:py-10 overflow-hidden h-full">
         {/* Hover radial bg */}
         <div
           className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
@@ -135,47 +135,19 @@ function StatCard({
 
         {/* Icon */}
         <div
-          className={[
-            "relative mb-6 w-13 h-13 md:w-14 md:h-14 flex items-center justify-center rounded-lg shadow-xs",
-            "transition-all duration-500 group-hover:scale-110",
-            isBlue ? "bg-primary-50 text-blue-600 group-hover:bg-primary-100" : "",
-            isAmber ? "bg-secondary-100 text-blue-600 group-hover:bg-secondary-200" : "",
-          ].join(" ")}
-        >
-          <Icon className="w-5 h-5 md:w-6 md:h-6" strokeWidth={1.75} />
+          className={[ "relative mb-6 w-13 h-13 md:w-14 md:h-14 flex items-center justify-center rounded-lg shadow-xs", "transition-all duration-500 group-hover:scale-110", isBlue ? "bg-primary-50 text-blue-600 group-hover:bg-primary-100" : "", isAmber ? "bg-secondary-100 text-blue-600 group-hover:bg-secondary-200" : "", ].join(" ")} > <Icon className="w-5 h-5 md:w-6 md:h-6" strokeWidth={1.75} />
           <div
-            className={[
-              "absolute inset-0 rounded-lg ring-0 transition-all duration-500",
-              isBlue ? "group-hover:ring-2 group-hover:ring-primary-200" : "",
-              isAmber ? "group-hover:ring-2 group-hover:ring-secondary-300" : "",
-            ].join(" ")}
-          />
-        </div>
-
-        {/* Number */}
+            className={[ "absolute inset-0 rounded-lg ring-0 transition-all duration-500", isBlue ? "group-hover:ring-2 group-hover:ring-primary-200" : "", isAmber ? "group-hover:ring-2 group-hover:ring-secondary-300" : "", ].join(" ")} /> </div>{/* Number */}
         <div className="flex items-baseline justify-center gap-0.5 mb-1">
           <span
-            className={[
-              "text-[2.625rem] md:text-[3.25rem] font-black leading-none tracking-[-0.04em]",
-              isBlue ? "text-blue-600" : "",
-              isAmber ? "text-blue-700" : "",
-            ].join(" ")}
-          >
-            <AnimatedCounter
-              value={stat.value}
+            className={[ "text-[2.625rem] md:text-[3.25rem] font-black leading-none tracking-[-0.04em]", isBlue ? "text-blue-600" : "", isAmber ? "text-blue-700" : "", ].join(" ")} > <AnimatedCounter value={stat.value}
               trigger={trigger}
               delay={0.5 + index * 0.1}
             />
           </span>
           {stat.suffix && (
             <span
-              className={[
-                "text-2xl md:text-3xl font-black leading-none tracking-[-0.03em]",
-                isBlue ? "text-primary-500" : "",
-                isAmber ? "text-secondary-600" : "",
-              ].join(" ")}
-            >
-              {stat.suffix}
+              className={[ "text-2xl md:text-3xl font-black leading-none tracking-[-0.03em]", isBlue ? "text-primary-500" : "", isAmber ? "text-secondary-600" : "", ].join(" ")} >{stat.suffix}
             </span>
           )}
         </div>
@@ -187,13 +159,7 @@ function StatCard({
 
         {/* Sublabel */}
         <p
-          className={[
-            "text-[0.6rem] md:text-[0.65rem] font-semibold tracking-wide mt-0.5",
-            isBlue ? "text-primary-500" : "",
-            isAmber ? "text-secondary-500" : "",
-          ].join(" ")}
-        >
-          {stat.sublabel}
+          className={[ "text-[0.6rem] md:text-[0.65rem] font-semibold tracking-wide mt-0.5", isBlue ? "text-primary-500" : "", isAmber ? "text-secondary-500" : "", ].join(" ")} >{stat.sublabel}
         </p>
 
         {/* Description — always visible on mobile, hover reveal on desktop */}
@@ -204,14 +170,8 @@ function StatCard({
         {/* Spacer to push accent line to bottom */}
         <div className="flex-grow" />
 
-        {/* Bottom accent line */}
         <div
-          className={[
-            "mt-5 h-[2px] w-6 rounded-full transition-all duration-500 group-hover:w-10",
-            isBlue ? "bg-primary-100 group-hover:bg-primary-500" : "",
-            isAmber ? "bg-secondary-200 group-hover:bg-primary-300" : "",
-          ].join(" ")}
-        />
+          className={[ "mt-5 h-[2px] w-6 rounded-full transition-all duration-500 group-hover:w-10", isBlue ? "bg-primary-100 group-hover:bg-primary-500" : "", isAmber ? "bg-secondary-200 group-hover:bg-primary-300" : "", ].join(" ")} />
       </div>
     </motion.div>
   );

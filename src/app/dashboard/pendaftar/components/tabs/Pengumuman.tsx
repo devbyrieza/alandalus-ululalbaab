@@ -209,7 +209,7 @@ export default function PengumumanTab() {
         ) : pengumuman.status_kelulusan === "diterima" ? (
         <div className="space-y-6">
           {/* Success Card */}
-          <div className="bg-linear-to-r from-primary-500 to-primary-700 rounded-[2rem] p-5 md:p-8 text-white shadow-lg shadow-primary-500/20 relative overflow-hidden app-card">
+          <div className="bg-linear-to-r from-primary-500 to-primary-700 rounded-[2rem] p-5 md:p-8 text-white shadow-lg relative overflow-hidden app-card">
             <div className="absolute -top-10 -right-10 p-5 md:p-8 opacity-10 transform rotate-12">
               <Trophy className="w-64 h-64" />
             </div>

@@ -203,7 +203,7 @@ export default function DaftarUlangTab() {
   return (
     <div className="space-y-8 max-w-4xl mx-auto pb-12">
       {/* Header */}
-      <div className="bg-linear-to-br from-primary-700 to-primary-900 rounded-2xl p-5 md:p-8 text-white shadow-xl shadow-primary/20 relative overflow-hidden">
+      <div className="bg-linear-to-br from-primary-700 to-primary-900 rounded-2xl p-5 md:p-8 text-white shadow-xl relative overflow-hidden">
         <div className="absolute top-0 right-0 p-4 opacity-10">
           <CheckCircle className="w-32 h-32" />
         </div>
@@ -216,7 +216,7 @@ export default function DaftarUlangTab() {
       </div>
 
       {/* Sub-Tab Switcher: Uang Pangkal / SPP */}
-      <div className="bg-white rounded-2xl p-4 shadow-xl shadow-primary/20 border border-slate-100">
+      <div className="bg-white rounded-2xl p-4 shadow-xl border border-slate-100">
         <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3">
           Pilih Jenis Pembayaran Daftar Ulang
         </p>
@@ -292,7 +292,7 @@ export default function DaftarUlangTab() {
 
       {/* Dashboard Status (per-tab) */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="bg-white p-5 rounded-2xl border border-slate-100 shadow-xl shadow-primary/20 flex flex-col justify-between">
+        <div className="bg-white p-5 rounded-2xl border border-slate-100 shadow-xl flex flex-col justify-between">
           <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-1">
             Status{" "}
             {subTab === "uang_pangkal" ? "Uang Pangkal" : "SPP Bulan Pertama"}
@@ -306,7 +306,7 @@ export default function DaftarUlangTab() {
           </div>
         </div>
 
-        <div className="bg-white p-5 rounded-2xl border border-slate-100 shadow-xl shadow-primary/20 flex flex-col justify-between">
+        <div className="bg-white p-5 rounded-2xl border border-slate-100 shadow-xl flex flex-col justify-between">
           <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-1">
             Sudah Dibayarkan
           </span>
@@ -318,7 +318,7 @@ export default function DaftarUlangTab() {
           </p>
         </div>
 
-        <div className="bg-white p-5 rounded-2xl border border-slate-100 shadow-xl shadow-primary/20 flex flex-col justify-between">
+        <div className="bg-white p-5 rounded-2xl border border-slate-100 shadow-xl flex flex-col justify-between">
           <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-1">
             Sisa Tagihan
           </span>
@@ -333,7 +333,7 @@ export default function DaftarUlangTab() {
 
       {/* Riwayat Pembayaran (filter per tab) */}
       {activeTabPayments.length > 0 && (
-        <div className="bg-white rounded-2xl p-6 shadow-xl shadow-primary/20 border border-slate-100">
+        <div className="bg-white rounded-2xl p-6 shadow-xl border border-slate-100">
           <h3 className="font-black text-slate-900 mb-4 flex items-center gap-2 text-base">
             <History className="w-5 h-5 text-slate-400" />
             Riwayat Pembayaran{" "}
@@ -392,7 +392,7 @@ export default function DaftarUlangTab() {
 
       {/* Info Tagihan & Rekening */}
       <div className="grid md:grid-cols-2 gap-6">
-        <div className="bg-white p-6 rounded-2xl border border-primary-100 shadow-xl shadow-primary/20 space-y-4">
+        <div className="bg-white p-6 rounded-2xl border border-primary-100 shadow-xl space-y-4">
           <div>
             <h3 className="text-sm font-black text-primary-900 uppercase tracking-wider mb-2">
               {subTab === "uang_pangkal" ? "Uang Pangkal (Biaya Masuk)" : "SPP Bulan Pertama"}
@@ -426,7 +426,7 @@ export default function DaftarUlangTab() {
             </h3>
 
             {/* Opsi Metode Pembayaran */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-4 bg-white p-1 rounded-2xl shadow-xl shadow-primary/20 border border-primary-100">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-4 bg-white p-1 rounded-2xl shadow-xl border border-primary-100">
               <button
                 onClick={() => setPaymentMethod("transfer")}
                 className={`py-2 px-2 rounded-2xl text-xs font-bold transition-all flex items-center justify-center gap-2 ${ paymentMethod === "transfer" ? "bg-primary-600 text-white shadow-sm" : "text-slate-500 hover:bg-slate-50" }`}
@@ -548,7 +548,7 @@ export default function DaftarUlangTab() {
       )}
 
       {message && message.type === "success" && (
-        <div className="p-5 bg-emerald-50 border border-emerald-200 rounded-2xl flex flex-col sm:flex-row items-center sm:items-start gap-4 shadow-xl shadow-primary/20">
+        <div className="p-5 bg-emerald-50 border border-emerald-200 rounded-2xl flex flex-col sm:flex-row items-center sm:items-start gap-4 shadow-xl">
           <div className="w-12 h-12 bg-emerald-100 rounded-2xl flex items-center justify-center shrink-0 mt-0.5 whitespace-nowrap shrink-0">
             <MessageCircle className="w-6 h-6 text-emerald-600" />
           </div>
@@ -574,7 +574,7 @@ export default function DaftarUlangTab() {
 
       {/* Form Upload — Sembunyikan jika tab sudah LUNAS */}
       {isTabLunas ? (
-        <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-8 text-center shadow-xl shadow-primary/20">
+        <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-8 text-center shadow-xl">
           <CheckCircle className="w-14 h-14 text-emerald-500 mx-auto mb-3" />
           <h3 className="font-black text-emerald-900 text-xl mb-2">
             {subTab === "uang_pangkal" ? "Uang Pangkal" : "SPP Bulan Pertama"}{" "}
@@ -597,7 +597,7 @@ export default function DaftarUlangTab() {
           )}
         </div>
       ) : (
-        <div className="bg-white rounded-2xl shadow-xl shadow-primary/20 border border-slate-100 overflow-hidden">
+        <div className="bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden">
           <div
             className={`p-6 border-b border-ink-100 flex justify-between items-center ${ subTab === "uang_pangkal" ? "bg-primary-50" : "bg-violet-50" }`}
           >
@@ -631,7 +631,7 @@ export default function DaftarUlangTab() {
                         new Intl.NumberFormat("id-ID").format(expectedTagihan)
                       )
                     }
-                    className={`p-4 rounded-2xl border-2 transition-all text-left flex flex-col ${ numericNominal === expectedTagihan ? "border-primary-500 bg-primary-50/50 ring-2 ring-primary-500/20 shadow-xl shadow-primary/20" : "border-slate-200 bg-white hover:bg-slate-50" }`}
+                    className={`p-4 rounded-2xl border-2 transition-all text-left flex flex-col ${ numericNominal === expectedTagihan ? "border-primary-500 bg-primary-50/50 ring-2 ring-primary-500/20 shadow-xl " : "border-slate-200 bg-white hover:bg-slate-50" }`}
                   >
                     <div className="flex items-center justify-between w-full mb-1">
                       <span className="font-black text-slate-900">
@@ -658,7 +658,7 @@ export default function DaftarUlangTab() {
                         new Intl.NumberFormat("id-ID").format(halfTagihan)
                       )
                     }
-                    className={`p-4 rounded-2xl border-2 transition-all text-left flex flex-col ${ numericNominal >= halfTagihan && numericNominal < expectedTagihan ? "border-primary-500 bg-primary-50/50 ring-2 ring-primary-500/20 shadow-xl shadow-primary/20" : "border-slate-200 bg-white hover:bg-slate-50" }`}
+                    className={`p-4 rounded-2xl border-2 transition-all text-left flex flex-col ${ numericNominal >= halfTagihan && numericNominal < expectedTagihan ? "border-primary-500 bg-primary-50/50 ring-2 ring-primary-500/20 shadow-xl " : "border-slate-200 bg-white hover:bg-slate-50" }`}
                   >
                     <div className="flex items-center justify-between w-full mb-1">
                       <span className="font-black text-slate-900">

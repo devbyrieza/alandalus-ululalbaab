@@ -124,19 +124,19 @@ export default function PerubahanDataPage() {
         <div className="flex bg-secondary-100 p-1.5 rounded-2xl gap-1">
           <button
             onClick={() => setFilter("pending")}
-            className={`px-4 py-2 rounded-2xl text-sm font-bold transition-all ${filter === "pending" ? "bg-white shadow-xl shadow-primary/20 text-primary-700" : "text-ink-500"}`}
+            className={`px-4 py-2 rounded-2xl text-sm font-bold transition-all ${filter === "pending" ? "bg-white shadow-xl  text-primary-700" : "text-ink-500"}`}
           >
             Pending
           </button>
           <button
             onClick={() => setFilter("submitted")}
-            className={`px-4 py-2 rounded-2xl text-sm font-bold transition-all ${filter === "submitted" ? "bg-white shadow-xl shadow-primary/20 text-primary-700" : "text-ink-500"}`}
+            className={`px-4 py-2 rounded-2xl text-sm font-bold transition-all ${filter === "submitted" ? "bg-white shadow-xl  text-primary-700" : "text-ink-500"}`}
           >
             Butuh Verifikasi
           </button>
           <button
             onClick={() => setFilter("all")}
-            className={`px-4 py-2 rounded-2xl text-sm font-bold transition-all ${filter === "all" ? "bg-white shadow-xl shadow-primary/20 text-primary-700" : "text-ink-500"}`}
+            className={`px-4 py-2 rounded-2xl text-sm font-bold transition-all ${filter === "all" ? "bg-white shadow-xl  text-primary-700" : "text-ink-500"}`}
           >
             Semua
           </button>
@@ -148,7 +148,7 @@ export default function PerubahanDataPage() {
           filtreredRequests.map((req) => (
             <div
               key={req.id}
-              className="bg-white rounded-2xl border border-secondary-200 shadow-xl shadow-primary/20 app-card p-6 group hover:border-primary-200 transition-all"
+              className="bg-white rounded-2xl border border-secondary-200 shadow-xl app-card p-6 group hover:border-primary-200 transition-all"
             >
               <div className="flex flex-col md:flex-row gap-6 items-start">
                 {/* Profile Info */}
@@ -197,7 +197,7 @@ export default function PerubahanDataPage() {
                       <button
                         onClick={() => handleAction(req.id, "approve")}
                         disabled={processing === req.id}
-                        className="flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-3 bg-primary-700 text-white rounded-2xl text-sm font-bold shadow-sm shadow-primary-600/20 hover:bg-primary-800 transition-all disabled:opacity-50"
+                        className="flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-3 bg-primary-700 text-white rounded-2xl text-sm font-bold shadow-sm hover:bg-primary-800 transition-all disabled:opacity-50"
                       >
                         {processing === req.id ? (
                           <Loader2 className="w-4 h-4 animate-spin" />
@@ -220,7 +220,7 @@ export default function PerubahanDataPage() {
                     <div className="flex gap-2 w-full">
                       <Link
                         href={`/dashboard/admin/pendaftar/${req.pendaftar_id}`}
-                        className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-primary-600 text-white rounded-2xl text-sm font-bold shadow-sm shadow-primary-500/20 hover:bg-primary-700 transition-all"
+                        className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-primary-600 text-white rounded-2xl text-sm font-bold shadow-sm hover:bg-primary-700 transition-all"
                       >
                         <Eye className="w-4 h-4" />
                         Cek Perubahan
@@ -228,7 +228,7 @@ export default function PerubahanDataPage() {
                       <button
                         onClick={() => handleAction(req.id, "complete")}
                         disabled={processing === req.id}
-                        className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-emerald-600 text-white rounded-2xl text-sm font-bold shadow-sm shadow-emerald-500/20 hover:bg-emerald-700 transition-all disabled:opacity-50"
+                        className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-emerald-600 text-white rounded-2xl text-sm font-bold shadow-sm hover:bg-emerald-700 transition-all disabled:opacity-50"
                       >
                         {processing === req.id ? (
                           <Loader2 className="w-4 h-4 animate-spin" />
@@ -254,7 +254,7 @@ export default function PerubahanDataPage() {
             </div>
           ))
         ) : (
-          <div className="bg-white rounded-2xl border border-secondary-200 shadow-xl shadow-primary/20 app-card p-20 text-center">
+          <div className="bg-white rounded-2xl border border-secondary-200 shadow-xl app-card p-20 text-center">
             <div className="w-20 h-20 bg-secondary-100 rounded-[2rem] flex items-center justify-center mx-auto mb-6">
               <Clock className="w-10 h-10 text-ink-300" />
             </div>

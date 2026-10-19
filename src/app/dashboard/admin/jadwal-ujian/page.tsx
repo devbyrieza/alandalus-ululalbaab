@@ -898,14 +898,14 @@ export default function JadwalUjianPage() {
           <div className="flex flex-wrap items-center gap-3">
             <button
               onClick={handleSwitchToKetersediaan}
-              className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs border transition-all whitespace-nowrap ${ mainTab === "ketersediaan" ? "bg-emerald-600 text-white border-emerald-600 shadow-md shadow-emerald-600/20" : "bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border-emerald-200" }`}
+              className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs border transition-all whitespace-nowrap ${ mainTab === "ketersediaan" ? "bg-emerald-600 text-white border-emerald-600 shadow-md " : "bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border-emerald-200" }`}
             >
               <Clock className="w-4 h-4" />
               + Buat Sesi Ketersediaan
             </button>
             <button
               onClick={() => openScheduleModal()}
-              className="flex items-center gap-2 px-5 py-2.5 bg-primary-600 hover:bg-primary-700 text-white rounded-xl font-black text-xs shadow-lg shadow-primary-600/20 transition-all hover:scale-[1.02] active:scale-95 whitespace-nowrap"
+              className="flex items-center gap-2 px-5 py-2.5 bg-primary-600 hover:bg-primary-700 text-white rounded-xl font-black text-xs shadow-lg transition-all hover:scale-[1.02] active:scale-95 whitespace-nowrap"
             >
               <CalendarPlus className="w-4 h-4" />
               + Buat Jadwal Khusus Santri
@@ -1096,7 +1096,7 @@ export default function JadwalUjianPage() {
                       <button
                         onClick={() => handleAssign(s.id)}
                         disabled={assigning || s.booked_count >= s.quota}
-                        className="w-full md:w-auto px-5 py-2.5 bg-primary-600 hover:bg-primary-700 text-white rounded-xl font-bold text-xs shadow-md shadow-primary-600/20 transition-all flex items-center justify-center gap-2"
+                        className="w-full md:w-auto px-5 py-2.5 bg-primary-600 hover:bg-primary-700 text-white rounded-xl font-bold text-xs shadow-md transition-all flex items-center justify-center gap-2"
                       >
                         {assigning && <Loader2 className="w-4 h-4 animate-spin" />}
                         Plotkan Santri Terpilih
@@ -1775,7 +1775,7 @@ export default function JadwalUjianPage() {
                       setFormLocationType("online");
                       if (detectedAnyMeet) setFormOnlineUrl(detectedAnyMeet);
                     }}
-                    className={`flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-xs transition-all ${ formLocationType === "online" ? "bg-emerald-600 text-white shadow-md shadow-emerald-600/20 font-black" : "text-stone-600 hover:text-stone-900" }`}
+                    className={`flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-xs transition-all ${ formLocationType === "online" ? "bg-emerald-600 text-white shadow-md  font-black" : "text-stone-600 hover:text-stone-900" }`}
                   >
                     <Video className="w-4 h-4" />
                     Online (Google Meet)
@@ -1973,7 +1973,7 @@ export default function JadwalUjianPage() {
                 <button
                   type="submit"
                   disabled={submittingSchedule}
-                  className="flex-[2] py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-xl font-black text-sm shadow-lg shadow-primary-600/20 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+                  className="flex-[2] py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-xl font-black text-sm shadow-lg transition-all flex items-center justify-center gap-2 disabled:opacity-50"
                 >
                   {submittingSchedule ? (
                     <>

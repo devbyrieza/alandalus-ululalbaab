@@ -48,7 +48,7 @@ const ContactInfoCard = ({
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
     transition={{ delay, duration: 0.5 }}
-    className="app-card bg-white p-6 sm:p-5 md:p-8 rounded-2xl sm:rounded-[2.5rem] border border-primary-100 shadow-xl shadow-primary/20 hover:shadow-xl shadow-primary/20 transition-all group flex flex-col items-center text-center"
+    className="app-card bg-white p-6 sm:p-5 md:p-8 rounded-2xl sm:rounded-[2.5rem] border border-primary-100 shadow-xl hover:shadow-xl transition-all group flex flex-col items-center text-center"
   >
     <div className="w-16 h-16 rounded-2xl bg-primary-50 flex items-center justify-center text-primary-600 mb-6 group-hover:scale-110 transition-transform shadow-sm border border-primary-100">
       <Icon className="w-8 h-8" />
@@ -85,10 +85,7 @@ const SocialCard = ({ social, delay = 0 }: { social: any; delay?: number }) => (
     href={social.url}
     target="_blank"
     rel="noopener noreferrer"
-    className={`app-card group flex items-center gap-4 sm:gap-5 p-4 sm:p-5 rounded-2xl sm:rounded-[2rem] bg-white border border-primary-50 shadow-xl shadow-primary/20 hover:shadow-xl shadow-primary/20 transition-all`}
-  >
-    <div
-      className={`w-14 h-14 rounded-2xl ${social.bgLight} flex items-center justify-center ${social.textColor} group-hover:scale-110 transition-transform shadow-sm border border-primary-50`}
+    className={`app-card group flex items-center gap-4 sm:gap-5 p-4 sm:p-5 rounded-2xl sm:rounded-[2rem] bg-white border border-primary-50 shadow-xl hover:shadow-xl transition-all`} > <div className={`w-14 h-14 rounded-2xl ${social.bgLight} flex items-center justify-center ${social.textColor} group-hover:scale-110 transition-transform shadow-sm border border-primary-50`}
     >
       <social.icon className="w-7 h-7" />
     </div>
@@ -247,7 +244,7 @@ export default function ContactPage() {
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="lg:col-span-3 bg-white p-6 md:p-16 rounded-[2.5rem] md:rounded-[4rem] shadow-xl shadow-primary/20 border border-primary-50 relative overflow-hidden"
+              className="lg:col-span-3 bg-white p-6 md:p-16 rounded-[2.5rem] md:rounded-[4rem] shadow-xl border border-primary-50 relative overflow-hidden"
             >
               <div className="absolute top-0 right-0 w-96 h-96 bg-primary-50/50 rounded-full blur-[100px] translate-x-1/2 -translate-y-1/2" />
 
@@ -401,7 +398,7 @@ export default function ContactPage() {
                     title="Lokasi Pesantren Al Andalus Ulul Albaab"
                     className="grayscale hover:grayscale-0 transition-all duration-700"
                   />
-                  <div className="absolute bottom-3 left-3 md:bottom-6 md:left-6 bg-white px-3 py-1.5 md:px-6 md:py-3 rounded-2xl md:rounded-2xl shadow-xl shadow-primary/20 border border-primary-100 flex items-center gap-1.5 md:gap-3 z-10">
+                  <div className="absolute bottom-3 left-3 md:bottom-6 md:left-6 bg-white px-3 py-1.5 md:px-6 md:py-3 rounded-2xl md:rounded-2xl shadow-xl border border-primary-100 flex items-center gap-1.5 md:gap-3 z-10">
                     <MapIcon className="w-3.5 h-3.5 md:w-5 md:h-5 text-primary-600" />
                     <span className="text-[10px] md:text-sm font-black text-ink-950 uppercase tracking-widest">
                       Buka di Maps
@@ -437,7 +434,7 @@ export default function ContactPage() {
               </p>
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 md:gap-6 justify-center px-4">
                 <Link href="/ppdb">
-                  <button className="w-full sm:w-auto px-6 sm:px-6 md:px-10 py-3.5 sm:py-4 md:py-5 rounded-pill bg-white text-primary-900 font-black text-sm sm:text-base md:text-lg hover:bg-secondary-100 shadow-xl shadow-primary/20 transition-all min-h-[48px] sm:min-h-[52px]">
+                  <button className="w-full sm:w-auto px-6 sm:px-6 md:px-10 py-3.5 sm:py-4 md:py-5 rounded-pill bg-white text-primary-900 font-black text-sm sm:text-base md:text-lg hover:bg-secondary-100 shadow-xl transition-all min-h-[48px] sm:min-h-[52px]">
                     Daftar PPDB
                   </button>
                 </Link>

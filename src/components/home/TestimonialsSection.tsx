@@ -61,7 +61,7 @@ function TestimonialCard({
       viewport={{ once: true, margin: "-32px" }}
       transition={{ delay: idx * 0.08, duration: 0.6, ease: EASE }}
       whileHover={{ y: -4 }}
-      className="group relative bg-white/80 backdrop-blur-sm flex flex-col h-full rounded-3xl border border-blue-100 shadow-xl shadow-blue-500/10 hover:shadow-2xl hover:shadow-blue-500/20 hover:border-primary-200 overflow-hidden transition-all duration-400"
+      className="group relative bg-white/80 backdrop-blur-sm flex flex-col h-full rounded-3xl border border-blue-100 shadow-xl hover:shadow-xl hover: hover:border-primary-200 overflow-hidden transition-all duration-400"
     >
       <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-primary-50/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 

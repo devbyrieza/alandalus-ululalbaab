@@ -187,7 +187,7 @@ export default function ProgramPage() {
                     .getElementById(program.id)
                     ?.scrollIntoView({ behavior: "smooth" });
                 }}
-                className={`px-6 md:px-8 py-2.5 md:py-3 rounded-full font-bold text-sm transition-all border shadow-xs ${ activeSection === program.id ? 'bg-primary-600 text-white border-primary-600 shadow-xl shadow-primary/20 shadow-primary-600/20' : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50' }`}
+                className={`px-6 md:px-8 py-2.5 md:py-3 rounded-full font-bold text-sm transition-all border shadow-xs ${ activeSection === program.id ? 'bg-primary-600 text-white border-primary-600 shadow-xl  ' : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50' }`}
               >
                 {program.name}
               </button>
@@ -236,9 +236,7 @@ export default function ProgramPage() {
                 </motion.div>
 
                 {/* Content Side */}
-                <div className={idx % 2 === 1 ? 'lg:col-start-1' : ''}>
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
+                <div className={idx % 2 === 1 ? 'lg:col-start-1' : ''}> <motion.div initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                   >
@@ -294,7 +292,7 @@ export default function ProgramPage() {
 
                   {/* CTA Button */}
                   <Link href={`/daftar?program=${program.id}`}>
-                    <button className="w-full sm:w-auto px-8 py-4 rounded-xl font-black text-white text-base bg-primary-600 hover:bg-primary-500 shadow-xl shadow-primary/20 shadow-primary-600/20 transition-all hover:-translate-y-0.5 flex items-center justify-center gap-2">
+                    <button className="w-full sm:w-auto px-8 py-4 rounded-xl font-black text-white text-base bg-primary-600 hover:bg-primary-500 shadow-xl transition-all hover:-translate-y-0.5 flex items-center justify-center gap-2">
                       {program.buttonLabel}
                       <ArrowRight className="w-4 h-4" />
                     </button>
@@ -319,7 +317,7 @@ export default function ProgramPage() {
           <div className="flex flex-wrap justify-center gap-4">
             <Link
               href="/daftar"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-primary-600 hover:bg-primary-500 text-white font-bold text-base shadow-lg shadow-primary-600/30 transition-all hover:-translate-y-0.5"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-primary-600 hover:bg-primary-500 text-white font-bold text-base shadow-lg transition-all hover:-translate-y-0.5"
             >
               Daftar PPDB Sekarang <ArrowRight className="w-4 h-4" />
             </Link>

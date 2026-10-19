@@ -106,7 +106,7 @@ export default function SendOtpPage() {
       <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-[0.02] pointer-events-none" />
 
       <BackToHomeButton position="top-left" />
-      <div className="app-card bg-white rounded-[2.5rem] shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 border border-primary-100 w-full max-w-md p-6 md:p-8 relative z-10">
+      <div className="app-card bg-white rounded-[2.5rem] shadow-2xl border border-primary-100 w-full max-w-md p-6 md:p-8 relative z-10">
         {/* Soft decorative blur inside card */}
         <div className="absolute top-0 right-0 w-64 h-64 bg-primary-50/30 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
         {/* Header */}
@@ -140,7 +140,7 @@ export default function SendOtpPage() {
           <div className="space-y-3">
             {/* Telegram Option */}
             <div
-              className={`p-4 border-2 rounded-3xl cursor-pointer transition-all app-card ${ selectedChannel === "telegram" ? "border-primary-600 bg-primary-50 shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 scale-[1.02]" : "border-surface-200 bg-white hover:border-primary-200 hover:shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10" }`}
+              className={`p-4 border-2 rounded-3xl cursor-pointer transition-all app-card ${ selectedChannel === "telegram" ? "border-primary-600 bg-primary-50 shadow-2xl    scale-[1.02]" : "border-surface-200 bg-white hover:border-primary-200 hover:shadow-xl   " }`}
               onClick={() => setSelectedChannel("telegram")}
             >
               <div className="flex items-center">
@@ -175,7 +175,7 @@ export default function SendOtpPage() {
 
             {/* Email Option */}
             <div
-              className={`p-4 border-2 rounded-3xl cursor-pointer transition-all app-card ${ selectedChannel === "email" ? "border-primary-600 bg-secondary-50 shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 scale-[1.02]" : "border-secondary-200 bg-white hover:border-primary-200 hover:shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10" }`}
+              className={`p-4 border-2 rounded-3xl cursor-pointer transition-all app-card ${ selectedChannel === "email" ? "border-primary-600 bg-secondary-50 shadow-2xl    scale-[1.02]" : "border-secondary-200 bg-white hover:border-primary-200 hover:shadow-xl   " }`}
               onClick={() => setSelectedChannel("email")}
             >
               <div className="flex items-center">
@@ -220,7 +220,7 @@ export default function SendOtpPage() {
 
             {/* SMS Option */}
             <div
-              className={`p-4 border-2 rounded-3xl cursor-pointer transition-all app-card ${ selectedChannel === "sms" ? "border-primary-600 bg-secondary-50 shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 scale-[1.02]" : "border-secondary-200 bg-white hover:border-primary-200 hover:shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10" }`}
+              className={`p-4 border-2 rounded-3xl cursor-pointer transition-all app-card ${ selectedChannel === "sms" ? "border-primary-600 bg-secondary-50 shadow-2xl    scale-[1.02]" : "border-secondary-200 bg-white hover:border-primary-200 hover:shadow-xl   " }`}
               onClick={() => setSelectedChannel("sms")}
             >
               <div className="flex items-center">
@@ -309,7 +309,7 @@ export default function SendOtpPage() {
         {/* Messages */}
         <div className="relative z-10">
           {successMessage && (
-            <div className="mb-4 p-4 bg-primary-50 border border-primary-200 text-primary-800 rounded-[1rem] shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10">
+            <div className="mb-4 p-4 bg-primary-50 border border-primary-200 text-primary-800 rounded-[1rem] shadow-2xl">
               <div className="flex items-center">
                 <div className="w-5 h-5 rounded-full bg-primary-500 flex items-center justify-center mr-2">
                   <span className="text-white text-xs">✓</span>
@@ -320,7 +320,7 @@ export default function SendOtpPage() {
           )}
 
           {errorMessage && (
-            <div className="mb-4 p-4 bg-red-50 border border-red-200 text-red-800 rounded-[1rem] shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10">
+            <div className="mb-4 p-4 bg-red-50 border border-red-200 text-red-800 rounded-[1rem] shadow-2xl">
               <div className="flex items-center">
                 <div className="w-5 h-5 rounded-full bg-red-500 flex items-center justify-center mr-2">
                   <span className="text-white text-xs">!</span>
@@ -335,9 +335,7 @@ export default function SendOtpPage() {
         <button
           onClick={handleSendOtp}
           disabled={loading}
-          className={`relative z-10 w-full py-4 md:py-5 rounded-pill font-black text-lg text-white flex items-center justify-center shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 transition-all active:scale-95 border border-transparent disabled:opacity-50 hover:bg-secondary-100 hover:text-primary-900 border-primary-900 bg-primary-900`}
-        >
-          {loading ? (
+          className={`relative z-10 w-full py-4 md:py-5 rounded-pill font-black text-lg text-white flex items-center justify-center shadow-md transition-all active:scale-95 border border-transparent disabled:opacity-50 hover:bg-secondary-100 hover:text-primary-900 border-primary-900 bg-primary-900`} >{loading ? (
             <>
               <svg
                 className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"

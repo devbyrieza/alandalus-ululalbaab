@@ -436,7 +436,7 @@ export default function GaleriPage() {
                     <button
                       key={idx}
                       onClick={() => setCurrentIndex(idx)}
-                      className={`relative w-16 h-12 rounded-2xl overflow-hidden shrink-0 border-2 transition-all cursor-pointer ${ idx === currentIndex ? "border-primary-400 scale-105 shadow-xl shadow-primary/20 shadow-primary-500/50" : "border-white/20 opacity-50 hover:opacity-100" }`}
+                      className={`relative w-16 h-12 rounded-2xl overflow-hidden shrink-0 border-2 transition-all cursor-pointer ${ idx === currentIndex ? "border-primary-400 scale-105 shadow-xl  " : "border-white/20 opacity-50 hover:opacity-100" }`}
                     >
                       <Image
                         src={it.src}
@@ -467,7 +467,7 @@ export default function GaleriPage() {
           <div className="flex flex-wrap justify-center gap-4">
             <Link
               href="/fasilitas"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-primary-600 hover:bg-primary-500 text-white font-bold text-base shadow-lg shadow-primary-600/30 transition-all hover:-translate-y-0.5"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-primary-600 hover:bg-primary-500 text-white font-bold text-base shadow-lg transition-all hover:-translate-y-0.5"
             >
               Rincian Fasilitas Lengkap <ArrowRight className="w-4 h-4" />
             </Link>

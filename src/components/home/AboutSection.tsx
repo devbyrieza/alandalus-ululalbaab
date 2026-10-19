@@ -108,13 +108,13 @@ export default function AboutSection() {
               viewport={{ once: true, margin: "-40px" }}
               transition={{ type: "tween", duration: 0.6, ease: SPRING }}
             >
-              <div className="relative overflow-hidden rounded-3xl border border-blue-100 bg-white/80 backdrop-blur-sm shadow-xl shadow-blue-500/10 group">
+              <div className="relative overflow-hidden rounded-3xl border border-blue-100 bg-white/80 backdrop-blur-sm shadow-xl group">
                 {/* Card top accent bar — biru ke kuning */}
                 <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-primary-600 via-primary-400 to-primary-800 rounded-t-2xl" />
 
                 <div className="flex flex-col items-center text-center px-8 py-12 md:px-16 md:py-16">
                   {/* Icon */}
-                  <div className="mb-7 w-14 h-14 rounded-2xl bg-primary-50 border border-blue-100 flex items-center justify-center shadow-xs group-hover:shadow-xl shadow-primary/20 transition-shadow duration-300">
+                  <div className="mb-7 w-14 h-14 rounded-2xl bg-primary-50 border border-blue-100 flex items-center justify-center shadow-xs group-hover:shadow-xl transition-shadow duration-300">
                     <Target
                       className="w-6 h-6 text-primary-600"
                       strokeWidth={1.75}
@@ -152,7 +152,7 @@ export default function AboutSection() {
                 ease: SPRING,
                 delay: 0.08 }}
             >
-              <div className="rounded-3xl border border-blue-100 bg-white/80 backdrop-blur-sm shadow-xl shadow-blue-500/10 overflow-hidden">
+              <div className="rounded-3xl border border-blue-100 bg-white/80 backdrop-blur-sm shadow-xl overflow-hidden">
                 {/* Header */}
                 <div className="flex items-center gap-4 px-8 py-7 md:px-10 border-b border-primary-50">
                   <div className="w-11 h-11 rounded-xl bg-primary-50 border border-blue-100 flex items-center justify-center shrink-0">

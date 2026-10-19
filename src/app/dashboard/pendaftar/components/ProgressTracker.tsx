@@ -135,7 +135,7 @@ export default function ProgressTracker({
                     {/* Step Icon / Circle */}
                     <motion.div
                       whileHover={{ scale: 1.1 }}
-                      className={`w-14 h-14 md:w-20 md:h-20 rounded-[1.5rem] md:rounded-[2rem] flex items-center justify-center relative z-10 transition-all duration-500 border-4 ${ isCompleted ? "bg-primary-700 border-white text-white shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 shadow-primary-200" : isCurrent ? "bg-white border-primary-700 text-primary-700 shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 shadow-primary-100 scale-110" : "bg-white border-stone-100 text-stone-200" }`}
+                      className={`w-14 h-14 md:w-20 md:h-20 rounded-[1.5rem] md:rounded-[2rem] flex items-center justify-center relative z-10 transition-all duration-500 border-4 ${ isCompleted ? "bg-primary-700 border-white text-white shadow-2xl    " : isCurrent ? "bg-white border-primary-700 text-primary-700 shadow-2xl     scale-110" : "bg-white border-stone-100 text-stone-200" }`}
                     >
                       {isCompleted ? (
                         <CheckCircle className="w-6 h-6 md:w-8 md:h-8" />

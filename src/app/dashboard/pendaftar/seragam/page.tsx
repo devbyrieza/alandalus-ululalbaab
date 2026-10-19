@@ -99,7 +99,7 @@ export default function SeragamPage() {
 
   if (!isAuthorized) {
     return (
-      <div className="max-w-3xl mx-auto mt-8 bg-white p-10 rounded-3xl shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 border border-red-100 flex flex-col items-center justify-center text-center">
+      <div className="max-w-3xl mx-auto mt-8 bg-white p-10 rounded-3xl shadow-2xl border border-red-100 flex flex-col items-center justify-center text-center">
         <div className="w-20 h-20 bg-red-50 text-red-500 rounded-full flex items-center justify-center mb-6">
           <Lock className="w-10 h-10" />
         </div>
@@ -113,7 +113,7 @@ export default function SeragamPage() {
 
   return (
     <div className="max-w-4xl mx-auto space-y-6">
-      <div className="bg-white p-6 rounded-3xl shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 border border-ink-100 flex items-start gap-4 relative overflow-hidden">
+      <div className="bg-white p-6 rounded-3xl shadow-2xl border border-ink-100 flex items-start gap-4 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-32 h-32 bg-primary-50 rounded-bl-[100px] -z-0"></div>
         <div className="w-12 h-12 bg-primary-100 text-primary-700 rounded-2xl flex items-center justify-center flex-shrink-0 relative z-10 whitespace-nowrap shrink-0">
           <Shirt className="w-6 h-6" />
@@ -136,7 +136,7 @@ export default function SeragamPage() {
       <div className="grid grid-cols-1 lg:grid-cols-1 md:grid-cols-2 gap-6">
         {/* Kolom Kiri: Form Input / Summary */}
         {isEditing ? (
-          <div className="bg-white p-6 rounded-3xl shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 border border-ink-100">
+          <div className="bg-white p-6 rounded-3xl shadow-2xl border border-ink-100">
             <h2 className="text-lg font-black text-ink-950 mb-6 flex items-center gap-2">
               <Ruler className="w-5 h-5 text-ink-400" />
               Form Pemilihan Ukuran
@@ -204,7 +204,7 @@ export default function SeragamPage() {
                 <button
                   type="submit"
                   disabled={saving}
-                  className="w-full flex items-center justify-center gap-2 px-6 py-3.5 bg-primary-700 text-white rounded-3xl font-black text-sm shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 shadow-primary-200 hover:bg-primary-800 disabled:opacity-50 transition-all cursor-pointer"
+                  className="w-full flex items-center justify-center gap-2 px-6 py-3.5 bg-primary-700 text-white rounded-3xl font-black text-sm shadow-md-200 hover:bg-primary-800 disabled:opacity-50 transition-all cursor-pointer"
                 >
                   {saving ? <Loader2 className="w-5 h-5 animate-spin" /> : <Save className="w-5 h-5" />}
                   {saving ? "Menyimpan..." : "Simpan Ukuran Seragam"}
@@ -213,7 +213,7 @@ export default function SeragamPage() {
             </form>
           </div>
         ) : (
-          <div className="bg-white p-6 rounded-3xl shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 border border-ink-100 flex flex-col justify-between">
+          <div className="bg-white p-6 rounded-3xl shadow-2xl border border-ink-100 flex flex-col justify-between">
             <div>
               <div className="flex items-center gap-2 mb-4">
                 <span className="flex h-2.5 w-2.5 relative">
@@ -244,7 +244,7 @@ export default function SeragamPage() {
                       <p className="text-sm font-bold text-ink-800">Santri / Siswa</p>
                     </div>
                   </div>
-                  <div className="px-4 py-2 bg-white border border-ink-200 text-ink-950 font-black text-lg rounded-3xl min-w-16 text-center shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10">
+                  <div className="px-4 py-2 bg-white border border-ink-200 text-ink-950 font-black text-lg rounded-3xl min-w-16 text-center shadow-2xl">
                     {formData.ukuran_seragam_baju}
                   </div>
                 </div>
@@ -260,7 +260,7 @@ export default function SeragamPage() {
                       <p className="text-sm font-bold text-ink-800">Santri / Siswa</p>
                     </div>
                   </div>
-                  <div className="px-4 py-2 bg-white border border-ink-200 text-ink-950 font-black text-lg rounded-3xl min-w-16 text-center shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10">
+                  <div className="px-4 py-2 bg-white border border-ink-200 text-ink-950 font-black text-lg rounded-3xl min-w-16 text-center shadow-2xl">
                     {formData.ukuran_seragam_celana}
                   </div>
                 </div>
@@ -276,7 +276,7 @@ export default function SeragamPage() {
                       <p className="text-sm font-bold text-ink-800">Santri / Siswa</p>
                     </div>
                   </div>
-                  <div className="px-4 py-2 bg-white border border-ink-200 text-ink-950 font-black text-lg rounded-3xl min-w-16 text-center shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10">
+                  <div className="px-4 py-2 bg-white border border-ink-200 text-ink-950 font-black text-lg rounded-3xl min-w-16 text-center shadow-2xl">
                     {formData.ukuran_seragam_almamater}
                   </div>
                 </div>
@@ -289,7 +289,7 @@ export default function SeragamPage() {
                   setIsEditing(true);
                   setMessage({ type: "", text: "" });
                 }}
-                className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-white border border-primary-600 text-primary-700 rounded-3xl font-black text-sm hover:bg-primary-50 active:scale-[0.98] transition-all shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 cursor-pointer"
+                className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-white border border-primary-600 text-primary-700 rounded-3xl font-black text-sm hover:bg-primary-50 active:scale-[0.98] transition-all shadow-2xl cursor-pointer"
               >
                 <Edit className="w-4 h-4" />
                 Ubah Pilihan Ukuran
@@ -306,7 +306,7 @@ export default function SeragamPage() {
           
           <div className="space-y-4 text-sm font-medium text-ink-700">
             {/* S */}
-            <div className="bg-white p-4 rounded-2xl shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10">
+            <div className="bg-white p-4 rounded-2xl shadow-2xl">
               <h3 className="font-black text-primary-700 mb-2">Ukuran S</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
                 <div>
@@ -333,7 +333,7 @@ export default function SeragamPage() {
             </div>
 
             {/* M */}
-            <div className="bg-white p-4 rounded-2xl shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10">
+            <div className="bg-white p-4 rounded-2xl shadow-2xl">
               <h3 className="font-black text-primary-700 mb-2">Ukuran M</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
                 <div>
@@ -360,7 +360,7 @@ export default function SeragamPage() {
             </div>
 
             {/* L */}
-            <div className="bg-white p-4 rounded-2xl shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10">
+            <div className="bg-white p-4 rounded-2xl shadow-2xl">
               <h3 className="font-black text-primary-700 mb-2">Ukuran L</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
                 <div>
@@ -387,7 +387,7 @@ export default function SeragamPage() {
             </div>
 
             {/* XL */}
-            <div className="bg-white p-4 rounded-2xl shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10">
+            <div className="bg-white p-4 rounded-2xl shadow-2xl">
               <h3 className="font-black text-primary-700 mb-2">Ukuran XL</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
                 <div>
@@ -414,7 +414,7 @@ export default function SeragamPage() {
             </div>
 
             {/* XXL */}
-            <div className="bg-white p-4 rounded-2xl shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10">
+            <div className="bg-white p-4 rounded-2xl shadow-2xl">
               <h3 className="font-black text-primary-700 mb-2">Ukuran XXL</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
                 <div>
@@ -441,7 +441,7 @@ export default function SeragamPage() {
             </div>
 
             {/* 3XL */}
-            <div className="bg-white p-4 rounded-2xl shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10">
+            <div className="bg-white p-4 rounded-2xl shadow-2xl">
               <h3 className="font-black text-primary-700 mb-2">Ukuran 3XL</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
                 <div>

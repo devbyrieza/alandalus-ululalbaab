@@ -103,7 +103,7 @@ function ActivityCard({
         delay: index * 0.09,
         duration: 0.6,
         ease: [0.16, 1, 0.3, 1] }}
-      className="group flex flex-col bg-white/80 backdrop-blur-sm rounded-3xl border border-blue-100 shadow-xl shadow-blue-500/10 overflow-hidden transition-all duration-500 ease-spring hover:-translate-y-2 hover:shadow-premium-md hover:border-primary-200"
+      className="group flex flex-col bg-white/80 backdrop-blur-sm rounded-3xl border border-blue-100 shadow-xl overflow-hidden transition-all duration-500 ease-spring hover:-translate-y-2 hover:shadow-premium-md hover:border-primary-200"
     >
       {/* Image */}
       <div className="relative h-52 overflow-hidden shrink-0 bg-primary-50">
@@ -119,7 +119,7 @@ function ActivityCard({
 
         {/* Badge */}
         <div className="absolute top-3 left-3">
-          <span className="inline-flex items-center px-2.5 py-1 rounded-full bg-white text-[0.6rem] font-bold text-primary-700 uppercase tracking-widest border border-primary-100/50 shadow-xl shadow-primary/20">
+          <span className="inline-flex items-center px-2.5 py-1 rounded-full bg-white text-[0.6rem] font-bold text-primary-700 uppercase tracking-widest border border-primary-100/50">
             {activity.badge}
           </span>
         </div>
@@ -167,25 +167,13 @@ function ExtraChip({ item, index }: { item: ExtraActivity; index: number }) {
         delay: index * 0.025,
         duration: 0.4,
         ease: [0.16, 1, 0.3, 1] }}
-      className="group flex flex-col items-center justify-center gap-3 p-5 md:p-6 bg-white/80 backdrop-blur-sm rounded-2xl border border-blue-100 hover:border-primary-200 hover:shadow-xl hover:shadow-blue-500/10 hover:bg-surface-50 transition-all duration-400 cursor-default"
+      className="group flex flex-col items-center justify-center gap-3 p-5 md:p-6 bg-white/80 backdrop-blur-sm rounded-2xl border border-blue-100 hover:border-primary-200 hover:shadow-xl hover: hover:bg-surface-50 transition-all duration-400 cursor-default"
     >
       <div
-        className={[
-          "w-12 h-12 md:w-13 md:h-13 rounded-xl flex items-center justify-center shadow-xs",
-          "transition-all duration-400 group-hover:scale-110",
-          "ring-1 ring-transparent group-hover:ring-2",
-          colorMap[item.color],
-        ].join(" ")}
-      >
-        <Icon className="w-5 h-5 md:w-6 md:h-6" strokeWidth={1.75} />
+        className={[ "w-12 h-12 md:w-13 md:h-13 rounded-xl flex items-center justify-center shadow-xs", "transition-all duration-400 group-hover:scale-110", "ring-1 ring-transparent group-hover:ring-2", colorMap[item.color], ].join(" ")} > <Icon className="w-5 h-5 md:w-6 md:h-6" strokeWidth={1.75} />
       </div>
       <p
-        className={[
-          "text-[0.6rem] md:text-[0.65rem] font-bold text-ink-700 uppercase tracking-widest leading-tight text-center transition-colors duration-300",
-          textHoverMap[item.color],
-        ].join(" ")}
-      >
-        {item.name}
+        className={[ "text-[0.6rem] md:text-[0.65rem] font-bold text-ink-700 uppercase tracking-widest leading-tight text-center transition-colors duration-300", textHoverMap[item.color], ].join(" ")} >{item.name}
       </p>
     </motion.div>
   );
@@ -301,7 +289,7 @@ export default function ActivitiesSection() {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.1 + idx * 0.05 }}
-                  className="flex flex-col items-center gap-3 p-4 bg-white/80 backdrop-blur-sm rounded-2xl border border-blue-100 shadow-xl shadow-primary/20 hover:border-primary-100 hover:shadow-md transition-all group text-center"
+                  className="flex flex-col items-center gap-3 p-4 bg-white/80 backdrop-blur-sm rounded-2xl border border-blue-100 shadow-xl hover:border-primary-100 hover:shadow-md transition-all group text-center"
                 >
                   <div className="w-10 h-10 rounded-xl bg-primary-50 flex items-center justify-center text-primary-600 group-hover:bg-primary-600 group-hover:text-white transition-colors">
                     <Icon className="w-5 h-5" />
@@ -339,7 +327,7 @@ export default function ActivitiesSection() {
 
                 <div className="shrink-0">
                   <Link href="/kegiatan">
-                    <button className="group relative inline-flex items-center gap-3 px-8 py-4 bg-secondary-500 text-primary-950 font-black text-sm uppercase tracking-widest rounded-xl overflow-hidden transition-all duration-300 shadow-lg shadow-blue-500/20 hover:scale-105 active:scale-95">
+                    <button className="group relative inline-flex items-center gap-3 px-8 py-4 bg-secondary-500 text-primary-950 font-black text-sm uppercase tracking-widest rounded-xl overflow-hidden transition-all duration-300 shadow-lg hover:scale-105 active:scale-95">
                       <span className="relative z-10">Eksplorasi Seluruh Kegiatan</span>
                       <CalendarIcon className="relative z-10 w-5 h-5 transition-transform duration-300 group-hover:rotate-12" />
                       <div className="absolute inset-0 bg-secondary-400 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />

@@ -79,8 +79,7 @@ export default function ParallaxSection({
   return (
     <div
       ref={ref}
-      className={className}
-      style={{
+      className={className} style={{
         transform: `translate3d(0, ${offset}px, 0) scale(${scale})`,
         willChange: "transform",
         transition: isVisible ? "none" : "transform 0.1s ease-out",

@@ -379,7 +379,7 @@ export default function LoginPage() {
                           key={role}
                           onClick={() => handleSelectRole(role)}
                           disabled={selectingRole}
-                          className="w-full p-4 rounded-2xl border border-slate-200 bg-white hover:border-primary-300 hover:shadow-lg hover:shadow-primary-600/10 text-left flex items-center gap-4 transition-all disabled:opacity-60 cursor-pointer group"
+                          className="w-full p-4 rounded-2xl border border-slate-200 bg-white hover:border-primary-300 hover:shadow-lg hover: text-left flex items-center gap-4 transition-all disabled:opacity-60 cursor-pointer group"
                         >
                           <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-600 shrink-0 group-hover:bg-primary-50 group-hover:text-primary-600 transition-colors">
                             <IconComp className="w-5 h-5" />

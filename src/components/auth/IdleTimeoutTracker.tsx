@@ -134,7 +134,7 @@ export default function IdleTimeoutTracker() {
 
       {/* Warning Modal */}
       <div onWheel={(e) => e.stopPropagation()} data-modal="true" aria-modal="true" role="dialog" className="fixed inset-0 flex items-center justify-center z-[9999] p-4 overscroll-contain">
-        <div className="bg-white rounded-2xl shadow-xl shadow-primary/20 max-w-md w-full p-6 animate-fadeInUp">
+        <div className="bg-white rounded-2xl shadow-xl max-w-md w-full p-6 animate-fadeInUp">
           {/* Icon */}
           <div className="w-16 h-16 rounded-full bg-yellow-100 flex items-center justify-center mx-auto mb-4">
             <AlertCircle className="w-8 h-8 text-yellow-600" />

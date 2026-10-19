@@ -251,7 +251,7 @@ export default function DaftarPage() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-white rounded-2xl shadow-xl shadow-primary/20 border border-secondary-200 mb-6 group hover:scale-110 transition-transform app-card">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-white rounded-2xl shadow-xl border border-secondary-200 mb-6 group hover:scale-110 transition-transform app-card">
             <School className="w-8 h-8 text-blue-600" />
           </div>
           <div className="mb-3 flex justify-center">
@@ -283,7 +283,7 @@ export default function DaftarPage() {
         {/* Banner Pengalihan Pendaftaran Santri Putri ke Al-Imam */}
         <div className="w-full mb-6 rounded-2xl sm:rounded-3xl bg-gradient-to-r from-rose-50/95 via-pink-50/90 to-rose-50/95 border-2 border-rose-200 p-4 sm:p-5 shadow-lg shadow-rose-500/5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-start gap-3.5">
-            <div className="w-11 h-11 rounded-2xl bg-[#800a0a] text-white flex items-center justify-center shrink-0 shadow-xl shadow-primary/20 shadow-rose-900/25 mt-0.5 sm:mt-0">
+            <div className="w-11 h-11 rounded-2xl bg-[#800a0a] text-white flex items-center justify-center shrink-0 shadow-xl shadow-rose-900/25 mt-0.5 sm:mt-0">
               <School className="w-5 h-5" />
             </div>
             <div>
@@ -302,7 +302,7 @@ export default function DaftarPage() {
             href="https://pesantren-alimam.com/daftar"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-[#800a0a] hover:bg-[#600808] active:scale-95 text-white font-extrabold text-xs uppercase tracking-wider shadow-xl shadow-primary/20 shadow-rose-900/20 hover:shadow-lg transition-all shrink-0 w-full sm:w-auto"
+            className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-[#800a0a] hover:bg-[#600808] active:scale-95 text-white font-extrabold text-xs uppercase tracking-wider shadow-xl shadow-rose-900/20 hover:shadow-lg transition-all shrink-0 w-full sm:w-auto"
           >
             <span>Daftar Santri Putri</span>
             <ExternalLink className="w-3.5 h-3.5" />
@@ -312,7 +312,7 @@ export default function DaftarPage() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.3 }}
-            className="app-card bg-white rounded-[2.5rem] md:rounded-[3.5rem] shadow-xl shadow-primary/20 p-6 md:p-16 border border-secondary-200 relative overflow-hidden"
+            className="app-card bg-white rounded-[2.5rem] md:rounded-[3.5rem] shadow-xl p-6 md:p-16 border border-secondary-200 relative overflow-hidden"
           >
             {/* Soft decorative blur inside card */}
             <div className="absolute top-0 right-0 w-64 h-64 bg-secondary-50/30 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
@@ -427,10 +427,10 @@ export default function DaftarPage() {
                             ...prev,
                             jenjang: option.value as any }));
                         }}
-                        className={`relative cursor-pointer rounded-[2rem] p-6 border-2 transition-all duration-300 app-card flex flex-col justify-between ${ isClosed ? "opacity-50 grayscale cursor-not-allowed border-secondary-200 bg-stone-50" : formData.jenjang === option.value ? "border-primary-600 bg-secondary-50 shadow-xl shadow-primary/20" : "border-secondary-200 bg-white hover:border-primary-200 hover:shadow-xl shadow-primary/20" }`}
+                        className={`relative cursor-pointer rounded-[2rem] p-6 border-2 transition-all duration-300 app-card flex flex-col justify-between ${ isClosed ? "opacity-50 grayscale cursor-not-allowed border-secondary-200 bg-stone-50" : formData.jenjang === option.value ? "border-primary-600 bg-secondary-50 shadow-xl " : "border-secondary-200 bg-white hover:border-primary-200 hover:shadow-xl " }`}
                       >
                         {isClosed && (
-                          <div className="absolute top-4 right-4 bg-red-600 text-white text-[10px] font-black px-2 py-1 rounded-full uppercase tracking-tighter shadow-xl shadow-primary/20 z-10">
+                          <div className="absolute top-4 right-4 bg-red-600 text-white text-[10px] font-black px-2 py-1 rounded-full uppercase tracking-tighter shadow-xl z-10">
                             {closedLabel}
                           </div>
                         )}
@@ -579,7 +579,7 @@ export default function DaftarPage() {
                     >
                       <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 p-4 md:p-5 rounded-2xl bg-blue-50/70 border border-blue-200">
                         <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-black shadow-xl shadow-primary/20 shadow-blue-600/20 text-sm">
+                          <div className="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-black shadow-xl text-sm">
                             L
                           </div>
                           <div>

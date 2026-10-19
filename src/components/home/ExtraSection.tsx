@@ -104,7 +104,7 @@ export default function ExtraSection() {
               whileInView={{ opacity: 1, y: 0, scale: 1 }}
               viewport={{ once: true, margin: "-20px" }}
               transition={{ delay: idx * 0.04, duration: 0.5, ease: EASE }}
-              className="bg-white/80 backdrop-blur-sm p-6 rounded-2xl border border-blue-100 flex flex-col items-center justify-center text-center group hover:border-primary-200 shadow-xl shadow-blue-500/10 hover:shadow-2xl hover:shadow-blue-500/20 transition-all duration-400 relative overflow-hidden"
+              className="bg-white/80 backdrop-blur-sm p-6 rounded-2xl border border-blue-100 flex flex-col items-center justify-center text-center group hover:border-primary-200 shadow-xl hover:shadow-xl hover: transition-all duration-400 relative overflow-hidden"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-primary-50/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 

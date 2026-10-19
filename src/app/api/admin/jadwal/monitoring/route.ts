@@ -314,7 +314,7 @@ export async function PATCH(request: NextRequest) {
       if (newSession) {
         targetStartTime = newSession.start_time;
         updateData.exam_session_id = newSession.id;
-        updateData.tanggal_ujian = newSession.date || new Date(newSession.start_time);
+        updateData.tanggal_ujian = (newSession as any).date || new Date(newSession.start_time);
         updateData.waktu_mulai_santri = newSession.start_time;
         updateData.waktu_selesai_santri = newSession.end_time;
         updateData.waktu_mulai_ortu = newSession.start_time;

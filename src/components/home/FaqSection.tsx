@@ -58,36 +58,16 @@ function FaqItem({
       transition={{ delay: index * 0.05, duration: 0.5, ease: EASE }}
     >
       <div
-        className={[
-          "rounded-2xl border border-blue-100 bg-white/80 backdrop-blur-sm overflow-hidden shadow-sm hover:shadow-md transition-all duration-300",
-          isOpen
-            ? "border-primary-200 shadow-premium-sm ring-1 ring-primary-100/60"
-            : "border-primary-100 hover:border-primary-200 hover:shadow-xs",
-        ].join(" ")}
-      >
-        <button
-          onClick={toggle}
+        className={[ "rounded-2xl border border-blue-100 bg-white/80 backdrop-blur-sm overflow-hidden shadow-sm hover:shadow-md transition-all duration-300", isOpen ? "border-primary-200 shadow-premium-sm ring-1 ring-primary-100/60" : "border-primary-100 hover:border-primary-200 hover:shadow-xs", ].join(" ")} > <button onClick={toggle}
           className="w-full text-left flex items-center justify-between gap-4 px-6 py-5 md:px-7 md:py-6 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 rounded-2xl flex-wrap"
           aria-expanded={isOpen}
         >
           <span
-            className={[
-              "font-bold text-[0.9375rem] md:text-base leading-snug tracking-tight transition-colors duration-200 pr-3",
-              isOpen ? "text-primary-700" : "text-ink-900",
-            ].join(" ")}
-          >
-            {question}
+            className={[ "font-bold text-[0.9375rem] md:text-base leading-snug tracking-tight transition-colors duration-200 pr-3", isOpen ? "text-primary-700" : "text-ink-900", ].join(" ")} >{question}
           </span>
 
           <div
-            className={[
-              "w-8 h-8 rounded-full flex items-center justify-center shrink-0 transition-all duration-300",
-              isOpen
-                ? "bg-primary-600 text-white rotate-180"
-                : "bg-secondary-50 text-primary-500 hover:bg-primary-50",
-            ].join(" ")}
-          >
-            <ChevronDown className="w-4 h-4" strokeWidth={2.5} />
+            className={[ "w-8 h-8 rounded-full flex items-center justify-center shrink-0 transition-all duration-300", isOpen ? "bg-primary-600 text-white rotate-180" : "bg-secondary-50 text-primary-500 hover:bg-primary-50", ].join(" ")} > <ChevronDown className="w-4 h-4" strokeWidth={2.5} />
           </div>
         </button>
 
@@ -152,9 +132,9 @@ export default function FaqSection() {
             </div>
 
             {/* Persistent Helpdesk Card (Al-Ma'tuq & SUNI Standard) */}
-            <div className="bg-gradient-to-br from-blue-50/80 via-white to-blue-50/40 backdrop-blur-md rounded-3xl p-6 sm:p-7 border border-blue-200 shadow-xl shadow-blue-500/10 space-y-5">
+            <div className="bg-gradient-to-br from-blue-50/80 via-white to-blue-50/40 backdrop-blur-md rounded-3xl p-6 sm:p-7 border border-blue-200 shadow-xl space-y-5">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-2xl bg-primary text-white flex items-center justify-center shadow-xl shadow-primary/20 shadow-blue-500/20 shrink-0">
+                <div className="w-12 h-12 rounded-2xl bg-primary text-white flex items-center justify-center shadow-xl shrink-0">
                   <MessageCircleMore className="w-6 h-6" />
                 </div>
                 <div>
@@ -175,7 +155,7 @@ export default function FaqSection() {
                 href={WA_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-2xl font-bold text-sm text-white bg-[#25D366] hover:bg-[#20ba59] shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/40 hover:-translate-y-0.5 transition-all duration-300"
+                className="w-full inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-2xl font-bold text-sm text-white bg-[#25D366] hover:bg-[#20ba59] shadow-lg hover: hover:-translate-y-0.5 transition-all duration-300"
               >
                 <svg
                   viewBox="0 0 24 24"

@@ -43,7 +43,8 @@ const Section = React.forwardRef<HTMLElement, SectionProps>(
           {
             "py-12 md:py-16": spacing === "sm",
             "py-16 md:py-20": spacing === "md",
-            "py-20 md:py-28": spacing === "lg" },
+            "py-20 md:py-28": spacing === "lg",
+          },
           // Background
           {
             "bg-white": background === "white",

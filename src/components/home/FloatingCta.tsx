@@ -32,10 +32,10 @@ export default function FloatingCta() {
           transition={{ type: "spring", stiffness: 260, damping: 20 }}
           className="fixed bottom-6 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none"
         >
-          <div className="bg-white/90 backdrop-blur-xl border border-blue-200/80 shadow-2xl shadow-blue-600/20 rounded-full p-2 flex items-center gap-2 pointer-events-auto">
+          <div className="bg-white/90 backdrop-blur-xl border border-blue-200/80 shadow-2xl rounded-full p-2 flex items-center gap-2 pointer-events-auto">
             <Link
               href="/ppdb"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-extrabold text-sm text-white bg-primary hover:bg-primary-600 shadow-md shadow-blue-500/25 hover:-translate-y-0.5 transition-all duration-300"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-extrabold text-sm text-white bg-primary hover:bg-primary-600 shadow-md hover:-translate-y-0.5 transition-all duration-300"
             >
               <span>Daftar SPMB 2027</span>
               <ArrowRight className="w-4 h-4" />

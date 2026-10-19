@@ -182,34 +182,9 @@ export default function Alert({
           animate="animate"
           exit="exit"
           transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
-          className={cn(
-            "flex items-start border",
-            sz.container,
-            accent && !filled
-              ? [
-                  sz.accentBorder,
-                  cfg.accent,
-                  "border-t-0 border-r-0 border-b-0 rounded-l-none",
-                ]
-              : "",
-            filled ? cfg.containerFilled : cfg.container,
-            className,
-          )}
-        >
-          {/* ── Icon ── */}
+          className={cn( "flex items-start border", sz.container, accent && !filled ? [ sz.accentBorder, cfg.accent, "border-t-0 border-r-0 border-b-0 rounded-l-none", ] : "", filled ? cfg.containerFilled : cfg.container, className, )} >{/* ── Icon ── */}
           <div
-            className={cn(
-              "shrink-0 flex items-center justify-center rounded-[var(--radius-sm)] transition-transform duration-200",
-              sz.iconWrapper,
-              filled ? cfg.iconWrapperFilled : cfg.iconWrapper,
-            )}
-          >
-            <IconComponent
-              className={cn(
-                sz.icon,
-                filled ? cfg.iconColorFilled : cfg.iconColor,
-              )}
-              strokeWidth={2}
+            className={cn( "shrink-0 flex items-center justify-center rounded-[var(--radius-sm)] transition-transform duration-200", sz.iconWrapper, filled ? cfg.iconWrapperFilled : cfg.iconWrapper, )} > <IconComponent className={cn( sz.icon, filled ? cfg.iconColorFilled : cfg.iconColor, )} strokeWidth={2}
             />
           </div>
 
@@ -217,23 +192,11 @@ export default function Alert({
           <div className="flex-1 min-w-0">
             {title && (
               <p
-                className={cn(
-                  sz.title,
-                  "mb-0.5",
-                  filled ? cfg.titleColorFilled : cfg.titleColor,
-                )}
-              >
-                {title}
+                className={cn( sz.title, "mb-0.5", filled ? cfg.titleColorFilled : cfg.titleColor, )} >{title}
               </p>
             )}
             <div
-              className={cn(
-                sz.body,
-                filled ? cfg.bodyColorFilled : cfg.bodyColor,
-                "[&_a]:underline [&_a]:underline-offset-2 [&_a]:font-medium",
-              )}
-            >
-              {children}
+              className={cn( sz.body, filled ? cfg.bodyColorFilled : cfg.bodyColor, "[&_a]:underline [&_a]:underline-offset-2 [&_a]:font-medium", )} >{children}
             </div>
           </div>
 
@@ -245,13 +208,7 @@ export default function Alert({
               whileTap={{ scale: 0.9 }}
               onClick={handleDismiss}
               aria-label="Tutup notifikasi"
-              className={cn(
-                "shrink-0 flex items-center justify-center rounded-[var(--radius-sm)] transition-all duration-150 ml-1 -mr-1 -mt-0.5",
-                sz.dismiss,
-                filled ? cfg.dismissColorFilled : cfg.dismissColor,
-              )}
-            >
-              <X className="w-3.5 h-3.5" strokeWidth={2.5} />
+              className={cn( "shrink-0 flex items-center justify-center rounded-[var(--radius-sm)] transition-all duration-150 ml-1 -mr-1 -mt-0.5", sz.dismiss, filled ? cfg.dismissColorFilled : cfg.dismissColor, )} > <X className="w-3.5 h-3.5" strokeWidth={2.5} />
             </motion.button>
           )}
         </motion.div>
@@ -301,13 +258,7 @@ export function InlineAlert({
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -4 }}
       transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-      className={cn(
-        "flex items-center gap-1.5 text-xs font-medium",
-        cfg.iconColor,
-        className,
-      )}
-    >
-      <IconComponent className="w-3.5 h-3.5 shrink-0" strokeWidth={2} />
+      className={cn( "flex items-center gap-1.5 text-xs font-medium", cfg.iconColor, className, )} > <IconComponent className="w-3.5 h-3.5 shrink-0" strokeWidth={2} />
       <span>{children}</span>
     </motion.p>
   );
@@ -343,16 +294,7 @@ export function AlertBanner({
           className="overflow-hidden"
         >
           <div
-            className={cn(
-              "flex items-center justify-between gap-3 px-4 py-2.5 text-sm font-medium",
-              cfg.containerFilled,
-              className,
-            )}
-          >
-            <div className="flex items-center gap-2 flex-1 min-w-0">
-              <IconComponent
-                className="w-4 h-4 shrink-0 text-white"
-                strokeWidth={2}
+            className={cn( "flex items-center justify-between gap-3 px-4 py-2.5 text-sm font-medium", cfg.containerFilled, className, )} > <div className="flex items-center gap-2 flex-1 min-w-0"> <IconComponent className="w-4 h-4 shrink-0 text-white" strokeWidth={2}
               />
               <span className="text-white/95 truncate">{children}</span>
             </div>

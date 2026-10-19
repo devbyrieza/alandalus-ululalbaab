@@ -155,7 +155,7 @@ export default function RescheduleRequestsPage() {
                   <button
                     onClick={() => handleAction(jadwal.id, "approve")}
                     disabled={processing === jadwal.id}
-                    className="py-3 sm:py-4 bg-primary-600 hover:bg-primary-700 text-white rounded-2xl text-[10px] sm:text-xs font-black uppercase tracking-wider transition-all flex items-center justify-center gap-2 active:scale-95 shadow-xl shadow-primary/20 disabled:opacity-50"
+                    className="py-3 sm:py-4 bg-primary-600 hover:bg-primary-700 text-white rounded-2xl text-[10px] sm:text-xs font-black uppercase tracking-wider transition-all flex items-center justify-center gap-2 active:scale-95 shadow-xl disabled:opacity-50"
                   >
                     <CheckCircle className="w-4 h-4" /> Setujui
                   </button>

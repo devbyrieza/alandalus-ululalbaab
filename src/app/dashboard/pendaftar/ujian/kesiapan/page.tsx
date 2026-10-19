@@ -139,7 +139,7 @@ export default function KesiapanTestPage() {
   if (alreadyDone) {
     return (
       <div className="max-w-lg mx-auto p-5 md:p-8 text-center mt-10">
-        <div className="bg-white rounded-2xl shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 border p-6 md:p-10">
+        <div className="bg-white rounded-2xl shadow-2xl border p-6 md:p-10">
           <CheckCircle className="w-16 h-16 text-emerald-500 mx-auto mb-4" />
           <h2 className="text-xl font-bold mb-2">Tes Sudah Dikerjakan</h2>
           <p className="text-stone-600 mb-6">
@@ -161,7 +161,7 @@ export default function KesiapanTestPage() {
   if (isLocked) {
     return (
       <div className="max-w-lg mx-auto p-5 md:p-8 text-center mt-10">
-        <div className="bg-white rounded-[2rem] shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 border p-6 md:p-10">
+        <div className="bg-white rounded-[2rem] shadow-2xl border p-6 md:p-10">
           <div className="w-20 h-20 bg-secondary-100 rounded-full flex items-center justify-center mx-auto mb-6">
             <AlertCircle className="w-10 h-10 text-secondary-600" />
           </div>
@@ -174,7 +174,7 @@ export default function KesiapanTestPage() {
           </p>
           <button
             onClick={() => router.push("/dashboard/pendaftar")}
-            className="w-full px-6 py-4 bg-primary-700 hover:bg-primary-800 text-white font-black rounded-3xl transition-all shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 uppercase tracking-widest text-sm"
+            className="w-full px-6 py-4 bg-primary-700 hover:bg-primary-800 text-white font-black rounded-3xl transition-all shadow-2xl uppercase tracking-widest text-sm"
           >
             Kembali ke Dashboard
           </button>
@@ -231,7 +231,7 @@ export default function KesiapanTestPage() {
       {KESIAPAN_QUESTIONS.map((section, idx) => (
         <div
           key={idx}
-          className="bg-white rounded-3xl shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 border mb-6 overflow-hidden"
+          className="bg-white rounded-3xl shadow-2xl border mb-6 overflow-hidden"
         >
           <div className="px-6 py-4 bg-stone-50 border-b font-bold text-stone-800">
             {section.section}
@@ -244,7 +244,7 @@ export default function KesiapanTestPage() {
                   {[1, 2, 3, 4, 5].map((val) => (
                     <label
                       key={val}
-                      className={`cursor-pointer border p-3 rounded-2xl flex-1 text-center hover:bg-slate-50 transition-all ${answers[q.id] === val ? "bg-emerald-100 border-emerald-500 font-bold text-emerald-700 shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10" : "border-stone-200"}`}
+                      className={`cursor-pointer border p-3 rounded-2xl flex-1 text-center hover:bg-slate-50 transition-all ${answers[q.id] === val ? "bg-emerald-100 border-emerald-500 font-bold text-emerald-700 shadow-2xl   " : "border-stone-200"}`}
                     >
                       <input
                         type="radio"
@@ -272,7 +272,7 @@ export default function KesiapanTestPage() {
         <button
           onClick={handleSubmit}
           disabled={loading}
-          className="w-full py-4 bg-emerald-600 hover:bg-emerald-700 disabled:bg-stone-300 text-white font-bold rounded-3xl shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 transition-colors flex items-center justify-center gap-2"
+          className="w-full py-4 bg-emerald-600 hover:bg-emerald-700 disabled:bg-stone-300 text-white font-bold rounded-3xl shadow-md transition-colors flex items-center justify-center gap-2"
         >
           {loading ? (
             <>
