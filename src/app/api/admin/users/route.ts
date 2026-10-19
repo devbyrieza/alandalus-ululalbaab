@@ -189,7 +189,7 @@ export async function POST(request: Request) {
         secondary_roles: Array.isArray(secondary_roles) ? secondary_roles : [],
         phone: phone || "-",
         username: username,
-        jenis_kelamin: jenis_kelamin || null,
+        jenis_kelamin: "L",
         google_meet_link: google_meet_link || null,
         password_hash } });
 
@@ -287,7 +287,7 @@ export async function PUT(request: Request) {
     }
     if (phone !== undefined) data.phone = phone;
     if (username !== undefined) data.username = username?.trim()?.toLowerCase() || null;
-    if (jenis_kelamin !== undefined) data.jenis_kelamin = jenis_kelamin;
+    data.jenis_kelamin = "L";
     if (google_meet_link !== undefined) data.google_meet_link = cleanFinalMeet || null;
 
     // Email update logic

@@ -93,7 +93,7 @@ export default function DaftarPindahanPage() {
     tempat_lahir: "",
     tanggal_lahir: "",
     no_hp: "",
-    jenis_kelamin: "",
+    jenis_kelamin: "L",
     jenjang: jenjangFromUrl,
     kelas_masuk: "",
     asal_institusi: "",
@@ -369,7 +369,7 @@ export default function DaftarPindahanPage() {
                             tempat_lahir: "",
                             tanggal_lahir: "",
                             no_hp: "",
-                            jenis_kelamin: "",
+                            jenis_kelamin: "L",
                             jenjang: "",
                             kelas_masuk: "",
                             asal_institusi: "",
@@ -542,31 +542,31 @@ export default function DaftarPindahanPage() {
                       label="Jenis Kelamin"
                       error={fieldErrors.jenis_kelamin}
                     >
-                      <div className="flex gap-4">
-                        {[
-                          { val: "L", label: "Santri Putra" },
-                          { val: "P", label: "Santri Putri" },
-                        ].map((jk) => (
-                          <motion.label
-                            key={jk.val}
-                            whileTap={{ scale: 0.98 }}
-                            className={`flex-1 flex items-center justify-center px-4 md:px-6 py-3 md:py-4 rounded-[1.5rem] md:rounded-[2rem] border-2 cursor-pointer transition-all duration-300 text-sm md:text-base ${ formData.jenis_kelamin === jk.val ? "bg-primary-700 border-primary-700 text-white font-black shadow-2xl   " : "bg-secondary-50 border-secondary-200 text-ink-800 hover:border-primary-200 hover:bg-white font-bold" }`}
+                      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 p-4 md:p-5 rounded-2xl bg-blue-50/70 border border-blue-200">
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-black shadow-md text-sm">
+                            L
+                          </div>
+                          <div>
+                            <p className="font-extrabold text-blue-950 text-sm md:text-base">
+                              Khusus Santri Putra (Laki-laki)
+                            </p>
+                            <p className="text-xs text-blue-700/80 font-medium">
+                              Pesantren Ulul Albaab Sukabumi khusus mendidik santri Putra
+                            </p>
+                          </div>
+                        </div>
+                        <div className="sm:text-right text-xs text-slate-500 font-medium border-t sm:border-t-0 sm:border-l border-blue-200/80 pt-2 sm:pt-0 sm:pl-4">
+                          <span>Untuk calon santri putri?</span>
+                          <a
+                            href="https://spmb.pesantren-alimam.com/daftar"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="block font-bold text-rose-600 hover:text-rose-700 hover:underline"
                           >
-                            <input
-                              type="radio"
-                              name="jk"
-                              value={jk.val}
-                              checked={formData.jenis_kelamin === jk.val}
-                              onChange={() =>
-                                setFormData((p) => ({
-                                  ...p,
-                                  jenis_kelamin: jk.val as any }))
-                              }
-                              className="hidden"
-                            />
-                            {jk.label}
-                          </motion.label>
-                        ))}
+                            Daftar di Al-Imam (Putri) →
+                          </a>
+                        </div>
                       </div>
                     </InputField>
                   </div>

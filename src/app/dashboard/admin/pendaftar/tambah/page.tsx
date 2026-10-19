@@ -17,7 +17,7 @@ export default function AdminTambahPendaftar() {
     nik: "",
     nama_lengkap: "",
     tanggal_lahir: "",
-    jenis_kelamin: "",
+    jenis_kelamin: "L",
     jenjang: "",
     no_hp: "",
     email: "",
@@ -66,7 +66,7 @@ export default function AdminTambahPendaftar() {
       const res = await fetch("/api/admin/pendaftar/tambah", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData) });
+        body: JSON.stringify({ ...formData, jenis_kelamin: "L" }) });
 
       const data = await res.json();
 
@@ -165,12 +165,11 @@ export default function AdminTambahPendaftar() {
                 <input required type="text" name="nama_lengkap" value={formData.nama_lengkap} onChange={handleChange} placeholder="Nama lengkap..." className="w-full px-4 py-2.5 rounded-3xl border-2 border-stone-200 focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 outline-none transition-all" />
               </div>
               <div className="space-y-2">
-                <label className="text-sm font-bold text-stone-700">Jenis Kelamin <span className="text-red-500">*</span></label>
-                <select required name="jenis_kelamin" value={formData.jenis_kelamin} onChange={handleChange} className="w-full px-4 py-2.5 rounded-3xl border-2 border-stone-200 focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 outline-none transition-all appearance-none bg-white">
-                  <option value="">Pilih Jenis Kelamin...</option>
-                  <option value="L">Laki-laki (Putra)</option>
-                  <option value="P">Perempuan (Putri)</option>
-                </select>
+                <label className="text-sm font-bold text-stone-700">Jenis Kelamin</label>
+                <div className="w-full px-4 py-2.5 rounded-3xl bg-blue-50 border-2 border-blue-100 text-blue-900 font-bold flex items-center gap-2">
+                  <span className="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs font-black">L</span>
+                  <span>Laki-laki (Khusus Putra)</span>
+                </div>
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-bold text-stone-700">Jenjang Tujuan <span className="text-red-500">*</span></label>

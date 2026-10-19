@@ -115,7 +115,7 @@ export default function UserManagementPage() {
     role: "admin_berkas",
     secondary_roles: [] as string[],
     phone: "",
-    jenis_kelamin: "",
+    jenis_kelamin: "L",
     google_meet_link: "" });
 
   const fetchUsers = async () => {
@@ -147,7 +147,7 @@ export default function UserManagementPage() {
       role: "admin_berkas",
       secondary_roles: [],
       phone: "",
-      jenis_kelamin: "",
+      jenis_kelamin: "L",
       google_meet_link: ""
     });
     setIsEditing(false);
@@ -193,7 +193,7 @@ export default function UserManagementPage() {
     const finalRole = formData.role === "penguji_hafalan" ? "penguji" : formData.role;
     let finalSecRoles = (formData.secondary_roles || []).map((r) => r === "penguji_hafalan" ? "penguji" : r).filter((r) => r !== finalRole);
     finalSecRoles = [...new Set(finalSecRoles)];
-    const submitData = { ...formData, role: finalRole, secondary_roles: finalSecRoles };
+    const submitData = { ...formData, role: finalRole, secondary_roles: finalSecRoles, jenis_kelamin: "L" };
 
     try {
       const method = isEditing ? "PUT" : "POST";
@@ -568,22 +568,6 @@ export default function UserManagementPage() {
                     }
                     className="w-full px-4 md:px-5 py-4 bg-stone-100/50 border-2 border-transparent focus:border-primary-600 focus:bg-white focus:outline-none font-bold rounded-2xl transition-all whitespace-nowrap inline-block shrink-0"
                   />
-                </div>
-                <div className="col-span-1 md:col-span-2">
-                  <label className="block text-[10px] font-black uppercase text-stone-500 mb-3 tracking-widest">
-                    Jenis Kelamin
-                  </label>
-                  <select
-                    value={formData.jenis_kelamin || ''}
-                    onChange={(e) =>
-                      setFormData({ ...formData, jenis_kelamin: e.target.value })
-                    }
-                    className="w-full px-4 md:px-5 py-4 bg-stone-100/50 border-2 border-transparent focus:border-primary-600 focus:bg-white focus:outline-none font-bold rounded-2xl transition-all cursor-pointer whitespace-nowrap inline-block shrink-0"
-                  >
-                    <option value="">Pilih Jenis Kelamin</option>
-                    <option value="L">Laki-Laki (Ustadz)</option>
-                    <option value="P">Perempuan (Ustadzah)</option>
-                  </select>
                 </div>
                 <div className="col-span-1 md:col-span-2">
                   <label className="block text-[10px] font-black uppercase text-stone-500 mb-3 tracking-widest flex items-center justify-between">
