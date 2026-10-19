@@ -6,7 +6,7 @@ import { useState } from "react";
 import { BookOpen, Brain, Heart, Users, UserCheck, BookOpenCheck, Search, Printer, Clock, CheckCircle2, FileText, AlertCircle, Sparkles, HelpCircle, Filter, Flame, Award, AlertTriangle, Star, MessageCircle, Settings, BarChart, User, BarChart2 } from "lucide-react";
 import { AKADEMIK_MTS } from "@/lib/questions/akademik-mts";
 import { AKADEMIK_IL, AKADEMIK_MA } from "@/lib/questions/akademik-il-ma";
-import { KEPRIBADIAN_QUESTIONS } from "@/lib/questions/kepribadian";
+import { KEPRIBADIAN_QUESTIONS, KEPRIBADIAN_SECTIONS } from "@/lib/questions/kepribadian";
 import { KESIAPAN_QUESTIONS } from "@/lib/questions/kesiapan";
 
 export default function BankSoalPanitiaPage() {
@@ -34,11 +34,12 @@ export default function BankSoalPanitiaPage() {
       (q.options || []).some((o) => o.label.toLowerCase().includes(searchQuery.toLowerCase()))
   );
 
-  const filteredKepribadian = KEPRIBADIAN_QUESTIONS.filter(
-    (q) =>
-      (q.optionA || q.text || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
-      (q.optionB || '').toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredKepribadian = KEPRIBADIAN_QUESTIONS.filter((q) => {
+    const qSearch = (searchQuery || "").toLowerCase();
+    const qText = (q.text || (q as any).statement || q.optionA || "").toLowerCase();
+    const qGroup = (q.group || (q as any).category || "").toLowerCase();
+    return qText.includes(qSearch) || qGroup.includes(qSearch);
+  });
 
   return (
     <div className="min-h-screen bg-slate-50 p-4 md:p-8 space-y-6">
@@ -301,30 +302,63 @@ export default function BankSoalPanitiaPage() {
       {/* TAB CONTENT: KEPRIBADIAN SANTRI */}
       {activeTab === "kepribadian" && (
         <div className="space-y-4">
-          <div className="bg-purple-50 border border-purple-200 text-purple-900 p-4 rounded-2xl text-xs md:text-sm flex items-start gap-3">
-            <Brain className="w-5 h-5 text-purple-600 flex-shrink-0 mt-0.5" />
-            <div>
-              <p className="font-bold">Informasi Instrumen Kepribadian Santri (Forced Choice):</p>
-              <p>Durasi Pengerjaan: <strong>20 Menit</strong> | Metode: <strong>Pilihan Paksa A vs B (Memilih mana yang paling menggambarkan diri)</strong></p>
+          <div
+            className="bg-blue-600 text-white border border-blue-500 p-4 sm:p-5 rounded-2xl shadow-2xl shadow-primary/30 border flex items-start gap-3.5"
+            style={{ background: "linear-gradient(to right, #0977E6, #0255a3)" }}
+          >
+            <Brain className="w-5 h-5 text-amber-300 flex-shrink-0 mt-0.5" />
+            <div className="space-y-1">
+              <p className="font-extrabold text-sm text-white">Informasi Instrumen Kepribadian Santri (40 Butir Skala Likert):</p>
+              <p className="text-xs text-slate-200">
+                Durasi Pengerjaan: <strong className="text-white">25 Menit</strong> | Skala Jawaban: <strong className="text-white">1 (Sangat Tidak Setuju) s/d 5 (Sangat Setuju)</strong>
+              </p>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {filteredKepribadian.map((q) => (
-              <div key={q.id} className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xl shadow-primary/20 space-y-3">
-                <span className="text-[11px] font-extrabold px-2.5 py-1 bg-purple-100 text-purple-800 rounded-2xl whitespace-nowrap inline-block shrink-0">
-                  PASANGAN #{q.id}
-                </span>
-                <div className="space-y-2 pt-1">
-                  <div className="p-3 bg-purple-50/50 border border-purple-100 rounded-2xl text-xs font-medium text-purple-900">
-                    <strong className="text-purple-700">A:</strong> {q.optionA}
+          <div className="card-tactile">
+            {(KEPRIBADIAN_SECTIONS || []).map((sec, sIdx) => {
+              const matchedItems = (sec.items || []).filter((item) => {
+                if (!searchQuery) return true;
+                const qSearch = (searchQuery || "").toLowerCase();
+                return (item.text || "").toLowerCase().includes(qSearch) || (item.group || "").toLowerCase().includes(qSearch);
+              });
+              if (matchedItems.length === 0) return null;
+              return (
+                <div key={sIdx} className="border-b border-slate-200 last:border-b-0">
+                  <div className="bg-slate-100 px-5 py-3 font-extrabold text-slate-900 text-sm flex items-center gap-2.5 border-b border-slate-200 whitespace-nowrap shrink-0">
+                    <span className="w-6 h-6 rounded-full bg-blue-600 text-amber-300 flex items-center justify-center text-xs font-black shadow-sm">
+                      {sIdx + 1}
+                    </span>
+                    <span>{sec.section}</span>
                   </div>
-                  <div className="p-3 bg-slate-50 border border-slate-100 rounded-2xl text-xs font-medium text-slate-800">
-                    <strong className="text-slate-600">B:</strong> {q.optionB}
+                  <div className="divide-y divide-slate-100">
+                    {matchedItems.map((item) => (
+                      <div key={item.id} className="p-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 hover:bg-slate-50 transition-colors">
+                        <div className="space-y-1">
+                          <div className="flex items-center gap-2">
+                            <span className="text-[10px] font-black text-slate-400">BUTIR #{item.id}</span>
+                            <span className="text-[10px] font-bold px-2 py-0.5 bg-blue-100 text-blue-900 rounded">
+                              {item.group}
+                            </span>
+                            {item.isReverse && (
+                              <span className="text-[10px] font-bold px-2 py-0.5 bg-amber-100 text-amber-900 rounded">
+                                Skor Terbalik (R)
+                              </span>
+                            )}
+                          </div>
+                          <p className="text-sm font-bold text-slate-800">{item.text}</p>
+                        </div>
+                        <div className="flex items-center gap-2 text-xs font-bold bg-blue-50 text-blue-900 border border-blue-200 px-3 py-1.5 rounded-2xl shrink-0">
+                          <span>{item.labelMin || "Sangat Tidak Setuju"}</span>
+                          <span>➔</span>
+                          <span>{item.labelMax || "Sangat Setuju"}</span>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       )}
