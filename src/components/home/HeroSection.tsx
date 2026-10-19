@@ -106,7 +106,7 @@ export default function HeroSection() {
               style={delay(80)}
             >
               Kaderisasi Ummat <br />
-              <span className="text-primary">Rabbani, Cendekia, &amp; Mandiri</span>
+              <span className="text-primary">Hanif, Kontributif, &amp; Adaptif</span>
             </h1>
 
             {/* Description */}
@@ -114,11 +114,13 @@ export default function HeroSection() {
               className={`text-slate-600 text-sm sm:text-base lg:text-[0.95rem] xl:text-lg max-w-xl mx-auto lg:mx-0 leading-relaxed font-normal ${enter}`}
               style={delay(160)}
             >
-              Pesantren Khusus Putra — bukan sekadar tempat belajar, namun sebuah ekosistem pendidikan yang{" "}
+              Bukan sekadar tempat belajar — pesantren khusus putra dengan ekosistem kaderisasi ummat yang hanif, kontributif, dan adaptif,{" "}
               <strong className="font-semibold text-slate-900">
-                berorientasi pada pembentukan Hamalatul Qur&apos;an dan karakter entrepreneur muslim yang mandiri
+                mendidik dengan keteladanan tanpa luka pengasuhan
               </strong>
-              , memadukan Tahfidz Al-Qur&apos;an, Ilmu Syar&apos;i, Sains Akademik, dan Islamic Entrepreneurship berbasis TICE.
+              . Menyelaraskan penguasaan <strong className="font-semibold text-slate-900">Bahasa Arab intensif</strong>, Tahfidz
+              Al-Qur&apos;an, pendalaman ilmu syar&apos;i, keunggulan sains akademik umum, serta penempaan{" "}
+              <em>leadership</em> dan <em>entrepreneurship</em> berlandaskan Al-Qur&apos;an dan Sunnah.
             </p>
 
             {/* Tagline */}

@@ -127,8 +127,8 @@ export default function AboutSection() {
 
                   <blockquote className="max-w-2xl mx-auto">
                     <p className="font-display font-black text-2xl md:text-[2.15rem] leading-[1.2] tracking-tight text-primary-900 italic">
-                      &ldquo;Kaderisasi Ummat Rabbani, Cendekia, dan
-                      Mandiri&rdquo;
+                      &ldquo;Kaderisasi Ummat Hanif, Kontributif, dan
+                      Adaptif&rdquo;
                     </p>
                   </blockquote>
 

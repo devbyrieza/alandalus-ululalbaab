@@ -225,9 +225,9 @@ function PPDBContent() {
               transition={{ delay: 0.1 }}
               className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-black mb-6 md:mb-8 tracking-tight text-slate-900 leading-[1.15]"
             >
-              <span className="block">Kaderisasi Generasi Robbani,</span>
+              <span className="block">Kaderisasi Ummat</span>
               <span className="block mt-1 text-[#0284c7]">
-                Cendekia &amp; Berakhlak Mulia
+                Hanif, Kontributif, &amp; Adaptif
               </span>
             </motion.h1>
 
@@ -237,9 +237,7 @@ function PPDBContent() {
               transition={{ delay: 0.2 }}
               className="text-xl md:text-2xl text-ink-600 max-w-3xl mx-auto leading-relaxed font-medium mb-10"
             >
-              Bergabunglah dengan Pesantren Al Andalus Ulul Albaab. Lingkungan
-              yang kondusif untuk mencetak Hafidz Qur'an yang berwawasan luas
-              dan berakhlak mulia.
+              Bukan sekadar tempat belajar — pesantren khusus putra dengan ekosistem kaderisasi ummat yang hanif, kontributif, dan adaptif, mendidik dengan keteladanan tanpa luka pengasuhan.
             </motion.p>
 
             <motion.div

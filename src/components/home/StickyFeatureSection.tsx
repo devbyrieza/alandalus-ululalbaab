@@ -57,7 +57,7 @@ export default function StickyFeatureSection() {
         <div className="text-center max-w-3xl mx-auto mb-16 md:mb-20">
           <span className="section-label section-label-primary mb-4">Sistem Pendidikan</span>
           <h2 className="text-3xl md:text-5xl font-black mb-6">Mengapa Memilih Kami?</h2>
-          <p className="text-ink-600 text-lg">Platform pendidikan yang didesain untuk mencetak generasi Rabbani yang unggul dalam Imtaq dan Iptek.</p>
+          <p className="text-ink-600 text-lg">Platform pendidikan yang didesain untuk mencetak kader ummat yang hanif, kontributif, dan adaptif.</p>
         </div>
 
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-16 items-start">

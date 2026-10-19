@@ -93,7 +93,7 @@ export default function TentangPage() {
           >
             Pesantren Islam Al-Andalus Ulul Albaab Sukabumi, cabang resmi Managed by Al Andalus IIBS.
             Memadukan intensitas Tahfidz Al-Qur'an dengan keunggulan akademik, sains, dan entrepreneurship islami untuk
-            mencetak kader ummat Rabbani, Cendekia, dan Mandiri.
+            mencetak kader ummat Hanif, Kontributif, dan Adaptif.
           </motion.p>
         </Container>
       </section>
@@ -182,7 +182,7 @@ export default function TentangPage() {
                 Menyongsong Tahun Ajaran 2027/2028, Pesantren Al-Andalus Ulul Albaab membuka Penerimaan Santri Baru (PSB) untuk jenjang Madrasah Tsanawiyah (MTs) dan I'dad Lughowi (IL) dengan fokus kurikulum berbasis TICE (Tahfidz, Islamic Curriculum, & Entrepreneurship).
               </p>
               <p className="font-bold text-primary-800 bg-primary-50 p-5 rounded-xl border border-primary-100 italic text-center text-base md:text-lg mt-6">
-                "Kaderisasi Ummat Rabbani, Cendekia & Mandiri"
+                "Kaderisasi Ummat Hanif, Kontributif, dan Adaptif"
               </p>
             </motion.div>
 
@@ -267,8 +267,8 @@ export default function TentangPage() {
                   <Compass className="w-6 h-6" />
                 </div>
                 <h3 className="text-2xl font-black text-slate-900 mb-4">Visi Pesantren</h3>
-                <p className="text-slate-800 font-bold text-xl leading-relaxed bg-white p-6 rounded-xl border border-slate-200">
-                  "KADERISASI UMMAT RABBANI, CENDEKIA &amp; MANDIRI"
+                <p className="text-slate-800 font-bold text-xl leading-relaxed bg-white p-6 rounded-xl border border-slate-200 uppercase">
+                  "Kaderisasi Ummat Hanif, Kontributif, dan Adaptif"
                 </p>
               </div>
             </motion.div>
@@ -288,15 +288,19 @@ export default function TentangPage() {
                 <ul className="space-y-4 text-slate-700 text-sm md:text-base">
                   <li className="flex items-start gap-3">
                     <CheckCircle2 className="w-5 h-5 text-primary-600 shrink-0 mt-0.5" />
-                    <span><strong>Menyelenggarakan Pendidikan Berbasis TICE</strong> (Tahfidz, Islamic Curriculum, &amp; Entrepreneurship).</span>
+                    <span>Melaksanakan pendidikan aqidah yang shohihah dan ibadah yang sesuai sunnah.</span>
                   </li>
                   <li className="flex items-start gap-3">
                     <CheckCircle2 className="w-5 h-5 text-primary-600 shrink-0 mt-0.5" />
-                    <span><strong>Mencetak HAMALATUL QUR'AN</strong> dengan bekal ilmu syar'i yang mumpuni.</span>
+                    <span>Menumbuhkembangkan soft skill berupa fitrah potensi dan growth mindset.</span>
                   </li>
                   <li className="flex items-start gap-3">
                     <CheckCircle2 className="w-5 h-5 text-primary-600 shrink-0 mt-0.5" />
-                    <span><strong>Menanamkan jiwa Entrepreneur Muslim</strong> yang berwawasan global dan mandiri.</span>
+                    <span>Mengembangkan hard skill berupa jiwa kewirausahaan dan life skills.</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle2 className="w-5 h-5 text-primary-600 shrink-0 mt-0.5" />
+                    <span>Membentuk generasi yang berjiwa dakwah dan mau'idzoh hasanah.</span>
                   </li>
                 </ul>
               </div>
