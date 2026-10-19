@@ -100,9 +100,9 @@ function canHover(): boolean {
 }
 
 const desktopLinkClass = (active: boolean) =>
-  `px-3 py-2 text-sm font-bold rounded-full transition-all duration-300 min-h-[40px] flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-300 ${
+  `px-2.5 2xl:px-3 py-1 2xl:py-1.5 text-xs xl:text-[13px] 2xl:text-sm font-bold rounded-full transition-all duration-300 min-h-[34px] 2xl:min-h-[38px] flex items-center gap-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-300 whitespace-nowrap ${
     active
-      ? "bg-primary-50 text-primary-900 font-extrabold shadow-sm"
+      ? "bg-primary-50 text-primary-900 font-extrabold shadow-xs"
       : "text-ink-600 hover:text-primary-900 hover:bg-primary-50/50"
   }`;
 
@@ -240,10 +240,10 @@ export default function Navbar() {
   const registerButtonDesktop = (
     <Link
       href={REGISTER_HREF}
-      className="btn-primary flex items-center gap-1.5 group text-xs xl:text-sm font-black px-3.5 xl:px-5 py-2 rounded-xl shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 hover:scale-105 transition-all glow-ring-primary"
+      className="btn-primary flex items-center gap-1.5 group text-xs xl:text-[13px] 2xl:text-sm font-black px-3.5 2xl:px-5 py-2 rounded-xl shadow-md hover:shadow-lg hover:scale-105 transition-all glow-ring-primary shrink-0 whitespace-nowrap"
     >
       <span>{REGISTER_LABEL}</span>
-      <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
+      <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1 shrink-0" />
     </Link>
   );
 
@@ -255,14 +255,14 @@ export default function Navbar() {
     <>
       <header
         id="main-header"
-        className="fixed w-full top-0 left-0 pt-[max(0.5rem,env(safe-area-inset-top))] sm:pt-3 z-50"
+        className="fixed w-full top-0 left-0 pt-[max(0.5rem,env(safe-area-inset-top))] sm:pt-3 z-50 px-2 sm:px-4"
       >
-        <div className="container mx-auto px-4 md:px-6 max-w-7xl">
+        <div className="mx-auto max-w-7xl 2xl:max-w-[1400px]">
           <div
-            className={`backdrop-blur-xl border border-white/40 rounded-full px-5 sm:px-6 flex items-center justify-between transition-all duration-300 ${
+            className={`backdrop-blur-xl border border-white/40 rounded-full pl-3.5 pr-4 sm:pl-5 sm:pr-5 2xl:pl-6 2xl:pr-6 flex items-center justify-between gap-2 xl:gap-3 transition-all duration-300 ${
               isScrolled
-                ? "bg-white/90 py-1.5 sm:py-2 shadow-xl shadow-blue-500/15"
-                : "bg-white/80 py-2 sm:py-2.5 shadow-2xl shadow-blue-500/10"
+                ? "bg-white/95 py-1.5 sm:py-2 shadow-xl shadow-blue-500/15"
+                : "bg-white/90 py-2 sm:py-2.5 shadow-2xl shadow-blue-500/10"
             }`}
           >
             {/* ── Logo ── */}
@@ -270,40 +270,39 @@ export default function Navbar() {
               href="/"
               onClick={handleBerandaClick}
               aria-label={`${BRANDING.schoolShortName} — Beranda`}
-              className="flex items-center gap-2.5 sm:gap-3 group min-w-0 xl:shrink-0 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-300"
+              className="flex items-center gap-2 sm:gap-2.5 group min-w-0 shrink-0 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-300"
             >
-              <div className="relative">
+              <div className="relative shrink-0">
                 <div
-                  className={`w-10 h-10 sm:w-11 sm:h-11 rounded-[14px] flex items-center justify-center border overflow-hidden bg-white transition-all duration-500 group-hover:scale-105 group-hover:-rotate-3 ${
+                  className={`w-9 h-9 sm:w-10 sm:h-10 2xl:w-11 2xl:h-11 rounded-[12px] sm:rounded-[14px] flex items-center justify-center border overflow-hidden bg-white transition-all duration-500 group-hover:scale-105 group-hover:-rotate-3 ${
                     isScrolled
-                      ? "border-primary/20 shadow-xl shadow-primary/10"
+                      ? "border-primary/20 shadow-lg shadow-primary/10"
                       : "border-white/70 shadow-[0_2px_12px_rgba(3,105,199,0.12)]"
                   }`}
                 >
                   <Image
                     src={BRANDING.logoPath}
                     alt={`Logo ${BRANDING.schoolName}`}
-                    width={44}
-                    height={44}
+                    width={40}
+                    height={40}
                     className="w-full h-full object-contain p-0.5"
                     priority
-                    sizes="44px"
+                    sizes="40px"
                   />
                 </div>
-                <div className="absolute -bottom-1 -right-1 w-3.5 h-3.5 bg-[var(--color-primary-600)] border-2 border-white rounded-full z-10 shadow-sm" />
+                <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-[var(--color-primary-600)] border-2 border-white rounded-full z-10 shadow-sm" />
               </div>
 
-              <div className="min-w-0 xl:shrink-0">
-                {/* <span>, bukan <h1>: judul utama halaman milik konten halaman */}
+              <div className="min-w-0 shrink-0">
                 <div className="flex items-center gap-1.5">
-                  <span className="block truncate text-sm sm:text-base font-black leading-tight tracking-tight text-[var(--color-ink-900)] xl:whitespace-normal xl:line-clamp-2 xl:max-w-[10rem] xl:leading-[1.15]">
+                  <span className="block truncate text-xs sm:text-sm 2xl:text-base font-black leading-tight tracking-tight text-[var(--color-ink-900)]">
                     {BRANDING.schoolShortName}
                   </span>
-                  <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[9.5px] font-black tracking-wide bg-blue-100 text-blue-800 border border-blue-200 shrink-0 shadow-xs">
+                  <span className="inline-flex items-center px-1.5 2xl:px-2 py-0.5 rounded-full text-[8.5px] 2xl:text-[9.5px] font-black tracking-wide bg-blue-100 text-blue-800 border border-blue-200 shrink-0 shadow-xs">
                     KHUSUS PUTRA
                   </span>
                 </div>
-                <span className="block truncate max-[359px]:hidden xl:max-w-[10rem] text-[8.5px] sm:text-[9.5px] font-bold text-[var(--color-ink-400)] uppercase tracking-wider mt-0.5 leading-none">
+                <span className="block truncate max-[359px]:hidden text-[8px] 2xl:text-[9.5px] font-bold text-[var(--color-ink-400)] uppercase tracking-wider mt-0.5 leading-none">
                   {MANAGED_BY}
                 </span>
               </div>
@@ -312,7 +311,7 @@ export default function Navbar() {
             {/* ── Desktop Nav (xl+) ── */}
             <nav
               aria-label="Navigasi utama"
-              className={`hidden xl:flex items-center gap-0.5 p-1.5 rounded-full border bg-white transition-all duration-300 ${
+              className={`hidden xl:flex items-center gap-0.5 p-1 2xl:p-1.5 rounded-full border bg-white transition-all duration-300 shrink-0 ${
                 isScrolled
                   ? "border-[var(--color-primary-100)] shadow-sm"
                   : "border-white/65 shadow-[0_2px_16px_rgba(3,105,199,0.10)]"
@@ -428,23 +427,23 @@ export default function Navbar() {
             </nav>
 
             {/* ── CTA (xl+) ── */}
-            <div className="hidden xl:flex items-center gap-2 shrink-0">
+            <div className="hidden xl:flex items-center gap-1.5 2xl:gap-2.5 shrink-0">
               <LanguageSwitcher />
               {isLoggedIn ? (
                 <Link
                   href="/dashboard"
-                  className="text-xs xl:text-sm font-bold text-[var(--color-ink-700)] hover:text-[var(--color-primary-800)] px-3 py-2 rounded-full border border-slate-200 bg-white hover:bg-slate-50 transition-all flex items-center gap-1.5 shadow-xs"
+                  className="text-xs 2xl:text-sm font-bold text-[var(--color-ink-700)] hover:text-[var(--color-primary-800)] px-2.5 2xl:px-3.5 py-1.5 2xl:py-2 rounded-full border border-slate-200 bg-white hover:bg-slate-50 transition-all flex items-center gap-1.5 shadow-xs shrink-0 whitespace-nowrap"
                 >
-                  <span className="relative flex h-2 w-2 mr-0.5">
+                  <span className="relative flex h-2 w-2 mr-0.5 shrink-0">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75 motion-reduce:animate-none" />
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500" />
                   </span>
-                  Masuk ke Akun
+                  <span>Masuk ke Akun</span>
                 </Link>
               ) : (
                 <Link
                   href="/login"
-                  className="text-xs xl:text-sm font-bold text-[var(--color-ink-600)] hover:text-[var(--color-primary-800)] transition-colors duration-200 px-3 py-2 rounded-full hover:bg-[var(--color-primary-50)]"
+                  className="text-xs 2xl:text-sm font-bold text-[var(--color-ink-600)] hover:text-[var(--color-primary-800)] transition-colors duration-200 px-2.5 2xl:px-3.5 py-1.5 2xl:py-2 rounded-full hover:bg-[var(--color-primary-50)] shrink-0 whitespace-nowrap"
                 >
                   Masuk
                 </Link>
