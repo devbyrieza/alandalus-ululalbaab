@@ -112,7 +112,7 @@ export default function ExamCardPage() {
       </div>
 
       {/* A4 Paper simulating div */}
-      <div className="bg-white shadow-sm w-full max-w-[21cm] min-h-[29.7cm] p-[2cm] relative print:shadow-none print:w-full print:p-0">
+      <div className="bg-white shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 w-full max-w-[21cm] min-h-[29.7cm] p-[2cm] relative print:shadow-none print:w-full print:p-0">
         {/* Header with Border */}
         <div className="border-2 border-black p-1 mb-1">
           <div className="border border-black p-6 relative">
@@ -157,7 +157,7 @@ export default function ExamCardPage() {
             </div>
 
             <div className="mb-8 font-serif">
-              <div className="bg-gray-50 p-4 border border-gray-200 rounded text-sm">
+              <div className="bg-gray-50 p-4 rounded text-sm">
                 <div className="grid grid-cols-12 gap-2 mb-2">
                   <span className="col-span-3 font-bold">
                     Nomor Pendaftaran

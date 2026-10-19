@@ -114,7 +114,7 @@ export default function AboutSection() {
 
                 <div className="flex flex-col items-center text-center px-8 py-12 md:px-16 md:py-16">
                   {/* Icon */}
-                  <div className="mb-7 w-14 h-14 rounded-2xl bg-primary-50 border border-blue-100 flex items-center justify-center shadow-xs group-hover:shadow-md transition-shadow duration-300">
+                  <div className="mb-7 w-14 h-14 rounded-2xl bg-primary-50 border border-blue-100 flex items-center justify-center shadow-xs group-hover:shadow-xl shadow-primary/20 transition-shadow duration-300">
                     <Target
                       className="w-6 h-6 text-primary-600"
                       strokeWidth={1.75}

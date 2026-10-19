@@ -128,7 +128,7 @@ function GalleryCard({
         {/* Overlay removed for clear images */}
       </div>
 
-      <div className="absolute top-3.5 right-3.5 w-8 h-8 rounded-xl bg-white/20  flex items-center justify-center border border-white/30 text-white opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:bg-secondary-400 group-hover:border-secondary-300 group-hover:text-primary-900 shadow-sm">
+      <div className="absolute top-3.5 right-3.5 w-8 h-8 rounded-xl bg-white/20 flex items-center justify-center border border-white/30 text-white opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:bg-secondary-400 group-hover:border-secondary-300 group-hover:text-primary-900 shadow-xl shadow-primary/20">
         <Icon className="w-4 h-4" />
       </div>
 

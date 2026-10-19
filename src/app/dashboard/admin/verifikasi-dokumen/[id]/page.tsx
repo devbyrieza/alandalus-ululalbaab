@@ -486,7 +486,7 @@ export default function VerifikasiDokumenDetailPage() {
 
   if (!pendaftar && !loading) {
     return (
-      <div className="bg-white rounded-3xl shadow-2xl shadow-primary/30  shadow-primary/20  shadow-primary/10 p-6 md:p-10 border border-gold-200 text-center">
+      <div className="bg-white rounded-3xl shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 p-6 md:p-10 border border-gold-200 text-center">
         <AlertCircle className="w-16 h-16 text-primary-500 mx-auto mb-4" />
         <h2 className="text-2xl font-black text-primary-950 mb-2">
           Data Tidak Ditemukan
@@ -496,7 +496,7 @@ export default function VerifikasiDokumenDetailPage() {
         </p>
         <button
           onClick={() => router.back()}
-          className="px-6 py-3 bg-primary-700 hover:bg-primary-800 text-white rounded-3xl font-bold transition-all shadow-2xl shadow-primary/30  shadow-primary/20  shadow-primary-700/20 active:scale-95"
+          className="px-6 py-3 bg-primary-700 hover:bg-primary-800 text-white rounded-3xl font-bold transition-all shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary-700/20 active:scale-95"
         >
           Kembali ke Daftar
         </button>
@@ -563,13 +563,7 @@ export default function VerifikasiDokumenDetailPage() {
         {dokumenList.map((dok) => (
           <div
             key={dok.id}
-            className={`bg-white border rounded-3xl overflow-hidden transition-all shadow-xs hover:shadow-2xl shadow-primary/30 hover:shadow-primary-900/5 ${
-              dok.status_verifikasi === "verified"
-                ? "border-emerald-200"
-                : dok.status_verifikasi === "rejected"
-                  ? "border-rose-200"
-                  : "border-gold-200"
-            }`}
+            className={`bg-white border rounded-3xl overflow-hidden transition-all shadow-xs hover:shadow-2xl shadow-primary/30 hover:shadow-primary-900/5 ${ dok.status_verifikasi === "verified" ? "border-emerald-200" : dok.status_verifikasi === "rejected" ? "border-rose-200" : "border-gold-200" }`}
           >
             {/* Document Preview */}
             <div className="w-full relative aspect-[4/3] bg-stone-100 overflow-hidden">
@@ -650,9 +644,7 @@ export default function VerifikasiDokumenDetailPage() {
 
                     {/* Mobile / iOS View: Dedicated SPMB Platinum PDF Card */}
                     <div
-                      className={`${
-                        !isMobileDevice ? "md:hidden" : ""
-                      } absolute inset-0 flex flex-col items-center justify-center p-4 text-center bg-gradient-to-b from-stone-50 via-white to-stone-50/90 border border-stone-200/60`}
+                      className={`${ !isMobileDevice ? "md:hidden" : "" } absolute inset-0 flex flex-col items-center justify-center p-4 text-center bg-gradient-to-b from-stone-50 via-white to-stone-50/90 border border-stone-200/60`}
                     >
                       <div className="relative mb-2.5">
                         <div className="w-13 h-13 sm:w-14 sm:h-14 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center shadow-xs border border-rose-100 group-hover:scale-105 transition-transform">
@@ -700,7 +692,7 @@ export default function VerifikasiDokumenDetailPage() {
                   href={dok.file_url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="absolute top-3 right-3 p-2 bg-white/90 hover:bg-white rounded-xl text-stone-700 shadow-md transition-all hover:scale-105 z-10"
+                  className="absolute top-3 right-3 p-2 bg-white/90 hover:bg-white/90 rounded-xl text-stone-700 shadow-md transition-all hover:scale-105 z-10"
                   title="Buka di Tab Baru"
                 >
                   <ExternalLink className="w-4 h-4" />
@@ -763,11 +755,7 @@ export default function VerifikasiDokumenDetailPage() {
                     processingDocs.has(dok.id) ||
                     dok.status_verifikasi === "verified"
                   }
-                  className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-3xl text-xs font-bold transition-all ${
-                    dok.status_verifikasi === "verified"
-                      ? "bg-emerald-50 text-[#550000] border border-emerald-100 cursor-default"
-                      : "bg-[#550000] hover:bg-[#550000] text-white shadow-2xl shadow-primary/30  shadow-primary/20 shadow-emerald-600/20 active:scale-95 disabled:opacity-50"
-                  }`}
+                  className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-3xl text-xs font-bold transition-all ${ dok.status_verifikasi === "verified" ? "bg-emerald-50 text-[#550000] border border-emerald-100 cursor-default" : "bg-[#550000] hover:bg-[#550000] text-white shadow-2xl shadow-primary/30 shadow-primary/20 shadow-emerald-600/20 active:scale-95 disabled:opacity-50" }`}
                 >
                   {processingDocs.has(dok.id) ? (
                     <Loader2 className="w-4 h-4 animate-spin" />
@@ -788,11 +776,7 @@ export default function VerifikasiDokumenDetailPage() {
                     setRejectReason(dok.catatan || "");
                   }}
                   disabled={processingDocs.has(dok.id)}
-                  className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-3xl text-xs font-black transition-all active:scale-95 disabled:opacity-50 ${
-                    dok.status_verifikasi === "rejected"
-                      ? "bg-rose-100 text-rose-700 border border-rose-200"
-                      : "bg-white border-2 border-gold-100 hover:border-rose-400 hover:text-rose-600 text-ink-300"
-                  }`}
+                  className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-3xl text-xs font-black transition-all active:scale-95 disabled:opacity-50 ${ dok.status_verifikasi === "rejected" ? "bg-rose-100 text-rose-700 border border-rose-200" : "bg-white border-2 border-gold-100 hover:border-rose-400 hover:text-rose-600 text-ink-300" }`}
                 >
                   {processingDocs.has(dok.id) ? (
                     <Loader2 className="w-4 h-4 animate-spin" />
@@ -945,9 +929,7 @@ export default function VerifikasiDokumenDetailPage() {
 
                   {/* Mobile PDF Reader View */}
                   <div
-                    className={`${
-                      !isMobileDevice ? "md:hidden" : ""
-                    } w-full h-full flex flex-col items-center justify-center p-6 text-center bg-stone-50 rounded-3xl whitespace-normal`}
+                    className={`${ !isMobileDevice ? "md:hidden" : "" } w-full h-full flex flex-col items-center justify-center p-6 text-center bg-stone-50 rounded-3xl whitespace-normal`}
                   >
                     <div className="w-18 h-18 rounded-3xl bg-rose-50 text-rose-600 flex items-center justify-center mb-4 shadow-sm border border-rose-200">
                       <FileText className="w-9 h-9" />
@@ -1105,7 +1087,7 @@ export default function VerifikasiDokumenDetailPage() {
                 disabled={
                   processingDocs.has(rejectModal.docId) || !rejectReason.trim()
                 }
-                className="px-5 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-3xl text-sm font-bold shadow-2xl shadow-primary/30  shadow-primary/20 shadow-rose-600/20 hover:shadow-rose-600/40 transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed transform active:scale-95"
+                className="px-5 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-3xl text-sm font-bold shadow-2xl shadow-primary/30 shadow-primary/20 shadow-rose-600/20 hover:shadow-rose-600/40 transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed transform active:scale-95"
               >
                 {processingDocs.has(rejectModal.docId) ? (
                   <Loader2 className="w-4 h-4 animate-spin" />

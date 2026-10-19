@@ -167,11 +167,7 @@ export default function AiChatWidget({
             className={`flex gap-3 ${msg.role === "user" ? "flex-row-reverse" : "flex-row"} items-end`}
           >
             <div
-              className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 mb-1 ${
-                msg.role === "user"
-                  ? "bg-primary-100 text-primary-700"
-                  : "bg-primary-600 text-white shadow-premium-xs"
-              }`}
+              className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 mb-1 ${ msg.role === "user" ? "bg-primary-100 text-primary-700" : "bg-primary-600 text-white shadow-premium-xs" }`}
             >
               {msg.role === "user" ? (
                 <User className="w-4 h-4" />
@@ -180,11 +176,7 @@ export default function AiChatWidget({
               )}
             </div>
             <div
-              className={`max-w-[75%] p-3.5 rounded-lg ${
-                msg.role === "user"
-                  ? "bg-primary-700 text-white rounded-br-none shadow-sm"
-                  : "bg-white text-ink-900 border border-surface-100 rounded-bl-none shadow-premium-xs"
-              }`}
+              className={`max-w-[75%] p-3.5 rounded-2xl ${ msg.role === "user" ? "bg-primary-700 text-white rounded-br-none shadow-sm" : "bg-white text-ink-900 border border-surface-100 rounded-bl-none shadow-premium-xs" }`}
             >
               <p className="text-[14px] leading-relaxed whitespace-pre-wrap">
                 {msg.content}
@@ -202,7 +194,7 @@ export default function AiChatWidget({
             <div className="w-8 h-8 rounded-full bg-primary-600 text-white flex items-center justify-center shrink-0 mb-1 shadow-premium-xs">
               <Bot className="w-5 h-5" />
             </div>
-            <div className="bg-white p-4 rounded-lg rounded-bl-none border border-surface-100 shadow-premium-xs flex gap-1 items-center h-12">
+            <div className="bg-white p-4 rounded-2xl rounded-bl-none border border-surface-100 shadow-premium-xs flex gap-1 items-center h-12">
               <motion.div
                 animate={{ y: [0, -5, 0] }}
                 transition={{ repeat: Infinity, duration: 0.6, delay: 0 }}
@@ -238,7 +230,7 @@ export default function AiChatWidget({
                 onEscalate();
                 onClose();
               }}
-              className="w-full bg-white border border-secondary-200 text-secondary-700 hover:bg-secondary-50 hover:border-secondary-300 py-3 rounded-lg text-sm font-bold flex items-center justify-center gap-2 transition-all shadow-premium-xs"
+              className="w-full bg-white border border-secondary-200 text-secondary-700 hover:bg-secondary-50 hover:border-secondary-300 py-3 rounded-2xl text-sm font-bold flex items-center justify-center gap-2 transition-all shadow-premium-xs"
             >
               <Headphones className="w-4 h-4" />
               Chat Langsung dengan CS
@@ -256,13 +248,13 @@ export default function AiChatWidget({
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Ketik pesan Anda..."
-            className="flex-1 bg-surface-50 border border-surface-200 rounded-lg px-4 py-3 text-[14px] text-ink-900 focus:outline-none focus:border-primary-400 focus:ring-2 focus:ring-primary-50 transition-all placeholder:text-ink-400"
+            className="flex-1 bg-surface-50 border border-surface-200 rounded-2xl px-4 py-3 text-[14px] text-ink-900 focus:outline-none focus:border-primary-400 focus:ring-2 focus:ring-primary-50 transition-all placeholder:text-ink-400"
             disabled={isLoading}
           />
           <button
             onClick={handleSend}
             disabled={isLoading || !input.trim()}
-            className="w-12 h-[46px] bg-primary-700 text-white rounded-lg flex items-center justify-center hover:bg-primary-800 disabled:opacity-50 disabled:hover:bg-primary-700 transition-colors shrink-0 shadow-sm"
+            className="w-12 h-[46px] bg-primary-700 text-white rounded-2xl flex items-center justify-center hover:bg-primary-800 disabled:opacity-50 disabled:hover:bg-primary-700 transition-colors shrink-0 shadow-sm"
           >
             {isLoading ? (
               <Loader2 className="w-5 h-5 animate-spin" />

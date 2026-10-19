@@ -187,11 +187,7 @@ export default function ProgramPage() {
                     .getElementById(program.id)
                     ?.scrollIntoView({ behavior: "smooth" });
                 }}
-                className={`px-6 md:px-8 py-2.5 md:py-3 rounded-full font-bold text-sm transition-all border shadow-xs ${
-                  activeSection === program.id
-                    ? 'bg-primary-600 text-white border-primary-600 shadow-md shadow-primary-600/20'
-                    : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
-                }`}
+                className={`px-6 md:px-8 py-2.5 md:py-3 rounded-full font-bold text-sm transition-all border shadow-xs ${ activeSection === program.id ? 'bg-primary-600 text-white border-primary-600 shadow-xl shadow-primary/20 shadow-primary-600/20' : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50' }`}
               >
                 {program.name}
               </button>
@@ -229,7 +225,7 @@ export default function ProgramPage() {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
 
                     <div className="absolute bottom-6 left-6 right-6 z-10 text-white">
-                      <span className="inline-block px-3 py-1 rounded-lg bg-white/20 backdrop-blur-md text-[11px] font-bold uppercase tracking-wider mb-2 border border-white/20">
+                      <span className="inline-block px-3 py-1 rounded-2xl bg-white/20 backdrop-blur-md text-[11px] font-bold uppercase tracking-wider mb-2 border border-white/20">
                         {program.badge}
                       </span>
                       <h3 className="text-xl md:text-2xl font-black">
@@ -264,7 +260,7 @@ export default function ProgramPage() {
                         key={sIdx}
                         className="bg-slate-50 p-4 rounded-xl border border-slate-200 text-center"
                       >
-                        <div className="w-8 h-8 rounded-lg bg-primary-100 text-primary-700 flex items-center justify-center mx-auto mb-2 whitespace-nowrap shrink-0">
+                        <div className="w-8 h-8 rounded-2xl bg-primary-100 text-primary-700 flex items-center justify-center mx-auto mb-2 whitespace-nowrap shrink-0">
                           <stat.icon className="w-4 h-4" />
                         </div>
                         <p className="text-[10px] text-slate-500 font-bold uppercase tracking-wider mb-0.5">
@@ -298,7 +294,7 @@ export default function ProgramPage() {
 
                   {/* CTA Button */}
                   <Link href={`/daftar?program=${program.id}`}>
-                    <button className="w-full sm:w-auto px-8 py-4 rounded-xl font-black text-white text-base bg-primary-600 hover:bg-primary-500 shadow-md shadow-primary-600/20 transition-all hover:-translate-y-0.5 flex items-center justify-center gap-2">
+                    <button className="w-full sm:w-auto px-8 py-4 rounded-xl font-black text-white text-base bg-primary-600 hover:bg-primary-500 shadow-xl shadow-primary/20 shadow-primary-600/20 transition-all hover:-translate-y-0.5 flex items-center justify-center gap-2">
                       {program.buttonLabel}
                       <ArrowRight className="w-4 h-4" />
                     </button>

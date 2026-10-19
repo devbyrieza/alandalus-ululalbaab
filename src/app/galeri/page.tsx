@@ -436,11 +436,7 @@ export default function GaleriPage() {
                     <button
                       key={idx}
                       onClick={() => setCurrentIndex(idx)}
-                      className={`relative w-16 h-12 rounded-lg overflow-hidden shrink-0 border-2 transition-all cursor-pointer ${
-                        idx === currentIndex
-                          ? "border-primary-400 scale-105 shadow-md shadow-primary-500/50"
-                          : "border-white/20 opacity-50 hover:opacity-100"
-                      }`}
+                      className={`relative w-16 h-12 rounded-2xl overflow-hidden shrink-0 border-2 transition-all cursor-pointer ${ idx === currentIndex ? "border-primary-400 scale-105 shadow-xl shadow-primary/20 shadow-primary-500/50" : "border-white/20 opacity-50 hover:opacity-100" }`}
                     >
                       <Image
                         src={it.src}

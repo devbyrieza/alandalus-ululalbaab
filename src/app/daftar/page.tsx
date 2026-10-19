@@ -251,7 +251,7 @@ export default function DaftarPage() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-white rounded-lg shadow-sm border border-secondary-200 mb-6 group hover:scale-110 transition-transform app-card">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-white rounded-2xl shadow-xl shadow-primary/20 border border-secondary-200 mb-6 group hover:scale-110 transition-transform app-card">
             <School className="w-8 h-8 text-blue-600" />
           </div>
           <div className="mb-3 flex justify-center">
@@ -283,7 +283,7 @@ export default function DaftarPage() {
         {/* Banner Pengalihan Pendaftaran Santri Putri ke Al-Imam */}
         <div className="w-full mb-6 rounded-2xl sm:rounded-3xl bg-gradient-to-r from-rose-50/95 via-pink-50/90 to-rose-50/95 border-2 border-rose-200 p-4 sm:p-5 shadow-lg shadow-rose-500/5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-start gap-3.5">
-            <div className="w-11 h-11 rounded-2xl bg-[#800a0a] text-white flex items-center justify-center shrink-0 shadow-md shadow-rose-900/25 mt-0.5 sm:mt-0">
+            <div className="w-11 h-11 rounded-2xl bg-[#800a0a] text-white flex items-center justify-center shrink-0 shadow-xl shadow-primary/20 shadow-rose-900/25 mt-0.5 sm:mt-0">
               <School className="w-5 h-5" />
             </div>
             <div>
@@ -302,7 +302,7 @@ export default function DaftarPage() {
             href="https://pesantren-alimam.com/daftar"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-[#800a0a] hover:bg-[#600808] active:scale-95 text-white font-extrabold text-xs uppercase tracking-wider shadow-md shadow-rose-900/20 hover:shadow-lg transition-all shrink-0 w-full sm:w-auto"
+            className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-[#800a0a] hover:bg-[#600808] active:scale-95 text-white font-extrabold text-xs uppercase tracking-wider shadow-xl shadow-primary/20 shadow-rose-900/20 hover:shadow-lg transition-all shrink-0 w-full sm:w-auto"
           >
             <span>Daftar Santri Putri</span>
             <ExternalLink className="w-3.5 h-3.5" />
@@ -312,7 +312,7 @@ export default function DaftarPage() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.3 }}
-            className="app-card bg-white rounded-[2.5rem] md:rounded-[3.5rem] shadow-sm p-6 md:p-16 border border-secondary-200 relative overflow-hidden"
+            className="app-card bg-white rounded-[2.5rem] md:rounded-[3.5rem] shadow-xl shadow-primary/20 p-6 md:p-16 border border-secondary-200 relative overflow-hidden"
           >
             {/* Soft decorative blur inside card */}
             <div className="absolute top-0 right-0 w-64 h-64 bg-secondary-50/30 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
@@ -324,7 +324,7 @@ export default function DaftarPage() {
                   initial={{ opacity: 0, height: 0, marginBottom: 0 }}
                   animate={{ opacity: 1, height: "auto", marginBottom: 40 }}
                   exit={{ opacity: 0, height: 0, marginBottom: 0 }}
-                  className="bg-blue-50 border border-blue-100/50 rounded-lg p-6 flex items-start gap-4 relative z-10 overflow-hidden"
+                  className="bg-blue-50 border border-blue-100/50 rounded-2xl p-6 flex items-start gap-4 relative z-10 overflow-hidden"
                 >
                   <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white shrink-0 shadow-premium-xs">
                     <CheckCircle className="w-6 h-6" />
@@ -381,7 +381,7 @@ export default function DaftarPage() {
                 transition={{ delay: 0.4 }}
               >
                 <div className="flex items-center gap-3 mb-8">
-                  <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center text-blue-600 shadow-sm border border-blue-200">
+                  <div className="w-10 h-10 rounded-2xl bg-blue-50 flex items-center justify-center text-blue-600 shadow-sm border border-blue-200">
                     <GraduationCap className="w-6 h-6" />
                   </div>
                   <h3 className="text-2xl font-display font-black text-ink-950">
@@ -427,16 +427,10 @@ export default function DaftarPage() {
                             ...prev,
                             jenjang: option.value as any }));
                         }}
-                        className={`relative cursor-pointer rounded-[2rem] p-6 border-2 transition-all duration-300 app-card flex flex-col justify-between ${
-                          isClosed
-                            ? "opacity-50 grayscale cursor-not-allowed border-secondary-200 bg-stone-50"
-                            : formData.jenjang === option.value
-                              ? "border-primary-600 bg-secondary-50 shadow-sm"
-                              : "border-secondary-200 bg-white hover:border-primary-200 hover:shadow-sm"
-                        }`}
+                        className={`relative cursor-pointer rounded-[2rem] p-6 border-2 transition-all duration-300 app-card flex flex-col justify-between ${ isClosed ? "opacity-50 grayscale cursor-not-allowed border-secondary-200 bg-stone-50" : formData.jenjang === option.value ? "border-primary-600 bg-secondary-50 shadow-xl shadow-primary/20" : "border-secondary-200 bg-white hover:border-primary-200 hover:shadow-xl shadow-primary/20" }`}
                       >
                         {isClosed && (
-                          <div className="absolute top-4 right-4 bg-red-600 text-white text-[10px] font-black px-2 py-1 rounded-full uppercase tracking-tighter shadow-sm z-10">
+                          <div className="absolute top-4 right-4 bg-red-600 text-white text-[10px] font-black px-2 py-1 rounded-full uppercase tracking-tighter shadow-xl shadow-primary/20 z-10">
                             {closedLabel}
                           </div>
                         )}
@@ -444,11 +438,7 @@ export default function DaftarPage() {
                         <div className="flex flex-col gap-4 h-full justify-between">
                           <div className="flex items-center gap-3 relative z-0">
                             <div
-                              className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-colors shrink-0 ${
-                                formData.jenjang === option.value
-                                  ? "border-primary-600"
-                                  : "border-secondary-200"
-                              }`}
+                              className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-colors shrink-0 ${ formData.jenjang === option.value ? "border-primary-600" : "border-secondary-200" }`}
                             >
                               {formData.jenjang === option.value && (
                                 <motion.div
@@ -480,7 +470,7 @@ export default function DaftarPage() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.35 }}
-                  className="mt-8 bg-amber-50 border border-amber-200 rounded-lg p-6 flex items-start gap-4 relative z-10 overflow-hidden shadow-premium-xs"
+                  className="mt-8 bg-amber-50 border border-amber-200 rounded-2xl p-6 flex items-start gap-4 relative z-10 overflow-hidden shadow-premium-xs"
                 >
                   <div className="w-10 h-10 bg-amber-500 rounded-full flex items-center justify-center text-white shrink-0 shadow-premium-xs">
                     <AlertCircle className="w-6 h-6" />
@@ -517,7 +507,7 @@ export default function DaftarPage() {
                 className="space-y-8"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-secondary-50 flex items-center justify-center text-primary-600 shadow-sm border border-secondary-200">
+                  <div className="w-10 h-10 rounded-2xl bg-secondary-50 flex items-center justify-center text-primary-600 shadow-sm border border-secondary-200">
                     <User className="w-6 h-6" />
                   </div>
                   <h3 className="text-2xl font-display font-black text-ink-950">
@@ -540,7 +530,7 @@ export default function DaftarPage() {
                             nama_lengkap: formatNamaLengkap(e.target.value) }))
                         }
                         placeholder="Sesuai Akta Kelahiran santri"
-                        className="w-full px-5 py-3 md:px-8 md:py-5 rounded-lg md:rounded-lg bg-secondary-50 border border-transparent focus:bg-white focus:border-primary-200 focus:ring-4 focus:ring-secondary-50 transition-all font-bold placeholder:text-ink-500 text-sm md:text-base text-ink-950"
+                        className="w-full px-5 py-3 md:px-8 md:py-5 rounded-2xl md:rounded-2xl bg-secondary-50 border border-transparent focus:bg-white focus:border-primary-200 focus:ring-4 focus:ring-secondary-50 transition-all font-bold placeholder:text-ink-500 text-sm md:text-base text-ink-950"
                       />
                     </InputField>
                   </div>
@@ -558,7 +548,7 @@ export default function DaftarPage() {
                             nik: e.target.value.replace(/\D/g, "") }))
                         }
                         placeholder="16 Digit NIK"
-                        className="w-full px-5 py-3 md:px-8 md:py-5 rounded-lg md:rounded-lg bg-secondary-50 border border-transparent focus:bg-white focus:border-primary-200 focus:ring-4 focus:ring-secondary-50 transition-all font-bold placeholder:text-ink-500 text-sm md:text-base text-ink-950"
+                        className="w-full px-5 py-3 md:px-8 md:py-5 rounded-2xl md:rounded-2xl bg-secondary-50 border border-transparent focus:bg-white focus:border-primary-200 focus:ring-4 focus:ring-secondary-50 transition-all font-bold placeholder:text-ink-500 text-sm md:text-base text-ink-950"
                       />
                       <p className="text-[10px] text-ink-500 mt-1.5 ml-1 font-bold">
                         NIK (Nomor Induk Kependudukan) santri dapat dilihat pada lembar Kartu Keluarga (KK) di sebelah nama santri, atau pada KIA/KTP Anak.
@@ -578,7 +568,7 @@ export default function DaftarPage() {
                           ...prev,
                           tanggal_lahir: e.target.value }))
                       }
-                      className="w-full px-5 py-3 md:px-8 md:py-5 rounded-lg md:rounded-lg bg-secondary-50 border border-transparent focus:bg-white focus:border-primary-200 focus:ring-4 focus:ring-secondary-50 transition-all font-bold text-sm md:text-base text-ink-950"
+                      className="w-full px-5 py-3 md:px-8 md:py-5 rounded-2xl md:rounded-2xl bg-secondary-50 border border-transparent focus:bg-white focus:border-primary-200 focus:ring-4 focus:ring-secondary-50 transition-all font-bold text-sm md:text-base text-ink-950"
                     />
                   </InputField>
 
@@ -589,7 +579,7 @@ export default function DaftarPage() {
                     >
                       <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 p-4 md:p-5 rounded-2xl bg-blue-50/70 border border-blue-200">
                         <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-black shadow-md shadow-blue-600/20 text-sm">
+                          <div className="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-black shadow-xl shadow-primary/20 shadow-blue-600/20 text-sm">
                             L
                           </div>
                           <div>
@@ -626,7 +616,7 @@ export default function DaftarPage() {
                 className="space-y-8"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-purple-50 flex items-center justify-center text-purple-600 shadow-sm border border-purple-200">
+                  <div className="w-10 h-10 rounded-2xl bg-purple-50 flex items-center justify-center text-purple-600 shadow-sm border border-purple-200">
                     <Phone className="w-6 h-6" />
                   </div>
                   <h3 className="text-2xl font-display font-black text-ink-950">
@@ -638,7 +628,7 @@ export default function DaftarPage() {
                   label="Nomor WhatsApp Orang Tua"
                   error={fieldErrors.no_hp}
                 >
-                  <div className="relative flex shadow-sm border border-transparent focus-within:border-primary-200 focus-within:ring-4 focus-within:ring-secondary-50 rounded-lg md:rounded-lg overflow-hidden bg-secondary-50 transition-all">
+                  <div className="relative flex shadow-sm border border-transparent focus-within:border-primary-200 focus-within:ring-4 focus-within:ring-secondary-50 rounded-2xl md:rounded-2xl overflow-hidden bg-secondary-50 transition-all">
                     <div className="relative">
                       <select
                         value={countryCode}

@@ -145,30 +145,10 @@ export default function ProfilPage() {
         {/* Request Status Banner */}
         {requestStatus && (
           <div
-            className={`px-5 py-4 rounded-lg flex items-center gap-4 transition-all hover:scale-[1.02] shadow-sm ${
-              requestStatus.status === "pending"
-                ? "bg-secondary-50 border border-secondary-200 text-secondary-800"
-                : requestStatus.status === "approved_to_edit"
-                  ? "bg-gradient-to-r from-emerald-50 to-pine-50 border border-pine-200 text-pine-800"
-                  : requestStatus.status === "submitted"
-                    ? "bg-primary-50 border border-primary-200 text-primary-800"
-                    : requestStatus.status === "rejected"
-                      ? "bg-red-50 border border-red-200 text-red-800"
-                      : "bg-surface-100 border border-ink-200 text-ink-800"
-            }`}
+            className={`px-5 py-4 rounded-2xl flex items-center gap-4 transition-all hover:scale-[1.02] shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 ${ requestStatus.status === "pending" ? "bg-secondary-50 border border-secondary-200 text-secondary-800" : requestStatus.status === "approved_to_edit" ? "bg-gradient-to-r from-emerald-50 to-pine-50 border border-pine-200 text-pine-800" : requestStatus.status === "submitted" ? "bg-primary-50 border border-primary-200 text-primary-800" : requestStatus.status === "rejected" ? "bg-red-50 border border-red-200 text-red-800" : "bg-surface-100 border border-ink-200 text-ink-800" }`}
           >
             <div
-              className={`w-10 h-10 rounded-lg flex items-center justify-center shrink-0 ${
-                requestStatus.status === "pending"
-                  ? "bg-secondary-100 text-secondary-600"
-                  : requestStatus.status === "approved_to_edit"
-                    ? "bg-pine-100 text-pine-600"
-                    : requestStatus.status === "submitted"
-                      ? "bg-primary-100 text-primary-600"
-                      : requestStatus.status === "rejected"
-                        ? "bg-red-100 text-red-600"
-                        : "bg-surface-200"
-              }`}
+              className={`w-10 h-10 rounded-3xl flex items-center justify-center shrink-0 ${ requestStatus.status === "pending" ? "bg-secondary-100 text-secondary-600" : requestStatus.status === "approved_to_edit" ? "bg-pine-100 text-pine-600" : requestStatus.status === "submitted" ? "bg-primary-100 text-primary-600" : requestStatus.status === "rejected" ? "bg-red-100 text-red-600" : "bg-surface-200" }`}
             >
               {requestStatus.status === "pending" && (
                 <Clock className="w-5 h-5 animate-pulse" />
@@ -207,7 +187,7 @@ export default function ProfilPage() {
             {requestStatus.status === "approved_to_edit" && (
               <Link
                 href="/dashboard/pendaftar/kelengkapan-berkas"
-                className="ml-auto px-4 py-2 bg-pine-600 text-white text-xs font-bold rounded-lg hover:bg-pine-700 shadow-pine-500/20 shadow-sm transition-all"
+                className="ml-auto px-4 py-2 bg-pine-600 text-white text-xs font-bold rounded-3xl hover:bg-pine-700 shadow-pine-500/20 shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 transition-all"
               >
                 Edit Sekarang
               </Link>
@@ -222,7 +202,7 @@ export default function ProfilPage() {
           {/* Identity Card */}
           <div className="glass-panel p-6 md:p-8 rounded-[2rem] shadow-clay-md">
             <div className="flex items-center gap-4 mb-6">
-              <div className="w-12 h-12 rounded-lg bg-pine-100 flex items-center justify-center text-pine-600 shadow-sm">
+              <div className="w-12 h-12 rounded-2xl bg-pine-100 flex items-center justify-center text-pine-600 shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10">
                 <User className="w-6 h-6" />
               </div>
               <div>
@@ -281,7 +261,7 @@ export default function ProfilPage() {
           {/* Address Card */}
           <div className="glass-panel p-6 md:p-8 rounded-[2rem] shadow-clay-md">
             <div className="flex items-center gap-4 mb-6">
-              <div className="w-12 h-12 rounded-lg bg-primary-100 flex items-center justify-center text-primary-600 shadow-sm whitespace-nowrap shrink-0">
+              <div className="w-12 h-12 rounded-2xl bg-primary-100 flex items-center justify-center text-primary-600 shadow-sm whitespace-nowrap shrink-0">
                 <MapPin className="w-6 h-6" />
               </div>
               <div>
@@ -295,7 +275,7 @@ export default function ProfilPage() {
             </div>
 
             <div className="space-y-6">
-              <div className="bg-surface-50 p-4 rounded-lg border border-ink-100">
+              <div className="bg-surface-50 p-4 rounded-2xl border border-ink-100">
                 <p className="text-xs text-ink-400 uppercase font-bold tracking-widest mb-2">
                   Alamat Lengkap
                 </p>
@@ -324,13 +304,13 @@ export default function ProfilPage() {
               </div>
 
               <div className="pt-6 border-t border-ink-100/50 flex flex-wrap gap-4">
-                <div className="flex items-center gap-3 px-4 py-2 bg-green-50 text-green-700 rounded-lg border border-green-100">
+                <div className="flex items-center gap-3 px-4 py-2 bg-green-50 text-green-700 rounded-2xl border border-green-100">
                   <Phone className="w-4 h-4" />
                   <span className="font-bold text-sm">
                     {data?.santri?.no_hp || "-"}
                   </span>
                 </div>
-                <div className="flex items-center gap-3 px-4 py-2 bg-purple-50 text-purple-700 rounded-lg border border-purple-100">
+                <div className="flex items-center gap-3 px-4 py-2 bg-purple-50 text-purple-700 rounded-2xl border border-purple-100">
                   <Mail className="w-4 h-4" />
                   <span className="font-bold text-sm">
                     {data?.santri?.email || "-"}
@@ -343,7 +323,7 @@ export default function ProfilPage() {
           {/* School Card */}
           <div className="glass-panel p-6 md:p-8 rounded-[2rem] shadow-clay-md">
             <div className="flex items-center gap-4 mb-6">
-              <div className="w-12 h-12 rounded-lg bg-secondary-100 flex items-center justify-center text-secondary-600 shadow-sm">
+              <div className="w-12 h-12 rounded-2xl bg-secondary-100 flex items-center justify-center text-secondary-600 shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10">
                 <School className="w-6 h-6" />
               </div>
               <div>
@@ -379,9 +359,9 @@ export default function ProfilPage() {
         <div className="space-y-6">
           {/* Request Edit Box */}
           <div className="bg-gradient-mesh p-1 rounded-[2.5rem] shadow-clay-lg">
-            <div className="bg-white  rounded-[2.3rem] p-6 lg:p-5 md:p-8">
+            <div className="bg-white/80 rounded-[2.3rem] p-6 lg:p-5 md:p-8 backdrop-blur-xl">
               <div className="flex items-center gap-3 mb-4 text-ink-900">
-                <div className="w-10 h-10 bg-surface-100 rounded-lg flex items-center justify-center">
+                <div className="w-10 h-10 bg-surface-100 rounded-3xl flex items-center justify-center">
                   <Edit className="w-5 h-5 text-ink-700" />
                 </div>
                 <h3 className="font-black text-xl">Perubahan Data</h3>
@@ -399,7 +379,7 @@ export default function ProfilPage() {
                 !isRequesting ? (
                   <button
                     onClick={() => setIsRequesting(true)}
-                    className="w-full py-4 bg-white border border-ink-200 text-ink-700 font-bold rounded-lg hover:bg-surface-50 hover:border-primary-300 hover:text-primary-700 transition-all shadow-sm hover:shadow-sm"
+                    className="w-full py-4 bg-white border border-ink-200 text-ink-700 font-bold rounded-2xl hover:bg-surface-50 hover:border-primary-300 hover:text-primary-700 transition-all shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 hover:shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10"
                   >
                     Ajukan Perubahan
                   </button>
@@ -419,14 +399,14 @@ export default function ProfilPage() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                       <button
                         onClick={() => setIsRequesting(false)}
-                        className="py-3 text-sm font-bold text-ink-500 hover:bg-surface-100 rounded-lg transition-colors"
+                        className="py-3 text-sm font-bold text-ink-500 hover:bg-surface-100 rounded-3xl transition-colors"
                       >
                         Batal
                       </button>
                       <button
                         onClick={handleRequestEdit}
                         disabled={submittingRequest}
-                        className="py-3 text-sm font-bold text-white bg-pine-600 hover:bg-pine-700 rounded-lg shadow-sm shadow-pine-500/20 disabled:opacity-50"
+                        className="py-3 text-sm font-bold text-white bg-pine-600 hover:bg-pine-700 rounded-3xl shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 shadow-pine-500/20 disabled:opacity-50"
                       >
                         {submittingRequest ? "Mengirim..." : "Kirim Pengajuan"}
                       </button>
@@ -434,7 +414,7 @@ export default function ProfilPage() {
                   </div>
                 )
               ) : (
-                <div className="bg-surface-50 p-6 rounded-lg border border-dashed border-ink-300 text-center">
+                <div className="bg-surface-50 p-6 rounded-2xl border border-dashed border-ink-300 text-center">
                   <ShieldAlert className="w-8 h-8 text-ink-300 mx-auto mb-2" />
                   <p className="text-sm text-ink-500 font-bold">
                     Permintaan Sedang Aktif
@@ -449,7 +429,7 @@ export default function ProfilPage() {
 
           {/* Admin Note if Rejected */}
           {requestStatus?.status === "rejected" && requestStatus.admin_note && (
-            <div className="bg-red-50 border border-red-200 p-6 rounded-[2rem] shadow-sm">
+            <div className="bg-red-50 border border-red-200 p-6 rounded-[2rem] shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10">
               <div className="flex items-center gap-3 mb-3 text-red-800">
                 <AlertCircle className="w-5 h-5" />
                 <h4 className="font-bold">Catatan Penolakan</h4>

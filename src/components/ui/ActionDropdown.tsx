@@ -79,7 +79,7 @@ export function ActionDropdown({ items }: ActionDropdownProps) {
           e.stopPropagation();
           setIsOpen(!isOpen);
         }}
-        className="p-1.5 rounded-lg hover:bg-stone-100 text-stone-500 hover:text-stone-800 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 whitespace-nowrap inline-block shrink-0"
+        className="p-1.5 rounded-2xl hover:bg-stone-100 text-stone-500 hover:text-stone-800 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 whitespace-nowrap inline-block shrink-0"
         aria-expanded={isOpen}
         aria-haspopup="true"
       >
@@ -90,7 +90,7 @@ export function ActionDropdown({ items }: ActionDropdownProps) {
         <div
           ref={menuRef}
           style={dropdownStyles}
-          className={`rounded-lg bg-white shadow-sm shadow-stone-200/50 ring-1 ring-black ring-opacity-5 focus:outline-none overflow-hidden transform transition-all duration-200 ease-out ${isUp ? 'origin-bottom-right' : 'origin-top-right'}`}
+          className={`rounded-2xl bg-white shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 shadow-stone-200/50 ring-1 ring-black ring-opacity-5 focus:outline-none overflow-hidden transform transition-all duration-200 ease-out ${isUp ? 'origin-bottom-right' : 'origin-top-right'}`}
         >
           <div className="py-1" role="menu" aria-orientation="vertical">
             {visibleItems.map((item, index) => {

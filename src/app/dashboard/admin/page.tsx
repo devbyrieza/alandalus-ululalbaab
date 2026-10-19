@@ -20,43 +20,27 @@ const StatWidget = ({ label, value, icon: Icon, color, trend, breakdown, highlig
     <motion.div 
       initial={{ opacity: 0, y: 20 }} 
       animate={{ opacity: 1, y: 0 }}
-      className={`glass-panel p-5 sm:p-6 lg:p-8 rounded-[2rem] border transition-all group relative overflow-hidden duration-300 hover-lift ${
-        highlighted 
-          ? "glass-panel-dark text-white border-primary-800 shadow-premium-lg" 
-          : "text-primary-950 border-primary-100 shadow-premium-sm"
-      }`}
+      className={`glass-panel p-5 sm:p-6 lg:p-8 rounded-[2rem] border transition-all group relative overflow-hidden duration-300 hover-lift ${ highlighted ? "glass-panel-dark text-white border-primary-800 shadow-premium-lg" : "text-primary-950 border-primary-100 shadow-premium-sm" }`}
     >
-      <div className={`glow-blob w-32 h-32 opacity-10 transition-colors duration-500 -top-10 -right-10 ${
-        highlighted ? "glow-blob-blue" : "glow-blob-amber"
-      }`} aria-hidden="true" />
+      <div className={`glow-blob w-32 h-32 opacity-10 transition-colors duration-500 -top-10 -right-10 ${ highlighted ? "glow-blob-blue" : "glow-blob-amber" }`} aria-hidden="true" />
       <div className="relative z-10">
         <div className="flex items-center justify-between mb-8">
-          <div className={`icon-box w-14 h-14 rounded-lg bg-linear-to-br ${colorMap[color] || colorMap.blue} text-white shadow-sm group-hover:scale-110 group-hover:rotate-3 duration-500`}>
+          <div className={`icon-box w-14 h-14 rounded-2xl bg-linear-to-br ${colorMap[color] || colorMap.blue} text-white shadow-sm group-hover:scale-110 group-hover:rotate-3 duration-500`}>
             <Icon className="w-6 h-6" />
           </div>
           {trend && (
-            <div className={`flex items-center gap-1.5 text-[10px] font-black px-3 py-1.5 rounded-full border ${
-              highlighted
-                ? "text-blue-400 bg-white/5 border-white/10"
-                : "text-blue-600 bg-blue-50 border-blue-100"
-            }`}>
+            <div className={`flex items-center gap-1.5 text-[10px] font-black px-3 py-1.5 rounded-full border ${ highlighted ? "text-blue-400 bg-white/5 border-white/10" : "text-blue-600 bg-blue-50 border-blue-100" }`}>
               <TrendingUp className="w-3.5 h-3.5" />
               <span className="uppercase tracking-wider">{trend}</span>
             </div>
           )}
         </div>
         <div className="mb-6 lg:mb-8">
-          <p className={`stat-label uppercase tracking-[0.25em] mb-2 ${
-            highlighted ? "text-blue-300" : "text-blue-400"
-          }`}>{label}</p>
+          <p className={`stat-label uppercase tracking-[0.25em] mb-2 ${ highlighted ? "text-blue-300" : "text-blue-400" }`}>{label}</p>
           <div className="flex items-baseline justify-between gap-2 flex-wrap">
             <div className="flex items-baseline gap-2">
-              <h3 className={`text-3xl sm:text-4xl lg:text-5xl font-black tracking-tighter ${
-                highlighted ? "text-white" : "text-blue-900"
-              }`}>{value}</h3>
-              <span className={`text-xs font-bold ${
-                highlighted ? "text-blue-300" : "text-blue-300"
-              }`}>Orang</span>
+              <h3 className={`text-3xl sm:text-4xl lg:text-5xl font-black tracking-tighter ${ highlighted ? "text-white" : "text-blue-900" }`}>{value}</h3>
+              <span className={`text-xs font-bold ${ highlighted ? "text-blue-300" : "text-blue-300" }`}>Orang</span>
             </div>
 
             {onDownload && (
@@ -65,11 +49,7 @@ const StatWidget = ({ label, value, icon: Icon, color, trend, breakdown, highlig
                   onClick={(e) => { e.stopPropagation(); onDownload("excel"); }}
                   disabled={!!isDownloading}
                   title="Unduh Excel"
-                  className={`p-2 rounded-lg border transition-all hover:scale-105 duration-300 ${
-                    highlighted 
-                      ? "bg-amber-500/10 border-amber-500/20 text-amber-400 hover:bg-amber-500/20" 
-                      : "bg-amber-50 border-amber-100 text-amber-600 hover:bg-amber-100"
-                  }`}
+                  className={`p-2 rounded-2xl border transition-all hover:scale-105 duration-300 ${ highlighted ? "bg-amber-500/10 border-amber-500/20 text-amber-400 hover:bg-amber-500/20" : "bg-amber-50 border-amber-100 text-amber-600 hover:bg-amber-100" }`}
                 >
                   {isDownloading === "excel" ? (
                     <Loader2 className="w-4 h-4 animate-spin" />
@@ -81,11 +61,7 @@ const StatWidget = ({ label, value, icon: Icon, color, trend, breakdown, highlig
                   onClick={(e) => { e.stopPropagation(); onDownload("pdf"); }}
                   disabled={!!isDownloading}
                   title="Unduh PDF"
-                  className={`p-2 rounded-lg border transition-all hover:scale-105 duration-300 ${
-                    highlighted 
-                      ? "bg-rose-500/10 border-rose-500/20 text-rose-400 hover:bg-rose-500/20" 
-                      : "bg-rose-50 border-rose-100 text-rose-600 hover:bg-rose-100"
-                  }`}
+                  className={`p-2 rounded-2xl border transition-all hover:scale-105 duration-300 ${ highlighted ? "bg-rose-500/10 border-rose-500/20 text-rose-400 hover:bg-rose-500/20" : "bg-rose-50 border-rose-100 text-rose-600 hover:bg-rose-100" }`}
                 >
                   {isDownloading === "pdf" ? (
                     <Loader2 className="w-4 h-4 animate-spin" />
@@ -103,7 +79,7 @@ const StatWidget = ({ label, value, icon: Icon, color, trend, breakdown, highlig
             <button
               onClick={(e) => { e.stopPropagation(); onPromote(); }}
               disabled={isPromoting}
-              className="w-full flex items-center justify-center gap-2 py-2.5 px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-black text-xs uppercase tracking-widest transition-all shadow-sm shadow-blue-600/20 hover:scale-[1.02] active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full flex items-center justify-center gap-2 py-2.5 px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl font-black text-xs uppercase tracking-widest transition-all shadow-sm shadow-blue-600/20 hover:scale-[1.02] active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isPromoting ? (
                 <>
@@ -121,29 +97,17 @@ const StatWidget = ({ label, value, icon: Icon, color, trend, breakdown, highlig
         )}
 
         {breakdown && (
-          <div className={`grid grid-cols-2 gap-4 pt-6 border-t ${
-            highlighted ? "border-white/10" : "border-primary-100"
-          }`}>
+          <div className={`grid grid-cols-2 gap-4 pt-6 border-t ${ highlighted ? "border-white/10" : "border-primary-100" }`}>
             <div className="space-y-4">
               <div className="flex flex-col">
-                <span className={`text-[9px] font-black uppercase tracking-widest mb-1 ${
-                  highlighted ? "text-blue-300" : "text-blue-400"
-                }`}>MTs Putra</span>
-                <span className={`text-base font-black leading-none ${
-                  highlighted ? "text-white" : "text-blue-700"
-                }`}>{breakdown.mts || 0}</span>
+                <span className={`text-[9px] font-black uppercase tracking-widest mb-1 ${ highlighted ? "text-blue-300" : "text-blue-400" }`}>MTs Putra</span>
+                <span className={`text-base font-black leading-none ${ highlighted ? "text-white" : "text-blue-700" }`}>{breakdown.mts || 0}</span>
               </div>
             </div>
-            <div className={`space-y-4 border-l pl-4 ${
-              highlighted ? "border-white/10" : "border-primary-100"
-            }`}>
+            <div className={`space-y-4 border-l pl-4 ${ highlighted ? "border-white/10" : "border-primary-100" }`}>
               <div className="flex flex-col">
-                <span className={`text-[9px] font-black uppercase tracking-widest mb-1 ${
-                  highlighted ? "text-blue-300" : "text-blue-400"
-                }`}>IL Putra</span>
-                <span className={`text-base font-black leading-none ${
-                  highlighted ? "text-white" : "text-blue-700"
-                }`}>{breakdown.il || 0}</span>
+                <span className={`text-[9px] font-black uppercase tracking-widest mb-1 ${ highlighted ? "text-blue-300" : "text-blue-400" }`}>IL Putra</span>
+                <span className={`text-base font-black leading-none ${ highlighted ? "text-white" : "text-blue-700" }`}>{breakdown.il || 0}</span>
               </div>
             </div>
           </div>
@@ -367,7 +331,7 @@ export default function AdminDashboardPage() {
           </h1>
           <p className="text-xs sm:text-sm text-primary-500 font-medium mt-1">Pantau perkembangan pendaftaran santri secara langsung.</p>
         </div>
-        <button onClick={fetchStats} className="p-3 bg-white border border-primary-100 rounded-lg text-primary-400 hover:text-primary-600 transition-all shadow-premium-sm self-start sm:self-auto hover-lift">
+        <button onClick={fetchStats} className="p-3 bg-white border border-primary-100 rounded-2xl text-primary-400 hover:text-primary-600 transition-all shadow-premium-sm self-start sm:self-auto hover-lift">
           <RefreshCw className={`w-5 h-5 ${loading ? "animate-spin" : ""}`} />
         </button>
       </div>
@@ -376,7 +340,7 @@ export default function AdminDashboardPage() {
         
         <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12">
           <div className="max-w-xl w-full">
-            <div className="section-label section-label-primary mb-6 lg:mb-8 bg-white/10 border-white/20 ">
+            <div className="section-label section-label-primary mb-6 lg:mb-8 bg-white/10 border-white/20">
               <Activity className="w-4 h-4 text-amber-400" />
               <span className="text-white">Status Operasional: Aktif</span>
             </div>
@@ -396,15 +360,15 @@ export default function AdminDashboardPage() {
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 w-full lg:w-auto">
-             <div className="bg-white/10  p-4 sm:p-6 lg:p-5 md:p-8 rounded-[1.5rem] sm:rounded-[2rem] border border-white/20 shadow-sm flex flex-col items-center group hover:bg-white/15 transition-all">
+             <div className="bg-white/10 p-4 sm:p-6 lg:p-5 md:p-8 rounded-[1.5rem] sm:rounded-[2rem] border border-white/20 shadow-xl shadow-primary/20 flex flex-col items-center group hover:bg-white/15 transition-all">
                 <p className="text-[9px] sm:text-[10px] font-black text-white/80 uppercase tracking-widest mb-2 sm:mb-4 text-center group-hover:text-white transition-colors">Diterima</p>
                 <p className="text-2xl sm:text-2xl md:text-4xl font-black text-amber-300 drop-shadow-sm">{stats.diterima}</p>
              </div>
-             <div className="bg-white/10  p-4 sm:p-6 lg:p-5 md:p-8 rounded-[1.5rem] sm:rounded-[2rem] border border-white/20 shadow-sm flex flex-col items-center group hover:bg-white/15 transition-all">
+             <div className="bg-white/10 p-4 sm:p-6 lg:p-5 md:p-8 rounded-[1.5rem] sm:rounded-[2rem] border border-white/20 shadow-xl shadow-primary/20 flex flex-col items-center group hover:bg-white/15 transition-all">
                 <p className="text-[9px] sm:text-[10px] font-black text-white/80 uppercase tracking-widest mb-2 sm:mb-4 text-center group-hover:text-white transition-colors">Proses Daftar Ulang</p>
                 <p className="text-2xl sm:text-2xl md:text-4xl font-black text-amber-400 drop-shadow-sm">{stats.daftar_ulang_sedang}</p>
              </div>
-             <div className="bg-white/10  p-4 sm:p-6 lg:p-5 md:p-8 rounded-[1.5rem] sm:rounded-[2rem] border border-white/20 shadow-sm flex flex-col items-center group hover:bg-white/15 transition-all md:col-span-2">
+             <div className="bg-white/10 p-4 sm:p-6 lg:p-5 md:p-8 rounded-[1.5rem] sm:rounded-[2rem] border border-white/20 shadow-xl shadow-primary/20 flex flex-col items-center group hover:bg-white/15 transition-all md:col-span-2">
                 <p className="text-[9px] sm:text-[10px] font-black text-white/80 uppercase tracking-widest mb-2 sm:mb-4 text-center group-hover:text-white transition-colors">Lunas Daftar Ulang</p>
                 <p className="text-2xl sm:text-2xl md:text-4xl font-black text-amber-300 drop-shadow-sm">{stats.daftar_ulang_selesai}</p>
              </div>
@@ -491,9 +455,9 @@ export default function AdminDashboardPage() {
                 Aksi Cepat
               </h3>
               <div className="space-y-4">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 sm:p-6 bg-primary-50 rounded-lg sm:rounded-lg border border-primary-100 hover:border-primary-200 transition-all cursor-default group/item gap-4">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 sm:p-6 bg-primary-50 rounded-2xl sm:rounded-2xl border border-primary-100 hover:border-primary-200 transition-all cursor-default group/item gap-4">
                   <div className="flex items-center gap-4 sm:gap-5">
-                    <div className="w-12 h-12 rounded-lg bg-white shadow-sm flex items-center justify-center text-primary-600 transition-transform group-hover/item:scale-110 shrink-0">
+                    <div className="w-12 h-12 rounded-2xl bg-white shadow-xl shadow-primary/20 flex items-center justify-center text-primary-600 transition-transform group-hover/item:scale-110 shrink-0">
                       <Users className="w-6 h-6" />
                     </div>
                     <div>
@@ -506,9 +470,9 @@ export default function AdminDashboardPage() {
                     <ChevronRight className="w-5 h-5 text-ink-300 hidden sm:block" />
                   </div>
                 </div>
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 sm:p-6 bg-primary-50 rounded-lg sm:rounded-lg border border-primary-100 hover:border-emerald-200 transition-all cursor-default group/item gap-4">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 sm:p-6 bg-primary-50 rounded-2xl sm:rounded-2xl border border-primary-100 hover:border-emerald-200 transition-all cursor-default group/item gap-4">
                   <div className="flex items-center gap-4 sm:gap-5">
-                    <div className="w-12 h-12 rounded-lg bg-white shadow-sm flex items-center justify-center text-emerald-600 transition-transform group-hover/item:scale-110 shrink-0">
+                    <div className="w-12 h-12 rounded-2xl bg-white shadow-xl shadow-primary/20 flex items-center justify-center text-emerald-600 transition-transform group-hover/item:scale-110 shrink-0">
                       <Wallet className="w-6 h-6" />
                     </div>
                     <div>

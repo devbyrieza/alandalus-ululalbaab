@@ -621,33 +621,21 @@ export default function SesiKetersediaanSection({
               <button
                 type="button"
                 onClick={() => setStatusFilter("all")}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                  statusFilter === "all"
-                    ? "bg-white text-primary-700 shadow-xs font-black"
-                    : "text-stone-600 hover:text-stone-900"
-                }`}
+                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${ statusFilter === "all" ? "bg-white text-primary-700 shadow-xs font-black" : "text-stone-600 hover:text-stone-900" }`}
               >
                 Semua ({slots.length})
               </button>
               <button
                 type="button"
                 onClick={() => setStatusFilter("available")}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                  statusFilter === "available"
-                    ? "bg-white text-emerald-700 shadow-xs font-black"
-                    : "text-stone-600 hover:text-stone-900"
-                }`}
+                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${ statusFilter === "available" ? "bg-white text-emerald-700 shadow-xs font-black" : "text-stone-600 hover:text-stone-900" }`}
               >
                 Tersedia ({slots.filter((s) => (s._count?.bookings || 0) < s.quota).length})
               </button>
               <button
                 type="button"
                 onClick={() => setStatusFilter("booked")}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                  statusFilter === "booked"
-                    ? "bg-white text-amber-700 shadow-xs font-black"
-                    : "text-stone-600 hover:text-stone-900"
-                }`}
+                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${ statusFilter === "booked" ? "bg-white text-amber-700 shadow-xs font-black" : "text-stone-600 hover:text-stone-900" }`}
               >
                 Terisi ({slots.filter((s) => (s._count?.bookings || 0) >= s.quota).length})
               </button>
@@ -808,13 +796,7 @@ export default function SesiKetersediaanSection({
                 onClick={
                   isSelectMode && !isBooked ? () => toggleSelectSlot(slot.id) : undefined
                 }
-                className={`bg-white rounded-2xl p-5 border shadow-sm transition-all relative ${
-                  isSelectMode && !isBooked ? "cursor-pointer hover:border-primary-400" : ""
-                } ${
-                  isSelected
-                    ? "border-primary-500 ring-2 ring-primary-200 bg-primary-50/20"
-                    : "border-stone-100 hover:shadow-md"
-                }`}
+                className={`bg-white rounded-2xl p-5 border shadow-sm transition-all relative ${ isSelectMode && !isBooked ? "cursor-pointer hover:border-primary-400" : "" } ${ isSelected ? "border-primary-500 ring-2 ring-primary-200 bg-primary-50/20" : "border-stone-100 hover:shadow-md" }`}
               >
                 {/* Select checkbox overlay */}
                 {isSelectMode && (
@@ -835,11 +817,7 @@ export default function SesiKetersediaanSection({
                   {/* Title & Badge */}
                   <div className="pr-8">
                     <span
-                      className={`inline-block px-2.5 py-0.5 rounded-full text-[10px] font-black tracking-wide mb-1.5 ${
-                        isBooked
-                          ? "bg-amber-100 text-amber-800"
-                          : "bg-emerald-100 text-emerald-800"
-                      }`}
+                      className={`inline-block px-2.5 py-0.5 rounded-full text-[10px] font-black tracking-wide mb-1.5 ${ isBooked ? "bg-amber-100 text-amber-800" : "bg-emerald-100 text-emerald-800" }`}
                     >
                       {isBooked ? "Sudah Diplot / Terisi" : "Tersedia (Siap Diplot)"}
                     </span>
@@ -1251,11 +1229,7 @@ export default function SesiKetersediaanSection({
                           setBulkForm({ ...bulkForm, selectedDays: next });
                           if (!isSelected) setActiveDay(d.id);
                         }}
-                        className={`py-2 px-1 rounded-xl text-[11px] font-black transition-all border ${
-                          isSelected
-                            ? "bg-primary-600 text-white border-primary-600 shadow-sm"
-                            : "bg-stone-50 text-stone-600 border-stone-200 hover:bg-stone-100"
-                        }`}
+                        className={`py-2 px-1 rounded-xl text-[11px] font-black transition-all border ${ isSelected ? "bg-primary-600 text-white border-primary-600 shadow-sm" : "bg-stone-50 text-stone-600 border-stone-200 hover:bg-stone-100" }`}
                       >
                         {d.label}
                       </button>
@@ -1279,11 +1253,7 @@ export default function SesiKetersediaanSection({
                             key={dayId}
                             type="button"
                             onClick={() => setActiveDay(dayId)}
-                            className={`px-2.5 py-1 rounded-lg text-[10px] font-black transition-all ${
-                              activeDay === dayId
-                                ? "bg-stone-900 text-white"
-                                : "bg-stone-200 text-stone-700 hover:bg-stone-300"
-                            }`}
+                            className={`px-2.5 py-1 rounded-lg text-[10px] font-black transition-all ${ activeDay === dayId ? "bg-stone-900 text-white" : "bg-stone-200 text-stone-700 hover:bg-stone-300" }`}
                           >
                             {dayNames[dayId]}
                           </button>

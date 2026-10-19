@@ -154,7 +154,7 @@ export default function FaqSection() {
             {/* Persistent Helpdesk Card (Al-Ma'tuq & SUNI Standard) */}
             <div className="bg-gradient-to-br from-blue-50/80 via-white to-blue-50/40 backdrop-blur-md rounded-3xl p-6 sm:p-7 border border-blue-200 shadow-xl shadow-blue-500/10 space-y-5">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-2xl bg-primary text-white flex items-center justify-center shadow-md shadow-blue-500/20 shrink-0">
+                <div className="w-12 h-12 rounded-2xl bg-primary text-white flex items-center justify-center shadow-xl shadow-primary/20 shadow-blue-500/20 shrink-0">
                   <MessageCircleMore className="w-6 h-6" />
                 </div>
                 <div>

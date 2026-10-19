@@ -35,7 +35,7 @@ export default function BentoGridSection() {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
             <div className="absolute inset-0 p-8 flex flex-col justify-end">
-              <div className="w-12 h-12 bg-white/20 backdrop-blur-md rounded-xl flex items-center justify-center mb-4 text-amber-300 border border-white/20 shadow-sm">
+              <div className="w-12 h-12 bg-white/20 backdrop-blur-md rounded-xl flex items-center justify-center mb-4 text-amber-300 border border-white/20 shadow-xl shadow-primary/20">
                 <BookOpen className="w-6 h-6" />
               </div>
               <h3 className="text-2xl md:text-3xl font-black text-white mb-2">Masjid Pusat Hafalan &amp; Ibadah</h3>
@@ -65,7 +65,7 @@ export default function BentoGridSection() {
                 Fasilitas modern untuk praktikum IT, coding, dan ujian berbasis CBT santri.
               </p>
             </div>
-            <div className="w-32 h-32 relative rounded-xl overflow-hidden shrink-0 shadow-md border border-white/10">
+            <div className="w-32 h-32 relative rounded-xl overflow-hidden shrink-0 shadow-xl shadow-primary/20 border border-white/10">
               <Image 
                 src="/images/lab-komputer-1.jpg" 
                 alt="Lab Komputer Ulul Albaab" 
@@ -91,7 +91,7 @@ export default function BentoGridSection() {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/20" />
             <div className="absolute inset-0 p-5 flex flex-col justify-between text-white z-10">
-              <div className="w-10 h-10 rounded-xl bg-white/20 backdrop-blur-md flex items-center justify-center text-amber-300 border border-white/20 shadow-sm">
+              <div className="w-10 h-10 rounded-xl bg-white/20 backdrop-blur-md flex items-center justify-center text-amber-300 border border-white/20 shadow-xl shadow-primary/20">
                 <Home className="w-5 h-5" />
               </div>
               <div>
@@ -119,7 +119,7 @@ export default function BentoGridSection() {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/20" />
             <div className="absolute inset-0 p-5 flex flex-col justify-between text-white z-10">
-              <div className="w-10 h-10 rounded-xl bg-white/20 backdrop-blur-md flex items-center justify-center text-emerald-300 border border-white/20 shadow-sm">
+              <div className="w-10 h-10 rounded-xl bg-white/20 backdrop-blur-md flex items-center justify-center text-emerald-300 border border-white/20 shadow-xl shadow-primary/20">
                 <Trophy className="w-5 h-5" />
               </div>
               <div>

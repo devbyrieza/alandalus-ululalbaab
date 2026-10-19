@@ -72,7 +72,7 @@ export default function DashboardTabs({ statusProses }: DashboardTabsProps) {
   ];
 
   return (
-    <div className="w-full bg-white  sticky top-0 z-30 border-b border-secondary-100 shadow-sm overflow-hidden rounded-b-[2rem]">
+    <div className="w-full bg-white/80 sticky top-0 z-30 border-b border-secondary-100 shadow-sm overflow-hidden rounded-b-[2rem] backdrop-blur-md">
       <div className="max-w-7xl mx-auto flex items-center overflow-x-auto scrollbar-hide px-4 py-2 gap-2 sm:gap-4 no-scrollbar">
         {tabs.map((tab) => {
           const isActive =
@@ -86,7 +86,7 @@ export default function DashboardTabs({ statusProses }: DashboardTabsProps) {
             return (
               <div
                 key={tab.id}
-                className="flex-shrink-0 flex items-center gap-2 px-4 py-3 rounded-lg text-ink-400 bg-surface-50 border border-transparent opacity-60 cursor-not-allowed group relative"
+                className="flex-shrink-0 flex items-center gap-2 px-4 py-3 rounded-2xl text-ink-400 bg-surface-50 border border-transparent opacity-60 cursor-not-allowed group relative"
               >
                 <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
                 <span className="text-[10px] sm:text-xs font-black uppercase tracking-widest hidden sm:block">
@@ -95,7 +95,7 @@ export default function DashboardTabs({ statusProses }: DashboardTabsProps) {
                 <Lock className="w-3 h-3 text-ink-300" />
 
                 {/* Minimal tooltip on hover for mobile/desktop */}
-                <div className="absolute top-full left-0 mt-2 p-2 bg-ink-900 text-white text-[8px] rounded shadow-sm invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all z-50 whitespace-nowrap">
+                <div className="absolute top-full left-0 mt-2 p-2 bg-ink-900 text-white text-[8px] rounded shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all z-50 whitespace-nowrap">
                   {getUnlockMessage(tab.id)}
                 </div>
               </div>
@@ -106,11 +106,7 @@ export default function DashboardTabs({ statusProses }: DashboardTabsProps) {
             <Link
               key={tab.id}
               href={tab.href}
-              className={`flex-shrink-0 flex items-center gap-2 px-4 py-3 rounded-lg transition-all duration-300 relative group ${
-                isActive
-                  ? "bg-primary-900 text-white shadow-primary-200 shadow-sm scale-105"
-                  : "text-ink-600 hover:bg-secondary-50 hover:text-primary-900"
-              }`}
+              className={`flex-shrink-0 flex items-center gap-2 px-4 py-3 rounded-2xl transition-all duration-300 relative group ${ isActive ? "bg-primary-900 text-white shadow-primary-200 shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 scale-105" : "text-ink-600 hover:bg-secondary-50 hover:text-primary-900" }`}
             >
               <Icon
                 className={`w-4 h-4 sm:w-5 sm:h-5 transition-transform group-hover:scale-110 ${isActive ? "text-secondary-300" : ""}`}

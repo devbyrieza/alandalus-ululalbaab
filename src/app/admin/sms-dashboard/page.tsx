@@ -68,7 +68,7 @@ export default function AdminSMSDashboard() {
   return (
     <div className="min-h-screen bg-gray-50 p-6">
       <div className="max-w-6xl mx-auto">
-        <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
+        <div className="bg-white rounded-2xl shadow-xl shadow-primary/20 p-6 mb-6">
           <h1 className="text-2xl font-bold text-gray-900 mb-2">
             <Smartphone className="w-6 h-6 inline-block mr-2" /> Dashboard Admin - SMS Manual
           </h1>
@@ -78,7 +78,7 @@ export default function AdminSMSDashboard() {
             Kirim SMS manual ke user berikut:
           </p>
 
-          <div className="bg-primary-50 border border-primary-200 rounded-lg p-4 mb-6">
+          <div className="bg-primary-50 border border-primary-200 rounded-2xl p-4 mb-6">
             <h3 className="font-bold text-primary-800 mb-2"><ClipboardList className="w-5 h-5 inline-block mr-1" /> Instruksi:</h3>
             <ol className="list-decimal list-inside text-primary-700 space-y-1">
               <li>Salin nomor HP dan OTP di bawah</li>
@@ -94,7 +94,7 @@ export default function AdminSMSDashboard() {
             </h2>
             <button
               onClick={fetchPendingSMS}
-              className="flex items-center gap-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700"
+              className="flex items-center gap-2 px-4 py-2 bg-primary-600 text-white rounded-2xl hover:bg-primary-700"
             >
               <RefreshCw className="w-4 h-4" />
               Refresh
@@ -116,11 +116,11 @@ export default function AdminSMSDashboard() {
               {pendingSMS.map((item) => (
                 <div
                   key={item.id}
-                  className="border-2 border-secondary-200 bg-secondary-50 rounded-lg p-5"
+                  className="border-2 border-secondary-200 bg-secondary-50 rounded-2xl p-5"
                 >
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                     <div className="flex items-center gap-3">
-                      <div className="p-2 bg-primary-100 rounded-lg whitespace-nowrap inline-block shrink-0">
+                      <div className="p-2 bg-primary-100 rounded-2xl whitespace-nowrap inline-block shrink-0">
                         <Smartphone className="w-5 h-5 text-primary-600" />
                       </div>
                       <div>
@@ -130,7 +130,7 @@ export default function AdminSMSDashboard() {
                     </div>
 
                     <div className="flex items-center gap-3">
-                      <div className="p-2 bg-green-100 rounded-lg">
+                      <div className="p-2 bg-green-100 rounded-2xl">
                         <User className="w-5 h-5 text-green-600" />
                       </div>
                       <div>
@@ -140,7 +140,7 @@ export default function AdminSMSDashboard() {
                     </div>
 
                     <div className="flex items-center gap-3">
-                      <div className="p-2 bg-red-100 rounded-lg">
+                      <div className="p-2 bg-red-100 rounded-2xl">
                         <Key className="w-5 h-5 text-red-600" />
                       </div>
                       <div>
@@ -152,11 +152,11 @@ export default function AdminSMSDashboard() {
                     </div>
                   </div>
 
-                  <div className="bg-white rounded-lg p-4 mb-4">
+                  <div className="bg-white rounded-2xl p-4 mb-4">
                     <p className="text-sm text-gray-500 mb-2">
                       <FileText className="w-4 h-4 inline-block mr-1" /> Pesan yang dikirim:
                     </p>
-                    <pre className="bg-gray-900 text-white p-4 rounded-lg text-sm">
+                    <pre className="bg-gray-900 text-white p-4 rounded-2xl text-sm">
                       {`PPDB ULUL ALBAAB
 Kode OTP: ${item.otp}
 Untuk: ${item.nama}
@@ -169,14 +169,14 @@ Hubungi 0812-8530-0800 jika ada masalah.`}
                   <div className="flex gap-3">
                     <button
                       onClick={() => markAsSent(item.id)}
-                      className="flex-1 py-3 bg-green-600 text-white font-bold rounded-lg hover:bg-green-700 flex items-center justify-center gap-2"
+                      className="flex-1 py-3 bg-green-600 text-white font-bold rounded-2xl hover:bg-green-700 flex items-center justify-center gap-2"
                     >
                       <Check className="w-5 h-5" /> Sudah Dikirim
                     </button>
 
                     <a
                       href={`sms:${item.phone}&body=PPDB ULUL ALBAAB: Kode OTP: ${item.otp} untuk ${item.nama}`}
-                      className="px-6 py-3 bg-primary-600 text-white font-bold rounded-lg hover:bg-primary-700"
+                      className="px-6 py-3 bg-primary-600 text-white font-bold rounded-2xl hover:bg-primary-700"
                     >
                       <Smartphone className="w-5 h-5 inline-block mr-1" /> Buka Aplikasi SMS
                     </a>
@@ -187,22 +187,22 @@ Hubungi 0812-8530-0800 jika ada masalah.`}
           )}
         </div>
 
-        <div className="bg-white rounded-lg shadow-sm p-6">
+        <div className="bg-white rounded-2xl shadow-xl shadow-primary/20 p-6">
           <h3 className="font-bold text-gray-900 mb-4"><BarChart className="w-5 h-5 inline-block mr-1" /> Status Sistem:</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="bg-primary-50 p-4 rounded-lg">
+            <div className="bg-primary-50 p-4 rounded-2xl">
               <p className="text-sm text-primary-600">SMS Service</p>
               <p className="text-2xl font-bold flex items-center gap-2"><RefreshCw className="w-6 h-6" /> Simulation</p>
             </div>
-            <div className="bg-green-50 p-4 rounded-lg">
+            <div className="bg-green-50 p-4 rounded-2xl">
               <p className="text-sm text-green-600">Telegram</p>
               <p className="text-2xl font-bold flex items-center gap-2"><Check className="w-6 h-6" /> Ready</p>
             </div>
-            <div className="bg-purple-50 p-4 rounded-lg">
+            <div className="bg-purple-50 p-4 rounded-2xl">
               <p className="text-sm text-purple-600">Email</p>
               <p className="text-2xl font-bold flex items-center gap-2"><Check className="w-6 h-6" /> Ready</p>
             </div>
-            <div className="bg-secondary-50 p-4 rounded-lg">
+            <div className="bg-secondary-50 p-4 rounded-2xl">
               <p className="text-sm text-secondary-600">Launch Date</p>
               <p className="text-2xl font-bold flex items-center gap-2"><Calendar className="w-6 h-6" /> 22 Jan</p>
             </div>

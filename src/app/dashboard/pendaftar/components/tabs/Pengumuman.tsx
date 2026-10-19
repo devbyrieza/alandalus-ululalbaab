@@ -131,7 +131,7 @@ export default function PengumumanTab() {
         <div className="absolute top-0 right-0 w-full max-w-[400px] h-[400px] bg-gold-50/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="flex items-center gap-5">
-            <div className="w-16 h-16 rounded-[1.5rem] bg-white/10  flex items-center justify-center border border-white/20 shadow-sm shrink-0">
+            <div className="w-16 h-16 rounded-[1.5rem] bg-white/10 flex items-center justify-center border border-white/20 shadow-sm shrink-0">
               <Trophy className="w-8 h-8 text-gold-100" />
             </div>
             <div>
@@ -215,7 +215,7 @@ export default function PengumumanTab() {
             </div>
             <div className="relative z-10">
               <div className="flex items-center gap-5 mb-8">
-                <div className="p-4 bg-white/20  rounded-[1.5rem] shadow-sm border border-white/20">
+                <div className="p-4 bg-white/20 rounded-[1.5rem] shadow-sm border border-white/20">
                   <CheckCircle className="w-10 h-10 text-primary-50" />
                 </div>
                 <div>
@@ -312,7 +312,7 @@ export default function PengumumanTab() {
             </div>
             <div className="relative z-10">
               <div className="flex items-center gap-5 mb-8">
-                <div className="p-4 bg-white/20  rounded-[1.5rem] shadow-sm border border-white/20">
+                <div className="p-4 bg-white/20 rounded-[1.5rem] shadow-sm border border-white/20">
                   <AlertCircle className="w-10 h-10 text-secondary-50" />
                 </div>
                 <div>
@@ -403,7 +403,7 @@ export default function PengumumanTab() {
               <XCircle className="w-64 h-64" />
             </div>
             <div className="flex items-center gap-5 mb-8 relative z-10">
-              <div className="p-4 bg-white/20  rounded-[1.5rem] shadow-sm border border-white/20">
+              <div className="p-4 bg-white/20 rounded-[1.5rem] shadow-sm border border-white/20">
                 <XCircle className="w-10 h-10 text-red-50" />
               </div>
               <div>

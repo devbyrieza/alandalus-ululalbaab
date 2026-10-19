@@ -67,7 +67,7 @@ export default function ProgressStepper({
   const activeIndex = currentStepIndex === -1 ? 0 : currentStepIndex;
 
   return (
-    <div className="w-full py-6 px-4 mb-8 bg-white/50  rounded-[2rem] border border-stone-100 shadow-sm overflow-x-auto scrollbar-hide">
+    <div className="w-full py-6 px-4 mb-8 bg-white/50 rounded-[2rem] border border-stone-100 shadow-sm overflow-x-auto scrollbar-hide backdrop-blur-sm">
       <div className="flex items-center justify-between min-w-[700px] lg:min-w-0 px-4">
         {STEPS.map((step, idx) => {
           const isCompleted = idx < activeIndex;
@@ -90,13 +90,7 @@ export default function ProgressStepper({
 
               {/* Icon Circle */}
               <div
-                className={`w-10 h-10 rounded-full flex items-center justify-center relative z-10 transition-all duration-500 border-2 ${
-                  isCompleted
-                    ? "bg-primary-600 border-primary-600 text-white shadow-primary-200 shadow-sm"
-                    : isActive
-                      ? "bg-white border-primary-600 text-primary-600 shadow-primary-100 shadow-sm scale-110 font-bold"
-                      : "bg-white border-stone-200 text-stone-300"
-                }`}
+                className={`w-10 h-10 rounded-full flex items-center justify-center relative z-10 transition-all duration-500 border-2 ${ isCompleted ? "bg-primary-600 border-primary-600 text-white shadow-primary-200 shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10" : isActive ? "bg-white border-primary-600 text-primary-600 shadow-primary-100 shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 scale-110 font-bold" : "bg-white border-stone-200 text-stone-300" }`}
               >
                 {isCompleted ? (
                   <Check className="w-5 h-5 stroke-[3]" />
@@ -107,13 +101,7 @@ export default function ProgressStepper({
 
               {/* Label */}
               <span
-                className={`mt-3 text-[10px] sm:text-xs font-black uppercase tracking-wider transition-colors duration-500 ${
-                  isActive
-                    ? "text-primary-800"
-                    : isCompleted
-                      ? "text-stone-600"
-                      : "text-stone-400"
-                }`}
+                className={`mt-3 text-[10px] sm:text-xs font-black uppercase tracking-wider transition-colors duration-500 ${ isActive ? "text-primary-800" : isCompleted ? "text-stone-600" : "text-stone-400" }`}
               >
                 {step.label}
               </span>

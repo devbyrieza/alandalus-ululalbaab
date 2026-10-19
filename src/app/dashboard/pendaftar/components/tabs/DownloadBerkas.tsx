@@ -101,10 +101,10 @@ export default function DownloadBerkasTab() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="relative overflow-hidden rounded-[2rem] bg-linear-to-br from-primary-700 to-primary-900 border border-primary-600 p-5 md:p-8 text-white shadow-sm app-card">
+      <div className="relative overflow-hidden rounded-[2rem] bg-linear-to-br from-primary-700 to-primary-900 border border-primary-600 p-5 md:p-8 text-white shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10 app-card">
         <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-secondary-50/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
         <div className="relative z-10 flex items-start md:items-center gap-6">
-          <div className="w-16 h-16 rounded-[1.5rem] bg-white/10  flex items-center justify-center border border-white/20 shadow-sm shrink-0">
+          <div className="w-16 h-16 rounded-[1.5rem] bg-white/10 flex items-center justify-center border border-white/20 shadow-sm shrink-0 backdrop-blur-md">
             <Download className="w-8 h-8 text-secondary-100" />
           </div>
           <div>
@@ -119,7 +119,7 @@ export default function DownloadBerkasTab() {
       </div>
 
       {/* Helper Banner */}
-      <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 flex gap-4 items-start shadow-sm mb-6">
+      <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4 flex gap-4 items-start shadow-sm mb-6">
         <AlertCircle className="w-6 h-6 text-amber-600 shrink-0" />
         <div>
           <h3 className="font-bold text-amber-900 mb-1 text-sm md:text-base">Mencari Dokumen yang Sudah Diupload?</h3>
@@ -138,7 +138,7 @@ export default function DownloadBerkasTab() {
           >
             <div className="flex items-start justify-between mb-4">
               <div className="flex items-center gap-3">
-                <div className="p-3 bg-primary-50 rounded-lg group-hover:bg-primary-100 transition-colors whitespace-nowrap inline-block shrink-0">
+                <div className="p-3 bg-primary-50 rounded-2xl group-hover:bg-primary-100 transition-colors whitespace-nowrap inline-block shrink-0">
                   <FileText className="w-6 h-6 text-primary-600" />
                 </div>
                 <div>
@@ -156,7 +156,7 @@ export default function DownloadBerkasTab() {
             {doc.status === "available" ? (
               <button
                 onClick={doc.action}
-                className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-lg font-medium transition-colors"
+                className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-2xl font-medium transition-colors"
               >
                 <Download className="w-5 h-5" />
                 Download PDF
@@ -164,7 +164,7 @@ export default function DownloadBerkasTab() {
             ) : doc.status === "locked" ? (
               <button
                 disabled
-                className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-stone-100 text-stone-400 rounded-lg font-medium cursor-not-allowed text-xs lg:text-sm border border-stone-200 whitespace-nowrap shrink-0"
+                className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-stone-100 text-stone-400 rounded-2xl font-medium cursor-not-allowed text-xs lg:text-sm border border-stone-200 whitespace-nowrap shrink-0"
               >
                 <AlertCircle className="w-4 h-4" />
                 Belum Tersedia
@@ -172,7 +172,7 @@ export default function DownloadBerkasTab() {
             ) : (
               <button
                 disabled
-                className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-stone-200 text-stone-500 rounded-lg font-medium cursor-not-allowed text-xs lg:text-sm"
+                className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-stone-200 text-stone-500 rounded-2xl font-medium cursor-not-allowed text-xs lg:text-sm"
               >
                 <AlertCircle className="w-4 h-4" />
                 Disediakan Sesuai Tahapan
@@ -186,7 +186,7 @@ export default function DownloadBerkasTab() {
       <div className="bg-primary-50 border border-primary-100 rounded-[2rem] p-5 md:p-8">
         <div className="flex gap-6">
           <div className="flex-shrink-0">
-            <div className="p-3 bg-white rounded-lg shadow-sm border border-primary-100">
+            <div className="p-3 bg-white rounded-2xl shadow-sm border border-primary-100">
               <AlertCircle className="w-6 h-6 text-primary-600" />
             </div>
           </div>

@@ -130,11 +130,11 @@ export default function IdleTimeoutTracker() {
   return (
     <>
       {/* Backdrop */}
-      <div onWheel={(e) => e.stopPropagation()} data-modal="true" aria-modal="true" role="dialog" className="fixed inset-0 bg-black/50  z-[9998] overscroll-contain" />
+      <div onWheel={(e) => e.stopPropagation()} data-modal="true" aria-modal="true" role="dialog" className="fixed inset-0 bg-black/50 z-[9998] overscroll-contain" />
 
       {/* Warning Modal */}
       <div onWheel={(e) => e.stopPropagation()} data-modal="true" aria-modal="true" role="dialog" className="fixed inset-0 flex items-center justify-center z-[9999] p-4 overscroll-contain">
-        <div className="bg-white rounded-lg shadow-sm max-w-md w-full p-6 animate-fadeInUp">
+        <div className="bg-white rounded-2xl shadow-xl shadow-primary/20 max-w-md w-full p-6 animate-fadeInUp">
           {/* Icon */}
           <div className="w-16 h-16 rounded-full bg-yellow-100 flex items-center justify-center mx-auto mb-4">
             <AlertCircle className="w-8 h-8 text-yellow-600" />
@@ -166,7 +166,7 @@ export default function IdleTimeoutTracker() {
           {/* Button */}
           <button
             onClick={updateActivity}
-            className="w-full py-3 px-6 bg-gradient-to-r from-[var(--color-brown-700)] to-[var(--color-brown-800)] hover:from-[var(--color-brown-800)] hover:to-[var(--color-brown-900)] text-white font-bold rounded-lg transition-all duration-300 shadow-sm hover:shadow-sm"
+            className="w-full py-3 px-6 bg-gradient-to-r from-[var(--color-brown-700)] to-[var(--color-brown-800)] hover:from-[var(--color-brown-800)] hover:to-[var(--color-brown-900)] text-white font-bold rounded-2xl transition-all duration-300 shadow-sm hover:shadow-sm"
           >
             Saya Masih Di Sini
           </button>

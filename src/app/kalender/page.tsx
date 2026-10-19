@@ -15,7 +15,7 @@ export default function CalendarPage() {
     <main className="bg-surface-50 min-h-screen flex items-center justify-center">
       <Container>
         <div className="max-w-2xl mx-auto text-center">
-          <div className="w-24 h-24 bg-primary-50 rounded-full flex items-center justify-center mx-auto mb-8 animate-pulse border border-primary-100 shadow-sm">
+          <div className="w-24 h-24 bg-primary-50 rounded-full flex items-center justify-center mx-auto mb-8 animate-pulse border border-primary-100 shadow-2xl shadow-primary/30 shadow-primary/20 shadow-primary/10">
             <Construction className="w-12 h-12 text-primary-700" />
           </div>
 

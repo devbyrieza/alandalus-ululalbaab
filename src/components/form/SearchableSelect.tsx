@@ -185,11 +185,7 @@ export default function SearchableSelect({
                 className="flex"
               >
                 <ChevronDown
-                  className={`w-4 h-4 transition-colors duration-150 ${
-                    isOpen
-                      ? "text-[var(--color-primary-500)]"
-                      : "text-[var(--color-ink-300)]"
-                  }`}
+                  className={`w-4 h-4 transition-colors duration-150 ${ isOpen ? "text-[var(--color-primary-500)]" : "text-[var(--color-ink-300)]" }`}
                 />
               </motion.span>
             )}

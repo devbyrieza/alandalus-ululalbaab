@@ -898,11 +898,7 @@ export default function JadwalUjianPage() {
           <div className="flex flex-wrap items-center gap-3">
             <button
               onClick={handleSwitchToKetersediaan}
-              className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs border transition-all whitespace-nowrap ${
-                mainTab === "ketersediaan"
-                  ? "bg-emerald-600 text-white border-emerald-600 shadow-md shadow-emerald-600/20"
-                  : "bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border-emerald-200"
-              }`}
+              className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs border transition-all whitespace-nowrap ${ mainTab === "ketersediaan" ? "bg-emerald-600 text-white border-emerald-600 shadow-md shadow-emerald-600/20" : "bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border-emerald-200" }`}
             >
               <Clock className="w-4 h-4" />
               + Buat Sesi Ketersediaan
@@ -963,11 +959,7 @@ export default function JadwalUjianPage() {
           <button
             type="button"
             onClick={() => setMainTab("plotting")}
-            className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg font-black text-xs transition-all ${
-              mainTab === "plotting"
-                ? "bg-white text-primary-700 shadow-sm font-black"
-                : "text-slate-600 hover:text-slate-900"
-            }`}
+            className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg font-black text-xs transition-all ${ mainTab === "plotting" ? "bg-white text-primary-700 shadow-sm font-black" : "text-slate-600 hover:text-slate-900" }`}
           >
             <Users className="w-4 h-4" />
             Plotting Jadwal Santri
@@ -975,11 +967,7 @@ export default function JadwalUjianPage() {
           <button
             type="button"
             onClick={handleSwitchToKetersediaan}
-            className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg font-black text-xs transition-all ${
-              mainTab === "ketersediaan"
-                ? "bg-white text-primary-700 shadow-sm font-black"
-                : "text-slate-600 hover:text-slate-900"
-            }`}
+            className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg font-black text-xs transition-all ${ mainTab === "ketersediaan" ? "bg-white text-primary-700 shadow-sm font-black" : "text-slate-600 hover:text-slate-900" }`}
           >
             <Clock className="w-4 h-4" />
             Sesi Ketersediaan Penguji
@@ -1065,9 +1053,7 @@ export default function JadwalUjianPage() {
               sessions.map((s) => (
                 <div
                   key={s.id}
-                  className={`bg-white rounded-2xl shadow-sm border border-stone-100 hover:border-primary-200 p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 transition-all hover:shadow-md ${
-                    selectedPendaftarId ? "ring-2 ring-primary-100" : ""
-                  }`}
+                  className={`bg-white rounded-2xl shadow-sm border border-stone-100 hover:border-primary-200 p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 transition-all hover:shadow-md ${ selectedPendaftarId ? "ring-2 ring-primary-100" : "" }`}
                 >
                   <div className="flex items-start gap-4">
                     <div className="w-12 h-12 rounded-xl bg-primary-50 flex items-center justify-center text-primary-700 shrink-0 border border-primary-100">
@@ -1144,22 +1130,14 @@ export default function JadwalUjianPage() {
                 <button
                   type="button"
                   onClick={() => setCandidateFilterTab("butuh")}
-                  className={`py-1.5 text-xs rounded-lg font-bold transition-all ${
-                    candidateFilterTab === "butuh"
-                      ? "bg-white text-primary-700 shadow-xs font-black"
-                      : "text-stone-600 hover:text-stone-900"
-                  }`}
+                  className={`py-1.5 text-xs rounded-lg font-bold transition-all ${ candidateFilterTab === "butuh" ? "bg-white text-primary-700 shadow-xs font-black" : "text-stone-600 hover:text-stone-900" }`}
                 >
                   Butuh Jadwal ({unscheduledCandidates.length})
                 </button>
                 <button
                   type="button"
                   onClick={() => setCandidateFilterTab("semua")}
-                  className={`py-1.5 text-xs rounded-lg font-bold transition-all ${
-                    candidateFilterTab === "semua"
-                      ? "bg-white text-primary-700 shadow-xs font-black"
-                      : "text-stone-600 hover:text-stone-900"
-                  }`}
+                  className={`py-1.5 text-xs rounded-lg font-bold transition-all ${ candidateFilterTab === "semua" ? "bg-white text-primary-700 shadow-xs font-black" : "text-stone-600 hover:text-stone-900" }`}
                 >
                   Semua Santri ({pendaftar.length})
                 </button>
@@ -1190,11 +1168,7 @@ export default function JadwalUjianPage() {
                     onClick={() =>
                       setSelectedPendaftarId(selectedPendaftarId === p.id ? null : p.id)
                     }
-                    className={`p-3 rounded-xl cursor-pointer transition-all flex items-center justify-between gap-3 border ${
-                      selectedPendaftarId === p.id
-                        ? "bg-primary-50 border-primary-300 shadow-xs"
-                        : "hover:bg-stone-50 border-transparent"
-                    }`}
+                    className={`p-3 rounded-xl cursor-pointer transition-all flex items-center justify-between gap-3 border ${ selectedPendaftarId === p.id ? "bg-primary-50 border-primary-300 shadow-xs" : "hover:bg-stone-50 border-transparent" }`}
                   >
                     <div className="min-w-0">
                       <p className="text-xs font-black text-stone-900 truncate">
@@ -1206,11 +1180,7 @@ export default function JadwalUjianPage() {
                         </span>
                         {p.jenjang && (
                           <span
-                            className={`text-[9px] font-black px-1.5 py-0.5 rounded border ${
-                              isJenjangTanpaIL(p.jenjang)
-                                ? "bg-amber-50 text-amber-800 border-amber-200"
-                                : "bg-stone-100 text-stone-700 border-stone-200"
-                            }`}
+                            className={`text-[9px] font-black px-1.5 py-0.5 rounded border ${ isJenjangTanpaIL(p.jenjang) ? "bg-amber-50 text-amber-800 border-amber-200" : "bg-stone-100 text-stone-700 border-stone-200" }`}
                           >
                             {p.jenjang}
                             {isJenjangTanpaIL(p.jenjang) ? " (Tanpa IL)" : ""}
@@ -1388,11 +1358,7 @@ export default function JadwalUjianPage() {
                       </div>
                     </div>
                     <span
-                      className={`text-[10px] px-2 py-0.5 rounded-full border font-black shrink-0 ${
-                        selectedCandidateObj.status_pendaftaran === "scheduled"
-                          ? "bg-blue-50 text-blue-700 border-blue-200"
-                          : "bg-emerald-50 text-emerald-700 border-emerald-200"
-                      }`}
+                      className={`text-[10px] px-2 py-0.5 rounded-full border font-black shrink-0 ${ selectedCandidateObj.status_pendaftaran === "scheduled" ? "bg-blue-50 text-blue-700 border-blue-200" : "bg-emerald-50 text-emerald-700 border-emerald-200" }`}
                     >
                       {selectedCandidateObj.status_pendaftaran === "scheduled"
                         ? "Jadwal Ulang"
@@ -1454,19 +1420,11 @@ export default function JadwalUjianPage() {
                     <button
                       type="button"
                       onClick={() => setFormTestType("Tes Al-Qur'an (Bacaan & Hafalan)")}
-                      className={`p-2.5 rounded-xl border text-left flex items-center justify-between transition-all ${
-                        (formTestType === "Tes Al-Qur'an (Bacaan & Hafalan)" || formTestType === "Tes Bacaan Al-Qur'an")
-                          ? "bg-emerald-50/90 border-emerald-500 text-emerald-950 font-black shadow-xs ring-2 ring-emerald-500/20"
-                          : "bg-white border-stone-200 text-stone-700 hover:border-emerald-300 hover:bg-emerald-50/30"
-                      }`}
+                      className={`p-2.5 rounded-xl border text-left flex items-center justify-between transition-all ${ (formTestType === "Tes Al-Qur'an (Bacaan & Hafalan)" || formTestType === "Tes Bacaan Al-Qur'an") ? "bg-emerald-50/90 border-emerald-500 text-emerald-950 font-black shadow-xs ring-2 ring-emerald-500/20" : "bg-white border-stone-200 text-stone-700 hover:border-emerald-300 hover:bg-emerald-50/30" }`}
                     >
                       <div className="flex items-center gap-2">
                         <BookOpen
-                          className={`w-3.5 h-3.5 shrink-0 ${
-                            (formTestType === "Tes Al-Qur'an (Bacaan & Hafalan)" || formTestType === "Tes Bacaan Al-Qur'an")
-                              ? "text-emerald-600"
-                              : "text-stone-400"
-                          }`}
+                          className={`w-3.5 h-3.5 shrink-0 ${ (formTestType === "Tes Al-Qur'an (Bacaan & Hafalan)" || formTestType === "Tes Bacaan Al-Qur'an") ? "text-emerald-600" : "text-stone-400" }`}
                         />
                         <span>1. Tes Al-Qur&apos;an (Bacaan &amp; Hafalan)</span>
                       </div>
@@ -1479,19 +1437,11 @@ export default function JadwalUjianPage() {
                     <button
                       type="button"
                       onClick={() => setFormTestType("Wawancara Calon Santri")}
-                      className={`p-2.5 rounded-xl border text-left flex items-center justify-between transition-all ${
-                        formTestType === "Wawancara Calon Santri"
-                          ? "bg-indigo-50/90 border-indigo-500 text-indigo-950 font-black shadow-xs ring-2 ring-indigo-500/20"
-                          : "bg-white border-stone-200 text-stone-700 hover:border-indigo-300 hover:bg-indigo-50/30"
-                      }`}
+                      className={`p-2.5 rounded-xl border text-left flex items-center justify-between transition-all ${ formTestType === "Wawancara Calon Santri" ? "bg-indigo-50/90 border-indigo-500 text-indigo-950 font-black shadow-xs ring-2 ring-indigo-500/20" : "bg-white border-stone-200 text-stone-700 hover:border-indigo-300 hover:bg-indigo-50/30" }`}
                     >
                       <div className="flex items-center gap-2">
                         <User
-                          className={`w-3.5 h-3.5 shrink-0 ${
-                            formTestType === "Wawancara Calon Santri"
-                              ? "text-indigo-600"
-                              : "text-stone-400"
-                          }`}
+                          className={`w-3.5 h-3.5 shrink-0 ${ formTestType === "Wawancara Calon Santri" ? "text-indigo-600" : "text-stone-400" }`}
                         />
                         <span>2. Wawancara Calon Santri</span>
                       </div>
@@ -1504,19 +1454,11 @@ export default function JadwalUjianPage() {
                     <button
                       type="button"
                       onClick={() => setFormTestType("Wawancara Calon Orangtua/Wali")}
-                      className={`p-2.5 rounded-xl border text-left flex items-center justify-between transition-all ${
-                        formTestType === "Wawancara Calon Orangtua/Wali"
-                          ? "bg-primary-50/90 border-primary-500 text-primary-950 font-black shadow-xs ring-2 ring-primary-500/20"
-                          : "bg-white border-stone-200 text-stone-700 hover:border-primary-300 hover:bg-primary-50/30"
-                      }`}
+                      className={`p-2.5 rounded-xl border text-left flex items-center justify-between transition-all ${ formTestType === "Wawancara Calon Orangtua/Wali" ? "bg-primary-50/90 border-primary-500 text-primary-950 font-black shadow-xs ring-2 ring-primary-500/20" : "bg-white border-stone-200 text-stone-700 hover:border-primary-300 hover:bg-primary-50/30" }`}
                     >
                       <div className="flex items-center gap-2">
                         <Users
-                          className={`w-3.5 h-3.5 shrink-0 ${
-                            formTestType === "Wawancara Calon Orangtua/Wali"
-                              ? "text-primary-600"
-                              : "text-stone-400"
-                          }`}
+                          className={`w-3.5 h-3.5 shrink-0 ${ formTestType === "Wawancara Calon Orangtua/Wali" ? "text-primary-600" : "text-stone-400" }`}
                         />
                         <span>3. Wawancara Calon Ortu/Wali</span>
                       </div>
@@ -1533,19 +1475,11 @@ export default function JadwalUjianPage() {
                       <button
                         type="button"
                         onClick={() => setFormTestType("Tes Lisan Bahasa Arab")}
-                        className={`p-2.5 rounded-xl border text-left flex items-center justify-between transition-all ${
-                          formTestType === "Tes Lisan Bahasa Arab"
-                            ? "bg-cyan-50/90 border-cyan-500 text-cyan-950 font-black shadow-xs ring-2 ring-cyan-500/20"
-                            : "bg-white border-stone-200 text-stone-700 hover:border-cyan-300 hover:bg-cyan-50/30"
-                        }`}
+                        className={`p-2.5 rounded-xl border text-left flex items-center justify-between transition-all ${ formTestType === "Tes Lisan Bahasa Arab" ? "bg-cyan-50/90 border-cyan-500 text-cyan-950 font-black shadow-xs ring-2 ring-cyan-500/20" : "bg-white border-stone-200 text-stone-700 hover:border-cyan-300 hover:bg-cyan-50/30" }`}
                       >
                         <div className="flex items-center gap-2">
                           <Languages
-                            className={`w-3.5 h-3.5 shrink-0 ${
-                              formTestType === "Tes Lisan Bahasa Arab"
-                                ? "text-cyan-600"
-                                : "text-stone-400"
-                            }`}
+                            className={`w-3.5 h-3.5 shrink-0 ${ formTestType === "Tes Lisan Bahasa Arab" ? "text-cyan-600" : "text-stone-400" }`}
                           />
                           <div className="truncate">
                             <span>5. Tes Lisan Bahasa Arab</span>
@@ -1841,11 +1775,7 @@ export default function JadwalUjianPage() {
                       setFormLocationType("online");
                       if (detectedAnyMeet) setFormOnlineUrl(detectedAnyMeet);
                     }}
-                    className={`flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-xs transition-all ${
-                      formLocationType === "online"
-                        ? "bg-emerald-600 text-white shadow-md shadow-emerald-600/20 font-black"
-                        : "text-stone-600 hover:text-stone-900"
-                    }`}
+                    className={`flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-xs transition-all ${ formLocationType === "online" ? "bg-emerald-600 text-white shadow-md shadow-emerald-600/20 font-black" : "text-stone-600 hover:text-stone-900" }`}
                   >
                     <Video className="w-4 h-4" />
                     Online (Google Meet)
@@ -1854,11 +1784,7 @@ export default function JadwalUjianPage() {
                   <button
                     type="button"
                     onClick={() => setFormLocationType("offline")}
-                    className={`flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-xs transition-all ${
-                      formLocationType === "offline"
-                        ? "bg-amber-600 text-white shadow-md shadow-amber-600/20 font-black"
-                        : "text-stone-600 hover:text-stone-900"
-                    }`}
+                    className={`flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-xs transition-all ${ formLocationType === "offline" ? "bg-amber-600 text-white shadow-md shadow-amber-600/20 font-black" : "text-stone-600 hover:text-stone-900" }`}
                   >
                     <MapPin className="w-4 h-4" />
                     Offline (Tatap Muka di Pesantren)
@@ -1959,11 +1885,7 @@ export default function JadwalUjianPage() {
                           key={chip}
                           type="button"
                           onClick={() => setFormOfflinePlace(chip)}
-                          className={`text-[10px] px-2 py-0.5 rounded-lg border font-bold transition-all ${
-                            formOfflinePlace === chip
-                              ? "bg-amber-600 text-white border-amber-600"
-                              : "bg-white text-stone-600 border-stone-200 hover:bg-stone-50"
-                          }`}
+                          className={`text-[10px] px-2 py-0.5 rounded-lg border font-bold transition-all ${ formOfflinePlace === chip ? "bg-amber-600 text-white border-amber-600" : "bg-white text-stone-600 border-stone-200 hover:bg-stone-50" }`}
                         >
                           {chip}
                         </button>
@@ -2017,11 +1939,7 @@ export default function JadwalUjianPage() {
                       key={dur}
                       type="button"
                       onClick={() => setFormDuration(dur)}
-                      className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all ${
-                        formDuration === dur
-                          ? "bg-primary-600 text-white shadow-xs"
-                          : "bg-stone-100 text-stone-600 hover:bg-stone-200"
-                      }`}
+                      className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all ${ formDuration === dur ? "bg-primary-600 text-white shadow-xs" : "bg-stone-100 text-stone-600 hover:bg-stone-200" }`}
                     >
                       {dur}m
                     </button>
@@ -2156,11 +2074,7 @@ export default function JadwalUjianPage() {
                   onClick={() => setResetFlags(!resetFlags)}
                 >
                   <div
-                    className={`w-5 h-5 rounded border flex items-center justify-center transition-colors ${
-                      resetFlags
-                        ? "bg-indigo-600 border-indigo-600 text-white"
-                        : "border-stone-300 bg-white"
-                    }`}
+                    className={`w-5 h-5 rounded border flex items-center justify-center transition-colors ${ resetFlags ? "bg-indigo-600 border-indigo-600 text-white" : "border-stone-300 bg-white" }`}
                   >
                     {resetFlags && <CheckSquare className="w-3.5 h-3.5" />}
                   </div>

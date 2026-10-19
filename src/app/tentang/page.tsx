@@ -193,7 +193,7 @@ export default function TentangPage() {
               transition={{ delay: 0.2 }}
               className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 pt-8"
             >
-              <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs flex flex-col items-center text-center group hover:shadow-md transition-shadow">
+              <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs flex flex-col items-center text-center group hover:shadow-xl shadow-primary/20 transition-shadow">
                 <div className="w-12 h-12 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center mb-3">
                   <Building2 className="w-6 h-6" />
                 </div>
@@ -201,7 +201,7 @@ export default function TentangPage() {
                 <p className="text-xs text-slate-500">Masjid luas, asrama nyaman, lab komputer, & sarana olahraga lengkap.</p>
               </div>
 
-              <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs flex flex-col items-center text-center group hover:shadow-md transition-shadow">
+              <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs flex flex-col items-center text-center group hover:shadow-xl shadow-primary/20 transition-shadow">
                 <div className="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-3">
                   <ShieldCheck className="w-6 h-6" />
                 </div>
@@ -209,7 +209,7 @@ export default function TentangPage() {
                 <p className="text-xs text-slate-500">Sistem manajemen dan standar mutu teruji dari Al-Andalus IIBS.</p>
               </div>
 
-              <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs flex flex-col items-center text-center group hover:shadow-md transition-shadow sm:col-span-2 md:col-span-1">
+              <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs flex flex-col items-center text-center group hover:shadow-xl shadow-primary/20 transition-shadow sm:col-span-2 md:col-span-1">
                 <div className="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center mb-3">
                   <GraduationCap className="w-6 h-6" />
                 </div>
@@ -328,7 +328,7 @@ export default function TentangPage() {
             {BOARD_MEMBERS.map((member, idx) => (
               <div
                 key={idx}
-                className="flex items-center gap-4 p-4 md:p-5 bg-white rounded-2xl border border-slate-200 shadow-xs hover:border-primary-300 hover:shadow-md transition-all duration-300"
+                className="flex items-center gap-4 p-4 md:p-5 bg-white rounded-2xl border border-slate-200 shadow-xs hover:border-primary-300 hover:shadow-xl shadow-primary/20 transition-all duration-300"
               >
                 <div className="relative w-16 h-16 rounded-2xl overflow-hidden shrink-0 bg-primary-50 border border-primary-100 flex items-center justify-center">
                   {member.image ? (

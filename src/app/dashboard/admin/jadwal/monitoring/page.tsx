@@ -693,11 +693,7 @@ export default function MonitoringJadwalPage() {
                             <Edit2 className="w-3 h-3" />
                         </button>
                     </div>
-                    <span className={`text-[10px] font-bold uppercase tracking-tight mt-0.5 ${
-                        status === 'completed' 
-                            ? (roleType === 'quran' ? 'text-green-600' : roleType === 'santri' ? 'text-indigo-600' : 'text-purple-600')
-                            : status === 'absent' ? 'text-red-500' : 'text-slate-400'
-                    }`}>
+                    <span className={`text-[10px] font-bold uppercase tracking-tight mt-0.5 ${ status === 'completed' ? (roleType === 'quran' ? 'text-green-600' : roleType === 'santri' ? 'text-indigo-600' : 'text-purple-600') : status === 'absent' ? 'text-red-500' : 'text-slate-400' }`}>
                         {status === 'completed' ? 'Selesai' : status === 'absent' ? 'Alpa' : 'Menunggu'}
                     </span>
                 </div>
@@ -787,19 +783,11 @@ export default function MonitoringJadwalPage() {
                                                 return (
                                                     <div 
                                                         key={j} 
-                                                        className={`flex items-center justify-between gap-3 p-3 rounded-2xl border transition-all ${
-                                                            isFirst 
-                                                                ? "bg-emerald-50/70 border-emerald-300 shadow-xs" 
-                                                                : "bg-rose-50/90 border-2 border-rose-300 shadow-sm"
-                                                        }`}
+                                                        className={`flex items-center justify-between gap-3 p-3 rounded-2xl border transition-all ${ isFirst ? "bg-emerald-50/70 border-emerald-300 shadow-xs" : "bg-rose-50/90 border-2 border-rose-300 shadow-sm" }`}
                                                     >
                                                         <div className="min-w-0 flex-1">
                                                             <div className="flex items-center gap-1.5 flex-wrap mb-1">
-                                                                <span className={`text-[9px] font-black px-2 py-0.5 rounded-full inline-flex items-center gap-1 uppercase tracking-wider ${
-                                                                    isFirst 
-                                                                        ? "bg-emerald-200 text-emerald-900 border border-emerald-400" 
-                                                                        : "bg-rose-200 text-rose-900 border border-rose-300 animate-pulse"
-                                                                }`}>
+                                                                <span className={`text-[9px] font-black px-2 py-0.5 rounded-full inline-flex items-center gap-1 uppercase tracking-wider ${ isFirst ? "bg-emerald-200 text-emerald-900 border border-emerald-400" : "bg-rose-200 text-rose-900 border border-rose-300 animate-pulse" }`}>
                                                                     {isFirst ? <CheckCircle2 className="w-2.5 h-2.5 text-emerald-700" /> : <AlertTriangle className="w-2.5 h-2.5 text-rose-700" />}
                                                                     {isFirst ? "Booking Lebih Awal (#1 Prioritas)" : `Booking Setelahnya (#${j + 1} Bentrok)`}
                                                                 </span>
@@ -822,11 +810,7 @@ export default function MonitoringJadwalPage() {
                                                                 const sched = schedules.find(s => s.id === item.scheduleId);
                                                                 if (sched) openAssignModal(sched);
                                                             }}
-                                                            className={`shrink-0 px-3 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider flex items-center gap-1.5 transition-all cursor-pointer ${
-                                                                isFirst
-                                                                    ? "bg-white hover:bg-emerald-100 text-emerald-800 border border-emerald-300 shadow-xs active:scale-95"
-                                                                    : "bg-rose-600 hover:bg-rose-700 active:scale-95 text-white shadow-md shadow-rose-300 ring-2 ring-rose-400/50"
-                                                            }`}
+                                                            className={`shrink-0 px-3 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider flex items-center gap-1.5 transition-all cursor-pointer ${ isFirst ? "bg-white hover:bg-emerald-100 text-emerald-800 border border-emerald-300 shadow-xs active:scale-95" : "bg-rose-600 hover:bg-rose-700 active:scale-95 text-white shadow-md shadow-rose-300 ring-2 ring-rose-400/50" }`}
                                                             title={isFirst ? "Ganti penguji santri ini" : "Disarankan ganti penguji untuk santri ini agar tidak bentrok"}
                                                         >
                                                             <UserCheck className="w-3.5 h-3.5" />
@@ -966,9 +950,7 @@ export default function MonitoringJadwalPage() {
                                                 <span className="text-[10px] font-mono font-bold px-2 py-0.5 bg-slate-100 text-slate-500 rounded uppercase tracking-wider whitespace-nowrap inline-block shrink-0">
                                                     {s.pendaftar.nomor}
                                                 </span>
-                                                <span className={`text-[10px] font-bold px-2 py-0.5 rounded uppercase ${
-                                                    s.pendaftar.jenjang === 'MTs' ? 'bg-purple-100 text-purple-600' : 'bg-emerald-100 text-emerald-600'
-                                                }`}>
+                                                <span className={`text-[10px] font-bold px-2 py-0.5 rounded uppercase ${ s.pendaftar.jenjang === 'MTs' ? 'bg-purple-100 text-purple-600' : 'bg-emerald-100 text-emerald-600' }`}>
                                                     {s.pendaftar.jenjang === "IL" ? "IL" : "SMP IT"}
                                                 </span>
                                             </div>
@@ -993,11 +975,7 @@ export default function MonitoringJadwalPage() {
                                         ].map((stat, i) => (
                                             <div key={i} className="flex items-center justify-between px-2">
                                                 <div className="flex items-center gap-3">
-                                                    <div className={`p-1.5 rounded-xl border ${
-                                                        stat.status === 'completed' ? 'bg-green-50 border-green-100' : 
-                                                        stat.status === 'absent' ? 'bg-red-50 border-red-100' : 
-                                                        'bg-primary-50 border-primary-100'
-                                                    }`}>
+                                                    <div className={`p-1.5 rounded-xl border ${ stat.status === 'completed' ? 'bg-green-50 border-green-100' : stat.status === 'absent' ? 'bg-red-50 border-red-100' : 'bg-primary-50 border-primary-100' }`}>
                                                         {getStatusIcon(stat.status)}
                                                     </div>
                                                     <div>
@@ -1011,11 +989,7 @@ export default function MonitoringJadwalPage() {
                                                 </div>
                                                 <div>
                                                     {stat.ustadz && stat.ustadz !== '-' ? (
-                                                        <span className={`text-[9px] font-black uppercase px-2 py-0.5 rounded-full ${
-                                                            stat.status === 'completed' ? 'bg-emerald-100 text-emerald-700' :
-                                                            stat.status === 'absent' ? 'bg-rose-100 text-rose-700' :
-                                                            'bg-primary-100 text-primary-700'
-                                                        }`}>
+                                                        <span className={`text-[9px] font-black uppercase px-2 py-0.5 rounded-full ${ stat.status === 'completed' ? 'bg-emerald-100 text-emerald-700' : stat.status === 'absent' ? 'bg-rose-100 text-rose-700' : 'bg-primary-100 text-primary-700' }`}>
                                                             {stat.status === 'completed' ? 'Selesai' : stat.status === 'absent' ? 'Absen' : 'Menunggu'}
                                                         </span>
                                                     ) : (
@@ -1085,9 +1059,7 @@ export default function MonitoringJadwalPage() {
                                                             <span className="text-[10px] font-mono font-bold px-2 py-0.5 bg-slate-100 text-slate-500 rounded uppercase tracking-wider whitespace-nowrap inline-block shrink-0">
                                                                 {s.pendaftar.nomor}
                                                             </span>
-                                                            <span className={`text-[10px] font-bold px-2 py-0.5 rounded uppercase ${
-                                                                s.pendaftar.jenjang === 'MTs' ? 'bg-purple-100 text-purple-700' : 'bg-emerald-100 text-emerald-700'
-                                                            }`}>
+                                                            <span className={`text-[10px] font-bold px-2 py-0.5 rounded uppercase ${ s.pendaftar.jenjang === 'MTs' ? 'bg-purple-100 text-purple-700' : 'bg-emerald-100 text-emerald-700' }`}>
                                                                 {s.pendaftar.jenjang === "IL" ? "IL" : "SMP IT"}
                                                             </span>
                                                         </div>
@@ -1181,11 +1153,7 @@ export default function MonitoringJadwalPage() {
                                                         <span className="text-[10px] text-slate-400 block font-mono font-bold mt-0.5">{item.schedule.pendaftar.nomor}</span>
                                                     </td>
                                                     <td className="px-7 py-4">
-                                                        <span className={`px-2.5 py-0.5 rounded-md font-bold text-[10px] uppercase tracking-wide ${
-                                                            item.role === 'Al-Qur\'an' ? 'bg-orange-100 text-orange-600' :
-                                                            item.role === 'W. Santri' ? 'bg-indigo-100 text-indigo-600' :
-                                                            'bg-emerald-100 text-emerald-600'
-                                                        }`}>
+                                                        <span className={`px-2.5 py-0.5 rounded-md font-bold text-[10px] uppercase tracking-wide ${ item.role === 'Al-Qur\'an' ? 'bg-orange-100 text-orange-600' : item.role === 'W. Santri' ? 'bg-indigo-100 text-indigo-600' : 'bg-emerald-100 text-emerald-600' }`}>
                                                             {item.role}
                                                         </span>
                                                     </td>

@@ -40,7 +40,7 @@ export default function ContactSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-40px" }}
           transition={{ duration: 0.6, ease: EASE }}
-          className="bg-primary-50/40 rounded-[2rem] lg:rounded-[2.5rem] p-8 md:p-12 lg:p-14 border border-primary-100 relative overflow-hidden shadow-sm"
+          className="bg-primary-50/40 rounded-[2rem] lg:rounded-[2.5rem] p-8 md:p-12 lg:p-14 border border-primary-100 relative overflow-hidden shadow-xl shadow-primary/20"
         >
           <div className="absolute inset-0 opacity-[0.03] bg-[url('/grid-pattern.svg')] pointer-events-none" />
 
@@ -79,13 +79,7 @@ export default function ContactSection() {
                   className={`bg-white/80 backdrop-blur-sm p-6 sm:p-7 rounded-2xl border border-blue-100 shadow-xl shadow-blue-500/10 hover:shadow-2xl hover:shadow-blue-500/20 flex flex-col items-start group transition-all duration-400 ${idx === 0 ? "sm:col-span-2" : ""}`}
                 >
                   <div
-                    className={`w-11 h-11 rounded-[12px] flex items-center justify-center mb-4 transition-transform shadow-xs group-hover:scale-105 duration-400 shrink-0 ${
-                      item.accent === "blue"
-                        ? "bg-primary-50 text-primary-600"
-                        : item.accent === "amber"
-                          ? "bg-secondary-50 text-secondary-700"
-                          : "bg-primary-50 text-primary-700"
-                    }`}
+                    className={`w-11 h-11 rounded-[12px] flex items-center justify-center mb-4 transition-transform shadow-xs group-hover:scale-105 duration-400 shrink-0 ${ item.accent === "blue" ? "bg-primary-50 text-primary-600" : item.accent === "amber" ? "bg-secondary-50 text-secondary-700" : "bg-primary-50 text-primary-700" }`}
                   >
                     <item.icon className="w-5 h-5" strokeWidth={1.8} />
                   </div>

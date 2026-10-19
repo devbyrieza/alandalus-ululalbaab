@@ -240,7 +240,7 @@ export default function Navbar() {
   const registerButtonDesktop = (
     <Link
       href={REGISTER_HREF}
-      className="btn-primary flex items-center gap-1.5 group text-xs xl:text-[13px] 2xl:text-sm font-black px-3.5 2xl:px-5 py-2 rounded-xl shadow-md hover:shadow-lg hover:scale-105 transition-all glow-ring-primary shrink-0 whitespace-nowrap"
+      className="btn-primary flex items-center gap-1.5 group text-xs xl:text-[13px] 2xl:text-sm font-black px-3.5 2xl:px-5 py-2 rounded-xl shadow-xl shadow-primary/20 hover:shadow-lg hover:scale-105 transition-all glow-ring-primary shrink-0 whitespace-nowrap"
     >
       <span>{REGISTER_LABEL}</span>
       <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1 shrink-0" />
@@ -259,11 +259,7 @@ export default function Navbar() {
       >
         <div className="mx-auto max-w-7xl 2xl:max-w-[1400px]">
           <div
-            className={`backdrop-blur-xl border border-white/40 rounded-full pl-3.5 pr-4 sm:pl-5 sm:pr-5 2xl:pl-6 2xl:pr-6 flex items-center justify-between gap-2 xl:gap-3 transition-all duration-300 ${
-              isScrolled
-                ? "bg-white/95 py-1.5 sm:py-2 shadow-xl shadow-blue-500/15"
-                : "bg-white/90 py-2 sm:py-2.5 shadow-2xl shadow-blue-500/10"
-            }`}
+            className={`backdrop-blur-xl border border-white/40 rounded-full pl-3.5 pr-4 sm:pl-5 sm:pr-5 2xl:pl-6 2xl:pr-6 flex items-center justify-between gap-2 xl:gap-3 transition-all duration-300 ${ isScrolled ? "bg-white/95 py-1.5 sm:py-2 shadow-xl shadow-blue-500/15" : "bg-white/90 py-2 sm:py-2.5 shadow-2xl shadow-blue-500/10" }`}
           >
             {/* ── Logo ── */}
             <Link
@@ -274,11 +270,7 @@ export default function Navbar() {
             >
               <div className="relative shrink-0">
                 <div
-                  className={`w-9 h-9 sm:w-10 sm:h-10 2xl:w-11 2xl:h-11 rounded-[12px] sm:rounded-[14px] flex items-center justify-center border overflow-hidden bg-white transition-all duration-500 group-hover:scale-105 group-hover:-rotate-3 ${
-                    isScrolled
-                      ? "border-primary/20 shadow-lg shadow-primary/10"
-                      : "border-white/70 shadow-[0_2px_12px_rgba(3,105,199,0.12)]"
-                  }`}
+                  className={`w-9 h-9 sm:w-10 sm:h-10 2xl:w-11 2xl:h-11 rounded-[12px] sm:rounded-[14px] flex items-center justify-center border overflow-hidden bg-white transition-all duration-500 group-hover:scale-105 group-hover:-rotate-3 ${ isScrolled ? "border-primary/20 shadow-lg shadow-primary/10" : "border-white/70 shadow-[0_2px_12px_rgba(3,105,199,0.12)]" }`}
                 >
                   <Image
                     src={BRANDING.logoPath}
@@ -311,11 +303,7 @@ export default function Navbar() {
             {/* ── Desktop Nav (xl+) ── */}
             <nav
               aria-label="Navigasi utama"
-              className={`hidden xl:flex items-center gap-0.5 p-1 2xl:p-1.5 rounded-full border bg-white transition-all duration-300 shrink-0 ${
-                isScrolled
-                  ? "border-[var(--color-primary-100)] shadow-sm"
-                  : "border-white/65 shadow-[0_2px_16px_rgba(3,105,199,0.10)]"
-              }`}
+              className={`hidden xl:flex items-center gap-0.5 p-1 2xl:p-1.5 rounded-full border bg-white transition-all duration-300 shrink-0 ${ isScrolled ? "border-[var(--color-primary-100)] shadow-xl shadow-primary/20" : "border-white/65 shadow-[0_2px_16px_rgba(3,105,199,0.10)]" }`}
             >
               {NAV_LINKS.map((link) => {
                 if (!link.children) {
@@ -363,9 +351,7 @@ export default function Navbar() {
                     >
                       {link.label}
                       <ChevronDown
-                        className={`w-4 h-4 transition-transform duration-300 ${
-                          megaOpen ? "rotate-180" : ""
-                        }`}
+                        className={`w-4 h-4 transition-transform duration-300 ${ megaOpen ? "rotate-180" : "" }`}
                       />
                     </Link>
 
@@ -458,11 +444,7 @@ export default function Navbar() {
               aria-label={isMenuOpen ? "Tutup menu" : "Buka menu"}
               aria-expanded={isMenuOpen}
               aria-controls="mobile-menu"
-              className={`xl:hidden p-2 sm:p-2.5 rounded-xl transition-all duration-300 min-h-[44px] min-w-[44px] flex items-center justify-center border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-300 ${
-                isScrolled
-                  ? "bg-white border-[var(--color-primary-100)] text-[var(--color-primary-700)] hover:bg-[var(--color-primary-50)] shadow-[var(--shadow-xs)]"
-                  : "bg-white/85 border-white/70 text-[var(--color-ink-800)] hover:bg-white/95 shadow-[0_2px_12px_rgba(3,105,199,0.10)]"
-              }`}
+              className={`xl:hidden p-2 sm:p-2.5 rounded-xl transition-all duration-300 min-h-[44px] min-w-[44px] flex items-center justify-center border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-300 ${ isScrolled ? "bg-white border-[var(--color-primary-100)] text-[var(--color-primary-700)] hover:bg-[var(--color-primary-50)] shadow-[var(--shadow-xs)]" : "bg-white/85 border-white/70 text-[var(--color-ink-800)] hover:bg-white/95 shadow-[0_2px_12px_rgba(3,105,199,0.10)]" }`}
             >
               <AnimatePresence mode="wait" initial={false}>
                 {isMenuOpen ? (
@@ -619,9 +601,7 @@ export default function Navbar() {
                               className="w-14 shrink-0 rounded-2xl flex items-center justify-center text-[var(--color-ink-600)] hover:bg-[var(--color-primary-50)] transition-colors"
                             >
                               <ChevronDown
-                                className={`w-5 h-5 transition-transform duration-300 ${
-                                  mobileProgramOpen ? "rotate-180" : ""
-                                }`}
+                                className={`w-5 h-5 transition-transform duration-300 ${ mobileProgramOpen ? "rotate-180" : "" }`}
                               />
                             </button>
                           )}

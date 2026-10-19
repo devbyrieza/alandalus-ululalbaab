@@ -109,13 +109,7 @@ export default function ExtraSection() {
               <div className="absolute inset-0 bg-gradient-to-br from-primary-50/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
               <div
-                className={`w-12 h-12 rounded-[12px] flex items-center justify-center mb-4 shadow-xs group-hover:scale-105 transition-transform duration-400 relative z-10 ${
-                    item.accent === "blue"
-                    ? "bg-primary-50 text-primary-600"
-                    : item.accent === "amber"
-                      ? "bg-secondary-50 text-secondary-700"
-                      : "bg-primary-50/50 text-primary-600"
-                }`}
+                className={`w-12 h-12 rounded-[12px] flex items-center justify-center mb-4 shadow-xs group-hover:scale-105 transition-transform duration-400 relative z-10 ${ item.accent === "blue" ? "bg-primary-50 text-primary-600" : item.accent === "amber" ? "bg-secondary-50 text-secondary-700" : "bg-primary-50/50 text-primary-600" }`}
               >
                 <item.icon className="w-6 h-6" strokeWidth={1.8} />
               </div>

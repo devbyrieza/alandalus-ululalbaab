@@ -84,7 +84,7 @@ export default function Footer() {
           <div className="lg:col-span-1 space-y-8">
             <Link href="/" className="flex items-center gap-4 group">
               <div
-                className="w-12 h-12 rounded-lg flex items-center justify-center overflow-hidden flex-shrink-0 transition-all duration-500 group-hover:scale-105 group-hover:-rotate-3"
+                className="w-12 h-12 rounded-2xl flex items-center justify-center overflow-hidden flex-shrink-0 transition-all duration-500 group-hover:scale-105 group-hover:-rotate-3"
                 style={{
                   background:
                     "linear-gradient(135deg, var(--color-secondary-200) 0%, var(--color-secondary-400) 100%)",
@@ -126,7 +126,7 @@ export default function Footer() {
                   key={label}
                   href={href}
                   aria-label={label}
-                  className="w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-300"
+                  className="w-10 h-10 rounded-2xl flex items-center justify-center transition-all duration-300"
                   style={{
                     background: "rgba(255,255,255,0.06)",
                     border: "1px solid rgba(255,255,255,0.10)",
@@ -230,7 +230,7 @@ export default function Footer() {
               {/* Alamat */}
               <div className="flex gap-3.5">
                 <div
-                  className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5"
+                  className="w-9 h-9 rounded-2xl flex items-center justify-center flex-shrink-0 mt-0.5"
                   style={{
                     background: "rgba(255,255,255,0.06)",
                     border: "1px solid rgba(255,255,255,0.10)",
@@ -249,7 +249,7 @@ export default function Footer() {
               {/* Telepon */}
               <div className="flex gap-3.5">
                 <div
-                  className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0"
+                  className="w-9 h-9 rounded-2xl flex items-center justify-center flex-shrink-0"
                   style={{
                     background: "rgba(255,255,255,0.06)",
                     border: "1px solid rgba(255,255,255,0.10)",
@@ -273,7 +273,7 @@ export default function Footer() {
               {/* Email */}
               <div className="flex gap-3.5">
                 <div
-                  className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0"
+                  className="w-9 h-9 rounded-2xl flex items-center justify-center flex-shrink-0"
                   style={{
                     background: "rgba(255,255,255,0.06)",
                     border: "1px solid rgba(255,255,255,0.10)",
@@ -324,7 +324,7 @@ export default function Footer() {
 
             {/* Language toggle — yellow accent */}
             <div
-              className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold"
+              className="flex items-center gap-2 px-3 py-1.5 rounded-2xl text-xs font-semibold"
               style={{
                 background: "rgba(251,191,36,0.08)",
                 border: "1px solid rgba(251,191,36,0.18)",

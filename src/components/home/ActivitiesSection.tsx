@@ -119,7 +119,7 @@ function ActivityCard({
 
         {/* Badge */}
         <div className="absolute top-3 left-3">
-          <span className="inline-flex items-center px-2.5 py-1 rounded-full bg-white  text-[0.6rem] font-bold text-primary-700 uppercase tracking-widest border border-primary-100/50 shadow-sm">
+          <span className="inline-flex items-center px-2.5 py-1 rounded-full bg-white text-[0.6rem] font-bold text-primary-700 uppercase tracking-widest border border-primary-100/50 shadow-xl shadow-primary/20">
             {activity.badge}
           </span>
         </div>
@@ -301,7 +301,7 @@ export default function ActivitiesSection() {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.1 + idx * 0.05 }}
-                  className="flex flex-col items-center gap-3 p-4 bg-white/80 backdrop-blur-sm rounded-2xl border border-blue-100 shadow-sm hover:border-primary-100 hover:shadow-md transition-all group text-center"
+                  className="flex flex-col items-center gap-3 p-4 bg-white/80 backdrop-blur-sm rounded-2xl border border-blue-100 shadow-xl shadow-primary/20 hover:border-primary-100 hover:shadow-md transition-all group text-center"
                 >
                   <div className="w-10 h-10 rounded-xl bg-primary-50 flex items-center justify-center text-primary-600 group-hover:bg-primary-600 group-hover:text-white transition-colors">
                     <Icon className="w-5 h-5" />

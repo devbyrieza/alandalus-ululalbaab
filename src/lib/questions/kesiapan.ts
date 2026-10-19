@@ -2,90 +2,163 @@ import type { KesiapanSection } from "./types";
 
 export const KESIAPAN_QUESTIONS: KesiapanSection[] = [
   {
-    section: "Ketaatan dan Sikap Disiplin",
+    section: "Kelompok 1 — Ketaatan dan Disiplin",
     items: [
       {
         id: 1,
-        text: "Saya berusaha patuh terhadap perintah orang tua dan guru.",
-        labelMin: "Sangat Tidak Patuh",
-        labelMax: "Sangat Patuh" },
+        text: "Saya melaksanakan perintah orang tua dan guru dengan segera, walaupun sedang asyik melakukan hal lain.",
+        labelMin: "Sangat Tidak Setuju",
+        labelMax: "Sangat Setuju",
+        isReverse: false
+      },
       {
         id: 2,
-        text: "Saya memandang perintah guru atau orang yang lebih tua sebagai hal yang penting untuk ditaati.",
-        labelMin: "Sangat Tidak Penting",
-        labelMax: "Sangat Penting" },
+        text: "Saya menganggap aturan pesantren dan asrama penting untuk dipatuhi, walaupun tidak ada yang mengawasi.",
+        labelMin: "Sangat Tidak Setuju",
+        labelMax: "Sangat Setuju",
+        isReverse: false
+      },
       {
         id: 3,
-        text: "Jika melanggar aturan, saya siap menerima konsekuensinya termasuk hukuman.",
-        labelMin: "Tidak siap sama sekali",
-        labelMax: "Sangat siap" },
+        text: "Saya sering mencari cara agar bisa lolos dari aturan yang menurut saya merepotkan.",
+        labelMin: "Sangat Tidak Setuju",
+        labelMax: "Sangat Setuju",
+        isReverse: true
+      },
       {
         id: 4,
-        text: "Saya merasa senang dan termotivasi bila di pesantren diwajibkan membaca Al-Qur'an dan mengulang hafalan setelah shalat.",
-        labelMin: "Sangat tidak senang",
-        labelMax: "Sangat senang" },
+        text: "Jika saya melanggar aturan, saya siap menerima sanksinya dan memperbaiki diri.",
+        labelMin: "Sangat Tidak Setuju",
+        labelMax: "Sangat Setuju",
+        isReverse: false
+      },
       {
         id: 5,
-        text: "Jika ada benturan antara kegiatan keluarga (misalnya jalan-jalan) dengan kewajiban belajar, saya lebih memilih menjalankan kewajiban belajar.",
-        labelMin: "Lebih memilih kegiatan lain",
-        labelMax: "Lebih memilih belajar/taat aturan" },
-    ] },
+        text: "Saya sulit bangun pagi untuk salat Subuh bila tidak dibangunkan orang lain.",
+        labelMin: "Sangat Tidak Setuju",
+        labelMax: "Sangat Setuju",
+        isReverse: true
+      }
+    ]
+  },
   {
-    section: "Motivasi & Semangat Belajar",
+    section: "Kelompok 2 — Motivasi Belajar",
     items: [
       {
         id: 6,
-        text: "Saya memilih pesantren sebagai tempat belajar karena dorongan dan keinginan yang kuat.",
-        labelMin: "Tidak ada dorongan",
-        labelMax: "Sangat kuat" },
+        text: "Keinginan masuk pesantren ini datang dari diri saya sendiri, bukan hanya karena disuruh.",
+        labelMin: "Sangat Tidak Setuju",
+        labelMax: "Sangat Setuju",
+        isReverse: false
+      },
       {
         id: 7,
-        text: "Saya merasa Pesantren Al Andalus Ulul Albaab adalah tempat belajar yang sesuai dengan harapan saya.",
-        labelMin: "Sangat tidak sesuai",
-        labelMax: "Sangat sesuai" },
+        text: "Saya sudah paham bahwa belajar di pesantren berarti belajar agama sekaligus pelajaran umum, dan saya mau menjalaninya.",
+        labelMin: "Sangat Tidak Setuju",
+        labelMax: "Sangat Setuju",
+        isReverse: false
+      },
       {
         id: 8,
-        text: "Ada tokoh atau seseorang yang membuat saya semangat dalam belajar.",
-        labelMin: "Tidak ada",
-        labelMax: "Ada dan sangat menginspirasi" },
+        text: "Ada seseorang (orang tua, guru, atau tokoh) yang membuat saya bersemangat untuk belajar.",
+        labelMin: "Sangat Tidak Setuju",
+        labelMax: "Sangat Setuju",
+        isReverse: false
+      },
       {
         id: 9,
-        text: "Saya tetap semangat belajar meskipun dalam kondisi sulit (misalnya sakit ringan, rindu orang tua, atau merasa jenuh).",
-        labelMin: "Sangat mudah menyerah",
-        labelMax: "Tetap semangat penuh" },
+        text: "Saya tetap berusaha belajar walaupun sedang lelah, jenuh, atau rindu rumah.",
+        labelMin: "Sangat Tidak Setuju",
+        labelMax: "Sangat Setuju",
+        isReverse: false
+      },
       {
         id: 10,
-        text: "Saya lebih menyukai pelajaran agama dibanding pelajaran umum.",
-        labelMin: "Hanya suka salah satu",
-        labelMax: "Suka keduanya" },
-    ] },
+        text: "Saya ingin pindah sekolah bila merasa pelajaran di pesantren terlalu berat.",
+        labelMin: "Sangat Tidak Setuju",
+        labelMax: "Sangat Setuju",
+        isReverse: true
+      }
+    ]
+  },
   {
-    section: "Kemandirian & Daya Tahan",
+    section: "Kelompok 3 — Kemandirian dan Daya Tahan",
     items: [
       {
         id: 11,
-        text: "Saya merasa siap ditinggalkan orang tua saat masuk pesantren.",
-        labelMin: "Sangat tidak siap",
-        labelMax: "Sangat siap" },
+        text: "Saya siap tinggal jauh dari orang tua di asrama.",
+        labelMin: "Sangat Tidak Setuju",
+        labelMax: "Sangat Setuju",
+        isReverse: false
+      },
       {
         id: 12,
-        text: "Saya bisa beradaptasi dengan lingkungan baru (asrama, teman, aturan) dalam waktu singkat.",
-        labelMin: "Sangat sulit beradaptasi",
-        labelMax: "Sangat mudah beradaptasi" },
+        text: "Saya bisa mencuci pakaian, merapikan tempat tidur, dan mengatur barang-barang saya sendiri.",
+        labelMin: "Sangat Tidak Setuju",
+        labelMax: "Sangat Setuju",
+        isReverse: false
+      },
       {
         id: 13,
-        text: "Jika saya sakit di pesantren, saya bisa mengatasi dengan sabar dan melapor kepada ustadz/ustadzah.",
-        labelMin: "Tidak tahu harus bagaimana",
-        labelMax: "Sangat siap dan paham" },
+        text: "Saya mudah panik atau menangis bila menghadapi masalah tanpa ada orang tua di dekat saya.",
+        labelMin: "Sangat Tidak Setuju",
+        labelMax: "Sangat Setuju",
+        isReverse: true
+      },
       {
         id: 14,
-        text: "Ketika kesulitan belajar, saya terbiasa berusaha mencari solusi (misalnya bertanya pada guru/teman atau belajar lebih giat).",
-        labelMin: "Tidak berusaha",
-        labelMax: "Berusaha kuat" },
+        text: "Bila saya sakit atau punya masalah di asrama, saya berani melapor kepada ustadz, ustadzah, atau musyrif.",
+        labelMin: "Sangat Tidak Setuju",
+        labelMax: "Sangat Setuju",
+        isReverse: false
+      },
       {
         id: 15,
-        text: "Jika uang jajan saya habis sementara orang tua belum memberi tambahan, saya bisa bersabar dan mengatur diri.",
-        labelMin: "Sangat tidak sabar",
-        labelMax: "Sangat bersabar" },
-    ] },
+        text: "Bila uang jajan saya menipis, saya bisa menahan diri dan mengatur pengeluaran.",
+        labelMin: "Sangat Tidak Setuju",
+        labelMax: "Sangat Setuju",
+        isReverse: false
+      }
+    ]
+  },
+  {
+    section: "Kelompok 4 — Gawai, Pergaulan, dan Pengendalian Diri",
+    items: [
+      {
+        id: 16,
+        text: "Saya bisa belajar tanpa terus-menerus memegang HP atau bermain game.",
+        labelMin: "Sangat Tidak Setuju",
+        labelMax: "Sangat Setuju",
+        isReverse: false
+      },
+      {
+        id: 17,
+        text: "Saya gelisah atau mudah marah bila beberapa hari tidak boleh memegang HP atau bermain game online.",
+        labelMin: "Sangat Tidak Setuju",
+        labelMax: "Sangat Setuju",
+        isReverse: true
+      },
+      {
+        id: 18,
+        text: "Saya mampu menolak ajakan teman untuk melakukan hal yang dilarang, seperti merokok atau vape.",
+        labelMin: "Sangat Tidak Setuju",
+        labelMax: "Sangat Setuju",
+        isReverse: false
+      },
+      {
+        id: 19,
+        text: "Saya bisa menahan diri dan tidak membalas dengan kasar ketika diejek atau dijahili teman.",
+        labelMin: "Sangat Tidak Setuju",
+        labelMax: "Sangat Setuju",
+        isReverse: false
+      },
+      {
+        id: 20,
+        text: "Saya mau meminta maaf lebih dulu bila bertengkar dengan teman.",
+        labelMin: "Sangat Tidak Setuju",
+        labelMax: "Sangat Setuju",
+        isReverse: false
+      }
+    ]
+  }
 ];

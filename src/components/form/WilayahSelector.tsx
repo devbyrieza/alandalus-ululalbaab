@@ -114,25 +114,13 @@ function WilayahSelect({
           <motion.span
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            className={`
-              inline-flex items-center justify-center w-5 h-5 rounded-full
-              text-[10px] font-bold leading-none flex-shrink-0
-              transition-colors duration-300
-              ${
-                isFilled
-                  ? "bg-primary-600 text-white"
-                  : "bg-primary-100 text-primary-500"
-              }
-            `}
+            className={`inline-flex items-center justify-center w-5 h-5 rounded-full text-[10px] font-bold leading-none flex-shrink-0 transition-colors duration-300 ${ isFilled ? "bg-primary-600 text-white" : "bg-primary-100 text-primary-500" }`}
           >
             {isFilled ? <Check className="w-2.5 h-2.5" /> : stepNumber}
           </motion.span>
         )}
         <label
-          className={`
-            text-sm font-semibold tracking-tight transition-colors duration-200
-            ${isFilled ? "text-primary-700" : "text-ink-700"}
-          `}
+          className={`text-sm font-semibold tracking-tight transition-colors duration-200 ${isFilled ? "text-primary-700" : "text-ink-700"}`}
         >
           {label}
           {required && <span className="ml-1 text-red-500 font-bold">*</span>}
@@ -146,47 +134,18 @@ function WilayahSelect({
         disabled={disabled}
         aria-haspopup="listbox"
         aria-expanded={open}
-        className={`
-          w-full flex items-center gap-3 px-4 py-3
-          rounded-lg border-2 text-left text-sm font-medium
-          transition-all duration-200 outline-none
-          focus-visible:ring-2 focus-visible:ring-primary-400/50 focus-visible:ring-offset-1
-          ${
-            isDisabled && !disabled
-              ? "bg-surface-100 border-primary-100 text-ink-300 cursor-not-allowed opacity-60"
-              : isFilled
-                ? "bg-white border-primary-400 text-ink-900 shadow-[var(--shadow-premium-sm)] cursor-pointer"
-                : open
-                  ? "bg-white border-primary-500 text-ink-900 shadow-[0_0_0_3px_rgba(3,105,199,0.10)] cursor-pointer"
-                  : "bg-white border-primary-100 text-ink-400 hover:border-primary-300 hover:bg-primary-50/40 cursor-pointer"
-          }
-          ${
-            disabled
-              ? "!bg-surface-100 !border-primary-100 !text-ink-300 !cursor-not-allowed !opacity-60"
-              : ""
-          }
-        `}
+        className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl border-2 text-left text-sm font-medium transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-primary-400/50 focus-visible:ring-offset-1 ${ isDisabled && !disabled ? "bg-surface-100 border-primary-100 text-ink-300 cursor-not-allowed opacity-60" : isFilled ? "bg-white border-primary-400 text-ink-900 shadow-[var(--shadow-premium-sm)] cursor-pointer" : open ? "bg-white border-primary-500 text-ink-900 shadow-[0_0_0_3px_rgba(3,105,199,0.10)] cursor-pointer" : "bg-white border-primary-100 text-ink-400 hover:border-primary-300 hover:bg-primary-50/40 cursor-pointer" } ${ disabled ? "!bg-surface-100 !border-primary-100 !text-ink-300 !cursor-not-allowed !opacity-60" : "" }`}
       >
         {/* Icon kiri */}
         <span
-          className={`
-            flex-shrink-0 transition-colors duration-200
-            ${isFilled ? "text-primary-500" : "text-ink-300"}
-          `}
+          className={`flex-shrink-0 transition-colors duration-200 ${isFilled ? "text-primary-500" : "text-ink-300"}`}
         >
           {icon ?? <MapPin className="w-4 h-4" />}
         </span>
 
         {/* Value / placeholder */}
         <span
-          className={`
-            flex-1 truncate
-            ${
-              isFilled
-                ? "text-ink-900 font-semibold"
-                : "text-ink-400 font-normal"
-            }
-          `}
+          className={`flex-1 truncate ${ isFilled ? "text-ink-900 font-semibold" : "text-ink-400 font-normal" }`}
         >
           {isFilled
             ? selectedLabel
@@ -206,10 +165,7 @@ function WilayahSelect({
             className="inline-flex"
           >
             <ChevronDown
-              className={`
-                w-4 h-4 transition-colors
-                ${isFilled ? "text-primary-400" : "text-ink-300"}
-              `}
+              className={`w-4 h-4 transition-colors ${isFilled ? "text-primary-400" : "text-ink-300"}`}
             />
           </motion.span>
         </span>
@@ -223,7 +179,7 @@ function WilayahSelect({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -4, scale: 0.98 }}
             transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
-            className="absolute z-50 top-[calc(100%+6px)] left-0 right-0 bg-white border border-primary-200 rounded-lg shadow-[var(--shadow-premium-lg)] overflow-hidden"
+            className="absolute z-50 top-[calc(100%+6px)] left-0 right-0 bg-white border border-primary-200 rounded-2xl shadow-[var(--shadow-premium-lg)] overflow-hidden"
             role="listbox"
           >
             {/* Search — hanya tampil jika opsi banyak */}
@@ -236,7 +192,7 @@ function WilayahSelect({
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
                     placeholder={`Cari ${label.toLowerCase()}...`}
-                    className="w-full pl-8 pr-3 py-2 text-sm rounded-lg bg-primary-50/60 border border-primary-100 text-ink-900 placeholder:text-ink-400 focus:outline-none focus:border-primary-400 focus:bg-white focus:shadow-[0_0_0_3px_rgba(3,105,199,0.08)] transition-all duration-150 font-medium"
+                    className="w-full pl-8 pr-3 py-2 text-sm rounded-2xl bg-primary-50/60 border border-primary-100 text-ink-900 placeholder:text-ink-400 focus:outline-none focus:border-primary-400 focus:bg-white focus:shadow-[0_0_0_3px_rgba(3,105,199,0.08)] transition-all duration-150 font-medium"
                   />
                   <svg
                     className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-ink-400 pointer-events-none"
@@ -270,15 +226,7 @@ function WilayahSelect({
                         role="option"
                         aria-selected={isSelected}
                         onClick={() => handleSelect(opt.name)}
-                        className={`
-                          w-full flex items-center gap-3 px-4 py-2.5
-                          text-sm text-left transition-colors duration-100
-                          ${
-                            isSelected
-                              ? "bg-primary-50 text-primary-900 font-semibold"
-                              : "text-ink-700 hover:bg-primary-50/60 hover:text-primary-800 font-medium"
-                          }
-                        `}
+                        className={`w-full flex items-center gap-3 px-4 py-2.5 text-sm text-left transition-colors duration-100 ${ isSelected ? "bg-primary-50 text-primary-900 font-semibold" : "text-ink-700 hover:bg-primary-50/60 hover:text-primary-800 font-medium" }`}
                       >
                         {isSelected && (
                           <Check className="w-3.5 h-3.5 text-primary-600 flex-shrink-0" />
@@ -538,25 +486,13 @@ export default function WilayahSelector({
         <div className="md:col-span-2">
           <div className="flex items-center gap-2 mb-2">
             <span
-              className={`
-                inline-flex items-center justify-center w-5 h-5 rounded-full
-                text-[10px] font-bold leading-none flex-shrink-0
-                transition-colors duration-300
-                ${
-                  value.kode_pos
-                    ? "bg-primary-600 text-white"
-                    : "bg-primary-100 text-primary-500"
-                }
-              `}
+              className={`inline-flex items-center justify-center w-5 h-5 rounded-full text-[10px] font-bold leading-none flex-shrink-0 transition-colors duration-300 ${ value.kode_pos ? "bg-primary-600 text-white" : "bg-primary-100 text-primary-500" }`}
             >
               {value.kode_pos ? <Check className="w-2.5 h-2.5" /> : 5}
             </span>
             <label
               htmlFor="kode_pos"
-              className={`
-                text-sm font-semibold tracking-tight transition-colors duration-200
-                ${value.kode_pos ? "text-primary-700" : "text-ink-700"}
-              `}
+              className={`text-sm font-semibold tracking-tight transition-colors duration-200 ${value.kode_pos ? "text-primary-700" : "text-ink-700"}`}
             >
               Kode Pos <span className="text-red-500 font-bold">*</span>
             </label>
@@ -566,10 +502,7 @@ export default function WilayahSelector({
             {/* Icon amplop */}
             <div className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none">
               <svg
-                className={`
-                  w-4 h-4 transition-colors duration-200
-                  ${value.kode_pos ? "text-primary-500" : "text-ink-300"}
-                `}
+                className={`w-4 h-4 transition-colors duration-200 ${value.kode_pos ? "text-primary-500" : "text-ink-300"}`}
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -597,34 +530,13 @@ export default function WilayahSelector({
               placeholder="Contoh: 10110"
               maxLength={5}
               disabled={disabled}
-              className={`
-                w-full pl-11 pr-4 py-3
-                rounded-lg border-2 text-sm font-medium
-                transition-all duration-200 outline-none
-                placeholder:text-ink-400 text-ink-900
-                focus-visible:ring-2 focus-visible:ring-primary-400/50 focus-visible:ring-offset-1
-                ${
-                  disabled
-                    ? "bg-surface-100 border-primary-100 text-ink-300 cursor-not-allowed opacity-60"
-                    : value.kode_pos
-                      ? "bg-white border-primary-400 shadow-[var(--shadow-premium-sm)]"
-                      : "bg-white border-primary-100 hover:border-primary-300 hover:bg-primary-50/40 focus:border-primary-500 focus:shadow-[0_0_0_3px_rgba(3,105,199,0.10)]"
-                }
-              `}
+              className={`w-full pl-11 pr-4 py-3 rounded-2xl border-2 text-sm font-medium transition-all duration-200 outline-none placeholder:text-ink-400 text-ink-900 focus-visible:ring-2 focus-visible:ring-primary-400/50 focus-visible:ring-offset-1 ${ disabled ? "bg-surface-100 border-primary-100 text-ink-300 cursor-not-allowed opacity-60" : value.kode_pos ? "bg-white border-primary-400 shadow-[var(--shadow-premium-sm)]" : "bg-white border-primary-100 hover:border-primary-300 hover:bg-primary-50/40 focus:border-primary-500 focus:shadow-[0_0_0_3px_rgba(3,105,199,0.10)]" }`}
             />
 
             {/* Live length indicator */}
             {value.kode_pos && (
               <span
-                className={`
-                  absolute right-4 top-1/2 -translate-y-1/2
-                  text-xs font-bold tabular-nums
-                  ${
-                    value.kode_pos.length === 5
-                      ? "text-primary-600"
-                      : "text-ink-400"
-                  }
-                `}
+                className={`absolute right-4 top-1/2 -translate-y-1/2 text-xs font-bold tabular-nums ${ value.kode_pos.length === 5 ? "text-primary-600" : "text-ink-400" }`}
               >
                 {value.kode_pos.length}/5
               </span>
@@ -641,7 +553,7 @@ export default function WilayahSelector({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 4, scale: 0.98 }}
             transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-            className="flex items-center gap-3 px-4 py-3 bg-primary-50 border border-primary-200 rounded-lg text-sm"
+            className="flex items-center gap-3 px-4 py-3 bg-primary-50 border border-primary-200 rounded-2xl text-sm"
           >
             {/* Icon dengan aksen kuning — signature Ulul Albaab */}
             <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary-600 flex items-center justify-center ring-2 ring-secondary-400/60">

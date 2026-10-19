@@ -243,7 +243,7 @@ export default function FacilitiesSection() {
             <motion.div
               key={idx}
               variants={itemVariants}
-              className="group flex items-center gap-3.5 p-3.5 rounded-2xl bg-white/80 backdrop-blur-sm border border-blue-100 hover:border-primary-200 shadow-md shadow-blue-500/5 hover:shadow-xl hover:shadow-blue-500/10 transition-all duration-300 ease-out cursor-default hover:-translate-y-0.5"
+              className="group flex items-center gap-3.5 p-3.5 rounded-2xl bg-white/80 backdrop-blur-sm border border-blue-100 hover:border-primary-200 shadow-xl shadow-primary/20 shadow-blue-500/5 hover:shadow-xl hover:shadow-blue-500/10 transition-all duration-300 ease-out cursor-default hover:-translate-y-0.5"
             >
               <div
                 className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ring-1 shadow-xs transition-transform duration-300 group-hover:scale-105 ${iconClasses[facility.color] ?? iconClasses.ink}`}
@@ -269,7 +269,7 @@ export default function FacilitiesSection() {
           className="flex justify-center"
         >
           <Link href="/fasilitas">
-            <button className="btn-secondary group inline-flex items-center gap-2 px-8 py-3 bg-white border border-primary-200 shadow-sm hover:shadow-sm transition-all">
+            <button className="btn-secondary group inline-flex items-center gap-2 px-8 py-3 bg-white border border-primary-200 shadow-xl shadow-primary/20 hover:shadow-xl shadow-primary/20 transition-all">
               <span className="text-[0.875rem] font-bold">
                 Lihat Semua Fasilitas
               </span>

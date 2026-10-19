@@ -1,10 +1,8 @@
 "use client";
 
-"use client";
-
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { KEPRIBADIAN_QUESTIONS } from "@/lib/questions";
+import { KEPRIBADIAN_QUESTIONS, KEPRIBADIAN_SECTIONS } from "@/lib/questions";
 import { CheckCircle, Loader2, ArrowLeft, AlertCircle } from "lucide-react";
 import Swal from "sweetalert2";
 
@@ -15,7 +13,7 @@ export default function KepribadianTestPage() {
   const [alreadyDone, setAlreadyDone] = useState(false);
   const [isLocked, setIsLocked] = useState(false);
   const [lockMessage, setLockMessage] = useState("");
-  const [answers, setAnswers] = useState<Record<number, string>>({});
+  const [answers, setAnswers] = useState<Record<number, number>>({});
   const [pendaftarId, setPendaftarId] = useState<string | null>(null);
 
   // Autosave answers to localStorage
@@ -44,6 +42,7 @@ export default function KepribadianTestPage() {
       }
     }
   }, [answers]);
+
   const [page, setPage] = useState(0);
   const topRef = useRef<HTMLDivElement>(null);
 
@@ -51,7 +50,7 @@ export default function KepribadianTestPage() {
   const totalPages = Math.ceil(KEPRIBADIAN_QUESTIONS.length / ITEMS_PER_PAGE);
   const currentQuestions = KEPRIBADIAN_QUESTIONS.slice(
     page * ITEMS_PER_PAGE,
-    (page + 1) * ITEMS_PER_PAGE,
+    (page + 1) * ITEMS_PER_PAGE
   );
 
   useEffect(() => {
@@ -88,8 +87,8 @@ export default function KepribadianTestPage() {
     if (unanswered.length > 0) {
       Swal.fire(
         "Perhatian",
-        `Masih ada ${unanswered.length} soal yang belum dijawab di halaman ini.`,
-        "warning",
+        `Masih ada ${unanswered.length} butir yang belum dijawab di halaman ini.`,
+        "warning"
       );
       return;
     }
@@ -101,8 +100,8 @@ export default function KepribadianTestPage() {
     if (unanswered.length > 0) {
       Swal.fire(
         "Perhatian",
-        `Masih ada ${unanswered.length} soal yang belum dijawab.`,
-        "warning",
+        `Masih ada ${unanswered.length} butir yang belum dijawab.`,
+        "warning"
       );
       return;
     }
@@ -112,10 +111,11 @@ export default function KepribadianTestPage() {
       text: "Jawaban yang sudah dikirim tidak dapat diubah.",
       icon: "question",
       showCancelButton: true,
-      confirmButtonColor: "#004A99",
+      confirmButtonColor: "#059669",
       cancelButtonColor: "#6b7280",
       confirmButtonText: "Ya, Kirim",
-      cancelButtonText: "Batal" });
+      cancelButtonText: "Batal"
+    });
     if (!result.isConfirmed) return;
 
     try {
@@ -126,11 +126,12 @@ export default function KepribadianTestPage() {
       const res = await fetch("/api/pendaftar/ujian/submit", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload) });
+        body: JSON.stringify(payload)
+      });
       if (!res.ok) {
-          const errData = await res.json().catch(() => null);
-          throw new Error(errData?.error || "Gagal mengirim");
-        }
+        const errData = await res.json().catch(() => null);
+        throw new Error(errData?.error || "Gagal mengirim");
+      }
 
       if (typeof window !== "undefined") {
         localStorage.removeItem("alandalus_ululalbaab_ujian_kepribadian_draft");
@@ -139,8 +140,9 @@ export default function KepribadianTestPage() {
       await Swal.fire({
         icon: "success",
         title: "Alhamdulillah!",
-        text: "Seleksi Kepribadian berhasil diselesaikan.",
-        confirmButtonColor: "#004A99" });
+        text: "Angket Karakter & Kepribadian berhasil diselesaikan.",
+        confirmButtonColor: "#059669"
+      });
       router.push("/dashboard/pendaftar/undangan-seleksi");
     } catch (err: any) {
       Swal.fire("Error", err.message, "error");
@@ -160,17 +162,15 @@ export default function KepribadianTestPage() {
   if (alreadyDone) {
     return (
       <div className="max-w-lg mx-auto p-5 md:p-8 text-center mt-10">
-        <div className="bg-white rounded-lg shadow-sm border p-6 md:p-10">
+        <div className="bg-white rounded-2xl shadow-sm border p-6 md:p-10">
           <CheckCircle className="w-16 h-16 text-emerald-500 mx-auto mb-4" />
           <h2 className="text-xl font-bold mb-2">Tes Sudah Dikerjakan</h2>
           <p className="text-stone-600 mb-6">
-            Anda sudah menyelesaikan Seleksi Kepribadian sebelumnya.
+            Anda sudah menyelesaikan Angket Karakter & Kepribadian sebelumnya.
           </p>
           <button
-            onClick={() =>
-              router.push("/dashboard/pendaftar?tab=undangan-seleksi")
-            }
-            className="px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white font-bold rounded-lg transition-colors shadow-sm shadow-primary-100"
+            onClick={() => router.push("/dashboard/pendaftar?tab=undangan-seleksi")}
+            className="px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white font-bold rounded-xl transition-colors"
           >
             Kembali ke Jadwal Seleksi
           </button>
@@ -182,7 +182,7 @@ export default function KepribadianTestPage() {
   if (isLocked) {
     return (
       <div className="max-w-lg mx-auto p-5 md:p-8 text-center mt-10">
-        <div className="bg-white rounded-[2rem] shadow-sm border p-6 md:p-10">
+        <div className="bg-white rounded-3xl shadow-sm border p-6 md:p-10">
           <div className="w-20 h-20 bg-secondary-100 rounded-full flex items-center justify-center mx-auto mb-6">
             <AlertCircle className="w-10 h-10 text-secondary-600" />
           </div>
@@ -190,12 +190,11 @@ export default function KepribadianTestPage() {
             Akses Terkunci
           </h2>
           <p className="text-ink-600 mb-8 leading-relaxed font-medium">
-            {lockMessage ||
-              "Anda belum dapat mengakses halaman tes ini. Silakan selesaikan tahap verifikasi dokumen terlebih dahulu."}
+            {lockMessage || "Anda belum dapat mengakses halaman tes ini. Silakan selesaikan tahap verifikasi dokumen terlebih dahulu."}
           </p>
           <button
             onClick={() => router.push("/dashboard/pendaftar")}
-            className="w-full px-6 py-4 bg-primary-700 hover:bg-primary-800 text-white font-black rounded-lg transition-all shadow-sm uppercase tracking-widest text-sm"
+            className="w-full px-6 py-4 bg-primary-700 hover:bg-primary-800 text-white font-black rounded-xl transition-all shadow-sm uppercase tracking-widest text-sm"
           >
             Kembali ke Dashboard
           </button>
@@ -209,8 +208,8 @@ export default function KepribadianTestPage() {
       <div ref={topRef} />
       
       {pendaftarId && (
-        <div className="mb-4 p-4 bg-amber-100 border border-amber-300 rounded-lg text-amber-900 flex items-center gap-3 whitespace-nowrap shrink-0">
-          <AlertCircle className="w-5 h-5 flex-shrink-0" />
+        <div className="mb-4 p-4 bg-amber-100 border border-amber-300 rounded-xl text-amber-900 flex items-center gap-3">
+          <AlertCircle className="w-5 h-5 shrink-0" />
           <p className="text-sm font-bold">MODE ADMIN: Anda sedang mengakses/mengisikan ujian atas nama santri lain.</p>
         </div>
       )}
@@ -222,96 +221,102 @@ export default function KepribadianTestPage() {
         <ArrowLeft className="w-4 h-4" /> Kembali
       </button>
 
-      <div className="bg-linear-to-r from-primary-600 to-primary-800 rounded-lg p-6 mb-6">
-        <h1 className="text-xl font-bold text-white">
-          Seleksi Kepribadian Calon Santri/Wati
+      <div className="bg-gradient-to-r from-emerald-600 via-teal-700 to-emerald-800 rounded-2xl p-6 mb-6 text-white shadow-md">
+        <h1 className="text-xl md:text-2xl font-black">
+          Angket Karakter & Kepribadian Calon Santri
         </h1>
-        <p className="text-primary-100 text-sm mt-1">
-          20 pernyataan • Skala 1-4 • Durasi 30 menit
+        <p className="text-emerald-100 text-sm mt-1">
+          40 butir pernyataan • Skala 1 (Sangat Tidak Setuju) s.d. 5 (Sangat Setuju) • Durasi 30 menit
         </p>
       </div>
 
-      <div className="bg-primary-50 border border-primary-200 rounded-lg p-4">
+      <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-4 mb-6">
         <div className="flex gap-4">
-          <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center border border-primary-100 flex-shrink-0">
-            <AlertCircle className="w-6 h-6 text-primary-600" />
+          <div className="w-11 h-11 rounded-xl bg-white flex items-center justify-center border border-emerald-200 shrink-0 text-emerald-700 font-bold">
+            💡
           </div>
           <div>
-            <h4 className="font-bold text-primary-800 mb-1 text-sm">
-              Pesan dari Mudir
+            <h4 className="font-bold text-emerald-900 mb-1 text-sm">
+              Petunjuk Pengisian
             </h4>
-            <p className="text-sm text-primary-700 leading-relaxed italic">
-              "Bismillah, kerjakan dengan jujur dan penuh optimisme. Hasil
-              terbaik adalah buah dari kejujuran dan usaha yang ikhlas."
-            </p>
-            <p className="text-sm text-primary-600 leading-relaxed mt-1">
-              - Ustadz Tri Sunyoto, M.Pd.
+            <p className="text-xs text-emerald-800 leading-relaxed">
+              Bacalah setiap pernyataan dengan seksama, lalu pilih opsi yang <strong>paling sesuai dengan dirimu yang sebenarnya</strong>. Tidak ada jawaban salah atau benar. Kerjakan dengan jujur dan mandiri.
             </p>
           </div>
         </div>
       </div>
 
-      {/* Progress */}
-      <div className="bg-white rounded-lg border p-4 mb-6 shadow-sm mt-6">
-        <div className="flex justify-between items-center mb-2 text-sm">
-          <span className="text-stone-600">
+      {/* Progress Bar */}
+      <div className="bg-white rounded-2xl border p-4 mb-6 shadow-xs">
+        <div className="flex justify-between items-center mb-2 text-xs font-bold">
+          <span className="text-stone-500">
             Halaman {page + 1} dari {totalPages}
           </span>
-          <span className="font-bold text-primary-600">
-            {Object.keys(answers).length}/{KEPRIBADIAN_QUESTIONS.length} dijawab
+          <span className="text-emerald-700">
+            {Object.keys(answers).length} dari {KEPRIBADIAN_QUESTIONS.length} butir terjawab
           </span>
         </div>
-        <div className="w-full h-2 bg-stone-100 rounded-full overflow-hidden whitespace-nowrap inline-block shrink-0">
+        <div className="w-full h-2.5 bg-stone-100 rounded-full overflow-hidden">
           <div
-            className="h-full bg-linear-to-r from-primary-500 to-primary-700 rounded-full transition-all duration-500 shadow-sm shadow-primary-200"
+            className="h-full bg-emerald-600 rounded-full transition-all duration-300"
             style={{
-              width: `${(Object.keys(answers).length / KEPRIBADIAN_QUESTIONS.length) * 100}%` }}
+              width: `${(Object.keys(answers).length / KEPRIBADIAN_QUESTIONS.length) * 100}%`
+            }}
           />
         </div>
       </div>
 
+      {/* Question Items */}
       <div className="space-y-4 mb-6">
         {currentQuestions.map((q) => (
-          <div key={q.id} className="bg-white p-5 rounded-lg border shadow-sm">
-            <p className="font-bold text-stone-400 text-sm mb-3">{q.id}.</p>
-            <div className="grid grid-cols-1 gap-3">
-              <div
-                onClick={() => setAnswers((p) => ({ ...p, [q.id]: "A" }))}
-                className={`cursor-pointer p-5 border-2 rounded-lg transition-all duration-300 ${answers[q.id] === "A" ? "bg-primary-50 border-primary-500 text-primary-950 shadow-sm ring-4 ring-primary-500/5" : "border-stone-100 hover:border-primary-200 hover:bg-slate-50"}`}
-              >
-                <span
-                  className={`font-black mr-3 border rounded-lg px-2.5 py-1 text-xs transition-colors ${answers[q.id] === "A" ? "bg-primary-600 text-white border-primary-600" : "bg-white text-stone-400 border-stone-200"}`}
-                >
-                  A
+          <div key={q.id} className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs">
+            <div className="flex items-center justify-between mb-2">
+              <span className="font-black text-emerald-800 text-xs px-2.5 py-0.5 bg-emerald-50 border border-emerald-200 rounded-lg">
+                Butir {q.id}
+              </span>
+              {q.group && (
+                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                  {q.group}
                 </span>
-                <span className="font-bold text-sm sm:text-base">
-                  {q.optionA}
-                </span>
-              </div>
-              <div
-                onClick={() => setAnswers((p) => ({ ...p, [q.id]: "B" }))}
-                className={`cursor-pointer p-5 border-2 rounded-lg transition-all duration-300 ${answers[q.id] === "B" ? "bg-primary-50 border-primary-500 text-primary-950 shadow-sm ring-4 ring-primary-500/5" : "border-stone-100 hover:border-primary-200 hover:bg-slate-50"}`}
-              >
-                <span
-                  className={`font-black mr-3 border rounded-lg px-2.5 py-1 text-xs transition-colors ${answers[q.id] === "B" ? "bg-primary-600 text-white border-primary-600" : "bg-white text-stone-400 border-stone-200"}`}
-                >
-                  B
-                </span>
-                <span className="font-bold text-sm sm:text-base">
-                  {q.optionB}
-                </span>
-              </div>
+              )}
+            </div>
+            <p className="font-semibold text-slate-800 text-sm sm:text-base leading-relaxed mb-4">
+              {q.text}
+            </p>
+            <div className="grid grid-cols-5 gap-2">
+              {[1, 2, 3, 4, 5].map((val) => {
+                const isSelected = answers[q.id] === val;
+                const label = val === 1 ? "Sangat Tdk Setuju" : val === 5 ? "Sangat Setuju" : val === 2 ? "Tdk Setuju" : val === 3 ? "Ragu-ragu" : "Setuju";
+                return (
+                  <label
+                    key={val}
+                    className={`cursor-pointer border-2 p-2.5 sm:p-3 rounded-xl flex flex-col items-center justify-center text-center transition-all ${ isSelected ? "bg-emerald-50 border-emerald-600 font-bold text-emerald-950 shadow-xs ring-2 ring-emerald-600/10" : "border-slate-200 hover:border-emerald-200 hover:bg-slate-50 text-slate-700" }`}
+                  >
+                    <input
+                      type="radio"
+                      name={`kepribadian-${q.id}`}
+                      value={val}
+                      className="hidden"
+                      onChange={() => setAnswers((prev) => ({ ...prev, [q.id]: val }))}
+                    />
+                    <span className="block text-base sm:text-lg font-black leading-none mb-1">{val}</span>
+                    <span className="text-[9px] sm:text-[10px] text-slate-500 leading-tight block line-clamp-1">
+                      {label}
+                    </span>
+                  </label>
+                );
+              })}
             </div>
           </div>
         ))}
       </div>
 
-      {/* Navigation */}
+      {/* Navigation Buttons */}
       <div className="sticky bottom-4 z-50 flex gap-3">
         {page > 0 && (
           <button
             onClick={() => setPage((p) => p - 1)}
-            className="flex-1 py-4 bg-white border-2 border-stone-300 hover:bg-stone-50 text-stone-700 font-bold rounded-lg shadow-sm transition-colors"
+            className="flex-1 py-4 bg-white border-2 border-stone-300 hover:bg-stone-50 text-stone-700 font-bold rounded-xl shadow-sm transition-colors text-xs uppercase tracking-wider"
           >
             Sebelumnya
           </button>
@@ -319,15 +324,15 @@ export default function KepribadianTestPage() {
         {page < totalPages - 1 ? (
           <button
             onClick={handleNext}
-            className="flex-1 py-4 bg-primary-600 hover:bg-primary-700 text-white font-black uppercase tracking-widest text-sm rounded-lg shadow-sm shadow-primary-200 transition-all active:scale-95"
+            className="flex-1 py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-black uppercase tracking-widest text-xs rounded-xl shadow-md shadow-emerald-900/20 transition-all active:scale-95"
           >
-            Lanjutkan
+            Lanjutkan ({page + 1}/{totalPages})
           </button>
         ) : (
           <button
             onClick={handleSubmit}
             disabled={loading}
-            className="flex-1 py-4 bg-primary-600 hover:bg-primary-700 disabled:bg-stone-300 text-white font-black uppercase tracking-widest text-sm rounded-lg shadow-sm shadow-primary-200 transition-all active:scale-95 flex items-center justify-center gap-2"
+            className="flex-1 py-4 bg-emerald-600 hover:bg-emerald-700 disabled:bg-stone-300 text-white font-black uppercase tracking-widest text-xs rounded-xl shadow-md shadow-emerald-900/20 transition-all active:scale-95 flex items-center justify-center gap-2"
           >
             {loading ? (
               <>
@@ -342,4 +347,3 @@ export default function KepribadianTestPage() {
     </div>
   );
 }
-

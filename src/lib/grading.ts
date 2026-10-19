@@ -14,12 +14,12 @@ export const ANSWER_KEYS = {
     12: "B",
     13: "A",
     14: "A",
-    15: "A", // IPA (q13 replaced)
+    15: "A", // IPA
     16: "D",
     17: "A",
     18: "C",
     19: "B",
-    20: "B", // Mat (q20 replaced)
+    20: "B", // Mat
   },
   IL: {
     1: "B",
@@ -41,7 +41,7 @@ export const ANSWER_KEYS = {
     17: "C",
     18: "D",
     19: "B",
-    20: "C", // Mat (q20 replaced)
+    20: "C", // Mat
   },
   SMA: {
     1: "A",
@@ -63,8 +63,9 @@ export const ANSWER_KEYS = {
     17: "C",
     18: "D",
     19: "B",
-    20: "C", // Mat (q20 replaced)
-  } };
+    20: "C", // Mat
+  }
+};
 
 export function calculateAkademikScore(
   answers: Record<string, string>,
@@ -83,33 +84,70 @@ export function calculateAkademikScore(
 }
 
 export function calculateKepribadianScore(
-  answers: Record<string, string>,
+  answers: Record<string, string | number>,
 ): number {
-  // Logic: Assume 'A' is generally the "Pesantren" answer for simplicity unless key map provided.
-  // Ideally this needs a map. For now, let's assume random distribution or just count 'A'.
-  // User asked AI to determine. Let's assume Option A is positive for 50% and B for 50%.
-  // BUT without the text of questions here, it's impossible to know.
-  // Fallback: Return a placeholder score or count 'A' as simple metric if acceptable.
-  // BETTER: Return 80 (Safe default) if logic unknown, OR calculate based on provided key.
-  // Given user instructions, I'll calculate based on majority 'A' being positive for now
-  // as in many forms A is the "ideal" first choice.
-  let positive = 0;
-  Object.values(answers).forEach((val) => {
-    if (val === "A") positive++;
-  });
-  return (positive / Object.keys(answers).length) * 100;
+  const keys = Object.keys(answers);
+  if (keys.length === 0) return 0;
+
+  // Check if answers are Likert numbers or legacy "A"/"B"
+  const isLikert = keys.some(k => typeof answers[k] === 'number' || !isNaN(Number(answers[k])));
+
+  if (!isLikert) {
+    // Legacy EPPS forced choice fallback
+    let positive = 0;
+    Object.values(answers).forEach((val) => {
+      if (val === "A") positive++;
+    });
+    return (positive / keys.length) * 100;
+  }
+
+  // 40-item Likert Karakter scoring
+  const REVERSE_ITEMS = [3, 5, 8, 10, 14, 17, 21, 23, 26, 28, 32, 35];
+  let coreTotal = 0;
+  let coreCount = 0;
+
+  for (let i = 1; i <= 36; i++) {
+    const raw = answers[i] || answers[String(i)];
+    if (raw !== undefined && raw !== null) {
+      const val = Number(raw);
+      if (!isNaN(val) && val >= 1 && val <= 5) {
+        const itemScore = REVERSE_ITEMS.includes(i) ? (6 - val) : val;
+        coreTotal += itemScore;
+        coreCount++;
+      }
+    }
+  }
+
+  if (coreCount === 0) return 70; // safe baseline
+  return Math.round((coreTotal / (coreCount * 5)) * 100);
 }
 
 export function calculateKesiapanScore(
-  answers: Record<string, number>,
+  answers: Record<string, number | string>,
 ): number {
-  // Likert 1-5. Max score = 15 * 5 = 75.
+  const keys = Object.keys(answers);
+  if (keys.length === 0) return 0;
+
+  const REVERSE_ITEMS = [3, 5, 10, 13, 17];
   let total = 0;
-  Object.values(answers).forEach((val) => (total += Number(val)));
-  // Normalize to 0-100
-  // Max possible for 15 questions is 75.
-  const maxPossible = 15 * 5;
-  return (total / maxPossible) * 100;
+  let count = 0;
+
+  keys.forEach((k) => {
+    const id = Number(k);
+    const raw = answers[k];
+    if (raw !== undefined && raw !== null) {
+      const val = Number(raw);
+      if (!isNaN(val) && val >= 1 && val <= 5) {
+        const itemScore = REVERSE_ITEMS.includes(id) ? (6 - val) : val;
+        total += itemScore;
+        count++;
+      }
+    }
+  });
+
+  if (count === 0) return 0;
+  const maxPossible = count * 5;
+  return Math.round((total / maxPossible) * 100);
 }
 
 export function calculateFinalScore(
@@ -119,8 +157,7 @@ export function calculateFinalScore(
   kepribadian: number,
   kesiapan: number,
 ): number {
-  // Weighting:
-  // Akademik 30%, Quran 30%, Wawancara 20%, Kepribadian 10%, Kesiapan 10%
+  // Weighting: Akademik 30%, Quran 30%, Wawancara 20%, Kepribadian 10%, Kesiapan 10%
   return (
     akademik * 0.3 +
     quran * 0.3 +
@@ -134,8 +171,9 @@ export function determineStatus(
   finalScore: number,
   quranScore: number,
 ): "LULUS" | "CADANGAN" | "DITOLAK" {
-  // Critical Condition: Quran < 40 (Grade E) -> GAGAL
-  if (quranScore < 40) return "DITOLAK";
+  // Standar KKM Baru Al-Qur'an: Minimal 75 untuk Lulus Murni
+  if (quranScore < 60) return "DITOLAK";
+  if (quranScore < 75) return "CADANGAN"; // Lulus bersyarat / wajib matrikulasi
 
   if (finalScore >= 70) return "LULUS";
   if (finalScore >= 55) return "CADANGAN";
@@ -145,15 +183,15 @@ export function determineStatus(
 export function gradeToScore(grade: string): number {
   switch (grade?.toUpperCase()) {
     case "A":
-      return 95; // Mid 85-100
+      return 95;
     case "B":
-      return 77; // Mid 70-84
+      return 80;
     case "C":
-      return 62; // Mid 55-69
+      return 68;
     case "D":
-      return 47; // Mid 40-54
+      return 50;
     case "E":
-      return 20; // < 40
+      return 20;
     default:
       return 0;
   }
@@ -161,23 +199,18 @@ export function gradeToScore(grade: string): number {
 
 export function scoreToGrade(score: number): string {
   if (score >= 85) return "A";
-  if (score >= 70) return "B";
-  if (score >= 55) return "C";
+  if (score >= 75) return "B";
+  if (score >= 60) return "C";
   if (score >= 40) return "D";
   return "E";
 }
 
-// ============================================================================
-// NEW GRADING LOGIC (Based on Excel R.H Matrix)
-// ============================================================================
-
-export function evaluateKepribadianGrade(
-  score: number,
-): "A" | "B" | "C" | "D" | "E" {
-  if (score >= 80) return "A";
-  if (score >= 50) return "B";
-  if (score >= 35) return "C";
-  if (score >= 20) return "D";
+export function evaluateQuranGrade(score: number): "A" | "B" | "C" | "D" | "E" {
+  // Standar KKM Baru Resmi Ujian Al-Qur'an: Minimal 75
+  if (score >= 85) return "A"; // Lulus predikat Baik Sekali
+  if (score >= 75) return "B"; // Lulus predikat Baik (Memenuhi KKM)
+  if (score >= 60) return "C"; // Lulus Bersyarat (Di bawah KKM, wajib matrikulasi)
+  if (score >= 40) return "D"; // Tidak Lulus
   return "E";
 }
 
@@ -191,7 +224,9 @@ export function evaluateAkademikGrade(
   return "E";
 }
 
-export function evaluateQuranGrade(score: number): "A" | "B" | "C" | "D" | "E" {
+export function evaluateKepribadianGrade(
+  score: number,
+): "A" | "B" | "C" | "D" | "E" {
   if (score >= 80) return "A";
   if (score >= 65) return "B";
   if (score >= 50) return "C";
@@ -255,15 +290,12 @@ export function determineFinalDecision(grades: {
   const vals = Object.values(grades);
 
   // 1. CRITICAL REJECTION (DITOLAK)
-  // Any E is an automatic rejection
   if (vals.includes("E")) return "DITOLAK";
 
-  // Critical Components (Quran or Wawancara Calon Santri) getting C or D is an automatic rejection
+  // Critical Components (Quran or Wawancara Calon Santri) getting D is an automatic rejection
   if (
     grades.quran === "D" ||
-    grades.wawancaraSantri === "D" ||
-    grades.quran === "C" ||
-    grades.wawancaraSantri === "C"
+    grades.wawancaraSantri === "D"
   ) {
     return "DITOLAK";
   }
@@ -278,21 +310,15 @@ export function determineFinalDecision(grades: {
   if (secondaryDs > 1) return "DITOLAK";
 
   // 2. AUTOMATIC RESERVE (CADANGAN)
-  // Rule: "Jika Quran dapet Cadangan (B), otomatis masuk Cadangan"
-  if (grades.quran === "B") return "CADANGAN";
-
-  // If there is exactly one D in secondary components, it becomes CADANGAN
+  if (grades.quran === "B" || grades.quran === "C") return "CADANGAN";
   if (secondaryDs === 1) return "CADANGAN";
 
-  // Also if Wawancara Calon Santri is B, it's very likely Cadangan unless everything else is A
   if (grades.wawancaraSantri === "B") {
     const countA = vals.filter((v) => v === "A").length;
     if (countA < 4) return "CADANGAN";
   }
 
   // 3. DITERIMA (LULUS)
-  // At this point Quran is 'A'.
-  // Allowed one 'C' in non-critical components (Akademik, Ortu, Kesiapan, Kepribadian)
   const countC = vals.filter((v) => v === "C").length;
   if (countC > 1) return "CADANGAN";
 
