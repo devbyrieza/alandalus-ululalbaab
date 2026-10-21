@@ -20,9 +20,17 @@ function getExamCategory(title: string): string {
   const t = title.toLowerCase();
   if (t.includes("quran") || t.includes("qur'an") || t.includes("bacaan") || t.includes("hafalan")) return "QURAN";
   if (t.includes("arab") || t.includes("lisan")) return "LISAN_ARAB";
-  if (t.includes("calsan") || t.includes("santri")) return "W_SANTRI";
-  if (t.includes("cawalsan") || t.includes("ortu") || t.includes("orang tua") || t.includes("wali"))
+  // W_ORTU must be checked BEFORE W_SANTRI because titles often contain "Orangtua/Wali Santri"
+  if (
+    t.includes("cawalsan") ||
+    t.includes("ortu") ||
+    t.includes("orang tua") ||
+    t.includes("orangtua") ||
+    t.includes("wali")
+  ) {
     return "W_ORTU";
+  }
+  if (t.includes("calsan") || t.includes("santri")) return "W_SANTRI";
   return "OTHER";
 }
 
@@ -364,6 +372,7 @@ export async function GET(request: Request) {
       if (!session.created_by) return false;
       const sStart = new Date(session.start_time).getTime();
       const sEnd = new Date(session.end_time).getTime();
+      if (isNaN(sStart) || isNaN(sEnd)) return false;
 
       return activeExaminerBookings.some((b) => {
         // Exclude the session itself if it is the one booked
@@ -380,6 +389,7 @@ export async function GET(request: Request) {
 
         const bStart = new Date(b.exam_session.start_time).getTime();
         const bEnd = new Date(b.exam_session.end_time).getTime();
+        if (isNaN(bStart) || isNaN(bEnd)) return false;
 
         // Check overlapping intervals: [sStart, sEnd) overlaps with [bStart, bEnd)
         return sStart < bEnd && sEnd > bStart;
@@ -463,6 +473,8 @@ export async function GET(request: Request) {
 
     return NextResponse.json({
       data: {
+        isSMA,
+        jenjang: pendaftar.jenjang,
         grupA,
         grupB: {
           hasSchedules: hasGrupBSessions,

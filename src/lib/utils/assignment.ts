@@ -14,19 +14,66 @@ export async function getLeastLoadedExaminerFromPool(
   tahunAjaranId: string,
   pendaftarGender?: string | null,
 ) {
-  // 1. Tentukan kata kunci pencarian berdasarkan kategori
-  let searchKeyword = "";
-  if (category === "QURAN") searchKeyword = "qur";
-  else if (category === "W_SANTRI") searchKeyword = "santri";
-  else if (category === "W_ORTU") searchKeyword = "ortu";
-  else if (category === "LISAN_ARAB") searchKeyword = "arab";
-  else if (category === "HAFALAN") searchKeyword = "hafalan";
+  // 1. Tentukan kondisi filter pencarian berdasarkan kategori
+  let titleWhere: any = {};
+  if (category === "QURAN") {
+    titleWhere = {
+      OR: [
+        { title: { contains: "qur", mode: "insensitive" } },
+        { title: { contains: "bacaan", mode: "insensitive" } },
+        { title: { contains: "hafalan", mode: "insensitive" } },
+      ],
+    };
+  } else if (category === "W_ORTU") {
+    titleWhere = {
+      OR: [
+        { title: { contains: "ortu", mode: "insensitive" } },
+        { title: { contains: "orang tua", mode: "insensitive" } },
+        { title: { contains: "orangtua", mode: "insensitive" } },
+        { title: { contains: "wali", mode: "insensitive" } },
+        { title: { contains: "cawalsan", mode: "insensitive" } },
+      ],
+    };
+  } else if (category === "W_SANTRI") {
+    titleWhere = {
+      AND: [
+        {
+          OR: [
+            { title: { contains: "santri", mode: "insensitive" } },
+            { title: { contains: "calsan", mode: "insensitive" } },
+          ],
+        },
+        {
+          NOT: {
+            OR: [
+              { title: { contains: "ortu", mode: "insensitive" } },
+              { title: { contains: "orang tua", mode: "insensitive" } },
+              { title: { contains: "orangtua", mode: "insensitive" } },
+              { title: { contains: "wali", mode: "insensitive" } },
+              { title: { contains: "cawalsan", mode: "insensitive" } },
+            ],
+          },
+        },
+      ],
+    };
+  } else if (category === "LISAN_ARAB") {
+    titleWhere = {
+      OR: [
+        { title: { contains: "arab", mode: "insensitive" } },
+        { title: { contains: "lisan", mode: "insensitive" } },
+      ],
+    };
+  } else if (category === "HAFALAN") {
+    titleWhere = {
+      title: { contains: "hafalan", mode: "insensitive" },
+    };
+  }
 
   // 2. Cari semua sesi yang memiliki waktu mulai yang sama dan kategori yang sama
   const sessions = await prisma.examSession.findMany({
     where: {
       start_time: startTime,
-      title: { contains: searchKeyword, mode: "insensitive" },
+      ...titleWhere,
       is_active: true },
     select: {
       id: true,
