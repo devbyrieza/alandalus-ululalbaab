@@ -272,6 +272,8 @@ export async function POST(req: NextRequest) {
       targetCategory,
       selectedIds,
       customRecipients,
+      recipientsChunk,
+      delayMode = "safe",
       message,
       header,
       footer,
@@ -290,6 +292,25 @@ export async function POST(req: NextRequest) {
 
     const candidateRecipients: RecipientItem[] = [];
 
+    // Category 0: Direct chunk of recipients passed by frontend batch runner
+    if (
+      Array.isArray(recipientsChunk) &&
+      recipientsChunk.length > 0
+    ) {
+      for (const item of recipientsChunk) {
+        candidateRecipients.push({
+          id: item.id || `chunk-${Date.now()}-${Math.random()}`,
+          type: item.type || "pendaftar",
+          name: item.name,
+          phone: formatPhoneNumber(item.phone),
+          nomor_pendaftaran: item.nomor_pendaftaran || "-",
+          jenjang: item.jenjang || "-",
+          tahun_ajaran: item.tahun_ajaran || "-",
+          roleLabel: item.roleLabel || "Penerima",
+        });
+      }
+    }
+
     // Helper to resolve pendaftar phone
     const resolvePendaftarPhone = (p: any): string => {
       let phone = p.no_hp || "";
@@ -304,7 +325,9 @@ export async function POST(req: NextRequest) {
     };
 
     // Category 1: Pendaftar
-    if (
+    if (candidateRecipients.length > 0) {
+      // Already populated via recipientsChunk
+    } else if (
       targetCategory === "all_pendaftar" ||
       targetCategory === "selected_pendaftar" ||
       body.ids // backwards compatibility
@@ -609,8 +632,20 @@ export async function POST(req: NextRequest) {
         });
       }
 
-      // Polite pacing: 350ms between sends to protect against gateway rate-limits
-      await new Promise((resolve) => setTimeout(resolve, 350));
+      // Human-like Anti-Ban Pacing Delay with Random Jitter
+      let pacingMs = 3500;
+      if (delayMode === "safe") {
+        // Safe Mode: 3000ms - 6000ms (Average ~4.5s) to mimic human typing & bypass bot detection
+        pacingMs = Math.floor(Math.random() * 3000) + 3000;
+      } else if (delayMode === "normal") {
+        // Normal Mode: 1500ms - 3000ms
+        pacingMs = Math.floor(Math.random() * 1500) + 1500;
+      } else if (delayMode === "fast") {
+        // Fast Mode: 800ms - 1200ms
+        pacingMs = Math.floor(Math.random() * 400) + 800;
+      }
+
+      await new Promise((resolve) => setTimeout(resolve, pacingMs));
     }
 
     const successCount = results.filter((r) => r.status === "success").length;

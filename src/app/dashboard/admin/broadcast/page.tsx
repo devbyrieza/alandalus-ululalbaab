@@ -17,6 +17,10 @@ import {
   Award,
   MessagesSquare,
   ShieldCheck,
+  ShieldAlert,
+  Zap,
+  AlertTriangle,
+  StopCircle,
   Sparkles,
   Phone,
   Filter,
@@ -199,6 +203,29 @@ export default function BroadcastPage() {
   const [sending, setSending] = useState(false);
   const [results, setResults] = useState<any>(null);
 
+  // Anti-Ban Pacing & Batching States
+  const [delayMode, setDelayMode] = useState<"safe" | "normal" | "fast">("safe");
+  const [sendProgress, setSendProgress] = useState<{
+    active: boolean;
+    currentBatch: number;
+    totalBatches: number;
+    sentCount: number;
+    failedCount: number;
+    totalRecipients: number;
+    currentName: string;
+    percentage: number;
+  }>({
+    active: false,
+    currentBatch: 0,
+    totalBatches: 0,
+    sentCount: 0,
+    failedCount: 0,
+    totalRecipients: 0,
+    currentName: "",
+    percentage: 0,
+  });
+  const abortBroadcastRef = useRef(false);
+
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
@@ -305,6 +332,19 @@ export default function BroadcastPage() {
 
   const currentItems = getCurrentTabList();
   const currentSelectedSet = activeTab === "pendaftar" ? selectedPendaftar : selectedStaff;
+  const selectedCount = currentSelectedSet.length;
+
+  const riskLevel = useMemo(() => {
+    if (selectedCount <= 25) return "low";
+    if (selectedCount <= 50) return "medium";
+    return "high";
+  }, [selectedCount]);
+
+  const estimatedTimeMinutes = useMemo(() => {
+    const avgSeconds = delayMode === "safe" ? 4.5 : delayMode === "normal" ? 2.3 : 1.0;
+    const totalSec = selectedCount * avgSeconds;
+    return (totalSec / 60).toFixed(1);
+  }, [selectedCount, delayMode]);
 
   // Toggle select single item
   const toggleSelectOne = (id: string) => {
@@ -541,7 +581,7 @@ export default function BroadcastPage() {
     return `${h}${salutation}${text}${f}`;
   };
 
-  // Trigger Send Broadcast
+  // Trigger Send Broadcast with Anti-Ban Micro-Batching
   const handleSendBroadcast = async () => {
     const isPendaftar = activeTab === "pendaftar";
     const selectedList = isPendaftar ? selectedPendaftar : selectedStaff;
@@ -579,13 +619,21 @@ export default function BroadcastPage() {
 
     const targetDesc = categoryTitleMap[activeTab];
 
+    const modeLabels: Record<string, string> = {
+      safe: "Mode Aman (Anti-Ban, jeda acak 3–6 detik)",
+      normal: "Mode Normal (Jeda 1.5–3 detik)",
+      fast: "Mode Cepat (Jeda ~1 detik)",
+    };
+
     const { isConfirmed } = await Swal.fire({
       title: "Kirim Broadcast WhatsApp?",
       html: `
         <div class="text-left text-sm space-y-2 mt-2">
           <p><strong>Target Kategori:</strong> ${targetDesc}</p>
           <p><strong>Jumlah Penerima:</strong> ${selectedList.length} orang</p>
-          <p class="text-stone-500 text-xs">Pesan akan dikirimkan secara langsung menggunakan gateway resmi WhatsApp dengan proteksi rate-limit.</p>
+          <p><strong>Mode Pengiriman:</strong> ${modeLabels[delayMode]}</p>
+          <p><strong>Estimasi Waktu:</strong> ±${estimatedTimeMinutes} menit</p>
+          <p class="text-stone-500 text-xs mt-1">Pesan akan dikirim bertahap dalam batch kecil untuk mencegah timeout server dan melindungi nomor dari pemblokiran spam WhatsApp.</p>
         </div>
       `,
       icon: "question",
@@ -597,44 +645,116 @@ export default function BroadcastPage() {
 
     if (!isConfirmed) return;
 
+    // Resolve all full recipient items
+    let recipientsToSend: Array<{
+      id: string;
+      name: string;
+      phone: string;
+      nomor_pendaftaran?: string;
+      jenjang?: string;
+      tahun_ajaran?: string;
+      roleLabel?: string;
+      type: "pendaftar" | "profile";
+    }> = [];
+
+    if (isPendaftar) {
+      recipientsToSend = pendaftarList
+        .filter((p) => selectedPendaftar.includes(p.id))
+        .map((p) => ({
+          id: p.id,
+          name: p.nama_lengkap,
+          phone: p.phone,
+          nomor_pendaftaran: p.nomor_pendaftaran,
+          jenjang: p.jenjang,
+          tahun_ajaran: p.tahun_ajaran,
+          roleLabel: "Calon Santri",
+          type: "pendaftar" as const,
+        }));
+    } else {
+      const list = staffData[activeTab] || [];
+      recipientsToSend = list
+        .filter((s) => selectedStaff.includes(s.id))
+        .map((s) => ({
+          id: s.id,
+          name: s.full_name,
+          phone: s.phone,
+          nomor_pendaftaran: "-",
+          jenjang: "-",
+          tahun_ajaran: "-",
+          roleLabel: s.roleLabel,
+          type: "profile" as const,
+        }));
+    }
+
+    const CHUNK_SIZE = delayMode === "safe" ? 8 : delayMode === "normal" ? 12 : 20;
+    const chunks: typeof recipientsToSend[] = [];
+    for (let i = 0; i < recipientsToSend.length; i += CHUNK_SIZE) {
+      chunks.push(recipientsToSend.slice(i, i + CHUNK_SIZE));
+    }
+
     try {
       setSending(true);
       setResults(null);
+      abortBroadcastRef.current = false;
 
-      // Map activeTab to targetCategory enum
-      const targetCategoryMap: Record<CategoryTab, TargetCategory> = {
-        pendaftar: "selected_pendaftar",
-        penguji_quran: "selected_penguji_quran",
-        penguji_arab: "selected_penguji_arab",
-        all_penguji: "selected_penguji",
-        pewawancara_calsan: "selected_pewawancara_calsan",
-        pewawancara_cawalsan: "selected_pewawancara_cawalsan",
-        all_pewawancara: "selected_pewawancara",
-        all_staff: "selected_staff",
-      };
+      const combinedResults: Array<any> = [];
+      let totalSent = 0;
+      let totalFailed = 0;
 
-      const res = await fetch("/api/admin/broadcast", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          targetCategory: targetCategoryMap[activeTab],
-          selectedIds: selectedList,
-          message,
-          header,
-          footer,
-          includeName,
-          jenjangFilter: isPendaftar ? filterJenjang : undefined,
-          statusFilter: isPendaftar ? filterStatus : undefined,
-          tahunAjaranFilter: isPendaftar ? filterTahunAjaran : undefined,
-        }),
-      });
+      for (let b = 0; b < chunks.length; b++) {
+        if (abortBroadcastRef.current) {
+          console.log("Broadcast stopped by admin user.");
+          break;
+        }
 
-      const data = await res.json();
-      if (!res.ok) {
-        throw new Error(data.error || "Gagal mengirim broadcast");
+        const currentChunk = chunks[b];
+        setSendProgress({
+          active: true,
+          currentBatch: b + 1,
+          totalBatches: chunks.length,
+          sentCount: totalSent,
+          failedCount: totalFailed,
+          totalRecipients: recipientsToSend.length,
+          currentName: currentChunk[0]?.name || "",
+          percentage: Math.round(((totalSent + totalFailed) / recipientsToSend.length) * 100),
+        });
+
+        const res = await fetch("/api/admin/broadcast", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            recipientsChunk: currentChunk,
+            delayMode,
+            message,
+            header,
+            footer,
+            includeName,
+          }),
+        });
+
+        const data = await res.json();
+        if (!res.ok) {
+          throw new Error(data.error || "Gagal mengirim batch broadcast");
+        }
+
+        totalSent += data.sent || 0;
+        totalFailed += data.failed || 0;
+        if (Array.isArray(data.details)) {
+          combinedResults.push(...data.details);
+        }
+
+        // Brief 1.5s cooling pause between batches if more batches remain
+        if (b < chunks.length - 1 && !abortBroadcastRef.current) {
+          await new Promise((resolve) => setTimeout(resolve, 1500));
+        }
       }
 
-      setResults(data);
+      setResults({
+        total: recipientsToSend.length,
+        sent: totalSent,
+        failed: totalFailed,
+        details: combinedResults,
+      });
 
       // Clear draft on successful broadcast
       if (typeof window !== "undefined") {
@@ -646,9 +766,9 @@ export default function BroadcastPage() {
       }
 
       Swal.fire({
-        icon: data.failed === 0 ? "success" : "info",
-        title: "Broadcast Selesai!",
-        text: `Berhasil dikirim: ${data.sent} | Gagal: ${data.failed}`,
+        icon: totalFailed === 0 ? "success" : "info",
+        title: abortBroadcastRef.current ? "Broadcast Dihentikan" : "Broadcast Selesai!",
+        text: `Berhasil dikirim: ${totalSent} | Gagal: ${totalFailed}`,
         confirmButtonColor: "#059669",
       });
     } catch (e: any) {
@@ -661,6 +781,7 @@ export default function BroadcastPage() {
       });
     } finally {
       setSending(false);
+      setSendProgress((prev) => ({ ...prev, active: false }));
     }
   };
 
@@ -1331,6 +1452,131 @@ export default function BroadcastPage() {
               />
             </div>
 
+            {/* Mode Kecepatan Anti-Ban & Pacing Selector */}
+            <div className="space-y-2 pt-2">
+              <div className="flex items-center justify-between">
+                <label className="text-xs font-black text-stone-900 flex items-center gap-1.5">
+                  <ShieldCheck className="w-4 h-4 text-emerald-600" />
+                  <span>Mode Kecepatan Anti-Ban (Proteksi Blokir WhatsApp)</span>
+                </label>
+                <span className="text-[10px] font-bold text-stone-500">
+                  Estimasi: ±{estimatedTimeMinutes} menit
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                {/* Option 1: Safe Mode */}
+                <button
+                  type="button"
+                  onClick={() => setDelayMode("safe")}
+                  className={`p-3 rounded-2xl border text-left transition-all relative ${
+                    delayMode === "safe"
+                      ? "bg-emerald-50/90 border-emerald-500 ring-2 ring-emerald-500/20 shadow-sm"
+                      : "bg-stone-50/70 border-stone-200 hover:bg-stone-50 hover:border-stone-300"
+                  }`}
+                >
+                  <div className="flex items-center justify-between mb-1">
+                    <div className="flex items-center gap-1.5 font-black text-xs text-emerald-950">
+                      <ShieldCheck className="w-4 h-4 text-emerald-600" />
+                      <span>Mode Aman</span>
+                    </div>
+                    <span className="text-[9px] px-1.5 py-0.2 rounded-full font-black bg-emerald-200 text-emerald-900 uppercase">
+                      Anti-Ban
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-stone-600 line-clamp-2">
+                    Jeda acak 3–6 detik. Meniru ketikan manusia untuk perlindungan maksimal.
+                  </p>
+                </button>
+
+                {/* Option 2: Normal Mode */}
+                <button
+                  type="button"
+                  onClick={() => setDelayMode("normal")}
+                  className={`p-3 rounded-2xl border text-left transition-all relative ${
+                    delayMode === "normal"
+                      ? "bg-amber-50/90 border-amber-500 ring-2 ring-amber-500/20 shadow-sm"
+                      : "bg-stone-50/70 border-stone-200 hover:bg-stone-50 hover:border-stone-300"
+                  }`}
+                >
+                  <div className="flex items-center justify-between mb-1">
+                    <div className="flex items-center gap-1.5 font-black text-xs text-amber-950">
+                      <Clock className="w-4 h-4 text-amber-600" />
+                      <span>Mode Normal</span>
+                    </div>
+                  </div>
+                  <p className="text-[11px] text-stone-600 line-clamp-2">
+                    Jeda 1.5–3 detik. Seimbang untuk 15–30 kontak.
+                  </p>
+                </button>
+
+                {/* Option 3: Fast Mode */}
+                <button
+                  type="button"
+                  onClick={() => setDelayMode("fast")}
+                  className={`p-3 rounded-2xl border text-left transition-all relative ${
+                    delayMode === "fast"
+                      ? "bg-indigo-50/90 border-indigo-500 ring-2 ring-indigo-500/20 shadow-sm"
+                      : "bg-stone-50/70 border-stone-200 hover:bg-stone-50 hover:border-stone-300"
+                  }`}
+                >
+                  <div className="flex items-center justify-between mb-1">
+                    <div className="flex items-center gap-1.5 font-black text-xs text-indigo-950">
+                      <Zap className="w-4 h-4 text-indigo-600" />
+                      <span>Mode Cepat</span>
+                    </div>
+                  </div>
+                  <p className="text-[11px] text-stone-600 line-clamp-2">
+                    Jeda ~1 detik. Khusus tes staf atau volume kecil (&lt;15 kontak).
+                  </p>
+                </button>
+              </div>
+            </div>
+
+            {/* Smart Anti-Ban Risk Indicator Banner */}
+            {selectedCount > 0 && (
+              <div
+                className={`p-3.5 rounded-2xl border flex items-start gap-3 text-xs ${
+                  riskLevel === "low"
+                    ? "bg-emerald-50/60 border-emerald-200 text-emerald-950"
+                    : riskLevel === "medium"
+                    ? "bg-amber-50/60 border-amber-200 text-amber-950"
+                    : "bg-rose-50/60 border-rose-200 text-rose-950"
+                }`}
+              >
+                <div className="shrink-0 mt-0.5">
+                  {riskLevel === "low" ? (
+                    <ShieldCheck className="w-4 h-4 text-emerald-600" />
+                  ) : riskLevel === "medium" ? (
+                    <AlertTriangle className="w-4 h-4 text-amber-600" />
+                  ) : (
+                    <ShieldAlert className="w-4 h-4 text-rose-600" />
+                  )}
+                </div>
+                <div className="space-y-0.5 flex-1">
+                  <div className="flex items-center justify-between">
+                    <span className="font-black uppercase text-[10px] tracking-wide">
+                      {riskLevel === "low"
+                        ? "Tingkat Risiko: Rendah (Sangat Aman)"
+                        : riskLevel === "medium"
+                        ? "Tingkat Risiko: Sedang (Perlu Hati-hati)"
+                        : "Tingkat Risiko: Volume Tinggi (Perhatian Khusus)"}
+                    </span>
+                    <span className="font-bold text-[10px]">
+                      {selectedCount} Nomor • Estimasi ±{estimatedTimeMinutes} Menit
+                    </span>
+                  </div>
+                  <p className="text-[11px] leading-relaxed text-stone-600">
+                    {riskLevel === "low"
+                      ? "Jumlah penerima aman untuk gateway WhatsApp. Pesan akan dikirim dengan jeda acak manusiawi agar terhindar dari deteksi spam."
+                      : riskLevel === "medium"
+                      ? "Disarankan gunakan Mode Aman (Anti-Ban). Pastikan penerima mengenali panitia atau telah menyimpan nomor WhatsApp resmi panitia."
+                      : `Mengirim ke ${selectedCount} nomor berisiko memicu proteksi spam WhatsApp Meta jika dikirim sekaligus. Sistem otomatis memecah pengiriman dalam batch kecil 8-10 nomor agar nomor Anda tetap terlindungi dan server tidak timeout.`}
+                  </p>
+                </div>
+              </div>
+            )}
+
             {/* Action Send Button */}
             <div className="pt-2">
               <button
@@ -1482,6 +1728,89 @@ export default function BroadcastPage() {
           )}
         </div>
       </div>
+
+      {/* Live Broadcast Streaming Progress Overlay */}
+      {sendProgress.active && (
+        <div className="fixed inset-0 z-50 bg-stone-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl p-6 md:p-8 max-w-lg w-full border border-stone-200 shadow-2xl space-y-5 animate-in fade-in zoom-in-95 duration-200">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center">
+                  <Loader2 className="w-6 h-6 animate-spin" />
+                </div>
+                <div>
+                  <h3 className="font-black text-lg text-stone-900">
+                    Mengirim Broadcast WhatsApp
+                  </h3>
+                  <p className="text-xs text-stone-500 font-medium">
+                    Batch {sendProgress.currentBatch} dari {sendProgress.totalBatches} • Proteksi Anti-Ban Aktif
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Live Progress Bar */}
+            <div className="space-y-1.5">
+              <div className="flex items-center justify-between text-xs font-bold text-stone-700">
+                <span>
+                  {sendProgress.sentCount + sendProgress.failedCount} dari {sendProgress.totalRecipients} nomor
+                </span>
+                <span className="text-emerald-600 font-black">
+                  {sendProgress.percentage}%
+                </span>
+              </div>
+              <div className="w-full h-3 bg-stone-100 rounded-full overflow-hidden border border-stone-200">
+                <div
+                  className="h-full bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full transition-all duration-300"
+                  style={{ width: `${sendProgress.percentage}%` }}
+                />
+              </div>
+            </div>
+
+            {/* Current Recipient Status */}
+            <div className="p-3 bg-stone-50 rounded-2xl border border-stone-200 text-xs text-stone-600 flex items-center justify-between">
+              <span className="truncate">
+                Sedang memproses batch ke penerima...
+              </span>
+              <div className="flex items-center gap-2 shrink-0">
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-black bg-emerald-100 text-emerald-800">
+                  {sendProgress.sentCount} Sukses
+                </span>
+                {sendProgress.failedCount > 0 && (
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-black bg-rose-100 text-rose-800">
+                    {sendProgress.failedCount} Gagal
+                  </span>
+                )}
+              </div>
+            </div>
+
+            <p className="text-[11px] text-stone-400 text-center italic">
+              Pesan dikirim bertahap dengan jeda acak manusiawi agar nomor terhindar dari pemblokiran spam WhatsApp. Jangan tutup halaman ini.
+            </p>
+
+            {/* Stop Button */}
+            <div className="pt-1 flex justify-center">
+              <button
+                type="button"
+                onClick={() => {
+                  abortBroadcastRef.current = true;
+                  Swal.fire({
+                    title: "Menghentikan Broadcast...",
+                    text: "Pengiriman akan dihentikan setelah batch saat ini selesai.",
+                    icon: "info",
+                    timer: 2000,
+                    showConfirmButton: false,
+                  });
+                }}
+                className="flex items-center gap-2 px-4 py-2 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 rounded-xl text-xs font-bold transition-all"
+              >
+                <StopCircle className="w-4 h-4 text-rose-600" />
+                <span>Hentikan Pengiriman</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
