@@ -11,7 +11,36 @@ interface RecipientItem {
   phone: string;
   nomor_pendaftaran?: string;
   jenjang?: string;
+  tahun_ajaran?: string;
   roleLabel?: string;
+}
+
+export function resolveTahunAjaran(p: {
+  nomor_pendaftaran: string;
+  created_at?: Date | null;
+  tahun_ajaran?: { nama: string } | null;
+}): string {
+  const no = p.nomor_pendaftaran || "";
+  const m4 = no.match(/20(\d{2})/);
+  if (m4) {
+    const c = parseInt(m4[1], 10);
+    return `20${c}/20${c + 1}`;
+  }
+  const m2 = no.match(/^[A-Za-z]+(\d{2})/);
+  if (m2) {
+    const c = parseInt(m2[1], 10);
+    if (c >= 20 && c <= 35) {
+      return `20${c}/20${c + 1}`;
+    }
+  }
+  if (p.tahun_ajaran?.nama && p.tahun_ajaran.nama.includes("/")) {
+    return p.tahun_ajaran.nama;
+  }
+  if (p.created_at) {
+    const yr = new Date(p.created_at).getFullYear();
+    return `${yr}/${yr + 1}`;
+  }
+  return "2027/2028";
 }
 
 export async function GET(req: NextRequest) {
@@ -36,6 +65,13 @@ export async function GET(req: NextRequest) {
         jenjang: true,
         status_pendaftaran: true,
         no_hp: true,
+        created_at: true,
+        tahun_ajaran: {
+          select: {
+            id: true,
+            nama: true,
+          },
+        },
         orang_tua: {
           select: {
             no_hp_ayah: true,
@@ -67,6 +103,7 @@ export async function GET(req: NextRequest) {
       }
 
       const formatted = formatPhoneNumber(resolvedPhone);
+      const ta = resolveTahunAjaran(p);
 
       return {
         id: p.id,
@@ -74,6 +111,7 @@ export async function GET(req: NextRequest) {
         nama_lengkap: p.nama_lengkap,
         jenjang: p.jenjang,
         status_pendaftaran: p.status_pendaftaran,
+        tahun_ajaran: ta,
         raw_phone: resolvedPhone,
         phone: formatted,
         phone_source: phoneSource,
@@ -170,10 +208,26 @@ export async function GET(req: NextRequest) {
 
     const allStaffList = staffList.filter((s) => s.is_all_staff);
 
+    // Dynamic Academic Years (Tahun Ajaran) List & Stats
+    const tahunAjaranSet = new Set<string>();
+    pendaftarList.forEach((p) => {
+      if (p.tahun_ajaran) tahunAjaranSet.add(p.tahun_ajaran);
+    });
+    if (tahunAjaranSet.size === 0) {
+      ["2027/2028", "2026/2027", "2025/2026"].forEach((t) => tahunAjaranSet.add(t));
+    }
+    const tahunAjaranList = Array.from(tahunAjaranSet).sort().reverse();
+    const activeTahunAjaran = tahunAjaranList[0] || "2027/2028";
+    const pendaftarActiveYearCount = pendaftarList.filter(
+      (p) => p.tahun_ajaran === activeTahunAjaran,
+    ).length;
+
     return NextResponse.json({
       success: true,
       counts: {
         pendaftar: pendaftarList.length,
+        pendaftar_active_year: pendaftarActiveYearCount,
+        active_tahun_ajaran: activeTahunAjaran,
         pendaftar_valid_phone: pendaftarList.filter((p) => p.has_phone).length,
         penguji_quran: pengujiQuranList.length,
         penguji_arab: pengujiArabList.length,
@@ -183,6 +237,7 @@ export async function GET(req: NextRequest) {
         all_pewawancara: allPewawancaraList.length,
         all_staff: allStaffList.length,
       },
+      tahun_ajaran_list: tahunAjaranList,
       data: {
         pendaftar: pendaftarList,
         penguji_quran: pengujiQuranList,
@@ -223,6 +278,7 @@ export async function POST(req: NextRequest) {
       includeName,
       jenjangFilter,
       statusFilter,
+      tahunAjaranFilter,
     } = body;
 
     if (!message || message.trim() === "") {
@@ -275,6 +331,13 @@ export async function POST(req: NextRequest) {
           nama_lengkap: true,
           jenjang: true,
           no_hp: true,
+          created_at: true,
+          tahun_ajaran: {
+            select: {
+              id: true,
+              nama: true,
+            },
+          },
           orang_tua: {
             select: {
               no_hp_ayah: true,
@@ -286,6 +349,15 @@ export async function POST(req: NextRequest) {
       });
 
       for (const p of pendaftarList) {
+        const ta = resolveTahunAjaran(p);
+        if (
+          tahunAjaranFilter &&
+          tahunAjaranFilter !== "ALL" &&
+          ta !== tahunAjaranFilter
+        ) {
+          continue;
+        }
+
         const ph = resolvePendaftarPhone(p);
         candidateRecipients.push({
           id: p.id,
@@ -294,6 +366,7 @@ export async function POST(req: NextRequest) {
           phone: ph,
           nomor_pendaftaran: p.nomor_pendaftaran,
           jenjang: p.jenjang,
+          tahun_ajaran: ta,
           roleLabel: "Calon Santri",
         });
       }
@@ -493,6 +566,7 @@ export async function POST(req: NextRequest) {
         .replace(/{nama}/gi, recipient.name)
         .replace(/{nomor_pendaftaran}/gi, recipient.nomor_pendaftaran || "-")
         .replace(/{jenjang}/gi, recipient.jenjang || "-")
+        .replace(/{tahun_ajaran}/gi, recipient.tahun_ajaran || "-")
         .replace(/{role}/gi, recipient.roleLabel || "Penerima")
         .replace(/{kontak}/gi, recipient.phone);
 

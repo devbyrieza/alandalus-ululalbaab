@@ -39,6 +39,7 @@ interface PendaftarItem {
   nama_lengkap: string;
   jenjang: string;
   status_pendaftaran: string;
+  tahun_ajaran: string;
   phone: string;
   raw_phone: string;
   phone_source: string;
@@ -126,6 +127,7 @@ export default function BroadcastPage() {
 
   // Filters for Pendaftar
   const [search, setSearch] = useState("");
+  const [filterTahunAjaran, setFilterTahunAjaran] = useState<string>("2027/2028");
   const [filterJenjang, setFilterJenjang] = useState<string>("ALL");
   const [filterStatus, setFilterStatus] = useState<string>("ALL");
 
@@ -167,6 +169,18 @@ export default function BroadcastPage() {
     }
   }, [header, message, footer, includeName]);
 
+  // Dynamic available academic years (Tahun Ajaran) from actual data
+  const availableTahunAjaran = useMemo(() => {
+    const set = new Set<string>();
+    pendaftarList.forEach((p) => {
+      if (p.tahun_ajaran) set.add(p.tahun_ajaran);
+    });
+    if (set.size === 0) {
+      ["2027/2028", "2026/2027", "2025/2026"].forEach((t) => set.add(t));
+    }
+    return Array.from(set).sort().reverse();
+  }, [pendaftarList]);
+
   // Dynamic available jenjangs from actual pendaftar data
   const availableJenjangs = useMemo(() => {
     const set = new Set<string>();
@@ -197,7 +211,8 @@ export default function BroadcastPage() {
       const res = await fetch("/api/admin/broadcast");
       if (res.ok) {
         const json = await res.json();
-        setPendaftarList(json.data.pendaftar || []);
+        const pList = json.data.pendaftar || [];
+        setPendaftarList(pList);
         setStaffData({
           penguji_quran: json.data.penguji_quran || [],
           penguji_arab: json.data.penguji_arab || [],
@@ -208,6 +223,9 @@ export default function BroadcastPage() {
           all_staff: json.data.all_staff || [],
         });
         setCounts(json.counts || {});
+        if (json.counts?.active_tahun_ajaran) {
+          setFilterTahunAjaran(json.counts.active_tahun_ajaran);
+        }
       }
     } catch (e) {
       console.error("Failed to fetch recipients:", e);
@@ -230,6 +248,9 @@ export default function BroadcastPage() {
     if (activeTab === "pendaftar") {
       return pendaftarList
         .filter((p) => {
+          if (filterTahunAjaran !== "ALL" && p.tahun_ajaran !== filterTahunAjaran) {
+            return false;
+          }
           if (filterJenjang !== "ALL" && p.jenjang.toLowerCase() !== filterJenjang.toLowerCase()) {
             return false;
           }
@@ -251,9 +272,10 @@ export default function BroadcastPage() {
           name: p.nama_lengkap,
           phone: p.phone,
           has_phone: p.has_phone,
-          subtitle: `${p.nomor_pendaftaran} • ${p.jenjang}`,
+          subtitle: `${p.nomor_pendaftaran} • ${p.jenjang} • TA ${p.tahun_ajaran}`,
           badge: p.status_pendaftaran.toUpperCase(),
           jenjang: p.jenjang,
+          tahun_ajaran: p.tahun_ajaran,
           status: p.status_pendaftaran,
         }));
     }
@@ -482,6 +504,7 @@ export default function BroadcastPage() {
         nama: first ? first.nama_lengkap : "Ahmad Fulan",
         nomor_pendaftaran: first ? first.nomor_pendaftaran : "MTA2700001",
         jenjang: first ? first.jenjang : "MTs",
+        tahun_ajaran: first ? first.tahun_ajaran : "2027/2028",
         role: "Calon Santri",
         phone: first && first.phone ? first.phone : "6281234567890",
       };
@@ -493,6 +516,7 @@ export default function BroadcastPage() {
         nama: first ? first.full_name : "Ustadz Abdullah",
         nomor_pendaftaran: "-",
         jenjang: "-",
+        tahun_ajaran: "-",
         role: first ? first.roleLabel : "Penguji",
         phone: first && first.phone ? first.phone : "6281234567890",
       };
@@ -506,6 +530,7 @@ export default function BroadcastPage() {
       .replace(/{nama}/gi, sample.nama)
       .replace(/{nomor_pendaftaran}/gi, sample.nomor_pendaftaran)
       .replace(/{jenjang}/gi, sample.jenjang)
+      .replace(/{tahun_ajaran}/gi, sample.tahun_ajaran || "2027/2028")
       .replace(/{role}/gi, sample.role)
       .replace(/{kontak}/gi, sample.phone);
 
@@ -600,6 +625,7 @@ export default function BroadcastPage() {
           includeName,
           jenjangFilter: isPendaftar ? filterJenjang : undefined,
           statusFilter: isPendaftar ? filterStatus : undefined,
+          tahunAjaranFilter: isPendaftar ? filterTahunAjaran : undefined,
         }),
       });
 
@@ -707,9 +733,18 @@ export default function BroadcastPage() {
               <div className="w-9 h-9 rounded-xl bg-emerald-600/10 text-emerald-600 flex items-center justify-center font-bold">
                 <Users className="w-5 h-5" />
               </div>
-              <span className="text-xs font-black px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">
-                {counts.pendaftar || 0}
-              </span>
+              <div className="flex items-center gap-1.5">
+                <span className="text-xs font-black px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">
+                  {filterTahunAjaran !== "ALL"
+                    ? pendaftarList.filter((p) => p.tahun_ajaran === filterTahunAjaran).length
+                    : pendaftarList.length}
+                </span>
+                {filterTahunAjaran !== "ALL" && (
+                  <span className="text-[10px] font-bold text-emerald-700 bg-emerald-100/70 px-1.5 py-0.5 rounded">
+                    TA {filterTahunAjaran}
+                  </span>
+                )}
+              </div>
             </div>
             <div className="mt-3 font-black text-stone-900 text-sm">
               Calon Santri / Pendaftar
@@ -952,7 +987,35 @@ export default function BroadcastPage() {
 
           {/* Additional Filters (Only for Pendaftar) */}
           {activeTab === "pendaftar" && (
-            <div className="grid grid-cols-2 gap-2 pt-1">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1">
+              {/* Filter 1: Tahun Ajaran */}
+              <div>
+                <label className="text-[10px] font-black uppercase tracking-wider text-emerald-700 block mb-1 flex items-center justify-between">
+                  <span>Tahun Ajaran</span>
+                  {filterTahunAjaran !== "ALL" && (
+                    <span className="text-[9px] px-1.5 py-0.2 bg-emerald-100 text-emerald-800 rounded font-bold">
+                      Aktif
+                    </span>
+                  )}
+                </label>
+                <select
+                  value={filterTahunAjaran}
+                  onChange={(e) => {
+                    setFilterTahunAjaran(e.target.value);
+                    setSelectedPendaftar([]); // Reset selection for safety
+                  }}
+                  className="w-full px-2.5 py-1.5 bg-emerald-50/60 border border-emerald-300 rounded-lg text-xs font-black text-emerald-950 focus:outline-none focus:ring-2 focus:ring-emerald-500 shadow-sm"
+                >
+                  <option value="ALL">Semua Tahun Ajaran</option>
+                  {availableTahunAjaran.map((ta) => (
+                    <option key={ta} value={ta}>
+                      TA {ta}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Filter 2: Jenjang */}
               <div>
                 <label className="text-[10px] font-black uppercase tracking-wider text-stone-400 block mb-1">
                   Jenjang
@@ -971,6 +1034,7 @@ export default function BroadcastPage() {
                 </select>
               </div>
 
+              {/* Filter 3: Status */}
               <div>
                 <label className="text-[10px] font-black uppercase tracking-wider text-stone-400 block mb-1">
                   Status
@@ -1132,6 +1196,13 @@ export default function BroadcastPage() {
                   className="px-2.5 py-1 bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 rounded-lg text-xs font-bold transition-all active:scale-95"
                 >
                   + &#123;jenjang&#125;
+                </button>
+                <button
+                  type="button"
+                  onClick={() => insertVariable("{tahun_ajaran}")}
+                  className="px-2.5 py-1 bg-teal-50 hover:bg-teal-100 text-teal-800 border border-teal-200 rounded-lg text-xs font-bold transition-all active:scale-95"
+                >
+                  + &#123;tahun_ajaran&#125;
                 </button>
                 <button
                   type="button"
