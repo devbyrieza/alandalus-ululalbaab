@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 
 const prisma = new PrismaClient();
 
-const DEFAULT_PASSWORD_ULUL = "PUAS2026!";
+const DEFAULT_PASSWORD_ULUL = "Puas2026!";
 
 async function main() {
   console.log("=== RESET SESSIONS CREATED TODAY IN ULUL ALBAAB ===");

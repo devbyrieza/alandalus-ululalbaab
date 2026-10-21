@@ -177,7 +177,14 @@ export async function POST(request: NextRequest) {
           available_roles: [...new Set([profile.role, ...secondaryRoles])] });
       }
 
-      const isDefaultPassword = profile.must_change_password === true || password === "2026#@" || profile.plain_password === "2026#@";
+      const isDefaultPassword =
+        profile.must_change_password === true ||
+        password === "2026#@" ||
+        password === "Puas2026!" ||
+        password === "PUAS2026!" ||
+        profile.plain_password === "2026#@" ||
+        profile.plain_password === "Puas2026!" ||
+        profile.plain_password === "PUAS2026!";
 
       // Single role — login normally
       const responseJson = NextResponse.json({
