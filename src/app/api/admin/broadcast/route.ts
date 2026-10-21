@@ -1,85 +1,556 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { enqueueWhatsapp } from "@/lib/whatsapp-queue";
+import { formatPhoneNumber } from "@/lib/wablas";
 import { getServerSession } from "@/lib/session";
+
+interface RecipientItem {
+  id: string;
+  type: "pendaftar" | "profile" | "custom";
+  name: string;
+  phone: string;
+  nomor_pendaftaran?: string;
+  jenjang?: string;
+  roleLabel?: string;
+}
+
+export async function GET(req: NextRequest) {
+  try {
+    const session = await getServerSession();
+    if (
+      !session ||
+      !["admin", "admin_super", "head_of_it", "superadmin"].some((r) =>
+        session.role?.toLowerCase().includes(r),
+      )
+    ) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    // 1. Fetch All Active Pendaftar with Parent Phone fallback
+    const rawPendaftar = await prisma.pendaftar.findMany({
+      where: { deleted_at: null },
+      select: {
+        id: true,
+        nomor_pendaftaran: true,
+        nama_lengkap: true,
+        jenjang: true,
+        status_pendaftaran: true,
+        no_hp: true,
+        orang_tua: {
+          select: {
+            no_hp_ayah: true,
+            no_hp_ibu: true,
+            no_hp_wali: true,
+            nama_ayah: true,
+            nama_ibu: true,
+          },
+        },
+      },
+      orderBy: { created_at: "desc" },
+    });
+
+    const pendaftarList = rawPendaftar.map((p) => {
+      let resolvedPhone = p.no_hp || "";
+      let phoneSource = "santri";
+
+      if (!resolvedPhone && p.orang_tua) {
+        if (p.orang_tua.no_hp_ayah) {
+          resolvedPhone = p.orang_tua.no_hp_ayah;
+          phoneSource = "ayah";
+        } else if (p.orang_tua.no_hp_ibu) {
+          resolvedPhone = p.orang_tua.no_hp_ibu;
+          phoneSource = "ibu";
+        } else if (p.orang_tua.no_hp_wali) {
+          resolvedPhone = p.orang_tua.no_hp_wali;
+          phoneSource = "wali";
+        }
+      }
+
+      const formatted = formatPhoneNumber(resolvedPhone);
+
+      return {
+        id: p.id,
+        nomor_pendaftaran: p.nomor_pendaftaran,
+        nama_lengkap: p.nama_lengkap,
+        jenjang: p.jenjang,
+        status_pendaftaran: p.status_pendaftaran,
+        raw_phone: resolvedPhone,
+        phone: formatted,
+        phone_source: phoneSource,
+        has_phone: Boolean(formatted),
+      };
+    });
+
+    // 2. Fetch All Staff Profiles
+    const rawProfiles = await prisma.profile.findMany({
+      where: {
+        role: { not: "pendaftar" },
+      },
+      select: {
+        id: true,
+        full_name: true,
+        username: true,
+        role: true,
+        secondary_roles: true,
+        phone: true,
+      },
+      orderBy: { full_name: "asc" },
+    });
+
+    const staffList = rawProfiles.map((s) => {
+      const allRoles = [s.role, ...(s.secondary_roles || [])].map((r) =>
+        r.toLowerCase(),
+      );
+
+      const isPengujiQuran =
+        allRoles.includes("penguji") ||
+        allRoles.includes("penguji_quran") ||
+        allRoles.includes("penguji_tahfidz");
+
+      const isPengujiArab =
+        allRoles.includes("penguji_bahasa_arab") ||
+        allRoles.includes("penguji_arab");
+
+      const isPewawancaraCalsan =
+        allRoles.includes("pewawancara_calsan") ||
+        allRoles.includes("pewawancara");
+      const isPewawancaraCawalsan =
+        allRoles.includes("pewawancara_cawalsan") ||
+        allRoles.includes("pewawancara");
+
+      const isPenguji = isPengujiQuran || isPengujiArab;
+      const isPewawancara = isPewawancaraCalsan || isPewawancaraCawalsan;
+
+      // Primary role label for display
+      const roleLabels: string[] = [];
+      if (isPengujiQuran) roleLabels.push("Penguji Al-Qur'an");
+      if (isPengujiArab) roleLabels.push("Penguji B. Arab");
+      if (allRoles.includes("pewawancara_calsan")) roleLabels.push("Pewawancara Calsan");
+      if (allRoles.includes("pewawancara_cawalsan")) roleLabels.push("Pewawancara Cawalsan");
+      if (allRoles.includes("pewawancara") && !allRoles.includes("pewawancara_calsan") && !allRoles.includes("pewawancara_cawalsan")) {
+        roleLabels.push("Pewawancara");
+      }
+      if (roleLabels.length === 0) {
+        roleLabels.push(s.role.replace(/_/g, " ").toUpperCase());
+      }
+
+      const formatted = formatPhoneNumber(s.phone);
+
+      return {
+        id: s.id,
+        full_name: s.full_name,
+        username: s.username,
+        role: s.role,
+        secondary_roles: s.secondary_roles,
+        roleLabel: roleLabels.join(" & "),
+        phone: formatted,
+        raw_phone: s.phone,
+        has_phone: Boolean(formatted),
+        is_penguji_quran: isPengujiQuran,
+        is_penguji_arab: isPengujiArab,
+        is_penguji: isPenguji,
+        is_pewawancara_calsan: isPewawancaraCalsan,
+        is_pewawancara_cawalsan: isPewawancaraCawalsan,
+        is_pewawancara: isPewawancara,
+        is_all_staff: isPenguji || isPewawancara || s.role.includes("admin") || s.role !== "pendaftar",
+      };
+    });
+
+    const pengujiQuranList = staffList.filter((s) => s.is_penguji_quran);
+    const pengujiArabList = staffList.filter((s) => s.is_penguji_arab);
+    const allPengujiList = staffList.filter((s) => s.is_penguji);
+
+    const pewawancaraCalsanList = staffList.filter(
+      (s) => s.is_pewawancara_calsan,
+    );
+    const pewawancaraCawalsanList = staffList.filter(
+      (s) => s.is_pewawancara_cawalsan,
+    );
+    const allPewawancaraList = staffList.filter((s) => s.is_pewawancara);
+
+    const allStaffList = staffList.filter((s) => s.is_all_staff);
+
+    return NextResponse.json({
+      success: true,
+      counts: {
+        pendaftar: pendaftarList.length,
+        pendaftar_valid_phone: pendaftarList.filter((p) => p.has_phone).length,
+        penguji_quran: pengujiQuranList.length,
+        penguji_arab: pengujiArabList.length,
+        all_penguji: allPengujiList.length,
+        pewawancara_calsan: pewawancaraCalsanList.length,
+        pewawancara_cawalsan: pewawancaraCawalsanList.length,
+        all_pewawancara: allPewawancaraList.length,
+        all_staff: allStaffList.length,
+      },
+      data: {
+        pendaftar: pendaftarList,
+        penguji_quran: pengujiQuranList,
+        penguji_arab: pengujiArabList,
+        all_penguji: allPengujiList,
+        pewawancara_calsan: pewawancaraCalsanList,
+        pewawancara_cawalsan: pewawancaraCawalsanList,
+        all_pewawancara: allPewawancaraList,
+        all_staff: allStaffList,
+      },
+    });
+  } catch (error: any) {
+    console.error("Fetch recipients error:", error);
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+}
 
 export async function POST(req: NextRequest) {
   try {
     const session = await getServerSession();
     if (
       !session ||
-      !["admin", "admin_super", "head_of_it"].includes(session.role)
+      !["admin", "admin_super", "head_of_it", "superadmin"].some((r) =>
+        session.role?.toLowerCase().includes(r),
+      )
     ) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { ids, message, header, footer, includeName } = await req.json();
+    const body = await req.json();
+    const {
+      targetCategory,
+      selectedIds,
+      customRecipients,
+      message,
+      header,
+      footer,
+      includeName,
+      jenjangFilter,
+      statusFilter,
+    } = body;
 
-    if (!ids || !Array.isArray(ids) || ids.length === 0) {
+    if (!message || message.trim() === "") {
       return NextResponse.json(
-        { error: "Recipient IDs are required" },
+        { error: "Pesan broadcast wajib diisi" },
         { status: 400 },
       );
     }
 
-    if (!message) {
+    const candidateRecipients: RecipientItem[] = [];
+
+    // Helper to resolve pendaftar phone
+    const resolvePendaftarPhone = (p: any): string => {
+      let phone = p.no_hp || "";
+      if (!phone && p.orang_tua) {
+        phone =
+          p.orang_tua.no_hp_ayah ||
+          p.orang_tua.no_hp_ibu ||
+          p.orang_tua.no_hp_wali ||
+          "";
+      }
+      return formatPhoneNumber(phone);
+    };
+
+    // Category 1: Pendaftar
+    if (
+      targetCategory === "all_pendaftar" ||
+      targetCategory === "selected_pendaftar" ||
+      body.ids // backwards compatibility
+    ) {
+      const whereClause: any = { deleted_at: null };
+      if (targetCategory === "selected_pendaftar" && selectedIds?.length > 0) {
+        whereClause.id = { in: selectedIds };
+      } else if (body.ids && Array.isArray(body.ids)) {
+        whereClause.id = { in: body.ids };
+      }
+
+      if (jenjangFilter && jenjangFilter !== "ALL") {
+        whereClause.jenjang = { equals: jenjangFilter, mode: "insensitive" };
+      }
+      if (statusFilter && statusFilter !== "ALL") {
+        whereClause.status_pendaftaran = statusFilter;
+      }
+
+      const pendaftarList = await prisma.pendaftar.findMany({
+        where: whereClause,
+        select: {
+          id: true,
+          nomor_pendaftaran: true,
+          nama_lengkap: true,
+          jenjang: true,
+          no_hp: true,
+          orang_tua: {
+            select: {
+              no_hp_ayah: true,
+              no_hp_ibu: true,
+              no_hp_wali: true,
+            },
+          },
+        },
+      });
+
+      for (const p of pendaftarList) {
+        const ph = resolvePendaftarPhone(p);
+        candidateRecipients.push({
+          id: p.id,
+          type: "pendaftar",
+          name: p.nama_lengkap,
+          phone: ph,
+          nomor_pendaftaran: p.nomor_pendaftaran,
+          jenjang: p.jenjang,
+          roleLabel: "Calon Santri",
+        });
+      }
+    }
+    // Category 2: Staff Profiles (Examiners / Interviewers)
+    else if (
+      [
+        "all_penguji_quran",
+        "selected_penguji_quran",
+        "all_penguji_arab",
+        "selected_penguji_arab",
+        "all_penguji",
+        "selected_penguji",
+        "all_pewawancara_calsan",
+        "selected_pewawancara_calsan",
+        "all_pewawancara_cawalsan",
+        "selected_pewawancara_cawalsan",
+        "all_pewawancara",
+        "selected_pewawancara",
+        "all_staff",
+        "selected_staff",
+      ].includes(targetCategory)
+    ) {
+      const whereClause: any = { role: { not: "pendaftar" } };
+      if (targetCategory.startsWith("selected_") && selectedIds?.length > 0) {
+        whereClause.id = { in: selectedIds };
+      }
+
+      const staffList = await prisma.profile.findMany({
+        where: whereClause,
+        select: {
+          id: true,
+          full_name: true,
+          role: true,
+          secondary_roles: true,
+          phone: true,
+        },
+      });
+
+      for (const s of staffList) {
+        const allRoles = [s.role, ...(s.secondary_roles || [])].map((r) =>
+          r.toLowerCase(),
+        );
+
+        const isPengujiQuran =
+          allRoles.includes("penguji") ||
+          allRoles.includes("penguji_quran") ||
+          allRoles.includes("penguji_tahfidz");
+
+        const isPengujiArab =
+          allRoles.includes("penguji_bahasa_arab") ||
+          allRoles.includes("penguji_arab");
+
+        const isPewawancaraCalsan =
+          allRoles.includes("pewawancara_calsan") ||
+          allRoles.includes("pewawancara");
+        const isPewawancaraCawalsan =
+          allRoles.includes("pewawancara_cawalsan") ||
+          allRoles.includes("pewawancara");
+
+        // Filter based on requested target
+        let match = false;
+        let roleName = "Penguji/Pewawancara";
+
+        if (
+          targetCategory === "all_penguji_quran" ||
+          targetCategory === "selected_penguji_quran"
+        ) {
+          match = isPengujiQuran;
+          roleName = "Penguji Al-Qur'an";
+        } else if (
+          targetCategory === "all_penguji_arab" ||
+          targetCategory === "selected_penguji_arab"
+        ) {
+          match = isPengujiArab;
+          roleName = "Penguji Bahasa Arab";
+        } else if (
+          targetCategory === "all_penguji" ||
+          targetCategory === "selected_penguji"
+        ) {
+          match = isPengujiQuran || isPengujiArab;
+          roleName = isPengujiQuran ? "Penguji Al-Qur'an" : "Penguji B. Arab";
+        } else if (
+          targetCategory === "all_pewawancara_calsan" ||
+          targetCategory === "selected_pewawancara_calsan"
+        ) {
+          match = isPewawancaraCalsan;
+          roleName = "Pewawancara Santri (Calsan)";
+        } else if (
+          targetCategory === "all_pewawancara_cawalsan" ||
+          targetCategory === "selected_pewawancara_cawalsan"
+        ) {
+          match = isPewawancaraCawalsan;
+          roleName = "Pewawancara Orang Tua (Cawalsan)";
+        } else if (
+          targetCategory === "all_pewawancara" ||
+          targetCategory === "selected_pewawancara"
+        ) {
+          match = isPewawancaraCalsan || isPewawancaraCawalsan;
+          roleName = isPewawancaraCalsan
+            ? "Pewawancara Calsan"
+            : "Pewawancara Cawalsan";
+        } else if (
+          targetCategory === "all_staff" ||
+          targetCategory === "selected_staff"
+        ) {
+          match =
+            isPengujiQuran ||
+            isPengujiArab ||
+            isPewawancaraCalsan ||
+            isPewawancaraCawalsan ||
+            s.role.includes("admin") ||
+            s.role !== "pendaftar";
+          roleName = "Tim Penguji & Pewawancara";
+        }
+
+        if (match) {
+          candidateRecipients.push({
+            id: s.id,
+            type: "profile",
+            name: s.full_name,
+            phone: formatPhoneNumber(s.phone),
+            roleLabel: roleName,
+          });
+        }
+      }
+    }
+    // Category 3: Custom List
+    else if (
+      targetCategory === "custom" &&
+      Array.isArray(customRecipients) &&
+      customRecipients.length > 0
+    ) {
+      for (const cr of customRecipients) {
+        candidateRecipients.push({
+          id: cr.id || `custom-${Date.now()}-${Math.random()}`,
+          type: "custom",
+          name: cr.name,
+          phone: formatPhoneNumber(cr.phone),
+          roleLabel: cr.roleLabel || "Penerima",
+          nomor_pendaftaran: cr.nomor_pendaftaran || "-",
+          jenjang: cr.jenjang || "-",
+        });
+      }
+    }
+
+    if (candidateRecipients.length === 0) {
       return NextResponse.json(
-        { error: "Message is required" },
+        { error: "Tidak ada penerima yang ditemukan untuk target ini." },
         { status: 400 },
       );
     }
 
-    // Fetch pendaftar data
-    const recipients = await prisma.pendaftar.findMany({
-      where: {
-        id: { in: ids },
-        deleted_at: null, // Don't broadcast to deleted users
-      },
-      select: {
-        id: true,
-        nama_lengkap: true,
-        no_hp: true } });
+    // Deduplicate by formatted phone number
+    const seenPhones = new Set<string>();
+    const uniqueRecipients: RecipientItem[] = [];
 
-    const results = [];
-    const formattedHeader = header ? `${header.trim()}\n\n` : "";
-    const formattedFooter = footer ? `\n\n${footer.trim()}` : "";
+    for (const r of candidateRecipients) {
+      if (!r.phone || r.phone.length < 10) {
+        // Keep so we can report them as failed (invalid phone)
+        uniqueRecipients.push(r);
+      } else if (!seenPhones.has(r.phone)) {
+        seenPhones.add(r.phone);
+        uniqueRecipients.push(r);
+      }
+    }
 
-    for (const recipient of recipients) {
-      if (!recipient.no_hp) {
+    const formattedHeader =
+      header && header.trim() ? `${header.trim()}\n\n` : "";
+    const formattedFooter =
+      footer && footer.trim() ? `\n\n${footer.trim()}` : "";
+
+    const results: Array<{
+      id: string;
+      name: string;
+      phone: string;
+      status: "success" | "failed";
+      error?: string;
+    }> = [];
+
+    // Dispatch messages sequentially with polite pacing
+    for (const recipient of uniqueRecipients) {
+      if (!recipient.phone || recipient.phone.length < 10) {
         results.push({
           id: recipient.id,
+          name: recipient.name,
+          phone: recipient.phone || "-",
           status: "failed",
-          error: "No phone number" });
+          error:
+            "Nomor WhatsApp kosong atau tidak valid (kurang dari 10 digit)",
+        });
         continue;
       }
 
-      let personalizedMessage = message;
-      const salutation = includeName ? `${recipient.nama_lengkap}, ` : "";
-      const finalMessage = `${formattedHeader}${salutation}${personalizedMessage}${formattedFooter}`;
+      // Variable Replacement Engine
+      let personalized = message
+        .replace(/{nama}/gi, recipient.name)
+        .replace(/{nomor_pendaftaran}/gi, recipient.nomor_pendaftaran || "-")
+        .replace(/{jenjang}/gi, recipient.jenjang || "-")
+        .replace(/{role}/gi, recipient.roleLabel || "Penerima")
+        .replace(/{kontak}/gi, recipient.phone);
+
+      const salutation = includeName ? `${recipient.name},\n\n` : "";
+      const finalMessage = `${formattedHeader}${salutation}${personalized}${formattedFooter}`;
 
       try {
-        await enqueueWhatsapp({
-          pendaftarId: recipient.id,
-          phone: recipient.no_hp,
+        const enqueueRes = await enqueueWhatsapp({
+          pendaftarId: recipient.type === "pendaftar" ? recipient.id : null,
+          phone: recipient.phone,
           jenisNotif: "broadcast",
-          messageContent: finalMessage });
-        results.push({ id: recipient.id, status: "success" });
+          messageContent: finalMessage,
+          force: true, // Force send: never drop as duplicate
+          sendNow: true,
+        });
+
+        if (enqueueRes.queued) {
+          results.push({
+            id: recipient.id,
+            name: recipient.name,
+            phone: recipient.phone,
+            status: "success",
+          });
+        } else {
+          results.push({
+            id: recipient.id,
+            name: recipient.name,
+            phone: recipient.phone,
+            status: "failed",
+            error: enqueueRes.reason || "Ditolak oleh gateway WhatsApp",
+          });
+        }
       } catch (error: any) {
         results.push({
           id: recipient.id,
+          name: recipient.name,
+          phone: recipient.phone,
           status: "failed",
-          error: error.message });
+          error: error.message || "Kesalahan jaringan",
+        });
       }
+
+      // Polite pacing: 350ms between sends to protect against gateway rate-limits
+      await new Promise((resolve) => setTimeout(resolve, 350));
     }
+
+    const successCount = results.filter((r) => r.status === "success").length;
+    const failedCount = results.filter((r) => r.status === "failed").length;
 
     return NextResponse.json({
       success: true,
-      total: recipients.length,
-      sent: results.filter((r) => r.status === "success").length,
-      failed: results.filter((r) => r.status === "failed").length,
-      details: results });
+      total: uniqueRecipients.length,
+      sent: successCount,
+      failed: failedCount,
+      details: results,
+    });
   } catch (error: any) {
-    console.error("Broadcast error:", error);
+    console.error("Broadcast POST error:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

@@ -78,6 +78,12 @@ async function isDuplicate(
     jenisNotif: NotifType | string,
     phone: string
 ): Promise<boolean> {
+    // Broadcasts are manual and intentional announcements sent by admin.
+    // They should NEVER be blocked by the anti-duplicate check.
+    if (typeof jenisNotif === "string" && (jenisNotif === "broadcast" || jenisNotif.startsWith("broadcast"))) {
+        return false;
+    }
+
     const isRealPendaftar = !!(
         pendaftarId &&
         /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(pendaftarId)
@@ -333,6 +339,8 @@ export async function enqueueWhatsapp(
         /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(pendaftarId)
     );
 
+    const isBroadcast = typeof jenisNotif === "string" && (jenisNotif === "broadcast" || jenisNotif.startsWith("broadcast"));
+
     // Verify that the pendaftar is active and not soft-deleted (only if a real pendaftar ID is provided)
     if (isRealPendaftar) {
         const pendaftar = await prisma.pendaftar.findUnique({
@@ -344,18 +352,20 @@ export async function enqueueWhatsapp(
         }
     }
 
-    // Layer 1: Duplicate check (skip if force is true)
-    const duplicate = !force && await isDuplicate(pendaftarId, jenisNotif, phone);
+    // Layer 1: Duplicate check (skip if force is true or if broadcast)
+    const duplicate = !force && !isBroadcast && await isDuplicate(pendaftarId, jenisNotif, phone);
     if (duplicate) {
         return { queued: false, reason: "Notifikasi serupa sudah pernah dikirim/diantri" };
     }
 
-    // Layer 5: Check if number is blocked
-    const blocked = await isNumberBlocked(phone);
-    if (blocked) {
-        return {
-            queued: false,
-            reason: "Nomor bermasalah (gagal berulang), perlu review admin" };
+    // Layer 5: Check if number is blocked (skip for broadcast so admin can always deliver)
+    if (!force && !isBroadcast) {
+        const blocked = await isNumberBlocked(phone);
+        if (blocked) {
+            return {
+                queued: false,
+                reason: "Nomor bermasalah (gagal berulang), perlu review admin" };
+        }
     }
 
     // Create log entry (pending)
@@ -388,12 +398,29 @@ export async function enqueueWhatsapp(
                     }
                 });
                 console.log(`✅ [Enqueue] sent successfully: ${log.id}`);
+                return { queued: true, logId: log.id };
             } else {
-                console.warn(`⚠️ [Enqueue] sendNow returned false status, leaving as pending. Result:`, sendResult);
+                await prisma.whatsappLog.update({
+                    where: { id: log.id },
+                    data: {
+                        status: "failed",
+                        error_message: sendResult.message || "Wablas returned false status",
+                        response_data: JSON.stringify(sendResult)
+                    }
+                });
+                console.warn(`⚠️ [Enqueue] sendNow failed:`, sendResult);
+                return { queued: false, reason: sendResult.message || "Gagal dari gateway WhatsApp", logId: log.id };
             }
         } catch (err: any) {
             console.error(`❌ [Enqueue] sendNow error:`, err);
-            // Will fallback to the queue naturally
+            await prisma.whatsappLog.update({
+                where: { id: log.id },
+                data: {
+                    status: "failed",
+                    error_message: err.message
+                }
+            });
+            return { queued: false, reason: err.message, logId: log.id };
         }
     } else {
         try {

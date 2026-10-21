@@ -55,9 +55,10 @@ if (!WABLAS_DOMAIN || !WABLAS_TOKEN) {
  * Input: 081234567890 or +6281234567890
  * Output: 6281234567890
  */
-function formatPhoneNumber(phone: string): string {
-  // Remove all non-numeric characters
+export function formatPhoneNumber(phone: string): string {
+  if (!phone) return "";
   let cleaned = phone.replace(/\D/g, "");
+  if (!cleaned) return "";
 
   // If starts with 0, replace with 62
   if (cleaned.startsWith("0")) {
@@ -67,6 +68,11 @@ function formatPhoneNumber(phone: string): string {
   // If doesn't start with 62, add it
   if (!cleaned.startsWith("62")) {
     cleaned = "62" + cleaned;
+  }
+
+  // Reject if too short (less than 9 digits after 62)
+  if (cleaned.length < 10) {
+    return "";
   }
 
   return cleaned;
