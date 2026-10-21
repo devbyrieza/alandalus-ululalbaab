@@ -86,23 +86,33 @@ export async function GET(req: NextRequest) {
     });
 
     const pendaftarList = rawPendaftar.map((p) => {
-      let resolvedPhone = p.no_hp || "";
+      // Prioritas pencarian nomor WA yang valid (minimal 10 digit):
+      // 1. Santri -> 2. Ayah -> 3. Ibu -> 4. Wali
+      let resolvedPhone = "";
       let phoneSource = "santri";
 
-      if (!resolvedPhone && p.orang_tua) {
-        if (p.orang_tua.no_hp_ayah) {
-          resolvedPhone = p.orang_tua.no_hp_ayah;
+      const santriPhone = formatPhoneNumber(p.no_hp || "");
+      if (santriPhone) {
+        resolvedPhone = santriPhone;
+        phoneSource = "santri";
+      } else if (p.orang_tua) {
+        const ayahPhone = formatPhoneNumber(p.orang_tua.no_hp_ayah || "");
+        const ibuPhone = formatPhoneNumber(p.orang_tua.no_hp_ibu || "");
+        const waliPhone = formatPhoneNumber(p.orang_tua.no_hp_wali || "");
+
+        if (ayahPhone) {
+          resolvedPhone = ayahPhone;
           phoneSource = "ayah";
-        } else if (p.orang_tua.no_hp_ibu) {
-          resolvedPhone = p.orang_tua.no_hp_ibu;
+        } else if (ibuPhone) {
+          resolvedPhone = ibuPhone;
           phoneSource = "ibu";
-        } else if (p.orang_tua.no_hp_wali) {
-          resolvedPhone = p.orang_tua.no_hp_wali;
+        } else if (waliPhone) {
+          resolvedPhone = waliPhone;
           phoneSource = "wali";
         }
       }
 
-      const formatted = formatPhoneNumber(resolvedPhone);
+      const formatted = resolvedPhone;
       const ta = resolveTahunAjaran(p);
 
       return {
@@ -311,17 +321,20 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // Helper to resolve pendaftar phone
+    // Helper to resolve pendaftar phone with full validation
     const resolvePendaftarPhone = (p: any): string => {
-      let phone = p.no_hp || "";
-      if (!phone && p.orang_tua) {
-        phone =
-          p.orang_tua.no_hp_ayah ||
-          p.orang_tua.no_hp_ibu ||
-          p.orang_tua.no_hp_wali ||
-          "";
+      const santriPhone = formatPhoneNumber(p.no_hp || "");
+      if (santriPhone) return santriPhone;
+
+      if (p.orang_tua) {
+        const ayahPhone = formatPhoneNumber(p.orang_tua.no_hp_ayah || "");
+        if (ayahPhone) return ayahPhone;
+        const ibuPhone = formatPhoneNumber(p.orang_tua.no_hp_ibu || "");
+        if (ibuPhone) return ibuPhone;
+        const waliPhone = formatPhoneNumber(p.orang_tua.no_hp_wali || "");
+        if (waliPhone) return waliPhone;
       }
-      return formatPhoneNumber(phone);
+      return "";
     };
 
     // Category 1: Pendaftar
@@ -543,16 +556,13 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Deduplicate by formatted phone number
-    const seenPhones = new Set<string>();
+    // Deduplicate recipients by unique recipient ID (memastikan tidak ada santri tertinggal meskipun saudara kandung berbagi nomor WA orang tua yang sama)
+    const seenIds = new Set<string>();
     const uniqueRecipients: RecipientItem[] = [];
 
     for (const r of candidateRecipients) {
-      if (!r.phone || r.phone.length < 10) {
-        // Keep so we can report them as failed (invalid phone)
-        uniqueRecipients.push(r);
-      } else if (!seenPhones.has(r.phone)) {
-        seenPhones.add(r.phone);
+      if (!seenIds.has(r.id)) {
+        seenIds.add(r.id);
         uniqueRecipients.push(r);
       }
     }

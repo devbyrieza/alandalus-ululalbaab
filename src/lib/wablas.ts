@@ -112,14 +112,39 @@ export async function sendMessage({
 
     console.log(`📡 Sending Wablas to ${formattedPhone} via ${WABLAS_DOMAIN}`);
 
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        Authorization: authToken,
-        "Content-Type": "application/x-www-form-urlencoded" },
-      body: formData.toString() });
+    // Robust fetch with retry on temporary gateway glitch
+    let response: Response | null = null;
+    let rawText = "";
+    let lastError: any = null;
 
-    const rawText = await response.text();
+    for (let attempt = 1; attempt <= 2; attempt++) {
+      try {
+        response = await fetch(url, {
+          method: "POST",
+          headers: {
+            Authorization: authToken,
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: formData.toString(),
+        });
+        rawText = await response.text();
+        if (response.ok) {
+          break; // Success response
+        }
+      } catch (err: any) {
+        lastError = err;
+        if (attempt < 2) {
+          console.warn(`⚠️ [Wablas] Attempt ${attempt} failed: ${err.message}. Retrying in 1s...`);
+          await new Promise((r) => setTimeout(r, 1000));
+        }
+      }
+    }
+
+    if (!response) {
+      console.error("❌ Wablas Network Error after retries:", lastError);
+      return { status: false, message: `Network Error: ${lastError?.message || "Unknown"}` };
+    }
+
     let data;
     try {
       data = JSON.parse(rawText);
@@ -127,14 +152,16 @@ export async function sendMessage({
       console.error("❌ Wablas Non-JSON Response:", rawText);
       return {
         status: false,
-        message: `Wablas Error: ${response.status} ${response.statusText}` };
+        message: `Wablas Error: ${response.status} ${response.statusText}`,
+      };
     }
 
     if (!response.ok || !data.status) {
       console.error("❌ Wablas API Error:", data);
       return {
         status: false,
-        message: data.message || `Wablas Failed: ${response.status}` };
+        message: data.message || `Wablas Failed: ${response.status}`,
+      };
     }
 
     return { status: true, message: "Message sent successfully", data };

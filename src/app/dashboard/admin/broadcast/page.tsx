@@ -697,6 +697,14 @@ export default function BroadcastPage() {
       setResults(null);
       abortBroadcastRef.current = false;
 
+      // Lock browser window reload/close to prevent accidental tab closing
+      const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+        e.preventDefault();
+        e.returnValue = "Proses broadcast sedang berjalan. Jangan tutup halaman ini agar seluruh pesan terkirim!";
+        return e.returnValue;
+      };
+      window.addEventListener("beforeunload", handleBeforeUnload);
+
       const combinedResults: Array<any> = [];
       let totalSent = 0;
       let totalFailed = 0;
@@ -719,28 +727,63 @@ export default function BroadcastPage() {
           percentage: Math.round(((totalSent + totalFailed) / recipientsToSend.length) * 100),
         });
 
-        const res = await fetch("/api/admin/broadcast", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            recipientsChunk: currentChunk,
-            delayMode,
-            message,
-            header,
-            footer,
-            includeName,
-          }),
-        });
+        // Network resilience with automatic retry loop (up to 3 attempts per batch)
+        let batchSuccess = false;
+        let batchData: any = null;
+        let lastBatchError = "";
 
-        const data = await res.json();
-        if (!res.ok) {
-          throw new Error(data.error || "Gagal mengirim batch broadcast");
+        for (let attempt = 1; attempt <= 3; attempt++) {
+          try {
+            const res = await fetch("/api/admin/broadcast", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                recipientsChunk: currentChunk,
+                delayMode,
+                message,
+                header,
+                footer,
+                includeName,
+              }),
+            });
+
+            const data = await res.json();
+            if (res.ok) {
+              batchSuccess = true;
+              batchData = data;
+              break;
+            } else {
+              lastBatchError = data.error || `HTTP ${res.status}`;
+            }
+          } catch (netErr: any) {
+            lastBatchError = netErr.message || "Network request failed";
+          }
+
+          if (attempt < 3 && !abortBroadcastRef.current) {
+            console.warn(`⚠️ Batch ${b + 1} attempt ${attempt} failed: ${lastBatchError}. Retrying in 2s...`);
+            await new Promise((r) => setTimeout(r, 2000));
+          }
         }
 
-        totalSent += data.sent || 0;
-        totalFailed += data.failed || 0;
-        if (Array.isArray(data.details)) {
-          combinedResults.push(...data.details);
+        if (batchSuccess && batchData) {
+          totalSent += batchData.sent || 0;
+          totalFailed += batchData.failed || 0;
+          if (Array.isArray(batchData.details)) {
+            combinedResults.push(...batchData.details);
+          }
+        } else {
+          // Record entire chunk as failed without aborting remaining batches!
+          console.error(`❌ Batch ${b + 1} completely failed after 3 attempts: ${lastBatchError}`);
+          totalFailed += currentChunk.length;
+          for (const item of currentChunk) {
+            combinedResults.push({
+              id: item.id,
+              name: item.name,
+              phone: item.phone,
+              status: "failed",
+              error: `Gagal jaringan server (3x percobaan): ${lastBatchError}`,
+            });
+          }
         }
 
         // Brief 1.5s cooling pause between batches if more batches remain
@@ -748,6 +791,8 @@ export default function BroadcastPage() {
           await new Promise((resolve) => setTimeout(resolve, 1500));
         }
       }
+
+      window.removeEventListener("beforeunload", handleBeforeUnload);
 
       setResults({
         total: recipientsToSend.length,
