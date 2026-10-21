@@ -175,6 +175,27 @@ export async function POST(request: Request) {
       const finalSessionId = balancedAssignment?.session_id || exam_session_id;
 
       if (finalExaminerId) {
+        // Atomic Dual-Role Conflict Guard: ensure examiner isn't booked in another category at the same overlapping time
+        const conflictingBooking = await tx.jadwalUjian.findFirst({
+          where: {
+            OR: [
+              { penguji_quran_id: finalExaminerId },
+              { penguji_santri_id: finalExaminerId },
+              { penguji_ortu_id: finalExaminerId },
+              { penguji_arab_id: finalExaminerId },
+              { exam_session: { created_by: finalExaminerId } },
+            ],
+            exam_session: {
+              start_time: { lt: examSession.end_time },
+              end_time: { gt: examSession.start_time },
+            },
+          },
+        });
+
+        if (conflictingBooking) {
+          throw new Error("Penguji ini baru saja terisi untuk sesi ujian lain di waktu yang sama. Silakan pilih sesi atau waktu lainnya.");
+        }
+
         const interviewer = await tx.profile.findUnique({
           where: { id: finalExaminerId },
           select: { google_meet_link: true, full_name: true, phone: true } });
@@ -213,6 +234,7 @@ export async function POST(request: Request) {
           status_santri: "scheduled",
           status_quran: "scheduled",
           status_ortu: "scheduled",
+          status_arab: "scheduled",
           status_online_test: "pending",
           ...pengujiFields } });
 

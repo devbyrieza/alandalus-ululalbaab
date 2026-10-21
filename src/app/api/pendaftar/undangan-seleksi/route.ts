@@ -18,9 +18,10 @@ import {
 
 function getExamCategory(title: string): string {
   const t = title.toLowerCase();
-  if (t.includes("quran") || t.includes("qur'an")) return "QURAN";
+  if (t.includes("quran") || t.includes("qur'an") || t.includes("bacaan") || t.includes("hafalan")) return "QURAN";
+  if (t.includes("arab") || t.includes("lisan")) return "LISAN_ARAB";
   if (t.includes("calsan") || t.includes("santri")) return "W_SANTRI";
-  if (t.includes("cawalsan") || t.includes("ortu") || t.includes("orang tua"))
+  if (t.includes("cawalsan") || t.includes("ortu") || t.includes("orang tua") || t.includes("wali"))
     return "W_ORTU";
   return "OTHER";
 }
@@ -96,6 +97,7 @@ export async function GET(request: Request) {
         no_hp: true,
         status_pendaftaran: true,
         jenis_kelamin: true,
+        jenjang: true,
         notif_belum_jadwal_terkirim: true,
         notif_jadwal_tersedia_terkirim: true,
         notif_hasil_tes_terkirim: true } });
@@ -333,8 +335,75 @@ export async function GET(request: Request) {
     }
     // -------------------------------------
 
-    const openSlots = availableSessions
-      .map((s) => ({
+    // --- CROSS-EXAMINER DUAL-ROLE CONFLICT DETECTION ---
+    // Fetch future bookings where examiners are already occupied
+    const activeExaminerBookings = await prisma.jadwalUjian.findMany({
+      where: {
+        exam_session: {
+          start_time: { gte: new Date() },
+        },
+      },
+      select: {
+        id: true,
+        penguji_quran_id: true,
+        penguji_santri_id: true,
+        penguji_ortu_id: true,
+        penguji_arab_id: true,
+        exam_session: {
+          select: {
+            id: true,
+            start_time: true,
+            end_time: true,
+            created_by: true,
+          },
+        },
+      },
+    });
+
+    const isExaminerBusy = (session: any) => {
+      if (!session.created_by) return false;
+      const sStart = new Date(session.start_time).getTime();
+      const sEnd = new Date(session.end_time).getTime();
+
+      return activeExaminerBookings.some((b) => {
+        // Exclude the session itself if it is the one booked
+        if (b.exam_session?.id === session.id) return false;
+
+        const isThisExaminer =
+          b.penguji_quran_id === session.created_by ||
+          b.penguji_santri_id === session.created_by ||
+          b.penguji_ortu_id === session.created_by ||
+          b.penguji_arab_id === session.created_by ||
+          b.exam_session?.created_by === session.created_by;
+
+        if (!isThisExaminer || !b.exam_session) return false;
+
+        const bStart = new Date(b.exam_session.start_time).getTime();
+        const bEnd = new Date(b.exam_session.end_time).getTime();
+
+        // Check overlapping intervals: [sStart, sEnd) overlaps with [bStart, bEnd)
+        return sStart < bEnd && sEnd > bStart;
+      });
+    };
+
+    // Filter slots for SMA vs Non-SMA
+    const cleanJenjang = (pendaftar.jenjang || "").toUpperCase();
+    const isSMA =
+      cleanJenjang.includes("SMA") ||
+      cleanJenjang.includes("MA") ||
+      cleanJenjang.includes("IL");
+
+    let filteredSessions = availableSessions;
+    if (!isSMA) {
+      filteredSessions = filteredSessions.filter(
+        (s) => getExamCategory(s.title || "") !== "LISAN_ARAB",
+      );
+    }
+
+    const openSlots = filteredSessions.map((s) => {
+      const busy = isExaminerBusy(s);
+      const isFull = s._count.bookings >= s.quota || busy;
+      return {
         id: s.id,
         title: sanitizeTitle(s.title || "Seleksi Santri Baru"),
         raw_title: s.title, // Keep for reference if needed
@@ -342,14 +411,16 @@ export async function GET(request: Request) {
         start_time: s.start_time,
         end_time: s.end_time,
         quota: s.quota,
-        booked: s._count.bookings,
+        booked: busy ? s.quota : s._count.bookings,
         location: s.location,
         notes: s.notes,
-        isFull: s._count.bookings >= s.quota }));
+        isFull,
+      };
+    });
 
     // Calculate overall progress
     // Grup B: only count as completed when status is "completed", not just "scheduled"
-    const totalTests = 6; // 3 Grup A + 3 Grup B
+    const totalTests = isSMA ? 7 : 6; // 3 Grup A + (3 or 4) Grup B
     const grupBCompleted = bookedJadwal.filter((j) => {
       const title = j.exam_session?.title || "";
       const hasScoreQuran = j.nilai_ujian?.some((n: any) => {
@@ -364,15 +435,22 @@ export async function GET(request: Request) {
         const c = n.detail_cawalsan as any;
         return n.nilai_wawancara_ortu != null || !!(c && typeof c === "object" && (c.rekomendasi || c.nama_penguji));
       });
+      const hasScoreArab = j.nilai_ujian?.some((n: any) => {
+        const a = (n as any).detail_arab as any;
+        return (n as any).score_arab != null || !!(a && typeof a === "object" && (a.rekomendasi || a.nama_penguji));
+      });
 
       if (title.includes("Qur'an") || title.includes("Quran")) {
         return hasScoreQuran || j.status_quran === "completed";
       } else if (
         title.includes("Orang Tua") ||
         title.includes("Ortu") ||
-        title.includes("orang")
+        title.includes("orang") ||
+        title.includes("wali")
       ) {
         return hasScoreOrtu || j.status_ortu === "completed";
+      } else if (title.includes("Arab") || title.includes("Lisan")) {
+        return hasScoreArab || (j as any).status_arab === "completed";
       } else {
         // Seleksi Wawancara Calon Santri / Wawancara Calon Santri
         return hasScoreSantri || j.status_santri === "completed";
