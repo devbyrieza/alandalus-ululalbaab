@@ -199,7 +199,7 @@ export async function POST(request: NextRequest) {
         { status: 400 },
       );
     }
-    // 5. Detect Real Mime Type via Magic Bytes
+    // 5. Detect Real Mime Type via Magic Bytes & Extension Fallback
     const buffer = Buffer.from(await file.arrayBuffer());
     const hex = buffer.slice(0, 4).toString("hex").toUpperCase();
     let detectedType = file.type || "";
@@ -208,19 +208,37 @@ export async function POST(request: NextRequest) {
     else if (hex === "89504E47") detectedType = "image/png";
     else if (hex === "25504446") detectedType = "application/pdf";
     else if (hex === "52494646") detectedType = "image/webp"; // RIFF
-    else if (["00000018", "00000020", "0000001C"].includes(hex)) detectedType = "image/heic"; // ftyp
+    else if (
+      ["00000018", "00000020", "0000001C", "00000024", "00000028"].includes(hex) ||
+      buffer.slice(4, 12).toString().includes("ftyp")
+    ) {
+      detectedType = "image/heic"; // ftyp
+    }
 
-    const isImageAllowed = config.allowedTypes.includes("image/jpeg");
-    const safeFileType = detectedType;
+    const safeFileName = file.name || "berkas_tanpa_nama.bin";
+    const originalExtension =
+      safeFileName.split(".").pop()?.toLowerCase() || "bin";
+
+    // Tolerant fallback for mobile browsers that send empty or octet-stream MIME types
+    if (!detectedType || detectedType === "application/octet-stream") {
+      if (["jpg", "jpeg"].includes(originalExtension)) detectedType = "image/jpeg";
+      else if (originalExtension === "png") detectedType = "image/png";
+      else if (originalExtension === "pdf") detectedType = "application/pdf";
+      else if (originalExtension === "webp") detectedType = "image/webp";
+      else if (["heic", "heif"].includes(originalExtension)) detectedType = "image/heic";
+    }
+
+    const isImageAllowed = config.allowedTypes.includes("image/jpeg") || config.allowedTypes.includes("image/png");
     const isAllowedType =
-      config.allowedTypes.includes(safeFileType) ||
-      (isImageAllowed && safeFileType.startsWith("image/"));
+      config.allowedTypes.includes(detectedType) ||
+      (isImageAllowed && (detectedType.startsWith("image/") || ["jpg", "jpeg", "png", "webp", "heic", "heif"].includes(originalExtension))) ||
+      (detectedType === "application/pdf" && config.allowedTypes.includes("application/pdf"));
 
     if (!isAllowedType) {
       return NextResponse.json(
         {
           success: false,
-          error: `Format file tidak didukung. File Anda: ${file.type || "tidak dikenali"}` },
+          error: `Format file tidak didukung. File Anda: ${file.type || originalExtension || "tidak dikenali"}. Gunakan format JPG, PNG, atau PDF.` },
         { status: 400 },
       );
     }
@@ -238,9 +256,6 @@ export async function POST(request: NextRequest) {
     }
 
     const timestamp = Date.now();
-    const safeFileName = file.name || "berkas_tanpa_nama.bin";
-    const originalExtension =
-      safeFileName.split(".").pop()?.toLowerCase() || "bin";
 
     // Correct extension based on detected type
     let fileExtension = originalExtension;

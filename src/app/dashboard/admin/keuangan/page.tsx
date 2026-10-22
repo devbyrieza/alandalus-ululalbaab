@@ -109,7 +109,7 @@ export default function KeuanganPage() {
   // TA state
   const [tahunAjaranList, setTahunAjaranList] = useState<any[]>([]);
   const [selectedTahunAjaranId, setSelectedTahunAjaranId] =
-    useState<string>("");
+    useState<string>("2027/2028");
 
   useEffect(() => {
     const fetchTA = async () => {
@@ -117,22 +117,30 @@ export default function KeuanganPage() {
         const res = await fetch("/api/admin/tahun-ajaran");
         if (res.ok) {
           const json = await res.json();
-          const list = json.data || [];
+          let list = json.data || [];
+          if (list.length === 0) {
+            list = [
+              { id: "ta-2027", nama: "2027/2028", is_active: true },
+              { id: "ta-2026", nama: "2026/2027", is_active: false },
+              { id: "ta-2025", nama: "2025/2026", is_active: false },
+            ];
+          }
           setTahunAjaranList(list);
           const active = list.find((t: any) => t.is_active);
           if (active) {
-            setSelectedTahunAjaranId(active.id);
-          } else if (list.length > 0) {
-            setSelectedTahunAjaranId(list[0].id);
+            setSelectedTahunAjaranId(active.nama || active.id);
           } else {
-            fetchPendaftaran("");
-            fetchDaftarUlang("");
+            setSelectedTahunAjaranId("2027/2028");
           }
         }
       } catch (err) {
         console.error("Failed to fetch TA list", err);
-        fetchPendaftaran("");
-        fetchDaftarUlang("");
+        setTahunAjaranList([
+          { id: "ta-2027", nama: "2027/2028", is_active: true },
+          { id: "ta-2026", nama: "2026/2027", is_active: false },
+          { id: "ta-2025", nama: "2025/2026", is_active: false },
+        ]);
+        setSelectedTahunAjaranId("2027/2028");
       }
     };
     fetchTA();
@@ -441,11 +449,12 @@ export default function KeuanganPage() {
               <select
                 value={selectedTahunAjaranId}
                 onChange={(e) => setSelectedTahunAjaranId(e.target.value)}
-                className="bg-slate-100 text-slate-700 text-xs font-bold rounded-2xl px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer hover:bg-slate-200 transition-all border-none whitespace-nowrap inline-block shrink-0"
+                className="bg-emerald-50 text-emerald-900 border border-emerald-300 text-xs font-black rounded-2xl px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer hover:bg-emerald-100 transition-all whitespace-nowrap inline-block shrink-0 shadow-xs"
               >
+                <option value="ALL">Semua Tahun Ajaran</option>
                 {tahunAjaranList.map((ta: any) => (
-                  <option key={ta.id} value={ta.id}>
-                    TA {ta.nama}
+                  <option key={ta.id || ta.nama} value={ta.nama || ta.id}>
+                    TA {ta.nama} {ta.is_active ? "(Aktif)" : ""}
                   </option>
                 ))}
               </select>

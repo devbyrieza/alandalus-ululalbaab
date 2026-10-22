@@ -93,16 +93,20 @@ export async function POST(request: NextRequest) {
 
     // 4. Save File
     let filePath: string;
+    let fileBuffer: Buffer | null = null;
+    let detectedMimeType: string = file.type || "image/jpeg";
     try {
       // Detect Real Mime Type via Magic Bytes
       const arrayBuffer = await file.arrayBuffer();
       const buffer = Buffer.from(arrayBuffer);
+      fileBuffer = buffer;
       const hex = buffer.slice(0, 4).toString("hex").toUpperCase();
       let detectedType = file.type;
 
       if (hex.startsWith("FFD8FF")) detectedType = "image/jpeg";
       else if (hex === "89504E47") detectedType = "image/png";
       else if (hex === "25504446") detectedType = "application/pdf";
+      detectedMimeType = detectedType || file.type;
 
       const timestamp = Date.now();
       const originalName = file.name || "bukti_transfer";
@@ -139,12 +143,17 @@ export async function POST(request: NextRequest) {
 
     // 5. Update Database
     try {
+      const midtransJson = fileBuffer
+        ? { base64_image: fileBuffer.toString("base64"), mime_type: detectedMimeType }
+        : undefined;
+
       await prisma.pembayaran.update({
         where: { id: pembayaranId },
         data: {
           bukti_transfer_path: filePath,
           bukti_transfer_filename: file.name,
           status_pembayaran: "verified",
+          midtrans_response_json: midtransJson,
           verified_by: session.id,
           verified_at: new Date(),
           catatan_verifikasi: "Diunggah dan diverifikasi otomatis oleh Admin",

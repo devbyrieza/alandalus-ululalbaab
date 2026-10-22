@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { prisma } from "@/lib/prisma";
-import { getAdminWhereClause } from "@/lib/utils/admin";
+import { getAdminWhereClause, resolveTahunAjaran } from "@/lib/utils/admin";
 
 export async function GET(request: NextRequest) {
   try {
@@ -13,19 +13,28 @@ export async function GET(request: NextRequest) {
     }
 
     const session = JSON.parse(sessionCookie.value);
-    // Allow admin, admin_super, admin_keuangan (if exists)
-    // For now check if role starts with 'admin'
     if (!session.role.startsWith("admin")) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
     const { searchParams } = new URL(request.url);
-    const tahunAjaranId = searchParams.get("tahun_ajaran_id");
+    const tahunAjaranParam = searchParams.get("tahun_ajaran_id") || "2027/2028";
 
-    // 2. Fetch Data
-    // Get all students who PASSED
-    const baseWhere = await getAdminWhereClause(tahunAjaranId || undefined) as any;
-    const students = await prisma.pendaftar.findMany({
+    // 2. Resolve Target Year
+    let targetYear = tahunAjaranParam;
+    if (targetYear && targetYear.includes("-")) {
+      const taRecord = await prisma.tahunAjaran.findUnique({
+        where: { id: targetYear },
+        select: { nama: true }
+      });
+      if (taRecord?.nama) {
+        targetYear = taRecord.nama;
+      }
+    }
+
+    // 3. Fetch Data - Get all students who passed / accepted
+    const baseWhere = await getAdminWhereClause("all") as any;
+    const allStudents = await prisma.pendaftar.findMany({
       where: {
         ...baseWhere,
         status_pendaftaran: {
@@ -52,8 +61,13 @@ export async function GET(request: NextRequest) {
         no_hp: true,
         email: true,
         data_lengkap: true,
+        tahun_ajaran_id: true,
+        created_at: true,
         updated_at: true,
         status_pendaftaran: true,
+        tahun_ajaran: {
+          select: { id: true, nama: true }
+        },
         nilai_ujian: {
           select: { status_kelulusan: true } },
         orang_tua: {
@@ -89,7 +103,14 @@ export async function GET(request: NextRequest) {
             updated_at: true } } } as any,
       orderBy: { nama_lengkap: "asc" } });
 
-    // 3. Transform Data
+    // Filter by academic year
+    const students = allStudents.filter((student: any) => {
+      if (targetYear === "all" || targetYear === "ALL") return true;
+      const resolved = resolveTahunAjaran(student);
+      return resolved === targetYear || student.tahun_ajaran?.nama === targetYear;
+    });
+
+    // 4. Transform Data
     const rekapData = students.map((student: any, index: number) => {
       // Calculate Total Paid for Daftar Ulang + SPP (only verified payments)
       const verifiedDUPayments = student.pembayaran.filter(
@@ -182,12 +203,15 @@ export async function GET(request: NextRequest) {
       }
       const keringanan_reason = reasons.length > 0 ? reasons.join(" | ") : null;
 
+      const taResolved = resolveTahunAjaran(student);
+
       return {
         no: index + 1,
         id: student.id,
         nama: student.nama_lengkap,
         nomor_pendaftaran: student.nomor_pendaftaran,
         jenjang: student.jenjang || "-",
+        tahun_ajaran: taResolved,
         status_kelulusan: ["accepted", "passed", "enrolled"].includes(student.status_pendaftaran)
           ? "DITERIMA"
           : (student.nilai_ujian[0]?.status_kelulusan || "LULUS"),
@@ -203,7 +227,7 @@ export async function GET(request: NextRequest) {
         sisa_tagihan_up: Math.max(0, expectedUP - totalBayarDU),
         sisa_tagihan_spp: Math.max(0, expectedSPP - totalBayarSPP),
         last_updated: lastUpdate,
-        pembayaran_list: student.pembayaran, // Pass all payments to the frontend
+        pembayaran_list: student.pembayaran,
         no_hp: student.no_hp || "-",
         email: student.email || "-",
         ortu: (() => {
@@ -229,7 +253,7 @@ export async function GET(request: NextRequest) {
         })() };
     });
 
-    return NextResponse.json({ success: true, data: rekapData });
+    return NextResponse.json({ success: true, data: rekapData, filter_ta: targetYear });
   } catch (error) {
     console.error("Error fetching finance rekap:", error);
     return NextResponse.json(
@@ -238,4 +262,3 @@ export async function GET(request: NextRequest) {
     );
   }
 }
-

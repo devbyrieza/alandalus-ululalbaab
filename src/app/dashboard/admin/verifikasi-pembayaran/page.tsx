@@ -67,6 +67,7 @@ function VerifikasiPembayaranContent() {
   const [counts, setCounts] = useState({ PENDAFTARAN: 0, DAFTAR_ULANG: 0, SPP: 0 });
   const [showModal, setShowModal] = useState(false);
   const [showUploadAtasNamaModal, setShowUploadAtasNamaModal] = useState(false);
+  const [proofError, setProofError] = useState(false);
   const [catatan, setCatatan] = useState("");
   const [editJumlah, setEditJumlah] = useState("");
   const [processing, setProcessing] = useState(false);
@@ -413,6 +414,7 @@ function VerifikasiPembayaranContent() {
 
   const openModal = (pay: Pembayaran) => {
     setSelectedPembayaran(pay);
+    setProofError(false);
     setCatatan(pay.catatan || "");
     setEditJumlah(pay.jumlah);
     
@@ -954,7 +956,30 @@ function VerifikasiPembayaranContent() {
                     </button>
                   </div>
                   <div className="border-2 border-stone-100 rounded-2xl overflow-hidden bg-stone-50 relative group">
-                    {selectedPembayaran.bukti_transfer_url
+                    {proofError || selectedPembayaran.bukti_transfer_url?.toLowerCase().endsWith(".heic") ? (
+                      <div className="p-8 flex flex-col items-center justify-center text-center space-y-3 bg-stone-50">
+                        <div className="w-14 h-14 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center shadow-xs">
+                          <FileText className="w-7 h-7" />
+                        </div>
+                        <div>
+                          <p className="text-sm font-bold text-stone-800">
+                            Pratinjau Langsung Tidak Didukung Browser
+                          </p>
+                          <p className="text-xs text-stone-500 max-w-sm mt-1">
+                            Format file (HEIC/TIFF/Dokumen Khusus) atau tautan eksternal tidak dapat dirender langsung di dalam browser.
+                          </p>
+                        </div>
+                        <a
+                          href={selectedPembayaran.bukti_transfer_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 px-5 py-2.5 bg-primary-600 hover:bg-primary-700 text-white rounded-xl text-xs font-bold shadow-md transition-all hover:scale-105"
+                        >
+                          <Eye className="w-4 h-4" />
+                          Buka di Tab Baru / Download File
+                        </a>
+                      </div>
+                    ) : selectedPembayaran.bukti_transfer_url
                       ?.toLowerCase()
                       .endsWith(".pdf") ? (
                       <iframe
@@ -966,20 +991,23 @@ function VerifikasiPembayaranContent() {
                       <img
                         src={selectedPembayaran.bukti_transfer_url}
                         alt="Bukti Transfer"
+                        onError={() => setProofError(true)}
                         className="w-full max-h-[500px] object-contain"
                       />
                     )}
-                    <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                      <a
-                        href={selectedPembayaran.bukti_transfer_url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="px-6 py-3 bg-white rounded-full font-bold text-stone-900 shadow-2xl hover:scale-105 transition-transform flex items-center gap-2"
-                      >
-                        <Eye className="w-4 h-4" />
-                        Lihat Full Size
-                      </a>
-                    </div>
+                    {!proofError && (
+                      <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none group-hover:pointer-events-auto">
+                        <a
+                          href={selectedPembayaran.bukti_transfer_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-6 py-3 bg-white rounded-full font-bold text-stone-900 shadow-2xl hover:scale-105 transition-transform flex items-center gap-2"
+                        >
+                          <Eye className="w-4 h-4" />
+                          Lihat Full Size
+                        </a>
+                      </div>
+                    )}
                   </div>
                 </div>
               ) : (

@@ -84,6 +84,16 @@ async function compressImage(file: File): Promise<File> {
   }
 
   return new Promise((resolve) => {
+    // Safety timeout: don't freeze upload if image processing hangs
+    const timer = setTimeout(() => {
+      resolve(file);
+    }, 4000);
+
+    const safeResolve = (f: File) => {
+      clearTimeout(timer);
+      resolve(f);
+    };
+
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = (event) => {
@@ -121,18 +131,18 @@ async function compressImage(file: File): Promise<File> {
                 type: "image/jpeg",
                 lastModified: Date.now() });
               // Hanya gunakan hasil kompresi jika ukurannya lebih kecil
-              resolve(compressedFile.size < file.size ? compressedFile : file);
+              safeResolve(compressedFile.size < file.size ? compressedFile : file);
             } else {
-              resolve(file);
+              safeResolve(file);
             }
           },
           "image/jpeg",
           0.7,
         );
       };
-      img.onerror = () => resolve(file);
+      img.onerror = () => safeResolve(file);
     };
-    reader.onerror = () => resolve(file);
+    reader.onerror = () => safeResolve(file);
   });
 }
 
@@ -529,7 +539,7 @@ function DokumenCard({
                 ref={fileInputRef}
                 type="file"
                 className="hidden"
-                accept={config?.allowedTypes.join(",")}
+                accept="image/*,application/pdf,.heic,.heif,.jpg,.jpeg,.png,.webp"
                 onChange={handleFileSelect}
               />
             )}

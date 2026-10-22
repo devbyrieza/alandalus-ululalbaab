@@ -210,6 +210,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const midtransJson = { base64_image: buffer.toString("base64"), mime_type: detectedType };
+
     // 10. Tentukan tipe cicilan
     const tipeCicilan = tipeCicilanRaw || "LUNAS";
     const cicilanKe = cicilanKeRaw ? parseInt(cicilanKeRaw) : null;
@@ -235,6 +237,7 @@ export async function POST(request: NextRequest) {
           bukti_transfer_path: filePath,
           bukti_transfer_filename: safeFileName,
           status_pembayaran: "verified",
+          midtrans_response_json: midtransJson,
           catatan_verifikasi: catatan
             ? `Admin upload (Auto-Verified): ${catatan}`
             : "Diunggah dan diverifikasi otomatis oleh Admin",
@@ -282,6 +285,7 @@ export async function POST(request: NextRequest) {
           bukti_transfer_path: filePath,
           bukti_transfer_filename: safeFileName,
           status_pembayaran: "verified",
+          midtrans_response_json: midtransJson,
           catatan_verifikasi: catatan
             ? `Admin upload (Auto-Verified): ${catatan}`
             : "Diunggah dan diverifikasi otomatis oleh Admin" } as any });
