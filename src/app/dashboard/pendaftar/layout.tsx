@@ -4,7 +4,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
-import { User, CreditCard, FileCheck, Calendar, Trophy, CheckCircle, Settings, LogOut, Menu, X, Home, Lock, Loader2, Download, Upload, ClipboardList, ChevronRight, ShieldCheck, Bell, Search, Shirt, HandCoins, PartyPopper, CheckCircle2, AlertTriangle, XCircle } from "lucide-react";
+import { User, CreditCard, FileCheck, Calendar, Trophy, CheckCircle, Settings, LogOut, Menu, X, Home, Lock, Loader2, Download, Upload, ClipboardList, ChevronRight, ShieldCheck, Bell, Search, Shirt, HandCoins, CheckCircle2, AlertTriangle, XCircle } from "lucide-react";
 import { BRANDING } from "@/config/branding";
 import Link from "next/link";
 import IdleTimeoutTracker from "@/components/auth/IdleTimeoutTracker";
@@ -36,7 +36,6 @@ export default function DashboardLayout({
   const [tipePendaftaran, setTipePendaftaran] = useState("");
   const [loading, setLoading] = useState(true);
   const [seragamLengkap, setSeragamLengkap] = useState(true); // true = sudah isi, false = belum
-  const [welcomeDayDone, setWelcomeDayDone] = useState(true); // true = sudah konfirmasi, false = belum
   const [pasFoto, setPasFoto] = useState("");
 
   // Extract first name for greeting
@@ -106,15 +105,6 @@ export default function DashboardLayout({
           setPasFoto(userData.data_lengkap.pas_foto);
         }
 
-        // Cek konfirmasi welcome day
-        try {
-          const wdRes = await fetch(`/api/pendaftar/welcome-day?t=${Date.now()}`);
-          if (wdRes.ok) {
-            const wdData = await wdRes.json();
-            setWelcomeDayDone(!!(wdData.success && wdData.data && wdData.data.data_penginap));
-          }
-        } catch {}
-        // intentional: fire-and-forget welcome day status check
       } catch (error: any) {
         console.error(
           "Error in Layout fetchUserData:",
@@ -178,12 +168,6 @@ export default function DashboardLayout({
       tabName: "ukuran-seragam" as TabName, // Menggunakan rules akses ukuran-seragam
       icon: Shirt,
       active: pathname === "/dashboard/pendaftar/seragam" },
-    {
-      name: "Welcome Day",
-      href: "/dashboard/pendaftar/welcome-day",
-      tabName: "welcome-day" as TabName,
-      icon: PartyPopper,
-      active: pathname === "/dashboard/pendaftar/welcome-day" },
     {
       name: "Keuangan (ZAD)",
       href: "http://localhost:3001/wali-santri",
@@ -249,11 +233,7 @@ export default function DashboardLayout({
     const isSeragamMenu = item.tabName === "ukuran-seragam";
     const showSeragamBadge = isSeragamMenu && !seragamLengkap && (statusProses === "accepted" || statusProses === "enrolled" || statusProses === "enrolled_full");
 
-    // Cek apakah ini menu welcome day yang perlu badge
-    const isWelcomeDayMenu = item.tabName === "welcome-day";
-    const showWelcomeDayBadge = isWelcomeDayMenu && !welcomeDayDone && (statusProses === "accepted" || statusProses === "enrolled" || statusProses === "enrolled_full");
-
-    const showAnyBadge = showSeragamBadge || showWelcomeDayBadge;
+    const showAnyBadge = showSeragamBadge;
 
     return (
       <div className="px-3 py-1">
@@ -604,27 +584,6 @@ export default function DashboardLayout({
                 </div>
               )}
 
-              {/* Banner Pengingat Welcome Day - muncul otomatis jika belum konfirmasi */}
-              {!welcomeDayDone && (statusProses === "accepted" || statusProses === "enrolled" || statusProses === "enrolled_full") && pathname !== "/dashboard/pendaftar/welcome-day" && (
-                <div className="mx-4 md:mx-6 lg:mx-5 mt-3 mb-0">
-                  <div className="flex items-center gap-3 bg-primary-50 border border-primary-200 rounded-2xl px-4 py-3 shadow-sm">
-                    <div className="w-9 h-9 rounded-2xl bg-primary-600 flex items-center justify-center flex-shrink-0 shadow-sm">
-                      <Calendar className="w-5 h-5 text-white" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-black text-primary-900"><Calendar size={20} className="inline-block mr-2" /> Konfirmasi Welcome Day Belum Diisi!</p>
-                      <p className="text-xs text-primary-700 leading-snug mt-0.5">Harap konfirmasi kehadiran Welcome Day (18 Juli 2026) segera.</p>
-                    </div>
-                    <Link
-                      href="/dashboard/pendaftar/welcome-day"
-                      className="flex-shrink-0 flex items-center gap-1 bg-primary-600 hover:bg-primary-700 text-white text-xs font-black px-3 py-2 rounded-2xl transition-colors shadow-sm"
-                    >
-                      <Calendar className="w-3.5 h-3.5" />
-                      <span>Konfirmasi</span>
-                    </Link>
-                  </div>
-                </div>
-              )}
 
               <div className="p-4 md:p-6 lg:p-5">{children}</div>
             </div>

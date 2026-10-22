@@ -119,6 +119,15 @@ export async function middleware(request: NextRequest) {
     }
   }
 
+  // ─────────────────────────────────────────────────────────────────────────────
+  // HIDDEN (sementara): /dashboard/pendaftar/welcome-day
+  // Halaman Welcome Day disembunyikan untuk saat ini. Untuk mengaktifkan lagi,
+  // hapus blok redirect di bawah ini.
+  // ─────────────────────────────────────────────────────────────────────────────
+  if (pathname.startsWith("/dashboard/pendaftar/welcome-day")) {
+    return NextResponse.redirect(new URL("/dashboard/pendaftar", request.url));
+  }
+
   // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
   // PROTECT: /dashboard/admin
   // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
