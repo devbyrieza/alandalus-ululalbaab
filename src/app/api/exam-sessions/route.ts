@@ -17,6 +17,20 @@ async function getSession() {
 }
 
 // GET: List exam sessions
+// JADWAL H+1 — Pendaftar hanya dapat memilih jadwal mulai BESOK.
+// Jadwal untuk HARI INI tidak dapat dipilih.
+function getEarliestSelectableDate(): Date {
+  const WIB_OFFSET_MS = 7 * 60 * 60 * 1000;
+  const nowWIB = new Date(Date.now() + WIB_OFFSET_MS);
+  return new Date(
+    Date.UTC(
+      nowWIB.getUTCFullYear(),
+      nowWIB.getUTCMonth(),
+      nowWIB.getUTCDate() + 1,
+    ) - WIB_OFFSET_MS,
+  );
+}
+
 export async function GET(request: Request) {
   const session = await getSession();
   if (!session) {
@@ -65,7 +79,7 @@ export async function GET(request: Request) {
     // Pendaftar Restriction: Must be active + future
     if (isPendaftar) {
       whereClause.is_active = true;
-      whereClause.start_time = { gte: new Date() };
+      whereClause.start_time = { gte: getEarliestSelectableDate() };
 
       // Pendaftar cannot see other filters
       if (creator_id) {

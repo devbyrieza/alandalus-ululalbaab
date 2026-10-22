@@ -25,6 +25,22 @@ import Swal from "sweetalert2";
 import { expandExamTitle } from "@/lib/utils";
 import Link from "next/link";
 
+// JADWAL H+1 — Pendaftar hanya dapat memilih jadwal mulai BESOK.
+// Jadwal untuk HARI INI tidak dapat dipilih.
+function getEarliestSelectableDate(): Date {
+  const WIB_OFFSET_MS = 7 * 60 * 60 * 1000;
+  const nowWIB = new Date(Date.now() + WIB_OFFSET_MS);
+  return new Date(
+    Date.UTC(
+      nowWIB.getUTCFullYear(),
+      nowWIB.getUTCMonth(),
+      nowWIB.getUTCDate() + 1,
+    ) - WIB_OFFSET_MS,
+  );
+}
+
+
+
 // ============================================================================
 // TYPES
 // ============================================================================
@@ -237,8 +253,12 @@ export default function UndanganSeleksiTab() {
   // Active category free slots
   const activeCategoryFreeSlots = useMemo(() => {
     if (!data?.grupB?.availableSlots) return [];
+    const earliest = getEarliestSelectableDate().getTime();
     return data.grupB.availableSlots.filter(
-      (slot) => slot.category === activeCategory && !slot.isFull
+      (slot) =>
+        slot.category === activeCategory &&
+        !slot.isFull &&
+        new Date(slot.start_time).getTime() >= earliest
     );
   }, [data, activeCategory]);
 
@@ -819,6 +839,13 @@ export default function UndanganSeleksiTab() {
                   <div className="text-xs text-stone-500 font-medium">
                     Tersedia <strong className="text-ink-900 font-bold">{displayedSlots.length}</strong> sesi ujian
                   </div>
+                </div>
+
+                <div className="flex items-start gap-2 text-[11px] text-amber-700 bg-amber-50 border border-amber-200 rounded-xl px-3 py-2 font-medium">
+                  <Info className="w-3.5 h-3.5 shrink-0 mt-0.5" />
+                  <span>
+                    Pemesanan jadwal paling awal adalah untuk <strong>besok (H+1)</strong>. Jadwal hari ini tidak dapat dipilih.
+                  </span>
                 </div>
 
                 {/* Date Filter Bar */}

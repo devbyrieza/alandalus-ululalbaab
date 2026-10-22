@@ -37,6 +37,20 @@ async function getSession() {
 }
 
 // GET: Fetch existing schedule for pendaftar
+// JADWAL H+1 — Pendaftar hanya dapat memilih jadwal mulai BESOK.
+// Jadwal untuk HARI INI tidak dapat dipilih.
+function getEarliestSelectableDate(): Date {
+  const WIB_OFFSET_MS = 7 * 60 * 60 * 1000;
+  const nowWIB = new Date(Date.now() + WIB_OFFSET_MS);
+  return new Date(
+    Date.UTC(
+      nowWIB.getUTCFullYear(),
+      nowWIB.getUTCMonth(),
+      nowWIB.getUTCDate() + 1,
+    ) - WIB_OFFSET_MS,
+  );
+}
+
 export async function GET() {
   const session = await getSession();
   if (!session || session.role !== "pendaftar") {
@@ -104,6 +118,14 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Sesi tidak aktif" }, { status: 400 });
     if (examSession._count.bookings >= examSession.quota) {
       return NextResponse.json({ error: "Kuota penuh" }, { status: 400 });
+    }
+
+    // JADWAL H+1 — jadwal hari ini tidak dapat dipilih, paling awal BESOK.
+    if (new Date(examSession.start_time).getTime() < getEarliestSelectableDate().getTime()) {
+      return NextResponse.json(
+        { error: "Jadwal untuk hari ini tidak dapat dipilih. Silakan pilih jadwal mulai besok (H+1)." },
+        { status: 400 },
+      );
     }
 
     // 2. Check for categorical duplication (Quran, Santri, Ortu)

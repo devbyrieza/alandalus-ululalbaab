@@ -73,6 +73,20 @@ async function getSession() {
   }
 }
 
+// JADWAL H+1 — Pendaftar hanya dapat memilih jadwal mulai BESOK.
+// Jadwal untuk HARI INI tidak dapat dipilih.
+function getEarliestSelectableDate(): Date {
+  const WIB_OFFSET_MS = 7 * 60 * 60 * 1000;
+  const nowWIB = new Date(Date.now() + WIB_OFFSET_MS);
+  return new Date(
+    Date.UTC(
+      nowWIB.getUTCFullYear(),
+      nowWIB.getUTCMonth(),
+      nowWIB.getUTCDate() + 1,
+    ) - WIB_OFFSET_MS,
+  );
+}
+
 export async function GET(request: Request) {
   const session = await getSession();
   
@@ -188,7 +202,7 @@ export async function GET(request: Request) {
     const availableSessions = await prisma.examSession.findMany({
       where: {
         is_active: true,
-        start_time: { gte: new Date() } },
+        start_time: { gte: getEarliestSelectableDate() } },
       include: {
         _count: { select: { bookings: true } } },
       orderBy: { start_time: "asc" } });
