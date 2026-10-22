@@ -414,7 +414,7 @@ export default function DaftarUlangTab() {
             )}
             <div className="flex justify-between border-t border-slate-100 pt-1 mt-1">
               <span className="text-ink-500">SPP Bulan Pertama:</span>
-              <span className="font-bold text-ink-800">Rp 1.200.000</span>
+              <span className="font-bold text-ink-800">Rp 1.100.000</span>
             </div>
           </div>
         </div>

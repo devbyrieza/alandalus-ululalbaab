@@ -12,8 +12,8 @@ import { logAdminAction } from "@/lib/audit";
  *   pendaftar_id: string,
  *   jenis_bantuan: "BEASISWA" | "KERINGANAN" | null,  // null = hapus
  *   cakupan: "UANG_PANGKAL" | "SPP" | "KEDUANYA",
- *   potongan_uang_pangkal: number,   // 0-7500000
- *   potongan_spp: number,            // 0-1000000
+ *   potongan_uang_pangkal: number,   // 0-9900000
+ *   potongan_spp: number,            // 0-1100000
  *   catatan: string | null
  * }
  *

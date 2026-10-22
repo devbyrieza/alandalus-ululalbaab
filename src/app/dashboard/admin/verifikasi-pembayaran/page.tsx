@@ -269,7 +269,7 @@ function VerifikasiPembayaranContent() {
         if ((activeTab as string) === "UANG_PANGKAL" || activeTab === "DAFTAR_ULANG") {
           expectedTagihan = 9900000 - g.beasiswa;
         } else if (activeTab === "SPP") {
-          expectedTagihan = 1000000;
+          expectedTagihan = 1100000;
         } else if (activeTab === "PENDAFTARAN") {
           expectedTagihan = 350000;
         }

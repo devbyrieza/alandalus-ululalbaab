@@ -255,7 +255,7 @@ export async function PATCH(request: NextRequest) {
         const totalSPPPaid = allSppVerified.reduce((acc, p) => acc + Number(p.jumlah), 0);
 
         const duLunas = totalDUPaid >= expectedDU;
-        const sppLunas = totalSPPPaid >= 1000000;
+        const sppLunas = totalSPPPaid >= 1100000;
 
         if (duLunas && sppLunas) {
           newPendaftarStatus = "enrolled_full";

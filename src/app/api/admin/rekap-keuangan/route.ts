@@ -140,7 +140,7 @@ export async function GET(request: NextRequest) {
 
       const nominalPotongan = potonganUP + potonganSPP;
       const expectedUP = 9900000 - potonganUP;
-      const expectedSPP = 1000000 - potonganSPP;
+      const expectedSPP = 1100000 - potonganSPP;
       const requiredAmount = expectedUP + expectedSPP;
 
       // Determine Status
