@@ -379,11 +379,23 @@ export default function BroadcastPage() {
     }
   };
 
-  // Select entire category
+  // Select entire category (sesuai filter yang aktif jika sedang memfilter pendaftar)
   const handleSelectEntireCategory = () => {
     if (activeTab === "pendaftar") {
-      const allIds = pendaftarList.map((p) => p.id);
-      setSelectedPendaftar(allIds);
+      const filteredPendaftar = pendaftarList.filter((p) => {
+        if (filterTahunAjaran !== "ALL" && p.tahun_ajaran !== filterTahunAjaran) {
+          return false;
+        }
+        if (filterJenjang !== "ALL" && p.jenjang.toLowerCase() !== filterJenjang.toLowerCase()) {
+          return false;
+        }
+        if (filterStatus !== "ALL" && p.status_pendaftaran !== filterStatus) {
+          return false;
+        }
+        return true;
+      });
+      const ids = filteredPendaftar.map((p) => p.id);
+      setSelectedPendaftar(ids);
     } else {
       const allIds = (staffData[activeTab] || []).map((s) => s.id);
       setSelectedStaff(allIds);
