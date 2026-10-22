@@ -34,6 +34,9 @@ ENV NEXTAUTH_SECRET=$NEXTAUTH_SECRET
 
 # Generate Prisma Client
 RUN npx prisma generate
+
+# Turbopack: pakai CA sistem agar fetch Google Fonts tidak gagal TLS saat build
+ENV NEXT_TURBOPACK_EXPERIMENTAL_USE_SYSTEM_TLS_CERTS=1
 RUN pnpm run build
 
 # 3. Production image, copy all the files and run next

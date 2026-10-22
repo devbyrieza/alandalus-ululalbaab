@@ -6,6 +6,11 @@ const nextConfig: any = {
   turbopack: {
     root: __dirname,
   },
+  experimental: {
+    // Turbopack (default di Next 16) memakai CA sistem agar fetch Google Fonts
+    // tidak gagal TLS saat build di Docker/CI.
+    turbopackUseSystemTlsCerts: true,
+  },
   images: {
     unoptimized: true,
   },
