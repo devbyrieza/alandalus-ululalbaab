@@ -42,15 +42,17 @@ export async function GET() {
 
       // Map jenjang to friendly program name
       const programMap: Record<string, string> = {
-        mts: "SMP IT",
-        ma: "SMA IT",
+        mts: "MTs",
+        smp: "MTs",
+        ma: "SMA",
+        sma: "SMA",
         idad: "I'dad Lughowi",
         "i'dad": "I'dad Lughowi",
         "i'dad lughowi": "I'dad Lughowi" };
       const program =
         programMap[r.jenjang?.toLowerCase() || ""] ||
         r.jenjang ||
-        "SMP IT";
+        "MTs";
 
       // City: use kabupaten, strip "Kab. " or "Kota " prefix for brevity
       const city = (r.kabupaten || "")

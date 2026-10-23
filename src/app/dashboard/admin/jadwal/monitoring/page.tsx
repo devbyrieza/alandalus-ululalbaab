@@ -79,8 +79,8 @@ interface Schedule {
     };
 }
 
-// Helper untuk memeriksa jenjang Langsung MA/SMA/SMA IT Tanpa IL (yang memerlukan Tes Lisan Bahasa Arab)
-// Jenjang MTs/SMP/SMP IT dan IL TIDAK memerlukan tes lisan bahasa Arab.
+// Helper untuk memeriksa jenjang Langsung SMA Tanpa IL (yang memerlukan Tes Lisan Bahasa Arab)
+// Jenjang MTs dan IL TIDAK memerlukan tes lisan bahasa Arab.
 export const isJenjangLangsungNonIL = (jenjang?: string | null): boolean => {
     if (!jenjang) return false;
     const clean = jenjang.trim().toUpperCase();
@@ -111,6 +111,17 @@ export const isJenjangLangsungNonIL = (jenjang?: string | null): boolean => {
         return true;
     }
     return false;
+};
+
+export const getJenjangBadge = (jenjang?: string | null) => {
+    const clean = (jenjang || "").trim().toUpperCase();
+    if (clean === "IL" || clean.includes("IL")) {
+        return { label: "IL", className: "bg-emerald-100 text-emerald-700" };
+    }
+    if (clean.includes("SMA") || clean.includes("MA") || clean.includes("SLTA")) {
+        return { label: "SMA", className: "bg-blue-100 text-blue-700" };
+    }
+    return { label: "MTs", className: "bg-purple-100 text-purple-700" };
 };
 
 
@@ -422,7 +433,7 @@ export default function MonitoringJadwalPage() {
                 { type: 'ortu', name: s.ustadz.ortu, label: 'W. Ortu' }
             ];
 
-            // Tambahan Tes Lisan Bahasa Arab khusus yang Langsung MA/SMA Tanpa IL
+            // Tambahan Tes Lisan Bahasa Arab khusus yang Langsung SMA Tanpa IL
             if (s.ustadz?.arab && s.ustadz.arab !== "-" && isJenjangLangsungNonIL(s.pendaftar?.jenjang)) {
                 roles.push({ type: 'arab', name: s.ustadz.arab, label: 'Lisan B. Arab' });
             }
@@ -529,7 +540,14 @@ export default function MonitoringJadwalPage() {
             (s?.ustadz?.ortu || "").toLowerCase().includes(search.toLowerCase()) ||
             (s?.ustadz?.arab || "").toLowerCase().includes(search.toLowerCase()) || (s?.sesi?.start ? formatDateTime(s.sesi.start).toLowerCase() : "").includes(search.toLowerCase());
         
-        const matchesJenjang = filterJenjang === "ALL" || s?.pendaftar?.jenjang === filterJenjang;
+        const matchesJenjang = (() => {
+            if (filterJenjang === "ALL") return true;
+            const clean = (s?.pendaftar?.jenjang || "").trim().toUpperCase();
+            if (filterJenjang === "IL") return clean === "IL" || clean.includes("IL");
+            if (filterJenjang === "SMA") return clean.includes("SMA") || clean.includes("MA") || clean.includes("SLTA");
+            if (filterJenjang === "MTs") return clean.includes("MTS") || clean.includes("SMP") || clean.includes("TSANAWIYAH");
+            return clean === filterJenjang.toUpperCase();
+        })();
         
         
         const now = new Date();
@@ -862,8 +880,9 @@ export default function MonitoringJadwalPage() {
                             className="w-32 bg-white border border-slate-200 rounded-xl px-3 py-2 text-[11px] font-black text-ink-600 focus:ring-4 focus:ring-primary-500/5 focus:border-primary-500 outline-none h-12 shadow-sm appearance-none text-center uppercase tracking-wider"
                         >
                             <option value="ALL">SEMUA</option>
-                            <option value="MTs">SMP IT</option>
+                            <option value="MTs">MTs</option>
                             <option value="IL">IL</option>
+                            <option value="SMA">SMA</option>
                         </select>
                     </div>
 
@@ -966,9 +985,14 @@ export default function MonitoringJadwalPage() {
                                                 <span className="text-[10px] font-mono font-bold px-2 py-0.5 bg-slate-100 text-slate-500 rounded uppercase tracking-wider whitespace-nowrap inline-block shrink-0">
                                                     {s.pendaftar.nomor}
                                                 </span>
-                                                <span className={`text-[10px] font-bold px-2 py-0.5 rounded uppercase ${ s.pendaftar.jenjang === 'MTs' ? 'bg-purple-100 text-purple-600' : 'bg-emerald-100 text-emerald-600' }`}>
-                                                    {s.pendaftar.jenjang === "IL" ? "IL" : "SMP IT"}
-                                                </span>
+                                                {(() => {
+                                                    const badge = getJenjangBadge(s.pendaftar.jenjang);
+                                                    return (
+                                                        <span className={`text-[10px] font-bold px-2 py-0.5 rounded uppercase ${badge.className}`}>
+                                                            {badge.label}
+                                                        </span>
+                                                    );
+                                                })()}
                                             </div>
                                         </div>
                                         <div className="text-right">
@@ -1075,9 +1099,14 @@ export default function MonitoringJadwalPage() {
                                                             <span className="text-[10px] font-mono font-bold px-2 py-0.5 bg-slate-100 text-slate-500 rounded uppercase tracking-wider whitespace-nowrap inline-block shrink-0">
                                                                 {s.pendaftar.nomor}
                                                             </span>
-                                                            <span className={`text-[10px] font-bold px-2 py-0.5 rounded uppercase ${ s.pendaftar.jenjang === 'MTs' ? 'bg-purple-100 text-purple-700' : 'bg-emerald-100 text-emerald-700' }`}>
-                                                                {s.pendaftar.jenjang === "IL" ? "IL" : "SMP IT"}
-                                                            </span>
+                                                            {(() => {
+                                                                const badge = getJenjangBadge(s.pendaftar.jenjang);
+                                                                return (
+                                                                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded uppercase ${badge.className}`}>
+                                                                        {badge.label}
+                                                                    </span>
+                                                                );
+                                                            })()}
                                                         </div>
                                                     </div>
                                                 </td>
@@ -1213,7 +1242,7 @@ export default function MonitoringJadwalPage() {
                                             </div>
                                             <div>
                                                 <h2 className="text-base font-extrabold text-slate-800 leading-tight">{group.name.split(' (')[0]}</h2>
-                                                <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400 mt-1.5">{group.name.split(' (')[1].replace(')', '')} • {group.items[0].pendaftar.jenjang}</p>
+                                                <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400 mt-1.5">{group.name.split(' (')[1].replace(')', '')} • {getJenjangBadge(group.items[0]?.pendaftar?.jenjang).label}</p>
                                             </div>
                                         </div>
                                         <button
@@ -1308,7 +1337,7 @@ export default function MonitoringJadwalPage() {
                                                 {targetSchedule.pendaftar.nomor}
                                             </span>
                                             <span className="text-[11px] font-bold text-primary-700 bg-primary-50 px-2 py-0.5 rounded border border-primary-100">
-                                                {targetSchedule.pendaftar.jenjang}
+                                                {getJenjangBadge(targetSchedule.pendaftar.jenjang).label}
                                             </span>
                                         </div>
                                     </div>
@@ -1462,13 +1491,13 @@ export default function MonitoringJadwalPage() {
                                         </select>
                                     </div>
 
-                                    {/* Khusus Langsung MA/SMA/SMA IT Tanpa IL: Penguji Lisan Bahasa Arab */}
+                                    {/* Khusus Langsung SMA Tanpa IL: Penguji Lisan Bahasa Arab */}
                                     {isJenjangLangsungNonIL(targetSchedule.pendaftar.jenjang) && (
                                         <div className="space-y-1.5 pt-2 border-t border-slate-100">
                                             <label className="text-xs font-black text-emerald-800 uppercase tracking-wider flex items-center justify-between">
                                                 <span className="flex items-center gap-1.5">
                                                     <Languages className="w-3.5 h-3.5 text-emerald-600" />
-                                                    Penguji Lisan Bahasa Arab (Khusus Langsung MA/SMA IT Tanpa IL)
+                                                    Penguji Lisan Bahasa Arab (Khusus Langsung SMA Tanpa IL)
                                                 </span>
                                                 {selectedArabId && (
                                                     <button

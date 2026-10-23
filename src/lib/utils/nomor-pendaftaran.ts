@@ -160,9 +160,9 @@ export function parseNomorPendaftaran(nomorPendaftaran: string): {
   let jenis_kelamin = "";
 
   if (prefix.startsWith("SP")) {
-    jenjang = "SMP IT";
+    jenjang = "MTs";
   } else if (prefix.startsWith("SM")) {
-    jenjang = "SMA IT";
+    jenjang = "SMA";
   } else if (prefix.startsWith("MT")) {
     jenjang = "MTs";
   } else if (prefix.startsWith("IL")) {
@@ -295,16 +295,16 @@ export async function getRegistrationStats(): Promise<{
  */
 export function getPrefixLabel(prefix: string): string {
   const labels: Record<string, string> = {
-    SPA: "SMP IT Putra (Laki-laki)",
-    SPI: "SMP IT Putri (Perempuan)",
-    SMA: "SMA IT Putra (Laki-laki)",
-    SMI: "SMA IT Putri (Perempuan)",
+    SPA: "MTs Putra (Laki-laki)",
+    SPI: "MTs Putri (Perempuan)",
+    SMA: "SMA Putra (Laki-laki)",
+    SMI: "SMA Putri (Perempuan)",
     ILA: "I'dad Lughowi Putra (Laki-laki)",
     ILI: "I'dad Lughowi Putri (Perempuan)",
-    MTA: "SMP IT / MTs Putra (Laki-laki)",
-    MTI: "SMP IT / MTs Putri (Perempuan)",
-    MAA: "SMA IT / MA Putra (Laki-laki)",
-    MAI: "SMA IT / MA Putri (Perempuan)",
+    MTA: "MTs Putra (Laki-laki)",
+    MTI: "MTs Putri (Perempuan)",
+    MAA: "SMA Putra (Laki-laki)",
+    MAI: "SMA Putri (Perempuan)",
   };
 
   return labels[prefix] || prefix;

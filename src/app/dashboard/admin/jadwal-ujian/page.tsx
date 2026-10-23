@@ -60,7 +60,7 @@ interface Pendaftar {
   no_hp?: string;
 }
 
-// Helper untuk mendeteksi jenjang tanpa IL (MA, SMA, SMA IT non-IL)
+// Helper untuk mendeteksi jenjang tanpa IL (SMA non-IL)
 export const formatExaminerRole = (role?: string) => {
   if (!role) return "";
   switch (role.toLowerCase()) {
@@ -117,7 +117,7 @@ export const isJenjangTanpaIL = (jenjang?: string | null): boolean => {
     return false;
   }
 
-  // Jika jenjangnya MA / SMA / SMA IT / ALIYAH dan tidak ada indikasi IL
+  // Jika jenjangnya SMA dan tidak ada indikasi IL
   if (
     clean.includes("MA") ||
     clean.includes("SMA") ||
@@ -1497,7 +1497,7 @@ export default function JadwalUjianPage() {
 
                   <p className="text-[11px] text-stone-500 leading-relaxed">
                     {isCandidateTanpaIL
-                      ? "Pilih satu materi seleksi yang ingin dijadwalkan pada sesi ini. Jenjang langsung MA/SMA/SMA IT Tanpa IL memiliki 5 pilihan materi seleksi."
+                      ? "Pilih satu materi seleksi yang ingin dijadwalkan pada sesi ini. Jenjang langsung SMA Tanpa IL memiliki 5 pilihan materi seleksi."
                       : "Pilih satu materi seleksi yang ingin dijadwalkan pada sesi ini. Jenjang Standar / IL memiliki 3 materi seleksi."}
                   </p>
                 </div>
