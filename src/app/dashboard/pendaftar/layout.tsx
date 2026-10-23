@@ -193,6 +193,12 @@ export default function DashboardLayout({
   // NavLink component dengan conditional rendering
   const NavLink = ({ item }: { item: (typeof menuItems)[0] }) => {
     const isAccessible = isTabAccessible(item.tabName);
+
+    // Halaman ukuran seragam hanya muncul saat sudah menerima pengumuman (accessible)
+    if (item.tabName === "ukuran-seragam" && !isAccessible) {
+      return null;
+    }
+
     const progressToUnlock = calculateProgressToUnlock(
       item.tabName,
       statusProses,
@@ -496,16 +502,21 @@ export default function DashboardLayout({
                 </div>
 
                 <nav className="flex-1 overflow-y-auto sidebar-scroll-menu p-4 space-y-1 overscroll-contain custom-scrollbar">
-                  {menuItems.map((item) => (
-                    <div
-                      key={item.name}
-                      onClick={() =>
-                        isTabAccessible(item.tabName) && setSidebarOpen(false)
-                      }
-                    >
-                      <NavLink item={item} />
-                    </div>
-                  ))}
+                  {menuItems.map((item) => {
+                    if (item.tabName === "ukuran-seragam" && !isTabAccessible(item.tabName)) {
+                      return null;
+                    }
+                    return (
+                      <div
+                        key={item.name}
+                        onClick={() =>
+                          isTabAccessible(item.tabName) && setSidebarOpen(false)
+                        }
+                      >
+                        <NavLink item={item} />
+                      </div>
+                    );
+                  })}
                 </nav>
 
                 <div className="p-4 border-t border-surface-100">

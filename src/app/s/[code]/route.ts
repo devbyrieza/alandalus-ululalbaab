@@ -28,12 +28,14 @@ export async function GET(req: Request, { params }: { params: Promise<{ code: st
     // Hash is valid, let's find the pendaftar
     const pendaftar = await prisma.pendaftar.findUnique({
       where: { nomor_pendaftaran },
-      select: { user_id: true, nama_lengkap: true }
+      select: { id: true, user_id: true, nama_lengkap: true }
     });
 
-    if (!pendaftar || !pendaftar.user_id) {
+    if (!pendaftar) {
       return NextResponse.redirect(new URL("/login?error=Pendaftar_tidak_ditemukan", req.url));
     }
+
+    const authId = pendaftar.user_id || pendaftar.id;
 
     // Determine redirect target based on query param, default to seragam
     const url = new URL(req.url);
@@ -47,7 +49,7 @@ export async function GET(req: Request, { params }: { params: Promise<{ code: st
 
     // Generate the actual magic token (valid for 48 hours)
     const token = generateMagicToken(
-      pendaftar.user_id,
+      authId,
       "pendaftar",
       pendaftar.nama_lengkap,
       48,

@@ -60,6 +60,7 @@ function VerifikasiPembayaranContent() {
   const [pembayaran, setPembayaran] = useState<Pembayaran[]>([]);
   const [loading, setLoading] = useState(true);
   const [statusFilter, setStatusFilter] = useState(urlStatus);
+  const [filterTahunAjaran, setFilterTahunAjaran] = useState<string>("2027/2028");
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedPembayaran, setSelectedPembayaran] =
     useState<Pembayaran | null>(null);
@@ -135,14 +136,14 @@ function VerifikasiPembayaranContent() {
     document.body.style.paddingRight = '';
 
     fetchPembayaran();
-  }, [statusFilter, activeTab]);
+  }, [statusFilter, activeTab, filterTahunAjaran]);
 
   const fetchPembayaran = async (silent = false) => {
     try {
       if (!silent) setLoading(true);
       else setIsRefreshing(true);
       const response = await fetch(
-        `/api/admin/verifikasi/pembayaran?status=${statusFilter}&jenis=${activeTab}`,
+        `/api/admin/verifikasi/pembayaran?status=${statusFilter}&jenis=${activeTab}&tahun_ajaran=${filterTahunAjaran}`,
       );
       if (!response.ok) throw new Error("Failed to fetch");
 
@@ -174,7 +175,7 @@ function VerifikasiPembayaranContent() {
     try {
       setExporting(true);
       const response = await fetch(
-        `/api/admin/verifikasi/pembayaran?status=all&jenis=${activeTab}`,
+        `/api/admin/verifikasi/pembayaran?status=all&jenis=${activeTab}&tahun_ajaran=${filterTahunAjaran}`,
       );
       if (!response.ok) throw new Error("Failed to export");
 
@@ -594,6 +595,19 @@ function VerifikasiPembayaranContent() {
       <div className="flex flex-wrap items-center gap-3 bg-white p-4 rounded-2xl shadow-2xl border border-stone-100">
         <div className="px-4 py-2 bg-stone-100 rounded-2xl text-sm font-bold text-stone-600 whitespace-nowrap inline-block shrink-0">
           Total: {filteredPembayaran.length}
+        </div>
+
+        <div className="flex items-center gap-2 shrink-0">
+          <span className="text-xs font-black text-stone-400 uppercase tracking-wider">TA:</span>
+          <select
+            value={filterTahunAjaran}
+            onChange={(e) => setFilterTahunAjaran(e.target.value)}
+            className="px-3 py-1.5 rounded-2xl text-xs font-black uppercase tracking-wider bg-stone-50 border border-stone-200 text-stone-700 outline-none hover:bg-stone-100 cursor-pointer shadow-sm transition-all"
+          >
+            <option value="2027/2028">TA 2027/2028 (Aktif)</option>
+            <option value="2026/2027">TA 2026/2027</option>
+            <option value="ALL">Semua TA</option>
+          </select>
         </div>
 
         <div className="h-8 w-px bg-stone-200 mx-1 hidden sm:block"></div>

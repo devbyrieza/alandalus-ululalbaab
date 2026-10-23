@@ -60,8 +60,11 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
+    const searchParams = request.nextUrl.searchParams;
+    const tahunAjaran = searchParams.get("tahun_ajaran") || "2027/2028";
+
     // Fetch all JadwalUjian with relations (filtering out deleted students)
-        const { getAdminWhereClause } = await import("@/lib/utils/admin");
+    const { getAdminWhereClause, resolveTahunAjaran } = await import("@/lib/utils/admin");
     const pendaftarWhere = await getAdminWhereClause();
 
     const schedules = await prisma.jadwalUjian.findMany({
@@ -77,6 +80,9 @@ export async function GET(request: NextRequest) {
             jenjang: true,
             no_hp: true,
             created_at: true,
+            tahun_ajaran: {
+              select: { id: true, nama: true },
+            },
           },
         },
         exam_session: {
@@ -195,6 +201,7 @@ export async function GET(request: NextRequest) {
         id: s.id,
         created_at: s.created_at,
         updated_at: s.updated_at,
+        tahun_ajaran: resolveTahunAjaran(s.pendaftar),
         pendaftar: {
           id: s.pendaftar.id,
           nomor: s.pendaftar.nomor_pendaftaran,
@@ -202,6 +209,7 @@ export async function GET(request: NextRequest) {
           jenjang: s.pendaftar.jenjang,
           no_hp: s.pendaftar.no_hp,
           created_at: s.pendaftar.created_at,
+          tahun_ajaran: resolveTahunAjaran(s.pendaftar),
         },
         sesi: {
           id: s.exam_session?.id || null,
@@ -251,7 +259,11 @@ export async function GET(request: NextRequest) {
       );
     });
 
-    return NextResponse.json({ data: cleanedData });
+    const filteredByTa = (tahunAjaran === "ALL" || tahunAjaran === "all")
+      ? cleanedData
+      : cleanedData.filter((s) => s.tahun_ajaran === tahunAjaran);
+
+    return NextResponse.json({ data: filteredByTa });
   } catch (error: any) {
     console.error("Monitoring API Error:", error);
     return NextResponse.json(

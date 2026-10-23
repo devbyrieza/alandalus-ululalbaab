@@ -29,9 +29,51 @@ export async function GET(request: NextRequest) {
     }
 
     const { id, role, full_name, redirect } = verification.data;
-
-    // 3. Check if user needs PIN (has phone number)
     const { prisma } = await import("@/lib/prisma");
+
+    // Jika role pendaftar, bypass verifikasi PIN penguji dan buat sesi pendaftar langsung
+    if (role === "pendaftar") {
+      const pendaftar = await prisma.pendaftar.findFirst({
+        where: {
+          OR: [
+            { id: id },
+            { user_id: id }
+          ]
+        },
+        select: {
+          id: true,
+          nik: true,
+          nomor_pendaftaran: true,
+          nama_lengkap: true
+        }
+      });
+
+      const sessionData = {
+        role: "pendaftar",
+        id: pendaftar ? pendaftar.id : id,
+        nik: pendaftar?.nik || "",
+        nomor_pendaftaran: pendaftar?.nomor_pendaftaran || "",
+        nama_lengkap: pendaftar?.nama_lengkap || full_name
+      };
+
+      const targetUrl = redirect || "/dashboard/pendaftar/seragam";
+      const response = NextResponse.redirect(new URL(targetUrl, baseUrl));
+      response.cookies.set(
+        "al_session",
+        JSON.stringify(sessionData),
+        {
+          path: "/",
+          httpOnly: true,
+          secure: process.env.NODE_ENV === "production",
+          sameSite: "lax",
+          maxAge: 60 * 60 * 24 * 90,
+          expires: new Date(Date.now() + 60 * 60 * 24 * 90 * 1000),
+        }
+      );
+      return response;
+    }
+
+    // 3. Check if staff user needs PIN (has phone number)
     const user = await prisma.profile.findUnique({
       where: { id },
       select: { phone: true } });

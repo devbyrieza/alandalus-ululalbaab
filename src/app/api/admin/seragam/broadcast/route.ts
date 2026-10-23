@@ -59,11 +59,12 @@ export async function POST(req: Request) {
         .slice(0, 8);
       
       const shortCode = `${pendaftar.nomor_pendaftaran}-${hash}`;
-      let magicLink;
+      const magicLink = `${baseUrl}/s/${shortCode}?t=seragam`;
+      const directDashboardLink = `${baseUrl}/dashboard/pendaftar/seragam`;
+
       let message;
 
       if (isSpecial) {
-        magicLink = `${baseUrl}/isi-seragam/${shortCode}`;
         message = `*PENDATAAN AWAL UKURAN SERAGAM*
 
 Assalamualaikum Warahmatullahi Wabarakatuh,
@@ -71,28 +72,34 @@ Abu/Ummu dari Ananda *${pendaftar.nama_lengkap}* (${pendaftar.nomor_pendaftaran}
 
 Sebagai persiapan awal, kami memohon kesediaan Abu/Ummu untuk mengisikan data ukuran seragam santri meskipun saat ini Ananda belum melakukan pembayaran Daftar Ulang.
 
-Mohon untuk mengisi ukuran seragam baju dan celana/rok melalui link khusus berikut:
+Mohon untuk mengisi ukuran seragam baju dan celana/rok melalui link dashboard akun Anda berikut:
 
-🔗 *Link Pengisian Khusus:*
+🔗 *Link Pengisian (Login Otomatis):*
 ${magicLink}
+
+Atau silakan login mandiri ke:
+${directDashboardLink}
+(Gunakan Nomor Pendaftaran: ${pendaftar.nomor_pendaftaran} & NIK Ananda)
 
 Jazakumullahu khairan.
 Panitia PPDB.`;
       } else {
-        magicLink = pendaftar.user_id ? `${baseUrl}/s/${shortCode}?t=seragam` : `${baseUrl}/isi-seragam/${shortCode}`;
         message = `*PENGINGAT PENGISIAN UKURAN SERAGAM*
 
 Assalamualaikum Warahmatullahi Wabarakatuh,
 Abu/Ummu dari Ananda *${pendaftar.nama_lengkap}* (${pendaftar.nomor_pendaftaran}).
 
 Kami menginformasikan bahwa Ananda belum mengisi ukuran seragam.
-Mengingat Ananda telah melakukan pembayaran Daftar Ulang, mohon untuk segera mengisi ukuran seragam baju dan celana/rok melalui link berikut:
+Mengingat Ananda telah melakukan pembayaran Daftar Ulang, mohon untuk segera mengisi ukuran seragam baju dan celana/rok melalui link dashboard akun Anda berikut:
 
-🔗 *Link Pengisian (Otomatis Login):*
+🔗 *Link Pengisian (Login Otomatis):*
 ${magicLink}
 
-Atau silakan login ke dashboard pendaftaran Anda dan buka menu "Ukuran Seragam".
-Pastikan untuk mengisinya secepatnya karena akan segera diproses.
+Atau silakan login ke dashboard akun santri di menu "Ukuran Seragam":
+${directDashboardLink}
+(Nomor Pendaftaran: ${pendaftar.nomor_pendaftaran})
+
+Pastikan untuk mengisinya secepatnya karena seragam akan segera diproses konveksi.
 
 Jazakumullahu khairan.
 Panitia PPDB.`;

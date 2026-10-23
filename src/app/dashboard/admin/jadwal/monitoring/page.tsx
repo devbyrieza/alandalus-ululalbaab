@@ -130,7 +130,8 @@ export default function MonitoringJadwalPage() {
     const [search, setSearch] = useState("");
     const [filterJenjang, setFilterJenjang] = useState("ALL");
     const [viewMode, setViewMode] = useState<"flat" | "grouped" | "santri" | "calendar">("flat");
-    const [dateFilter, setDateFilter] = useState<"hari_ini" | "besok" | "akan_datang" | "berlalu" | "semua" | "kustom">("hari_ini");
+    const [dateFilter, setDateFilter] = useState<"hari_ini" | "besok" | "akan_datang" | "berlalu" | "semua" | "kustom">("akan_datang");
+    const [filterTahunAjaran, setFilterTahunAjaran] = useState<string>("2027/2028");
     const [customDate, setCustomDate] = useState("");
     const [customTime, setCustomTime] = useState("");
 
@@ -470,7 +471,7 @@ export default function MonitoringJadwalPage() {
     const fetchMonitoringData = async () => {
         try {
             setLoading(true);
-            const res = await fetch("/api/admin/jadwal/monitoring");
+            const res = await fetch(`/api/admin/jadwal/monitoring?tahun_ajaran=${filterTahunAjaran}`);
             if (res.ok) {
                 const json = await res.json();
                 const data = json.data || [];
@@ -483,6 +484,10 @@ export default function MonitoringJadwalPage() {
             setLoading(false);
         }
     };
+
+    useEffect(() => {
+        fetchMonitoringData();
+    }, [filterTahunAjaran]);
 
     const formatBookingTime = (isoString?: string) => {
         if (!isoString) return "-";
@@ -544,12 +549,12 @@ export default function MonitoringJadwalPage() {
             } else if (dateFilter === "besok") {
                 matchesDate = sessDateStr === tomorrowStr;
             } else if (dateFilter === "akan_datang") {
-                // If it hasn't ended yet, it's upcoming (or active)
-                const endTime = s.sesi.end ? new Date(s.sesi.end).getTime() : sessDateObj.getTime();
-                matchesDate = endTime >= now.getTime();
+                // Sesi mendatang: jadwal dari hari ini dan seterusnya
+                matchesDate = sessDateStr >= todayStr;
             } else if (dateFilter === "berlalu") {
-                const endTime = s.sesi.end ? new Date(s.sesi.end).getTime() : sessDateObj.getTime();
-                matchesDate = endTime < now.getTime();
+                matchesDate = sessDateStr < todayStr;
+            } else if (dateFilter === "semua") {
+                matchesDate = true;
             } else if (dateFilter === "kustom") {
                 let isMatch = true;
                 if (customDate) {
@@ -565,7 +570,9 @@ export default function MonitoringJadwalPage() {
             }
         }
 
-        return matchesSearch && matchesJenjang && matchesDate;
+        const matchesTahunAjaran = filterTahunAjaran === "ALL" || (s as any).tahun_ajaran === filterTahunAjaran || (s?.pendaftar as any)?.tahun_ajaran === filterTahunAjaran;
+
+        return matchesSearch && matchesJenjang && matchesDate && matchesTahunAjaran;
     }).sort((a, b) => new Date(a.sesi.start).getTime() - new Date(b.sesi.start).getTime());
 
     const getGroupedSchedules = () => {
@@ -886,13 +893,22 @@ export default function MonitoringJadwalPage() {
                             <Loader2 className={`w-4 h-4 ${loading ? 'animate-spin text-primary-500' : ''}`} />
                         </button>
                         <select
+                            value={filterTahunAjaran}
+                            onChange={(e) => setFilterTahunAjaran(e.target.value)}
+                            className="px-3 pr-8 rounded-xl text-[11px] font-bold uppercase tracking-wider transition-all border h-12 shadow-sm bg-white border-slate-200 text-slate-600 focus:border-primary-500 focus:ring-1 focus:ring-primary-500 outline-none appearance-none cursor-pointer hover:bg-slate-50"
+                        >
+                            <option value="2027/2028">TA 2027/2028 (Aktif)</option>
+                            <option value="2026/2027">TA 2026/2027</option>
+                            <option value="ALL">Semua TA</option>
+                        </select>
+                        <select
                             value={dateFilter}
                             onChange={(e) => setDateFilter(e.target.value as any)}
                             className="px-4 pr-8 rounded-xl text-[11px] font-bold uppercase tracking-wider transition-all border h-12 shadow-sm bg-white border-slate-200 text-slate-600 focus:border-primary-500 focus:ring-1 focus:ring-primary-500 outline-none appearance-none cursor-pointer hover:bg-slate-50"
                         >
+                            <option value="akan_datang">Sesi Mendatang (Default)</option>
                             <option value="hari_ini">Jadwal Hari Ini</option>
                             <option value="besok">Jadwal Besok</option>
-                            <option value="akan_datang">Sesi Mendatang</option>
                             <option value="berlalu">Sesi Berlalu</option>
                             <option value="semua">Semua Waktu</option>
                             <option value="kustom">Spesifik (Tgl / Jam)</option>
