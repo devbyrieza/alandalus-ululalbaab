@@ -46,7 +46,7 @@ export async function middleware(request: NextRequest) {
     const appPaths = [
       "/ppdb", "/spmb", "/login", "/daftar", "/daftar-pindahan", "/daftar-sukses", 
       "/dashboard", "/admin", "/auth", "/pilih-verifikasi", "/send-otp", "/verifikasi-otp",
-      "/panitia", "/bank-soal"
+      "/panitia", "/bank-soal", "/s", "/n"
     ];
     const isAppPath = appPaths.some(p => pathLower === p || pathLower.startsWith(p + "/"));
     

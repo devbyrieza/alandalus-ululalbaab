@@ -1139,8 +1139,232 @@ export async function getQueueStats() {
             : null };
 }
 
+// ============================================================================
+// STANDARDIZED REMINDER TEMPLATES (SESUAI SOP SPMB)
+// ============================================================================
+
+const SYSTEM_FOOTER_ULULALBAAB = "_Sistem SPMB Pesantren Ulul Albaab Managed by Al-Andalus IIBS_";
+
+export function formatJenjangUlulAlbaab(jenjang?: string | null): string {
+    if (!jenjang) return "MTs";
+    const j = jenjang.trim().toUpperCase();
+    if (j === "IL" || j.includes("I'DAD") || j.includes("IDAD")) return "IL";
+    if (j === "SMA" || j.includes("SMA")) return "SMA";
+    return "MTs";
+}
+
 /**
- * Template: Pengingat 4 Jam Sebelum Ujian untuk Santri
+ * A. UNTUK PENDAFTAR — 1. Pengingat Jadwal Tes Al-Qur'an
+ */
+export function buildMessageReminderQuranPendaftar(params: {
+    namaWali?: string | null;
+    namaSantri: string;
+    jenjang?: string | null;
+    hariTanggal: string;
+    waktu: string;
+    googleMeetLink?: string | null;
+}): string {
+    const wali = (params.namaWali || "").trim() || "Wali Santri";
+    const jenjang = formatJenjangUlulAlbaab(params.jenjang);
+    const meet = params.googleMeetLink && params.googleMeetLink !== "-" ? params.googleMeetLink.trim() : "-";
+
+    return `*🔔 PENGINGAT JADWAL TES AL-QUR'AN*
+
+Assalamu'alaikum warahmatullahi wabarakatuh, Abu/Ummu *${wali}*,
+
+Mengingatkan jadwal Tes Al-Qur'an ananda:
+
+👤 *Nama Santri:* ${params.namaSantri}
+🎓 *Jenjang:* ${jenjang}
+📅 *Hari/Tanggal:* ${params.hariTanggal}
+⏰ *Waktu:* ${params.waktu}
+📍 *Link Google Meet:* ${meet}
+
+Mohon ananda bersiap dan masuk ke ruang Meet tepat waktu ya, Abu/Ummu.
+
+Jazakumullahu khairan.
+
+---
+${SYSTEM_FOOTER_ULULALBAAB}`;
+}
+
+/**
+ * A. UNTUK PENDAFTAR — 2. Pengingat Jadwal Wawancara Calon Santri
+ */
+export function buildMessageReminderSantriPendaftar(params: {
+    namaWali?: string | null;
+    namaSantri: string;
+    jenjang?: string | null;
+    hariTanggal: string;
+    waktu: string;
+    googleMeetLink?: string | null;
+}): string {
+    const wali = (params.namaWali || "").trim() || "Wali Santri";
+    const jenjang = formatJenjangUlulAlbaab(params.jenjang);
+    const meet = params.googleMeetLink && params.googleMeetLink !== "-" ? params.googleMeetLink.trim() : "-";
+
+    return `*🔔 PENGINGAT JADWAL WAWANCARA CALON SANTRI*
+
+Assalamu'alaikum warahmatullahi wabarakatuh, Abu/Ummu *${wali}*,
+
+Mengingatkan jadwal Wawancara Calon Santri ananda:
+
+👤 *Nama Santri:* ${params.namaSantri}
+🎓 *Jenjang:* ${jenjang}
+📅 *Hari/Tanggal:* ${params.hariTanggal}
+⏰ *Waktu:* ${params.waktu}
+📍 *Link Google Meet:* ${meet}
+
+Mohon ananda bersiap dan masuk ke ruang Meet tepat waktu ya, Abu/Ummu.
+
+Jazakumullahu khairan.
+
+---
+${SYSTEM_FOOTER_ULULALBAAB}`;
+}
+
+/**
+ * A. UNTUK PENDAFTAR — 3. Pengingat Jadwal Wawancara Calon Orangtua/Wali Santri
+ */
+export function buildMessageReminderOrtuPendaftar(params: {
+    namaWali?: string | null;
+    namaSantri: string;
+    jenjang?: string | null;
+    hariTanggal: string;
+    waktu: string;
+    googleMeetLink?: string | null;
+}): string {
+    const wali = (params.namaWali || "").trim() || "Wali Santri";
+    const jenjang = formatJenjangUlulAlbaab(params.jenjang);
+    const meet = params.googleMeetLink && params.googleMeetLink !== "-" ? params.googleMeetLink.trim() : "-";
+
+    return `*🔔 PENGINGAT JADWAL WAWANCARA CALON ORANGTUA/WALI SANTRI*
+
+Assalamu'alaikum warahmatullahi wabarakatuh, Abu/Ummu *${wali}*,
+
+Mengingatkan jadwal Wawancara Calon Orangtua/Wali Santri:
+
+👤 *Nama Santri:* ${params.namaSantri}
+🎓 *Jenjang:* ${jenjang}
+📅 *Hari/Tanggal:* ${params.hariTanggal}
+⏰ *Waktu:* ${params.waktu}
+📍 *Link Google Meet:* ${meet}
+
+Tidak harus kedua orangtua hadir — salah satu saja boleh ya, Abu/Ummu. Mohon masuk ke ruang Meet tepat waktu.
+
+Jazakumullahu khairan.
+
+---
+${SYSTEM_FOOTER_ULULALBAAB}`;
+}
+
+/**
+ * B. UNTUK PENGUJI & PEWAWANCARA — 1. Pengingat Jadwal Menguji Tes Al-Qur'an
+ */
+export function buildMessageReminderQuranPenguji(params: {
+    namaPenguji: string;
+    namaSantri: string;
+    jenjang?: string | null;
+    hariTanggal: string;
+    waktu: string;
+    googleMeetLink?: string | null;
+    linkInputNilai: string;
+}): string {
+    const jenjang = formatJenjangUlulAlbaab(params.jenjang);
+    const meet = params.googleMeetLink && params.googleMeetLink !== "-" ? params.googleMeetLink.trim() : "-";
+    const inputNilai = params.linkInputNilai && params.linkInputNilai !== "-" ? params.linkInputNilai.trim() : "-";
+
+    return `*🔔 PENGINGAT JADWAL MENGUJI — TES AL-QUR'AN*
+
+Assalamu'alaikum warahmatullahi wabarakatuh, Ustadz/Ustadzah *${params.namaPenguji}*,
+
+Mengingatkan jadwal Tes Al-Qur'an:
+
+👤 *Nama Santri:* ${params.namaSantri}
+🎓 *Jenjang:* ${jenjang}
+📅 *Hari/Tanggal:* ${params.hariTanggal}
+⏰ *Waktu:* ${params.waktu}
+📍 *Link Google Meet:* ${meet}
+🔗 *Input Nilai:* ${inputNilai}
+
+Mohon kehadirannya tepat waktu. Jazakumullahu khairan.
+
+---
+${SYSTEM_FOOTER_ULULALBAAB}`;
+}
+
+/**
+ * B. UNTUK PENGUJI & PEWAWANCARA — 2. Pengingat Jadwal Mewawancara Calon Santri
+ */
+export function buildMessageReminderSantriPenguji(params: {
+    namaPenguji: string;
+    namaSantri: string;
+    jenjang?: string | null;
+    hariTanggal: string;
+    waktu: string;
+    googleMeetLink?: string | null;
+    linkInputNilai: string;
+}): string {
+    const jenjang = formatJenjangUlulAlbaab(params.jenjang);
+    const meet = params.googleMeetLink && params.googleMeetLink !== "-" ? params.googleMeetLink.trim() : "-";
+    const inputNilai = params.linkInputNilai && params.linkInputNilai !== "-" ? params.linkInputNilai.trim() : "-";
+
+    return `*🔔 PENGINGAT JADWAL MEWAWANCARA — CALON SANTRI*
+
+Assalamu'alaikum warahmatullahi wabarakatuh, Ustadz/Ustadzah *${params.namaPenguji}*,
+
+Mengingatkan jadwal Wawancara Calon Santri:
+
+👤 *Nama Santri:* ${params.namaSantri}
+🎓 *Jenjang:* ${jenjang}
+📅 *Hari/Tanggal:* ${params.hariTanggal}
+⏰ *Waktu:* ${params.waktu}
+📍 *Link Google Meet:* ${meet}
+🔗 *Input Nilai:* ${inputNilai}
+
+Mohon kehadirannya tepat waktu. Jazakumullahu khairan.
+
+---
+${SYSTEM_FOOTER_ULULALBAAB}`;
+}
+
+/**
+ * B. UNTUK PENGUJI & PEWAWANCARA — 3. Pengingat Jadwal Mewawancara Calon Orangtua/Wali Santri
+ */
+export function buildMessageReminderOrtuPenguji(params: {
+    namaPenguji: string;
+    namaSantri: string;
+    jenjang?: string | null;
+    hariTanggal: string;
+    waktu: string;
+    googleMeetLink?: string | null;
+    linkInputNilai: string;
+}): string {
+    const jenjang = formatJenjangUlulAlbaab(params.jenjang);
+    const meet = params.googleMeetLink && params.googleMeetLink !== "-" ? params.googleMeetLink.trim() : "-";
+    const inputNilai = params.linkInputNilai && params.linkInputNilai !== "-" ? params.linkInputNilai.trim() : "-";
+
+    return `*🔔 PENGINGAT JADWAL MEWAWANCARA — CALON ORANGTUA/WALI SANTRI*
+
+Assalamu'alaikum warahmatullahi wabarakatuh, Ustadz/Ustadzah *${params.namaPenguji}*,
+
+Mengingatkan jadwal Wawancara Calon Orangtua/Wali Santri:
+
+👤 *Nama Santri:* ${params.namaSantri}
+🎓 *Jenjang:* ${jenjang}
+📅 *Hari/Tanggal:* ${params.hariTanggal}
+⏰ *Waktu:* ${params.waktu}
+📍 *Link Google Meet:* ${meet}
+🔗 *Input Nilai:* ${inputNilai}
+
+Mohon kehadirannya tepat waktu. Jazakumullahu khairan.
+
+---
+${SYSTEM_FOOTER_ULULALBAAB}`;
+}
+
+/**
+ * Template: Pengingat 4 Jam Sebelum Ujian untuk Santri (Legacy Wrapper)
  */
 export function buildMessageReminderH1Santri(
     nama: string,
@@ -1148,7 +1372,9 @@ export function buildMessageReminderH1Santri(
     tanggal: string,
     jam: string,
     lokasi: string,
-    jenisUjian: string
+    jenisUjian: string,
+    namaWali?: string,
+    jenjang?: string
 ): string {
     let cleanJam = (jam || "").replace(/\s*WIB\s*/gi, " ").trim();
     cleanJam = cleanJam.replace(/\s+/g, " ");
@@ -1161,37 +1387,39 @@ export function buildMessageReminderH1Santri(
     }
     const finalHariTanggal = `${cleanHari}, ${cleanTanggal}`;
 
-    let agendaTitle = jenisUjian;
-    if (jenisUjian.toLowerCase().includes("quran")) agendaTitle = "Tes Al-Qur'an";
-    else if (jenisUjian.toLowerCase().includes("calsan")) agendaTitle = "Wawancara Calon Santri";
+    const isQuran = (jenisUjian || "").toLowerCase().includes("quran");
+    if (isQuran) {
+        return buildMessageReminderQuranPendaftar({
+            namaWali: namaWali || "",
+            namaSantri: nama,
+            jenjang: jenjang || "MTs",
+            hariTanggal: finalHariTanggal,
+            waktu: finalJam,
+            googleMeetLink: lokasi
+        });
+    }
 
-    return `*PENGINGAT TES SELEKSI*
-
-Assalamu'alaikum Abu/Ummu,
-
-Ini adalah pengingat bahwa Ananda *${nama}* dijadwalkan mengikuti *${agendaTitle}* pada:
-
-📅 *Hari/Tanggal:* ${finalHariTanggal}
-⏰ *Waktu:* ${finalJam}
-📍 *Lokasi/Link:* ${lokasi}
-
-Mohon persiapkan diri dengan baik dan pastikan koneksi internet stabil. Sampai jumpa!
-
-Jazakumullahu khairan
-
----
-*Panitia SPMB ${BRANDING.schoolName}*`;
+    return buildMessageReminderSantriPendaftar({
+        namaWali: namaWali || "",
+        namaSantri: nama,
+        jenjang: jenjang || "MTs",
+        hariTanggal: finalHariTanggal,
+        waktu: finalJam,
+        googleMeetLink: lokasi
+    });
 }
 
 /**
- * Template: Pengingat 4 Jam Sebelum Ujian untuk Calon Orang Tua/Wali
+ * Template: Pengingat 4 Jam Sebelum Ujian untuk Calon Orang Tua/Wali (Legacy Wrapper)
  */
 export function buildMessageReminderH1OrangTua(
     namaSantri: string,
     hari: string,
     tanggal: string,
     jam: string,
-    lokasi: string
+    lokasi: string,
+    namaWali?: string,
+    jenjang?: string
 ): string {
     let cleanJam = (jam || "").replace(/\s*WIB\s*/gi, " ").trim();
     cleanJam = cleanJam.replace(/\s+/g, " ");
@@ -1201,26 +1429,18 @@ export function buildMessageReminderH1OrangTua(
     let cleanTanggal = (tanggal || "").replace(new RegExp(`^${cleanHari},\\s*`, "i"), "");
     const finalHariTanggal = `${cleanHari}, ${cleanTanggal}`;
 
-    return `*PENGINGAT TES SELEKSI*
-
-Assalamu'alaikum Abu/Ummu dari Ananda *${namaSantri}*,
-
-Ini adalah pengingat bahwa Abu/Ummu dijadwalkan mengikuti *Wawancara Calon Orangtua/Wali Santri* pada:
-
-📅 *Hari/Tanggal:* ${finalHariTanggal}
-⏰ *Waktu:* ${finalJam}
-📍 *Lokasi/Link:* ${lokasi}
-
-Mohon persiapkan diri dengan baik dan pastikan koneksi internet stabil. Sampai jumpa!
-
-Jazakumullahu khairan
-
----
-*Panitia SPMB ${BRANDING.schoolName}*`;
+    return buildMessageReminderOrtuPendaftar({
+        namaWali: namaWali || "",
+        namaSantri,
+        jenjang: jenjang || "MTs",
+        hariTanggal: finalHariTanggal,
+        waktu: finalJam,
+        googleMeetLink: lokasi
+    });
 }
 
 /**
- * Template: Pengingat 4 Jam Sebelum Ujian untuk Penguji/Pewawancara
+ * Template: Pengingat 4 Jam Sebelum Ujian untuk Penguji/Pewawancara (Legacy Wrapper)
  */
 export function buildMessageReminderH1Penguji(
     namaPenguji: string,
@@ -1231,10 +1451,9 @@ export function buildMessageReminderH1Penguji(
     lokasi: string,
     jenisUjian: string,
     gender: string = "L",
-    inputNilaiLink?: string
+    inputNilaiLink?: string,
+    jenjang?: string
 ): string {
-    const title = gender === "P" ? "Ustadzah" : "Ustadz";
-
     let cleanJam = (jam || "").replace(/\s*WIB\s*/gi, " ").trim();
     cleanJam = cleanJam.replace(/\s+/g, " ");
     const finalJam = `${cleanJam} WIB`;
@@ -1243,38 +1462,40 @@ export function buildMessageReminderH1Penguji(
     let cleanTanggal = (tanggal || "").replace(new RegExp(`^${cleanHari},\\s*`, "i"), "");
     const finalHariTanggal = `${cleanHari}, ${cleanTanggal}`;
 
-    const jenisLower = jenisUjian.toLowerCase();
-    let agendaText = jenisUjian;
-    let agendaTitle = "*PENGINGAT JADWAL MENGUJI*";
-
+    const jenisLower = (jenisUjian || "").toLowerCase();
     if (jenisLower.includes("quran")) {
-        agendaText = "Tes Al-Qur'an";
-        agendaTitle = "*PENGINGAT JADWAL MENGUJI*";
-    } else if (jenisLower.includes("calsan") || jenisLower.includes("santri")) {
-        agendaText = "Wawancara Calon Santri";
-        agendaTitle = "*PENGINGAT JADWAL WAWANCARA*";
-    } else if (jenisLower.includes("cawalsan") || jenisLower.includes("ortu") || jenisLower.includes("orang tua")) {
-        agendaText = "Wawancara Calon Orangtua/Wali Santri";
-        agendaTitle = "*PENGINGAT JADWAL WAWANCARA*";
+        return buildMessageReminderQuranPenguji({
+            namaPenguji,
+            namaSantri,
+            jenjang: jenjang || "MTs",
+            hariTanggal: finalHariTanggal,
+            waktu: finalJam,
+            googleMeetLink: lokasi,
+            linkInputNilai: inputNilaiLink || "-"
+        });
     }
 
-    return `${agendaTitle}
+    if (jenisLower.includes("cawalsan") || jenisLower.includes("ortu") || jenisLower.includes("orang tua")) {
+        return buildMessageReminderOrtuPenguji({
+            namaPenguji,
+            namaSantri,
+            jenjang: jenjang || "MTs",
+            hariTanggal: finalHariTanggal,
+            waktu: finalJam,
+            googleMeetLink: lokasi,
+            linkInputNilai: inputNilaiLink || "-"
+        });
+    }
 
-Assalamu'alaikum ${title} *${namaPenguji}*,
-
-Mengingatkan jadwal ${agendaText.includes("Wawancara") ? "wawancara" : "menguji"} ${title}:
-
-📝 *Agenda:* ${agendaText}
-👤 *Nama Santri:* *${namaSantri}*
-📅 *Hari/Tanggal:* ${finalHariTanggal}
-⏰ *Waktu:* ${finalJam}
-📍 *Lokasi/Link:* ${lokasi}
-🔗 *Input Hasil:* ${inputNilaiLink || "-"}
-
-Mohon kehadirannya tepat waktu. Jazakumullahu khairan.
-
----
-*Sistem SPMB ${BRANDING.schoolName}*`;
+    return buildMessageReminderSantriPenguji({
+        namaPenguji,
+        namaSantri,
+        jenjang: jenjang || "MTs",
+        hariTanggal: finalHariTanggal,
+        waktu: finalJam,
+        googleMeetLink: lokasi,
+        linkInputNilai: inputNilaiLink || "-"
+    });
 }
 
 export function buildMessageCombinedFinal(

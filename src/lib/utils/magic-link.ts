@@ -198,3 +198,90 @@ export async function generateShortLink(longUrl: string): Promise<string> {
   // Fallback to original URL if everything fails
   return longUrl;
 }
+
+// ============================================================================
+// EXAMINER DIRECT INPUT SHORTLINK (/n/[code])
+// ============================================================================
+
+/**
+ * Generate a short, stateless, tamper-proof code for examiner direct scoring.
+ * Encodes the 16-byte UUID to base64url (~22 chars) + nomor_pendaftaran + 8-char HMAC signature.
+ * Format: [shortUuid]_[nomorPendaftaran]_[signature]
+ */
+export function generateExaminerInputCode(
+  profileId: string,
+  nomorPendaftaran: string = ""
+): string {
+  const cleanUuid = profileId.replace(/-/g, "");
+  const shortUuid = Buffer.from(cleanUuid, "hex").toString("base64url");
+  const cleanNomor = nomorPendaftaran ? nomorPendaftaran.trim() : "-";
+
+  const signature = createHmac("sha256", MAGIC_LINK_SECRET)
+    .update(`${profileId}:${cleanNomor}`)
+    .digest("hex")
+    .slice(0, 8);
+
+  return `${shortUuid}_${cleanNomor}_${signature}`;
+}
+
+/**
+ * Verify examiner input code and extract profileId and nomorPendaftaran.
+ */
+export function verifyExaminerInputCode(code: string): {
+  valid: boolean;
+  profileId?: string;
+  nomorPendaftaran?: string;
+  reason?: string;
+} {
+  try {
+    const parts = code.split("_");
+    if (parts.length !== 3) {
+      return { valid: false, reason: "Format kode tidak valid" };
+    }
+
+    const [shortUuid, nomorPendaftaran, signature] = parts;
+    const hex = Buffer.from(shortUuid, "base64url").toString("hex");
+    if (hex.length !== 32) {
+      return { valid: false, reason: "ID penguji tidak valid" };
+    }
+
+    const profileId = [
+      hex.slice(0, 8),
+      hex.slice(8, 12),
+      hex.slice(12, 16),
+      hex.slice(16, 20),
+      hex.slice(20),
+    ].join("-");
+
+    const expectedSig = createHmac("sha256", MAGIC_LINK_SECRET)
+      .update(`${profileId}:${nomorPendaftaran}`)
+      .digest("hex")
+      .slice(0, 8);
+
+    if (signature !== expectedSig) {
+      return { valid: false, reason: "Kode tidak valid atau telah dimanipulasi" };
+    }
+
+    return {
+      valid: true,
+      profileId,
+      nomorPendaftaran: nomorPendaftaran === "-" ? "" : nomorPendaftaran,
+    };
+  } catch (e) {
+    return { valid: false, reason: "Terjadi kesalahan saat memproses kode" };
+  }
+}
+
+/**
+ * Generate full direct link for examiner to grade a specific applicant.
+ */
+export function generateExaminerInputLink(
+  profileId: string,
+  nomorPendaftaran: string = "",
+  baseUrlOverride?: string
+): string {
+  const code = generateExaminerInputCode(profileId, nomorPendaftaran);
+  const baseUrl = baseUrlOverride || process.env.NEXT_PUBLIC_APP_URL || "";
+  const cleanBase = baseUrl.replace(/\/$/, "");
+  return `${cleanBase}/n/${code}`;
+}
