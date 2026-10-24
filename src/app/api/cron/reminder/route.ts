@@ -262,6 +262,7 @@ export async function GET(request: Request) {
 
                     const msgPenguji = builder({
                         namaPenguji: profile.full_name,
+                        gender: profile.jenis_kelamin,
                         namaSantri: jadwal.pendaftar.nama_lengkap,
                         jenjang: santriJenjang,
                         hariTanggal: finalHariTanggal,

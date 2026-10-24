@@ -1075,10 +1075,22 @@ export function buildMessageKonfirmasiJadwalInterviewer(
     waktu: string,
     lokasi: string, // Kept for signature compatibility
     jenisUjian: string,
-    inputNilaiLink?: string // Kept for signature compatibility
+    inputNilaiLink?: string, // Kept for signature compatibility
+    gender?: string | null
 ): string {
-    const gender = (namaInterviewer || "").toLowerCase().includes("ustadzah") ? "P" : "L";
-    const title = gender === "P" ? "Ustadzah" : "Ustadz";
+    let title = "Ustadz";
+    if (gender === "P") {
+        title = "Ustadzah";
+    } else if (gender === "L") {
+        title = "Ustadz";
+    } else {
+        const cleanName = (namaInterviewer || "").toLowerCase();
+        if (cleanName.includes("ustadzah")) {
+            title = "Ustadzah";
+        } else {
+            title = "Ustadz";
+        }
+    }
     const opening = pickOpening();
 
     const jenisLower = jenisUjian.toLowerCase();
@@ -1103,12 +1115,14 @@ ${opening} ${title} *${namaInterviewer}*,
 Santri atas nama *${namaSantri}* baru saja memilih jadwal *${agendaText}* pada:
 
 📅 *Tanggal:* ${tanggal}
-⏰ *Waktu:* ${waktu}
+⏰ *Waktu:* ${finalWaktu}
 
 Pesan pengingat beserta link meeting dan link input nilai akan dikirimkan otomatis menyusul mendekati waktu pelaksanaan.
 
 Jazakumullahu khairan.
-*Sistem SPMB ${BRANDING.schoolName}*`;
+
+---
+_Sistem SPMB Pesantren Ulul Albaab Managed by Al-Andalus IIBS_`;
     return msg;
 }
 
@@ -1144,6 +1158,16 @@ export async function getQueueStats() {
 // ============================================================================
 
 const SYSTEM_FOOTER_ULULALBAAB = "_Sistem SPMB Pesantren Ulul Albaab Managed by Al-Andalus IIBS_";
+
+export function getExaminerSalutationUlulAlbaab(gender?: string | null, nama?: string): string {
+    if (gender === "P") return "Ustadzah";
+    if (gender === "L") return "Ustadz";
+    if (nama) {
+        const clean = nama.toLowerCase();
+        if (clean.includes("ustadzah")) return "Ustadzah";
+    }
+    return "Ustadz"; // Ulul Albaab default
+}
 
 export function formatJenjangUlulAlbaab(jenjang?: string | null): string {
     if (!jenjang) return "MTs";
@@ -1263,6 +1287,7 @@ ${SYSTEM_FOOTER_ULULALBAAB}`;
  */
 export function buildMessageReminderQuranPenguji(params: {
     namaPenguji: string;
+    gender?: string | null;
     namaSantri: string;
     jenjang?: string | null;
     hariTanggal: string;
@@ -1273,10 +1298,11 @@ export function buildMessageReminderQuranPenguji(params: {
     const jenjang = formatJenjangUlulAlbaab(params.jenjang);
     const meet = params.googleMeetLink && params.googleMeetLink !== "-" ? params.googleMeetLink.trim() : "-";
     const inputNilai = params.linkInputNilai && params.linkInputNilai !== "-" ? params.linkInputNilai.trim() : "-";
+    const title = getExaminerSalutationUlulAlbaab(params.gender, params.namaPenguji);
 
     return `*🔔 PENGINGAT JADWAL MENGUJI — TES AL-QUR'AN*
 
-Assalamu'alaikum warahmatullahi wabarakatuh, Ustadz/Ustadzah *${params.namaPenguji}*,
+Assalamu'alaikum warahmatullahi wabarakatuh, ${title} *${params.namaPenguji}*,
 
 Mengingatkan jadwal Tes Al-Qur'an:
 
@@ -1298,6 +1324,7 @@ ${SYSTEM_FOOTER_ULULALBAAB}`;
  */
 export function buildMessageReminderSantriPenguji(params: {
     namaPenguji: string;
+    gender?: string | null;
     namaSantri: string;
     jenjang?: string | null;
     hariTanggal: string;
@@ -1308,10 +1335,11 @@ export function buildMessageReminderSantriPenguji(params: {
     const jenjang = formatJenjangUlulAlbaab(params.jenjang);
     const meet = params.googleMeetLink && params.googleMeetLink !== "-" ? params.googleMeetLink.trim() : "-";
     const inputNilai = params.linkInputNilai && params.linkInputNilai !== "-" ? params.linkInputNilai.trim() : "-";
+    const title = getExaminerSalutationUlulAlbaab(params.gender, params.namaPenguji);
 
     return `*🔔 PENGINGAT JADWAL MEWAWANCARA — CALON SANTRI*
 
-Assalamu'alaikum warahmatullahi wabarakatuh, Ustadz/Ustadzah *${params.namaPenguji}*,
+Assalamu'alaikum warahmatullahi wabarakatuh, ${title} *${params.namaPenguji}*,
 
 Mengingatkan jadwal Wawancara Calon Santri:
 
@@ -1333,6 +1361,7 @@ ${SYSTEM_FOOTER_ULULALBAAB}`;
  */
 export function buildMessageReminderOrtuPenguji(params: {
     namaPenguji: string;
+    gender?: string | null;
     namaSantri: string;
     jenjang?: string | null;
     hariTanggal: string;
@@ -1343,10 +1372,11 @@ export function buildMessageReminderOrtuPenguji(params: {
     const jenjang = formatJenjangUlulAlbaab(params.jenjang);
     const meet = params.googleMeetLink && params.googleMeetLink !== "-" ? params.googleMeetLink.trim() : "-";
     const inputNilai = params.linkInputNilai && params.linkInputNilai !== "-" ? params.linkInputNilai.trim() : "-";
+    const title = getExaminerSalutationUlulAlbaab(params.gender, params.namaPenguji);
 
     return `*🔔 PENGINGAT JADWAL MEWAWANCARA — CALON ORANGTUA/WALI SANTRI*
 
-Assalamu'alaikum warahmatullahi wabarakatuh, Ustadz/Ustadzah *${params.namaPenguji}*,
+Assalamu'alaikum warahmatullahi wabarakatuh, ${title} *${params.namaPenguji}*,
 
 Mengingatkan jadwal Wawancara Calon Orangtua/Wali Santri:
 
@@ -1466,6 +1496,7 @@ export function buildMessageReminderH1Penguji(
     if (jenisLower.includes("quran")) {
         return buildMessageReminderQuranPenguji({
             namaPenguji,
+            gender,
             namaSantri,
             jenjang: jenjang || "MTs",
             hariTanggal: finalHariTanggal,
@@ -1478,6 +1509,7 @@ export function buildMessageReminderH1Penguji(
     if (jenisLower.includes("cawalsan") || jenisLower.includes("ortu") || jenisLower.includes("orang tua")) {
         return buildMessageReminderOrtuPenguji({
             namaPenguji,
+            gender,
             namaSantri,
             jenjang: jenjang || "MTs",
             hariTanggal: finalHariTanggal,
@@ -1489,6 +1521,7 @@ export function buildMessageReminderH1Penguji(
 
     return buildMessageReminderSantriPenguji({
         namaPenguji,
+        gender,
         namaSantri,
         jenjang: jenjang || "MTs",
         hariTanggal: finalHariTanggal,

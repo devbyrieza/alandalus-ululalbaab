@@ -193,7 +193,7 @@ export default function UserManagementPage() {
     const finalRole = formData.role === "penguji_hafalan" ? "penguji" : formData.role;
     let finalSecRoles = (formData.secondary_roles || []).map((r) => r === "penguji_hafalan" ? "penguji" : r).filter((r) => r !== finalRole);
     finalSecRoles = [...new Set(finalSecRoles)];
-    const submitData = { ...formData, role: finalRole, secondary_roles: finalSecRoles, jenis_kelamin: "L" };
+    const submitData = { ...formData, role: finalRole, secondary_roles: finalSecRoles, jenis_kelamin: formData.jenis_kelamin || "L" };
 
     try {
       const method = isEditing ? "PUT" : "POST";
@@ -362,9 +362,14 @@ export default function UserManagementPage() {
                           {user.full_name.charAt(0)}
                         </div>
                         <div>
-                          <p className="font-black text-ink-950 text-base leading-tight mb-1">
-                            {user.full_name}
-                          </p>
+                          <div className="flex items-center gap-2 mb-1">
+                            <p className="font-black text-ink-950 text-base leading-tight">
+                              {user.full_name}
+                            </p>
+                            <span className={`px-2.5 py-0.5 text-[10px] font-black rounded-full uppercase tracking-wider ${user.jenis_kelamin === "P" ? "bg-rose-50 text-rose-700 border border-rose-200" : "bg-sky-50 text-sky-700 border border-sky-200"}`}>
+                              {user.jenis_kelamin === "P" ? "Ustadzah" : "Ustadz"}
+                            </span>
+                          </div>
                           <div className="flex items-center gap-2 text-xs text-ink-400 font-bold">
                             <Mail className="w-3" /> {user.email}
                           </div>
@@ -417,7 +422,7 @@ export default function UserManagementPage() {
                                   role: primaryRole,
                                   secondary_roles: secRoles,
                                   phone: user.phone || "",
-                                  jenis_kelamin: user.jenis_kelamin || "",
+                                  jenis_kelamin: user.jenis_kelamin || "L",
                                   google_meet_link: user.google_meet_link || ""
                                 });
                                 setIsEditing(true);
@@ -465,19 +470,40 @@ export default function UserManagementPage() {
             </div>
             <form onSubmit={handleSubmit} className="p-6 md:p-12 space-y-8 overflow-y-auto custom-scrollbar overscroll-contain">
               <div className="grid grid-cols-1 md:grid-cols-1 sm:grid-cols-2 gap-5 md:gap-8">
-                <div className="col-span-1 md:col-span-2">
-                  <label className="block text-[10px] font-black uppercase text-stone-500 mb-3 tracking-widest">
-                    Nama Lengkap Personal
-                  </label>
-                  <input
-                    required
-                    type="text"
-                    value={formData.full_name}
-                    onChange={(e) =>
-                      setFormData({ ...formData, full_name: e.target.value })
-                    }
-                    className="w-full px-4 md:px-5 py-4 bg-stone-100/50 border-2 border-transparent focus:border-primary-600 focus:bg-white focus:outline-none font-bold rounded-2xl transition-all whitespace-nowrap inline-block shrink-0"
-                  />
+                <div className="col-span-1 md:col-span-2 grid grid-cols-1 md:grid-cols-3 gap-5">
+                  <div className="md:col-span-2">
+                    <label className="block text-[10px] font-black uppercase text-stone-500 mb-3 tracking-widest">
+                      Nama Lengkap Personal
+                    </label>
+                    <input
+                      required
+                      type="text"
+                      value={formData.full_name}
+                      onChange={(e) =>
+                        setFormData({ ...formData, full_name: e.target.value })
+                      }
+                      placeholder="Nama lengkap beserta gelar"
+                      className="w-full px-4 md:px-5 py-4 bg-stone-100/50 border-2 border-transparent focus:border-primary-600 focus:bg-white focus:outline-none font-bold rounded-2xl transition-all whitespace-nowrap inline-block shrink-0"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-black uppercase text-stone-500 mb-3 tracking-widest flex items-center justify-between">
+                      <span>Gender / Panggilan</span>
+                      <span className="text-primary-600 font-bold normal-case text-[11px]">
+                        {formData.jenis_kelamin === "P" ? "Ustadzah" : "Ustadz"}
+                      </span>
+                    </label>
+                    <select
+                      value={formData.jenis_kelamin || "L"}
+                      onChange={(e) =>
+                        setFormData({ ...formData, jenis_kelamin: e.target.value })
+                      }
+                      className="w-full px-4 md:px-5 py-4 bg-stone-100/50 border-2 border-transparent focus:border-primary-600 focus:bg-white focus:outline-none font-bold rounded-2xl transition-all cursor-pointer text-sm"
+                    >
+                      <option value="L">Laki-laki (Ustadz)</option>
+                      <option value="P">Perempuan (Ustadzah)</option>
+                    </select>
+                  </div>
                 </div>
                 <div className="col-span-1 md:col-span-2">
                   <label className="block text-[10px] font-black uppercase text-stone-500 mb-3 tracking-widest">

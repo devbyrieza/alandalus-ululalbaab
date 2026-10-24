@@ -317,8 +317,50 @@ export async function POST(request: Request) {
         jenisNotif: "konfirmasi_jadwal_pendaftar",
         messageContent: konfirmasiMsg }).catch((err: any) => console.error("Failed to enqueue jadwal confirmation to pendaftar:", err));
 
-      // 2. Note: Notifikasi ke Penguji dibuat Silent saat booking (menghindari chat spam ke asatidz).
-      // Penguji akan menerima pengingat terjadwal via Cron H-1 / 4 jam sebelum ujian serta dapat memantau langsung via /dashboard/penguji.
+      // 2. Notify Interviewer — SEGERA setelah booking
+      const finalId =
+        pengujiFields.penguji_quran_id ||
+        pengujiFields.penguji_santri_id ||
+        pengujiFields.penguji_ortu_id ||
+        examSession.created_by;
+      if (finalId) {
+        const interviewer = await prisma.profile.findUnique({
+          where: { id: finalId },
+          select: { id: true, full_name: true, phone: true, jenis_kelamin: true, google_meet_link: true } });
+
+        if (interviewer && interviewer.phone) {
+          const appUrl = process.env.NEXT_PUBLIC_APP_URL || "https://spmb.pesantren-ululalbaab.com";
+          const { generateExaminerInputLink } = await import("@/lib/utils/magic-link");
+          const shortUrlKonfirmasi = generateExaminerInputLink(
+            interviewer.id,
+            pendaftarInfo.nomor_pendaftaran,
+            appUrl
+          );
+
+          const intMessage = buildMessageKonfirmasiJadwalInterviewer(
+            interviewer.full_name,
+            pendaftarInfo.nama_lengkap,
+            dateStr,
+            timeStr,
+            interviewer.google_meet_link || lokasi,
+            jenisUjian,
+            shortUrlKonfirmasi,
+            interviewer.jenis_kelamin
+          );
+
+          // Delay 1 menit untuk menghindari burst pesan berturut-turut
+          const scheduledAtInt = new Date();
+          scheduledAtInt.setMinutes(scheduledAtInt.getMinutes() + 1);
+
+          enqueueWhatsapp({
+            pendaftarId: session.id,
+            phone: interviewer.phone,
+            jenisNotif: "konfirmasi_jadwal_interviewer",
+            messageContent: intMessage,
+            scheduledAt: scheduledAtInt }).catch((err: any) => console.error("Failed to enqueue jadwal confirmation to interviewer:", err));
+        }
+      }
+
 
     }
 

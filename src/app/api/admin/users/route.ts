@@ -154,6 +154,7 @@ export async function POST(request: Request) {
           secondary_roles: Array.isArray(secondary_roles) ? secondary_roles : [],
           phone: phone || existing.phone || "-",
           username: username || existing.username,
+          jenis_kelamin: jenis_kelamin ? (jenis_kelamin === "P" ? "P" : "L") : (existing.jenis_kelamin || "L"),
           google_meet_link: cleanMeet || null,
           password_hash,
           updated_at: new Date() } });
@@ -189,7 +190,7 @@ export async function POST(request: Request) {
         secondary_roles: Array.isArray(secondary_roles) ? secondary_roles : [],
         phone: phone || "-",
         username: username,
-        jenis_kelamin: "L",
+        jenis_kelamin: jenis_kelamin === "P" ? "P" : "L",
         google_meet_link: google_meet_link || null,
         password_hash } });
 
@@ -287,7 +288,7 @@ export async function PUT(request: Request) {
     }
     if (phone !== undefined) data.phone = phone;
     if (username !== undefined) data.username = username?.trim()?.toLowerCase() || null;
-    data.jenis_kelamin = "L";
+    if (jenis_kelamin !== undefined) data.jenis_kelamin = jenis_kelamin === "P" ? "P" : "L";
     if (google_meet_link !== undefined) data.google_meet_link = cleanFinalMeet || null;
 
     // Email update logic
