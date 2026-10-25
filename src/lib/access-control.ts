@@ -156,7 +156,7 @@ export function getNextStep(
     docs_uploaded: { status: "docs_verified", action: "Menunggu Review Admin", href: "/dashboard/pendaftar/upload-berkas" },
     docs_verified: { status: "selection", action: "Mulai Seleksi & Ujian", href: "/dashboard/pendaftar/undangan-seleksi" },
     selection: { status: "tested", action: "Lanjutkan Seleksi", href: "/dashboard/pendaftar/undangan-seleksi" },
-    scheduled: { status: "tested", action: "Ikuti Ujian Masuk", href: "/dashboard/pendaftar/ujian" },
+    scheduled: { status: "tested", action: "Ikuti Ujian Masuk", href: "/dashboard/pendaftar/undangan-seleksi" },
     tested: { status: "announced", action: "Menunggu Hasil", href: "/dashboard/pendaftar/pengumuman" },
     announced: { status: "accepted", action: "Cek Hasil", href: "/dashboard/pendaftar/pengumuman" },
     accepted: { status: "enrolled", action: "Daftar Ulang Sekarang", href: "/dashboard/pendaftar/daftar-ulang" } };

@@ -494,10 +494,10 @@ export default function UndanganSeleksiTab() {
             const Icon = GRUP_A_ICONS[key] || BookOpen;
             const linkHref =
               key === "akademik"
-                ? "/dashboard/pendaftar/ujian-online/akademik"
+                ? "/dashboard/pendaftar/ujian/akademik"
                 : key === "kepribadian"
-                ? "/dashboard/pendaftar/ujian-online/kepribadian"
-                : "/dashboard/pendaftar/ujian-online/kesiapan";
+                ? "/dashboard/pendaftar/ujian/kepribadian"
+                : "/dashboard/pendaftar/ujian/kesiapan";
 
             return (
               <div

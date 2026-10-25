@@ -18,6 +18,15 @@ const nextConfig: any = {
     maxInactiveAge: 25 * 1000,
     pagesBufferLength: 2,
   },
+  async redirects() {
+    return [
+      {
+        source: '/dashboard/pendaftar/ujian-online/:path*',
+        destination: '/dashboard/pendaftar/ujian/:path*',
+        permanent: false,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
