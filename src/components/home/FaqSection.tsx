@@ -67,7 +67,7 @@ function FaqItem({
           </span>
 
           <div
-            className={[ "w-8 h-8 rounded-full flex items-center justify-center shrink-0 transition-all duration-300", isOpen ? "bg-primary-600 text-white rotate-180" : "bg-secondary-50 text-primary-500 hover:bg-primary-50", ].join(" ")} > <ChevronDown className="w-4 h-4" strokeWidth={2.5} />
+            className={[ "w-8 h-8 rounded-full flex items-center justify-center shrink-0 transition-all duration-300", isOpen ? "bg-primary-600 text-white rotate-180" : "bg-secondary-50 text-primary-900 hover:bg-primary-50", ].join(" ")} > <ChevronDown className="w-4 h-4" strokeWidth={2.5} />
           </div>
         </button>
 
@@ -155,7 +155,7 @@ export default function FaqSection() {
                 href={WA_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-2xl font-bold text-sm text-white bg-[#25D366] hover:bg-[#20ba59] shadow-lg hover: hover:-translate-y-0.5 transition-all duration-300"
+                className="w-full inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-2xl font-bold text-sm text-ink-950 bg-[#25D366] hover:bg-[#20ba59] shadow-lg hover: hover:-translate-y-0.5 transition-all duration-300"
               >
                 <svg
                   viewBox="0 0 24 24"

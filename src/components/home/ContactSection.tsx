@@ -79,7 +79,7 @@ export default function ContactSection() {
                   className={`bg-white/80 backdrop-blur-sm p-6 sm:p-7 rounded-2xl border border-blue-100 shadow-xl hover:shadow-xl hover: flex flex-col items-start group transition-all duration-400 ${idx === 0 ? "sm:col-span-2" : ""}`}
                 >
                   <div
-                    className={`w-11 h-11 rounded-[12px] flex items-center justify-center mb-4 transition-transform shadow-xs group-hover:scale-105 duration-400 shrink-0 ${ item.accent === "blue" ? "bg-primary-50 text-primary-600" : item.accent === "amber" ? "bg-secondary-50 text-secondary-700" : "bg-primary-50 text-primary-700" }`}
+                    className={`w-11 h-11 rounded-[12px] flex items-center justify-center mb-4 transition-transform shadow-xs group-hover:scale-105 duration-400 shrink-0 ${ item.accent === "blue" ? "bg-primary-50 text-primary-900" : item.accent === "amber" ? "bg-secondary-50 text-secondary-800" : "bg-primary-50 text-primary-900" }`}
                   >
                     <item.icon className="w-5 h-5" strokeWidth={1.8} />
                   </div>

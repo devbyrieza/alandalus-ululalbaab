@@ -114,14 +114,14 @@ function getTokens(variant: ProgramVariant) {
       return {
         accentBar: "bg-gradient-to-r from-secondary-600 via-secondary-400 to-secondary-200",
         corner: "bg-secondary-50",
-        icon: "bg-secondary-500 text-white ring-1 ring-secondary-100",
+        icon: "bg-secondary-500 text-ink-950 ring-1 ring-secondary-100",
         subtitleText: "text-secondary-600",
         dividerLine: "bg-secondary-100",
         checkBg: "bg-secondary-50 border-secondary-200",
         checkHover:
           "group-hover/item:bg-secondary-500 group-hover/item:border-secondary-500",
         checkIcon: "text-secondary-600 group-hover/item:text-white",
-        ctaBtn: "bg-white border-secondary-200 text-primary-800 hover:bg-secondary-500 hover:border-secondary-500 hover:text-white shadow-sm hover:shadow-sm" };
+        ctaBtn: "bg-white border-secondary-200 text-primary-800 hover:bg-secondary-500 hover:border-secondary-500 hover:text-ink-950 shadow-sm hover:shadow-sm" };
   default:
 return { accentBar: "", corner: "", icon: "", subtitleText: "", dividerLine: "", checkBg: "", checkHover: "", checkIcon: "", ctaBtn: "" };
 }

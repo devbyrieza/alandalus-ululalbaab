@@ -381,7 +381,7 @@ export default function DaftarPage() {
                 transition={{ delay: 0.4 }}
               >
                 <div className="flex items-center gap-3 mb-8">
-                  <div className="w-10 h-10 rounded-2xl bg-blue-50 flex items-center justify-center text-blue-600 shadow-sm border border-blue-200">
+                  <div className="w-10 h-10 rounded-2xl bg-blue-50 flex items-center justify-center text-blue-700 shadow-sm border border-blue-200">
                     <GraduationCap className="w-6 h-6" />
                   </div>
                   <h3 className="text-2xl font-display font-black text-ink-950">
@@ -472,7 +472,7 @@ export default function DaftarPage() {
                   transition={{ delay: 0.35 }}
                   className="mt-8 bg-amber-50 border border-amber-200 rounded-2xl p-6 flex items-start gap-4 relative z-10 overflow-hidden shadow-premium-xs"
                 >
-                  <div className="w-10 h-10 bg-amber-500 rounded-full flex items-center justify-center text-white shrink-0 shadow-premium-xs">
+                  <div className="w-10 h-10 bg-amber-500 rounded-full flex items-center justify-center text-ink-950 shrink-0 shadow-premium-xs">
                     <AlertCircle className="w-6 h-6" />
                   </div>
                   <div className="flex-1">
@@ -507,7 +507,7 @@ export default function DaftarPage() {
                 className="space-y-8"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-2xl bg-secondary-50 flex items-center justify-center text-primary-600 shadow-sm border border-secondary-200">
+                  <div className="w-10 h-10 rounded-2xl bg-secondary-50 flex items-center justify-center text-primary-900 shadow-sm border border-secondary-200">
                     <User className="w-6 h-6" />
                   </div>
                   <h3 className="text-2xl font-display font-black text-ink-950">
@@ -616,7 +616,7 @@ export default function DaftarPage() {
                 className="space-y-8"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-2xl bg-purple-50 flex items-center justify-center text-purple-600 shadow-sm border border-purple-200">
+                  <div className="w-10 h-10 rounded-2xl bg-purple-50 flex items-center justify-center text-purple-700 shadow-sm border border-purple-200">
                     <Phone className="w-6 h-6" />
                   </div>
                   <h3 className="text-2xl font-display font-black text-ink-950">

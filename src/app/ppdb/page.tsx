@@ -99,7 +99,7 @@ const TimelineItem = ({ item, index }: { item: any; index: number }) => (
           {item.phase}
         </h3>
         <span
-          className={`px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest ${ item.status === "active" ? "bg-primary-50 text-primary-700" : "bg-surface-50 text-ink-400" }`}
+          className={`px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest ${ item.status === "active" ? "bg-primary-50 text-primary-900" : "bg-surface-50 text-ink-600" }`}
         >
           {item.date}
         </span>
@@ -325,7 +325,7 @@ function PPDBContent() {
               <div className="bg-white p-6 sm:p-5 md:p-8 rounded-[2rem] md:rounded-[3rem] border border-surface-100 shadow-premium-lg relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-primary-50 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
                 <div className="relative z-10 flex items-center gap-5">
-                  <div className="w-14 h-14 bg-primary-500 rounded-2xl flex items-center justify-center text-white shadow-premium-md">
+                  <div className="w-14 h-14 bg-primary-500 rounded-2xl flex items-center justify-center text-ink-950 shadow-premium-md">
                     <CheckCircle className="w-7 h-7" />
                   </div>
                   <div>
@@ -401,7 +401,7 @@ function PPDBContent() {
               <div className="absolute -top-3.5 px-4 py-1 rounded-full bg-primary-600 text-white text-[11px] font-black uppercase tracking-wider shadow-sm">
                 Bisa Dicicil 3x
               </div>
-              <div className="w-16 h-16 bg-primary-50 rounded-2xl flex items-center justify-center text-primary-600 mb-6 group-hover:scale-110 transition-transform shadow-2xs">
+              <div className="w-16 h-16 bg-primary-50 rounded-2xl flex items-center justify-center text-primary-900 mb-6 group-hover:scale-110 transition-transform shadow-2xs">
                 <Shield className="w-8 h-8" />
               </div>
               <h3 className="text-xs text-primary-700 font-black uppercase tracking-widest mb-2">
@@ -422,7 +422,7 @@ function PPDBContent() {
               transition={{ delay: 0.2 }}
               className="bg-white p-7 sm:p-8 rounded-[2rem] border border-blue-100 shadow-premium-sm hover:shadow-premium-md transition-all flex flex-col items-center text-center group"
             >
-              <div className="w-16 h-16 bg-amber-50 rounded-2xl flex items-center justify-center text-amber-600 mb-6 group-hover:scale-110 transition-transform shadow-2xs">
+              <div className="w-16 h-16 bg-amber-50 rounded-2xl flex items-center justify-center text-amber-700 mb-6 group-hover:scale-110 transition-transform shadow-2xs">
                 <Star className="w-8 h-8" />
               </div>
               <h3 className="text-xs text-ink-400 font-black uppercase tracking-widest mb-2">
@@ -441,7 +441,7 @@ function PPDBContent() {
           <div className="max-w-5xl mx-auto bg-white rounded-3xl border border-blue-200 p-6 sm:p-10 shadow-premium-sm mb-10">
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pb-8 mb-8 border-b border-surface-100 text-center sm:text-left">
               <div>
-                <span className="text-[11px] font-black uppercase tracking-widest text-primary-600 bg-primary-50 px-3 py-1 rounded-full border border-primary-200 inline-block mb-1">
+                <span className="text-[11px] font-black uppercase tracking-widest text-primary-900 bg-primary-50 px-3 py-1 rounded-full border border-primary-200 inline-block mb-1">
                   Skema Pembayaran Transparan
                 </span>
                 <h3 className="text-xl sm:text-2xl font-display font-black text-ink-950">
@@ -460,7 +460,7 @@ function PPDBContent() {
                   <span className="w-8 h-8 rounded-full bg-primary-600 text-white font-black text-sm flex items-center justify-center shadow-xs">
                     1
                   </span>
-                  <span className="text-[10px] font-black uppercase tracking-wider text-primary-700 bg-primary-100/80 px-2.5 py-1 rounded-full">
+                  <span className="text-[10px] font-black uppercase tracking-wider text-primary-900 bg-primary-100/80 px-2.5 py-1 rounded-full">
                     Kunci Kuota
                   </span>
                 </div>
@@ -677,7 +677,7 @@ function PPDBContent() {
                       className="bg-white p-6 sm:p-6 md:p-10 rounded-[2rem] md:rounded-[3rem] border border-surface-100 shadow-premium-md"
                     >
                       <div className="flex items-center gap-4 md:gap-5 mb-6 md:mb-8">
-                        <div className="w-12 h-12 md:w-14 md:h-14 bg-primary-50 rounded-2xl flex items-center justify-center text-primary-600 shadow-premium-sm shrink-0">
+                        <div className="w-12 h-12 md:w-14 md:h-14 bg-primary-50 rounded-2xl flex items-center justify-center text-primary-900 shadow-premium-sm shrink-0">
                           <ReqIcon className="w-6 h-6 md:w-7 md:h-7" />
                         </div>
                         <h3 className="text-xl md:text-2xl font-display font-black text-ink-950 leading-tight">
@@ -691,7 +691,7 @@ function PPDBContent() {
                             className="flex items-center gap-3 md:gap-4 bg-surface-50/50 p-3 md:p-4 rounded-2xl md:rounded-2xl border border-surface-100 group hover:bg-white transition-all"
                           >
                             <div
-                              className={`w-8 h-8 rounded-2xl flex items-center justify-center shadow-premium-xs ${ item.type === "Wajib" || item.type === "Required" ? "bg-primary-500 text-white" : "bg-surface-200 text-ink-400" } shrink-0`}
+                              className={`w-8 h-8 rounded-2xl flex items-center justify-center shadow-premium-xs ${ item.type === "Wajib" || item.type === "Required" ? "bg-primary-500 text-ink-950" : "bg-surface-200 text-ink-600" } shrink-0`}
                             >
                               <Check className="w-5 h-5" />
                             </div>
@@ -788,7 +788,7 @@ function PPDBContent() {
                     <motion.div key={i} className="group">
                       <details className="bg-white rounded-2xl border border-surface-100 shadow-premium-sm transition-all duration-300 open:shadow-premium-lg">
                         <summary className="p-5 md:p-6 flex items-center gap-4 md:gap-5 cursor-pointer list-none">
-                          <div className="w-8 h-8 md:w-10 md:h-10 bg-primary-50 rounded-2xl flex items-center justify-center text-primary-600 group-hover:bg-primary-600 group-hover:text-white transition-all shrink-0">
+                          <div className="w-8 h-8 md:w-10 md:h-10 bg-primary-50 rounded-2xl flex items-center justify-center text-primary-900 group-hover:bg-primary-600 group-hover:text-white transition-all shrink-0">
                             <HelpCircle className="w-4 h-4 md:w-5 md:h-5" />
                           </div>
                           <span className="flex-1 font-black text-ink-950 tracking-tight text-sm md:text-base">
@@ -834,7 +834,7 @@ function PPDBContent() {
               </p>
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 md:gap-6 justify-center px-4">
                 <Link href="/daftar">
-                  <span className="w-full sm:w-auto inline-block px-6 sm:px-5 md:px-8 py-3.5 sm:py-4 md:py-5 rounded-pill bg-white text-primary-900 font-black text-sm sm:text-base md:text-lg xl:text-xl hover:bg-secondary-400 hover:text-white shadow-premium-xl transition-all cursor-pointer min-h-[48px] sm:min-h-[52px]">
+                  <span className="w-full sm:w-auto inline-block px-6 sm:px-5 md:px-8 py-3.5 sm:py-4 md:py-5 rounded-pill bg-white text-primary-900 font-black text-sm sm:text-base md:text-lg xl:text-xl hover:bg-secondary-400 hover:text-ink-950 shadow-premium-xl transition-all cursor-pointer min-h-[48px] sm:min-h-[52px]">
                     Daftar Sekarang
                   </span>
                 </Link>

@@ -50,7 +50,7 @@ const ContactInfoCard = ({
     transition={{ delay, duration: 0.5 }}
     className="app-card bg-white p-6 sm:p-5 md:p-8 rounded-2xl sm:rounded-[2.5rem] border border-primary-100 shadow-xl hover:shadow-xl transition-all group flex flex-col items-center text-center"
   >
-    <div className="w-16 h-16 rounded-2xl bg-primary-50 flex items-center justify-center text-primary-600 mb-6 group-hover:scale-110 transition-transform shadow-sm border border-primary-100">
+    <div className="w-16 h-16 rounded-2xl bg-primary-50 flex items-center justify-center text-primary-900 mb-6 group-hover:scale-110 transition-transform shadow-sm border border-primary-100">
       <Icon className="w-8 h-8" />
     </div>
     <h3 className="text-xl font-display font-black text-primary-950 mb-3">
@@ -175,7 +175,7 @@ export default function ContactPage() {
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-pill bg-primary-50 border border-primary-100 text-primary-700 text-xs font-bold uppercase tracking-widest mb-10 shadow-sm"
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-pill bg-primary-50 border border-primary-100 text-primary-900 text-xs font-bold uppercase tracking-widest mb-10 shadow-sm"
             >
               <Phone className="w-3.5 h-3.5" />
               <span>Layanan Informasi & Kontak</span>
@@ -272,7 +272,7 @@ export default function ContactPage() {
                       className="bg-primary-50 border border-primary-100 p-6 rounded-[2rem] overflow-hidden"
                     >
                       <div className="flex items-center gap-4">
-                        <div className="w-10 h-10 bg-primary-500 rounded-full flex items-center justify-center text-white shrink-0">
+                        <div className="w-10 h-10 bg-primary-500 rounded-full flex items-center justify-center text-ink-950 shrink-0">
                           <CheckCircle className="w-6 h-6" />
                         </div>
                         <p className="text-primary-900 font-black text-lg">

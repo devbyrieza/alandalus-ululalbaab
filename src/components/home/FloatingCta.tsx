@@ -46,7 +46,7 @@ export default function FloatingCta() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Konsultasi via WhatsApp"
-              className="flex items-center justify-center w-11 h-11 rounded-full bg-emerald-50 text-emerald-600 border border-emerald-300 hover:bg-emerald-600 hover:text-white shadow-sm hover:-translate-y-0.5 transition-all duration-300"
+              className="flex items-center justify-center w-11 h-11 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-300 hover:bg-emerald-600 hover:text-white shadow-sm hover:-translate-y-0.5 transition-all duration-300"
             >
               <MessageCircle className="w-5 h-5" />
             </a>

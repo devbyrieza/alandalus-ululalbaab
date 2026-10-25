@@ -67,7 +67,7 @@ export default function TentangPage() {
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary-50 border border-primary-100 text-primary-700 text-xs font-bold uppercase tracking-widest mb-8 shadow-xs"
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary-50 border border-primary-100 text-primary-900 text-xs font-bold uppercase tracking-widest mb-8 shadow-xs"
           >
             <Sparkles className="w-3.5 h-3.5" />
             <span>Mengenal Al Andalus Ulul Albaab • Managed by Al Andalus IIBS</span>
@@ -194,7 +194,7 @@ export default function TentangPage() {
               className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 pt-8"
             >
               <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs flex flex-col items-center text-center group hover:shadow-xl transition-shadow">
-                <div className="w-12 h-12 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center mb-3">
+                <div className="w-12 h-12 rounded-xl bg-sky-50 text-sky-700 flex items-center justify-center mb-3">
                   <Building2 className="w-6 h-6" />
                 </div>
                 <h4 className="font-black text-slate-900 text-lg mb-1">Fasilitas Representatif</h4>
@@ -202,7 +202,7 @@ export default function TentangPage() {
               </div>
 
               <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs flex flex-col items-center text-center group hover:shadow-xl transition-shadow">
-                <div className="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-3">
+                <div className="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center mb-3">
                   <ShieldCheck className="w-6 h-6" />
                 </div>
                 <h4 className="font-black text-slate-900 text-lg mb-1">Jaringan Al-Andalus</h4>
@@ -210,7 +210,7 @@ export default function TentangPage() {
               </div>
 
               <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs flex flex-col items-center text-center group hover:shadow-xl transition-shadow sm:col-span-2 md:col-span-1">
-                <div className="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center mb-3">
+                <div className="w-12 h-12 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center mb-3">
                   <GraduationCap className="w-6 h-6" />
                 </div>
                 <h4 className="font-black text-slate-900 text-lg mb-1">Tahfidz & TICE</h4>
@@ -263,7 +263,7 @@ export default function TentangPage() {
               className="bg-slate-50 p-8 rounded-2xl border border-slate-200 flex flex-col justify-between"
             >
               <div>
-                <div className="w-12 h-12 rounded-xl bg-primary-100 text-primary-700 flex items-center justify-center mb-6 whitespace-nowrap shrink-0">
+                <div className="w-12 h-12 rounded-xl bg-primary-100 text-primary-900 flex items-center justify-center mb-6 whitespace-nowrap shrink-0">
                   <Compass className="w-6 h-6" />
                 </div>
                 <h3 className="text-2xl font-black text-slate-900 mb-4">Visi Pesantren</h3>
@@ -370,7 +370,7 @@ export default function TentangPage() {
           <div className="flex flex-wrap justify-center gap-4">
             <Link
               href="/daftar"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-primary-600 hover:bg-primary-500 text-white font-bold text-base shadow-lg transition-all hover:-translate-y-0.5"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-primary-600 hover:bg-primary-500 text-ink-950 font-bold text-base shadow-lg transition-all hover:-translate-y-0.5"
             >
               Daftar PPDB Sekarang <Send className="w-4 h-4" />
             </Link>

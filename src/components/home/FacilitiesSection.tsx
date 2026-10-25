@@ -80,13 +80,13 @@ const FACILITY_IMAGES = [
 
 /* ── Icon colour mapping — blue/amber branding ── */
 const iconClasses: Record<string, string> = {
-  blue: "bg-primary-50 text-primary-600 ring-primary-100",
-  red: "bg-red-50 text-red-600 ring-red-100",
-  orange: "bg-orange-50 text-orange-600 ring-orange-100",
-  indigo: "bg-indigo-50 text-indigo-600 ring-indigo-100",
-  amber: "bg-secondary-50 text-secondary-600 ring-secondary-100",
-  emerald: "bg-emerald-50 text-emerald-600 ring-emerald-100",
-  cyan: "bg-cyan-50 text-cyan-600 ring-cyan-100",
+  blue: "bg-primary-50 text-primary-900 ring-primary-100",
+  red: "bg-red-50 text-red-700 ring-red-100",
+  orange: "bg-orange-50 text-orange-700 ring-orange-100",
+  indigo: "bg-indigo-50 text-indigo-700 ring-indigo-100",
+  amber: "bg-secondary-50 text-secondary-800 ring-secondary-100",
+  emerald: "bg-emerald-50 text-emerald-700 ring-emerald-100",
+  cyan: "bg-cyan-50 text-cyan-700 ring-cyan-100",
   ink: "bg-slate-50 text-ink-600 ring-slate-200" };
 
 /* ── Easing & transition helpers ── */

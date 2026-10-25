@@ -56,12 +56,12 @@ const EASE = [0.16, 1, 0.3, 1] as const;
 
 const ACCENT_MAP = {
   blue: {
-    icon: "bg-primary-50 text-primary-600 border-primary-100 group-hover:bg-primary-100 group-hover:border-primary-200",
+    icon: "bg-primary-50 text-primary-900 border-primary-100 group-hover:bg-primary-100 group-hover:border-primary-200",
     badge: "bg-primary-600 text-white",
     title: "group-hover:text-primary-700" },
   amber: {
-    icon: "bg-secondary-50 text-secondary-700 border-secondary-100 group-hover:bg-secondary-100 group-hover:border-secondary-200",
-    badge: "bg-secondary-500 text-white",
+    icon: "bg-secondary-50 text-secondary-800 border-secondary-100 group-hover:bg-secondary-100 group-hover:border-secondary-200",
+    badge: "bg-secondary-500 text-ink-950",
     title: "group-hover:text-secondary-700" } };
 
 // ─── Step Card ────────────────────────────────────────

@@ -62,7 +62,7 @@ const HeroStat = ({
     transition={{ delay, duration: 0.5 }}
     className="app-card bg-white p-5 flex flex-col items-center text-center min-w-[140px]"
   >
-    <div className="w-12 h-12 rounded-2xl bg-primary-50 flex items-center justify-center text-primary-600 mb-3 border border-primary-100 shadow-sm">
+    <div className="w-12 h-12 rounded-2xl bg-primary-50 flex items-center justify-center text-primary-900 mb-3 border border-primary-100 shadow-sm">
       <Icon className="w-6 h-6" />
     </div>
     <p className="text-2xl font-black text-primary-950 leading-none mb-1">
@@ -155,7 +155,7 @@ Mohon konfirmasi kesediaan waktu kunjungan tersebut. Terima kasih.`;
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-pill bg-primary-50 border border-primary-100 text-primary-700 text-xs font-bold uppercase tracking-widest mb-8 shadow-sm"
+                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-pill bg-primary-50 border border-primary-100 text-primary-900 text-xs font-bold uppercase tracking-widest mb-8 shadow-sm"
               >
                 <Building2 className="w-3.5 h-3.5" />
                 <span>Sarana & Prasarana</span>
@@ -336,7 +336,7 @@ Mohon konfirmasi kesediaan waktu kunjungan tersebut. Terima kasih.`;
                     <Home className="w-48 h-48" />
                   </div>
 
-                  <div className="w-16 h-16 sm:w-20 sm:h-20 bg-primary-50 rounded-2xl flex items-center justify-center text-primary-700 mb-8 sm:mb-10 shadow-sm transition-transform group-hover:scale-110 border border-primary-100">
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 bg-primary-50 rounded-2xl flex items-center justify-center text-primary-900 mb-8 sm:mb-10 shadow-sm transition-transform group-hover:scale-110 border border-primary-100">
                     <Home className="w-8 h-8 sm:w-10 sm:h-10" />
                   </div>
 
@@ -430,7 +430,7 @@ Mohon konfirmasi kesediaan waktu kunjungan tersebut. Terima kasih.`;
                     <School className="w-48 h-48" />
                   </div>
 
-                  <div className="w-16 h-16 sm:w-20 sm:h-20 bg-primary-50 rounded-2xl flex items-center justify-center text-primary-700 mb-8 sm:mb-10 shadow-sm transition-transform group-hover:scale-110 border border-primary-100">
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 bg-primary-50 rounded-2xl flex items-center justify-center text-primary-900 mb-8 sm:mb-10 shadow-sm transition-transform group-hover:scale-110 border border-primary-100">
                     <School className="w-8 h-8 sm:w-10 sm:h-10" />
                   </div>
 
@@ -488,7 +488,7 @@ Mohon konfirmasi kesediaan waktu kunjungan tersebut. Terima kasih.`;
                     <Building className="w-48 h-48" />
                   </div>
 
-                  <div className="w-16 h-16 sm:w-20 sm:h-20 bg-primary-50 rounded-2xl flex items-center justify-center text-primary-700 mb-8 sm:mb-10 shadow-sm transition-transform group-hover:scale-110 border border-primary-100">
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 bg-primary-50 rounded-2xl flex items-center justify-center text-primary-900 mb-8 sm:mb-10 shadow-sm transition-transform group-hover:scale-110 border border-primary-100">
                     <Building className="w-8 h-8 sm:w-10 sm:h-10" />
                   </div>
 
@@ -582,7 +582,7 @@ Mohon konfirmasi kesediaan waktu kunjungan tersebut. Terima kasih.`;
                     <Trophy className="w-48 h-48" />
                   </div>
 
-                  <div className="w-16 h-16 sm:w-20 sm:h-20 bg-primary-50 rounded-2xl flex items-center justify-center text-primary-700 mb-8 sm:mb-10 shadow-sm transition-transform group-hover:scale-110 border border-primary-100">
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 bg-primary-50 rounded-2xl flex items-center justify-center text-primary-900 mb-8 sm:mb-10 shadow-sm transition-transform group-hover:scale-110 border border-primary-100">
                     <Trophy className="w-8 h-8 sm:w-10 sm:h-10" />
                   </div>
 
@@ -640,7 +640,7 @@ Mohon konfirmasi kesediaan waktu kunjungan tersebut. Terima kasih.`;
                     <Award className="w-48 h-48" />
                   </div>
 
-                  <div className="w-16 h-16 sm:w-20 sm:h-20 bg-primary-50 rounded-2xl flex items-center justify-center text-primary-700 mb-8 sm:mb-10 shadow-sm transition-transform group-hover:scale-110 border border-primary-100">
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 bg-primary-50 rounded-2xl flex items-center justify-center text-primary-900 mb-8 sm:mb-10 shadow-sm transition-transform group-hover:scale-110 border border-primary-100">
                     <Award className="w-8 h-8 sm:w-10 sm:h-10" />
                   </div>
 
@@ -734,7 +734,7 @@ Mohon konfirmasi kesediaan waktu kunjungan tersebut. Terima kasih.`;
                     <Droplets className="w-48 h-48" />
                   </div>
 
-                  <div className="w-16 h-16 sm:w-20 sm:h-20 bg-primary-50 rounded-2xl flex items-center justify-center text-primary-700 mb-8 sm:mb-10 shadow-sm transition-transform group-hover:scale-110 border border-primary-100">
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 bg-primary-50 rounded-2xl flex items-center justify-center text-primary-900 mb-8 sm:mb-10 shadow-sm transition-transform group-hover:scale-110 border border-primary-100">
                     <Droplets className="w-8 h-8 sm:w-10 sm:h-10" />
                   </div>
 
@@ -792,7 +792,7 @@ Mohon konfirmasi kesediaan waktu kunjungan tersebut. Terima kasih.`;
                     <Building2 className="w-48 h-48" />
                   </div>
 
-                  <div className="w-16 h-16 sm:w-20 sm:h-20 bg-primary-50 rounded-2xl flex items-center justify-center text-primary-700 mb-8 sm:mb-10 shadow-sm transition-transform group-hover:scale-110 border border-primary-100">
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 bg-primary-50 rounded-2xl flex items-center justify-center text-primary-900 mb-8 sm:mb-10 shadow-sm transition-transform group-hover:scale-110 border border-primary-100">
                     <Building2 className="w-8 h-8 sm:w-10 sm:h-10" />
                   </div>
 
@@ -892,7 +892,7 @@ Mohon konfirmasi kesediaan waktu kunjungan tersebut. Terima kasih.`;
               transition={{ delay: 0.1 }}
               className="app-card bg-white p-6 md:p-8 flex flex-col items-start group hover:-translate-y-1 transition-transform border border-primary-50 shadow-xl"
             >
-              <div className="w-12 h-12 bg-primary-50 rounded-2xl flex items-center justify-center text-primary-700 mb-5 group-hover:scale-110 transition-transform border border-primary-100 shadow-sm">
+              <div className="w-12 h-12 bg-primary-50 rounded-2xl flex items-center justify-center text-primary-900 mb-5 group-hover:scale-110 transition-transform border border-primary-100 shadow-sm">
                 <BookOpen className="w-6 h-6" />
               </div>
               <h3 className="font-black text-lg text-primary-950 mb-2">
@@ -915,7 +915,7 @@ Mohon konfirmasi kesediaan waktu kunjungan tersebut. Terima kasih.`;
               transition={{ delay: 0.2 }}
               className="app-card bg-white p-6 md:p-8 flex flex-col items-start group hover:-translate-y-1 transition-transform border border-primary-50 shadow-xl"
             >
-              <div className="w-12 h-12 bg-primary-50 rounded-2xl flex items-center justify-center text-primary-700 mb-5 group-hover:scale-110 transition-transform border border-primary-100 shadow-sm">
+              <div className="w-12 h-12 bg-primary-50 rounded-2xl flex items-center justify-center text-primary-900 mb-5 group-hover:scale-110 transition-transform border border-primary-100 shadow-sm">
                 <FlaskConical className="w-6 h-6" />
               </div>
               <h3 className="font-black text-lg text-primary-950 mb-2">
@@ -938,7 +938,7 @@ Mohon konfirmasi kesediaan waktu kunjungan tersebut. Terima kasih.`;
               transition={{ delay: 0.3 }}
               className="app-card bg-white p-6 md:p-8 flex flex-col items-start group hover:-translate-y-1 transition-transform border border-primary-50 shadow-xl"
             >
-              <div className="w-12 h-12 bg-primary-50 rounded-2xl flex items-center justify-center text-primary-700 mb-5 group-hover:scale-110 transition-transform border border-primary-100 shadow-sm">
+              <div className="w-12 h-12 bg-primary-50 rounded-2xl flex items-center justify-center text-primary-900 mb-5 group-hover:scale-110 transition-transform border border-primary-100 shadow-sm">
                 <Utensils className="w-6 h-6" />
               </div>
               <h3 className="font-black text-lg text-primary-950 mb-2">
@@ -962,7 +962,7 @@ Mohon konfirmasi kesediaan waktu kunjungan tersebut. Terima kasih.`;
               transition={{ delay: 0.5 }}
               className="app-card bg-white p-6 md:p-8 flex flex-col items-start group hover:-translate-y-1 transition-transform border border-primary-50 shadow-xl"
             >
-              <div className="w-12 h-12 bg-primary-50 rounded-2xl flex items-center justify-center text-primary-700 mb-5 group-hover:scale-110 transition-transform border border-primary-100 shadow-sm">
+              <div className="w-12 h-12 bg-primary-50 rounded-2xl flex items-center justify-center text-primary-900 mb-5 group-hover:scale-110 transition-transform border border-primary-100 shadow-sm">
                 <Heart className="w-6 h-6" />
               </div>
               <h3 className="font-black text-lg text-primary-950 mb-2">
@@ -985,7 +985,7 @@ Mohon konfirmasi kesediaan waktu kunjungan tersebut. Terima kasih.`;
               transition={{ delay: 0.6 }}
               className="app-card bg-white p-6 md:p-8 flex flex-col items-start group hover:-translate-y-1 transition-transform border border-primary-50 shadow-xl"
             >
-              <div className="w-12 h-12 bg-primary-50 rounded-2xl flex items-center justify-center text-primary-700 mb-5 group-hover:scale-110 transition-transform border border-primary-100 shadow-sm">
+              <div className="w-12 h-12 bg-primary-50 rounded-2xl flex items-center justify-center text-primary-900 mb-5 group-hover:scale-110 transition-transform border border-primary-100 shadow-sm">
                 <Shield className="w-6 h-6" />
               </div>
               <h3 className="font-black text-lg text-primary-950 mb-2">
@@ -1008,7 +1008,7 @@ Mohon konfirmasi kesediaan waktu kunjungan tersebut. Terima kasih.`;
               transition={{ delay: 0.7 }}
               className="app-card bg-white p-6 md:p-8 flex flex-col items-start group hover:-translate-y-1 transition-transform border border-primary-50 shadow-xl"
             >
-              <div className="w-12 h-12 bg-primary-50 rounded-2xl flex items-center justify-center text-primary-700 mb-5 group-hover:scale-110 transition-transform border border-primary-100 shadow-sm">
+              <div className="w-12 h-12 bg-primary-50 rounded-2xl flex items-center justify-center text-primary-900 mb-5 group-hover:scale-110 transition-transform border border-primary-100 shadow-sm">
                 <Building2 className="w-6 h-6" />
               </div>
               <h3 className="font-black text-lg text-primary-950 mb-2">
@@ -1062,7 +1062,7 @@ Mohon konfirmasi kesediaan waktu kunjungan tersebut. Terima kasih.`;
                   
                   <div className="space-y-6">
                     <div className="flex gap-4">
-                      <div className="w-12 h-12 rounded-2xl bg-primary-50 flex items-center justify-center text-primary-600 shrink-0 border border-primary-100">
+                      <div className="w-12 h-12 rounded-2xl bg-primary-50 flex items-center justify-center text-primary-900 shrink-0 border border-primary-100">
                         <CheckCircle2 className="w-6 h-6" />
                       </div>
                       <div>
@@ -1071,7 +1071,7 @@ Mohon konfirmasi kesediaan waktu kunjungan tersebut. Terima kasih.`;
                       </div>
                     </div>
                     <div className="flex gap-4">
-                      <div className="w-12 h-12 rounded-2xl bg-primary-50 flex items-center justify-center text-primary-600 shrink-0 border border-primary-100">
+                      <div className="w-12 h-12 rounded-2xl bg-primary-50 flex items-center justify-center text-primary-900 shrink-0 border border-primary-100">
                         <MapPin className="w-6 h-6" />
                       </div>
                       <div>
@@ -1135,7 +1135,7 @@ Mohon konfirmasi kesediaan waktu kunjungan tersebut. Terima kasih.`;
                       </p>
                       <button 
                         onClick={() => setFormStatus('idle')}
-                        className="px-6 py-3 rounded-2xl bg-primary-50 text-primary-700 font-bold hover:bg-primary-100 transition-colors whitespace-nowrap inline-block shrink-0"
+                        className="px-6 py-3 rounded-2xl bg-primary-50 text-primary-900 font-bold hover:bg-primary-100 transition-colors whitespace-nowrap inline-block shrink-0"
                       >
                         Isi Form Kembali
                       </button>

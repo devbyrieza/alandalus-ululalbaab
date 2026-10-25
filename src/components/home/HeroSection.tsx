@@ -144,7 +144,7 @@ export default function HeroSection() {
             style={delay(240)}
           >
             <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-white/90 border border-blue-100 shadow-xl backdrop-blur-xs text-left">
-              <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 border border-emerald-200 shadow-2xs">
+              <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0 border border-emerald-200 shadow-2xs">
                 <ShieldCheck className="w-5 h-5" />
               </div>
               <div>
@@ -154,7 +154,7 @@ export default function HeroSection() {
             </div>
 
             <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-white/90 border border-blue-100 shadow-xl backdrop-blur-xs text-left">
-              <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 border border-blue-200 shadow-2xs">
+              <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center shrink-0 border border-blue-200 shadow-2xs">
                 <BookOpen className="w-5 h-5" />
               </div>
               <div>
@@ -164,7 +164,7 @@ export default function HeroSection() {
             </div>
 
             <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-white/90 border border-blue-100 shadow-xl backdrop-blur-xs text-left">
-              <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0 border border-amber-200 shadow-2xs">
+              <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center shrink-0 border border-amber-200 shadow-2xs">
                 <GraduationCap className="w-5 h-5" />
               </div>
               <div>
@@ -208,7 +208,7 @@ export default function HeroSection() {
               href={WA_CONSULT_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-4 rounded-2xl font-bold text-sm sm:text-base bg-[#25D366] text-white hover:bg-[#20ba59] shadow-lg hover: hover:-translate-y-0.5 transition-all duration-300"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-4 rounded-2xl font-bold text-sm sm:text-base bg-[#25D366] text-ink-950 hover:bg-[#20ba59] shadow-lg hover: hover:-translate-y-0.5 transition-all duration-300"
             >
               <MessageCircle className="w-5 h-5 shrink-0" />
               <span>Konsultasi Panitia</span>
@@ -316,7 +316,7 @@ export default function HeroSection() {
 
           <div className={`app-card p-6 sm:p-7 rounded-3xl hover:border-emerald-300 transition-all duration-300 ${enter}`} style={delay(540)}>
             <div className="flex items-center gap-3.5 mb-4">
-              <div className="icon-box w-12 h-12 shrink-0 rounded-2xl bg-emerald-50 text-emerald-600 border border-emerald-200 shadow-xs">
+              <div className="icon-box w-12 h-12 shrink-0 rounded-2xl bg-emerald-50 text-emerald-700 border border-emerald-200 shadow-xs">
                 <ShieldCheck className="w-6 h-6" aria-hidden="true" />
               </div>
               <span className="text-xs font-extrabold text-emerald-600 uppercase tracking-wider">

@@ -113,7 +113,7 @@ export default function TeachersSection() {
                   className="group flex items-center gap-4 bg-white/80 backdrop-blur-sm p-4 rounded-2xl border border-blue-100 shadow-lg hover:shadow-xl hover: hover:border-primary-200 transition-all duration-400"
                 >
                   <div
-                    className={`w-11 h-11 rounded-[12px] flex items-center justify-center shrink-0 shadow-xs transition-transform duration-400 group-hover:scale-105 ${ feature.accent === "blue" ? "bg-primary-50 text-primary-600" : feature.accent === "yellow" ? "bg-secondary-50 text-secondary-700 border border-secondary-100" : "bg-primary-50/50 text-primary-600" }`}
+                    className={`w-11 h-11 rounded-[12px] flex items-center justify-center shrink-0 shadow-xs transition-transform duration-400 group-hover:scale-105 ${ feature.accent === "blue" ? "bg-primary-50 text-primary-900" : feature.accent === "yellow" ? "bg-secondary-50 text-secondary-800 border border-secondary-100" : "bg-primary-50/50 text-primary-900" }`}
                   >
                     <feature.icon className="w-5 h-5" strokeWidth={1.8} />
                   </div>

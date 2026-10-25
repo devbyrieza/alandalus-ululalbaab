@@ -148,7 +148,7 @@ export default function ProgramPage() {
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary-50 border border-primary-100 text-primary-700 text-xs font-bold uppercase tracking-widest mb-8 shadow-xs"
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary-50 border border-primary-100 text-primary-900 text-xs font-bold uppercase tracking-widest mb-8 shadow-xs"
           >
             <GraduationCap className="w-3.5 h-3.5" />
             <span>Jenjang Pendidikan • Tahun Ajaran 2027/2028</span>
@@ -258,7 +258,7 @@ export default function ProgramPage() {
                         key={sIdx}
                         className="bg-slate-50 p-4 rounded-xl border border-slate-200 text-center"
                       >
-                        <div className="w-8 h-8 rounded-2xl bg-primary-100 text-primary-700 flex items-center justify-center mx-auto mb-2 whitespace-nowrap shrink-0">
+                        <div className="w-8 h-8 rounded-2xl bg-primary-100 text-primary-900 flex items-center justify-center mx-auto mb-2 whitespace-nowrap shrink-0">
                           <stat.icon className="w-4 h-4" />
                         </div>
                         <p className="text-[10px] text-slate-500 font-bold uppercase tracking-wider mb-0.5">
@@ -292,7 +292,7 @@ export default function ProgramPage() {
 
                   {/* CTA Button */}
                   <Link href={`/daftar?program=${program.id}`}>
-                    <button className="w-full sm:w-auto px-8 py-4 rounded-xl font-black text-white text-base bg-primary-600 hover:bg-primary-500 shadow-xl transition-all hover:-translate-y-0.5 flex items-center justify-center gap-2">
+                    <button className="w-full sm:w-auto px-8 py-4 rounded-xl font-black text-ink-950 text-base bg-primary-600 hover:bg-primary-500 shadow-xl transition-all hover:-translate-y-0.5 flex items-center justify-center gap-2">
                       {program.buttonLabel}
                       <ArrowRight className="w-4 h-4" />
                     </button>
@@ -317,7 +317,7 @@ export default function ProgramPage() {
           <div className="flex flex-wrap justify-center gap-4">
             <Link
               href="/daftar"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-primary-600 hover:bg-primary-500 text-white font-bold text-base shadow-lg transition-all hover:-translate-y-0.5"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-primary-600 hover:bg-primary-500 text-ink-950 font-bold text-base shadow-lg transition-all hover:-translate-y-0.5"
             >
               Daftar PPDB Sekarang <ArrowRight className="w-4 h-4" />
             </Link>

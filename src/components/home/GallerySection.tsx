@@ -128,7 +128,7 @@ function GalleryCard({
         {/* Overlay removed for clear images */}
       </div>
 
-      <div className="absolute top-3.5 right-3.5 w-8 h-8 rounded-xl bg-white/20 flex items-center justify-center border border-white/30 text-white opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:bg-secondary-400 group-hover:border-secondary-300 group-hover:text-primary-900 shadow-xl">
+      <div className="absolute top-3.5 right-3.5 w-8 h-8 rounded-xl bg-white/20 flex items-center justify-center border border-white/30 text-ink-950 opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:bg-secondary-400 group-hover:border-secondary-300 group-hover:text-primary-900 shadow-xl">
         <Icon className="w-4 h-4" />
       </div>
 
@@ -254,7 +254,7 @@ export default function GallerySection() {
               animate={scheduleInView ? "visible" : "hidden"}
             >
               <motion.div variants={fadeUpVariants}>
-                <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-secondary-50 border border-secondary-200 text-primary-700 text-[0.65rem] font-bold uppercase tracking-[0.12em] mb-5 shadow-xs">
+                <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-secondary-50 border border-secondary-200 text-primary-900 text-[0.65rem] font-bold uppercase tracking-[0.12em] mb-5 shadow-xs">
                   <Star className="w-3 h-3 fill-current" />
                   <span>Jadwal Harian</span>
                 </div>

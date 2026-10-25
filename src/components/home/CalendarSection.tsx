@@ -31,12 +31,12 @@ const EASE = [0.16, 1, 0.3, 1] as const;
 const ACCENT_MAP = {
   blue: {
     number: "bg-primary-600 text-white",
-    badge: "bg-primary-50 text-primary-700 border-primary-100",
+    badge: "bg-primary-50 text-primary-900 border-primary-100",
     title: "group-hover:text-primary-700" },
   amber: {
     number:
-      "bg-secondary-50 text-secondary-700 border border-secondary-200",
-    badge: "bg-secondary-50 text-secondary-700 border-secondary-200",
+      "bg-secondary-50 text-secondary-800 border border-secondary-200",
+    badge: "bg-secondary-50 text-secondary-800 border-secondary-200",
     title: "group-hover:text-secondary-700" } };
 
 // ─── Main ─────────────────────────────────────────────
@@ -57,7 +57,7 @@ export default function CalendarSection() {
               viewport={{ once: true, margin: "-40px" }}
               transition={{ duration: 0.6, ease: EASE }}
             >
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary-50 border border-primary-100 text-primary-700 text-[0.65rem] font-bold uppercase tracking-[0.12em] mb-5 shadow-xs">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary-50 border border-primary-100 text-primary-900 text-[0.65rem] font-bold uppercase tracking-[0.12em] mb-5 shadow-xs">
                 <Calendar className="w-3 h-3 shrink-0" strokeWidth={2} />
                 <span>Agenda Penting</span>
               </div>

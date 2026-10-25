@@ -112,7 +112,7 @@ export default function BoardSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, ease: EASE }}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary-50 border border-primary-100 text-primary-700 text-xs font-bold uppercase tracking-widest mb-4 shadow-xs"
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary-50 border border-primary-100 text-primary-900 text-xs font-bold uppercase tracking-widest mb-4 shadow-xs"
           >
             <Users className="w-3.5 h-3.5 shrink-0" />
             <span>Struktur Organisasi</span>

@@ -45,7 +45,7 @@ export default function FloatingWhatsApp() {
             className="relative bg-white rounded-2xl border border-surface-100 px-4 py-3 max-w-[200px] sm:max-w-[220px]"
             style={{ boxShadow: "0 8px 32px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06)" }}
           >
-            <button onClick={() => setDismissed(true)} className="absolute top-1.5 right-1.5 w-5 h-5 flex items-center justify-center rounded-full text-ink-400 hover:text-ink-700 hover:bg-surface-100 transition-all duration-150" aria-label="Tutup">
+            <button onClick={() => setDismissed(true)} className="absolute top-1.5 right-1.5 w-5 h-5 flex items-center justify-center rounded-full text-ink-600 hover:text-ink-700 hover:bg-surface-100 transition-all duration-150" aria-label="Tutup">
               <X className="w-3 h-3" />
             </button>
             <div className="flex items-center gap-1.5 mb-1.5">

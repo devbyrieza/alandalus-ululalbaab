@@ -122,7 +122,7 @@ export default function ChatSystem() {
                 </span>
                 <button
                   onClick={() => setIsMenuOpen(false)}
-                  className="p-1.5 hover:bg-surface-50 rounded-full transition-colors text-ink-400 hover:text-ink-600"
+                  className="p-1.5 hover:bg-surface-50 rounded-full transition-colors text-ink-600 hover:text-ink-600"
                 >
                   <X className="w-4 h-4" />
                 </button>

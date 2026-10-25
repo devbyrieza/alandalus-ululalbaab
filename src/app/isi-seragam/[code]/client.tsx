@@ -50,7 +50,7 @@ export default function IsiSeragamClient({ code, pendaftar }: { code: string; pe
       <div className="max-w-4xl mx-auto space-y-6">
         <div className="bg-white p-6 rounded-3xl shadow-sm border border-ink-100 flex items-start gap-4 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-32 h-32 bg-primary-50 rounded-bl-[100px] -z-0"></div>
-          <div className="w-12 h-12 bg-primary-100 text-primary-700 rounded-2xl flex items-center justify-center flex-shrink-0 relative z-10 whitespace-nowrap shrink-0">
+          <div className="w-12 h-12 bg-primary-100 text-primary-900 rounded-2xl flex items-center justify-center flex-shrink-0 relative z-10 whitespace-nowrap shrink-0">
             <Shirt className="w-6 h-6" />
           </div>
           <div className="relative z-10">
@@ -172,7 +172,7 @@ export default function IsiSeragamClient({ code, pendaftar }: { code: string; pe
                   {/* Item 1: Baju */}
                   <div className="flex items-center justify-between p-4 bg-ink-50 border border-ink-100 rounded-2xl">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-primary-50 text-primary-700 rounded-2xl flex items-center justify-center flex-shrink-0">
+                      <div className="w-10 h-10 bg-primary-50 text-primary-900 rounded-2xl flex items-center justify-center flex-shrink-0">
                         <Shirt className="w-5 h-5" />
                       </div>
                       <div>
@@ -188,7 +188,7 @@ export default function IsiSeragamClient({ code, pendaftar }: { code: string; pe
                   {/* Item 2: Celana */}
                   <div className="flex items-center justify-between p-4 bg-ink-50 border border-ink-100 rounded-2xl">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-primary-50 text-primary-700 rounded-2xl flex items-center justify-center flex-shrink-0">
+                      <div className="w-10 h-10 bg-primary-50 text-primary-900 rounded-2xl flex items-center justify-center flex-shrink-0">
                         <Ruler className="w-5 h-5" />
                       </div>
                       <div>
@@ -204,7 +204,7 @@ export default function IsiSeragamClient({ code, pendaftar }: { code: string; pe
                   {/* Item 3: Almamater */}
                   <div className="flex items-center justify-between p-4 bg-ink-50 border border-ink-100 rounded-2xl">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-primary-50 text-primary-700 rounded-2xl flex items-center justify-center flex-shrink-0">
+                      <div className="w-10 h-10 bg-primary-50 text-primary-900 rounded-2xl flex items-center justify-center flex-shrink-0">
                         <Shirt className="w-5 h-5 animate-pulse" />
                       </div>
                       <div>

@@ -151,8 +151,8 @@ function ExtraChip({ item, index }: { item: ExtraActivity; index: number }) {
   const Icon = item.icon;
 
   const colorMap = {
-    blue: "bg-primary-50 text-primary-600 group-hover:bg-primary-100 ring-primary-200",
-    amber: "bg-secondary-50 text-secondary-600 group-hover:bg-secondary-100 ring-secondary-300" };
+    blue: "bg-primary-50 text-primary-900 group-hover:bg-primary-100 ring-primary-200",
+    amber: "bg-secondary-50 text-secondary-800 group-hover:bg-secondary-100 ring-secondary-300" };
 
   const textHoverMap = {
     blue: "group-hover:text-primary-800",
@@ -261,7 +261,7 @@ export default function ActivitiesSection() {
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             className="text-center mb-10 md:mb-12"
           >
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary-50 border border-primary-100 text-primary-700 text-[0.65rem] font-bold uppercase tracking-[0.12em] mb-5 shadow-xs">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary-50 border border-primary-100 text-primary-900 text-[0.65rem] font-bold uppercase tracking-[0.12em] mb-5 shadow-xs">
               <Sparkles className="w-3 h-3 shrink-0" strokeWidth={2} />
               <span>Minat & Bakat</span>
             </div>
@@ -291,7 +291,7 @@ export default function ActivitiesSection() {
                   transition={{ delay: 0.1 + idx * 0.05 }}
                   className="flex flex-col items-center gap-3 p-4 bg-white/80 backdrop-blur-sm rounded-2xl border border-blue-100 shadow-xl hover:border-primary-100 hover:shadow-md transition-all group text-center"
                 >
-                  <div className="w-10 h-10 rounded-xl bg-primary-50 flex items-center justify-center text-primary-600 group-hover:bg-primary-600 group-hover:text-white transition-colors">
+                  <div className="w-10 h-10 rounded-xl bg-primary-50 flex items-center justify-center text-primary-900 group-hover:bg-primary-600 group-hover:text-white transition-colors">
                     <Icon className="w-5 h-5" />
                   </div>
                   <span className="text-[11px] font-bold text-ink-950 uppercase tracking-wider">

@@ -114,7 +114,7 @@ function WilayahSelect({
           <motion.span
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            className={`inline-flex items-center justify-center w-5 h-5 rounded-full text-[10px] font-bold leading-none flex-shrink-0 transition-colors duration-300 ${ isFilled ? "bg-primary-600 text-white" : "bg-primary-100 text-primary-500" }`}
+            className={`inline-flex items-center justify-center w-5 h-5 rounded-full text-[10px] font-bold leading-none flex-shrink-0 transition-colors duration-300 ${ isFilled ? "bg-primary-600 text-white" : "bg-primary-100 text-primary-900" }`}
           >
             {isFilled ? <Check className="w-2.5 h-2.5" /> : stepNumber}
           </motion.span>
@@ -134,7 +134,7 @@ function WilayahSelect({
         disabled={disabled}
         aria-haspopup="listbox"
         aria-expanded={open}
-        className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl border-2 text-left text-sm font-medium transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-primary-400/50 focus-visible:ring-offset-1 ${ isDisabled && !disabled ? "bg-surface-100 border-primary-100 text-ink-300 cursor-not-allowed opacity-60" : isFilled ? "bg-white border-primary-400 text-ink-900 shadow-[var(--shadow-premium-sm)] cursor-pointer" : open ? "bg-white border-primary-500 text-ink-900 shadow-[0_0_0_3px_rgba(3,105,199,0.10)] cursor-pointer" : "bg-white border-primary-100 text-ink-400 hover:border-primary-300 hover:bg-primary-50/40 cursor-pointer" } ${ disabled ? "!bg-surface-100 !border-primary-100 !text-ink-300 !cursor-not-allowed !opacity-60" : "" }`}
+        className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl border-2 text-left text-sm font-medium transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-primary-400/50 focus-visible:ring-offset-1 ${ isDisabled && !disabled ? "bg-surface-100 border-primary-100 text-ink-300 cursor-not-allowed opacity-60" : isFilled ? "bg-white border-primary-400 text-ink-900 shadow-[var(--shadow-premium-sm)] cursor-pointer" : open ? "bg-white border-primary-500 text-ink-900 shadow-[0_0_0_3px_rgba(3,105,199,0.10)] cursor-pointer" : "bg-white border-primary-100 text-ink-600 hover:border-primary-300 hover:bg-primary-50/40 cursor-pointer" } ${ disabled ? "!bg-surface-100 !border-primary-100 !text-ink-300 !cursor-not-allowed !opacity-60" : "" }`}
       >
         {/* Icon kiri */}
         <span
@@ -486,7 +486,7 @@ export default function WilayahSelector({
         <div className="md:col-span-2">
           <div className="flex items-center gap-2 mb-2">
             <span
-              className={`inline-flex items-center justify-center w-5 h-5 rounded-full text-[10px] font-bold leading-none flex-shrink-0 transition-colors duration-300 ${ value.kode_pos ? "bg-primary-600 text-white" : "bg-primary-100 text-primary-500" }`}
+              className={`inline-flex items-center justify-center w-5 h-5 rounded-full text-[10px] font-bold leading-none flex-shrink-0 transition-colors duration-300 ${ value.kode_pos ? "bg-primary-600 text-white" : "bg-primary-100 text-primary-900" }`}
             >
               {value.kode_pos ? <Check className="w-2.5 h-2.5" /> : 5}
             </span>

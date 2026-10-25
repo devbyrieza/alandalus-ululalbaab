@@ -248,7 +248,7 @@ export default function SearchableSelect({
                         aria-label="Hapus pencarian"
                         className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 rounded-full flex items-center justify-center transition-colors duration-150"
                         style={{
-                          color: "var(--color-ink-400)",
+                          color: "var(--color-ink-600)",
                           background: "var(--color-ink-100)" }}
                         onMouseEnter={(e) => {
                           const el = e.currentTarget as HTMLElement;
@@ -326,7 +326,7 @@ export default function SearchableSelect({
                       className="w-10 h-10 rounded-full flex items-center justify-center mx-auto mb-3"
                       style={{
                         background: "var(--color-primary-50)",
-                        color: "var(--color-primary-300)" }}
+                        color: "var(--color-primary-900)" }}
                     >
                       <Search className="w-4 h-4" />
                     </div>

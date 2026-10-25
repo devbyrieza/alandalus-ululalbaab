@@ -167,7 +167,7 @@ export default function AiChatWidget({
             className={`flex gap-3 ${msg.role === "user" ? "flex-row-reverse" : "flex-row"} items-end`}
           >
             <div
-              className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 mb-1 ${ msg.role === "user" ? "bg-primary-100 text-primary-700" : "bg-primary-600 text-white shadow-premium-xs" }`}
+              className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 mb-1 ${ msg.role === "user" ? "bg-primary-100 text-primary-900" : "bg-primary-600 text-white shadow-premium-xs" }`}
             >
               {msg.role === "user" ? (
                 <User className="w-4 h-4" />
