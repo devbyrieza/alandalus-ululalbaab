@@ -42,7 +42,7 @@ export default function BankSoalPanitiaPage() {
   });
 
   return (
-    <div className="min-h-screen bg-slate-50 p-4 md:p-8 space-y-6">
+    <div className="min-h-dvh bg-slate-50 p-4 md:p-8 space-y-6">
       {/* HEADER BANNER */}
       <div className="bg-gradient-to-r from-teal-800 via-teal-700 to-emerald-800 text-white rounded-2xl p-6 md:p-8 shadow-xl relative overflow-hidden">
         <div className="absolute right-0 top-0 opacity-10 pointer-events-none transform translate-x-8 -translate-y-8">

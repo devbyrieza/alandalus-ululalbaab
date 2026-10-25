@@ -212,7 +212,7 @@ function LoadingFallback() {
 
 export default function DaftarSuksesPage() {
   return (
-    <main className="min-h-screen bg-white flex items-center justify-center p-6 relative overflow-hidden">
+    <main className="min-h-dvh bg-white flex items-center justify-center p-6 relative overflow-hidden">
       {/* Background Decor */}
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary-100/40 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 pointer-events-none max-w-full" />
       <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-primary-200/20 rounded-full blur-[100px] -translate-x-1/2 translate-y-1/2 pointer-events-none max-w-full" />
