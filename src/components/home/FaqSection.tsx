@@ -101,7 +101,7 @@ export default function FaqSection() {
   return (
     <section id="faq" className="section-std relative overflow-hidden bg-gradient-to-b from-white via-slate-50/50 to-white py-20 lg:py-24">
       <div
-        className="absolute top-1/2 -left-32 -translate-y-1/2 w-[380px] h-[380px] pointer-events-none"
+        className="absolute top-1/2 -left-32 -translate-y-1/2 w-[380px] h-[380px] pointer-events-none max-w-full"
         style={{
           background:
             "radial-gradient(circle, rgba(254,243,199,0.5) 0%, transparent 65%)" }}

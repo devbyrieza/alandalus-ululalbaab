@@ -366,7 +366,7 @@ export default function Navbar() {
                               : { opacity: 0, y: 10, scale: 0.95 }
                           }
                           transition={{ duration: reduceMotion ? 0 : 0.2 }}
-                          className="absolute top-full left-1/2 -translate-x-1/2 pt-4 w-[600px] z-50"
+                          className="absolute top-full left-1/2 -translate-x-1/2 pt-4 w-[600px] z-50 max-w-full"
                         >
                           <div className="mega-menu-content p-6 grid grid-cols-2 gap-6 relative">
                             <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-white rotate-45 border-l border-t border-surface-100" />

@@ -129,7 +129,7 @@ export default function FacilitiesSection() {
       {/* ── Decorative blobs ── */}
       <div
         aria-hidden
-        className="pointer-events-none absolute -bottom-24 -right-24 w-[480px] h-[480px] rounded-full bg-secondary-100 blur-[120px] opacity-60"
+        className="pointer-events-none absolute -bottom-24 -right-24 w-[480px] h-[480px] rounded-full bg-secondary-100 blur-[120px] opacity-60 max-w-full"
       />
       <div
         aria-hidden

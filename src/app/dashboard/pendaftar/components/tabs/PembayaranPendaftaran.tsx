@@ -762,7 +762,7 @@ export default function PembayaranPendaftaranTab({
 
       {/* Header Banner */}
       <div className="relative overflow-hidden rounded-[2rem] bg-linear-to-br from-primary-700 to-primary-900 border border-primary-600 p-5 md:p-8 text-white shadow-xl app-card">
-        <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-secondary-50/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+        <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-secondary-50/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none max-w-full" />
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="flex items-start gap-5">
             <div className="w-16 h-16 rounded-[1.5rem] bg-white/10 flex items-center justify-center border border-white/20 shadow-xl shrink-0">

@@ -50,7 +50,7 @@ export default function FeaturesSection() {
   return (
     <section id="keunggulan" className="section-std relative overflow-hidden">
       {/* CiroAI-style ambient glow blobs */}
-      <div className="glow-blob glow-blob-primary w-[500px] h-[500px] -top-[15%] -right-[10%] opacity-[0.12]" aria-hidden="true" />
+      <div className="glow-blob glow-blob-primary w-[500px] h-[500px] -top-[15%] -right-[10%] opacity-[0.12] max-w-full" aria-hidden="true" />
       
       <Container className="relative z-10">
         <div className="flex flex-col lg:flex-row items-start gap-16 lg:gap-24">

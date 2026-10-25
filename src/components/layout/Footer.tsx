@@ -51,7 +51,7 @@ export default function Footer() {
       {/* ── Decorative orbs — blue + yellow (energik, dua warna) ── */}
       {/* Orb utama: biru cerah kanan-atas */}
       <div
-        className="absolute top-0 right-0 w-[520px] h-[520px] rounded-full pointer-events-none -translate-y-1/2 translate-x-1/3"
+        className="absolute top-0 right-0 w-[520px] h-[520px] rounded-full pointer-events-none -translate-y-1/2 translate-x-1/3 max-w-full"
         style={{
           background:
             "radial-gradient(circle, rgba(3,105,199,0.22) 0%, transparent 70%)" }}

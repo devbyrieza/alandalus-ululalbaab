@@ -59,8 +59,8 @@ export default function TentangPage() {
     <main className="bg-white min-h-screen">
       {/* 1. Hero Section */}
       <section className="section-std pb-0! relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-secondary-100/60 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-primary-50/40 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/2 pointer-events-none" />
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-secondary-100/60 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 pointer-events-none max-w-full" />
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-primary-50/40 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/2 pointer-events-none max-w-full" />
         <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-[0.02] pointer-events-none" />
 
         <Container className="relative z-10 text-center">
@@ -223,7 +223,7 @@ export default function TentangPage() {
 
       {/* 4. Vision & Mission (Official PUAS) */}
       <section className="py-16 md:py-24 bg-white relative">
-        <div className="absolute top-0 left-0 w-[400px] h-[400px] bg-secondary-100/50 rounded-full blur-[100px] -translate-y-1/2 -translate-x-1/2 opacity-50 pointer-events-none" />
+        <div className="absolute top-0 left-0 w-[400px] h-[400px] bg-secondary-100/50 rounded-full blur-[100px] -translate-y-1/2 -translate-x-1/2 opacity-50 pointer-events-none max-w-full" />
         <Container className="relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <motion.span

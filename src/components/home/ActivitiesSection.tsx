@@ -195,13 +195,13 @@ export default function ActivitiesSection() {
 
       {/* Ambient glow — biru di atas, kuning di bawah */}
       <div
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] -translate-y-1/2 pointer-events-none"
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] -translate-y-1/2 pointer-events-none max-w-full"
         style={{
           background:
             "radial-gradient(ellipse, rgba(220,237,255,0.65) 0%, transparent 70%)" }}
       />
       <div
-        className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] translate-y-1/2 pointer-events-none"
+        className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] translate-y-1/2 pointer-events-none max-w-full"
         style={{
           background:
             "radial-gradient(ellipse, rgba(254,243,199,0.4) 0%, transparent 70%)" }}
