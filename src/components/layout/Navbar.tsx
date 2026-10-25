@@ -15,7 +15,6 @@ import {
   Star,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import { scrollToTop, navigateToDetail } from "@/lib/navigation-scroll";
 import { BRANDING } from "@/config/branding";
 import LanguageSwitcher from "@/components/common/LanguageSwitcher";
 
@@ -97,6 +96,14 @@ function canHover(): boolean {
     typeof window !== "undefined" &&
     window.matchMedia("(hover: hover)").matches
   );
+}
+
+/** Smooth scroll ke atas, hormati preferensi reduced-motion. */
+function scrollToTop(): void {
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+  window.scrollTo({ top: 0, behavior: prefersReducedMotion ? "auto" : "smooth" });
 }
 
 const desktopLinkClass = (active: boolean) =>
@@ -194,21 +201,20 @@ export default function Navbar() {
   /* ── Navigasi ── */
 
   const handleBerandaClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-
     const mainDomain = getMainDomain();
     if (mainDomain) {
+      e.preventDefault();
       window.location.href = `https://${mainDomain}/`;
       return;
     }
 
     if (pathname === "/") {
-      scrollToTop();
-    } else {
+      e.preventDefault();
       sessionStorage.removeItem("scroll_to_section");
       sessionStorage.removeItem("scroll_to_position");
-      window.location.href = "/";
+      scrollToTop();
     }
+    // Selain itu: biarkan <Link> menangani navigasi client-side.
   };
 
   const handleNavClick = (
@@ -226,11 +232,7 @@ export default function Navbar() {
       window.location.href = `https://${mainDomain}${link.href}`;
       return;
     }
-
-    if (link.section) {
-      e.preventDefault();
-      navigateToDetail(link.href, link.section);
-    }
+    // Selain itu: biarkan <Link> menangani navigasi client-side.
   };
 
   const closeMobile = () => setIsMenuOpen(false);

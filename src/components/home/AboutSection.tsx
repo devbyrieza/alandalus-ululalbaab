@@ -9,7 +9,6 @@ import {
   Sparkles } from "lucide-react";
 import { Container } from "@/components/layout/Container";
 import { motion, Variants } from "framer-motion";
-import { navigateToDetail } from "@/lib/navigation-scroll";
 
 const SPRING: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
@@ -45,10 +44,6 @@ const itemVariants: Variants = {
       ease: SPRING } } };
 
 export default function AboutSection() {
-  const handleNavigateToDetail = () => {
-    navigateToDetail("/tentang", "#about");
-  };
-
   return (
     <section id="about" className="section-alt relative overflow-hidden">
       {/* Ambient background blobs — biru & kuning sesuai branding Ulul Albaab */}
@@ -225,11 +220,7 @@ export default function AboutSection() {
               delay: 0.1 }}
             className="flex flex-col items-center"
           >
-            <Link
-              href="/tentang"
-              onClick={handleNavigateToDetail}
-              className="w-full sm:w-auto"
-            >
+            <Link href="/tentang" className="w-full sm:w-auto">
               <button className="btn-secondary w-full px-10 py-3.5 group">
                 Lanjut Baca Profil
                 <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />

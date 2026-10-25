@@ -1,7 +1,6 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useScrollRestoration } from "@/hooks/useScrollRestoration";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import TawkToScript from "@/components/ui/widgets/TawkToScript";
@@ -19,7 +18,6 @@ export default function LayoutWrapper({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-  useScrollRestoration();
 
   const hideNavbarFooter =
     pathname.startsWith("/login") ||
