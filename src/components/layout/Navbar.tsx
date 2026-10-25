@@ -159,8 +159,11 @@ export default function Navbar() {
     if (!isMenuOpen) return;
     const previous = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+    const lenis = (window as any).lenis;
+    lenis?.stop?.();
     return () => {
       document.body.style.overflow = previous;
+      lenis?.start?.();
     };
   }, [isMenuOpen]);
 
@@ -479,6 +482,7 @@ export default function Navbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: reduceMotion ? 0 : 0.2 }}
+            data-lenis-prevent
             className="fixed inset-0 z-40 xl:hidden overscroll-contain"
             role="dialog"
             aria-modal="true"
@@ -547,6 +551,7 @@ export default function Navbar() {
               {/* Navigasi */}
               <nav
                 aria-label="Navigasi seluler"
+                data-lenis-prevent
                 className="overflow-y-auto flex-1 px-4 py-4 pb-safe overscroll-contain custom-scrollbar"
               >
                 <p className="text-[10px] font-black text-[var(--color-ink-400)] uppercase tracking-[0.12em] px-3 mb-3">
