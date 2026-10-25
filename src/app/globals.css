@@ -288,8 +288,9 @@
     -webkit-tap-highlight-color: transparent;
     scroll-behavior: smooth;
     font-size: 16px;
-    overscroll-behavior-y: none;
-    overflow-x: hidden;
+    overscroll-behavior-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overflow-x: clip;
     text-rendering: optimizeLegibility;
     -webkit-text-size-adjust: 100%;
   }
@@ -308,7 +309,8 @@
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    overflow-x: hidden;
+    overflow-x: clip;
+    -webkit-overflow-scrolling: touch;
     width: 100%;
     max-width: 100vw;
     line-height: 1.6;
@@ -2624,8 +2626,6 @@ html, body {
 .custom-scrollbar {
   scrollbar-width: thin;
   scrollbar-color: #cbd5e1 transparent;
-  overscroll-behavior: contain !important;
-  overscroll-behavior-y: contain !important;
   -webkit-overflow-scrolling: touch;
 }
 

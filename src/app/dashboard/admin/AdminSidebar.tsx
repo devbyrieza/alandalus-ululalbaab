@@ -582,7 +582,7 @@ export default function AdminSidebar({
         </header>
 
         {/* Main Page Content: Area di mana halaman Dashboard sebenarnya dirender */}
-        <div className="p-6 md:p-8 pt-24 lg:pt-8 max-w-[1600px] mx-auto animate-in fade-in slide-in-from-bottom-2 duration-500">
+        <div className="p-3.5 sm:p-6 md:p-8 pt-20 sm:pt-24 lg:pt-8 max-w-[1600px] mx-auto animate-in fade-in slide-in-from-bottom-2 duration-500">
           {children}
         </div>
       </main>

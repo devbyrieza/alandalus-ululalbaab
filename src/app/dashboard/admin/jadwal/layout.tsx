@@ -8,27 +8,39 @@ export default function JadwalLayout({ children }: { children: React.ReactNode }
   const pathname = usePathname();
 
   return (
-    <div className="space-y-6 max-w-7xl mx-auto">
-      <div className="bg-white rounded-xl shadow-sm p-4 border border-slate-100 flex gap-2 overflow-x-auto hide-scrollbar">
+    <div className="space-y-4 sm:space-y-6 max-w-7xl mx-auto">
+      <div className="bg-white rounded-2xl shadow-sm p-2 sm:p-3 border border-slate-100 flex gap-1.5 sm:gap-2 overflow-x-auto custom-scrollbar touch-pan-x overscroll-x-contain">
         <Link 
           href="/dashboard/admin/jadwal/monitoring"
-          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-sm transition-all whitespace-nowrap ${ pathname.endsWith('/monitoring') ? 'bg-primary-50 text-primary-700' : 'text-slate-500 hover:bg-slate-50' }`}
+          className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all whitespace-nowrap shrink-0 ${
+            pathname.endsWith('/monitoring') 
+              ? 'bg-primary-50 text-primary-700' 
+              : 'text-slate-500 hover:bg-slate-50'
+          }`}
         >
-          <LayoutDashboard className="w-4 h-4" />
+          <LayoutDashboard className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
           Monitoring Pelaksanaan
         </Link>
         <Link 
           href="/dashboard/admin/jadwal/monitoring-penguji"
-          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-sm transition-all whitespace-nowrap ${ pathname.includes('/monitoring-penguji') ? 'bg-primary-50 text-primary-700' : 'text-slate-500 hover:bg-slate-50' }`}
+          className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all whitespace-nowrap shrink-0 ${
+            pathname.includes('/monitoring-penguji') 
+              ? 'bg-primary-50 text-primary-700' 
+              : 'text-slate-500 hover:bg-slate-50'
+          }`}
         >
-          <ClipboardEdit className="w-4 h-4" />
+          <ClipboardEdit className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
           Monitoring Penguji
         </Link>
         <Link 
           href="/dashboard/admin/jadwal/plotting"
-          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-sm transition-all whitespace-nowrap ${ pathname.includes('/plotting') || pathname.includes('/input') ? 'bg-primary-50 text-primary-700 font-black' : 'text-slate-500 hover:bg-slate-50' }`}
+          className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all whitespace-nowrap shrink-0 ${
+            pathname.includes('/plotting') || pathname.includes('/input')
+              ? 'bg-primary-50 text-primary-700 font-black' 
+              : 'text-slate-500 hover:bg-slate-50'
+          }`}
         >
-          <CalendarPlus className="w-4 h-4 text-amber-600" />
+          <CalendarPlus className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-600" />
           Plotting &amp; Sesi Ketersediaan
         </Link>
       </div>

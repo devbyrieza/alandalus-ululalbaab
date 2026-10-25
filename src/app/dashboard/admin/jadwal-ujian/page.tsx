@@ -139,6 +139,12 @@ export default function JadwalUjianPage() {
   const [search, setSearch] = useState("");
   const [selectedPendaftarId, setSelectedPendaftarId] = useState<string | null>(null);
   const [candidateFilterTab, setCandidateFilterTab] = useState<"butuh" | "semua">("butuh");
+  const [candidatePageSize, setCandidatePageSize] = useState(25);
+  const [sessionPageSize, setSessionPageSize] = useState(20);
+
+  useEffect(() => {
+    setCandidatePageSize(25);
+  }, [search, candidateFilterTab]);
 
   const searchParams = useSearchParams();
   const tabParam = searchParams ? searchParams.get("tab") : null;
@@ -877,6 +883,14 @@ export default function JadwalUjianPage() {
     );
   }, [pendaftar, formCandidateSearch]);
 
+    const displayedCandidates = useMemo(() => {
+    return filteredPendaftar.slice(0, candidatePageSize);
+  }, [filteredPendaftar, candidatePageSize]);
+
+  const displayedSessions = useMemo(() => {
+    return sessions.slice(0, sessionPageSize);
+  }, [sessions, sessionPageSize]);
+
   return (
     <div className="space-y-6 pb-20 max-w-7xl mx-auto">
       {/* Header Banner Terpadu */}
@@ -895,31 +909,31 @@ export default function JadwalUjianPage() {
               </p>
             </div>
           </div>
-          <div className="flex flex-wrap items-center gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:flex lg:flex-wrap items-center gap-2.5 w-full lg:w-auto">
             <button
               onClick={handleSwitchToKetersediaan}
-              className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs border transition-all whitespace-nowrap ${ mainTab === "ketersediaan" ? "bg-emerald-600 text-white border-emerald-600 shadow-md " : "bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border-emerald-200" }`}
+              className={`flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs border transition-all whitespace-nowrap w-full lg:w-auto ${ mainTab === "ketersediaan" ? "bg-emerald-600 text-white border-emerald-600 shadow-md " : "bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border-emerald-200" }`}
             >
               <Clock className="w-4 h-4" />
               + Buat Sesi Ketersediaan
             </button>
             <button
               onClick={() => openScheduleModal()}
-              className="flex items-center gap-2 px-5 py-2.5 bg-primary-600 hover:bg-primary-700 text-white rounded-xl font-black text-xs shadow-lg transition-all hover:scale-[1.02] active:scale-95 whitespace-nowrap"
+              className="flex items-center justify-center gap-2 px-4 sm:px-5 py-2.5 bg-primary-600 hover:bg-primary-700 text-white rounded-xl font-black text-xs shadow-lg transition-all hover:scale-[1.02] active:scale-95 whitespace-nowrap w-full lg:w-auto"
             >
               <CalendarPlus className="w-4 h-4" />
               + Buat Jadwal Khusus Santri
             </button>
             <button
               onClick={() => setShowBroadcastModal(true)}
-              className="flex items-center gap-2 px-4 py-2.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-xl font-bold text-xs border border-indigo-200 transition-all whitespace-nowrap"
+              className="flex items-center justify-center gap-2 px-4 py-2.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-xl font-bold text-xs border border-indigo-200 transition-all whitespace-nowrap w-full lg:w-auto"
             >
               <Send className="w-4 h-4" />
               Pulse Notifikasi
               </button>
               <button
                 onClick={handleBroadcastPenguji}
-                className="flex items-center gap-2 px-4 py-2.5 bg-violet-50 hover:bg-violet-100 text-violet-700 rounded-xl font-bold text-xs border border-violet-200 transition-all whitespace-nowrap"
+                className="flex items-center justify-center gap-2 px-4 py-2.5 bg-violet-50 hover:bg-violet-100 text-violet-700 rounded-xl font-bold text-xs border border-violet-200 transition-all whitespace-nowrap w-full lg:w-auto"
               >
                 <Send className="w-4 h-4" />
                 Pulse Penguji
@@ -1050,7 +1064,7 @@ export default function JadwalUjianPage() {
                 </button>
               </div>
             ) : (
-              sessions.map((s) => (
+              displayedSessions.map((s) => (
                 <div
                   key={s.id}
                   className={`bg-white rounded-2xl shadow-sm border border-stone-100 hover:border-primary-200 p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 transition-all hover:shadow-md ${ selectedPendaftarId ? "ring-2 ring-primary-100" : "" }`}
@@ -1105,6 +1119,15 @@ export default function JadwalUjianPage() {
                   </div>
                 </div>
               ))
+            )}
+            {sessions.length > sessionPageSize && (
+              <button
+                type="button"
+                onClick={() => setSessionPageSize((prev) => prev + 20)}
+                className="w-full py-3 bg-stone-50 hover:bg-stone-100 text-stone-700 font-bold text-xs rounded-2xl border border-stone-200 transition-all text-center shadow-xs"
+              >
+                Tampilkan 20 Sesi Lagi ({sessions.length - sessionPageSize} tersisa)
+              </button>
             )}
           </div>
         </div>
@@ -1162,7 +1185,7 @@ export default function JadwalUjianPage() {
                   Tidak ada data pendaftar yang cocok
                 </div>
               ) : (
-                filteredPendaftar.map((p) => (
+                displayedCandidates.map((p) => (
                   <div
                     key={p.id}
                     onClick={() =>
@@ -1215,6 +1238,18 @@ export default function JadwalUjianPage() {
               )}
             </div>
 
+            {filteredPendaftar.length > candidatePageSize && (
+              <div className="p-2 border-t border-stone-100 bg-stone-50">
+                <button
+                  type="button"
+                  onClick={() => setCandidatePageSize((prev) => prev + 25)}
+                  className="w-full py-2 bg-white hover:bg-stone-100 text-stone-700 font-bold text-xs rounded-xl border border-stone-200 transition-all text-center"
+                >
+                  Tampilkan 25 Santri Lagi ({filteredPendaftar.length - candidatePageSize} tersisa)
+                </button>
+              </div>
+            )}
+
             <div className="p-3.5 bg-stone-900 text-white flex items-center justify-between">
               <div>
                 <p className="text-[10px] font-bold uppercase tracking-widest text-stone-400">
@@ -1255,11 +1290,11 @@ export default function JadwalUjianPage() {
           data-modal="true"
           aria-modal="true"
           role="dialog"
-          className="fixed inset-0 z-50 flex items-start md:items-center pt-8 pb-16 justify-center p-4 bg-stone-900/60 backdrop-blur-xs overflow-y-auto overscroll-contain custom-scrollbar"
+          className="fixed inset-0 z-50 flex items-start sm:items-center justify-center p-3 sm:p-4 bg-stone-900/60 backdrop-blur-xs overflow-y-auto overscroll-contain custom-scrollbar"
         >
-          <div className="bg-white rounded-3xl w-full max-w-2xl shadow-2xl border border-stone-100 overflow-hidden my-auto animate-in zoom-in-95 duration-200">
+          <div className="bg-white rounded-2xl sm:rounded-3xl w-full max-w-2xl max-h-[calc(100dvh-1.5rem)] sm:max-h-[calc(100dvh-3rem)] flex flex-col shadow-2xl border border-stone-100 overflow-hidden my-auto animate-in zoom-in-95 duration-200">
             {/* Modal Header */}
-            <div className="p-6 bg-gradient-to-r from-primary-900 via-primary-800 to-primary-950 text-white flex items-start justify-between">
+            <div className="p-4 sm:p-6 bg-gradient-to-r from-primary-900 via-primary-800 to-primary-950 text-white flex items-start justify-between shrink-0">
               <div>
                 <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-white/15 text-white text-xs font-bold mb-2 border border-white/20">
                   <CalendarPlus className="w-3.5 h-3.5 text-white" />
@@ -1287,7 +1322,7 @@ export default function JadwalUjianPage() {
             </div>
 
             {/* Modal Form */}
-            <form onSubmit={handleSaveSchedule} className="p-6 space-y-5">
+            <form onSubmit={handleSaveSchedule} className="flex-1 min-h-0 overflow-y-auto custom-scrollbar p-4 sm:p-6 space-y-5 touch-pan-y">
               {/* 1. PILIH CALON SANTRI / PENDAFTAR (WAJIB) */}
               <div className="p-4 bg-primary-50/50 rounded-2xl border border-primary-100 space-y-2.5">
                 <div className="flex items-center justify-between">
@@ -1962,7 +1997,7 @@ export default function JadwalUjianPage() {
               </div>
 
               {/* Modal Actions */}
-              <div className="pt-4 border-t border-stone-100 flex gap-3">
+              <div className="pt-4 border-t border-stone-100 flex gap-3 shrink-0 bg-white">
                 <button
                   type="button"
                   onClick={() => setScheduleModalOpen(false)}
