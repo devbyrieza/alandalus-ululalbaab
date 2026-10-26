@@ -154,20 +154,58 @@ export async function POST(request: NextRequest) {
 
     // 7. Validasi status untuk DAFTAR_ULANG
     if (jenisPembayaran === "DAFTAR_ULANG") {
+      const SELECTION_OR_CADANGAN_STATUSES = [
+        "selection",
+        "scheduled",
+        "testing",
+        "tested",
+        "announced",
+        "cadangan",
+        "docs_verified",
+        "data_completed",
+        "verified",
+        "paid",
+      ];
       const ELIGIBLE_STATUSES = [
         "accepted",
         "enrolled",
+        "enrolled_full",
         "sudah_daftar_ulang",
         "Sudah Daftar Ulang",
       ];
-      const statusOk = ELIGIBLE_STATUSES.includes(
-        pendaftar.status_pendaftaran ?? "",
-      );
-      if (!statusOk) {
+      const currentSt = pendaftar.status_pendaftaran ?? "";
+
+      if (SELECTION_OR_CADANGAN_STATUSES.includes(currentSt)) {
+        // Otomatis promosikan pendaftar ke accepted & terbitkan pengumuman resmi Diterima
+        await prisma.$transaction(async (tx) => {
+          await tx.pendaftar.update({
+            where: { id: pendaftar.id },
+            data: { status_pendaftaran: "accepted", updated_at: new Date() },
+          });
+          await tx.pengumuman.upsert({
+            where: { pendaftar_id: pendaftar.id },
+            update: {
+              status_kelulusan: "Diterima",
+              is_published: true,
+              published_at: new Date(),
+              updated_at: new Date(),
+            },
+            create: {
+              pendaftar_id: pendaftar.id,
+              status_kelulusan: "Diterima",
+              is_published: true,
+              published_at: new Date(),
+              tahun_ajaran_id: pendaftar.tahun_ajaran_id,
+            },
+          });
+        });
+        pendaftar.status_pendaftaran = "accepted";
+      } else if (!ELIGIBLE_STATUSES.includes(currentSt)) {
         return NextResponse.json(
           {
             success: false,
-            error: `Pendaftar ${pendaftar.nama_lengkap} belum dinyatakan DITERIMA, tidak bisa melakukan daftar ulang. Status saat ini: ${pendaftar.status_pendaftaran}` },
+            error: `Pendaftar ${pendaftar.nama_lengkap} belum berstatus Diterima/Daftar Ulang. Status saat ini: ${currentSt}`,
+          },
           { status: 400 },
         );
       }

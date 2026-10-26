@@ -8,7 +8,7 @@ import { exportToExcelProfessional, exportToPDF } from "@/lib/utils/export";
 import Swal from "sweetalert2";
 import { BRANDING } from "@/config/branding";
 
-const StatWidget = ({ label, value, icon: Icon, color, trend, breakdown, highlighted, onDownload, isDownloading, onPromote, isPromoting }: any) => {
+const StatWidget = ({ label, value, icon: Icon, color, trend, breakdown, highlighted, onDownload, isDownloading, onPromote, isPromoting, promoteLabel, promoteColor, actionLink }: any) => {
     const colorMap: any = {
     blue: "from-blue-600 to-blue-800",
     emerald: "from-blue-500 to-blue-600",
@@ -75,11 +75,11 @@ const StatWidget = ({ label, value, icon: Icon, color, trend, breakdown, highlig
         </div>
 
         {onPromote && value > 0 && (
-          <div className="mb-4">
+          <div className="mb-4 space-y-2">
             <button
               onClick={(e) => { e.stopPropagation(); onPromote(); }}
               disabled={isPromoting}
-              className="w-full flex items-center justify-center gap-2 py-2.5 px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl font-black text-xs uppercase tracking-widest transition-all shadow-sm hover:scale-[1.02] active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+              className={`w-full flex items-center justify-center gap-2 py-2.5 px-4 ${promoteColor || "bg-primary-600 hover:bg-primary-700 shadow-primary-600/20"} text-white rounded-xl font-black text-xs uppercase tracking-widest transition-all shadow-lg hover:scale-[1.02] active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed`}
             >
               {isPromoting ? (
                 <>
@@ -89,10 +89,20 @@ const StatWidget = ({ label, value, icon: Icon, color, trend, breakdown, highlig
               ) : (
                 <>
                   <CheckSquare className="w-4 h-4" />
-                  Promosikan Semua → Diterima
+                  {promoteLabel || "Promosikan Semua → Diterima"}
                 </>
               )}
             </button>
+            {actionLink && (
+              <a
+                href={actionLink.href}
+                onClick={(e) => e.stopPropagation()}
+                className="w-full flex items-center justify-center gap-1.5 py-1.5 px-3 bg-primary-50 hover:bg-primary-100 text-primary-700 border border-primary-200/60 rounded-xl font-bold text-[11px] transition-all hover:scale-[1.01]"
+              >
+                <span>{actionLink.label}</span>
+                <ChevronRight className="w-3.5 h-3.5" />
+              </a>
+            )}
           </div>
         )}
 
@@ -123,6 +133,7 @@ export default function AdminDashboardPage() {
   const [stats, setStats] = useState<any>({ total_pendaftar: 0, sudah_bayar: 0, sedang_seleksi: 0, diterima: 0, daftar_ulang: 0, daftar_ulang_sedang: 0, daftar_ulang_selesai: 0, sudah_isi_data: 0, berkas_lengkap: 0, cadangan: 0, ditolak: 0, waiting_payment: 0, waiting_docs: 0, stats_per_jenjang: [] });
   const [downloadingKey, setDownloadingKey] = useState<string | null>(null);
   const [isPromotingCadangan, setIsPromotingCadangan] = useState(false);
+  const [isPromotingSelection, setIsPromotingSelection] = useState(false);
 
   const handleSingleCardExport = async (statusKey: string, cardLabel: string, type: "excel" | "pdf") => {
     try {
@@ -257,7 +268,48 @@ export default function AdminDashboardPage() {
   const isAdminKeuangan = role === "admin_keuangan";
   const isAdminBerkas = role === "admin_berkas";
 
-  const handlePromoteAllCadangan = async () => {
+    const handlePromoteAllSelection = async () => {
+    const count = stats.sedang_seleksi || 0;
+    const result = await Swal.fire({
+      title: "Luluskan Semua Santri Seleksi?",
+      html: `<p>Yakin ingin memindahkan <b>semua ${count} Pendaftar Proses Seleksi</b> ke status <b>Diterima</b>?</p><p class="mt-3 text-sm text-stone-500">Tindakan ini akan menetapkan status Diterima, menerbitkan pengumuman resmi kelulusan, membuka akses pembayaran uang pangkal / daftar ulang di portal santri, dan mengantrekan notifikasi WhatsApp kelulusan.</p>`,
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#059669",
+      cancelButtonColor: "#94a3b8",
+      confirmButtonText: `Ya, Luluskan Semua (${count})!`,
+      cancelButtonText: "Batal",
+      reverseButtons: true,
+    });
+
+    if (!result.isConfirmed) return;
+
+    try {
+      setIsPromotingSelection(true);
+      const response = await fetch("/api/admin/pendaftar/promote-selection", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({}),
+      });
+
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || "Gagal memproses kelulusan");
+
+      Swal.fire({
+        title: "Alhamdulillah, Berhasil!",
+        text: data.message || `${data.updated_count} Pendaftar berhasil diluluskan ke status Diterima.`,
+        icon: "success",
+        confirmButtonColor: "#059669",
+      });
+      fetchStats();
+    } catch (error: any) {
+      Swal.fire("Gagal!", error.message || "Terjadi kesalahan.", "error");
+    } finally {
+      setIsPromotingSelection(false);
+    }
+  };
+
+const handlePromoteAllCadangan = async () => {
     const result = await Swal.fire({
       title: "Promosikan Semua Cadangan",
       html: `<p>Yakin ingin memindahkan <b>semua ${stats.cadangan} Pendaftar Cadangan</b> ke status <b>Diterima</b>?</p><p class="mt-3 text-sm text-stone-500">Tindakan ini akan mengubah status seluruh Pendaftar Cadangan sekaligus dan tidak dapat diurungkan secara massal.</p>`,
@@ -382,7 +434,30 @@ export default function AdminDashboardPage() {
           <StatWidget label="Bayar Pendaftaran" value={stats.sudah_bayar} icon={Wallet} color="emerald" breakdown={getBreakdown("bayar")} highlighted={false} onDownload={(type: "excel" | "pdf") => handleSingleCardExport("sudah_bayar", "Bayar Pendaftaran", type)} isDownloading={downloadingKey?.startsWith("sudah_bayar_") ? downloadingKey.split("_")[2] : null} />
           <StatWidget label="Data Lengkap" value={stats.sudah_isi_data} icon={FileCheck} color="purple" breakdown={getBreakdown("data")} highlighted={false} onDownload={(type: "excel" | "pdf") => handleSingleCardExport("sudah_isi_data", "Data Lengkap", type)} isDownloading={downloadingKey?.startsWith("sudah_isi_data_") ? downloadingKey.split("_")[3] : null} />
           <StatWidget label="Berkas Lengkap" value={stats.berkas_lengkap} icon={ClipboardCheck} color="purple" breakdown={getBreakdown("berkas")} highlighted={false} onDownload={(type: "excel" | "pdf") => handleSingleCardExport("dokumen_terverifikasi", "Berkas Lengkap", type)} isDownloading={downloadingKey?.startsWith("dokumen_terverifikasi_") ? downloadingKey.split("_")[2] : null} />
-          <StatWidget label="Proses Seleksi" value={stats.sedang_seleksi} icon={Loader2} color="blue" breakdown={getBreakdown("seleksi")} highlighted={false} onDownload={(type: "excel" | "pdf") => handleSingleCardExport("selection", "Proses Seleksi", type)} isDownloading={downloadingKey?.startsWith("selection_") ? downloadingKey.split("_")[1] : null} />
+          <StatWidget
+            label="Proses Seleksi"
+            value={stats.sedang_seleksi}
+            icon={Loader2}
+            color="blue"
+            breakdown={getBreakdown("seleksi")}
+            highlighted={false}
+            onDownload={(type: "excel" | "pdf") =>
+              handleSingleCardExport("selection", "Proses Seleksi", type)
+            }
+            isDownloading={
+              downloadingKey?.startsWith("selection_")
+                ? downloadingKey.split("_")[1]
+                : null
+            }
+            onPromote={handlePromoteAllSelection}
+            isPromoting={isPromotingSelection}
+            promoteLabel="Luluskan Semua Seleksi → Diterima"
+            promoteColor="bg-emerald-600 hover:bg-emerald-700 shadow-emerald-600/25"
+            actionLink={{
+              href: "/dashboard/admin/pengumuman?status=sedang_seleksi",
+              label: "Buka Pengumuman & Seleksi",
+            }}
+          />
           <StatWidget label="Diterima" value={stats.diterima} icon={CheckCircle2} color="emerald" breakdown={getBreakdown("lulus")} highlighted={false} onDownload={(type: "excel" | "pdf") => handleSingleCardExport("diterima", "Diterima", type)} isDownloading={downloadingKey?.startsWith("diterima_") ? downloadingKey.split("_")[1] : null} />
           <StatWidget label="Cadangan" value={stats.cadangan} icon={Clock} color="slate" breakdown={getBreakdown("cadangan")} highlighted={false} onDownload={(type: "excel" | "pdf") => handleSingleCardExport("announced", "Cadangan", type)} isDownloading={downloadingKey?.startsWith("announced_") ? downloadingKey.split("_")[1] : null} onPromote={handlePromoteAllCadangan} isPromoting={isPromotingCadangan} />
           <StatWidget label="Ditolak" value={stats.ditolak} icon={Activity} color="rose" breakdown={getBreakdown("ditolak")} highlighted={false} onDownload={(type: "excel" | "pdf") => handleSingleCardExport("pembayaran_ditolak", "Ditolak", type)} isDownloading={downloadingKey?.startsWith("pembayaran_ditolak_") ? downloadingKey.split("_")[2] : null} />

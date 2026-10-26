@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import {
   AlertCircle,
   Send,
@@ -12,7 +13,7 @@ import {
 import { toast } from "react-hot-toast";
 import Swal from "sweetalert2";
 
-export default function PengumumanPage() {
+function PengumumanContent() {
   const [loading, setLoading] = useState(false);
   const [candidates, setCandidates] = useState<any[]>([]);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
@@ -49,7 +50,7 @@ export default function PengumumanPage() {
         // Calculate basic stats from this batch
         const ready = data.data.filter(
           (c: any) =>
-            c.exam_status === "tested" || c.status_pendaftaran === "tested",
+            ["selection", "scheduled", "testing", "tested"].includes(c.status_pendaftaran) || c.exam_status === "tested",
         ).length;
         const accepted = data.data.filter(
           (c: any) => c.status_pendaftaran === "accepted",
@@ -131,6 +132,65 @@ export default function PengumumanPage() {
       setIsPublishing(false);
     }
   };
+  const renderStatusBadge = (c: any, isMobile = false) => {
+    const textSize = isMobile ? "text-[10px]" : "text-xs";
+    if (c.status_pendaftaran === "tested") {
+      if (c.pengumuman) {
+        const sL = c.pengumuman.status_kelulusan;
+        const cls = sL === "Diterima" ? "bg-green-100 text-green-700" : sL === "Cadangan" ? "bg-amber-100 text-amber-700" : "bg-red-100 text-red-700";
+        return (
+          <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full ${cls} ${textSize} font-black uppercase whitespace-nowrap shrink-0`}>
+            DRAFT: {sL}
+          </span>
+        );
+      }
+      return (
+        <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-primary-100 text-primary-700 ${textSize} font-black uppercase whitespace-nowrap shrink-0`}>
+          Menunggu Rapat
+        </span>
+      );
+    }
+    if (["selection", "testing"].includes(c.status_pendaftaran)) {
+      return (
+        <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-blue-100 text-blue-700 ${textSize} font-black uppercase whitespace-nowrap shrink-0`}>
+          Proses Seleksi
+        </span>
+      );
+    }
+    if (c.status_pendaftaran === "scheduled") {
+      return (
+        <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-indigo-100 text-indigo-700 ${textSize} font-black uppercase whitespace-nowrap shrink-0`}>
+          Terjadwal Ujian
+        </span>
+      );
+    }
+    if (c.status_pendaftaran === "accepted") {
+      return (
+        <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-green-100 text-green-700 ${textSize} font-black uppercase whitespace-nowrap shrink-0`}>
+          <CheckCircle2 className="w-3 h-3" /> Lulus
+        </span>
+      );
+    }
+    if (c.status_pendaftaran === "cadangan" || c.status_pendaftaran === "announced") {
+      return (
+        <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-amber-100 text-amber-700 ${textSize} font-black uppercase whitespace-nowrap shrink-0`}>
+          Cadangan
+        </span>
+      );
+    }
+    if (c.status_pendaftaran === "rejected") {
+      return (
+        <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-red-100 text-red-700 ${textSize} font-black uppercase whitespace-nowrap shrink-0`}>
+          Ditolak
+        </span>
+      );
+    }
+    return (
+      <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-stone-100 text-stone-600 ${textSize} font-black uppercase whitespace-nowrap shrink-0`}>
+        {c.status_pendaftaran}
+      </span>
+    );
+  };
 
   return (
     <div className="space-y-6">
@@ -142,7 +202,7 @@ export default function PengumumanPage() {
         </div>
         <div className="bg-primary-50 p-6 rounded-xl shadow-xl border border-primary-100">
           <p className="text-primary-600 text-sm font-medium">
-            Proses Seleksi (Belum Selesai)
+            Proses Seleksi (Siap Diluluskan)
           </p>
           <h3 className="text-2xl font-bold text-primary-700">{stats.ready}</h3>
         </div>
@@ -161,28 +221,16 @@ export default function PengumumanPage() {
             <Filter className="w-4 h-4 text-stone-500" />
             <select
               className="bg-transparent text-sm focus:outline-none"
-              value={filter.jenjang}
-              onChange={(e) =>
-                setFilter({ ...filter, jenjang: e.target.value })
-              }
-            >
-              <option value="">Semua Jenjang</option>
-              <option value="MTs">MTs</option>
-              <option value="IL">IL</option>
-              <option value="SMA">SMA</option>
-            </select>
-          </div>
-
-          <div className="flex items-center gap-2 px-3 py-2 bg-stone-50 rounded-xl border border-stone-200">
-            <Search className="w-4 h-4 text-stone-500" />
-            <select
-              className="bg-transparent text-sm focus:outline-none"
               value={filter.status}
               onChange={(e) => setFilter({ ...filter, status: e.target.value })}
             >
-              <option value="tested">Proses Seleksi (sudah ujian)</option>
-              <option value="accepted">Sudah Lulus/Diumumkan</option>
+              <option value="sedang_seleksi">Semua Proses Seleksi (Siap Diluluskan)</option>
+              <option value="tested">Sudah Selesai Ujian (Tested)</option>
               <option value="scheduled">Terjadwal Ujian</option>
+              <option value="accepted">Sudah Lulus / Diterima</option>
+              <option value="cadangan">Cadangan</option>
+              <option value="rejected">Ditolak</option>
+              <option value="all">Semua Status</option>
             </select>
           </div>
         </div>
@@ -313,36 +361,7 @@ export default function PengumumanPage() {
                         </span>
                       </div>
                       <div>
-                        {(() => {
-                          if (c.status_pendaftaran === "tested") {
-                            if (c.pengumuman) {
-                              const sL = c.pengumuman.status_kelulusan;
-                              const cls = sL === "Diterima" ? "bg-green-100 text-green-700" : sL === "Cadangan" ? "bg-amber-100 text-amber-700" : "bg-red-100 text-red-700";
-                              return (
-                                <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full ${cls} text-[10px] font-black uppercase whitespace-nowrap shrink-0`}>
-                                  DRAFT: {sL}
-                                </span>
-                              );
-                            }
-                            return (
-                              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-primary-100 text-primary-700 text-[10px] font-black uppercase whitespace-nowrap shrink-0">
-                                Menunggu Rapat
-                              </span>
-                            );
-                          }
-                          if (c.status_pendaftaran === "accepted") {
-                            return (
-                              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-green-100 text-green-700 text-[10px] font-black uppercase whitespace-nowrap shrink-0">
-                                <CheckCircle2 className="w-3 h-3" /> Lulus
-                              </span>
-                            );
-                          }
-                          return (
-                            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-stone-100 text-stone-600 text-[10px] font-black uppercase whitespace-nowrap shrink-0">
-                              {c.status_pendaftaran}
-                            </span>
-                          );
-                        })()}
+                        {renderStatusBadge(c, true)}
                       </div>
                     </div>
                   </div>
@@ -480,36 +499,7 @@ export default function PengumumanPage() {
                         </div>
                       </td>
                       <td className="px-6 py-4 text-center">
-                        {(() => {
-                          if (c.status_pendaftaran === "tested") {
-                            if (c.pengumuman) {
-                              const sL = c.pengumuman.status_kelulusan;
-                              const cls = sL === "Diterima" ? "bg-green-100 text-green-700" : sL === "Cadangan" ? "bg-amber-100 text-amber-700" : "bg-red-100 text-red-700";
-                              return (
-                                <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full ${cls} text-xs font-bold whitespace-nowrap shrink-0`}>
-                                  DRAFT: {sL}
-                                </span>
-                              );
-                            }
-                            return (
-                              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-primary-100 text-primary-700 text-xs font-bold whitespace-nowrap shrink-0">
-                                Menunggu Rapat
-                              </span>
-                            );
-                          }
-                          if (c.status_pendaftaran === "accepted") {
-                            return (
-                              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-green-100 text-green-700 text-xs font-bold">
-                                <CheckCircle2 className="w-3 h-3" /> Lulus
-                              </span>
-                            );
-                          }
-                          return (
-                            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-stone-100 text-stone-700 text-xs font-bold whitespace-nowrap shrink-0">
-                              {c.status_pendaftaran}
-                            </span>
-                          );
-                        })()}
+                        {renderStatusBadge(c, true)}
                       </td>
                     </tr>
                   );
@@ -520,5 +510,20 @@ export default function PengumumanPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+
+export default function PengumumanPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex items-center justify-center min-h-[400px]">
+          <Loader2 className="w-8 h-8 animate-spin text-primary-600" />
+        </div>
+      }
+    >
+      <PengumumanContent />
+    </Suspense>
   );
 }
