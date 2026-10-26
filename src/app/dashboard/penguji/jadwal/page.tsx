@@ -957,35 +957,28 @@ export default function JadwalPengujiPage() {
       allowOutsideClick: false,
       didOpen: () => Swal.showLoading() });
 
-    let successCount = 0;
-    let errorCount = 0;
-
-    for (const slot of emptySlots) {
-      try {
-        const res = await fetch(`/api/exam-sessions?id=${slot.id}`, {
-          method: "DELETE" });
-        if (res.ok) successCount++;
-        else errorCount++;
-      } catch {
-        errorCount++;
+    try {
+      const res = await fetch("/api/exam-sessions/bulk-delete", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ slot_ids: emptySlots.map((s) => s.id) }),
+      });
+      const data = await res.json();
+      exitSelectMode();
+      await fetchSlots();
+      if (res.ok) {
+        Swal.fire(
+          "Terhapus!",
+          data.message || `${emptySlots.length} sesi berhasil dihapus.`,
+          "success",
+        );
+      } else {
+        Swal.fire("Gagal", data.error || "Gagal menghapus sesi", "error");
       }
-    }
-
-    exitSelectMode();
-    fetchSlots();
-
-    if (errorCount === 0) {
-      Swal.fire(
-        "Terhapus!",
-        `${successCount} sesi berhasil dihapus.`,
-        "success",
-      );
-    } else {
-      Swal.fire(
-        "Selesai",
-        `${successCount} berhasil dihapus, ${errorCount} gagal.`,
-        "warning",
-      );
+    } catch {
+      exitSelectMode();
+      await fetchSlots();
+      Swal.fire("Gagal", "Terjadi kesalahan koneksi ke server", "error");
     }
   };
 
@@ -1016,19 +1009,23 @@ export default function JadwalPengujiPage() {
       allowOutsideClick: false,
       didOpen: () => Swal.showLoading() });
 
-    let successCount = 0;
-    for (const id of ids) {
-      try {
-        const response = await fetch(`/api/exam-sessions?id=${id}`, {
-          method: "DELETE" });
-        if (response.ok) successCount++;
-      } catch (error: any) {}
-    }
-
-    Swal.close();
-    if (successCount > 0) {
-      setMessage({ type: "success", text: `${successCount} sesi berhasil dihapus` });
-      fetchSlots();
+    try {
+      const response = await fetch("/api/exam-sessions/bulk-delete", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ slot_ids: ids }),
+      });
+      const data = await response.json();
+      Swal.close();
+      if (response.ok) {
+        setMessage({ type: "success", text: data.message || `${ids.length} sesi berhasil dihapus` });
+        fetchSlots();
+      } else {
+        Swal.fire("Gagal", data.error || "Gagal menghapus sesi", "error");
+      }
+    } catch {
+      Swal.close();
+      Swal.fire("Gagal", "Terjadi kesalahan koneksi ke server", "error");
     }
   };
 
