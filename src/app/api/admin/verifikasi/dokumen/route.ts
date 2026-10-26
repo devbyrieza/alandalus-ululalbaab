@@ -36,12 +36,19 @@ export async function GET(request: NextRequest) {
     const searchParams = request.nextUrl.searchParams;
     const statusParam = searchParams.get("status") || "pending";
     const pendaftarId = searchParams.get("pendaftar_id");
+    const tahunAjaranParam =
+      searchParams.get("tahun_ajaran_id") ||
+      searchParams.get("tahun_ajaran") ||
+      "";
 
-    // Build filter
-    const { getAdminWhereClause } = await import("@/lib/utils/admin");
+    // Build filter (tahun ajaran disaring lewat relasi pendaftar — tabel dokumen tanpa FK tahun)
+    const { getAdminWhereClause, resolveTahunAjaranId } = await import(
+      "@/lib/utils/admin"
+    );
+    const taId = await resolveTahunAjaranId(tahunAjaranParam);
     const where: any = {
       pendaftar: {
-        is: await getAdminWhereClause() } };
+        is: await getAdminWhereClause(taId ?? undefined) } };
     
     if (pendaftarId) {
       where.pendaftar_id = pendaftarId;

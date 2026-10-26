@@ -7,7 +7,7 @@ import {
   buildMessagePaymentRejected } from "@/lib/whatsapp-queue";
 import { getServerSession } from "@/lib/session";
 import { logAdminAction } from "@/lib/audit";
-import { getAdminWhereClause, resolveTahunAjaran } from "@/lib/utils/admin";
+import { getAdminWhereClause, resolveTahunAjaran, resolveTahunAjaranId } from "@/lib/utils/admin";
 import { createHmac } from "crypto";
 
 // GET: List pembayaran yang perlu diverifikasi
@@ -33,13 +33,20 @@ export async function GET(request: NextRequest) {
     const searchParams = request.nextUrl.searchParams;
     const status = searchParams.get("status") || "pending";
     const jenis = searchParams.get("jenis"); // PENDAFTARAN, DAFTAR_ULANG, or SPP
-    const tahunAjaran = searchParams.get("tahun_ajaran") || "2027/2028";
+    const tahunAjaranParam =
+      searchParams.get("tahun_ajaran_id") ||
+      searchParams.get("tahun_ajaran") ||
+      "";
+
+    // Resolve tahun ajaran -> UUID (null = semua tahun)
+    const taId = await resolveTahunAjaranId(tahunAjaranParam);
+    const adminClause = await getAdminWhereClause(taId ?? undefined);
 
     // Build filter
     const where: any = {
       // Use global admin filter to exclude tests and soft-deleted records
       pendaftar: {
-        is: await getAdminWhereClause() } };
+        is: adminClause } };
     if (status === "all") {
       // No additional filter
     } else if (status === "pending") {
@@ -88,17 +95,8 @@ export async function GET(request: NextRequest) {
               select: { id: true, jenis_pembayaran: true } } } } },
       orderBy: { created_at: "desc" } });
 
-    // Filter by Tahun Ajaran
-    const filteredData = (tahunAjaran === "ALL" || tahunAjaran === "all")
-      ? data
-      : data.filter((p) => {
-          if (!p.pendaftar) return false;
-          const ta = resolveTahunAjaran(p.pendaftar);
-          return ta === tahunAjaran;
-        });
-
     // Generate URLs (Mock for now as we removed Supabase Storage)
-    const dataWithUrls = filteredData.map((pembayaran) => {
+    const dataWithUrls = data.map((pembayaran) => {
       let bukti_transfer_url: string | null = null;
       if (pembayaran.bukti_transfer_path) {
         bukti_transfer_url = `/api/files/${pembayaran.bukti_transfer_path}`;
@@ -132,12 +130,11 @@ export async function GET(request: NextRequest) {
     });
 
     // Fetch counts for pending status explicitly filtered by selected Tahun Ajaran
-    const baseWhere = await getAdminWhereClause() as any;
     
     const pendingList = await prisma.pembayaran.findMany({
       where: {
         status_pembayaran: { notIn: ["verified", "rejected"] },
-        pendaftar: baseWhere,
+        pendaftar: adminClause,
       },
       select: {
         jenis_pembayaran: true,
@@ -151,17 +148,10 @@ export async function GET(request: NextRequest) {
       },
     });
 
-    const filteredPending = (tahunAjaran === "ALL" || tahunAjaran === "all")
-      ? pendingList
-      : pendingList.filter((pay) => {
-          if (!pay.pendaftar) return false;
-          return resolveTahunAjaran(pay.pendaftar) === tahunAjaran;
-        });
-
     const counts = {
-      PENDAFTARAN: filteredPending.filter((p) => p.jenis_pembayaran === "PENDAFTARAN").length,
-      DAFTAR_ULANG: filteredPending.filter((p) => p.jenis_pembayaran === "DAFTAR_ULANG").length,
-      SPP: filteredPending.filter((p) => (p.jenis_pembayaran as any) === "SPP").length,
+      PENDAFTARAN: pendingList.filter((p) => p.jenis_pembayaran === "PENDAFTARAN").length,
+      DAFTAR_ULANG: pendingList.filter((p) => p.jenis_pembayaran === "DAFTAR_ULANG").length,
+      SPP: pendingList.filter((p) => (p.jenis_pembayaran as any) === "SPP").length,
     };
 
     return NextResponse.json({ data: dataWithUrls, counts });

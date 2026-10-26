@@ -60,7 +60,10 @@ function VerifikasiPembayaranContent() {
   const [pembayaran, setPembayaran] = useState<Pembayaran[]>([]);
   const [loading, setLoading] = useState(true);
   const [statusFilter, setStatusFilter] = useState(urlStatus);
-  const [filterTahunAjaran, setFilterTahunAjaran] = useState<string>("2027/2028");
+  const [filterTahunAjaran, setFilterTahunAjaran] = useState<string>("");
+  const [tahunAjaranList, setTahunAjaranList] = useState<
+    { id: string; nama: string; is_active: boolean }[]
+  >([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedPembayaran, setSelectedPembayaran] =
     useState<Pembayaran | null>(null);
@@ -135,15 +138,34 @@ function VerifikasiPembayaranContent() {
     document.body.classList.remove('swal2-shown', 'swal2-height-auto');
     document.body.style.paddingRight = '';
 
+    if (!filterTahunAjaran) return;
     fetchPembayaran();
   }, [statusFilter, activeTab, filterTahunAjaran]);
+
+  useEffect(() => {
+    const fetchTahunAjaran = async () => {
+      try {
+        const res = await fetch("/api/admin/tahun-ajaran");
+        if (!res.ok) throw new Error("Failed to fetch tahun ajaran");
+        const json = await res.json();
+        const list = json.data || [];
+        setTahunAjaranList(list);
+        const active = list.find((t: any) => t.is_active) || list[0];
+        setFilterTahunAjaran(active?.id || "ALL");
+      } catch (e) {
+        console.error("Failed to fetch tahun ajaran", e);
+        setFilterTahunAjaran("ALL");
+      }
+    };
+    fetchTahunAjaran();
+  }, []);
 
   const fetchPembayaran = async (silent = false) => {
     try {
       if (!silent) setLoading(true);
       else setIsRefreshing(true);
       const response = await fetch(
-        `/api/admin/verifikasi/pembayaran?status=${statusFilter}&jenis=${activeTab}&tahun_ajaran=${filterTahunAjaran}`,
+        `/api/admin/verifikasi/pembayaran?status=${statusFilter}&jenis=${activeTab}&tahun_ajaran_id=${filterTahunAjaran}`,
       );
       if (!response.ok) throw new Error("Failed to fetch");
 
@@ -175,7 +197,7 @@ function VerifikasiPembayaranContent() {
     try {
       setExporting(true);
       const response = await fetch(
-        `/api/admin/verifikasi/pembayaran?status=all&jenis=${activeTab}&tahun_ajaran=${filterTahunAjaran}`,
+        `/api/admin/verifikasi/pembayaran?status=all&jenis=${activeTab}&tahun_ajaran_id=${filterTahunAjaran}`,
       );
       if (!response.ok) throw new Error("Failed to export");
 
@@ -604,8 +626,12 @@ function VerifikasiPembayaranContent() {
             onChange={(e) => setFilterTahunAjaran(e.target.value)}
             className="px-3 py-1.5 rounded-2xl text-xs font-black uppercase tracking-wider bg-stone-50 border border-stone-200 text-stone-700 outline-none hover:bg-stone-100 cursor-pointer shadow-sm transition-all"
           >
-            <option value="2027/2028">TA 2027/2028 (Aktif)</option>
-            <option value="2026/2027">TA 2026/2027</option>
+            {tahunAjaranList.map((ta) => (
+              <option key={ta.id} value={ta.id}>
+                TA {ta.nama}
+                {ta.is_active ? " (Aktif)" : ""}
+              </option>
+            ))}
             <option value="ALL">Semua TA</option>
           </select>
         </div>

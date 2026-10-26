@@ -50,6 +50,10 @@ function VerifikasiDokumenContent() {
   const [refreshing, setRefreshing] = useState(false);
   const [statusFilter, setStatusFilter] = useState(urlStatus);
   const [searchTerm, setSearchTerm] = useState(urlSearch);
+  const [filterTahunAjaran, setFilterTahunAjaran] = useState<string>("");
+  const [tahunAjaranList, setTahunAjaranList] = useState<
+    { id: string; nama: string; is_active: boolean }[]
+  >([]);
   const [exporting, setExporting] = useState(false);
   const [userRole, setUserRole] = useState<string | null>(null);
   const [showSearchModal, setShowSearchModal] = useState(false);
@@ -91,6 +95,24 @@ function VerifikasiDokumenContent() {
     router.push(`?${params.toString()}`);
   };
 
+  useEffect(() => {
+    const fetchTahunAjaran = async () => {
+      try {
+        const res = await fetch("/api/admin/tahun-ajaran");
+        if (!res.ok) throw new Error("Failed to fetch tahun ajaran");
+        const json = await res.json();
+        const list = json.data || [];
+        setTahunAjaranList(list);
+        const active = list.find((t: any) => t.is_active) || list[0];
+        setFilterTahunAjaran(active?.id || "ALL");
+      } catch (e) {
+        console.error("Failed to fetch tahun ajaran", e);
+        setFilterTahunAjaran("ALL");
+      }
+    };
+    fetchTahunAjaran();
+  }, []);
+
   const fetchData = useCallback(async () => {
     try {
       if (pendaftarList.length === 0) {
@@ -99,7 +121,7 @@ function VerifikasiDokumenContent() {
         setRefreshing(true);
       }
       const response = await fetch(
-        `/api/admin/verifikasi/dokumen?status=${statusFilter}`,
+        `/api/admin/verifikasi/dokumen?status=${statusFilter}${filterTahunAjaran ? `&tahun_ajaran_id=${filterTahunAjaran}` : ""}`,
       );
       if (!response.ok) throw new Error("Failed to fetch");
 
@@ -134,7 +156,7 @@ function VerifikasiDokumenContent() {
       setLoading(false);
       setRefreshing(false);
     }
-  }, [statusFilter, pendaftarList.length]);
+  }, [statusFilter, filterTahunAjaran, pendaftarList.length]);
 
   useEffect(() => {
     // FORCE CLEANUP: SweetAlert overlay bug fix
@@ -143,14 +165,17 @@ function VerifikasiDokumenContent() {
     swalContainers.forEach(el => el.remove());
     document.body.classList.remove('swal2-shown', 'swal2-height-auto');
     document.body.style.paddingRight = '';
-    
+
+    if (!filterTahunAjaran) return;
     fetchData();
-  }, [fetchData]);
+  }, [fetchData, filterTahunAjaran]);
 
   const handleExport = async (type: "excel" | "pdf") => {
     try {
       setExporting(true);
-      const response = await fetch(`/api/admin/verifikasi/dokumen?status=all`);
+      const response = await fetch(
+        `/api/admin/verifikasi/dokumen?status=all${filterTahunAjaran ? `&tahun_ajaran_id=${filterTahunAjaran}` : ""}`,
+      );
       if (!response.ok) throw new Error("Failed to export");
 
       const result = await response.json();
@@ -302,6 +327,24 @@ function VerifikasiDokumenContent() {
               }}
               className="w-full pl-12 pr-4 py-4 bg-primary-50/50 border border-primary-100 rounded-2xl focus:border-primary-500 focus:bg-white focus:outline-none transition-all text-sm md:text-base font-bold text-primary-950 placeholder:text-ink-300"
             />
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-xs font-black text-ink-400 uppercase tracking-wider">
+              TA:
+            </span>
+            <select
+              value={filterTahunAjaran}
+              onChange={(e) => setFilterTahunAjaran(e.target.value)}
+              className="px-3 py-1.5 rounded-2xl text-xs font-black uppercase tracking-wider bg-primary-50/50 border border-primary-100 text-primary-950 outline-none hover:bg-primary-50 cursor-pointer shadow-sm transition-all"
+            >
+              {tahunAjaranList.map((ta) => (
+                <option key={ta.id} value={ta.id}>
+                  TA {ta.nama}
+                  {ta.is_active ? " (Aktif)" : ""}
+                </option>
+              ))}
+              <option value="ALL">Semua TA</option>
+            </select>
           </div>
           <div className="flex flex-wrap gap-2">
             {[
