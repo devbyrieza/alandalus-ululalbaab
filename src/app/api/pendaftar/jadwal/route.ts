@@ -37,8 +37,9 @@ async function getSession() {
 }
 
 // GET: Fetch existing schedule for pendaftar
-// JADWAL H+1 — Pendaftar hanya dapat memilih jadwal mulai BESOK.
-// Jadwal untuk HARI INI tidak dapat dipilih.
+// JADWAL H+1 s/d H+14 (Maksimal 2 Pekan):
+// 1. Pendaftar hanya dapat memilih jadwal mulai BESOK (H+1). Jadwal hari ini tidak dapat dipilih.
+// 2. Pendaftar hanya dapat memilih jadwal maksimal 14 hari (2 pekan) ke depan.
 function getEarliestSelectableDate(): Date {
   const WIB_OFFSET_MS = 7 * 60 * 60 * 1000;
   const nowWIB = new Date(Date.now() + WIB_OFFSET_MS);
@@ -47,6 +48,20 @@ function getEarliestSelectableDate(): Date {
       nowWIB.getUTCFullYear(),
       nowWIB.getUTCMonth(),
       nowWIB.getUTCDate() + 1,
+      0, 0, 0, 0
+    ) - WIB_OFFSET_MS,
+  );
+}
+
+function getLatestSelectableDate(): Date {
+  const WIB_OFFSET_MS = 7 * 60 * 60 * 1000;
+  const nowWIB = new Date(Date.now() + WIB_OFFSET_MS);
+  return new Date(
+    Date.UTC(
+      nowWIB.getUTCFullYear(),
+      nowWIB.getUTCMonth(),
+      nowWIB.getUTCDate() + 14,
+      23, 59, 59, 999
     ) - WIB_OFFSET_MS,
   );
 }
@@ -120,10 +135,19 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Kuota penuh" }, { status: 400 });
     }
 
-    // JADWAL H+1 — jadwal hari ini tidak dapat dipilih, paling awal BESOK.
+    // JADWAL H+1 s/d H+14 (Maksimal 2 Pekan):
+    // 1. Paling awal: Mulai besok (H+1). Jadwal hari ini tidak dapat dipilih.
     if (new Date(examSession.start_time).getTime() < getEarliestSelectableDate().getTime()) {
       return NextResponse.json(
         { error: "Jadwal untuk hari ini tidak dapat dipilih. Silakan pilih jadwal mulai besok (H+1)." },
+        { status: 400 },
+      );
+    }
+
+    // 2. Paling akhir: Maksimal 14 hari (2 pekan) ke depan.
+    if (new Date(examSession.start_time).getTime() > getLatestSelectableDate().getTime()) {
+      return NextResponse.json(
+        { error: "Jadwal yang dipilih melebihi batas 14 hari (2 pekan) ke depan." },
         { status: 400 },
       );
     }

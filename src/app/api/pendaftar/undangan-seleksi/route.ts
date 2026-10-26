@@ -73,8 +73,9 @@ async function getSession() {
   }
 }
 
-// JADWAL H+1 — Pendaftar hanya dapat memilih jadwal mulai BESOK.
-// Jadwal untuk HARI INI tidak dapat dipilih.
+// JADWAL H+1 s/d H+14 (Maksimal 2 Pekan):
+// 1. Pendaftar hanya dapat memilih jadwal mulai BESOK (H+1). Jadwal hari ini tidak dapat dipilih.
+// 2. Pendaftar hanya dapat memilih jadwal maksimal 14 hari (2 pekan) ke depan.
 function getEarliestSelectableDate(): Date {
   const WIB_OFFSET_MS = 7 * 60 * 60 * 1000;
   const nowWIB = new Date(Date.now() + WIB_OFFSET_MS);
@@ -83,6 +84,20 @@ function getEarliestSelectableDate(): Date {
       nowWIB.getUTCFullYear(),
       nowWIB.getUTCMonth(),
       nowWIB.getUTCDate() + 1,
+      0, 0, 0, 0
+    ) - WIB_OFFSET_MS,
+  );
+}
+
+function getLatestSelectableDate(): Date {
+  const WIB_OFFSET_MS = 7 * 60 * 60 * 1000;
+  const nowWIB = new Date(Date.now() + WIB_OFFSET_MS);
+  return new Date(
+    Date.UTC(
+      nowWIB.getUTCFullYear(),
+      nowWIB.getUTCMonth(),
+      nowWIB.getUTCDate() + 14,
+      23, 59, 59, 999
     ) - WIB_OFFSET_MS,
   );
 }
@@ -198,11 +213,15 @@ export async function GET(request: Request) {
         label: "Identifikasi Kepribadian" },
       kesiapan: { completed: hasKesiapan, label: "Seleksi Kesiapan" } };
 
-    // 3. Fetch Grup B — Available exam sessions (future, active)
+    // 3. Fetch Grup B — Available exam sessions (future, active within H+1 to H+14 window)
     const availableSessions = await prisma.examSession.findMany({
       where: {
         is_active: true,
-        start_time: { gte: getEarliestSelectableDate() } },
+        start_time: {
+          gte: getEarliestSelectableDate(),
+          lte: getLatestSelectableDate(),
+        },
+      },
       include: {
         _count: { select: { bookings: true } } },
       orderBy: { start_time: "asc" } });

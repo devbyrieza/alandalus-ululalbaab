@@ -10,6 +10,35 @@ import { prisma } from "@/lib/prisma";
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
+// JADWAL H+1 s/d H+14 (Maksimal 2 Pekan):
+// 1. Pendaftar hanya dapat memilih jadwal mulai BESOK (H+1). Jadwal hari ini tidak dapat dipilih.
+// 2. Pendaftar hanya dapat memilih jadwal maksimal 14 hari (2 pekan) ke depan.
+function getEarliestSelectableDate(): Date {
+  const WIB_OFFSET_MS = 7 * 60 * 60 * 1000;
+  const nowWIB = new Date(Date.now() + WIB_OFFSET_MS);
+  return new Date(
+    Date.UTC(
+      nowWIB.getUTCFullYear(),
+      nowWIB.getUTCMonth(),
+      nowWIB.getUTCDate() + 1,
+      0, 0, 0, 0
+    ) - WIB_OFFSET_MS,
+  );
+}
+
+function getLatestSelectableDate(): Date {
+  const WIB_OFFSET_MS = 7 * 60 * 60 * 1000;
+  const nowWIB = new Date(Date.now() + WIB_OFFSET_MS);
+  return new Date(
+    Date.UTC(
+      nowWIB.getUTCFullYear(),
+      nowWIB.getUTCMonth(),
+      nowWIB.getUTCDate() + 14,
+      23, 59, 59, 999
+    ) - WIB_OFFSET_MS,
+  );
+}
+
 export async function GET(request: NextRequest) {
   try {
     // Auth Check
@@ -89,9 +118,15 @@ export async function GET(request: NextRequest) {
       currentStatus = "verified";
     }
 
-    // Check if slots are available and pendaftar hasn't booked yet
+    // Check if slots are available and pendaftar hasn't booked yet (within H+1 to H+14 window)
     const rawSessions = await prisma.examSession.findMany({
-      where: { is_active: true, start_time: { gte: new Date() } },
+      where: {
+        is_active: true,
+        start_time: {
+          gte: getEarliestSelectableDate(),
+          lte: getLatestSelectableDate(),
+        },
+      },
       include: { 
         creator: { select: { jenis_kelamin: true } },
         _count: { select: { bookings: true } } 

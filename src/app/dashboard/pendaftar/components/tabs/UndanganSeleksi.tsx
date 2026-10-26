@@ -25,8 +25,9 @@ import Swal from "sweetalert2";
 import { expandExamTitle } from "@/lib/utils";
 import Link from "next/link";
 
-// JADWAL H+1 — Pendaftar hanya dapat memilih jadwal mulai BESOK.
-// Jadwal untuk HARI INI tidak dapat dipilih.
+// JADWAL H+1 s/d H+14 (Maksimal 2 Pekan):
+// 1. Pendaftar hanya dapat memilih jadwal mulai BESOK (H+1). Jadwal hari ini tidak dapat dipilih.
+// 2. Pendaftar hanya dapat memilih jadwal maksimal 14 hari (2 pekan) ke depan.
 function getEarliestSelectableDate(): Date {
   const WIB_OFFSET_MS = 7 * 60 * 60 * 1000;
   const nowWIB = new Date(Date.now() + WIB_OFFSET_MS);
@@ -35,6 +36,20 @@ function getEarliestSelectableDate(): Date {
       nowWIB.getUTCFullYear(),
       nowWIB.getUTCMonth(),
       nowWIB.getUTCDate() + 1,
+      0, 0, 0, 0
+    ) - WIB_OFFSET_MS,
+  );
+}
+
+function getLatestSelectableDate(): Date {
+  const WIB_OFFSET_MS = 7 * 60 * 60 * 1000;
+  const nowWIB = new Date(Date.now() + WIB_OFFSET_MS);
+  return new Date(
+    Date.UTC(
+      nowWIB.getUTCFullYear(),
+      nowWIB.getUTCMonth(),
+      nowWIB.getUTCDate() + 14,
+      23, 59, 59, 999
     ) - WIB_OFFSET_MS,
   );
 }
@@ -250,16 +265,20 @@ export default function UndanganSeleksiTab() {
     setSelectedDate("ALL");
   };
 
-  // Active category free slots
+  // Active category free slots (H+1 s/d H+14)
   const activeCategoryFreeSlots = useMemo(() => {
     if (!data?.grupB?.availableSlots) return [];
     const earliest = getEarliestSelectableDate().getTime();
-    return data.grupB.availableSlots.filter(
-      (slot) =>
+    const latest = getLatestSelectableDate().getTime();
+    return data.grupB.availableSlots.filter((slot) => {
+      const slotTime = new Date(slot.start_time).getTime();
+      return (
         slot.category === activeCategory &&
         !slot.isFull &&
-        new Date(slot.start_time).getTime() >= earliest
-    );
+        slotTime >= earliest &&
+        slotTime <= latest
+      );
+    });
   }, [data, activeCategory]);
 
   // Unique dates for active category
@@ -707,9 +726,15 @@ export default function UndanganSeleksiTab() {
               {availableCategories.map((cat) => {
                 const isBooked = data.grupB.booked.some((b) => b.category === cat.key);
                 const isCurrent = activeCategory === cat.key;
-                const slotCount = data.grupB.availableSlots.filter(
-                  (s) => s.category === cat.key && !s.isFull,
-                ).length;
+                const slotCount = data.grupB.availableSlots.filter((s) => {
+                  const st = new Date(s.start_time).getTime();
+                  return (
+                    s.category === cat.key &&
+                    !s.isFull &&
+                    st >= getEarliestSelectableDate().getTime() &&
+                    st <= getLatestSelectableDate().getTime()
+                  );
+                }).length;
                 const CatIcon = cat.icon;
 
                 return (
@@ -844,7 +869,7 @@ export default function UndanganSeleksiTab() {
                 <div className="flex items-start gap-2 text-[11px] text-amber-700 bg-amber-50 border border-amber-200 rounded-xl px-3 py-2 font-medium">
                   <Info className="w-3.5 h-3.5 shrink-0 mt-0.5" />
                   <span>
-                    Pemesanan jadwal paling awal adalah untuk <strong>besok (H+1)</strong>. Jadwal hari ini tidak dapat dipilih.
+                    Pemesanan jadwal paling awal adalah untuk <strong>besok (H+1)</strong> dan maksimal <strong>14 hari (2 pekan) ke depan</strong>. Jadwal hari ini tidak dapat dipilih.
                   </span>
                 </div>
 
