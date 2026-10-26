@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, Suspense } from "react";
+import { useState, useEffect, useMemo, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import {
   AlertCircle,
@@ -20,6 +20,14 @@ function PengumumanContent() {
   const [candidates, setCandidates] = useState<any[]>([]);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [stats, setStats] = useState({ total: 0, ready: 0, accepted: 0 });
+
+  const sortedCandidates = useMemo(() => {
+    return [...candidates].sort((a, b) => {
+      const nA = a.nilai_ujian?.nilai_total ?? -1;
+      const nB = b.nilai_ujian?.nilai_total ?? -1;
+      return nB - nA;
+    });
+  }, [candidates]);
   const [filter, setFilter] = useState({
     jenjang: "",
     status: "tested", // Default to those who have completed ALL 6 exams
@@ -191,11 +199,6 @@ const handlePublish = async (new_status: "accepted" | "cadangan" | "rejected") =
       setIsPublishing(false);
     }
   };
-  const sortedCandidates = [...candidates].sort((a, b) => {
-    const nA = a.nilai_ujian?.nilai_total ?? -1;
-    const nB = b.nilai_ujian?.nilai_total ?? -1;
-    return nB - nA;
-  });
 
   const renderStatusBadge = (c: any, isMobile = false) => {
     const textSize = isMobile ? "text-[10px]" : "text-xs";
