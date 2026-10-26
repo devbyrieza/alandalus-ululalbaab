@@ -83,6 +83,29 @@ export async function GET(request: NextRequest) {
             tahun_ajaran: {
               select: { id: true, nama: true },
             },
+            nilai_ujian: {
+              select: {
+                nilai_tes_quran: true,
+                score_quran: true,
+                catatan_quran: true,
+                input_at_quran: true,
+                detail_quran: true,
+                nilai_wawancara_santri: true,
+                input_at_santri: true,
+                detail_wawancara: true,
+                nilai_wawancara_ortu: true,
+                input_at_ortu: true,
+                detail_cawalsan: true,
+                nilai_hafalan_total: true,
+                score_hafalan: true,
+                input_at_hafalan: true,
+                detail_hafalan: true,
+                nilai_arab_total: true,
+                score_arab: true,
+                input_at_arab: true,
+                detail_lisan_arab: true,
+              },
+            },
           },
         },
         exam_session: {
@@ -149,17 +172,35 @@ export async function GET(request: NextRequest) {
     });
 
     const formatted = schedules.map((s) => {
-      const hasScoreQuran = s.nilai_ujian.some((n) => {
+      const allNilai = [
+        ...(s.nilai_ujian || []),
+        ...((s.pendaftar as any)?.nilai_ujian || []),
+      ];
+
+      const hasScoreQuran = allNilai.some((n: any) => {
         const q = n.detail_quran as any;
-        return !!(q && typeof q === "object" && (q.rekomendasi || q.nama_penguji));
+        return (
+          n.score_quran != null ||
+          n.nilai_tes_quran != null ||
+          n.input_at_quran != null ||
+          !!(q && typeof q === "object" && (q.rekomendasi || q.nama_penguji || Object.keys(q).length > 0))
+        );
       });
-      const hasScoreSantri = s.nilai_ujian.some((n) => {
+      const hasScoreSantri = allNilai.some((n: any) => {
         const w = n.detail_wawancara as any;
-        return !!(w && typeof w === "object" && (w.rekomendasi || w.nama_penguji));
+        return (
+          n.nilai_wawancara_santri != null ||
+          n.input_at_santri != null ||
+          !!(w && typeof w === "object" && (w.rekomendasi || w.nama_penguji || Object.keys(w).length > 0))
+        );
       });
-      const hasScoreOrtu = s.nilai_ujian.some((n) => {
+      const hasScoreOrtu = allNilai.some((n: any) => {
         const c = n.detail_cawalsan as any;
-        return !!(c && typeof c === "object" && (c.rekomendasi || c.nama_penguji));
+        return (
+          n.nilai_wawancara_ortu != null ||
+          n.input_at_ortu != null ||
+          !!(c && typeof c === "object" && (c.rekomendasi || c.nama_penguji || Object.keys(c).length > 0))
+        );
       });
 
       // Session creator fallback if examiner created the slot
@@ -241,9 +282,9 @@ export async function GET(request: NextRequest) {
           arab: !!arabName,
         },
         status: {
-          quran: hasScoreQuran ? "completed" : s.status_quran || "scheduled",
-          santri: hasScoreSantri ? "completed" : s.status_santri || "scheduled",
-          ortu: hasScoreOrtu ? "completed" : s.status_ortu || "scheduled",
+          quran: s.status_quran === "completed" || hasScoreQuran ? "completed" : s.status_quran || "scheduled",
+          santri: s.status_santri === "completed" || hasScoreSantri ? "completed" : s.status_santri || "scheduled",
+          ortu: s.status_ortu === "completed" || hasScoreOrtu ? "completed" : s.status_ortu || "scheduled",
           hafalan: s.status_hafalan || "scheduled",
           arab: s.status_arab || "scheduled",
         },
@@ -288,6 +329,11 @@ export async function PATCH(request: NextRequest) {
       penguji_ortu_id,
       penguji_hafalan_id,
       penguji_arab_id,
+      status_quran,
+      status_santri,
+      status_ortu,
+      status_hafalan,
+      status_arab,
       allow_conflict,
       new_session_id,
     } = body;
@@ -458,6 +504,12 @@ export async function PATCH(request: NextRequest) {
         updateData.google_meet_link = anyMeet;
       }
     }
+
+    if (status_quran !== undefined) updateData.status_quran = status_quran;
+    if (status_santri !== undefined) updateData.status_santri = status_santri;
+    if (status_ortu !== undefined) updateData.status_ortu = status_ortu;
+    if (status_hafalan !== undefined) updateData.status_hafalan = status_hafalan;
+    if (status_arab !== undefined) updateData.status_arab = status_arab;
 
     const updated = await prisma.jadwalUjian.update({
       where: { id: jadwal_id },

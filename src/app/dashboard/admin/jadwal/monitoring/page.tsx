@@ -157,6 +157,9 @@ export default function MonitoringJadwalPage() {
     const [selectedHafalanId, setSelectedHafalanId] = useState<string>("");
     const [activeSessions, setActiveSessions] = useState<any[]>([]);
     const [selectedSessionId, setSelectedSessionId] = useState<string>("");
+    const [statusQuran, setStatusQuran] = useState<string>("scheduled");
+    const [statusSantri, setStatusSantri] = useState<string>("scheduled");
+    const [statusOrtu, setStatusOrtu] = useState<string>("scheduled");
     const [selectedArabId, setSelectedArabId] = useState<string>("");
     const [showAllStaff, setShowAllStaff] = useState(false);
     const [savingAssignment, setSavingAssignment] = useState(false);
@@ -310,6 +313,9 @@ export default function MonitoringJadwalPage() {
         setShowAllStaff(false);
         setSaveSuccessMsg(null);
         setSelectedSessionId(schedule.sesi.id || "");
+        setStatusQuran(schedule.status?.quran || "scheduled");
+        setStatusSantri(schedule.status?.santri || "scheduled");
+        setStatusOrtu(schedule.status?.ortu || "scheduled");
         setAssignModalOpen(true);
     };
 
@@ -369,6 +375,9 @@ export default function MonitoringJadwalPage() {
                     penguji_ortu_id: selectedOrtuId || null,
                     penguji_hafalan_id: selectedHafalanId || null,
                     penguji_arab_id: selectedArabId || null,
+                    status_quran: statusQuran,
+                    status_santri: statusSantri,
+                    status_ortu: statusOrtu,
                     new_session_id: selectedSessionId || undefined,
                     allow_conflict: allowConflict,
                 }),
@@ -1421,6 +1430,24 @@ export default function MonitoringJadwalPage() {
                                                 );
                                             })}
                                         </select>
+                                        <div className="flex items-center justify-between mt-2 pt-2 border-t border-slate-100">
+                                            <span className="text-[11px] font-bold text-slate-500">Status Ujian Al-Qur'an:</span>
+                                            <select
+                                                value={statusQuran}
+                                                onChange={(e) => setStatusQuran(e.target.value)}
+                                                className={`px-2.5 py-1 rounded-lg text-xs font-bold border transition-all cursor-pointer ${
+                                                    statusQuran === "completed"
+                                                        ? "bg-emerald-50 text-emerald-700 border-emerald-200"
+                                                        : statusQuran === "absent"
+                                                        ? "bg-rose-50 text-rose-700 border-rose-200"
+                                                        : "bg-primary-50 text-primary-700 border-primary-200"
+                                                }`}
+                                            >
+                                                <option value="scheduled">🔵 Menunggu Ujian</option>
+                                                <option value="completed">🟢 Selesai Ujian</option>
+                                                <option value="absent">🔴 Alpa / Tidak Hadir</option>
+                                            </select>
+                                        </div>
                                     </div>
 
                                     {/* 2. Pewawancara Calon Santri */}
@@ -1455,6 +1482,24 @@ export default function MonitoringJadwalPage() {
                                                 );
                                             })}
                                         </select>
+                                        <div className="flex items-center justify-between mt-2 pt-2 border-t border-slate-100">
+                                            <span className="text-[11px] font-bold text-slate-500">Status Wawancara Santri:</span>
+                                            <select
+                                                value={statusSantri}
+                                                onChange={(e) => setStatusSantri(e.target.value)}
+                                                className={`px-2.5 py-1 rounded-lg text-xs font-bold border transition-all cursor-pointer ${
+                                                    statusSantri === "completed"
+                                                        ? "bg-emerald-50 text-emerald-700 border-emerald-200"
+                                                        : statusSantri === "absent"
+                                                        ? "bg-rose-50 text-rose-700 border-rose-200"
+                                                        : "bg-indigo-50 text-indigo-700 border-indigo-200"
+                                                }`}
+                                            >
+                                                <option value="scheduled">🔵 Menunggu Wawancara</option>
+                                                <option value="completed">🟢 Selesai Wawancara</option>
+                                                <option value="absent">🔴 Alpa / Tidak Hadir</option>
+                                            </select>
+                                        </div>
                                     </div>
 
                                     {/* 3. Pewawancara Calon Orangtua/Wali */}
@@ -1489,6 +1534,24 @@ export default function MonitoringJadwalPage() {
                                                 );
                                             })}
                                         </select>
+                                        <div className="flex items-center justify-between mt-2 pt-2 border-t border-slate-100">
+                                            <span className="text-[11px] font-bold text-slate-500">Status Wawancara Ortu:</span>
+                                            <select
+                                                value={statusOrtu}
+                                                onChange={(e) => setStatusOrtu(e.target.value)}
+                                                className={`px-2.5 py-1 rounded-lg text-xs font-bold border transition-all cursor-pointer ${
+                                                    statusOrtu === "completed"
+                                                        ? "bg-emerald-50 text-emerald-700 border-emerald-200"
+                                                        : statusOrtu === "absent"
+                                                        ? "bg-rose-50 text-rose-700 border-rose-200"
+                                                        : "bg-purple-50 text-purple-700 border-purple-200"
+                                                }`}
+                                            >
+                                                <option value="scheduled">🔵 Menunggu Wawancara</option>
+                                                <option value="completed">🟢 Selesai Wawancara</option>
+                                                <option value="absent">🔴 Alpa / Tidak Hadir</option>
+                                            </select>
+                                        </div>
                                     </div>
 
                                     {/* Khusus Langsung SMA Tanpa IL: Penguji Lisan Bahasa Arab */}
