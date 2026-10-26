@@ -299,7 +299,7 @@ export async function GET(request: Request) {
         provinsi = provinsi
           .toLowerCase()
           .split(" ")
-          .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+          .map((word: string) => word.charAt(0).toUpperCase() + word.slice(1))
           .join(" ");
       }
       provinsiCounts[provinsi] = (provinsiCounts[provinsi] || 0) + 1;
