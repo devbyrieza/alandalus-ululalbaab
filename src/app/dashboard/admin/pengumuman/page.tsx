@@ -71,7 +71,7 @@ function PengumumanContent() {
 
   const handleSelectAll = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
-      setSelectedIds(candidates.map((c) => c.id));
+      setSelectedIds(sortedCandidates.map((c, rankIdx) => c.id));
     } else {
       setSelectedIds([]);
     }
@@ -85,7 +85,64 @@ function PengumumanContent() {
     }
   };
 
-  const handlePublish = async (new_status: "accepted" | "cadangan" | "rejected") => {
+    const handlePublishSingle = async (
+    id: string,
+    nama: string,
+    new_status: "accepted" | "cadangan" | "rejected"
+  ) => {
+    const actionText =
+      new_status === "accepted"
+        ? "MELULUSKAN"
+        : new_status === "cadangan"
+          ? "menjadikan CADANGAN"
+          : "MENOLAK";
+    const btnColor =
+      new_status === "accepted"
+        ? "#059669"
+        : new_status === "cadangan"
+          ? "#d97706"
+          : "#dc2626";
+
+    const result = await Swal.fire({
+      title: `${actionText} Santri?`,
+      html: `<p>Yakin ingin <b>${actionText}</b> santri an. <b>${nama}</b>?</p><p class="mt-2 text-xs text-stone-500">Status akan langsung ditetapkan, surat pengumuman terbit, dan notifikasi WhatsApp diantrekan.</p>`,
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: btnColor,
+      cancelButtonColor: "#57534e",
+      confirmButtonText: "Ya, Tetapkan!",
+      cancelButtonText: "Batal",
+      reverseButtons: true,
+    });
+
+    if (!result.isConfirmed) return;
+
+    try {
+      setIsPublishing(true);
+      const res = await fetch("/api/admin/pengumuman/publish", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          pendaftar_ids: [id],
+          new_status: new_status,
+        }),
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        toast.success(data.message || `Status ${nama} berhasil diperbarui.`);
+        fetchCandidates();
+      } else {
+        toast.error(data.error || "Gagal memperbarui status");
+      }
+    } catch (error) {
+      toast.error("Terjadi kesalahan sistem");
+    } finally {
+      setIsPublishing(false);
+    }
+  };
+
+const handlePublish = async (new_status: "accepted" | "cadangan" | "rejected") => {
     if (selectedIds.length === 0) return;
 
     const actionText = new_status === "accepted" ? "MELULUSKAN" : new_status === "cadangan" ? "menjadikan CADANGAN" : "MENOLAK";
@@ -132,6 +189,12 @@ function PengumumanContent() {
       setIsPublishing(false);
     }
   };
+  const sortedCandidates = [...candidates].sort((a, b) => {
+    const nA = a.nilai_ujian?.nilai_total ?? -1;
+    const nB = b.nilai_ujian?.nilai_total ?? -1;
+    return nB - nA;
+  });
+
   const renderStatusBadge = (c: any, isMobile = false) => {
     const textSize = isMobile ? "text-[10px]" : "text-xs";
     if (c.status_pendaftaran === "tested") {
@@ -269,7 +332,7 @@ function PengumumanContent() {
               Tidak ada data kandidat sesuai filter
             </div>
           ) : (
-            candidates.map((c) => {
+            sortedCandidates.map((c, rankIdx) => {
               const nu = c.nilai_ujian;
               const getGradeBadge = (
                 score: number | null | undefined,
@@ -399,20 +462,23 @@ function PengumumanContent() {
                 <th className="px-6 py-4 text-center text-xs font-bold text-stone-500 uppercase">
                   Rekomendasi / Status
                 </th>
+                <th className="px-6 py-4 text-center text-xs font-bold text-stone-500 uppercase">
+                  Aksi Penetapan (1-Klik)
+                </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-stone-100">
               {candidates.length === 0 ? (
                 <tr>
                   <td
-                    colSpan={5}
+                    colSpan={6}
                     className="px-6 py-8 text-center text-stone-500"
                   >
                     Tidak ada data kandidat sesuai filter
                   </td>
                 </tr>
               ) : (
-                candidates.map((c) => {
+                sortedCandidates.map((c, rankIdx) => {
                   const nu = c.nilai_ujian;
                   const getGradeBadge = (
                     score: number | null | undefined,
@@ -499,7 +565,50 @@ function PengumumanContent() {
                         </div>
                       </td>
                       <td className="px-6 py-4 text-center">
-                        {renderStatusBadge(c, true)}
+                        {renderStatusBadge(c, false)}
+                      </td>
+                      <td className="px-6 py-4 text-center" onClick={(e) => e.stopPropagation()}>
+                        <div className="flex items-center justify-center gap-1.5">
+                          <button
+                            onClick={() => handlePublishSingle(c.id, c.nama_lengkap, "accepted")}
+                            disabled={isPublishing || c.status_pendaftaran === "accepted"}
+                            title="Luluskan (Diterima)"
+                            className={`px-2.5 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1 transition-all ${
+                              c.status_pendaftaran === "accepted"
+                                ? "bg-green-100 text-green-700 opacity-60 cursor-default"
+                                : "bg-green-600 hover:bg-green-700 text-white shadow-xs hover:scale-105 active:scale-95"
+                            }`}
+                          >
+                            <CheckCircle2 className="w-3.5 h-3.5" />
+                            <span>Lulus</span>
+                          </button>
+                          <button
+                            onClick={() => handlePublishSingle(c.id, c.nama_lengkap, "cadangan")}
+                            disabled={isPublishing || c.status_pendaftaran === "cadangan" || c.status_pendaftaran === "announced"}
+                            title="Jadikan Cadangan"
+                            className={`px-2.5 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1 transition-all ${
+                              c.status_pendaftaran === "cadangan" || c.status_pendaftaran === "announced"
+                                ? "bg-amber-100 text-amber-700 opacity-60 cursor-default"
+                                : "bg-amber-500 hover:bg-amber-600 text-white shadow-xs hover:scale-105 active:scale-95"
+                            }`}
+                          >
+                            <Clock className="w-3.5 h-3.5" />
+                            <span>Cadangan</span>
+                          </button>
+                          <button
+                            onClick={() => handlePublishSingle(c.id, c.nama_lengkap, "rejected")}
+                            disabled={isPublishing || c.status_pendaftaran === "rejected"}
+                            title="Tolak"
+                            className={`px-2.5 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1 transition-all ${
+                              c.status_pendaftaran === "rejected"
+                                ? "bg-red-100 text-red-700 opacity-60 cursor-default"
+                                : "bg-red-600 hover:bg-red-700 text-white shadow-xs hover:scale-105 active:scale-95"
+                            }`}
+                          >
+                            <XCircle className="w-3.5 h-3.5" />
+                            <span>Tolak</span>
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   );
