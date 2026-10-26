@@ -57,12 +57,23 @@ export async function POST(request: NextRequest) {
 
     // Use transaction for consistency
     await prisma.$transaction(async (tx) => {
-      // Bulk update status pendaftaran
-      await tx.pendaftar.updateMany({
-        where: { id: { in: pendaftar_ids } },
-        data: {
-          status_pendaftaran: new_status,
-          updated_at: new Date() } });
+      // Bulk update status pendaftaran (protect already enrolled students from downgrade)
+      if (new_status === "accepted") {
+        await tx.pendaftar.updateMany({
+          where: {
+            id: { in: pendaftar_ids },
+            status_pendaftaran: { notIn: ["enrolled", "enrolled_full"] }
+          },
+          data: {
+            status_pendaftaran: new_status,
+            updated_at: new Date() } });
+      } else {
+        await tx.pendaftar.updateMany({
+          where: { id: { in: pendaftar_ids } },
+          data: {
+            status_pendaftaran: new_status,
+            updated_at: new Date() } });
+      }
 
       // Upsert records in Pengumuman table so they appear in student dashboard
       for (const user of updatedUsers) {

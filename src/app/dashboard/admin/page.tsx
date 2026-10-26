@@ -1,3 +1,4 @@
+import Link from "next/link";
 "use client";
 
 import { useState, useEffect } from "react";
@@ -256,7 +257,7 @@ export default function AdminDashboardPage() {
   const fetchStats = async () => {
     try {
       setLoading(true);
-      const [sR, sesR] = await Promise.all([fetch("/api/admin/stats"), fetch("/api/auth/session")]);
+      const [sR, sesR] = await Promise.all([fetch("/api/admin/stats?fresh=true"), fetch("/api/auth/session")]);
       if (sR.ok) setStats(await sR.json());
       if (sesR.ok) { const d = await sesR.json(); setRole(d.session?.role); }
     } finally { setLoading(false); }
