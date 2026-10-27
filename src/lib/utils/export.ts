@@ -51,18 +51,40 @@ export const exportToExcelProfessional = async ({
   }[];
 }) => {
   const workbook = new ExcelJS.Workbook();
+  const usedSheetNames = new Set<string>();
 
-  for (const sheetInfo of sheets) {
-    const worksheet = workbook.addWorksheet(sheetInfo.name);
+  for (let sIdx = 0; sIdx < sheets.length; sIdx++) {
+    const sheetInfo = sheets[sIdx];
+
+    // Sanitize sheet name: Excel forbids \ / ? * : [ ] and max 31 chars
+    let cleanName = (sheetInfo.name || `Sheet${sIdx + 1}`)
+      .replace(/[\*\?\:\\\/\[\]]/g, "-")
+      .replace(/\s+/g, " ")
+      .trim();
+    if (!cleanName) cleanName = `Sheet${sIdx + 1}`;
+    cleanName = cleanName.substring(0, 31);
+
+    // Ensure unique sheet name within workbook (case-insensitive)
+    let uniqueName = cleanName;
+    let counter = 1;
+    while (usedSheetNames.has(uniqueName.toLowerCase())) {
+      const suffix = ` (${counter})`;
+      uniqueName = `${cleanName.substring(0, 31 - suffix.length)}${suffix}`;
+      counter++;
+    }
+    usedSheetNames.add(uniqueName.toLowerCase());
+
+    const worksheet = workbook.addWorksheet(uniqueName);
     let currentRow = 1;
 
-    const brandColor = BRANDING.primaryColor.replace("#", "");
+    const brandColor = (BRANDING?.primaryColor || "#0977E6").replace("#", "");
 
     // Title
     if (sheetInfo.title) {
       const titleRow = worksheet.getRow(currentRow);
       titleRow.height = 40;
-      worksheet.mergeCells(currentRow, 1, currentRow, sheetInfo.header.length);
+      const colSpan = Math.max(sheetInfo.header?.length || 1, 1);
+      worksheet.mergeCells(currentRow, 1, currentRow, colSpan);
       const titleCell = worksheet.getCell(currentRow, 1);
       titleCell.value = sheetInfo.title.toUpperCase();
       titleCell.font = { name: "Arial", size: 16, bold: true, color: { argb: brandColor } };
@@ -74,7 +96,8 @@ export const exportToExcelProfessional = async ({
     if (sheetInfo.subTitle) {
       const subTitleRow = worksheet.getRow(currentRow);
       subTitleRow.height = 20;
-      worksheet.mergeCells(currentRow, 1, currentRow, sheetInfo.header.length);
+      const colSpan = Math.max(sheetInfo.header?.length || 1, 1);
+      worksheet.mergeCells(currentRow, 1, currentRow, colSpan);
       const subTitleCell = worksheet.getCell(currentRow, 1);
       subTitleCell.value = sheetInfo.subTitle;
       subTitleCell.font = { name: "Arial", size: 11, italic: true };
@@ -193,16 +216,20 @@ export const exportToExcelProfessional = async ({
     });
   }
 
-  // Generate Buffer
+  // Generate Buffer & trigger safe browser download
   const buffer = await workbook.xlsx.writeBuffer();
   const blob = new Blob([buffer], {
-    type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+    type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+  });
   const url = window.URL.createObjectURL(blob);
   const anchor = document.createElement("a");
   anchor.href = url;
-  anchor.download = `${fileName}.xlsx`;
+  const safeFileName = fileName.endsWith(".xlsx") ? fileName : `${fileName}.xlsx`;
+  anchor.download = safeFileName;
+  document.body.appendChild(anchor);
   anchor.click();
-  window.URL.revokeObjectURL(url);
+  document.body.removeChild(anchor);
+  setTimeout(() => window.URL.revokeObjectURL(url), 3000);
 };
 
 /**

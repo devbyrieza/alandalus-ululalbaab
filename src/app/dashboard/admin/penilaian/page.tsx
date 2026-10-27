@@ -84,6 +84,7 @@ export default function ExaminerDashboard() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isBroadcasting, setIsBroadcasting] = useState(false);
   const [isProcessingQueue, setIsProcessingQueue] = useState(false);
+  const [isExporting, setIsExporting] = useState(false);
   const [queueStats, setQueueStats] = useState<{
     pending: number;
     sent: number;
@@ -456,102 +457,134 @@ export default function ExaminerDashboard() {
   });
 
   const handleExportExcel = async () => {
-    if (!students?.length)
-      return Swal.fire("Info", "Tidak ada data untuk diekspor", "info");
+    if (!students?.length) {
+      return Swal.fire("Info", "Tidak ada data santri untuk diekspor", "info");
+    }
 
-    const getGrade = (score: number | undefined | null, type: string) => {
-      if (score == null) return "-";
-      if (type === "akademik") {
-        if (score >= 75) return "A";
-        if (score >= 60) return "B";
-        if (score >= 45) return "C";
-        if (score >= 30) return "D";
-        return "E";
-      }
-      if (type === "quran") {
+    try {
+      setIsExporting(true);
+
+      const getGrade = (score: number | undefined | null, type: string) => {
+        if (score == null) return "-";
+        if (type === "akademik") {
+          if (score >= 75) return "A";
+          if (score >= 60) return "B";
+          if (score >= 45) return "C";
+          if (score >= 30) return "D";
+          return "E";
+        }
+        if (type === "quran") {
+          if (score >= 80) return "A";
+          if (score >= 65) return "B";
+          if (score >= 50) return "C";
+          if (score >= 35) return "D";
+          return "E";
+        }
+        if (type === "kepribadian") {
+          if (score >= 85) return "A";
+          if (score >= 70) return "B";
+          if (score >= 55) return "C";
+          if (score >= 40) return "D";
+          return "E";
+        }
+        // Wawancara & Kesiapan
         if (score >= 80) return "A";
         if (score >= 65) return "B";
         if (score >= 50) return "C";
         if (score >= 35) return "D";
         return "E";
-      }
-      if (type === "kepribadian") {
-        if (score >= 85) return "A";
-        if (score >= 70) return "B";
-        if (score >= 55) return "C";
-        if (score >= 40) return "D";
-        return "E";
-      }
-      // Wawancara & Kesiapan
-      if (score >= 80) return "A";
-      if (score >= 65) return "B";
-      if (score >= 50) return "C";
-      if (score >= 35) return "D";
-      return "E";
-    };
+      };
 
-    const formatStudentForExport = (s: Student) => {
-      const ws = s.nilai_ujian?.nilai_wawancara_santri || 0;
-      const wo = s.nilai_ujian?.nilai_wawancara_ortu || 0;
-      const avgWawancara = ws > 0 && wo > 0 ? (ws + wo) / 2 : ws || wo || 0;
+      const formatStudentForExport = (s: Student) => {
+        const ws = s?.nilai_ujian?.nilai_wawancara_santri || 0;
+        const wo = s?.nilai_ujian?.nilai_wawancara_ortu || 0;
+        const avgWawancara = ws > 0 && wo > 0 ? (ws + wo) / 2 : ws || wo || 0;
 
-      return [
-        s.nomor_pendaftaran || "-",
-        (s.nama_lengkap || "").toUpperCase(),
-        s.jenjang || "-",
-        getGrade(s.nilai_ujian?.score_quran, "quran"),
-        getGrade(s.nilai_ujian?.score_akademik, "akademik"),
-        getGrade(s.nilai_ujian?.score_kepribadian, "kepribadian"),
-        getGrade(avgWawancara, "wawancara"),
-        getGrade(s.nilai_ujian?.score_kesiapan, "kesiapan"),
-        s.nilai_ujian?.status_kelulusan || "BELUM LENGKAP",
+        let examStatus = s?.nilai_ujian?.status_kelulusan;
+        const pendaftaranStatus = (s?.status_pendaftaran || "").toUpperCase();
+        if (["ACCEPTED", "ENROLLED", "ENROLLED_FULL", "DITERIMA", "PROSES_DAFTAR_ULANG", "LUNAS_DAFTAR_ULANG"].includes(pendaftaranStatus)) {
+          examStatus = "DITERIMA";
+        }
+
+        const totalScore = s?.nilai_ujian?.nilai_total != null ? Number(s.nilai_ujian.nilai_total).toFixed(2) : "-";
+
+        return [
+          s?.nomor_pendaftaran || "-",
+          (s?.nama_lengkap || "").toUpperCase(),
+          s?.jenjang || "-",
+          getGrade(s?.nilai_ujian?.score_quran, "quran"),
+          getGrade(s?.nilai_ujian?.score_akademik, "akademik"),
+          getGrade(s?.nilai_ujian?.score_kepribadian, "kepribadian"),
+          getGrade(avgWawancara, "wawancara"),
+          getGrade(s?.nilai_ujian?.score_kesiapan, "kesiapan"),
+          totalScore,
+          examStatus || "BELUM LENGKAP",
+        ];
+      };
+
+      const header = [
+        "NP",
+        "Nama Santri",
+        "Jenjang",
+        "Al-Qur'an",
+        "Akademik",
+        "Kepribadian",
+        "Wawancara",
+        "Kesiapan",
+        "Total Skor",
+        "Keputusan",
       ];
-    };
 
-    const header = [
-      "NP",
-      "Nama Santri",
-      "Jenjang",
-      "Al-Qur'an",
-      "Akademik",
-      "Kepribadian",
-      "Wawancara",
-      "Kesiapan",
-      "Keputusan",
-    ];
-
-    // Grouping by Jenjang
-    const jenjangGroups: Record<string, Student[]> = {};
-    students.forEach((s) => {
-      const j = s.jenjang || "LAINNYA";
-      if (!jenjangGroups[j]) jenjangGroups[j] = [];
-      jenjangGroups[j].push(s);
-    });
-
-    const sheets = [
-      {
-        name: "REKAP TOTAL",
-        title: "REKAPITULASI HASIL SELEKSI PENDAFTAR (SEMUA JENJANG)",
-        subTitle: `Tanggal Ekspor: ${new Date().toLocaleDateString("id-ID")}`,
-        header,
-        data: students.map(formatStudentForExport) },
-    ];
-
-    // Add sheets for each Jenjang
-    Object.keys(jenjangGroups)
-      .sort()
-      .forEach((j) => {
-        sheets.push({
-          name: j.substring(0, 31), // Excel sheet name limit
-          title: `REKAPITULASI HASIL SELEKSI - ${j}`,
-          subTitle: `Jenjang: ${j} | Total: ${jenjangGroups[j].length} Peserta`,
-          header,
-          data: jenjangGroups[j].map(formatStudentForExport) });
+      // Grouping by Jenjang
+      const jenjangGroups: Record<string, Student[]> = {};
+      students.forEach((s) => {
+        const rawJ = s?.jenjang || "LAINNYA";
+        const j = rawJ.replace(/[\*\?\:\\\/\[\]]/g, "-").trim() || "LAINNYA";
+        if (!jenjangGroups[j]) jenjangGroups[j] = [];
+        jenjangGroups[j].push(s);
       });
 
-    await exportToExcelProfessional({
-      fileName: `Rekap_Nilai_PPDB_Professional_${new Date().toISOString().split("T")[0]}`,
-      sheets });
+      const sheets = [
+        {
+          name: "REKAP TOTAL",
+          title: "REKAPITULASI HASIL SELEKSI PENDAFTAR (SEMUA JENJANG)",
+          subTitle: `Tanggal Ekspor: ${new Date().toLocaleDateString("id-ID")} | Total: ${students.length} Peserta`,
+          header,
+          data: students.map(formatStudentForExport),
+        },
+      ];
+
+      // Add sheets for each Jenjang
+      Object.keys(jenjangGroups)
+        .sort()
+        .forEach((j) => {
+          sheets.push({
+            name: j.substring(0, 31),
+            title: `REKAPITULASI HASIL SELEKSI - ${j}`,
+            subTitle: `Jenjang: ${j} | Total: ${jenjangGroups[j].length} Peserta`,
+            header,
+            data: jenjangGroups[j].map(formatStudentForExport),
+          });
+        });
+
+      await exportToExcelProfessional({
+        fileName: `Rekap_Nilai_PPDB_Professional_${new Date().toISOString().split("T")[0]}`,
+        sheets,
+      });
+
+      Swal.fire({
+        title: "Berhasil!",
+        text: "Data rekap penilaian berhasil diekspor ke Excel.",
+        icon: "success",
+        timer: 2000,
+        showConfirmButton: false,
+      });
+    } catch (error: any) {
+      console.error("Export Excel error:", error);
+      Swal.fire("Gagal Ekspor", error?.message || "Terjadi kesalahan saat mengekspor data ke Excel", "error");
+    } finally {
+      setIsExporting(false);
+    }
   };
 
   return (
@@ -696,9 +729,18 @@ export default function ExaminerDashboard() {
               <div className="flex flex-wrap gap-2 w-full lg:w-auto">
                 <Button
                   onClick={handleExportExcel}
-                  className="btn-secondary flex items-center gap-2 bg-emerald-50 text-[#550000] border-emerald-100 hover:bg-emerald-100 rounded-3xl font-bold py-2 whitespace-nowrap shrink-0"
+                  disabled={isExporting}
+                  className="btn-secondary flex items-center gap-2 bg-emerald-50 text-emerald-800 border-emerald-200 hover:bg-emerald-100 rounded-3xl font-bold py-2 whitespace-nowrap shrink-0 disabled:opacity-50"
                 >
-                  <Download className="w-4 h-4" /> Export Excel
+                  {isExporting ? (
+                    <>
+                      <RefreshCcw className="w-4 h-4 animate-spin" /> Mengekspor...
+                    </>
+                  ) : (
+                    <>
+                      <Download className="w-4 h-4" /> Export Excel
+                    </>
+                  )}
                 </Button>
 
                 <Button
