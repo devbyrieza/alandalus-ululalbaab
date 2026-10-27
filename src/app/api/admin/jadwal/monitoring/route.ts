@@ -61,7 +61,7 @@ export async function GET(request: NextRequest) {
     }
 
     const searchParams = request.nextUrl.searchParams;
-    const tahunAjaran = searchParams.get("tahun_ajaran") || "2027/2028";
+    const tahunAjaran = searchParams.get("tahun_ajaran") || "ALL";
 
     // Fetch all JadwalUjian with relations (filtering out deleted students)
     const { getAdminWhereClause, resolveTahunAjaran } = await import("@/lib/utils/admin");
@@ -103,7 +103,17 @@ export async function GET(request: NextRequest) {
                 nilai_arab_total: true,
                 score_arab: true,
                 input_at_arab: true,
-                detail_lisan_arab: true,
+                detail_arab: true,
+              },
+            },
+            jadwal_ujian: {
+              select: {
+                id: true,
+                status_quran: true,
+                status_santri: true,
+                status_ortu: true,
+                status_hafalan: true,
+                status_arab: true,
               },
             },
           },
@@ -177,12 +187,17 @@ export async function GET(request: NextRequest) {
         ...((s.pendaftar as any)?.nilai_ujian || []),
       ];
 
+      const pendaftarJadwals = (s.pendaftar as any)?.jadwal_ujian || [];
+
       const hasScoreQuran = allNilai.some((n: any) => {
-        const q = n.detail_quran as any;
+        const q = (n.detail_quran || n.detail_hafalan) as any;
         return (
           n.score_quran != null ||
           n.nilai_tes_quran != null ||
           n.input_at_quran != null ||
+          n.nilai_hafalan_total != null ||
+          n.score_hafalan != null ||
+          n.input_at_hafalan != null ||
           !!(q && typeof q === "object" && (q.rekomendasi || q.nama_penguji || Object.keys(q).length > 0))
         );
       });
@@ -202,6 +217,26 @@ export async function GET(request: NextRequest) {
           !!(c && typeof c === "object" && (c.rekomendasi || c.nama_penguji || Object.keys(c).length > 0))
         );
       });
+
+      const isQuranCompleted =
+        hasScoreQuran ||
+        s.status_quran === "completed" ||
+        pendaftarJadwals.some((j: any) => j.status_quran === "completed");
+
+      const isSantriCompleted =
+        hasScoreSantri ||
+        s.status_santri === "completed" ||
+        pendaftarJadwals.some((j: any) => j.status_santri === "completed");
+
+      const isOrtuCompleted =
+        hasScoreOrtu ||
+        s.status_ortu === "completed" ||
+        pendaftarJadwals.some((j: any) => j.status_ortu === "completed");
+
+      const isArabCompleted =
+        allNilai.some((n: any) => n.nilai_arab_total != null || n.score_arab != null || n.input_at_arab != null) ||
+        s.status_arab === "completed" ||
+        pendaftarJadwals.some((j: any) => j.status_arab === "completed");
 
       // Session creator fallback if examiner created the slot
       const creator = s.exam_session?.creator;
@@ -282,11 +317,11 @@ export async function GET(request: NextRequest) {
           arab: !!arabName,
         },
         status: {
-          quran: s.status_quran === "completed" || hasScoreQuran ? "completed" : s.status_quran || "scheduled",
-          santri: s.status_santri === "completed" || hasScoreSantri ? "completed" : s.status_santri || "scheduled",
-          ortu: s.status_ortu === "completed" || hasScoreOrtu ? "completed" : s.status_ortu || "scheduled",
+          quran: isQuranCompleted ? "completed" : s.status_quran || "scheduled",
+          santri: isSantriCompleted ? "completed" : s.status_santri || "scheduled",
+          ortu: isOrtuCompleted ? "completed" : s.status_ortu || "scheduled",
           hafalan: s.status_hafalan || "scheduled",
-          arab: s.status_arab || "scheduled",
+          arab: isArabCompleted ? "completed" : s.status_arab || "scheduled",
         },
       };
     });
@@ -300,9 +335,9 @@ export async function GET(request: NextRequest) {
       );
     });
 
-    const filteredByTa = (tahunAjaran === "ALL" || tahunAjaran === "all")
+    const filteredByTa = (!tahunAjaran || tahunAjaran.toUpperCase() === "ALL")
       ? cleanedData
-      : cleanedData.filter((s) => s.tahun_ajaran === tahunAjaran);
+      : cleanedData.filter((s) => s.tahun_ajaran?.trim() === tahunAjaran.trim());
 
     return NextResponse.json({ data: filteredByTa });
   } catch (error: any) {

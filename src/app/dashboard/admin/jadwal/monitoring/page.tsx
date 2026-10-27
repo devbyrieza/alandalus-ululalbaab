@@ -141,8 +141,9 @@ export default function MonitoringJadwalPage() {
     const [search, setSearch] = useState("");
     const [filterJenjang, setFilterJenjang] = useState("ALL");
     const [viewMode, setViewMode] = useState<"flat" | "grouped" | "santri" | "calendar">("flat");
-    const [dateFilter, setDateFilter] = useState<"hari_ini" | "besok" | "akan_datang" | "berlalu" | "semua" | "kustom">("akan_datang");
-    const [filterTahunAjaran, setFilterTahunAjaran] = useState<string>("2027/2028");
+    const [dateFilter, setDateFilter] = useState<"hari_ini" | "besok" | "akan_datang" | "berlalu" | "semua" | "kustom">("semua");
+    const [filterTahunAjaran, setFilterTahunAjaran] = useState<string>("ALL");
+    const [tahunAjaranList, setTahunAjaranList] = useState<{ id: string; nama: string; is_active: boolean }[]>([]);
     const [customDate, setCustomDate] = useState("");
     const [customTime, setCustomTime] = useState("");
 
@@ -241,7 +242,22 @@ export default function MonitoringJadwalPage() {
         fetchMonitoringData();
         fetchExaminers();
         fetchExamSessions();
+        fetchTahunAjaran();
     }, []);
+
+    const fetchTahunAjaran = async () => {
+        try {
+            const res = await fetch("/api/admin/tahun-ajaran");
+            if (res.ok) {
+                const json = await res.json();
+                if (json.data && Array.isArray(json.data)) {
+                    setTahunAjaranList(json.data);
+                }
+            }
+        } catch (e) {
+            console.error("Failed to fetch TA list", e);
+        }
+    };
 
     const fetchExamSessions = async () => {
         try {
@@ -668,12 +684,27 @@ export default function MonitoringJadwalPage() {
             .sort((a, b) => a.earliestSession - b.earliestSession);
     };
 
-    // Calculate Unique Stats
-    const totalTerjadwal = new Set(filteredSchedules.map(s => s.pendaftar.nomor)).size;
-    const totalSesi = filteredSchedules.length;
-    const selesaiQuran = new Set(filteredSchedules.filter(s => s.status.quran === 'completed').map(s => s.pendaftar.nomor)).size;
-    const selesaiWSantri = new Set(filteredSchedules.filter(s => s.status.santri === 'completed').map(s => s.pendaftar.nomor)).size;
-    const selesaiWOrangTua = new Set(filteredSchedules.filter(s => s.status.ortu === 'completed').map(s => s.pendaftar.nomor)).size;
+    // Calculate Unique Stats based on the active cohort (filtered by TA & Jenjang, resilient to date/search filter)
+    const baseSchedulesForStats = useMemo(() => {
+        return schedules.filter(s => {
+            const matchesJenjang = (() => {
+                if (filterJenjang === "ALL") return true;
+                const clean = (s?.pendaftar?.jenjang || "").trim().toUpperCase();
+                if (filterJenjang === "IL") return clean === "IL" || clean.includes("IL");
+                if (filterJenjang === "SMP IT") return clean.includes("SMP") || clean.includes("MTS") || clean.includes("TSANAWIYAH");
+                if (filterJenjang === "SMA IT") return clean.includes("SMA") || clean.includes("MA") || clean.includes("SLTA");
+                return clean === filterJenjang.toUpperCase();
+            })();
+            const matchesTahunAjaran = filterTahunAjaran === "ALL" || (s as any).tahun_ajaran === filterTahunAjaran || (s?.pendaftar as any)?.tahun_ajaran === filterTahunAjaran;
+            return matchesJenjang && matchesTahunAjaran;
+        });
+    }, [schedules, filterJenjang, filterTahunAjaran]);
+
+    const totalTerjadwal = useMemo(() => new Set(baseSchedulesForStats.map(s => s.pendaftar.nomor)).size, [baseSchedulesForStats]);
+    const totalSesi = useMemo(() => baseSchedulesForStats.length, [baseSchedulesForStats]);
+    const selesaiQuran = useMemo(() => new Set(baseSchedulesForStats.filter(s => s.status.quran === 'completed').map(s => s.pendaftar.nomor)).size, [baseSchedulesForStats]);
+    const selesaiWSantri = useMemo(() => new Set(baseSchedulesForStats.filter(s => s.status.santri === 'completed').map(s => s.pendaftar.nomor)).size, [baseSchedulesForStats]);
+    const selesaiWOrangTua = useMemo(() => new Set(baseSchedulesForStats.filter(s => s.status.ortu === 'completed').map(s => s.pendaftar.nomor)).size, [baseSchedulesForStats]);
 
     // Helper untuk merender sel penguji
     const renderExaminerCell = (
@@ -925,20 +956,29 @@ export default function MonitoringJadwalPage() {
                             onChange={(e) => setFilterTahunAjaran(e.target.value)}
                             className="px-3 pr-8 rounded-xl text-[11px] font-bold uppercase tracking-wider transition-all border h-12 shadow-sm bg-white border-slate-200 text-slate-600 focus:border-primary-500 focus:ring-1 focus:ring-primary-500 outline-none appearance-none cursor-pointer hover:bg-slate-50"
                         >
-                            <option value="2027/2028">TA 2027/2028 (Aktif)</option>
-                            <option value="2026/2027">TA 2026/2027</option>
-                            <option value="ALL">Semua TA</option>
+                            <option value="ALL">Semua TA (Default)</option>
+                            {tahunAjaranList.map((t) => (
+                                <option key={t.id} value={t.nama}>
+                                    TA {t.nama} {t.is_active ? "(Aktif)" : ""}
+                                </option>
+                            ))}
+                            {tahunAjaranList.length === 0 && (
+                                <>
+                                    <option value="2027/2028">TA 2027/2028</option>
+                                    <option value="2026/2027">TA 2026/2027</option>
+                                </>
+                            )}
                         </select>
                         <select
                             value={dateFilter}
                             onChange={(e) => setDateFilter(e.target.value as any)}
                             className="px-4 pr-8 rounded-xl text-[11px] font-bold uppercase tracking-wider transition-all border h-12 shadow-sm bg-white border-slate-200 text-slate-600 focus:border-primary-500 focus:ring-1 focus:ring-primary-500 outline-none appearance-none cursor-pointer hover:bg-slate-50"
                         >
-                            <option value="akan_datang">Sesi Mendatang (Default)</option>
+                            <option value="semua">Semua Waktu (Default)</option>
+                            <option value="akan_datang">Sesi Mendatang</option>
                             <option value="hari_ini">Jadwal Hari Ini</option>
                             <option value="besok">Jadwal Besok</option>
                             <option value="berlalu">Sesi Berlalu</option>
-                            <option value="semua">Semua Waktu</option>
                             <option value="kustom">Spesifik (Tgl / Jam)</option>
                         </select>
                         {dateFilter === "kustom" && (
