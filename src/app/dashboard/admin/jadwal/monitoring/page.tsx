@@ -922,36 +922,75 @@ export default function MonitoringJadwalPage() {
                 </motion.div>
             )}
 
-            {/* Filter & Actions Bar */}
-            <div className="flex flex-col gap-4">
-                <div className="flex flex-col md:flex-row gap-3">
-                    {/* Search & Jenjang */}
-                    <div className="flex-1 flex gap-2">
+                        {/* Filter & Actions Bar */}
+            <div className="bg-white rounded-2xl border border-slate-200/80 p-3 md:p-4 shadow-sm space-y-3">
+                <div className="flex flex-col xl:flex-row items-stretch xl:items-center justify-between gap-3">
+                    {/* Left: Search & Jenjang */}
+                    <div className="flex-1 flex items-center gap-2">
                         <div className="relative flex-1">
-                            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-ink-400" />
+                            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
                             <input 
                                 type="text" 
                                 placeholder="Cari santri, no pendaftaran, atau nama penguji..."
                                 value={search}
                                 onChange={(e) => setSearch(e.target.value)}
-                                className="w-full bg-white border border-slate-200 rounded-xl pl-10 pr-4 py-2 text-sm focus:ring-4 focus:ring-primary-500/5 focus:border-primary-500 outline-none font-bold h-12 transition-all shadow-sm"
+                                className="w-full bg-slate-50/70 hover:bg-slate-50 focus:bg-white border border-slate-200 rounded-xl pl-10 pr-4 py-2 text-xs md:text-sm focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none font-bold h-11 transition-all"
                             />
                         </div>
                         <select 
                             value={filterJenjang}
                             onChange={(e) => setFilterJenjang(e.target.value)}
-                            className="w-32 bg-white border border-slate-200 rounded-xl px-3 py-2 text-[11px] font-black text-ink-600 focus:ring-4 focus:ring-primary-500/5 focus:border-primary-500 outline-none h-12 shadow-sm appearance-none text-center uppercase tracking-wider"
+                            className="bg-slate-50/70 hover:bg-slate-50 border border-slate-200 rounded-xl px-3 text-[11px] font-black text-slate-700 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none h-11 shadow-xs appearance-none text-center uppercase tracking-wider cursor-pointer shrink-0"
                         >
-                            <option value="ALL">SEMUA</option>
-                            <option value="MTs">MTs</option>
+                            <option value="ALL">SEMUA JENJANG</option>
+                            <option value="SMP IT">SMP IT</option>
                             <option value="IL">IL</option>
-                            <option value="SMA">SMA</option>
+                            <option value="SMA IT">SMA IT</option>
                         </select>
                     </div>
 
-                    {/* View Switcher & Actions */}
-                    <div className="flex items-center gap-2">
-                        <div className="flex-1 md:flex-none flex bg-slate-100 p-1.5 rounded-xl h-12 min-w-fit whitespace-nowrap shrink-0">
+                    {/* Right: TA, Waktu, Switcher & Refresh */}
+                    <div className="flex flex-wrap sm:flex-nowrap items-center gap-2">
+                        {/* Dropdown Tahun Ajaran */}
+                        <div className="flex-1 sm:flex-none min-w-[150px]">
+                            <select
+                                value={filterTahunAjaran}
+                                onChange={(e) => setFilterTahunAjaran(e.target.value)}
+                                className="w-full bg-slate-50/70 hover:bg-slate-50 border border-slate-200 rounded-xl px-3 pr-8 text-[11px] font-bold uppercase tracking-wider text-slate-700 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none appearance-none cursor-pointer h-11 shadow-xs"
+                            >
+                                {tahunAjaranList.map((t) => (
+                                    <option key={t.id} value={t.nama}>
+                                        TA {t.nama} {t.is_active ? "(AKTIF)" : ""}
+                                    </option>
+                                ))}
+                                {tahunAjaranList.length === 0 && (
+                                    <>
+                                        <option value="2027/2028">TA 2027/2028 (AKTIF)</option>
+                                        <option value="2026/2027">TA 2026/2027</option>
+                                    </>
+                                )}
+                                <option value="ALL">SEMUA TA</option>
+                            </select>
+                        </div>
+
+                        {/* Dropdown Waktu / Sesi */}
+                        <div className="flex-1 sm:flex-none min-w-[170px]">
+                            <select
+                                value={dateFilter}
+                                onChange={(e) => setDateFilter(e.target.value as any)}
+                                className="w-full bg-slate-50/70 hover:bg-slate-50 border border-slate-200 rounded-xl px-3.5 pr-8 text-[11px] font-bold uppercase tracking-wider text-slate-700 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none appearance-none cursor-pointer h-11 shadow-xs"
+                            >
+                                <option value="hari_ini">JADWAL HARI INI (DEFAULT)</option>
+                                <option value="akan_datang">SESI MENDATANG</option>
+                                <option value="besok">JADWAL BESOK</option>
+                                <option value="berlalu">SESI BERLALU</option>
+                                <option value="semua">SEMUA WAKTU</option>
+                                <option value="kustom">SPESIFIK (TGL / JAM)</option>
+                            </select>
+                        </div>
+
+                        {/* View Switcher Tabs */}
+                        <div className="flex bg-slate-100 p-1 rounded-xl h-11 shrink-0 overflow-x-auto no-scrollbar">
                             {[
                                 { id: "flat", label: "List" },
                                 { id: "grouped", label: "Ustadz" },
@@ -961,69 +1000,52 @@ export default function MonitoringJadwalPage() {
                                 <button 
                                     key={mode.id}
                                     onClick={() => setViewMode(mode.id as any)}
-                                    className={`px-5 rounded-xl text-[11px] font-bold uppercase tracking-wider transition-all ${viewMode === mode.id ? "bg-white text-primary-700 shadow-sm" : "text-slate-400 hover:text-slate-600"}`}
+                                    className={`px-3 md:px-3.5 rounded-lg text-[10px] md:text-[11px] font-bold uppercase tracking-wider transition-all whitespace-nowrap ${viewMode === mode.id ? "bg-white text-primary-700 shadow-xs" : "text-slate-500 hover:text-slate-800"}`}
                                 >
                                     {mode.label}
                                 </button>
                             ))}
                         </div>
+
+                        {/* Refresh Button */}
                         <button 
                             onClick={fetchMonitoringData}
-                            className="w-12 h-12 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 rounded-xl shadow-sm transition-all flex items-center justify-center shrink-0"
+                            className="w-11 h-11 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 rounded-xl shadow-xs transition-all flex items-center justify-center shrink-0"
                             title="Refresh Data"
                         >
                             <Loader2 className={`w-4 h-4 ${loading ? 'animate-spin text-primary-500' : ''}`} />
                         </button>
-                        <select
-                            value={filterTahunAjaran}
-                            onChange={(e) => setFilterTahunAjaran(e.target.value)}
-                            className="px-3 pr-8 rounded-xl text-[11px] font-bold uppercase tracking-wider transition-all border h-12 shadow-sm bg-white border-slate-200 text-slate-600 focus:border-primary-500 focus:ring-1 focus:ring-primary-500 outline-none appearance-none cursor-pointer hover:bg-slate-50"
-                        >
-                            {tahunAjaranList.map((t) => (
-                                <option key={t.id} value={t.nama}>
-                                    TA {t.nama} {t.is_active ? "(AKTIF / DEFAULT)" : ""}
-                                </option>
-                            ))}
-                            {tahunAjaranList.length === 0 && (
-                                <>
-                                    <option value="2027/2028">TA 2027/2028 (AKTIF / DEFAULT)</option>
-                                    <option value="2026/2027">TA 2026/2027</option>
-                                </>
-                            )}
-                            <option value="ALL">SEMUA TAHUN AJARAN</option>
-                        </select>
-                        <select
-                            value={dateFilter}
-                            onChange={(e) => setDateFilter(e.target.value as any)}
-                            className="px-4 pr-8 rounded-xl text-[11px] font-bold uppercase tracking-wider transition-all border h-12 shadow-sm bg-white border-slate-200 text-slate-600 focus:border-primary-500 focus:ring-1 focus:ring-primary-500 outline-none appearance-none cursor-pointer hover:bg-slate-50"
-                        >
-                            <option value="hari_ini">JADWAL HARI INI (DEFAULT)</option>
-                            <option value="akan_datang">SESI MENDATANG</option>
-                            <option value="besok">JADWAL BESOK</option>
-                            <option value="berlalu">SESI BERLALU</option>
-                            <option value="semua">SEMUA WAKTU</option>
-                            <option value="kustom">SPESIFIK (TGL / JAM)</option>
-                        </select>
-                        {dateFilter === "kustom" && (
-                            <div className="flex gap-2 animate-in fade-in zoom-in duration-300">
-                                <input
-                                    type="date"
-                                    value={customDate}
-                                    onChange={(e) => setCustomDate(e.target.value)}
-                                    className="px-3 rounded-xl text-[11px] font-bold uppercase tracking-wider transition-all border h-12 shadow-sm bg-white border-slate-200 text-slate-600 focus:border-primary-500 focus:ring-1 focus:ring-primary-500 outline-none hover:bg-slate-50"
-                                    title="Pilih Tanggal Sesi"
-                                />
-                                <input
-                                    type="time"
-                                    value={customTime}
-                                    onChange={(e) => setCustomTime(e.target.value)}
-                                    className="px-3 rounded-xl text-[11px] font-bold uppercase tracking-wider transition-all border h-12 shadow-sm bg-white border-slate-200 text-slate-600 focus:border-primary-500 focus:ring-1 focus:ring-primary-500 outline-none hover:bg-slate-50"
-                                    title="Pilih Jam Sesi"
-                                />
-                            </div>
-                        )}
                     </div>
                 </div>
+
+                {/* Custom Date & Time Inputs */}
+                {dateFilter === "kustom" && (
+                    <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-slate-100 animate-in fade-in duration-200">
+                        <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Filter Spesifik:</span>
+                        <input
+                            type="date"
+                            value={customDate}
+                            onChange={(e) => setCustomDate(e.target.value)}
+                            className="px-3 rounded-xl text-[11px] font-bold uppercase tracking-wider transition-all border h-10 shadow-xs bg-white border-slate-200 text-slate-600 focus:border-primary-500 focus:ring-1 focus:ring-primary-500 outline-none hover:bg-slate-50"
+                            title="Pilih Tanggal Sesi"
+                        />
+                        <input
+                            type="time"
+                            value={customTime}
+                            onChange={(e) => setCustomTime(e.target.value)}
+                            className="px-3 rounded-xl text-[11px] font-bold uppercase tracking-wider transition-all border h-10 shadow-xs bg-white border-slate-200 text-slate-600 focus:border-primary-500 focus:ring-1 focus:ring-primary-500 outline-none hover:bg-slate-50"
+                            title="Pilih Jam Sesi"
+                        />
+                        {(customDate || customTime) && (
+                            <button
+                                onClick={() => { setCustomDate(""); setCustomTime(""); }}
+                                className="text-[11px] text-rose-600 font-bold hover:underline px-2"
+                            >
+                                Reset Jam/Tgl
+                            </button>
+                        )}
+                    </div>
+                )}
             </div>
 
             {/* Table Area */}
