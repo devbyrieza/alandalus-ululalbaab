@@ -8,12 +8,16 @@ export function resolveTahunAjaran(p: {
   nomor_pendaftaran?: string | null;
   created_at?: Date | string | null;
   tahun_ajaran?: { nama?: string | null } | null;
-}): string {
+}, fallbackActiveTa?: string): string {
   // 1) FK resmi (relasi tahun_ajaran) selalu diprioritaskan
   if (p.tahun_ajaran?.nama && p.tahun_ajaran.nama.includes("/")) {
     return p.tahun_ajaran.nama;
   }
-  // 2) Fallback: 2 digit tahun pada nomor_pendaftaran (data legacy)
+  // 2) Fallback: Active TA jika disediakan oleh pemanggil
+  if (fallbackActiveTa && fallbackActiveTa.includes("/")) {
+    return fallbackActiveTa;
+  }
+  // 3) Fallback: 2 digit tahun pada nomor_pendaftaran (data legacy)
   const no = p.nomor_pendaftaran || "";
   const m4 = no.match(/20(\d{2})/);
   if (m4) {

@@ -141,7 +141,7 @@ export default function MonitoringJadwalPage() {
     const [search, setSearch] = useState("");
     const [filterJenjang, setFilterJenjang] = useState("ALL");
     const [viewMode, setViewMode] = useState<"flat" | "grouped" | "santri" | "calendar">("flat");
-    const [dateFilter, setDateFilter] = useState<"hari_ini" | "besok" | "akan_datang" | "berlalu" | "semua" | "kustom">("semua");
+    const [dateFilter, setDateFilter] = useState<"akan_datang" | "hari_ini" | "besok" | "berlalu" | "semua" | "kustom">("akan_datang");
     const [filterTahunAjaran, setFilterTahunAjaran] = useState<string>("ALL");
     const [tahunAjaranList, setTahunAjaranList] = useState<{ id: string; nama: string; is_active: boolean }[]>([]);
     const [customDate, setCustomDate] = useState("");
@@ -576,44 +576,62 @@ export default function MonitoringJadwalPage() {
         
         
         const now = new Date();
-        const todayStr = new Date(now.getTime() - (now.getTimezoneOffset() * 60000)).toISOString().split('T')[0];
-        
-        let matchesDate = true;
-        if (s?.sesi?.start) {
-            const sessDateObj = new Date(s.sesi.start);
-            const sessDateStr = new Date(sessDateObj.getTime() - (sessDateObj.getTimezoneOffset() * 60000)).toISOString().split('T')[0];
-            
-            const tomorrowObj = new Date(now);
-            tomorrowObj.setDate(tomorrowObj.getDate() + 1);
-            const tomorrowStr = new Date(tomorrowObj.getTime() - (tomorrowObj.getTimezoneOffset() * 60000)).toISOString().split('T')[0];
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, "0");
+        const day = String(now.getDate()).padStart(2, "0");
+        const todayStr = `${year}-${month}-${day}`;
 
-            if (dateFilter === "hari_ini") {
-                matchesDate = sessDateStr === todayStr;
-            } else if (dateFilter === "besok") {
-                matchesDate = sessDateStr === tomorrowStr;
-            } else if (dateFilter === "akan_datang") {
-                // Sesi mendatang: jadwal dari hari ini dan seterusnya
-                matchesDate = sessDateStr >= todayStr;
-            } else if (dateFilter === "berlalu") {
-                matchesDate = sessDateStr < todayStr;
-            } else if (dateFilter === "semua") {
-                matchesDate = true;
-            } else if (dateFilter === "kustom") {
-                let isMatch = true;
-                if (customDate) {
-                    isMatch = isMatch && (sessDateStr === customDate);
+        let matchesDate = true;
+        const scheduleDateRaw = s?.sesi?.start || (s as any)?.tanggal_ujian;
+        if (scheduleDateRaw) {
+            const sessDateObj = new Date(scheduleDateRaw);
+            if (!isNaN(sessDateObj.getTime())) {
+                const sYear = sessDateObj.getFullYear();
+                const sMonth = String(sessDateObj.getMonth() + 1).padStart(2, "0");
+                const sDay = String(sessDateObj.getDate()).padStart(2, "0");
+                const sessDateStr = `${sYear}-${sMonth}-${sDay}`;
+
+                const tomorrowObj = new Date(now);
+                tomorrowObj.setDate(tomorrowObj.getDate() + 1);
+                const tYear = tomorrowObj.getFullYear();
+                const tMonth = String(tomorrowObj.getMonth() + 1).padStart(2, "0");
+                const tDay = String(tomorrowObj.getDate()).padStart(2, "0");
+                const tomorrowStr = `${tYear}-${tMonth}-${tDay}`;
+
+                if (dateFilter === "hari_ini") {
+                    matchesDate = sessDateStr === todayStr;
+                } else if (dateFilter === "besok") {
+                    matchesDate = sessDateStr === tomorrowStr;
+                } else if (dateFilter === "akan_datang") {
+                    // Sesi mendatang: jadwal dari hari ini dan seterusnya (semua jadwal hari ini tetap tertampil)
+                    matchesDate = sessDateStr >= todayStr;
+                } else if (dateFilter === "berlalu") {
+                    matchesDate = sessDateStr < todayStr;
+                } else if (dateFilter === "semua") {
+                    matchesDate = true;
+                } else if (dateFilter === "kustom") {
+                    let isMatch = true;
+                    if (customDate) {
+                        isMatch = isMatch && (sessDateStr === customDate);
+                    }
+                    if (customTime) {
+                        const hours = sessDateObj.getHours().toString().padStart(2, '0');
+                        const mins = sessDateObj.getMinutes().toString().padStart(2, '0');
+                        const sessTimeStr = `${hours}:${mins}`;
+                        isMatch = isMatch && (sessTimeStr === customTime);
+                    }
+                    matchesDate = isMatch;
                 }
-                if (customTime) {
-                    const hours = sessDateObj.getHours().toString().padStart(2, '0');
-                    const mins = sessDateObj.getMinutes().toString().padStart(2, '0');
-                    const sessTimeStr = `${hours}:${mins}`;
-                    isMatch = isMatch && (sessTimeStr === customTime);
-                }
-                matchesDate = isMatch;
             }
         }
 
-        const matchesTahunAjaran = filterTahunAjaran === "ALL" || (s as any).tahun_ajaran === filterTahunAjaran || (s?.pendaftar as any)?.tahun_ajaran === filterTahunAjaran;
+        const matchesTahunAjaran = (() => {
+            if (!filterTahunAjaran || filterTahunAjaran === "ALL") return true;
+            const req = filterTahunAjaran.trim().toUpperCase();
+            const cur = ((s as any).tahun_ajaran || "").trim().toUpperCase();
+            const pTa = ((s?.pendaftar as any)?.tahun_ajaran || "").trim().toUpperCase();
+            return cur === req || pTa === req || cur.includes(req) || req.includes(cur);
+        })();
 
         return matchesSearch && matchesJenjang && matchesDate && matchesTahunAjaran;
     }).sort((a, b) => new Date(a.sesi.start).getTime() - new Date(b.sesi.start).getTime());
@@ -956,7 +974,7 @@ export default function MonitoringJadwalPage() {
                             onChange={(e) => setFilterTahunAjaran(e.target.value)}
                             className="px-3 pr-8 rounded-xl text-[11px] font-bold uppercase tracking-wider transition-all border h-12 shadow-sm bg-white border-slate-200 text-slate-600 focus:border-primary-500 focus:ring-1 focus:ring-primary-500 outline-none appearance-none cursor-pointer hover:bg-slate-50"
                         >
-                            <option value="ALL">Semua TA (Default)</option>
+                            <option value="ALL">SEMUA TAHUN AJARAN</option>
                             {tahunAjaranList.map((t) => (
                                 <option key={t.id} value={t.nama}>
                                     TA {t.nama} {t.is_active ? "(Aktif)" : ""}
@@ -974,12 +992,12 @@ export default function MonitoringJadwalPage() {
                             onChange={(e) => setDateFilter(e.target.value as any)}
                             className="px-4 pr-8 rounded-xl text-[11px] font-bold uppercase tracking-wider transition-all border h-12 shadow-sm bg-white border-slate-200 text-slate-600 focus:border-primary-500 focus:ring-1 focus:ring-primary-500 outline-none appearance-none cursor-pointer hover:bg-slate-50"
                         >
-                            <option value="semua">Semua Waktu (Default)</option>
-                            <option value="akan_datang">Sesi Mendatang</option>
-                            <option value="hari_ini">Jadwal Hari Ini</option>
-                            <option value="besok">Jadwal Besok</option>
-                            <option value="berlalu">Sesi Berlalu</option>
-                            <option value="kustom">Spesifik (Tgl / Jam)</option>
+                            <option value="akan_datang">SESI MENDATANG (DEFAULT)</option>
+                            <option value="hari_ini">JADWAL HARI INI</option>
+                            <option value="besok">JADWAL BESOK</option>
+                            <option value="berlalu">SESI BERLALU</option>
+                            <option value="semua">SEMUA WAKTU</option>
+                            <option value="kustom">SPESIFIK (TGL / JAM)</option>
                         </select>
                         {dateFilter === "kustom" && (
                             <div className="flex gap-2 animate-in fade-in zoom-in duration-300">

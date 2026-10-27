@@ -53,6 +53,28 @@ function isJenjangLangsungNonIL(jenjang?: string | null): boolean {
   return false;
 }
 
+
+function buildFullDateTime(datePart?: Date | string | null, timePart?: Date | string | null): string | null {
+  if (!datePart && !timePart) return null;
+  if (datePart) {
+    const d = new Date(datePart);
+    if (!isNaN(d.getTime()) && d.getFullYear() > 2000) {
+      if (timePart) {
+        const t = new Date(timePart);
+        if (!isNaN(t.getTime())) {
+          d.setHours(t.getHours(), t.getMinutes(), t.getSeconds(), 0);
+        }
+      }
+      return d.toISOString();
+    }
+  }
+  if (timePart) {
+    const t = new Date(timePart);
+    if (!isNaN(t.getTime()) && t.getFullYear() > 2000) return t.toISOString();
+  }
+  return null;
+}
+
 export async function GET(request: NextRequest) {
   try {
     const session = await getAdminSession();
@@ -64,6 +86,13 @@ export async function GET(request: NextRequest) {
     const tahunAjaran = searchParams.get("tahun_ajaran") || "ALL";
 
     // Fetch all JadwalUjian with relations (filtering out deleted students)
+    const activeTa = await prisma.tahunAjaran.findFirst({
+      where: { is_active: true },
+      select: { id: true, nama: true },
+      orderBy: { tahun_mulai: "desc" }
+    });
+    const activeTaNama = activeTa?.nama || "2027/2028";
+
     const { getAdminWhereClause, resolveTahunAjaran } = await import("@/lib/utils/admin");
     const pendaftarWhere = await getAdminWhereClause();
 
@@ -72,6 +101,9 @@ export async function GET(request: NextRequest) {
         pendaftar: pendaftarWhere,
       },
       include: {
+        tahun_ajaran: {
+          select: { id: true, nama: true },
+        },
         pendaftar: {
           select: {
             id: true,
@@ -233,6 +265,21 @@ export async function GET(request: NextRequest) {
         s.status_ortu === "completed" ||
         pendaftarJadwals.some((j: any) => j.status_ortu === "completed");
 
+      const sessionStart =
+        s.exam_session?.start_time && new Date(s.exam_session.start_time).getFullYear() > 2000
+          ? new Date(s.exam_session.start_time).toISOString()
+          : buildFullDateTime(s.tanggal_ujian, s.waktu_mulai_santri);
+
+      const sessionEnd =
+        s.exam_session?.end_time && new Date(s.exam_session.end_time).getFullYear() > 2000
+          ? new Date(s.exam_session.end_time).toISOString()
+          : buildFullDateTime(s.tanggal_ujian, s.waktu_selesai_santri);
+
+      const resolvedTa =
+        s.tahun_ajaran?.nama ||
+        s.pendaftar.tahun_ajaran?.nama ||
+        resolveTahunAjaran(s.pendaftar, activeTaNama);
+
       const isArabCompleted =
         allNilai.some((n: any) => n.nilai_arab_total != null || n.score_arab != null || n.input_at_arab != null) ||
         s.status_arab === "completed" ||
@@ -277,7 +324,8 @@ export async function GET(request: NextRequest) {
         id: s.id,
         created_at: s.created_at,
         updated_at: s.updated_at,
-        tahun_ajaran: resolveTahunAjaran(s.pendaftar),
+        tahun_ajaran: resolvedTa,
+        tanggal_ujian: s.tanggal_ujian ? new Date(s.tanggal_ujian).toISOString() : null,
         pendaftar: {
           id: s.pendaftar.id,
           nomor: s.pendaftar.nomor_pendaftaran,
@@ -285,13 +333,13 @@ export async function GET(request: NextRequest) {
           jenjang: s.pendaftar.jenjang,
           no_hp: s.pendaftar.no_hp,
           created_at: s.pendaftar.created_at,
-          tahun_ajaran: resolveTahunAjaran(s.pendaftar),
+          tahun_ajaran: resolvedTa,
         },
         sesi: {
           id: s.exam_session?.id || null,
           title: s.exam_session?.title || "Sesi Ujian",
-          start: s.exam_session?.start_time || s.waktu_mulai_santri,
-          end: s.exam_session?.end_time || s.waktu_selesai_santri,
+          start: sessionStart,
+          end: sessionEnd,
           location: s.exam_session?.location || s.tempat_santri,
           metode: s.metode_ujian || "offline",
         },
@@ -337,7 +385,19 @@ export async function GET(request: NextRequest) {
 
     const filteredByTa = (!tahunAjaran || tahunAjaran.toUpperCase() === "ALL")
       ? cleanedData
-      : cleanedData.filter((s) => s.tahun_ajaran?.trim() === tahunAjaran.trim());
+      : cleanedData.filter((s) => {
+          const req = tahunAjaran.trim().toUpperCase();
+          const cur = (s.tahun_ajaran || "").trim().toUpperCase();
+          const pTa = (s.pendaftar?.tahun_ajaran || "").trim().toUpperCase();
+          const isReqActive = activeTa?.nama && req.includes(activeTa.nama.toUpperCase());
+          return (
+            cur === req ||
+            pTa === req ||
+            cur.includes(req) ||
+            req.includes(cur) ||
+            (isReqActive && (!cur || cur === activeTaNama.toUpperCase()))
+          );
+        });
 
     return NextResponse.json({ data: filteredByTa });
   } catch (error: any) {
