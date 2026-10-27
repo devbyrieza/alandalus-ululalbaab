@@ -141,8 +141,8 @@ export default function MonitoringJadwalPage() {
     const [search, setSearch] = useState("");
     const [filterJenjang, setFilterJenjang] = useState("ALL");
     const [viewMode, setViewMode] = useState<"flat" | "grouped" | "santri" | "calendar">("flat");
-    const [dateFilter, setDateFilter] = useState<"akan_datang" | "hari_ini" | "besok" | "berlalu" | "semua" | "kustom">("akan_datang");
-    const [filterTahunAjaran, setFilterTahunAjaran] = useState<string>("ALL");
+    const [dateFilter, setDateFilter] = useState<"hari_ini" | "akan_datang" | "besok" | "berlalu" | "semua" | "kustom">("hari_ini");
+    const [filterTahunAjaran, setFilterTahunAjaran] = useState<string>("2027/2028");
     const [tahunAjaranList, setTahunAjaranList] = useState<{ id: string; nama: string; is_active: boolean }[]>([]);
     const [customDate, setCustomDate] = useState("");
     const [customTime, setCustomTime] = useState("");
@@ -250,8 +250,13 @@ export default function MonitoringJadwalPage() {
             const res = await fetch("/api/admin/tahun-ajaran");
             if (res.ok) {
                 const json = await res.json();
-                if (json.data && Array.isArray(json.data)) {
+                if (json.data && Array.isArray(json.data) && json.data.length > 0) {
                     setTahunAjaranList(json.data);
+                    // Prioritaskan TA aktif atau TA paling baru (posisi pertama)
+                    const activeOrNewest = json.data.find((t: any) => t.is_active) || json.data[0];
+                    if (activeOrNewest?.nama) {
+                        setFilterTahunAjaran(activeOrNewest.nama);
+                    }
                 }
             }
         } catch (e) {
@@ -974,26 +979,26 @@ export default function MonitoringJadwalPage() {
                             onChange={(e) => setFilterTahunAjaran(e.target.value)}
                             className="px-3 pr-8 rounded-xl text-[11px] font-bold uppercase tracking-wider transition-all border h-12 shadow-sm bg-white border-slate-200 text-slate-600 focus:border-primary-500 focus:ring-1 focus:ring-primary-500 outline-none appearance-none cursor-pointer hover:bg-slate-50"
                         >
-                            <option value="ALL">SEMUA TAHUN AJARAN</option>
                             {tahunAjaranList.map((t) => (
                                 <option key={t.id} value={t.nama}>
-                                    TA {t.nama} {t.is_active ? "(Aktif)" : ""}
+                                    TA {t.nama} {t.is_active ? "(AKTIF / DEFAULT)" : ""}
                                 </option>
                             ))}
                             {tahunAjaranList.length === 0 && (
                                 <>
-                                    <option value="2027/2028">TA 2027/2028</option>
+                                    <option value="2027/2028">TA 2027/2028 (AKTIF / DEFAULT)</option>
                                     <option value="2026/2027">TA 2026/2027</option>
                                 </>
                             )}
+                            <option value="ALL">SEMUA TAHUN AJARAN</option>
                         </select>
                         <select
                             value={dateFilter}
                             onChange={(e) => setDateFilter(e.target.value as any)}
                             className="px-4 pr-8 rounded-xl text-[11px] font-bold uppercase tracking-wider transition-all border h-12 shadow-sm bg-white border-slate-200 text-slate-600 focus:border-primary-500 focus:ring-1 focus:ring-primary-500 outline-none appearance-none cursor-pointer hover:bg-slate-50"
                         >
-                            <option value="akan_datang">SESI MENDATANG (DEFAULT)</option>
-                            <option value="hari_ini">JADWAL HARI INI</option>
+                            <option value="hari_ini">JADWAL HARI INI (DEFAULT)</option>
+                            <option value="akan_datang">SESI MENDATANG</option>
                             <option value="besok">JADWAL BESOK</option>
                             <option value="berlalu">SESI BERLALU</option>
                             <option value="semua">SEMUA WAKTU</option>
