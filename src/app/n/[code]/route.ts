@@ -6,11 +6,27 @@ export async function GET(
   req: Request,
   { params }: { params: Promise<{ code: string }> }
 ) {
+  const host = req.headers.get("x-forwarded-host") || req.headers.get("host") || "";
+  const proto = req.headers.get("x-forwarded-proto") || "https";
+  let baseOrigin = "";
+  if (host && !host.startsWith("0.0.0.0") && !host.startsWith("127.0.0.1") && !host.startsWith("localhost")) {
+    baseOrigin = `${proto}://${host}`;
+  } else {
+    baseOrigin = process.env.NEXT_PUBLIC_WEBSITE_URL || process.env.NEXT_PUBLIC_APP_URL || process.env.NEXTAUTH_URL || "";
+  }
+  if (!baseOrigin) {
+    try {
+      baseOrigin = new URL(req.url).origin;
+    } catch {
+      baseOrigin = "https://spmb.pesantren-ululalbaab.com";
+    }
+  }
+
   try {
     const { code } = await params;
 
     if (!code) {
-      return NextResponse.redirect(new URL("/login?error=Link_tidak_valid", req.url));
+      return NextResponse.redirect(new URL("/login?error=Link_tidak_valid", baseOrigin));
     }
 
     const verification = verifyExaminerInputCode(code);
@@ -18,7 +34,7 @@ export async function GET(
       return NextResponse.redirect(
         new URL(
           `/login?error=${encodeURIComponent(verification.reason || "Link_tidak_valid")}`,
-          req.url
+          baseOrigin
         )
       );
     }
@@ -37,7 +53,7 @@ export async function GET(
 
     if (!profile) {
       return NextResponse.redirect(
-        new URL("/login?error=Akun_penguji_tidak_ditemukan", req.url)
+        new URL("/login?error=Akun_penguji_tidak_ditemukan", baseOrigin)
       );
     }
 
@@ -47,7 +63,7 @@ export async function GET(
         ? `/dashboard/penguji/input-nilai?search=${encodeURIComponent(nomorPendaftaran)}`
         : `/dashboard/penguji/input-nilai`;
 
-    const redirectUrl = new URL(targetPath, req.url);
+    const redirectUrl = new URL(targetPath, baseOrigin);
     const response = NextResponse.redirect(redirectUrl);
 
     const sessionData = {
@@ -74,6 +90,6 @@ export async function GET(
     return response;
   } catch (error) {
     console.error("Examiner Direct Link Error:", error);
-    return NextResponse.redirect(new URL("/login?error=Terjadi_kesalahan", req.url));
+    return NextResponse.redirect(new URL("/login?error=Terjadi_kesalahan", baseOrigin));
   }
 }
