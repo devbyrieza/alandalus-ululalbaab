@@ -222,20 +222,20 @@
   /* Inner shadow */
   --shadow-inner: inset 0 2px 6px rgba(0, 0, 0, 0.06);
 
-  /* --- Border Radius   Watzap-style Ceria & Rounded --- */
+  /* --- Border Radius   skala tenang: kartu 12-16px, tombol pill --- */
   --radius-xs: 0.25rem;
   --radius-sm: 0.5rem;
-  --radius-md: 1rem;
-  --radius-lg: 1.5rem;
-  --radius-xl: 1.75rem;
-  --radius-2xl: 2rem;
-  --radius-3xl: 2.5rem;
+  --radius-md: 0.625rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.25rem;
+  --radius-3xl: 1.5rem;
   --radius-full: 9999px;
   --radius-pill: 9999px;
 
   /* --- Spacing Scale --- */
-  --space-section-y: clamp(4rem, 10vw, 7rem);
-  --space-section-y-sm: clamp(3rem, 7vw, 5rem);
+  --space-section-y: clamp(4rem, 8vw, 6.5rem);
+  --space-section-y-sm: clamp(3rem, 6vw, 4.5rem);
 
   /* --- Transitions   Linear-style easing --- */
   --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
@@ -270,8 +270,8 @@
   --danger:         #dc2626;
   --info:           #2563eb;
   
-  /* GEOMETRY: Ultra Rounded (Glass & Breathable - PLATINUM) */
-  --radius:         20px;
+  /* GEOMETRY: kartu 12-16px (lihat skala --radius-* di @theme) */
+  --radius:         16px;
   
   /* ELEVATION: Glowing / Deep 3D Shadows */
   --shadow-sm:      0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
@@ -324,23 +324,25 @@
     cursor: pointer;
   }
 
-  /* --- Fluid Typography   Linear-style tight & intentional --- */
+  /* --- Fluid Typography   Linear-style tight & intentional ---
+     Hirarki dari ukuran & weight: heading default tinta gelap,
+     aksen warna brand lewat span/class khusus (bukan default). --- */
   h1 {
     font-family: var(--font-display);
-    font-weight: 900;
+    font-weight: 800;
     letter-spacing: -0.03em;
-    font-size: clamp(2.25rem, 5vw + 1rem, 5rem);
-    line-height: 1.05;
-    color: var(--color-primary);
+    font-size: clamp(2.25rem, 5vw + 1rem, 4.5rem);
+    line-height: 1.08;
+    color: var(--color-ink-950);
   }
 
   h2 {
     font-family: var(--font-display);
-    font-weight: 800;
+    font-weight: 700;
     letter-spacing: -0.025em;
-    font-size: clamp(1.75rem, 3.5vw + 0.75rem, 3.5rem);
+    font-size: clamp(1.75rem, 3.5vw + 0.75rem, 3.25rem);
     line-height: 1.15;
-    color: var(--color-primary);
+    color: var(--color-ink-950);
   }
 
   h3 {
@@ -349,7 +351,7 @@
     letter-spacing: -0.02em;
     font-size: clamp(1.25rem, 2vw + 0.5rem, 2rem);
     line-height: 1.25;
-    color: var(--color-primary);
+    color: var(--color-ink-900);
   }
 
   h4 {
@@ -436,12 +438,8 @@
     background-clip: content-box;
   }
 
-  /* --- Focus Ring --- */
-  :focus-visible {
-    outline: 2px solid var(--color-primary);
-    outline-offset: 3px;
-    border-radius: var(--radius-sm);
-  }
+  /* --- Focus Ring: satu definisi final memakai box-shadow ring
+         (ada di lapisan bawah file ini) --- */
 
   /* --- Touch targets   mobile-first --- */
   @media (max-width: 768px) {
@@ -485,36 +483,21 @@
     font-size: 0.9375rem;
     letter-spacing: -0.01em;
     color: var(--color-white);
-    background: linear-gradient(135deg,
-        var(--color-blue-500) 0%,
-        var(--color-blue-800) 100%);
-    box-shadow: var(--shadow-blue);
-    transition: all var(--duration-base) var(--ease-spring);
+    background: var(--color-blue-600);
+    box-shadow: var(--shadow-xs);
+    transition: background-color var(--duration-base) var(--ease-smooth),
+      box-shadow var(--duration-base) var(--ease-smooth),
+      transform var(--duration-fast) var(--ease-smooth);
     border: none;
     text-decoration: none;
-    position: relative;
-    overflow: hidden;
-
-    &::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg,
-          rgba(255, 255, 255, 0.12) 0%,
-          rgba(255, 255, 255, 0) 60%);
-      border-radius: inherit;
-      pointer-events: none;
-    }
 
     &:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-blue-lg);
-      filter: brightness(1.08);
+      background: var(--color-blue-700);
+      box-shadow: var(--shadow-sm);
     }
 
     &:active {
-      transform: translateY(0) scale(0.98);
-      box-shadow: var(--shadow-blue);
+      transform: scale(0.98);
     }
 
     &:disabled {
@@ -537,36 +520,21 @@
     font-size: 0.9375rem;
     letter-spacing: -0.01em;
     color: var(--color-white);
-    background: linear-gradient(135deg,
-        var(--color-blue-500) 0%,
-        var(--color-blue-800) 100%);
-    box-shadow: var(--shadow-blue);
-    transition: all var(--duration-base) var(--ease-spring);
+    background: var(--color-blue-600);
+    box-shadow: var(--shadow-xs);
+    transition: background-color var(--duration-base) var(--ease-smooth),
+      box-shadow var(--duration-base) var(--ease-smooth),
+      transform var(--duration-fast) var(--ease-smooth);
     border: none;
     text-decoration: none;
-    position: relative;
-    overflow: hidden;
-
-    &::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg,
-          rgba(255, 255, 255, 0.12) 0%,
-          rgba(255, 255, 255, 0) 60%);
-      border-radius: inherit;
-      pointer-events: none;
-    }
 
     &:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-blue-lg);
-      filter: brightness(1.08);
+      background: var(--color-blue-700);
+      box-shadow: var(--shadow-sm);
     }
 
     &:active {
-      transform: translateY(0) scale(0.98);
-      box-shadow: var(--shadow-blue);
+      transform: scale(0.98);
     }
 
     &:disabled {
@@ -589,35 +557,21 @@
     font-size: 0.9375rem;
     letter-spacing: -0.01em;
     color: var(--color-cream-100);
-    background: linear-gradient(135deg,
-        var(--color-maroon-700) 0%,
-        var(--color-maroon-950) 100%);
-    box-shadow: var(--shadow-maroon);
-    transition: all var(--duration-base) var(--ease-spring);
+    background: var(--color-maroon-700);
+    box-shadow: var(--shadow-xs);
+    transition: background-color var(--duration-base) var(--ease-smooth),
+      box-shadow var(--duration-base) var(--ease-smooth),
+      transform var(--duration-fast) var(--ease-smooth);
     border: none;
     text-decoration: none;
-    position: relative;
-    overflow: hidden;
-
-    &::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg,
-          rgba(255, 255, 255, 0.1) 0%,
-          rgba(255, 255, 255, 0) 60%);
-      border-radius: inherit;
-      pointer-events: none;
-    }
 
     &:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-maroon-lg);
-      filter: brightness(1.08);
+      background: var(--color-maroon-800);
+      box-shadow: var(--shadow-sm);
     }
 
     &:active {
-      transform: translateY(0) scale(0.98);
+      transform: scale(0.98);
     }
 
     &:disabled {
@@ -643,18 +597,20 @@
     background: var(--color-white);
     border: 1.5px solid var(--color-blue-200);
     box-shadow: var(--shadow-xs);
-    transition: all var(--duration-base) var(--ease-smooth);
+    transition: background-color var(--duration-base) var(--ease-smooth),
+      border-color var(--duration-base) var(--ease-smooth),
+      box-shadow var(--duration-base) var(--ease-smooth),
+      transform var(--duration-fast) var(--ease-smooth);
     text-decoration: none;
 
     &:hover {
       background: var(--color-blue-50);
-      border-color: var(--color-blue-400);
+      border-color: var(--color-blue-300);
       box-shadow: var(--shadow-sm);
-      transform: translateY(-1px);
     }
 
     &:active {
-      transform: translateY(0) scale(0.98);
+      transform: scale(0.98);
     }
 
     &:disabled {
@@ -679,18 +635,20 @@
     background: var(--color-white);
     border: 1.5px solid var(--color-blue-200);
     box-shadow: var(--shadow-xs);
-    transition: all var(--duration-base) var(--ease-smooth);
+    transition: background-color var(--duration-base) var(--ease-smooth),
+      border-color var(--duration-base) var(--ease-smooth),
+      box-shadow var(--duration-base) var(--ease-smooth),
+      transform var(--duration-fast) var(--ease-smooth);
     text-decoration: none;
 
     &:hover {
       background: var(--color-blue-50);
-      border-color: var(--color-blue-400);
+      border-color: var(--color-blue-300);
       box-shadow: var(--shadow-sm);
-      transform: translateY(-1px);
     }
 
     &:active {
-      transform: translateY(0) scale(0.98);
+      transform: scale(0.98);
     }
 
     &:disabled {
@@ -715,18 +673,20 @@
     background: var(--color-white);
     border: 1.5px solid var(--color-maroon-200);
     box-shadow: var(--shadow-xs);
-    transition: all var(--duration-base) var(--ease-smooth);
+    transition: background-color var(--duration-base) var(--ease-smooth),
+      border-color var(--duration-base) var(--ease-smooth),
+      box-shadow var(--duration-base) var(--ease-smooth),
+      transform var(--duration-fast) var(--ease-smooth);
     text-decoration: none;
 
     &:hover {
       background: var(--color-maroon-50);
-      border-color: var(--color-maroon-400);
+      border-color: var(--color-maroon-300);
       box-shadow: var(--shadow-sm);
-      transform: translateY(-1px);
     }
 
     &:active {
-      transform: translateY(0) scale(0.98);
+      transform: scale(0.98);
     }
 
     &:disabled {
@@ -748,22 +708,21 @@
     font-size: 0.9375rem;
     letter-spacing: -0.01em;
     color: var(--color-blue-900);
-    background: linear-gradient(135deg,
-        var(--color-amber-200) 0%,
-        var(--color-amber-400) 100%);
-    box-shadow: var(--shadow-amber);
-    transition: all var(--duration-base) var(--ease-spring);
+    background: var(--color-amber-300);
+    box-shadow: var(--shadow-xs);
+    transition: background-color var(--duration-base) var(--ease-smooth),
+      box-shadow var(--duration-base) var(--ease-smooth),
+      transform var(--duration-fast) var(--ease-smooth);
     text-decoration: none;
-    border: 1px solid var(--color-amber-300);
+    border: 1px solid var(--color-amber-400);
 
     &:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px -4px rgba(175, 165, 90, 0.4);
-      filter: brightness(1.05);
+      background: var(--color-amber-400);
+      box-shadow: var(--shadow-sm);
     }
 
     &:active {
-      transform: translateY(0) scale(0.98);
+      transform: scale(0.98);
     }
 
     &:disabled {
@@ -785,22 +744,21 @@
     font-size: 0.9375rem;
     letter-spacing: -0.01em;
     color: var(--color-blue-900);
-    background: linear-gradient(135deg,
-        var(--color-amber-300) 0%,
-        var(--color-amber-500) 100%);
-    box-shadow: var(--shadow-yellow);
-    transition: all var(--duration-base) var(--ease-spring);
+    background: var(--color-amber-400);
+    box-shadow: var(--shadow-xs);
+    transition: background-color var(--duration-base) var(--ease-smooth),
+      box-shadow var(--duration-base) var(--ease-smooth),
+      transform var(--duration-fast) var(--ease-smooth);
     text-decoration: none;
     border: none;
 
     &:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-yellow-lg);
-      filter: brightness(1.06);
+      background: var(--color-amber-500);
+      box-shadow: var(--shadow-sm);
     }
 
     &:active {
-      transform: translateY(0) scale(0.98);
+      transform: scale(0.98);
     }
 
     &:disabled {
@@ -822,22 +780,21 @@
     font-size: 0.9375rem;
     letter-spacing: -0.01em;
     color: var(--color-maroon-900);
-    background: linear-gradient(135deg,
-        var(--color-cream-200) 0%,
-        var(--color-cream-400) 100%);
-    box-shadow: var(--shadow-cream);
-    transition: all var(--duration-base) var(--ease-spring);
+    background: var(--color-cream-300);
+    box-shadow: var(--shadow-xs);
+    transition: background-color var(--duration-base) var(--ease-smooth),
+      box-shadow var(--duration-base) var(--ease-smooth),
+      transform var(--duration-fast) var(--ease-smooth);
     text-decoration: none;
     border: 1px solid var(--color-cream-400);
 
     &:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px -4px rgba(228, 193, 111, 0.45);
-      filter: brightness(1.05);
+      background: var(--color-cream-400);
+      box-shadow: var(--shadow-sm);
     }
 
     &:active {
-      transform: translateY(0) scale(0.98);
+      transform: scale(0.98);
     }
   }
 
@@ -853,22 +810,21 @@
     font-size: 0.9375rem;
     letter-spacing: -0.01em;
     color: var(--color-ink-900);
-    background: linear-gradient(135deg,
-        var(--color-gold-300) 0%,
-        var(--color-gold-500) 100%);
-    box-shadow: var(--shadow-gold);
-    transition: all var(--duration-base) var(--ease-spring);
+    background: var(--color-gold-400);
+    box-shadow: var(--shadow-xs);
+    transition: background-color var(--duration-base) var(--ease-smooth),
+      box-shadow var(--duration-base) var(--ease-smooth),
+      transform var(--duration-fast) var(--ease-smooth);
     text-decoration: none;
     border: none;
 
     &:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px -4px rgba(245, 158, 11, 0.45);
-      filter: brightness(1.05);
+      background: var(--color-gold-500);
+      box-shadow: var(--shadow-sm);
     }
 
     &:active {
-      transform: translateY(0) scale(0.98);
+      transform: scale(0.98);
     }
   }
 
@@ -919,12 +875,11 @@
       background: var(--color-blue-800);
       color: var(--color-white);
       border-color: var(--color-blue-800);
-      box-shadow: var(--shadow-blue);
-      transform: translateY(-1px);
+      box-shadow: var(--shadow-xs);
     }
 
     &:active {
-      transform: translateY(0) scale(0.98);
+      transform: scale(0.98);
     }
   }
 
@@ -948,12 +903,11 @@
       background: var(--color-maroon-950);
       color: var(--color-cream-100);
       border-color: var(--color-maroon-950);
-      box-shadow: var(--shadow-maroon);
-      transform: translateY(-1px);
+      box-shadow: var(--shadow-xs);
     }
 
     &:active {
-      transform: translateY(0) scale(0.98);
+      transform: scale(0.98);
     }
   }
 
@@ -963,13 +917,13 @@
     background-color: var(--color-white);
     border-radius: var(--radius-xl);
     border: 1px solid var(--color-surface-200);
-    box-shadow: var(--shadow-premium-sm);
-    transition: all var(--duration-slow) var(--ease-spring);
+    box-shadow: var(--shadow-xs);
+    transition: box-shadow var(--duration-base) var(--ease-smooth),
+      border-color var(--duration-base) var(--ease-smooth);
     overflow: hidden;
 
     &:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-premium-md);
+      box-shadow: var(--shadow-md);
       border-color: var(--color-ink-200);
     }
   }
@@ -986,7 +940,6 @@
     &:hover {
       background: rgba(255, 255, 255, 0.96);
       box-shadow: var(--shadow-premium-md);
-      transform: translateY(-2px);
     }
   }
 
@@ -998,11 +951,11 @@
     border-radius: var(--radius-xl);
     border: 1px solid var(--color-blue-100);
     box-shadow: var(--shadow-premium-sm);
-    transition: all var(--duration-slow) var(--ease-spring);
+    transition: box-shadow var(--duration-base) var(--ease-smooth),
+      border-color var(--duration-base) var(--ease-smooth);
     overflow: hidden;
 
     &:hover {
-      transform: translateY(-3px);
       box-shadow: var(--shadow-premium-md);
       border-color: var(--color-blue-200);
     }
@@ -1042,11 +995,11 @@
     border-radius: var(--radius-xl);
     border: 1px solid var(--color-cream-200);
     box-shadow: var(--shadow-premium-sm);
-    transition: all var(--duration-slow) var(--ease-spring);
+    transition: box-shadow var(--duration-base) var(--ease-smooth),
+      border-color var(--duration-base) var(--ease-smooth);
     overflow: hidden;
 
     &:hover {
-      transform: translateY(-3px);
       box-shadow: var(--shadow-premium-md);
       border-color: var(--color-cream-300);
     }
@@ -1617,38 +1570,23 @@
 @layer utilities {
 
   .text-gradient-primary {
-    background: linear-gradient(135deg, var(--color-primary-600) 0%, var(--color-primary-900) 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--color-blue-800);
   }
 
   .text-gradient-blue {
-    background: linear-gradient(135deg, var(--color-blue-600) 0%, var(--color-blue-900) 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--color-blue-800);
   }
 
   .text-gradient-maroon {
-    background: linear-gradient(135deg, var(--color-maroon-600) 0%, var(--color-maroon-900) 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--color-maroon-800);
   }
 
   .text-gradient-gold {
-    background: linear-gradient(135deg, var(--color-gold-400) 0%, var(--color-gold-600) 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--color-gold-600);
   }
 
   .text-gradient-amber {
-    background: linear-gradient(135deg, var(--color-amber-400) 0%, var(--color-amber-600) 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--color-amber-600);
   }
 
   .bg-blue-gradient {
@@ -1714,8 +1652,8 @@
     padding: 0.35rem 0.9rem;
     border-radius: var(--radius-full);
     font-size: 0.6875rem;
-    font-weight: 800;
-    letter-spacing: 0.1em;
+    font-weight: 700;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
     line-height: 1;
     border: 1px solid;
@@ -1813,8 +1751,8 @@
     position: absolute;
     border-radius: 50%;
     pointer-events: none;
-    filter: blur(60px);
-    opacity: 0.28;
+    /* dinetralkan: efek glow dihapus (lihat DESIGN.md) */
+    opacity: 0;
   }
 
   .glow-blob-blue {
@@ -1848,55 +1786,37 @@
      Contoh: <span class="gradient-text-blue">Penerimaan Santri</span>
   */
   .gradient-text-blue {
-    background: linear-gradient(135deg, var(--color-blue-600) 0%, var(--color-blue-900) 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--color-blue-600);
     display: inline;
   }
 
   /* Blue-Amber gradient (pai-next teal-amber style, versi Ulul Albaab) */
   .gradient-text-blue-amber {
-    background: linear-gradient(135deg, var(--color-blue-600) 0%, var(--color-amber-500) 60%, var(--color-blue-700) 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--color-blue-700);
     display: inline;
   }
 
   /* Amber warm (untuk hero secondary text) */
   .gradient-text-amber-warm {
-    background: linear-gradient(135deg, var(--color-amber-400) 0%, var(--color-amber-600) 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--color-amber-600);
     display: inline;
   }
 
   /* Biru fresh */
   .gradient-text-blue-fresh {
-    background: linear-gradient(135deg, var(--color-blue-500) 0%, var(--color-blue-700) 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--color-blue-600);
     display: inline;
   }
 
 
   .gradient-text-maroon {
-    background: linear-gradient(135deg, var(--color-maroon-600) 0%, var(--color-maroon-900) 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--color-maroon-800);
     display: inline;
   }
 
   /* White gradient (untuk section gelap) */
   .gradient-text-white {
-    background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.65) 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: rgba(255, 255, 255, 0.95);
     display: inline;
   }
 
@@ -1904,20 +1824,20 @@
      Menambah glow effect pada elemen dengan brand color
   */
   .glow-ring-blue {
-    box-shadow: 0 0 0 1px rgba(3, 105, 199, 0.3), 0 0 20px rgba(3, 105, 199, 0.15);
+    box-shadow: 0 0 0 1px rgba(3, 105, 199, 0.25);
     transition: box-shadow var(--duration-base) var(--ease-smooth);
 
     &:hover {
-      box-shadow: 0 0 0 1px rgba(3, 105, 199, 0.5), 0 0 30px rgba(3, 105, 199, 0.22);
+      box-shadow: 0 0 0 1px rgba(3, 105, 199, 0.4);
     }
   }
 
   .glow-ring-maroon {
-    box-shadow: 0 0 0 1px rgba(128, 0, 0, 0.3), 0 0 20px rgba(128, 0, 0, 0.15);
+    box-shadow: 0 0 0 1px rgba(128, 0, 0, 0.25);
     transition: box-shadow var(--duration-base) var(--ease-smooth);
 
     &:hover {
-      box-shadow: 0 0 0 1px rgba(128, 0, 0, 0.5), 0 0 30px rgba(128, 0, 0, 0.22);
+      box-shadow: 0 0 0 1px rgba(128, 0, 0, 0.4);
     }
   }
 
@@ -1995,30 +1915,20 @@
     border: none;
   }
 
-  /* -- Hover Lift (standard micro-interaction) -- */
+  /* -- Hover Lift (dinetralkan: tanpa transform, hanya shadow) -- */
   .hover-lift {
-    transition: transform var(--duration-base) var(--ease-spring), box-shadow var(--duration-base) var(--ease-spring);
+    transition: box-shadow var(--duration-base) var(--ease-smooth);
 
     &:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-premium-lg);
-    }
-
-    &:active {
-      transform: translateY(-1px) scale(0.99);
+      box-shadow: var(--shadow-md);
     }
   }
 
   .hover-lift-sm {
-    transition: transform var(--duration-fast) var(--ease-spring), box-shadow var(--duration-fast) var(--ease-spring);
+    transition: box-shadow var(--duration-fast) var(--ease-smooth);
 
     &:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-premium-md);
-    }
-
-    &:active {
-      transform: translateY(0) scale(0.99);
+      box-shadow: var(--shadow-sm);
     }
   }
 }
@@ -2031,11 +1941,11 @@
     align-items: center;
     justify-content: center;
     border-radius: var(--radius-md);
-    transition: all var(--duration-base) var(--ease-spring);
+    transition: filter var(--duration-base) var(--ease-smooth);
     flex-shrink: 0;
 
     &:hover, .group:hover & {
-      transform: scale(1.10) rotate(3deg);
+      filter: brightness(1.05);
     }
   }
 
@@ -2070,33 +1980,11 @@
     align-items: center;
     gap: 0.625rem;
     font-size: 0.6875rem;
-    font-weight: 800;
-    letter-spacing: 0.12em;
+    font-weight: 700;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
     color: var(--color-primary-600);
     line-height: 1;
-  }
-
-  .shine-hover {
-    position: relative;
-    overflow: hidden;
-
-    &::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 60%;
-      height: 100%;
-      background: linear-gradient(105deg, transparent 40%, rgba(255, 255, 255, 0.12) 50%, transparent 60%);
-      transition: left 0.6s var(--ease-smooth);
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    &:hover::before {
-      left: 150%;
-    }
   }
 
   .divider-editorial {
@@ -2114,9 +2002,9 @@
 
     & span {
       font-size: 0.6rem;
-      font-weight: 800;
+      font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.15em;
+      letter-spacing: 0.06em;
       color: var(--color-ink-300);
       white-space: nowrap;
     }
@@ -2223,11 +2111,6 @@ html, body {
   }
 }
 
-@theme {
-  --radius-md: 12px;
-  --radius-lg: 14px;
-}
-
 @layer utilities {
   .animate-slide-up {
     animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -2240,18 +2123,10 @@ html, body {
 }
 
 .stat-card {
-  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease !important;
-  will-change: transform;
+  transition: box-shadow 0.25s ease;
 }
 .stat-card:hover {
-  transform: translateY(-2px) scale(1.01) !important;
-  box-shadow: 0 10px 28px rgba(85, 0, 0, 0.08), 0 2px 8px rgba(0,0,0,0.04) !important;
-}
-.stat-icon {
-  transition: transform 0.2s ease;
-}
-.stat-card:hover .stat-icon {
-  transform: scale(1.06) !important;
+  box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.08);
 }
 /* -------------------------------------------------------------------------- */
 
@@ -2327,12 +2202,7 @@ html, body {
     transition: box-shadow 0.15s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  /* -- 5. SELECTION   Soft brand-tinted ------------------------------ */
-  ::selection {
-    background-color: #2563eb !important;
-    color: #ffffff !important;
-    -webkit-text-fill-color: #ffffff !important;
-  }
+  /* -- 5. SELECTION: satu definisi final ada di @layer base atas --- */
 
   /* -- 6. IMAGES   Smooth rendering ---------------------------------- */
   img {
@@ -2386,8 +2256,8 @@ html, body {
   textarea:focus,
   select:focus {
     outline: none;
-    border-color: var(--color-primary, #0f766e) !important;
-    box-shadow: 0 0 0 3px rgba(var(--color-primary-rgb, 15 118 110), 0.12),
+    border-color: var(--color-primary, #0977E6) !important;
+    box-shadow: 0 0 0 3px rgba(9, 119, 230, 0.12),
                 0 1px 4px rgba(0, 0, 0, 0.06);
     background-color: #FFFFFF;
   }
@@ -2522,11 +2392,7 @@ html, body {
     transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
   }
   .hover-lift {
-    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
-                box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  .hover-lift:hover {
-    transform: translateY(-2px);
+    transition: box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   }
   .hover-scale:hover {
     transform: scale(1.02);
@@ -2726,29 +2592,7 @@ svg:not(:has(text)), svg:not(:has(text)) * {
   user-select: none !important;
 }
 
-/* Highlight seleksi teks yang tegas, jelas, dan kontras tinggi (Vivid Selection) */
-::selection {
-  background-color: #2563eb !important;
-  color: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
-}
-
-::-moz-selection {
-  background-color: #2563eb !important;
-  color: #ffffff !important;
-}
-
-/* Highlight seleksi di dalam form input dan textarea */
-input::selection, textarea::selection {
-  background-color: #2563eb !important;
-  color: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
-}
-
-input::-moz-selection, textarea::-moz-selection {
-  background-color: #2563eb !important;
-  color: #ffffff !important;
-}
+/* Highlight seleksi teks: satu definisi final ada di @layer base atas */
 
 
 /* Global Cursor Override Requested by User */
