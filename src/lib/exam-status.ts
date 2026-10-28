@@ -74,18 +74,19 @@ export async function markExamComponentAsComplete({
           updates.status_quran = "completed";
           updates.penguji_quran_id = userId;
           updatedField = "Seleksi Al Qur'an";
-        } else if (title.includes("calsan") || title.includes("santri")) {
-          updates.status_santri = "completed";
-          updates.penguji_santri_id = userId;
-          updatedField = "Seleksi Wawancara Calon Santri";
         } else if (
           title.includes("cawalsan") ||
           title.includes("ortu") ||
-          title.includes("orang")
+          title.includes("orang") ||
+          title.includes("wali")
         ) {
           updates.status_ortu = "completed";
           updates.penguji_ortu_id = userId;
           updatedField = "Seleksi Wawancara Orang Tua";
+        } else if (title.includes("calsan") || title.includes("santri")) {
+          updates.status_santri = "completed";
+          updates.penguji_santri_id = userId;
+          updatedField = "Seleksi Wawancara Calon Santri";
         } else if (title.includes("hafalan")) {
           updates.status_hafalan = "completed";
           updates.penguji_hafalan_id = userId;

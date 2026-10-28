@@ -93,14 +93,15 @@ export async function PATCH(
     ) {
       const title = (assignment.exam_session.title || "").toLowerCase();
       const hasQuranMatch = title.includes("qur") || title.includes("quran");
-      const hasWawancaraMatch =
-        title.includes("calsan") ||
-        title.includes("santri") ||
-        title.includes("wawancara");
       const hasOrtuMatch =
         title.includes("cawalsan") ||
         title.includes("ortu") ||
-        title.includes("orang");
+        title.includes("orang") ||
+        title.includes("wali");
+      const hasWawancaraMatch =
+        (title.includes("calsan") ||
+        title.includes("santri") ||
+        title.includes("wawancara")) && !hasOrtuMatch;
       const hasHafalanMatch = title.includes("hafalan");
       const hasArabMatch = title.includes("arab");
 

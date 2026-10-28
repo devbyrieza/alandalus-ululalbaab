@@ -112,14 +112,15 @@ export async function GET() {
               jenis_tugas.push("Seleksi Al Qur'an", "Tes Al-Qur'an (Bacaan & Hafalan)");
             else if (title.includes("arab") || title.includes("lisan"))
               jenis_tugas.push("Tes Lisan Bahasa Arab");
-          else if (title.includes("calsan") || title.includes("santri"))
-            jenis_tugas.push("Seleksi Wawancara Calon Santri");
           else if (
             title.includes("cawalsan") ||
             title.includes("ortu") ||
-            title.includes("orang")
+            title.includes("orang") ||
+            title.includes("wali")
           )
             jenis_tugas.push("Seleksi Wawancara Calon Orangtua/Wali Santri");
+          else if (title.includes("calsan") || title.includes("santri"))
+            jenis_tugas.push("Seleksi Wawancara Calon Santri");
           else jenis_tugas.push(item.exam_session?.title || "Ujian");
         }
       }

@@ -1098,10 +1098,10 @@ export function buildMessageKonfirmasiJadwalInterviewer(
     let agendaTitle = "*JADWAL SELEKSI BARU MASUK*";
     if (jenisLower.includes("quran")) {
         agendaText = "Tes Al-Qur'an";
+    } else if (jenisLower.includes("cawalsan") || jenisLower.includes("ortu") || jenisLower.includes("orang tua") || jenisLower.includes("wali")) {
+        agendaText = "Wawancara Calon Orangtua/Wali Santri";
     } else if (jenisLower.includes("calsan") || jenisLower.includes("santri")) {
         agendaText = "Wawancara Calon Santri";
-    } else if (jenisLower.includes("cawalsan") || jenisLower.includes("ortu") || jenisLower.includes("orang tua")) {
-        agendaText = "Wawancara Calon Orangtua/Wali Santri";
     }
 
     let cleanJam = (waktu || "").replace(/\s*WIB\s*/gi, " ").trim();

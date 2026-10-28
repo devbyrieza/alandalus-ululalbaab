@@ -140,8 +140,8 @@ export async function GET() {
         if (roles.length === 0 && item.exam_session?.created_by === userId) {
           const title = (item.exam_session?.title || "").toLowerCase();
           const hasQuranMatch = title.includes("qur") || title.includes("quran") || title.includes("hafalan") || title.includes("bacaan");
-          const hasWawancaraMatch = title.includes("calsan") || title.includes("santri") || title.includes("wawancara");
-          const hasOrtuMatch = title.includes("cawalsan") || title.includes("ortu") || title.includes("orang");
+          const hasOrtuMatch = title.includes("cawalsan") || title.includes("ortu") || title.includes("orang") || title.includes("wali");
+          const hasWawancaraMatch = (title.includes("calsan") || title.includes("santri") || title.includes("wawancara")) && !hasOrtuMatch;
           const hasLisanArabMatch = isDirectNonIL && (title.includes("arab") || title.includes("lisan"));
 
           if (hasQuranMatch) roles.push("quran");

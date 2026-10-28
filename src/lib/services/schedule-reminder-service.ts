@@ -129,7 +129,7 @@ export async function checkAndSendH1Reminders(appUrl: string, force: boolean = f
 
         const sessionTitle = (jadwal.exam_session?.title || "").toLowerCase();
         const isQuran = sessionTitle.includes("quran") || sessionTitle.includes("qur'an");
-        const isOrtu = sessionTitle.includes("ortu") || sessionTitle.includes("cawalsan") || sessionTitle.includes("orang tua");
+        const isOrtu = sessionTitle.includes("ortu") || sessionTitle.includes("cawalsan") || sessionTitle.includes("orang tua") || sessionTitle.includes("orangtua") || sessionTitle.includes("wali");
         const isSantri = sessionTitle.includes("calsan") || (sessionTitle.includes("santri") && !isOrtu);
 
         // 1. Kirim ke Pendaftar jika belum terkirim
@@ -342,7 +342,7 @@ export async function checkAndSendH0Reminders(appUrl: string): Promise<{ checked
 
         const sessionTitle = (jadwal.exam_session?.title || "").toLowerCase();
         const isQuran = sessionTitle.includes("quran") || sessionTitle.includes("qur'an");
-        const isOrtu = sessionTitle.includes("ortu") || sessionTitle.includes("cawalsan") || sessionTitle.includes("orang tua");
+        const isOrtu = sessionTitle.includes("ortu") || sessionTitle.includes("cawalsan") || sessionTitle.includes("orang tua") || sessionTitle.includes("orangtua") || sessionTitle.includes("wali");
         const isSantri = sessionTitle.includes("calsan") || (sessionTitle.includes("santri") && !isOrtu);
 
         // 1. Kirim Pengingat Hari H ke Pendaftar

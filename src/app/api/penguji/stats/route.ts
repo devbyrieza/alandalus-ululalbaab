@@ -71,18 +71,18 @@ export async function GET() {
         const title = (item.exam_session.title || "").toLowerCase();
         if (title.includes("qur") || title.includes("quran"))
           roles.push("quran");
-        if (
-          title.includes("calsan") ||
-          title.includes("santri") ||
-          title.includes("wawancara")
-        )
-          roles.push("santri");
-        if (
+        const isOrtuMatch =
           title.includes("cawalsan") ||
           title.includes("ortu") ||
-          title.includes("orang")
+          title.includes("orang") ||
+          title.includes("wali");
+        if (isOrtuMatch) roles.push("ortu");
+        if (
+          (title.includes("calsan") ||
+          title.includes("santri") ||
+          title.includes("wawancara")) && !isOrtuMatch
         )
-          roles.push("ortu");
+          roles.push("santri");
       }
 
       if (pesertaMap.has(pendaftarId)) {

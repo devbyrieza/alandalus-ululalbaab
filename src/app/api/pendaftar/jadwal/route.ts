@@ -14,9 +14,17 @@ function getExamCategory(title: string): string {
   const t = (title || "").toLowerCase();
   if (t.includes("quran") || t.includes("qur'an") || t.includes("bacaan") || t.includes("hafalan")) return "QURAN";
   if (t.includes("arab") || t.includes("lisan")) return "LISAN_ARAB";
-  if (t.includes("calsan") || t.includes("santri")) return "W_SANTRI";
-  if (t.includes("cawalsan") || t.includes("ortu") || t.includes("orang tua"))
+  // W_ORTU must be checked BEFORE W_SANTRI because titles often contain "Orangtua/Wali Santri", "Calon Wali Santri", "Cawalsan", etc.
+  if (
+    t.includes("cawalsan") ||
+    t.includes("ortu") ||
+    t.includes("orang tua") ||
+    t.includes("orangtua") ||
+    t.includes("wali")
+  ) {
     return "W_ORTU";
+  }
+  if (t.includes("calsan") || t.includes("santri")) return "W_SANTRI";
   return "OTHER";
 }
 
@@ -176,7 +184,7 @@ export async function POST(request: Request) {
           : currentCategory === "W_SANTRI"
             ? "Seleksi Wawancara Calon Santri"
             : currentCategory === "W_ORTU"
-              ? "Wawancara Orang Tua"
+              ? "Wawancara Calon Orangtua/Wali"
               : "Ujian ini";
 
       return NextResponse.json(

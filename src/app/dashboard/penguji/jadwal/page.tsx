@@ -1329,17 +1329,18 @@ export default function JadwalPengujiPage() {
                         let showOrtu = isOrtu;
                         if (!isSantri && !isQuran && !isOrtu && isCreator) {
                           const tugas = (item.jenis_tugas || "").toLowerCase();
+                          const hasOrtuTugas =
+                            tugas.includes("cawalsan") ||
+                            tugas.includes("ortu") ||
+                            tugas.includes("wali") ||
+                            tugas.includes("orang");
+                          if (hasOrtuTugas) showOrtu = true;
                           if (
-                            tugas.includes("calsan") ||
-                            tugas.includes("santri")
+                            (tugas.includes("calsan") ||
+                            tugas.includes("santri")) && !hasOrtuTugas
                           )
                             showSantri = true;
                           if (tugas.includes("qur")) showQuran = true;
-                          if (
-                            tugas.includes("cawalsan") ||
-                            tugas.includes("ortu")
-                          )
-                            showOrtu = true;
                         }
 
                         return (

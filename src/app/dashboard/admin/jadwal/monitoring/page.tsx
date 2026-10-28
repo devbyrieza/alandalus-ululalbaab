@@ -129,8 +129,9 @@ function getExamCategory(title: string): string {
     const t = (title || "").toLowerCase();
     if (t.includes("quran") || t.includes("qur'an") || t.includes("bacaan") || t.includes("hafalan")) return "QURAN";
     if (t.includes("arab") || t.includes("lisan")) return "LISAN_ARAB";
+    // Check W_ORTU before W_SANTRI
+    if (t.includes("cawalsan") || t.includes("ortu") || t.includes("orang tua") || t.includes("orangtua") || t.includes("wali")) return "W_ORTU";
     if (t.includes("calsan") || t.includes("santri")) return "W_SANTRI";
-    if (t.includes("cawalsan") || t.includes("ortu") || t.includes("orang tua") || t.includes("wali")) return "W_ORTU";
     return "OTHER";
 }
 

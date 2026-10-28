@@ -306,10 +306,17 @@ export async function GET(request: NextRequest) {
       if (creatorIsExaminer) {
         if (sessionTitle.includes("qur") || creator.role?.includes("quran")) {
           fallbackQuran = creator.full_name;
-        } else if (sessionTitle.includes("santri") || creator.role?.includes("santri")) {
-          fallbackSantri = creator.full_name;
-        } else if (sessionTitle.includes("ortu") || creator.role?.includes("ortu")) {
+        } else if (
+          sessionTitle.includes("ortu") ||
+          sessionTitle.includes("cawalsan") ||
+          sessionTitle.includes("orang") ||
+          sessionTitle.includes("wali") ||
+          creator.role?.includes("ortu") ||
+          creator.role?.includes("cawalsan")
+        ) {
           fallbackOrtu = creator.full_name;
+        } else if (sessionTitle.includes("santri") || creator.role?.includes("santri") || creator.role?.includes("calsan")) {
+          fallbackSantri = creator.full_name;
         }
       }
 
