@@ -147,6 +147,21 @@ export async function checkAndSendH1Reminders(appUrl: string, force: boolean = f
                 });
                 await enqueueWhatsapp({ pendaftarId: jadwal.pendaftar_id, phone: santriPhone, jenisNotif: "reminder_quran_pendaftar_h1", messageContent: msg, force: true, sendNow: true });
                 sent = true;
+            } else if (isOrtu && (parentPhone || santriPhone)) {
+                const targetPhone = parentPhone || santriPhone;
+                if (targetPhone) {
+                    const meet = jadwal.penguji_ortu?.google_meet_link || jadwal.penguji_santri?.google_meet_link || jadwal.google_meet_link || "-";
+                    const msg = buildMessageReminderOrtuPendaftar({
+                        namaWali,
+                        namaSantri: jadwal.pendaftar.nama_lengkap,
+                        jenjang: santriJenjang,
+                        hariTanggal: finalHariTanggal,
+                        waktu: finalJam,
+                        googleMeetLink: meet
+                    });
+                    await enqueueWhatsapp({ pendaftarId: jadwal.pendaftar_id, phone: targetPhone, jenisNotif: "reminder_ortu_pendaftar_h1", messageContent: msg, force: true, sendNow: true });
+                    sent = true;
+                }
             } else if (isSantri && santriPhone) {
                 const meet = jadwal.penguji_santri?.google_meet_link || jadwal.google_meet_link || "-";
                 const msg = buildMessageReminderSantriPendaftar({
@@ -158,18 +173,6 @@ export async function checkAndSendH1Reminders(appUrl: string, force: boolean = f
                     googleMeetLink: meet
                 });
                 await enqueueWhatsapp({ pendaftarId: jadwal.pendaftar_id, phone: santriPhone, jenisNotif: "reminder_santri_pendaftar_h1", messageContent: msg, force: true, sendNow: true });
-                sent = true;
-            } else if (isOrtu && parentPhone) {
-                const meet = jadwal.penguji_ortu?.google_meet_link || jadwal.google_meet_link || "-";
-                const msg = buildMessageReminderOrtuPendaftar({
-                    namaWali,
-                    namaSantri: jadwal.pendaftar.nama_lengkap,
-                    jenjang: santriJenjang,
-                    hariTanggal: finalHariTanggal,
-                    waktu: finalJam,
-                    googleMeetLink: meet
-                });
-                await enqueueWhatsapp({ pendaftarId: jadwal.pendaftar_id, phone: parentPhone, jenisNotif: "reminder_ortu_pendaftar_h1", messageContent: msg, force: true, sendNow: true });
                 sent = true;
             } else {
                 // Sesi Umum / Terpadu
@@ -186,6 +189,20 @@ export async function checkAndSendH1Reminders(appUrl: string, force: boolean = f
                     await enqueueWhatsapp({ pendaftarId: jadwal.pendaftar_id, phone: santriPhone, jenisNotif: "reminder_quran_pendaftar_h1", messageContent: msg, force: true, sendNow: true });
                     sent = true;
                 }
+                const ortuPhone = parentPhone || santriPhone;
+                if (jadwal.penguji_ortu && ortuPhone) {
+                    const meet = jadwal.penguji_ortu.google_meet_link || jadwal.google_meet_link || "-";
+                    const msg = buildMessageReminderOrtuPendaftar({
+                        namaWali,
+                        namaSantri: jadwal.pendaftar.nama_lengkap,
+                        jenjang: santriJenjang,
+                        hariTanggal: finalHariTanggal,
+                        waktu: finalJam,
+                        googleMeetLink: meet
+                    });
+                    await enqueueWhatsapp({ pendaftarId: jadwal.pendaftar_id, phone: ortuPhone, jenisNotif: "reminder_ortu_pendaftar_h1", messageContent: msg, force: true, sendNow: true });
+                    sent = true;
+                }
                 if (jadwal.penguji_santri && santriPhone) {
                     const meet = jadwal.penguji_santri.google_meet_link || jadwal.google_meet_link || "-";
                     const msg = buildMessageReminderSantriPendaftar({
@@ -197,19 +214,6 @@ export async function checkAndSendH1Reminders(appUrl: string, force: boolean = f
                         googleMeetLink: meet
                     });
                     await enqueueWhatsapp({ pendaftarId: jadwal.pendaftar_id, phone: santriPhone, jenisNotif: "reminder_santri_pendaftar_h1", messageContent: msg, force: true, sendNow: true });
-                    sent = true;
-                }
-                if (jadwal.penguji_ortu && parentPhone) {
-                    const meet = jadwal.penguji_ortu.google_meet_link || jadwal.google_meet_link || "-";
-                    const msg = buildMessageReminderOrtuPendaftar({
-                        namaWali,
-                        namaSantri: jadwal.pendaftar.nama_lengkap,
-                        jenjang: santriJenjang,
-                        hariTanggal: finalHariTanggal,
-                        waktu: finalJam,
-                        googleMeetLink: meet
-                    });
-                    await enqueueWhatsapp({ pendaftarId: jadwal.pendaftar_id, phone: parentPhone, jenisNotif: "reminder_ortu_pendaftar_h1", messageContent: msg, force: true, sendNow: true });
                     sent = true;
                 }
             }
@@ -232,16 +236,28 @@ export async function checkAndSendH1Reminders(appUrl: string, force: boolean = f
                 notifType: string;
             }> = [];
 
-            if (isQuran && jadwal.penguji_quran) {
-                examinerTasks.push({ profile: jadwal.penguji_quran, builder: buildMessageReminderQuranPenguji, notifType: "reminder_quran_penguji_h1" });
+            if (isQuran && (jadwal.penguji_quran || (jadwal as any).penguji_hafalan)) {
+                examinerTasks.push({ profile: jadwal.penguji_quran || (jadwal as any).penguji_hafalan, builder: buildMessageReminderQuranPenguji, notifType: "reminder_quran_penguji_h1" });
+            } else if (isOrtu && (jadwal.penguji_ortu || jadwal.penguji_santri)) {
+                const examiner = jadwal.penguji_ortu || jadwal.penguji_santri;
+                examinerTasks.push({ profile: examiner, builder: buildMessageReminderOrtuPenguji, notifType: "reminder_ortu_penguji_h1" });
+                if (!jadwal.penguji_ortu && jadwal.penguji_santri) {
+                    prisma.jadwalUjian.update({
+                        where: { id: jadwal.id },
+                        data: {
+                            penguji_ortu_id: jadwal.penguji_santri_id,
+                            penguji_santri_id: null,
+                            status_ortu: jadwal.status_santri || "scheduled",
+                            status_santri: null,
+                        }
+                    }).catch(console.error);
+                }
             } else if (isSantri && jadwal.penguji_santri) {
                 examinerTasks.push({ profile: jadwal.penguji_santri, builder: buildMessageReminderSantriPenguji, notifType: "reminder_santri_penguji_h1" });
-            } else if (isOrtu && jadwal.penguji_ortu) {
-                examinerTasks.push({ profile: jadwal.penguji_ortu, builder: buildMessageReminderOrtuPenguji, notifType: "reminder_ortu_penguji_h1" });
             } else {
                 if (jadwal.penguji_quran) examinerTasks.push({ profile: jadwal.penguji_quran, builder: buildMessageReminderQuranPenguji, notifType: "reminder_quran_penguji_h1" });
-                if (jadwal.penguji_santri) examinerTasks.push({ profile: jadwal.penguji_santri, builder: buildMessageReminderSantriPenguji, notifType: "reminder_santri_penguji_h1" });
                 if (jadwal.penguji_ortu) examinerTasks.push({ profile: jadwal.penguji_ortu, builder: buildMessageReminderOrtuPenguji, notifType: "reminder_ortu_penguji_h1" });
+                if (jadwal.penguji_santri) examinerTasks.push({ profile: jadwal.penguji_santri, builder: buildMessageReminderSantriPenguji, notifType: "reminder_santri_penguji_h1" });
             }
 
             for (const task of examinerTasks) {
@@ -358,6 +374,21 @@ export async function checkAndSendH0Reminders(appUrl: string): Promise<{ checked
             });
             await enqueueWhatsapp({ pendaftarId: jadwal.pendaftar_id, phone: santriPhone, jenisNotif: "reminder_quran_pendaftar_h0", messageContent: msg, force: true, sendNow: true });
             enqueuedPendaftar++;
+        } else if (isOrtu && (parentPhone || santriPhone)) {
+            const targetPhone = parentPhone || santriPhone;
+            if (targetPhone) {
+                const meet = jadwal.penguji_ortu?.google_meet_link || jadwal.penguji_santri?.google_meet_link || jadwal.google_meet_link || "-";
+                const msg = buildMessageReminderOrtuPendaftar({
+                    namaWali,
+                    namaSantri: jadwal.pendaftar.nama_lengkap,
+                    jenjang: santriJenjang,
+                    hariTanggal: finalHariTanggal,
+                    waktu: finalJam,
+                    googleMeetLink: meet
+                });
+                await enqueueWhatsapp({ pendaftarId: jadwal.pendaftar_id, phone: targetPhone, jenisNotif: "reminder_ortu_pendaftar_h0", messageContent: msg, force: true, sendNow: true });
+                enqueuedPendaftar++;
+            }
         } else if (isSantri && santriPhone) {
             const meet = jadwal.penguji_santri?.google_meet_link || jadwal.google_meet_link || "-";
             const msg = buildMessageReminderSantriPendaftar({
@@ -369,18 +400,6 @@ export async function checkAndSendH0Reminders(appUrl: string): Promise<{ checked
                 googleMeetLink: meet
             });
             await enqueueWhatsapp({ pendaftarId: jadwal.pendaftar_id, phone: santriPhone, jenisNotif: "reminder_santri_pendaftar_h0", messageContent: msg, force: true, sendNow: true });
-            enqueuedPendaftar++;
-        } else if (isOrtu && parentPhone) {
-            const meet = jadwal.penguji_ortu?.google_meet_link || jadwal.google_meet_link || "-";
-            const msg = buildMessageReminderOrtuPendaftar({
-                namaWali,
-                namaSantri: jadwal.pendaftar.nama_lengkap,
-                jenjang: santriJenjang,
-                hariTanggal: finalHariTanggal,
-                waktu: finalJam,
-                googleMeetLink: meet
-            });
-            await enqueueWhatsapp({ pendaftarId: jadwal.pendaftar_id, phone: parentPhone, jenisNotif: "reminder_ortu_pendaftar_h0", messageContent: msg, force: true, sendNow: true });
             enqueuedPendaftar++;
         } else {
             // Sesi Umum / Terpadu
@@ -397,6 +416,20 @@ export async function checkAndSendH0Reminders(appUrl: string): Promise<{ checked
                 await enqueueWhatsapp({ pendaftarId: jadwal.pendaftar_id, phone: santriPhone, jenisNotif: "reminder_quran_pendaftar_h0", messageContent: msg, force: true, sendNow: true });
                 enqueuedPendaftar++;
             }
+            const ortuPhone = parentPhone || santriPhone;
+            if (jadwal.penguji_ortu && ortuPhone) {
+                const meet = jadwal.penguji_ortu.google_meet_link || jadwal.google_meet_link || "-";
+                const msg = buildMessageReminderOrtuPendaftar({
+                    namaWali,
+                    namaSantri: jadwal.pendaftar.nama_lengkap,
+                    jenjang: santriJenjang,
+                    hariTanggal: finalHariTanggal,
+                    waktu: finalJam,
+                    googleMeetLink: meet
+                });
+                await enqueueWhatsapp({ pendaftarId: jadwal.pendaftar_id, phone: ortuPhone, jenisNotif: "reminder_ortu_pendaftar_h0", messageContent: msg, force: true, sendNow: true });
+                enqueuedPendaftar++;
+            }
             if (jadwal.penguji_santri && santriPhone) {
                 const meet = jadwal.penguji_santri.google_meet_link || jadwal.google_meet_link || "-";
                 const msg = buildMessageReminderSantriPendaftar({
@@ -410,19 +443,6 @@ export async function checkAndSendH0Reminders(appUrl: string): Promise<{ checked
                 await enqueueWhatsapp({ pendaftarId: jadwal.pendaftar_id, phone: santriPhone, jenisNotif: "reminder_santri_pendaftar_h0", messageContent: msg, force: true, sendNow: true });
                 enqueuedPendaftar++;
             }
-            if (jadwal.penguji_ortu && parentPhone) {
-                const meet = jadwal.penguji_ortu.google_meet_link || jadwal.google_meet_link || "-";
-                const msg = buildMessageReminderOrtuPendaftar({
-                    namaWali,
-                    namaSantri: jadwal.pendaftar.nama_lengkap,
-                    jenjang: santriJenjang,
-                    hariTanggal: finalHariTanggal,
-                    waktu: finalJam,
-                    googleMeetLink: meet
-                });
-                await enqueueWhatsapp({ pendaftarId: jadwal.pendaftar_id, phone: parentPhone, jenisNotif: "reminder_ortu_pendaftar_h0", messageContent: msg, force: true, sendNow: true });
-                enqueuedPendaftar++;
-            }
         }
 
         // 2. Kirim Pengingat Hari H ke Penguji
@@ -432,16 +452,28 @@ export async function checkAndSendH0Reminders(appUrl: string): Promise<{ checked
             notifType: string;
         }> = [];
 
-        if (isQuran && jadwal.penguji_quran) {
-            examinerTasks.push({ profile: jadwal.penguji_quran, builder: buildMessageReminderQuranPenguji, notifType: "reminder_quran_penguji_h0" });
+        if (isQuran && (jadwal.penguji_quran || (jadwal as any).penguji_hafalan)) {
+            examinerTasks.push({ profile: jadwal.penguji_quran || (jadwal as any).penguji_hafalan, builder: buildMessageReminderQuranPenguji, notifType: "reminder_quran_penguji_h0" });
+        } else if (isOrtu && (jadwal.penguji_ortu || jadwal.penguji_santri)) {
+            const examiner = jadwal.penguji_ortu || jadwal.penguji_santri;
+            examinerTasks.push({ profile: examiner, builder: buildMessageReminderOrtuPenguji, notifType: "reminder_ortu_penguji_h0" });
+            if (!jadwal.penguji_ortu && jadwal.penguji_santri) {
+                prisma.jadwalUjian.update({
+                    where: { id: jadwal.id },
+                    data: {
+                        penguji_ortu_id: jadwal.penguji_santri_id,
+                        penguji_santri_id: null,
+                        status_ortu: jadwal.status_santri || "scheduled",
+                        status_santri: null,
+                    }
+                }).catch(console.error);
+            }
         } else if (isSantri && jadwal.penguji_santri) {
             examinerTasks.push({ profile: jadwal.penguji_santri, builder: buildMessageReminderSantriPenguji, notifType: "reminder_santri_penguji_h0" });
-        } else if (isOrtu && jadwal.penguji_ortu) {
-            examinerTasks.push({ profile: jadwal.penguji_ortu, builder: buildMessageReminderOrtuPenguji, notifType: "reminder_ortu_penguji_h0" });
         } else {
             if (jadwal.penguji_quran) examinerTasks.push({ profile: jadwal.penguji_quran, builder: buildMessageReminderQuranPenguji, notifType: "reminder_quran_penguji_h0" });
-            if (jadwal.penguji_santri) examinerTasks.push({ profile: jadwal.penguji_santri, builder: buildMessageReminderSantriPenguji, notifType: "reminder_santri_penguji_h0" });
             if (jadwal.penguji_ortu) examinerTasks.push({ profile: jadwal.penguji_ortu, builder: buildMessageReminderOrtuPenguji, notifType: "reminder_ortu_penguji_h0" });
+            if (jadwal.penguji_santri) examinerTasks.push({ profile: jadwal.penguji_santri, builder: buildMessageReminderSantriPenguji, notifType: "reminder_santri_penguji_h0" });
         }
 
         for (const task of examinerTasks) {

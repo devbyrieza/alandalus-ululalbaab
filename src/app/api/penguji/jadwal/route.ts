@@ -93,25 +93,50 @@ export async function GET() {
           "Tes Lisan Bahasa Arab",
         );
       } else {
-        if (item.penguji_santri_id === userId)
-          jenis_tugas.push("Seleksi Wawancara Calon Santri");
-        if (item.penguji_quran_id === userId || item.penguji_hafalan_id === userId)
-            jenis_tugas.push("Seleksi Al Qur'an", "Tes Al-Qur'an (Bacaan & Hafalan)");
-          if (item.penguji_arab_id === userId)
-            jenis_tugas.push("Tes Lisan Bahasa Arab");
-        if (item.penguji_ortu_id === userId)
+        const sessionTitle = (item.exam_session?.title || "").toLowerCase();
+        const isSessionOrtu =
+          sessionTitle.includes("cawalsan") ||
+          sessionTitle.includes("ortu") ||
+          sessionTitle.includes("orang") ||
+          sessionTitle.includes("wali");
+
+        if (item.penguji_ortu_id === userId) {
           jenis_tugas.push("Seleksi Wawancara Calon Orangtua/Wali Santri");
+        } else if (item.penguji_santri_id === userId) {
+          if (isSessionOrtu) {
+            // Auto-heal: assigned to santri_id due to legacy bug, but session is Ortu
+            jenis_tugas.push("Seleksi Wawancara Calon Orangtua/Wali Santri");
+            if (!item.penguji_ortu_id) {
+              prisma.jadwalUjian.update({
+                where: { id: item.id },
+                data: {
+                  penguji_ortu_id: userId,
+                  penguji_santri_id: null,
+                  status_ortu: item.status_santri || item.status_ortu || "scheduled",
+                  status_santri: null,
+                },
+              }).catch((e) => console.error("Auto-heal jadwal error:", e));
+            }
+          } else {
+            jenis_tugas.push("Seleksi Wawancara Calon Santri");
+          }
+        }
+
+        if (item.penguji_quran_id === userId || item.penguji_hafalan_id === userId)
+          jenis_tugas.push("Seleksi Al Qur'an", "Tes Al-Qur'an (Bacaan & Hafalan)");
+        if (item.penguji_arab_id === userId)
+          jenis_tugas.push("Tes Lisan Bahasa Arab");
 
         // Fallback: if matched via exam_session.created_by, derive from session title
         if (
           jenis_tugas.length === 0 &&
           item.exam_session?.created_by === userId
         ) {
-          const title = (item.exam_session?.title || "").toLowerCase();
+          const title = sessionTitle;
           if (title.includes("hafalan") || title.includes("qur") || title.includes("quran"))
-              jenis_tugas.push("Seleksi Al Qur'an", "Tes Al-Qur'an (Bacaan & Hafalan)");
-            else if (title.includes("arab") || title.includes("lisan"))
-              jenis_tugas.push("Tes Lisan Bahasa Arab");
+            jenis_tugas.push("Seleksi Al Qur'an", "Tes Al-Qur'an (Bacaan & Hafalan)");
+          else if (title.includes("arab") || title.includes("lisan"))
+            jenis_tugas.push("Tes Lisan Bahasa Arab");
           else if (
             title.includes("cawalsan") ||
             title.includes("ortu") ||

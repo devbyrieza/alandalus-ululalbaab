@@ -648,8 +648,20 @@ function InputNilaiContent() {
     });
   };
 
-  const relevantPeserta = peserta.filter(p => p.roles.some(r => visibleFormTypes.includes(r)));
-    const pendingPeserta = relevantPeserta.filter(p => !isParticipantFinished(p)).filter(
+  const isSpecificSearch = !!search && search.trim().length > 0;
+
+  const relevantPeserta = peserta.filter(p => {
+    // If reviewer is searching for a specific candidate (e.g. from magic link /n/[code]?search=MTA2700038),
+    // always make the participant accessible so the reviewer is never blocked by role edge cases
+    if (isSpecificSearch && (
+      (p.nomor_pendaftaran || "").toLowerCase().includes(search.toLowerCase()) ||
+      (p.nama_lengkap || "").toLowerCase().includes(search.toLowerCase())
+    )) {
+      return true;
+    }
+    return p.roles.some(r => visibleFormTypes.includes(r));
+  });
+  const pendingPeserta = relevantPeserta.filter(p => !isParticipantFinished(p)).filter(
     (p) =>
       (p.nama_lengkap || "").toLowerCase().includes(search.toLowerCase()) ||
       (p.nomor_pendaftaran || "").toLowerCase().includes(search.toLowerCase())
@@ -670,7 +682,16 @@ function InputNilaiContent() {
   // ============================================================================
   // RENDER: Seleksi Al Qur'an Form
   // ============================================================================
-  const renderPesertaCard = (p: Peserta) => (
+  const renderPesertaCard = (p: Peserta) => {
+    const hasAnyMatchingRole =
+      (p.roles.includes("quran") && visibleFormTypes.includes("quran")) ||
+      (p.roles.includes("wawancara") && visibleFormTypes.includes("wawancara")) ||
+      (p.roles.includes("ortu") && visibleFormTypes.includes("ortu")) ||
+      (isJenjangLangsungNonIL(p.jenjang) && p.roles.includes("lisan_arab") && visibleFormTypes.includes("lisan_arab"));
+
+    const allowAllCandidateRoles = !hasAnyMatchingRole && isSpecificSearch;
+
+    return (
     <div key={p.id} className="bg-white rounded-3xl sm:rounded-4xl p-5 sm:p-6 md:p-10 border border-secondary-100 shadow-2xl app-card">
       {/* Peserta Header */}
       <div className="flex items-center justify-between mb-6 sm:mb-8 pb-6 sm:pb-8 border-b border-ink-100/50">
@@ -700,13 +721,14 @@ function InputNilaiContent() {
 
       {/* Forms based on roles AND active session role */}
       <div className="space-y-4">
-        {p.roles.includes("quran") && visibleFormTypes.includes("quran") && renderQuranForm(p)}
-        {p.roles.includes("wawancara") && visibleFormTypes.includes("wawancara") && renderSantriForm(p)}
-        {p.roles.includes("ortu") && visibleFormTypes.includes("ortu") && renderOrangTuaForm(p)}
-        {isJenjangLangsungNonIL(p.jenjang) && p.roles.includes("lisan_arab") && visibleFormTypes.includes("lisan_arab") && renderArabForm(p)}
+        {p.roles.includes("quran") && (visibleFormTypes.includes("quran") || allowAllCandidateRoles) && renderQuranForm(p)}
+        {p.roles.includes("wawancara") && (visibleFormTypes.includes("wawancara") || allowAllCandidateRoles) && renderSantriForm(p)}
+        {p.roles.includes("ortu") && (visibleFormTypes.includes("ortu") || allowAllCandidateRoles) && renderOrangTuaForm(p)}
+        {isJenjangLangsungNonIL(p.jenjang) && p.roles.includes("lisan_arab") && (visibleFormTypes.includes("lisan_arab") || allowAllCandidateRoles) && renderArabForm(p)}
       </div>
     </div>
   );
+  };
 
     const renderHafalanForm = (p: Peserta) => {
     const isSaved = !!(p.detail_hafalan?.rekomendasi || p.nilai_tes_hafalan != null || p.score_hafalan != null);

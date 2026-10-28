@@ -121,6 +121,25 @@ export async function GET() {
       );
 
       // Determine roles for this jadwal record: Quran (Bacaan & Hafalan), Santri, Ortu for everyone; Arab ONLY for direct Non-IL
+      const sessionTitle = (item.exam_session?.title || "").toLowerCase();
+      const isSessionOrtu =
+        sessionTitle.includes("cawalsan") ||
+        sessionTitle.includes("ortu") ||
+        sessionTitle.includes("orang") ||
+        sessionTitle.includes("wali");
+      const isSessionQuran =
+        sessionTitle.includes("qur") ||
+        sessionTitle.includes("quran") ||
+        sessionTitle.includes("hafalan") ||
+        sessionTitle.includes("bacaan");
+      const isSessionSantri =
+        (sessionTitle.includes("calsan") ||
+        sessionTitle.includes("santri") ||
+        sessionTitle.includes("wawancara")) && !isSessionOrtu;
+
+      const userIsCawalsan = allRoles.includes("pewawancara_cawalsan");
+      const userIsCalsan = allRoles.includes("pewawancara_calsan");
+
       const roles: string[] = [];
       if (isAdmin) {
         roles.push("wawancara", "quran", "ortu");
@@ -128,8 +147,32 @@ export async function GET() {
           roles.push("lisan_arab");
         }
       } else {
-        if (item.penguji_santri_id === userId) roles.push("wawancara");
-        if (item.penguji_ortu_id === userId) roles.push("ortu");
+        if (item.penguji_ortu_id === userId) {
+          roles.push("ortu");
+        } else if (item.penguji_santri_id === userId) {
+          if (isSessionOrtu || userIsCawalsan) {
+            // Auto-heal: session was for Ortu/Cawalsan or reviewer is Cawalsan interviewer
+            roles.push("ortu");
+            if (!item.penguji_ortu_id) {
+              prisma.jadwalUjian.update({
+                where: { id: item.id },
+                data: {
+                  penguji_ortu_id: userId,
+                  penguji_santri_id: null,
+                  status_ortu: item.status_santri || item.status_ortu || "scheduled",
+                  status_santri: null,
+                },
+              }).catch((e) => console.error("Auto-heal jadwal error:", e));
+            }
+          } else {
+            roles.push("wawancara");
+          }
+        }
+
+        if (item.penguji_santri_id === userId && !roles.includes("wawancara") && !isSessionOrtu && !userIsCawalsan) {
+          roles.push("wawancara");
+        }
+
         if (item.penguji_quran_id === userId || (item as any).penguji_hafalan_id === userId) {
           roles.push("quran");
         }
@@ -138,11 +181,10 @@ export async function GET() {
         }
 
         if (roles.length === 0 && item.exam_session?.created_by === userId) {
-          const title = (item.exam_session?.title || "").toLowerCase();
-          const hasQuranMatch = title.includes("qur") || title.includes("quran") || title.includes("hafalan") || title.includes("bacaan");
-          const hasOrtuMatch = title.includes("cawalsan") || title.includes("ortu") || title.includes("orang") || title.includes("wali");
-          const hasWawancaraMatch = (title.includes("calsan") || title.includes("santri") || title.includes("wawancara")) && !hasOrtuMatch;
-          const hasLisanArabMatch = isDirectNonIL && (title.includes("arab") || title.includes("lisan"));
+          const hasQuranMatch = isSessionQuran;
+          const hasOrtuMatch = isSessionOrtu;
+          const hasWawancaraMatch = isSessionSantri;
+          const hasLisanArabMatch = isDirectNonIL && (sessionTitle.includes("arab") || sessionTitle.includes("lisan"));
 
           if (hasQuranMatch) roles.push("quran");
           if (hasWawancaraMatch) roles.push("wawancara");
@@ -150,8 +192,12 @@ export async function GET() {
           if (hasLisanArabMatch) roles.push("lisan_arab");
 
           if (roles.length === 0) {
-            roles.push("quran");
-            if (isDirectNonIL) roles.push("lisan_arab");
+            if (userIsCawalsan) roles.push("ortu");
+            else if (userIsCalsan) roles.push("wawancara");
+            else {
+              roles.push("quran");
+              if (isDirectNonIL) roles.push("lisan_arab");
+            }
           }
         }
       }

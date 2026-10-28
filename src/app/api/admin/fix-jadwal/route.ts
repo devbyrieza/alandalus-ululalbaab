@@ -15,23 +15,45 @@ export async function GET() {
     for (const jadwal of jadwals) {
       if (!jadwal.exam_session) continue;
 
-      const session = jadwal.exam_session;
+      const title = (jadwal.exam_session.title || "").toLowerCase();
+      const sessionCreator = jadwal.exam_session.created_by;
       let updateData: any = {};
 
-      if (session.title === "Tes Al-Quran" && !jadwal.penguji_quran_id) {
-        updateData.penguji_quran_id = session.created_by;
-      } else if (
-        (session.title === "Seleksi Wawancara Calon Santri" ||
-          session.title === "Wawancara Calon Santri") &&
-        !jadwal.penguji_santri_id
-      ) {
-        updateData.penguji_santri_id = session.created_by;
-      } else if (
-        (session.title === "Seleksi Wawancara Orang Tua" ||
-          session.title === "Wawancara Orangtua/Wali") &&
-        !jadwal.penguji_ortu_id
-      ) {
-        updateData.penguji_ortu_id = session.created_by;
+      const isOrtu =
+        title.includes("cawalsan") ||
+        title.includes("ortu") ||
+        title.includes("orang") ||
+        title.includes("wali");
+      const isQuran =
+        title.includes("qur") ||
+        title.includes("quran") ||
+        title.includes("hafalan") ||
+        title.includes("bacaan");
+      const isSantri =
+        (title.includes("calsan") ||
+        title.includes("santri") ||
+        title.includes("wawancara")) && !isOrtu;
+
+      if (isOrtu) {
+        // If penguji_santri_id was mistakenly assigned or penguji_ortu_id is missing:
+        if (jadwal.penguji_santri_id && !jadwal.penguji_ortu_id) {
+          updateData.penguji_ortu_id = jadwal.penguji_santri_id;
+          updateData.penguji_santri_id = null;
+          if (jadwal.status_santri && !jadwal.status_ortu) {
+            updateData.status_ortu = jadwal.status_santri;
+            updateData.status_santri = null;
+          }
+        } else if (!jadwal.penguji_ortu_id && sessionCreator) {
+          updateData.penguji_ortu_id = sessionCreator;
+        }
+      } else if (isQuran) {
+        if (!jadwal.penguji_quran_id && sessionCreator) {
+          updateData.penguji_quran_id = sessionCreator;
+        }
+      } else if (isSantri) {
+        if (!jadwal.penguji_santri_id && sessionCreator) {
+          updateData.penguji_santri_id = sessionCreator;
+        }
       }
 
       if (Object.keys(updateData).length > 0) {
