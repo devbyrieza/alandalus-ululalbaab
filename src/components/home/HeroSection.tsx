@@ -86,11 +86,6 @@ export default function HeroSection() {
       {/* Background micro grid */}
       <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgc3Ryb2tlPSIjMDAwMDAwIiBzdHJva2Utb3BhY2l0eT0iMC4wMiIgZmlsbD0ibm9uZSI+PHBhdGggZD0iTTAgNjBoNjBNNjAgMGwwIDYwIi8+PC9nPjwvc3ZnPg==')] opacity-70 pointer-events-none" />
 
-      {/* Ambient soft glow blobs */}
-      <div className="glow-blob glow-blob-primary w-[550px] h-[550px] -top-36 left-1/2 -translate-x-1/2 opacity-25 max-w-full" aria-hidden="true" />
-      <div className="glow-blob glow-blob-secondary w-[360px] h-[360px] bottom-10 right-10 opacity-20 max-w-full" aria-hidden="true" />
-      <div className="glow-blob glow-blob-primary w-[320px] h-[320px] bottom-20 left-10 opacity-20" aria-hidden="true" />
-
       <Container className="relative z-10 max-w-6xl mx-auto px-4 md:px-6">
         {/* ═════════ CENTERED HERO CONTENT ═════════ */}
         <div className="text-center space-y-6 sm:space-y-7 max-w-4xl mx-auto">

@@ -21,8 +21,6 @@ export default function CtaSection() {
           style={{ background: "linear-gradient(135deg, var(--color-primary-800) 0%, var(--color-primary-950) 100%)" }}
         >
           <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-[0.08] mix-blend-overlay pointer-events-none" />
-          <div className="hidden sm:block glow-blob glow-blob-primary w-[600px] h-[600px] -top-32 -right-32 opacity-30 max-w-full" />
-          
 
           <div className="relative z-10 max-w-3xl mx-auto flex flex-col items-center">
             <div className="section-label section-label-white mb-6">
@@ -42,7 +40,7 @@ export default function CtaSection() {
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center px-4 max-w-xl mx-auto w-full">
               <Link href="/ppdb" className="w-full sm:w-auto flex-1 hover-lift">
-                <button className="w-full px-8 py-4 rounded-full bg-secondary-300 text-primary-950 font-bold hover:bg-secondary-400 transition-all duration-300 text-[0.9375rem] flex items-center justify-center gap-2 glow-ring-primary">
+                <button className="w-full px-8 py-4 rounded-full bg-secondary-300 text-primary-950 font-bold hover:bg-secondary-400 transition-colors duration-300 text-[0.9375rem] flex items-center justify-center gap-2">
                   Daftar Sekarang
                 </button>
               </Link>

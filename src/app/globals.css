@@ -2483,6 +2483,26 @@ html, body {
    =================================================================== */
 
 /* ═══════════════════════════════════════════════════════════════════
+   PREFERS-REDUCED-MOTION (wajib per DESIGN.md)
+   Animasi & transisi dimatikan; scroll langsung.
+   ═══════════════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Marquee berhenti total (inline style perlu !important) */
+  .marquee-track {
+    animation: none !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
    UNIFIED SCROLL ISOLATION & CUSTOM SCROLLBAR STANDARD (MANDATORY UX)
    1. Pointer Focus: Sidebar scrolling NEVER leaks to main page body
    2. Main Content: Main page scrolls smoothly without affecting sidebar

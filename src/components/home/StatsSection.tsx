@@ -186,10 +186,6 @@ export default function StatsSection() {
       ref={ref}
       className="relative py-16 md:py-24 bg-white border-b border-surface-200 overflow-hidden"
     >
-      {/* CiroAI Background glows */}
-      <div className="glow-blob glow-blob-primary w-[600px] h-[600px] -top-[25%] right-0 translate-x-[20%] max-w-full" aria-hidden="true" />
-      
-
       <Container className="relative z-10">
         <div className="max-w-5xl mx-auto space-y-12 md:space-y-14">
           {/* Grid */}

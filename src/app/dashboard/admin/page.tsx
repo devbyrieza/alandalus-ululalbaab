@@ -24,10 +24,9 @@ const StatWidget = ({ label, value, icon: Icon, color, trend, breakdown, highlig
       animate={{ opacity: 1, y: 0 }}
       className={`glass-panel p-5 sm:p-6 lg:p-8 rounded-[2rem] border transition-all group relative overflow-hidden duration-300 hover-lift ${ highlighted ? "glass-panel-dark text-white border-primary-800 shadow-premium-lg" : "text-primary-950 border-primary-100 shadow-premium-sm" }`}
     >
-      <div className={`glow-blob w-32 h-32 opacity-10 transition-colors duration-500 -top-10 -right-10 ${ highlighted ? "glow-blob-blue" : "glow-blob-amber" }`} aria-hidden="true" />
       <div className="relative z-10">
         <div className="flex items-center justify-between mb-8">
-          <div className={`icon-box w-14 h-14 rounded-2xl bg-linear-to-br ${colorMap[color] || colorMap.blue} text-white shadow-sm group-hover:scale-110 group-hover:rotate-3 duration-500`}>
+          <div className={`icon-box w-14 h-14 rounded-2xl bg-linear-to-br ${colorMap[color] || colorMap.blue} text-white shadow-sm`}>
             <Icon className="w-6 h-6" />
           </div>
           {trend && (
@@ -374,10 +373,6 @@ const handlePromoteAllCadangan = async () => {
 
   return (
     <div className="relative max-w-[1400px] mx-auto space-y-6 sm:space-y-8 pb-20 px-1">
-      {/* Background Ambience */}
-      <div className="glow-blob glow-blob-primary w-[50%] h-[40%] -top-[10%] -left-[10%] opacity-[0.03] fixed" aria-hidden="true" />
-      
-
       <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl sm:text-3xl font-black tracking-tight">

@@ -88,10 +88,10 @@ export default function InfiniteMarquee({
         </>
       )}
 
-      {/* Marquee track */}
+      {/* Marquee track — marquee-track dihentikan via prefers-reduced-motion di globals.css */}
       <div
         ref={trackRef}
-        className="flex items-center"
+        className="marquee-track flex items-center"
         style={{
           animation: `marquee-scroll ${animDuration} linear infinite ${animDirection}`,
           animationPlayState: isHovered ? "paused" : "running",

@@ -133,9 +133,6 @@ export default function StickyFeatureSection() {
                 </motion.div>
               </AnimatePresence>
             </div>
-            
-            {/* Decorative blobs */}
-            <div className="glow-blob glow-blob-primary w-64 h-64 -bottom-10 -right-10 opacity-30 z-[-1]" />
           </div>
         </div>
       </Container>
