@@ -109,7 +109,7 @@ export async function POST(request: NextRequest) {
       ],
       customer_details: {
         first_name: pendaftar.nama_lengkap,
-        email: pendaftar.email || "noemail@ponpesalimam.sch.id",
+        email: pendaftar.email || "noemail@pesantren-ululalbaab.com",
         phone: pendaftar.no_hp || "" },
       callbacks: {
         finish: `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/dashboard/pendaftar/pembayaran-pendaftaran?status=finish`,

@@ -459,14 +459,14 @@ export default function DaftarUlangTab() {
                       </span>
                     </div>
                     <p className="font-black text-primary-950 text-2xl tracking-tight leading-none mb-2">
-                      4222224441
+                      7253701263
                     </p>
                     <p className="text-xs font-bold text-primary-700/70 text-left italic">
-                      a.n PP Al Andalus Al Imam
+                      a.n Al Andalus Ulul Albaab 1
                     </p>
                   </div>
                   <button
-                    onClick={() => handleCopy("4222224441")}
+                    onClick={() => handleCopy("7253701263")}
                     className="p-2 hover:bg-primary-50 text-primary-600 rounded-2xl transition-colors flex flex-col items-center gap-1 group"
                   >
                     {copied ? (

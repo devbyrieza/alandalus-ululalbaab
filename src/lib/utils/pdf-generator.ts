@@ -399,7 +399,7 @@ export const generateKartuUjian = async (data: PendaftarPdfData) => {
     ["NIK", `: ${data.nik}`],
     ["Jenjang", `: ${data.jenjang}`],
     ["Jadwal Seleksi", `: ${data.jadwal_ujian || "Menunggu Konfirmasi"}`],
-    ["Lokasi", `: ${data.lokasi_ujian || "Pesantren Al Imam Al Islami"}`],
+    ["Lokasi", `: ${data.lokasi_ujian || PDF_BRANDING.institution.name}`],
   ];
 
   autoTable(doc, {
@@ -486,7 +486,7 @@ export const generateSuratKelulusan = async (data: PendaftarPdfData) => {
   doc.setFontSize(11);
 
   let closing =
-    "Selamat bergabung menjadi keluarga besar Pesantren Al Imam Al Islami. Silakan segera melakukan proses daftar ulang sesuai jadwal yang ditentukan.";
+    `Selamat bergabung menjadi keluarga besar ${PDF_BRANDING.institution.name}. Silakan segera melakukan proses daftar ulang sesuai jadwal yang ditentukan.`;
   if (statusText === "CADANGAN")
     closing =
       "Anda masuk dalam daftar cadangan. Panitia akan menghubungi Anda jika terdapat kuota yang kosong.";

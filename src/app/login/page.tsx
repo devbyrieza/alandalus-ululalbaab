@@ -343,7 +343,7 @@ export default function LoginPage() {
               />
             </div>
             <p className="text-[10px] font-black uppercase tracking-[0.2em] text-primary-600 mb-2">
-              {BRANDING?.schoolName || "Pesantren Al-Imam"}
+              {BRANDING?.schoolName || "Pesantren Ulul Albaab"}
             </p>
             <h1 className="text-3xl font-black text-slate-900 tracking-tight leading-tight mb-2">
               Portal Masuk
@@ -565,7 +565,7 @@ export default function LoginPage() {
           
           <div className="text-center pt-2">
             <p className="text-[11px] font-bold text-slate-400">
-              &copy; {new Date().getFullYear()} {BRANDING?.schoolName || "Pesantren Al-Imam"}. Hak Cipta Dilindungi.
+              &copy; {new Date().getFullYear()} {BRANDING?.schoolName || "Pesantren Ulul Albaab"}. Hak Cipta Dilindungi.
             </p>
           </div>
         </div>

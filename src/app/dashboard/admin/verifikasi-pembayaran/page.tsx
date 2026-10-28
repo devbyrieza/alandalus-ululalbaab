@@ -236,7 +236,7 @@ function VerifikasiPembayaranContent() {
         
         let cleanMetode = item.metode_pembayaran || "-";
         if (cleanMetode.toLowerCase() === "manual") {
-          cleanMetode = "Transfer Manual BSI Al Imam";
+          cleanMetode = "Transfer Manual BSI Ulul Albaab";
         }
 
         const tglText = item.tanggal_pembayaran
