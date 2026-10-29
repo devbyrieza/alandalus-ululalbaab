@@ -141,6 +141,8 @@ ${lines}
 
 ⚠️ *MOHON DITERUSKAN* daftar ini ke *grup WhatsApp penguji & pewawancara* agar seluruh penguji mengetahui jadwal menguji hari ini.
 
+🔗 Link Google Meet masing-masing penguji telah dikirim via pesan pribadi (pengingat H-1 & H-0).
+
 Terima kasih. Jazakumullahu khairan.
 
 ---
