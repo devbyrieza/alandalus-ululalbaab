@@ -120,7 +120,8 @@ export default function HeroSection() {
             </strong>
             . Menyelaraskan penguasaan <strong className="font-semibold text-slate-900">Bahasa Arab intensif</strong>, Tahfidz
             Al-Qur&apos;an, pendalaman ilmu syar&apos;i, keunggulan sains akademik umum, serta penempaan{" "}
-            <em>leadership</em> dan <em>entrepreneurship</em> berlandaskan Al-Qur&apos;an dan Sunnah.
+            <em>leadership</em> dan <em>agropreneur</em> — ilmu pertanian dan peternakan — berlandaskan
+            Al-Qur&apos;an dan Sunnah.
           </p>
 
           {/* Tagline */}
