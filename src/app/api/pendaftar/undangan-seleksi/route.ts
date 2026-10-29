@@ -223,7 +223,15 @@ export async function GET(request: Request) {
         },
       },
       include: {
-        _count: { select: { bookings: true } } },
+        _count: { select: { bookings: true } },
+        creator: {
+          select: {
+            id: true,
+            role: true,
+            secondary_roles: true,
+          },
+        },
+      },
       orderBy: { start_time: "asc" } });
 
     // 4. Fetch booked schedules for this pendaftar
@@ -403,6 +411,12 @@ export async function GET(request: Request) {
 
     const isExaminerBusy = (session: any) => {
       if (!session.created_by) return false;
+
+      // Sesi yang dibuat admin atau kuota > 1 adalah sesi umum / pool, bukan 1-on-1 penguji tunggal
+      const creatorRole = session.creator?.role;
+      if (creatorRole === "admin" || creatorRole === "admin_super") return false;
+      if (session.quota > 1) return false;
+
       const sStart = new Date(session.start_time).getTime();
       const sEnd = new Date(session.end_time).getTime();
       if (isNaN(sStart) || isNaN(sEnd)) return false;
@@ -411,12 +425,12 @@ export async function GET(request: Request) {
         // Exclude the session itself if it is the one booked
         if (b.exam_session?.id === session.id) return false;
 
+        // Hanya cek bentrok jika pembuat sesi secara spesifik bertugas sebagai penguji di booking lain
         const isThisExaminer =
           b.penguji_quran_id === session.created_by ||
           b.penguji_santri_id === session.created_by ||
           b.penguji_ortu_id === session.created_by ||
-          b.penguji_arab_id === session.created_by ||
-          b.exam_session?.created_by === session.created_by;
+          b.penguji_arab_id === session.created_by;
 
         if (!isThisExaminer || !b.exam_session) return false;
 

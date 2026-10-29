@@ -20,6 +20,7 @@ import {
   Sparkles,
   ArrowRight,
   Filter,
+  CalendarClock,
 } from "lucide-react";
 import Swal from "sweetalert2";
 import { expandExamTitle } from "@/lib/utils";
@@ -387,9 +388,10 @@ export default function UndanganSeleksiTab() {
     }
   };
 
-  const formatDate = (dateString: string) => {
-    if (!dateString) return "-";
-    return new Date(dateString)
+  const formatDate = (dateInput: string | Date | undefined | null) => {
+    if (!dateInput) return "-";
+    const d = typeof dateInput === "string" ? new Date(dateInput) : dateInput;
+    return d
       .toLocaleDateString("id-ID", {
         weekday: "long",
         day: "numeric",
@@ -721,6 +723,51 @@ export default function UndanganSeleksiTab() {
               </div>
             </div>
 
+            {/* Rule Highlight Card (H+1 s/d H+14) */}
+            <div className="bg-gradient-to-br from-amber-500/10 via-primary-500/5 to-emerald-500/10 border-2 border-amber-300/70 rounded-3xl p-5 shadow-lg shadow-amber-500/5 backdrop-blur-md relative overflow-hidden">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div className="space-y-1.5 max-w-xl">
+                  <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-black bg-amber-500/20 text-amber-900 border border-amber-300 uppercase tracking-wider">
+                    <CalendarClock className="w-3.5 h-3.5 text-amber-700" />
+                    Ketentuan Waktu Pemilihan Jadwal
+                  </div>
+                  <h4 className="text-base sm:text-lg font-black text-ink-950">
+                    Paling Cepat Mulai Besok &bull; Maksimal 14 Hari ke Depan
+                  </h4>
+                  <p className="text-xs text-stone-600 font-medium leading-relaxed">
+                    Sesuai SOP Seleksi, jadwal untuk <strong>hari ini (Hari H) sengaja ditiadakan</strong> guna memberikan waktu persiapan optimal bagi calon santri dan dewan penguji. Silakan pilih tanggal mulai besok hingga 2 pekan ke depan.
+                  </p>
+                </div>
+
+                {/* 2 Dynamic Date Indicator Badges */}
+                <div className="grid grid-cols-2 sm:grid-cols-2 gap-2.5 shrink-0 min-w-[280px]">
+                  <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-3 border border-amber-200/80 shadow-sm flex flex-col justify-between">
+                    <span className="text-[10px] font-bold text-amber-700 uppercase tracking-wider block">
+                      Paling Cepat (Besok)
+                    </span>
+                    <span className="text-xs font-black text-ink-900 mt-1 block">
+                      {formatDate(getEarliestSelectableDate())}
+                    </span>
+                    <span className="text-[10px] font-semibold text-emerald-700 mt-0.5">
+                      Mulai H+1 Dibuka
+                    </span>
+                  </div>
+
+                  <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-3 border border-stone-200 shadow-sm flex flex-col justify-between">
+                    <span className="text-[10px] font-bold text-stone-500 uppercase tracking-wider block">
+                      Batas Terakhir
+                    </span>
+                    <span className="text-xs font-black text-ink-900 mt-1 block">
+                      {formatDate(getLatestSelectableDate())}
+                    </span>
+                    <span className="text-[10px] font-semibold text-amber-700 mt-0.5">
+                      Maksimal 14 Hari
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             {/* Category Tabs */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
               {availableCategories.map((cat) => {
@@ -866,10 +913,10 @@ export default function UndanganSeleksiTab() {
                   </div>
                 </div>
 
-                <div className="flex items-start gap-2 text-[11px] text-amber-700 bg-amber-50 border border-amber-200 rounded-xl px-3 py-2 font-medium">
-                  <Info className="w-3.5 h-3.5 shrink-0 mt-0.5" />
+                <div className="flex items-center gap-2.5 text-xs text-amber-900 bg-amber-500/10 border border-amber-300/80 rounded-2xl px-4 py-3 font-semibold shadow-sm">
+                  <CalendarClock className="w-4 h-4 text-amber-700 shrink-0" />
                   <span>
-                    Pemesanan jadwal paling awal adalah untuk <strong>besok (H+1)</strong> dan maksimal <strong>14 hari (2 pekan) ke depan</strong>. Jadwal hari ini tidak dapat dipilih.
+                    Jadwal yang ditampilkan adalah untuk rentang <strong>{formatDate(getEarliestSelectableDate())}</strong> s/d <strong>{formatDate(getLatestSelectableDate())}</strong>. Sesi hari ini tidak dibuka demi kesiapan tes.
                   </span>
                 </div>
 
@@ -973,7 +1020,7 @@ export default function UndanganSeleksiTab() {
                     </h4>
                     <p className="text-xs text-stone-500 mt-1 max-w-sm mx-auto font-medium">
                       {activeCategoryFreeSlots.length === 0
-                        ? "Seluruh kuota sesi untuk tahap ini telah terisi atau sedang disiapkan oleh panitia. Mohon cek kembali secara berkala."
+                        ? `Seluruh kuota sesi untuk tahap ini telah terisi atau sedang disiapkan oleh panitia dalam rentang ${formatDate(getEarliestSelectableDate())} s/d ${formatDate(getLatestSelectableDate())}. Mohon cek kembali secara berkala.`
                         : "Silakan pilih tombol \"Semua Tanggal\" atau klik tanggal lain pada filter di atas."}
                     </p>
                   </div>

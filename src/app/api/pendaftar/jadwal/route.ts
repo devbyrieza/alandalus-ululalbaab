@@ -229,30 +229,33 @@ export async function POST(request: Request) {
       const finalSessionId = balancedAssignment?.session_id || exam_session_id;
 
       if (finalExaminerId) {
-        // Atomic Dual-Role Conflict Guard: ensure examiner isn't booked in another category at the same overlapping time
-        const conflictingBooking = await tx.jadwalUjian.findFirst({
-          where: {
-            OR: [
-              { penguji_quran_id: finalExaminerId },
-              { penguji_santri_id: finalExaminerId },
-              { penguji_ortu_id: finalExaminerId },
-              { penguji_arab_id: finalExaminerId },
-              { exam_session: { created_by: finalExaminerId } },
-            ],
-            exam_session: {
-              start_time: { lt: examSession.end_time },
-              end_time: { gt: examSession.start_time },
-            },
-          },
-        });
-
-        if (conflictingBooking) {
-          throw new Error("Penguji ini baru saja terisi untuk sesi ujian lain di waktu yang sama. Silakan pilih sesi atau waktu lainnya.");
-        }
-
         const interviewer = await tx.profile.findUnique({
           where: { id: finalExaminerId },
-          select: { google_meet_link: true, full_name: true, phone: true } });
+          select: { role: true, secondary_roles: true, google_meet_link: true, full_name: true, phone: true } });
+
+        const isCreatorAdmin = interviewer?.role === "admin" || interviewer?.role === "admin_super";
+
+        // Atomic Dual-Role Conflict Guard: hanya cek untuk penguji riil (bukan admin pembuat batch sesi)
+        if (!isCreatorAdmin) {
+          const conflictingBooking = await tx.jadwalUjian.findFirst({
+            where: {
+              OR: [
+                { penguji_quran_id: finalExaminerId },
+                { penguji_santri_id: finalExaminerId },
+                { penguji_ortu_id: finalExaminerId },
+                { penguji_arab_id: finalExaminerId },
+              ],
+              exam_session: {
+                start_time: { lt: examSession.end_time },
+                end_time: { gt: examSession.start_time },
+              },
+            },
+          });
+
+          if (conflictingBooking) {
+            throw new Error("Penguji ini baru saja terisi untuk sesi ujian lain di waktu yang sama. Silakan pilih sesi atau waktu lainnya.");
+          }
+        }
 
         if (currentCategory === "LISAN_ARAB") {
             pengujiFields = {
@@ -354,6 +357,7 @@ export async function POST(request: Request) {
         pengujiFields.penguji_quran_id ||
         pengujiFields.penguji_santri_id ||
         pengujiFields.penguji_ortu_id ||
+        pengujiFields.penguji_arab_id ||
         examSession.created_by;
       if (finalId) {
         const interviewer = await prisma.profile.findUnique({
