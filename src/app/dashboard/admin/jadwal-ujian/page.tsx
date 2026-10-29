@@ -1936,9 +1936,20 @@ export default function JadwalUjianPage() {
 
               {/* 5. WAKTU PELAKSANAAN & DURASI */}
               <div className="space-y-2">
-                <label className="block text-xs font-black text-stone-500 uppercase tracking-wider">
-                  5. Waktu Pelaksanaan &amp; Durasi <span className="text-rose-500">*</span>
-                </label>
+                <div className="flex items-center justify-between">
+                  <label className="block text-xs font-black text-stone-500 uppercase tracking-wider">
+                    5. Waktu Pelaksanaan &amp; Durasi <span className="text-rose-500">*</span>
+                  </label>
+                  <span className="text-[10px] font-bold px-2 py-0.5 bg-amber-50 text-amber-800 border border-amber-200 rounded-full">
+                    Format 24 Jam (Contoh: 14.00 untuk jam 2 siang)
+                  </span>
+                </div>
+                <div className="p-2.5 bg-amber-50/70 border border-amber-200 rounded-xl text-[11px] text-amber-900 flex items-start gap-1.5">
+                  <AlertCircle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+                  <span>
+                    <strong>Penting:</strong> Masukkan jam dalam format <strong>24 Jam (WIB)</strong>. Jika ujian jam 2 siang, pilih/ketik <strong>14:00</strong> (jangan 02:00) agar notifikasi WhatsApp ke calon santri dan penguji sinkron serta tidak terbaca subuh.
+                  </span>
+                </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-[11px] font-bold text-stone-500 mb-1">

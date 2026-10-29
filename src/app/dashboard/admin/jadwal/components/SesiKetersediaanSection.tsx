@@ -1063,9 +1063,14 @@ export default function SesiKetersediaanSection({
 
               {/* Waktu Mulai & Selesai */}
               <div>
-                  <label className="block text-xs font-black text-stone-700 mb-1.5">
-                    Slot Jam (WIB)
-                  </label>
+                  <div className="flex items-center justify-between mb-1.5">
+                    <label className="block text-xs font-black text-stone-700">
+                      Slot Jam (WIB)
+                    </label>
+                    <span className="text-[10px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200">
+                      Format 24 Jam (Contoh: 14.00 = jam 2 siang)
+                    </span>
+                  </div>
                   <div className="space-y-2">
                     {slotForm.slots.map((s, idx) => (
                       <div key={idx} className="flex items-center gap-2">

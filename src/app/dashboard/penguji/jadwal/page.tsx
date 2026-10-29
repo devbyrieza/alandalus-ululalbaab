@@ -2313,7 +2313,7 @@ export default function JadwalPengujiPage() {
                   
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-1.5">
-                      <label className="text-xs font-bold text-ink-600 uppercase tracking-wider">Jam Mulai</label>
+                      <label className="text-xs font-bold text-ink-600 uppercase tracking-wider">Jam Mulai (24 Jam, misal 14:00)</label>
                       <input 
                         type="time" 
                         value={rescheduleForm.start_time}
