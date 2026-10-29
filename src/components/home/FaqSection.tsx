@@ -10,7 +10,7 @@ const FAQS = [
   {
     question: "Kapan pendaftaran santri baru angkatan 2027/2028 dibuka?",
     answer:
-      "Pendaftaran SPMB Tahun Ajaran 2027/2028 dibuka mulai tanggal 16 Oktober sampai dengan 20 Desember 2026. Kuota penerimaan terbatas: MTs Putra sebanyak 48 santri dan IL / SMA Putra sebanyak 24 santri. Pendaftaran dapat ditutup lebih awal jika kuota santri baru sudah terpenuhi." },
+      "Pendaftaran SPMB Tahun Ajaran 2027/2028 dibuka mulai tanggal 24 Oktober sampai dengan 20 Desember 2026. Kuota penerimaan terbatas: MTs Putra sebanyak 48 santri dan IL / SMA Putra sebanyak 24 santri. Pendaftaran dapat ditutup lebih awal jika kuota santri baru sudah terpenuhi." },
   {
     question: "Apakah santri diwajibkan untuk tinggal di asrama?",
     answer:

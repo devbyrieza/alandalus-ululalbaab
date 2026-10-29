@@ -140,7 +140,7 @@ function PPDBContent() {
   const timeline = [
     {
       phase: "Registrasi Online",
-      date: "16 Oktober - 20 Desember 2026",
+      date: "24 Oktober - 20 Desember 2026",
       desc: "Daftar dan buat akun pendaftar melalui website resmi atau scan barcode di brosur.",
       status: "active" },
     {
@@ -780,7 +780,7 @@ function PPDBContent() {
                       a: "Ya, seluruh santri di Pesantren Al Andalus Ulul Albaab wajib tinggal di asrama untuk mengikuti seluruh rangkaian kegiatan tarbiyah, halaqah tahfidz, dan pembelajaran kitab turots secara maksimal." },
                     {
                       q: "Kapan batas akhir pendaftaran SPMB 2027/2028?",
-                      a: "Pendaftaran SPMB Tahun Ajaran 2027/2028 dibuka mulai 16 Oktober sampai dengan 20 Desember 2026. Pendaftaran dapat ditutup lebih awal jika kuota terpenuhi. Segera daftar!" },
+                      a: "Pendaftaran SPMB Tahun Ajaran 2027/2028 dibuka mulai 24 Oktober sampai dengan 20 Desember 2026. Pendaftaran dapat ditutup lebih awal jika kuota terpenuhi. Segera daftar!" },
                     {
                       q: "Berapa total biaya yang harus disiapkan?",
                       a: "Biaya pendaftaran Rp 250.000, Uang Pangkal Rp 9.900.000 (dapat dicicil 3x: 50% sepekan setelah menerima pengumuman seleksi, sisanya boleh dicicil 2x hingga Mei 2027), dan SPP bulanan Rp 1.100.000/bulan (Total 1 tahun: Rp 13.200.000 All In mencakup makan, asrama, dan seluruh kegiatan pesantren)." },

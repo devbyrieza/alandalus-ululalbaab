@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 // ─── Data ────────────────────────────────────────────
 const IMPORTANT_DATES = [
   {
-    date: "16 Okt - 20 Des 2026",
+    date: "24 Okt - 20 Des 2026",
     title: "Pendaftaran SPMB",
     description:
       "Pendaftaran santri baru dibuka secara online melalui website resmi.",

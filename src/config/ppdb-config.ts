@@ -109,9 +109,9 @@ export const PPDB_CONFIG = {
   // 📅 JADWAL PPSB 2027/2028
   schedule: {
     tahunAjaran: "2027/2028",
-    pembukaan: "16 Oktober 2026",
+    pembukaan: "24 Oktober 2026",
     penutupan: "20 Desember 2026",
-    jadwalTes: "16 Oktober – 20 Desember 2026",
+    jadwalTes: "24 Oktober – 20 Desember 2026",
   },
 
   // 👥 DEWAN PEMBINA, PENGURUS & PENGASUH

@@ -51,7 +51,7 @@ PROGRAM PENDIDIKAN (KHUSUS PUTRA):
 - Total Kuota Keseluruhan: 72 Santri Putra (48 MTs + 24 IL/SMA).
 
 INFORMASI SPMB T.A 2027/2028:
-- Pendaftaran: 16 Oktober - 20 Desember 2026 (Online via website).
+- Pendaftaran: 24 Oktober - 20 Desember 2026 (Online via website).
 - BIAYA PENDIDIKAN PENTING:
   - Biaya Pendaftaran: Rp 250.000 (Non-refundable)
   - Uang Pangkal: Rp 9.900.000 (Non-refundable, dapat dicicil 3x: 50% sepekan setelah pengumuman, sisa 2x hingga Mei 2027)
