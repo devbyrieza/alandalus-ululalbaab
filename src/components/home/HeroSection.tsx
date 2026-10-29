@@ -7,6 +7,7 @@ import {
   ArrowRight,
   GraduationCap,
   BookOpen,
+  Download,
   ShieldCheck,
   CheckCircle2,
   MessageCircle,
@@ -213,6 +214,15 @@ export default function HeroSection() {
             <Link href="/program" className="btn-secondary w-full sm:w-auto px-6 py-4 text-sm sm:text-base flex items-center justify-center gap-2">
               <span>Lihat Program</span>
             </Link>
+
+            <a
+              href="/documents/Brosur-SPMB-Ulul-Albaab-2027-2028.pdf"
+              download="Brosur-SPMB-Pesantren-Ulul-Albaab-2027-2028.pdf"
+              className="btn-cream w-full sm:w-auto px-6 py-4 text-sm sm:text-base flex items-center justify-center gap-2"
+            >
+              <Download className="w-4 h-4" aria-hidden="true" />
+              <span>Unduh Brosur</span>
+            </a>
           </div>
 
           {/* ═════════ 4 QUICK HIGHLIGHT STAT CARDS (Kuliah SUNI Standard) ═════════ */}
