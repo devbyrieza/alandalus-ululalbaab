@@ -17,7 +17,8 @@ import { BRANDING } from "@/config/branding";
 
 const RECIPIENT_KEY = "daily_jadwal_recipient";
 const LAST_SENT_KEY = "daily_jadwal_last_sent";
-const SEND_HOUR_WIB = 7; // kirim mulai 07.00 WIB, sekali per hari
+const SEND_HOUR_WIB = 6;
+const SEND_MINUTE_WIB = 45; // kirim mulai 06.45 WIB, sekali per hari
 
 export interface DigestJadwalItem {
     jam: string;
@@ -174,7 +175,7 @@ async function getDailySentMarker(): Promise<string | null> {
  */
 export async function maybeSendDailyScheduleDigest(now: Date = new Date()): Promise<DailyDigestResult> {
     const wib = getWIBParts(now);
-    const notYetTime = wib.hour < SEND_HOUR_WIB;
+    const notYetTime = wib.hour < SEND_HOUR_WIB || (wib.hour === SEND_HOUR_WIB && wib.minute < SEND_MINUTE_WIB);
     const alreadySent = (await getDailySentMarker()) === wib.dateKey;
 
     if (notYetTime || alreadySent) {
