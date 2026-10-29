@@ -34,6 +34,14 @@ if (typeof window === "undefined" && process.env.NODE_ENV !== "test") {
             } catch (errRem) {
               console.error("❌ Schedule Reminder Worker Error:", errRem);
             }
+
+            // 3. Digest jadwal seleksi harian — kirim sekali sehari mulai 07.00 WIB
+            try {
+              const { maybeSendDailyScheduleDigest } = await import("./services/daily-digest-service");
+              await maybeSendDailyScheduleDigest();
+            } catch (errDigest) {
+              console.error("❌ Daily Digest Worker Error:", errDigest);
+            }
           } catch (err) {
             console.error("❌ Background Worker Error:", err);
           }

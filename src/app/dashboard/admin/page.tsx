@@ -9,6 +9,7 @@ import { motion } from "framer-motion";
 import { exportToExcelProfessional, exportToPDF } from "@/lib/utils/export";
 import Swal from "sweetalert2";
 import { BRANDING } from "@/config/branding";
+import DailyDigestBanner from "@/components/admin/DailyDigestBanner";
 
 const StatWidget = ({ label, value, icon: Icon, color, trend, breakdown, highlighted, onDownload, isDownloading, onPromote, isPromoting, promoteLabel, promoteColor, actionLink }: any) => {
     const colorMap: any = {
@@ -384,6 +385,8 @@ const handlePromoteAllCadangan = async () => {
           <RefreshCw className={`w-5 h-5 ${loading ? "animate-spin" : ""}`} />
         </button>
       </div>
+
+      <DailyDigestBanner role={role ?? undefined} />
 
       <div className="bg-linear-to-br from-blue-800 via-blue-700 to-blue-950 rounded-[2.5rem] lg:rounded-[3rem] p-6 sm:p-5 md:p-8 lg:p-6 text-white relative overflow-hidden shadow-[0_32px_64px_-16px_rgba(30,58,138,0.4)] border border-white/10">
         
