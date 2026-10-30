@@ -145,7 +145,7 @@ export default function HeroSection() {
               </div>
               <div>
                 <div className="text-xs font-bold text-slate-900 leading-tight">Mendidik Tanpa Luka</div>
-                <div className="text-[11px] text-slate-500 font-medium leading-tight">Nol kekerasan &amp; perundungan</div>
+                <div className="text-[11px] text-slate-500 font-medium leading-tight">Tanpa kekerasan &amp; perundungan</div>
               </div>
             </div>
 
