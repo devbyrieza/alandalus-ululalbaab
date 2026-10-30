@@ -19,7 +19,7 @@ export default function FloatingWhatsApp() {
 
   useEffect(() => {
     setMounted(true);
-    const t = setTimeout(() => setShowTooltip(true), 5000);
+    const t = setTimeout(() => setShowTooltip(false), 5000);
     return () => clearTimeout(t);
   }, []);
 

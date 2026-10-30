@@ -50,7 +50,7 @@ export default function LayoutWrapper({
           {/* <TawkToScript /> */}
           <ScrollToTop />
           <FloatingWhatsApp />
-          <LiveActivityToast />
+          {/* <LiveActivityToast /> */}
         </>
       )}
     </div>
