@@ -295,7 +295,7 @@ export default function HeroSection() {
               </span>
             </div>
             <h3 className="text-xl font-extrabold text-slate-900 mt-1 leading-snug">
-              Bahasa Arab &amp; Syar&apos;i
+              Bahasa Arab &amp; Ilmu Syar&apos;i
             </h3>
             <p className="text-sm text-slate-500 mt-2 leading-relaxed">
               Penguasaan bahasa Arab intensif harian, tahfidz Al-Qur&apos;an mutqin, dan pendalaman kitab turots sesuai bimbingan Sunnah.
