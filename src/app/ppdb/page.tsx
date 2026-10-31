@@ -193,7 +193,7 @@ function PPDBContent() {
       items: [
         { name: "Surat Keterangan Sehat (Format Panitia)", type: "Wajib" },
         { name: "Scan Pakta Integritas Calon Santri (Format Panitia)", type: "Wajib" },
-        { name: "Scan Pakta Integritas Calon Orangtua/Wali Santri (Format Panitia)", type: "Wajib" },
+        { name: "Scan Pakta Integritas Calon Orang Tua/Wali Santri (Format Panitia)", type: "Wajib" },
         {
           name: "Scan Pernyataan Bebas Perilaku Negatif (Format Panitia)",
           type: "Wajib" },

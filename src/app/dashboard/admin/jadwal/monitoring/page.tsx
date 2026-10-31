@@ -348,7 +348,7 @@ export default function MonitoringJadwalPage() {
         if (!allowConflict) {
             const conflictDetails: string[] = [];
             if (selectedQuranId && busyExaminersAtTargetTime.has(selectedQuranId)) {
-                const name = allValidExaminers.find(u => u.id === selectedQuranId)?.full_name || "Penguji Al-Qur'an";
+                const name = allValidExaminers.find(u => u.id === selectedQuranId)?.full_name || "Penguji Tes Al-Qur'an";
                 conflictDetails.push(`${name} (bentrok dengan ${busyExaminersAtTargetTime.get(selectedQuranId)})`);
             }
             if (selectedSantriId && busyExaminersAtTargetTime.has(selectedSantriId)) {
@@ -364,7 +364,7 @@ export default function MonitoringJadwalPage() {
                 conflictDetails.push(`${name} (bentrok dengan ${busyExaminersAtTargetTime.get(selectedHafalanId)})`);
             }
             if (selectedArabId && busyExaminersAtTargetTime.has(selectedArabId)) {
-                const name = allValidExaminers.find(u => u.id === selectedArabId)?.full_name || "Penguji B. Arab";
+                const name = allValidExaminers.find(u => u.id === selectedArabId)?.full_name || "Penguji Tes Lisan Bahasa Arab";
                 conflictDetails.push(`${name} (bentrok dengan ${busyExaminersAtTargetTime.get(selectedArabId)})`);
             }
 
@@ -1176,7 +1176,7 @@ export default function MonitoringJadwalPage() {
                                         <tr className="bg-slate-50/70">
                                             <th className="px-6 py-5 text-[11px] font-bold uppercase tracking-wider text-slate-400 border-b border-slate-100">Peserta</th>
                                             <th className="px-6 py-5 text-[11px] font-bold uppercase tracking-wider text-slate-400 border-b border-slate-100">Jadwal & Lokasi</th>
-                                            <th className="px-6 py-5 text-[11px] font-bold uppercase tracking-wider text-slate-400 border-b border-slate-100">Penguji Al-Qur'an</th>
+                                            <th className="px-6 py-5 text-[11px] font-bold uppercase tracking-wider text-slate-400 border-b border-slate-100">Penguji Tes Al-Qur'an</th>
                                             <th className="px-6 py-5 text-[11px] font-bold uppercase tracking-wider text-slate-400 border-b border-slate-100">W. Santri</th>
                                             <th className="px-6 py-5 text-[11px] font-bold uppercase tracking-wider text-slate-400 border-b border-slate-100">W. Ortu</th>
                                             <th className="px-6 py-5 text-[11px] font-bold uppercase tracking-wider text-slate-400 border-b border-slate-100 text-center">Aksi</th>
@@ -1272,7 +1272,7 @@ export default function MonitoringJadwalPage() {
                                             )}
                                         </div>
                                     </div>
-                                    <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Penguji Al-Qur'an / Pewawancara</span>
+                                    <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Penguji Tes Al-Qur'an / Pewawancara</span>
                                 </div>
                                 <div className="p-0 overflow-x-auto custom-scrollbar">
                                     <table className="w-full min-w-[750px] text-left border-collapse max-w-full">
@@ -1484,12 +1484,12 @@ export default function MonitoringJadwalPage() {
 
                                   {/* Penguji Selection Dropdowns */}
                                 <div className="space-y-4">
-                                    {/* 1. Penguji Al-Qur'an */}
+                                    {/* 1. Penguji Tes Al-Qur'an */}
                                     <div className="space-y-1.5">
                                         <label className="text-xs font-black text-slate-700 uppercase tracking-wider flex items-center justify-between">
                                             <span className="flex items-center gap-1.5">
                                                 <BookOpen className="w-3.5 h-3.5 text-primary-500" />
-                                                Penguji Al-Qur'an (Bacaan & Hafalan)
+                                                Penguji Tes Al-Qur'an
                                             </span>
                                             {selectedQuranId && (
                                                 <button
@@ -1506,7 +1506,7 @@ export default function MonitoringJadwalPage() {
                                             onChange={(e) => setSelectedQuranId(e.target.value)}
                                             className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs font-bold text-slate-800 focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 outline-none transition-all"
                                         >
-                                            <option value="">-- Pilih Penguji Al-Qur'an (Belum Ditugaskan) --</option>
+                                            <option value="">-- Pilih Penguji Tes Al-Qur'an (Belum Ditugaskan) --</option>
                                             {(showAllStaff ? allValidExaminers : quranExaminers).map((u) => {
                                                 const conflictInfo = busyExaminersAtTargetTime.get(u.id);
                                                 return (
@@ -1588,12 +1588,12 @@ export default function MonitoringJadwalPage() {
                                         </div>
                                     </div>
 
-                                    {/* 3. Pewawancara Calon Orangtua/Wali */}
+                                    {/* 3. Pewawancara Calon Orang Tua/Wali */}
                                     <div className="space-y-1.5">
                                         <label className="text-xs font-black text-slate-700 uppercase tracking-wider flex items-center justify-between">
                                             <span className="flex items-center gap-1.5">
                                                 <Users className="w-3.5 h-3.5 text-purple-500" />
-                                                Pewawancara Calon Orangtua/Wali
+                                                Pewawancara Calon Orang Tua/Wali
                                             </span>
                                             {selectedOrtuId && (
                                                 <button
@@ -1640,13 +1640,13 @@ export default function MonitoringJadwalPage() {
                                         </div>
                                     </div>
 
-                                    {/* Khusus Langsung SMA Tanpa IL: Penguji Lisan Bahasa Arab */}
+                                    {/* Khusus Langsung SMA Tanpa IL: Penguji Tes Lisan Bahasa Arab */}
                                     {isJenjangLangsungNonIL(targetSchedule.pendaftar.jenjang) && (
                                         <div className="space-y-1.5 pt-2 border-t border-slate-100">
                                             <label className="text-xs font-black text-emerald-800 uppercase tracking-wider flex items-center justify-between">
                                                 <span className="flex items-center gap-1.5">
                                                     <Languages className="w-3.5 h-3.5 text-emerald-600" />
-                                                    Penguji Lisan Bahasa Arab (Khusus Langsung SMA Tanpa IL)
+                                                    Penguji Tes Lisan Bahasa Arab (Khusus Langsung SMA Tanpa IL)
                                                 </span>
                                                 {selectedArabId && (
                                                     <button

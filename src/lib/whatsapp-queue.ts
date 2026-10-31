@@ -887,7 +887,7 @@ export function buildMessageJadwalBelum(nama: string): string {
 
 Terima kasih telah mendaftar di ${BRANDING.schoolName}.
 
-Saat ini jadwal tes lanjutan (Tes Al-Qur'an, Wawancara Calon Santri, dan Wawancara Calon Orangtua/Wali Santri) belum tersedia. Mohon bersabar, kami akan menginformasikan kembali begitu jadwal sudah siap.
+Saat ini jadwal tes lanjutan (Tes Al-Qur'an, Wawancara Calon Santri, dan Wawancara Calon Orang Tua/Wali Santri) belum tersedia. Mohon bersabar, kami akan menginformasikan kembali begitu jadwal sudah siap.
 
 Untuk sementara, Ananda sudah bisa mengerjakan seleksi online yang tersedia di dashboard:
 - Kemampuan Dasar Akademik
@@ -910,7 +910,7 @@ Alhamdulillah, jadwal tes lanjutan sudah tersedia!
 Silakan login ke dashboard dan pilih jadwal yang sesuai untuk:
 - Tes Al-Qur'an
 - Wawancara Calon Santri
-- Wawancara Calon Orangtua/Wali Santri
+- Wawancara Calon Orang Tua/Wali Santri
 
 Segera pilih jadwal sebelum kuota penuh.
 
@@ -932,7 +932,7 @@ Saat ini *jadwal tes lanjutan sudah tersedia dan bisa langsung dipilih*.
 Silakan login ke dashboard dan pilih sesi jadwal untuk:
 - Tes Al-Qur'an
 - Wawancara Calon Santri
-- Wawancara Calon Orangtua/Wali Santri
+- Wawancara Calon Orang Tua/Wali Santri
 
 Harap segera memilih jadwal sebelum kuota penuh. Jangan lupa juga untuk menyelesaikan Seleksi Online (Akademik & Kepribadian).
 
@@ -1099,7 +1099,7 @@ export function buildMessageKonfirmasiJadwalInterviewer(
     if (jenisLower.includes("quran")) {
         agendaText = "Tes Al-Qur'an";
     } else if (jenisLower.includes("cawalsan") || jenisLower.includes("ortu") || jenisLower.includes("orang tua") || jenisLower.includes("wali")) {
-        agendaText = "Wawancara Calon Orangtua/Wali Santri";
+        agendaText = "Wawancara Calon Orang Tua/Wali Santri";
     } else if (jenisLower.includes("calsan") || jenisLower.includes("santri")) {
         agendaText = "Wawancara Calon Santri";
     }
@@ -1248,7 +1248,7 @@ ${SYSTEM_FOOTER_ULULALBAAB}`;
 }
 
 /**
- * A. UNTUK PENDAFTAR — 3. Pengingat Jadwal Wawancara Calon Orangtua/Wali Santri
+ * A. UNTUK PENDAFTAR — 3. Pengingat Jadwal Wawancara Calon Orang Tua/Wali Santri
  */
 export function buildMessageReminderOrtuPendaftar(params: {
     namaWali?: string | null;
@@ -1266,7 +1266,7 @@ export function buildMessageReminderOrtuPendaftar(params: {
 
 Assalamu'alaikum warahmatullahi wabarakatuh, Abu/Ummu,
 
-Mengingatkan jadwal Wawancara Calon Orangtua/Wali Santri:
+Mengingatkan jadwal Wawancara Calon Orang Tua/Wali Santri:
 
 👤 *Nama Santri:* ${params.namaSantri}
 🎓 *Jenjang:* ${jenjang}
@@ -1357,7 +1357,7 @@ ${SYSTEM_FOOTER_ULULALBAAB}`;
 }
 
 /**
- * B. UNTUK PENGUJI & PEWAWANCARA — 3. Pengingat Jadwal Mewawancara Calon Orangtua/Wali Santri
+ * B. UNTUK PENGUJI & PEWAWANCARA — 3. Pengingat Jadwal Mewawancara Calon Orang Tua/Wali Santri
  */
 export function buildMessageReminderOrtuPenguji(params: {
     namaPenguji: string;
@@ -1378,7 +1378,7 @@ export function buildMessageReminderOrtuPenguji(params: {
 
 Assalamu'alaikum warahmatullahi wabarakatuh, ${title} *${params.namaPenguji}*,
 
-Mengingatkan jadwal Wawancara Calon Orangtua/Wali Santri:
+Mengingatkan jadwal Wawancara Calon Orang Tua/Wali Santri:
 
 👤 *Nama Santri:* ${params.namaSantri}
 🎓 *Jenjang:* ${jenjang}

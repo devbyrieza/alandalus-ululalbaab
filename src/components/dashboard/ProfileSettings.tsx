@@ -56,7 +56,7 @@ export default function ProfileSettings({ user }: { user: UserSession }) {
       admin_super: "Admin Super",
       admin_keuangan: "Admin Keuangan",
       admin_berkas: "Admin Berkas",
-      penguji: "Penguji Al-Qur'an",
+      penguji: "Penguji Tes Al-Qur'an",
       pewawancara_calsan: "Pewawancara Calsan",
       pewawancara_cawalsan: "Pewawancara Cawalsan",
       admin: "Admin" };

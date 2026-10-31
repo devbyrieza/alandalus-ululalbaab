@@ -46,7 +46,7 @@ const DOKUMEN_CONFIG: Record<
     maxSize: 5 * 1024 * 1024,
     allowedTypes: ["image/jpeg", "image/png", "application/pdf"] },
   pakta_integritas_ortu: {
-    label: "Scan Pakta Integritas Calon Orangtua/Wali Santri",
+    label: "Scan Pakta Integritas Calon Orang Tua/Wali Santri",
     maxSize: 5 * 1024 * 1024,
     allowedTypes: ["image/jpeg", "image/png", "application/pdf"] },
   pernyataan_bebas_negatif: {

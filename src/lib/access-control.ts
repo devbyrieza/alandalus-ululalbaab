@@ -197,11 +197,11 @@ export const ROLE_LABELS: Record<UserRole, string> = {
   pendaftar: "Pendaftar",
   admin_berkas: "Admin Berkas",
   admin_keuangan: "Admin Keuangan",
-  penguji: "Penguji Al-Qur'an (Bacaan & Hafalan)",
+  penguji: "Penguji Tes Al-Qur'an",
   pewawancara_calsan: "Pewawancara Calon Santri",
-  pewawancara_cawalsan: "Pewawancara Calon Orangtua/Wali",
-  penguji_hafalan: "Penguji Al-Qur'an (Bacaan & Hafalan)",
-  penguji_bahasa_arab: "Penguji Lisan B. Arab",
+  pewawancara_cawalsan: "Pewawancara Calon Orang Tua/Wali Santri",
+  penguji_hafalan: "Penguji Tes Al-Qur'an",
+  penguji_bahasa_arab: "Penguji Tes Lisan Bahasa Arab",
   admin_super: "Admin Super",
   admin: "Administrator" };
 

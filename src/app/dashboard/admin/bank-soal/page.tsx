@@ -107,7 +107,7 @@ export default function BankSoalPanitiaPage() {
           { id: "kepribadian", label: "Kepribadian Santri", count: KEPRIBADIAN_QUESTIONS.length, icon: Brain },
           { id: "calsan", label: "Wawancara Calsan", count: "7 Rubrik", icon: Users },
           { id: "cawalsan", label: "Wawancara Ortu", count: "12 Soal", icon: UserCheck },
-          { id: "quran", label: "Penguji Al-Qur'an & Lisan", count: "3 Aspek", icon: BookOpenCheck },
+          { id: "quran", label: "Penguji Tes Al-Qur'an & Lisan", count: "3 Aspek", icon: BookOpenCheck },
           { id: "aturan", label: "Aturan & Bobot Nilai", count: "Info", icon: HelpCircle },
         ].map((tab) => {
           const Icon = tab.icon;
@@ -464,7 +464,7 @@ export default function BankSoalPanitiaPage() {
           <div className="bg-teal-50 border border-teal-200 text-teal-900 p-4 rounded-2xl text-xs md:text-sm flex items-start gap-3">
             <BookOpenCheck className="w-5 h-5 text-teal-600 flex-shrink-0 mt-0.5" />
             <div>
-              <p className="font-bold">Form Penilaian Penguji Al-Qur'an, Hafalan & Lisan Bahasa Arab:</p>
+              <p className="font-bold">Form Penilaian Penguji Tes Al-Qur'an, Hafalan & Lisan Bahasa Arab:</p>
               <p>Waktu Tes: <strong>15-20 Menit/Santri</strong> | Nilai diinput langsung dari HP/Tablet penguji di Dashboard Input Nilai</p>
             </div>
           </div>

@@ -111,7 +111,7 @@ export async function setDigestRecipientSetting(phone: string | null): Promise<v
 function formatJenisUjian(sessionTitle: string): string {
     const t = (sessionTitle || "").toLowerCase();
     if (t.includes("quran") || t.includes("qur'an")) return "Tes Al-Qur'an";
-    if (t.includes("ortu") || t.includes("cawalsan") || t.includes("orang tua") || t.includes("orangtua") || t.includes("wali")) return "Wawancara Calon Orangtua/Wali";
+    if (t.includes("ortu") || t.includes("cawalsan") || t.includes("orang tua") || t.includes("orangtua") || t.includes("wali")) return "Wawancara Calon Orang Tua/Wali";
     if (t.includes("calsan") || t.includes("santri")) return "Wawancara Calon Santri";
     if (t.includes("arab") || t.includes("lisan")) return "Tes Lisan Bahasa Arab";
     return sessionTitle || "Tes Seleksi";

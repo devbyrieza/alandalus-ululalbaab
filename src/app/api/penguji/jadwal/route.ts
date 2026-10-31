@@ -89,7 +89,7 @@ export async function GET() {
           "Seleksi Al Qur'an",
           "Tes Al-Qur'an (Bacaan & Hafalan)",
           "Seleksi Wawancara Calon Santri",
-          "Seleksi Wawancara Calon Orangtua/Wali Santri",
+          "Seleksi Wawancara Calon Orang Tua/Wali Santri",
           "Tes Lisan Bahasa Arab",
         );
       } else {
@@ -101,11 +101,11 @@ export async function GET() {
           sessionTitle.includes("wali");
 
         if (item.penguji_ortu_id === userId) {
-          jenis_tugas.push("Seleksi Wawancara Calon Orangtua/Wali Santri");
+          jenis_tugas.push("Seleksi Wawancara Calon Orang Tua/Wali Santri");
         } else if (item.penguji_santri_id === userId) {
           if (isSessionOrtu) {
             // Auto-heal: assigned to santri_id due to legacy bug, but session is Ortu
-            jenis_tugas.push("Seleksi Wawancara Calon Orangtua/Wali Santri");
+            jenis_tugas.push("Seleksi Wawancara Calon Orang Tua/Wali Santri");
             if (!item.penguji_ortu_id) {
               prisma.jadwalUjian.update({
                 where: { id: item.id },
@@ -143,7 +143,7 @@ export async function GET() {
             title.includes("orang") ||
             title.includes("wali")
           )
-            jenis_tugas.push("Seleksi Wawancara Calon Orangtua/Wali Santri");
+            jenis_tugas.push("Seleksi Wawancara Calon Orang Tua/Wali Santri");
           else if (title.includes("calsan") || title.includes("santri"))
             jenis_tugas.push("Seleksi Wawancara Calon Santri");
           else jenis_tugas.push(item.exam_session?.title || "Ujian");

@@ -40,20 +40,20 @@ function sanitizeTitle(title: string): string {
   
   // Expand Pewawancara/Penguji Calsan/Cawalsan
   clean = clean.replace(/Pewawancara Calsan/gi, "Pewawancara Calon Santri");
-  clean = clean.replace(/Pewawancara Cawalsan/gi, "Pewawancara Calon Orangtua/Wali Santri");
+  clean = clean.replace(/Pewawancara Cawalsan/gi, "Pewawancara Calon Orang Tua/Wali Santri");
   clean = clean.replace(/Penguji Calsan/gi, "Penguji Calon Santri");
-  clean = clean.replace(/Penguji Cawalsan/gi, "Penguji Calon Orangtua/Wali Santri");
+  clean = clean.replace(/Penguji Cawalsan/gi, "Penguji Calon Orang Tua/Wali Santri");
 
   // Expand generic Wawancara Santri / Ortu / Orang Tua
   clean = clean.replace(/Wawancara Santri/gi, "Wawancara Calon Santri");
-  clean = clean.replace(/Wawancara Ortu/gi, "Wawancara Calon Orangtua/Wali Santri");
-  clean = clean.replace(/Wawancara Orang Tua/gi, "Wawancara Calon Orangtua/Wali Santri");
+  clean = clean.replace(/Wawancara Ortu/gi, "Wawancara Calon Orang Tua/Wali Santri");
+  clean = clean.replace(/Wawancara Orang Tua/gi, "Wawancara Calon Orang Tua/Wali Santri");
 
   // Expand Calsan
   clean = clean.replace(/calsan/gi, "Calon Santri");
 
   // Expand Cawalsan
-  clean = clean.replace(/cawalsan/gi, "Calon Orangtua/Wali Santri");
+  clean = clean.replace(/cawalsan/gi, "Calon Orang Tua/Wali Santri");
 
   // Clean up potential double "Calon" or other artifacts
   clean = clean.replace(/Calon Santri Santri/gi, "Calon Santri");
@@ -373,7 +373,7 @@ export async function GET(request: Request) {
       if (!hasWawancaraOrtuBooking && checkScore((userNilai as any).nilai_wawancara_ortu, (userNilai as any).detail_cawalsan, 'rekomendasi')) {
         booked.push({
           id: "SYNTHETIC_W_ORTU",
-          jenis_ujian: "Wawancara Calon Orangtua/Wali (Admin/Jalur Khusus)",
+          jenis_ujian: "Wawancara Calon Orang Tua/Wali (Admin/Jalur Khusus)",
           tanggal_ujian: new Date() as any,
           waktu_mulai: "00:00",
           waktu_selesai: "00:00",

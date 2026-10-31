@@ -162,7 +162,7 @@ export default function PendaftarDetailPage() {
       foto_setengah_badan: "Foto Setengah Badan",
       surat_kesehatan: "Surat Keterangan Sehat",
       pakta_integritas_santri: "Scan Pakta Integritas Calon Santri",
-      pakta_integritas_ortu: "Scan Pakta Integritas Calon Orangtua/Wali Santri",
+      pakta_integritas_ortu: "Scan Pakta Integritas Calon Orang Tua/Wali Santri",
       pernyataan_bebas_negatif: "Scan Pernyataan Bebas Perilaku Negatif",
       pakta_integritas: "Scan Pakta Integritas Calon Santri",
       scan_kartu_keluarga: "Scan Kartu Keluarga",
@@ -173,7 +173,7 @@ export default function PendaftarDetailPage() {
       scan_foto_setengah_badan: "Foto Setengah Badan",
       scan_surat_kesehatan: "Surat Keterangan Sehat",
       scan_pakta_integritas_santri: "Scan Pakta Integritas Calon Santri",
-      scan_pakta_integritas_ortu: "Scan Pakta Integritas Calon Orangtua/Wali Santri",
+      scan_pakta_integritas_ortu: "Scan Pakta Integritas Calon Orang Tua/Wali Santri",
       scan_pernyataan_bebas_negatif: "Scan Pernyataan Bebas Perilaku Negatif",
       scan_pakta_integritas: "Scan Pakta Integritas Calon Santri" };
     return labels[key] || key.replace(/_/g, " ").replace(/\b\w/g, (l) => l.toUpperCase());
@@ -1675,7 +1675,7 @@ export default function PendaftarDetailPage() {
                 <div className="bg-rose-50/50 p-4 rounded-3xl border border-rose-100 flex flex-col justify-between">
                   <div>
                     <span className="block text-xs text-rose-600 font-bold uppercase tracking-wide mb-1">
-                      Wawancara: Calon Orangtua/Wali Santri
+                      Wawancara: Calon Orang Tua/Wali Santri
                     </span>
                     {!pendaftar.nilai_ujian ? (
                       <span className="text-sm font-bold text-stone-400 italic inline-block mt-2 px-3 py-1 bg-stone-100 rounded whitespace-nowrap inline-block shrink-0">

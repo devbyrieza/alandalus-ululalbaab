@@ -479,7 +479,7 @@ export default function BroadcastPage() {
       case "penguji_quran":
         setHeader("Assalamu'alaikum Warahmatullahi Wabarakatuh");
         setMessage(
-          "Yth. Ustadz/Ustadzah *{nama}* (Tim Penguji Al-Qur'an SPMB).\n\n" +
+          "Yth. Ustadz/Ustadzah *{nama}* (Tim Penguji Tes Al-Qur'an SPMB).\n\n" +
             "Diberitahukan bahwa jadwal pelaksanaan tes Al-Qur'an (Tahfidz & Tahsin) untuk calon santri baru telah tersedia di portal penguji.\n\n" +
             "Mohon kesediaan antum untuk membuka portal dan mengisi penilaian seleksi pada pendaftar yang telah ditugaskan.\n\n" +
             "Jazakumullahu khairan katsiran atas dedikasi dan khidmat antum.",
@@ -512,7 +512,7 @@ export default function BroadcastPage() {
       case "pewawancara_cawalsan":
         setHeader("Assalamu'alaikum Warahmatullahi Wabarakatuh");
         setMessage(
-          "Yth. Bapak/Ibu/Ustadz *{nama}* (Tim Pewawancara Calon Orang Tua / Wali).\n\n" +
+          "Yth. Bapak/Ibu/Ustadz *{nama}* (Tim Pewawancara Calon Orang Tua/Wali).\n\n" +
             "Diberitahukan bahwa sesi wawancara kesiapan orang tua / wali santri baru siap dilaksanakan.\n\n" +
             "Mohon kesediaannya untuk memverifikasi komitmen dan poin keselarasan visi wali di portal SPMB.\n\n" +
             "Jazakumullahu khair.",
@@ -620,7 +620,7 @@ export default function BroadcastPage() {
 
     const categoryTitleMap: Record<CategoryTab, string> = {
       pendaftar: "Calon Santri & Wali (Pendaftar)",
-      penguji_quran: "Penguji Al-Qur'an",
+      penguji_quran: "Penguji Tes Al-Qur'an",
       penguji_arab: "Penguji Bahasa Arab",
       all_penguji: "Seluruh Penguji (Qur'an + Arab)",
       pewawancara_calsan: "Pewawancara Calon Santri (Calsan)",
@@ -865,7 +865,7 @@ export default function BroadcastPage() {
                 Broadcast <span className="text-emerald-600">WhatsApp</span>
               </h1>
               <p className="text-stone-500 text-sm mt-0.5">
-                Kirim pesan massal resmi ke Calon Santri, Wali, Penguji Al-Qur'an, Penguji B. Arab, dan Pewawancara Calsan & Cawalsan.
+                Kirim pesan massal resmi ke Calon Santri, Wali, Penguji Tes Al-Qur'an, Penguji Tes Lisan Bahasa Arab, dan Pewawancara Calsan & Cawalsan.
               </p>
             </div>
           </div>
@@ -950,14 +950,14 @@ export default function BroadcastPage() {
               </span>
             </div>
             <div className="mt-3 font-black text-stone-900 text-sm">
-              Penguji Al-Qur'an
+              Penguji Tes Al-Qur'an
             </div>
             <p className="text-[11px] text-stone-500 line-clamp-1 mt-0.5">
               Khusus penguji Tahsin & Tahfidz
             </p>
           </button>
 
-          {/* Tab 3: Penguji B. Arab */}
+          {/* Tab 3: Penguji Tes Lisan Bahasa Arab */}
           <button
             onClick={() => setActiveTab("penguji_arab")}
             className={`p-4 rounded-2xl border text-left transition-all relative overflow-hidden ${
@@ -1003,7 +1003,7 @@ export default function BroadcastPage() {
               Semua Penguji (Gabungan)
             </div>
             <p className="text-[11px] text-stone-500 line-clamp-1 mt-0.5">
-              Penguji Al-Qur'an + B. Arab
+              Penguji Tes Al-Qur'an + B. Arab
             </p>
           </button>
 
@@ -1335,8 +1335,8 @@ export default function BroadcastPage() {
                   <option value="" disabled>
                     Pilih Template Siap Pakai...
                   </option>
-                  <option value="penguji_quran">Undangan Penguji Al-Qur'an</option>
-                  <option value="penguji_arab">Undangan Penguji B. Arab</option>
+                  <option value="penguji_quran">Undangan Penguji Tes Al-Qur'an</option>
+                  <option value="penguji_arab">Undangan Penguji Tes Lisan Bahasa Arab</option>
                   <option value="pewawancara_calsan">Undangan Wawancara Calsan</option>
                   <option value="pewawancara_cawalsan">Undangan Wawancara Cawalsan</option>
                   <option value="pendaftar_jadwal">Informasi Jadwal Pendaftar</option>

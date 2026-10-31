@@ -30,20 +30,20 @@ export function expandExamTitle(title: string | null): string {
 
   // Expand Pewawancara/Penguji Calsan/Cawalsan
   expanded = expanded.replace(/Pewawancara Calsan/gi, "Pewawancara Calon Santri");
-  expanded = expanded.replace(/Pewawancara Cawalsan/gi, "Pewawancara Calon Orangtua/Wali Santri");
+  expanded = expanded.replace(/Pewawancara Cawalsan/gi, "Pewawancara Calon Orang Tua/Wali Santri");
   expanded = expanded.replace(/Penguji Calsan/gi, "Penguji Calon Santri");
-  expanded = expanded.replace(/Penguji Cawalsan/gi, "Penguji Calon Orangtua/Wali Santri");
+  expanded = expanded.replace(/Penguji Cawalsan/gi, "Penguji Calon Orang Tua/Wali Santri");
 
   // Expand generic Wawancara Santri / Ortu / Orang Tua
   expanded = expanded.replace(/Wawancara Santri/gi, "Wawancara Calon Santri");
-  expanded = expanded.replace(/Wawancara Ortu/gi, "Wawancara Calon Orangtua/Wali Santri");
-  expanded = expanded.replace(/Wawancara Orang Tua/gi, "Wawancara Calon Orangtua/Wali Santri");
+  expanded = expanded.replace(/Wawancara Ortu/gi, "Wawancara Calon Orang Tua/Wali Santri");
+  expanded = expanded.replace(/Wawancara Orang Tua/gi, "Wawancara Calon Orang Tua/Wali Santri");
 
   // Expand Calsan
   expanded = expanded.replace(/calsan/gi, "Calon Santri");
 
   // Expand Cawalsan
-  expanded = expanded.replace(/cawalsan/gi, "Calon Orangtua/Wali Santri");
+  expanded = expanded.replace(/cawalsan/gi, "Calon Orang Tua/Wali Santri");
 
   // Clean up potential double "Calon" or other artifacts
   expanded = expanded.replace(/Calon Santri Santri/gi, "Calon Santri");

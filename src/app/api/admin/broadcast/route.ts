@@ -171,8 +171,8 @@ export async function GET(req: NextRequest) {
 
       // Primary role label for display
       const roleLabels: string[] = [];
-      if (isPengujiQuran) roleLabels.push("Penguji Al-Qur'an");
-      if (isPengujiArab) roleLabels.push("Penguji B. Arab");
+      if (isPengujiQuran) roleLabels.push("Penguji Tes Al-Qur'an");
+      if (isPengujiArab) roleLabels.push("Penguji Tes Lisan Bahasa Arab");
       if (allRoles.includes("pewawancara_calsan")) roleLabels.push("Pewawancara Calsan");
       if (allRoles.includes("pewawancara_cawalsan")) roleLabels.push("Pewawancara Cawalsan");
       if (allRoles.includes("pewawancara") && !allRoles.includes("pewawancara_calsan") && !allRoles.includes("pewawancara_cawalsan")) {
@@ -472,7 +472,7 @@ export async function POST(req: NextRequest) {
           targetCategory === "selected_penguji_quran"
         ) {
           match = isPengujiQuran;
-          roleName = "Penguji Al-Qur'an";
+          roleName = "Penguji Tes Al-Qur'an";
         } else if (
           targetCategory === "all_penguji_arab" ||
           targetCategory === "selected_penguji_arab"
@@ -484,7 +484,7 @@ export async function POST(req: NextRequest) {
           targetCategory === "selected_penguji"
         ) {
           match = isPengujiQuran || isPengujiArab;
-          roleName = isPengujiQuran ? "Penguji Al-Qur'an" : "Penguji B. Arab";
+          roleName = isPengujiQuran ? "Penguji Tes Al-Qur'an" : "Penguji Tes Lisan Bahasa Arab";
         } else if (
           targetCategory === "all_pewawancara_calsan" ||
           targetCategory === "selected_pewawancara_calsan"

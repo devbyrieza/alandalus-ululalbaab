@@ -57,7 +57,7 @@ const JENIS_DOKUMEN_ORDER = [
   "Scan NISN",
   "Surat Keterangan Sehat",
   "Scan Pakta Integritas Calon Santri",
-  "Scan Pakta Integritas Calon Orangtua/Wali Santri",
+  "Scan Pakta Integritas Calon Orang Tua/Wali Santri",
   "Scan Pernyataan Bebas Perilaku Negatif",
 ];
 
@@ -197,7 +197,7 @@ export default function VerifikasiDokumenDetailPage() {
               label = "Scan Pakta Integritas Calon Santri";
               break;
             case "pakta_integritas_ortu":
-              label = "Scan Pakta Integritas Calon Orangtua/Wali Santri";
+              label = "Scan Pakta Integritas Calon Orang Tua/Wali Santri";
               break;
             case "pernyataan_bebas_negatif":
               label = "Scan Pernyataan Bebas Perilaku Negatif";
@@ -274,7 +274,7 @@ export default function VerifikasiDokumenDetailPage() {
                 label = "Scan Pakta Integritas Calon Santri";
                 break;
               case "pakta_integritas_ortu":
-                label = "Scan Pakta Integritas Calon Orangtua/Wali Santri";
+                label = "Scan Pakta Integritas Calon Orang Tua/Wali Santri";
                 break;
               case "pernyataan_bebas_negatif":
                 label = "Scan Pernyataan Bebas Perilaku Negatif";

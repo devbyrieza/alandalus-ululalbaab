@@ -184,7 +184,7 @@ export async function POST(request: Request) {
           : currentCategory === "W_SANTRI"
             ? "Seleksi Wawancara Calon Santri"
             : currentCategory === "W_ORTU"
-              ? "Wawancara Calon Orangtua/Wali"
+              ? "Wawancara Calon Orang Tua/Wali"
               : "Ujian ini";
 
       return NextResponse.json(

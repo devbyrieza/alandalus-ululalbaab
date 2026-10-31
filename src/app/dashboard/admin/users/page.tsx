@@ -36,10 +36,10 @@ const ROLE_OPTIONS = [
   { value: "admin_super", label: "Admin Super" },
   { value: "admin_berkas", label: "Admin Berkas" },
   { value: "admin_keuangan", label: "Admin Keuangan" },
-  { value: "penguji", label: "Penguji Al-Qur'an (Bacaan & Hafalan)" },
+  { value: "penguji", label: "Penguji Tes Al-Qur'an" },
   { value: "pewawancara_calsan", label: "Pewawancara Calon Santri" },
-  { value: "pewawancara_cawalsan", label: "Pewawancara Calon Orangtua/Wali" },
-  { value: "penguji_bahasa_arab", label: "Penguji Lisan B. Arab" },
+  { value: "pewawancara_cawalsan", label: "Pewawancara Calon Orang Tua/Wali" },
+  { value: "penguji_bahasa_arab", label: "Penguji Tes Lisan Bahasa Arab" },
 ];
 
 export default function UserManagementPage() {

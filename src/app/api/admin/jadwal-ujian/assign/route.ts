@@ -159,7 +159,7 @@ export async function POST(req: NextRequest) {
           ...(materi_tes ? { catatan: `Materi: ${materi_tes}` } : {}),
           ...(materi_tes === "Tes Bacaan Al-Qur'an" ? { status_quran: "scheduled" } : {}),
           ...(materi_tes === "Wawancara Calon Santri" ? { status_santri: "scheduled" } : {}),
-          ...(materi_tes === "Wawancara Calon Orangtua/Wali" ? { status_ortu: "scheduled" } : {}),
+          ...(materi_tes === "Wawancara Calon Orang Tua/Wali" ? { status_ortu: "scheduled" } : {}),
           ...(materi_tes === "Tes Hafalan Al-Qur'an" ? { status_hafalan: "scheduled" } : {}),
           ...(materi_tes === "Tes Lisan Bahasa Arab" ? { status_arab: "scheduled" } : {}),
         },

@@ -109,7 +109,7 @@ const DOKUMEN_CONFIG: Record<
     ],
     required: true },
   pakta_integritas_ortu: {
-    label: "Scan Pakta Integritas Calon Orangtua/Wali Santri",
+    label: "Scan Pakta Integritas Calon Orang Tua/Wali Santri",
     maxSize: 10 * 1024 * 1024,
     allowedTypes: [
       "image/jpeg",

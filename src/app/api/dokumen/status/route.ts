@@ -24,7 +24,7 @@ const JENIS_DOKUMEN = [
     label: "Surat Keterangan Sehat (Download format)",
     required: true },
   { key: "pakta_integritas_santri", label: "Scan Pakta Integritas Calon Santri (Download format)", required: true },
-  { key: "pakta_integritas_ortu", label: "Scan Pakta Integritas Calon Orangtua/Wali Santri (Download format)", required: true },
+  { key: "pakta_integritas_ortu", label: "Scan Pakta Integritas Calon Orang Tua/Wali Santri (Download format)", required: true },
   {
     key: "pernyataan_bebas_negatif",
     label: "Scan Pernyataan Bebas Perilaku Negatif (Download format)",
