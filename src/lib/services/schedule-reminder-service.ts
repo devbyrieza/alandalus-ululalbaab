@@ -6,6 +6,8 @@ import {
     buildMessageReminderOrtuPendaftar,
     buildMessageReminderQuranPenguji,
     buildMessageReminderSantriPenguji,
+    buildMessageReminderArabPendaftar,
+    buildMessageReminderArabPenguji,
     buildMessageReminderOrtuPenguji
 } from "@/lib/whatsapp-queue";
 import { generateExaminerInputLink } from "@/lib/utils/magic-link";
@@ -99,7 +101,8 @@ export async function checkAndSendH1Reminders(appUrl: string, force: boolean = f
             },
             penguji_santri: true,
             penguji_quran: true,
-            penguji_ortu: true
+            penguji_ortu: true,
+            penguji_arab: true
         }
     });
 
@@ -130,12 +133,25 @@ export async function checkAndSendH1Reminders(appUrl: string, force: boolean = f
         const sessionTitle = (jadwal.exam_session?.title || "").toLowerCase();
         const isQuran = sessionTitle.includes("quran") || sessionTitle.includes("qur'an");
         const isOrtu = sessionTitle.includes("ortu") || sessionTitle.includes("cawalsan") || sessionTitle.includes("orang tua") || sessionTitle.includes("orangtua") || sessionTitle.includes("wali");
-        const isSantri = sessionTitle.includes("calsan") || (sessionTitle.includes("santri") && !isOrtu);
+        const isSantri = sessionTitle.includes("calsan") || (sessionTitle.includes("santri") && !isOrtu);
+        const isArab = sessionTitle.includes("arab") || sessionTitle.includes("lisan");
 
         // 1. Kirim ke Pendaftar jika belum terkirim
         if (!jadwal.notif_h1_pendaftar_terkirim) {
             let sent = false;
-            if (isQuran && santriPhone) {
+            if (isArab && santriPhone) {
+                const meet = jadwal.penguji_arab?.google_meet_link || jadwal.google_meet_link || "-";
+                const msg = buildMessageReminderArabPendaftar({
+                    namaWali,
+                    namaSantri: jadwal.pendaftar.nama_lengkap,
+                    jenjang: santriJenjang,
+                    hariTanggal: finalHariTanggal,
+                    waktu: finalJam,
+                    googleMeetLink: meet
+                });
+                await enqueueWhatsapp({ pendaftarId: jadwal.pendaftar_id, phone: santriPhone, jenisNotif: "reminder_arab_pendaftar_h1", messageContent: msg, force: true, sendNow: true });
+                sent = true;
+            } else if (isQuran && santriPhone) {
                 const meet = jadwal.penguji_quran?.google_meet_link || jadwal.google_meet_link || "-";
                 const msg = buildMessageReminderQuranPendaftar({
                     namaWali,
@@ -236,7 +252,9 @@ export async function checkAndSendH1Reminders(appUrl: string, force: boolean = f
                 notifType: string;
             }> = [];
 
-            if (isQuran && (jadwal.penguji_quran || (jadwal as any).penguji_hafalan)) {
+            if (isArab && jadwal.penguji_arab) {
+                examinerTasks.push({ profile: jadwal.penguji_arab, builder: buildMessageReminderArabPenguji, notifType: "reminder_arab_penguji_h1" });
+            } else if (isQuran && (jadwal.penguji_quran || (jadwal as any).penguji_hafalan)) {
                 examinerTasks.push({ profile: jadwal.penguji_quran || (jadwal as any).penguji_hafalan, builder: buildMessageReminderQuranPenguji, notifType: "reminder_quran_penguji_h1" });
             } else if (isOrtu && (jadwal.penguji_ortu || jadwal.penguji_santri)) {
                 const examiner = jadwal.penguji_ortu || jadwal.penguji_santri;
@@ -258,6 +276,7 @@ export async function checkAndSendH1Reminders(appUrl: string, force: boolean = f
                 if (jadwal.penguji_quran) examinerTasks.push({ profile: jadwal.penguji_quran, builder: buildMessageReminderQuranPenguji, notifType: "reminder_quran_penguji_h1" });
                 if (jadwal.penguji_ortu) examinerTasks.push({ profile: jadwal.penguji_ortu, builder: buildMessageReminderOrtuPenguji, notifType: "reminder_ortu_penguji_h1" });
                 if (jadwal.penguji_santri) examinerTasks.push({ profile: jadwal.penguji_santri, builder: buildMessageReminderSantriPenguji, notifType: "reminder_santri_penguji_h1" });
+                if (jadwal.penguji_arab) examinerTasks.push({ profile: jadwal.penguji_arab, builder: buildMessageReminderArabPenguji, notifType: "reminder_arab_penguji_h1" });
             }
 
             for (const task of examinerTasks) {
@@ -322,7 +341,8 @@ export async function checkAndSendH0Reminders(appUrl: string): Promise<{ checked
             },
             penguji_santri: true,
             penguji_quran: true,
-            penguji_ortu: true,
+            penguji_ortu: true,
+            penguji_arab: true,
             notif_reminders: true
         }
     });
@@ -359,10 +379,23 @@ export async function checkAndSendH0Reminders(appUrl: string): Promise<{ checked
         const sessionTitle = (jadwal.exam_session?.title || "").toLowerCase();
         const isQuran = sessionTitle.includes("quran") || sessionTitle.includes("qur'an");
         const isOrtu = sessionTitle.includes("ortu") || sessionTitle.includes("cawalsan") || sessionTitle.includes("orang tua") || sessionTitle.includes("orangtua") || sessionTitle.includes("wali");
-        const isSantri = sessionTitle.includes("calsan") || (sessionTitle.includes("santri") && !isOrtu);
+        const isSantri = sessionTitle.includes("calsan") || (sessionTitle.includes("santri") && !isOrtu);
+        const isArab = sessionTitle.includes("arab") || sessionTitle.includes("lisan");
 
         // 1. Kirim Pengingat Hari H ke Pendaftar
-        if (isQuran && santriPhone) {
+        if (isArab && santriPhone) {
+            const meet = jadwal.penguji_arab?.google_meet_link || jadwal.google_meet_link || "-";
+            const msg = buildMessageReminderArabPendaftar({
+                namaWali,
+                namaSantri: jadwal.pendaftar.nama_lengkap,
+                jenjang: santriJenjang,
+                hariTanggal: finalHariTanggal,
+                waktu: finalJam,
+                googleMeetLink: meet
+            });
+            await enqueueWhatsapp({ pendaftarId: jadwal.pendaftar_id, phone: santriPhone, jenisNotif: "reminder_arab_pendaftar_h0", messageContent: msg, force: true, sendNow: true });
+            enqueuedPendaftar++;
+        } else if (isQuran && santriPhone) {
             const meet = jadwal.penguji_quran?.google_meet_link || jadwal.google_meet_link || "-";
             const msg = buildMessageReminderQuranPendaftar({
                 namaWali,
@@ -452,7 +485,9 @@ export async function checkAndSendH0Reminders(appUrl: string): Promise<{ checked
             notifType: string;
         }> = [];
 
-        if (isQuran && (jadwal.penguji_quran || (jadwal as any).penguji_hafalan)) {
+        if (isArab && jadwal.penguji_arab) {
+            examinerTasks.push({ profile: jadwal.penguji_arab, builder: buildMessageReminderArabPenguji, notifType: "reminder_arab_penguji_h0" });
+        } else if (isQuran && (jadwal.penguji_quran || (jadwal as any).penguji_hafalan)) {
             examinerTasks.push({ profile: jadwal.penguji_quran || (jadwal as any).penguji_hafalan, builder: buildMessageReminderQuranPenguji, notifType: "reminder_quran_penguji_h0" });
         } else if (isOrtu && (jadwal.penguji_ortu || jadwal.penguji_santri)) {
             const examiner = jadwal.penguji_ortu || jadwal.penguji_santri;
@@ -474,6 +509,7 @@ export async function checkAndSendH0Reminders(appUrl: string): Promise<{ checked
             if (jadwal.penguji_quran) examinerTasks.push({ profile: jadwal.penguji_quran, builder: buildMessageReminderQuranPenguji, notifType: "reminder_quran_penguji_h0" });
             if (jadwal.penguji_ortu) examinerTasks.push({ profile: jadwal.penguji_ortu, builder: buildMessageReminderOrtuPenguji, notifType: "reminder_ortu_penguji_h0" });
             if (jadwal.penguji_santri) examinerTasks.push({ profile: jadwal.penguji_santri, builder: buildMessageReminderSantriPenguji, notifType: "reminder_santri_penguji_h0" });
+            if (jadwal.penguji_arab) examinerTasks.push({ profile: jadwal.penguji_arab, builder: buildMessageReminderArabPenguji, notifType: "reminder_arab_penguji_h0" });
         }
 
         for (const task of examinerTasks) {
