@@ -374,25 +374,8 @@ function InputNilaiContent() {
   };
 
   const getLockInfo = (inputAt: string | null | undefined) => {
-    if (!inputAt) return { isLocked: false, remainingText: "" };
-    
-    const isAdmin = ['admin_super', 'admin'].includes(activeRole);
-    if (isAdmin) return { isLocked: false, remainingText: "Akses Admin: Bebas Edit" };
-
-    const inputDate = new Date(inputAt);
-    const lockDate = new Date(inputDate.getTime() + 24 * 60 * 60 * 1000);
-    const now = new Date();
-    
-    const isLocked = now > lockDate;
-    
-    if (isLocked) {
-      return { isLocked: true, remainingText: "Terkunci (Batas edit 24 jam habis)" };
-    } else {
-      const diffMs = lockDate.getTime() - now.getTime();
-      const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
-      const diffMins = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
-      return { isLocked: false, remainingText: `Masa edit: ${diffHours}j ${diffMins}m lagi` };
-    }
+    // Kebijakan: penguji bebas edit nilai kapan saja — tanpa penguncian
+    return { isLocked: false, remainingText: inputAt ? "Bebas edit kapan saja" : "" };
   };
 
   useEffect(() => {
@@ -751,7 +734,7 @@ function InputNilaiContent() {
         {isEditing ? (
           <div className="space-y-5 sm:space-y-6">
             {(() => {
-              const isInputtedByAdmin = p.score_hafalan != null && !p.input_at_hafalan;
+              const isInputtedByAdmin = false as boolean; // Penguji bebas edit nilai kapan saja
               return (
                 <>
                   {isInputtedByAdmin && (
@@ -875,7 +858,7 @@ function InputNilaiContent() {
         {isEditing ? (
           <div className="space-y-5 sm:space-y-6">
             {(() => {
-              const isInputtedByAdmin = p.score_lisan_arab != null && !p.input_at_lisan_arab;
+              const isInputtedByAdmin = false as boolean; // Penguji bebas edit nilai kapan saja
               return (
                 <>
                   {isInputtedByAdmin && (
@@ -1173,7 +1156,7 @@ function InputNilaiContent() {
         {isEditing ? (
           <div className="space-y-5 sm:space-y-6">
             {(() => {
-              const isInputtedByAdmin = p.score_quran != null && !p.input_at_quran;
+              const isInputtedByAdmin = false as boolean; // Penguji bebas edit nilai kapan saja
               return (
                 <>
                   {isInputtedByAdmin && (
@@ -1315,7 +1298,7 @@ function InputNilaiContent() {
         {isEditing ? (
           <div className="space-y-5 sm:space-y-6">
             {(() => {
-              const isInputtedByAdmin = p.score_wawancara != null && !p.input_at_santri;
+              const isInputtedByAdmin = false as boolean; // Penguji bebas edit nilai kapan saja
               return (
                 <>
                   {isInputtedByAdmin && (
@@ -1455,7 +1438,7 @@ function InputNilaiContent() {
         {isEditing ? (
           <div className="space-y-5 sm:space-y-6">
             {(() => {
-              const isInputtedByAdmin = p.nilai_wawancara_ortu != null && !p.input_at_ortu;
+              const isInputtedByAdmin = false as boolean; // Penguji bebas edit nilai kapan saja
               return (
                 <>
                   {isInputtedByAdmin && (

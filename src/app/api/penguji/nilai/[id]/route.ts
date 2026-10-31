@@ -165,7 +165,7 @@ export async function PATCH(
 
     const updateData: any = {};
     const now = new Date();
-    const LOCK_TIME = 24 * 60 * 60 * 1000; // 24 hours in ms
+    const LOCK_TIME = Number.POSITIVE_INFINITY; // Kebijakan: penguji bebas edit nilai kapan saja (batas 24 jam dimatikan)
 
     // 1. Quran Update
     if (canEditQuran && body.detail_quran !== undefined) {
