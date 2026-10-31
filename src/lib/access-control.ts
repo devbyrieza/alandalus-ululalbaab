@@ -217,15 +217,23 @@ export const ROLE_PERMISSIONS: Record<UserRole, string[]> = {
   admin_super: ["view_pendaftar_list", "view_dashboard_stats", "manage_users", "manage_settings"],
   admin: ["view_pendaftar_list", "verify_documents", "verify_payment", "input_exam_scores"] };
 
-export const DASHBOARD_ROUTES: Record<UserRole, string> = {
+// Selain UserRole inti, peta ini memuat alias role lama yang masih tersimpan
+// di database (penguji_quran, penguji_calsan, dst.) agar halaman login dan
+// middleware tidak menolaknya. Role staf baru cukup didaftarkan di sini.
+export const DASHBOARD_ROUTES: Record<string, string> = {
   pendaftar: "/dashboard/pendaftar",
   admin_berkas: "/dashboard/admin",
   admin_keuangan: "/dashboard/admin",
   penguji: "/dashboard/penguji",
+  pewawancara: "/dashboard/penguji",
   pewawancara_calsan: "/dashboard/penguji",
   pewawancara_cawalsan: "/dashboard/penguji",
   penguji_hafalan: "/dashboard/penguji",
   penguji_bahasa_arab: "/dashboard/penguji",
+  penguji_quran: "/dashboard/penguji",
+  penguji_calsan: "/dashboard/penguji",
+  penguji_cawalsan: "/dashboard/penguji",
+  head_of_it: "/dashboard/admin",
   admin_super: "/dashboard/admin",
   admin: "/dashboard/admin" };
 

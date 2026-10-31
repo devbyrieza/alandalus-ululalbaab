@@ -30,6 +30,7 @@ import {
 import { Container } from "@/components/layout/Container";
 import { motion, AnimatePresence } from "framer-motion";
 import { BRANDING } from "@/config/branding";
+import { DASHBOARD_ROUTES } from "@/lib/access-control";
 
 // Role label & icon map
 const ROLE_INFO: Record<
@@ -256,25 +257,11 @@ export default function LoginPage() {
       }
 
       const userRole = data.role.toLowerCase();
-      // Single role: redirect
-      if (
-        ["admin", "admin_super", "admin_berkas", "admin_keuangan"].includes(
-          userRole,
-        )
-      ) {
-        window.location.href = "/dashboard/admin";
-      } else if (
-        [
-          "penguji",
-          "pewawancara",
-          "pewawancara_calsan",
-          "pewawancara_cawalsan",
-          "penguji_quran",
-          "penguji_calsan",
-          "penguji_cawalsan"
-        ].includes(userRole)
-      ) {
-        window.location.href = "/dashboard/penguji";
+      // Redirect via peta terpusat DASHBOARD_ROUTES (sumber tunggal bersama
+      // middleware & select-role) agar role staf baru tidak perlu disinkronkan manual di sini.
+      const redirectTo = userRole === "pendaftar" ? undefined : DASHBOARD_ROUTES[userRole];
+      if (redirectTo) {
+        window.location.href = redirectTo;
       } else {
         throw new Error(`Role tidak dikenali: ${data.role}`);
       }

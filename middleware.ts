@@ -25,6 +25,20 @@ function getSessionFromCookie(request: NextRequest): {
   }
 }
 
+// Daftar role per dashboard — wajib sinkron dengan DASHBOARD_ROUTES di src/lib/access-control.ts
+const ADMIN_DASHBOARD_ROLES = ["admin", "admin_super", "admin_berkas", "admin_keuangan", "head_of_it"];
+const PENGUJI_DASHBOARD_ROLES = [
+  "penguji",
+  "penguji_quran",
+  "penguji_hafalan",
+  "penguji_bahasa_arab",
+  "penguji_calsan",
+  "penguji_cawalsan",
+  "pewawancara",
+  "pewawancara_calsan",
+  "pewawancara_cawalsan",
+];
+
 export async function middleware(request: NextRequest) {
   const { role: userRole } = getSessionFromCookie(request);
   const { pathname } = request.nextUrl;
@@ -132,8 +146,7 @@ export async function middleware(request: NextRequest) {
   // PROTECT: /dashboard/admin
   // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
   if (pathname.startsWith("/dashboard/admin")) {
-    const allowedAdminRoles = ["admin_berkas", "admin_keuangan", "admin_super", "admin"];
-    if (!userRole || !allowedAdminRoles.includes(userRole)) {
+    if (!userRole || !ADMIN_DASHBOARD_ROLES.includes(userRole)) {
       return NextResponse.redirect(new URL("/login", request.url));
     }
   }
@@ -142,8 +155,7 @@ export async function middleware(request: NextRequest) {
   // PROTECT: /dashboard/penguji
   // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
   if (pathname.startsWith("/dashboard/penguji")) {
-    const allowedPengujiRoles = ["penguji", "penguji_calsan", "pewawancara", "pewawancara_calsan", "pewawancara_cawalsan", "penguji_quran", "admin_super"];
-    if (!userRole || !allowedPengujiRoles.includes(userRole)) {
+    if (!userRole || !(PENGUJI_DASHBOARD_ROLES.includes(userRole) || userRole === "admin_super")) {
       return NextResponse.redirect(new URL("/login", request.url));
     }
   }
@@ -158,9 +170,9 @@ export async function middleware(request: NextRequest) {
 
     if (userRole === "pendaftar") {
       return NextResponse.redirect(new URL("/dashboard/pendaftar", request.url));
-    } else if (["admin_berkas", "admin_keuangan", "admin_super", "admin"].includes(userRole)) {
+    } else if (ADMIN_DASHBOARD_ROLES.includes(userRole)) {
       return NextResponse.redirect(new URL("/dashboard/admin", request.url));
-    } else if (["penguji", "pewawancara", "pewawancara_calsan", "pewawancara_cawalsan", "penguji_quran"].includes(userRole)) {
+    } else if (PENGUJI_DASHBOARD_ROLES.includes(userRole)) {
       return NextResponse.redirect(new URL("/dashboard/penguji", request.url));
     }
 
@@ -173,9 +185,9 @@ export async function middleware(request: NextRequest) {
   if (pathname === "/login" && userRole) {
     if (userRole === "pendaftar") {
       return NextResponse.redirect(new URL("/dashboard/pendaftar", request.url));
-    } else if (["admin_berkas", "admin_keuangan", "admin_super", "admin"].includes(userRole)) {
+    } else if (ADMIN_DASHBOARD_ROLES.includes(userRole)) {
       return NextResponse.redirect(new URL("/dashboard/admin", request.url));
-    } else if (["penguji", "pewawancara_calsan", "pewawancara_cawalsan"].includes(userRole)) {
+    } else if (PENGUJI_DASHBOARD_ROLES.includes(userRole)) {
       return NextResponse.redirect(new URL("/dashboard/penguji", request.url));
     }
   }
