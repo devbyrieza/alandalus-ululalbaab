@@ -15,7 +15,7 @@ async function getSession() {
 }
 
 // POST: Batch recalculate all NilaiUjian records
-export async function POST() {
+export async function POST(request: Request) {
   try {
     const session = await getSession();
     if (!session) {
@@ -26,13 +26,24 @@ export async function POST() {
     if (session.role !== "admin_super") {
       return NextResponse.json(
         { error: "Forbidden: Only admin super can recalculate" },
-        { status: 403 },
+        { status: 403 }
       );
     }
 
-    // Fetch unique pendaftar_ids from NilaiUjian records
-    const uniquePendaftars = await prisma.nilaiUjian.groupBy({
-      by: ["pendaftar_id"] });
+    // Scope opsional per tahun ajaran (dari filter halaman penilaian).
+    // Tanpa body -> semua tahun ajaran (perilaku lama).
+    let taId: string | null = null;
+    try {
+      const body = await request.json();
+      taId = body?.tahun_ajaran_id || null;
+    } catch {
+      // body kosong dianggap semua
+    }
+    const uniquePendaftars = await prisma.nilaiUjian.findMany({
+      where: taId ? { pendaftar: { tahun_ajaran_id: taId } } : undefined,
+      distinct: ["pendaftar_id"],
+      select: { pendaftar_id: true },
+    });
 
     let successCount = 0;
     let errorCount = 0;
