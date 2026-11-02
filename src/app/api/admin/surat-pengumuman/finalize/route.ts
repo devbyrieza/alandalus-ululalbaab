@@ -172,26 +172,66 @@ export async function POST(request: Request) {
       details: { nomor_surat: nomorSurat, surat_path: suratPath },
     });
 
-    // Kirim WA: teks selamat + dokumen PDF (signed URL agar bisa diambil Wablas)
+    // Kirim WA: teks selamat + link dokumen PDF signed (tercatat di whatsapp_log)
     let waSent = false;
     if (body.kirim_wa !== false && pendaftar.no_hp) {
       try {
         const appUrl = process.env.NEXT_PUBLIC_APP_URL || "https://spmb.pesantren-ululalbaab.com";
-        const suratUrl = `${appUrl}/api/files/${suratPath}?k=${signFilePath(suratPath)}`;
-        const result = await notifySelectionResult({
+        const token = signFilePath(suratPath);
+        const suratDownloadUrl = `${appUrl}/api/files/${encodeURI(suratPath)}?k=${token}`;
+        const targetKelas = kelasDiterima || pendaftar.jenjang || "VII MTs Putra";
+
+        const messageContent = `📋 *PENGUMUMAN HASIL KELULUSAN SELEKSI PSB*
+*PESANTREN ULUL ALBAAB SUKABUMI*
+Tahun Ajaran 2027/2028
+
+Assalamu'alaikum Warahmatullahi Wabarakatuh,
+
+Yth. Bapak/Ibu Orang Tua / Wali dari:
+👤 *${pendaftar.nama_lengkap}*
+No. Pendaftaran: *${pendaftar.nomor_pendaftaran}*
+
+Alhamdulillah, ananda dinyatakan *DITERIMA* sebagai Santri Baru di Pesantren Ulul Albaab Sukabumi:
+🎓 *Jenjang / Kelas:* ${targetKelas}
+📜 *No. Surat Keputusan:* ${nomorSurat}
+
+📄 *Unduh Surat Keputusan Resmi (PDF):*
+${suratDownloadUrl}
+
+📝 *Tahap Selanjutnya (Daftar Ulang):*
+Silakan masuk ke portal pendaftar untuk melihat rincian pengumuman dan panduan daftar ulang:
+🔗 ${appUrl}/login
+
+Semoga Allah ﷻ memberkahi ananda dan menjadikannya santri yang sholeh, berilmu, dan berakhlak mulia. Aamiin.
+
+Jazakumullahu khairan katsiran.
+Wassalamu'alaikum Warahmatullahi Wabarakatuh.
+---
+*Panitia PSB Pesantren Ulul Albaab Sukabumi*`;
+
+        const { enqueueWhatsapp } = await import("@/lib/whatsapp-queue");
+        const enqResult = await enqueueWhatsapp({
+          pendaftarId: pendaftar.id,
           phone: pendaftar.no_hp,
-          nama: pendaftar.nama_lengkap,
-          status: "DITERIMA",
-          jenjang: pendaftar.jenjang,
-          tahun_ajaran: pendaftar.tahun_ajaran?.nama,
+          jenisNotif: "hasil_seleksi",
+          messageContent,
+          force: true,
+          sendNow: true,
         });
-        void result;
-        const docResult = await sendDocumentMessage({
-          phone: pendaftar.no_hp,
-          message: `Alhamdulillah, ananda ${pendaftar.nama_lengkap} DITERIMA sebagai Santri Pesantren Ulul Albaab Sukabumi TA 2027/2028. Terlampir Surat Pengumuman Hasil (${nomorSurat}). Jazakumullohu khoiron katsiron.`,
-          documentUrl: suratUrl,
-        });
-        waSent = !!docResult.status;
+
+        waSent = !!enqResult.queued;
+
+        // Coba kirim lampiran PDF jika paket Wablas mendukung (non-blocking)
+        try {
+          await sendDocumentMessage({
+            phone: pendaftar.no_hp,
+            message: `📄 Surat Keputusan Kelulusan — ${pendaftar.nama_lengkap} (${nomorSurat})`,
+            documentUrl: suratDownloadUrl,
+          });
+        } catch {
+          // Ignored jika paket Wablas tidak support send-document
+        }
+
         await prisma.pengumuman.update({
           where: { id: pengumuman.id },
           data: { wa_blast_sent: waSent, wa_blast_sent_at: waSent ? new Date() : null },
