@@ -120,62 +120,173 @@ export async function GET(
     if (!fileData && pathSegments.length === 2) {
       fileData =
         getFileLocal(path.join("dokumen-pendaftaran", relativePath)) ||
-        getFileLocal(path.join("bukti-pembayaran", relativePath));
+        getFileLocal(path.join("bukti-pembayaran", relativePath)) ||
+        getFileLocal(path.join("pengumuman", relativePath));
     }
 
     // 4. Database fallback (ephemeral Docker/Vercel support)
     if (!fileData) {
       try {
         const { prisma } = await import("@/lib/prisma");
+        const lowerFilename = filename.toLowerCase();
+        const isPengumuman =
+          category === "pengumuman" ||
+          lowerFilename.includes("pengumuman") ||
+          lowerFilename.includes("surat");
+        const isPembayaran =
+          category === "bukti-pembayaran" ||
+          category === "pembayaran" ||
+          lowerFilename.includes("bukti") ||
+          lowerFilename.includes("transfer") ||
+          lowerFilename.includes("pembayaran");
 
-        // A. Check Dokumen Table
-        const doc = await prisma.dokumen.findFirst({
-          where: {
-            OR: [
-              { file_path: { contains: filename } },
-              { file_name: filename },
-              { file_path: relativePath },
-              { file_path: normalizedForwardPath },
-              ...(ownerId && ownerId.includes("-") ? [{ pendaftar_id: ownerId }] : []),
-            ],
-          },
-          select: {
-            file_data: true,
-            file_type: true,
-            file_name: true,
-            pendaftar_id: true,
-          },
-          orderBy: { updated_at: "desc" },
-        });
+        // A. Khusus Surat Pengumuman Hasil Kelulusan
+        if (isPengumuman) {
+          // Cari di tabel Dokumen (prioritas jenis_dokumen: surat_pengumuman)
+          const doc = await prisma.dokumen.findFirst({
+            where: {
+              OR: [
+                { file_path: { contains: filename } },
+                { file_name: filename },
+                { file_path: relativePath },
+                { file_path: normalizedForwardPath },
+                ...(ownerId && ownerId.includes("-")
+                  ? [
+                      { pendaftar_id: ownerId, jenis_dokumen: "surat_pengumuman" },
+                      { pendaftar_id: ownerId, file_name: filename },
+                      { pendaftar_id: ownerId, file_path: { contains: filename } },
+                    ]
+                  : []),
+              ],
+            },
+            select: {
+              file_data: true,
+              file_type: true,
+              file_name: true,
+              pendaftar_id: true,
+            },
+            orderBy: { updated_at: "desc" },
+          });
 
-        if (doc && doc.file_data) {
-          console.log(`[File Serve] Found in Dokumen DB (BYTEA): ${filename}`);
-          const buffer = Buffer.from(doc.file_data);
-          let mimeType = doc.file_type || "application/octet-stream";
-          if (mimeType === "application/octet-stream") {
-            const hex = buffer.slice(0, 4).toString("hex").toUpperCase();
-            if (hex.startsWith("FFD8FF")) mimeType = "image/jpeg";
-            else if (hex === "89504E47") mimeType = "image/png";
-            else if (hex === "25504446") mimeType = "application/pdf";
-            else if (hex === "52494646") mimeType = "image/webp";
+          if (doc && doc.file_data) {
+            console.log(`[File Serve] Found Pengumuman in Dokumen DB (BYTEA): ${filename}`);
+            const buffer = Buffer.from(doc.file_data);
+            const mimeType = doc.file_type || "application/pdf";
+            fileData = { buffer, mimeType };
+
+            // Cache back to disk
+            try {
+              await saveFileLocal(
+                buffer,
+                "pengumuman",
+                doc.pendaftar_id || ownerId || "cache",
+                filename
+              );
+            } catch (cacheErr) {
+              console.warn("[File Serve] Disk cache write failed (non-critical):", cacheErr);
+            }
           }
-          fileData = { buffer, mimeType };
 
-          // Cache back to disk
-          try {
-            await saveFileLocal(
-              buffer,
-              "dokumen-pendaftaran",
-              doc.pendaftar_id || "cache",
-              filename
-            );
-          } catch (cacheErr) {
-            console.warn("[File Serve] Disk cache write failed (non-critical):", cacheErr);
+          // Fallback kedua: Cek Pengumuman table lalu cari Dokumen terkait
+          if (!fileData && ownerId && ownerId.includes("-")) {
+            const pgm = await prisma.pengumuman.findFirst({
+              where: {
+                OR: [
+                  { pendaftar_id: ownerId },
+                  { surat_pengumuman_path: { contains: filename } },
+                ],
+              },
+              select: { pendaftar_id: true, surat_pengumuman_path: true },
+            });
+
+            if (pgm) {
+              const docRel = await prisma.dokumen.findFirst({
+                where: {
+                  pendaftar_id: pgm.pendaftar_id,
+                  jenis_dokumen: "surat_pengumuman",
+                },
+                select: { file_data: true, file_type: true, file_name: true, pendaftar_id: true },
+                orderBy: { updated_at: "desc" },
+              });
+
+              if (docRel && docRel.file_data) {
+                console.log(`[File Serve] Found Pengumuman via relation in Dokumen DB: ${filename}`);
+                const buffer = Buffer.from(docRel.file_data);
+                const mimeType = docRel.file_type || "application/pdf";
+                fileData = { buffer, mimeType };
+
+                try {
+                  await saveFileLocal(
+                    buffer,
+                    "pengumuman",
+                    pgm.pendaftar_id || "cache",
+                    filename
+                  );
+                } catch (cacheErr) {
+                  console.warn("[File Serve] Disk cache write failed (non-critical):", cacheErr);
+                }
+              }
+            }
+          }
+
+          // DILARANG KERAS fallback ke tabel pembayaran untuk kategori surat pengumuman!
+        }
+
+        // B. Dokumen Pendaftaran Santri Umum (KK, KTP, Akta, Ijazah, dll)
+        if (!fileData && !isPengumuman && !isPembayaran) {
+          const doc = await prisma.dokumen.findFirst({
+            where: {
+              OR: [
+                { file_path: { contains: filename } },
+                { file_name: filename },
+                { file_path: relativePath },
+                { file_path: normalizedForwardPath },
+                ...(ownerId && ownerId.includes("-")
+                  ? [
+                      { pendaftar_id: ownerId, file_name: filename },
+                      { pendaftar_id: ownerId, file_path: { contains: filename } },
+                    ]
+                  : []),
+              ],
+            },
+            select: {
+              file_data: true,
+              file_type: true,
+              file_name: true,
+              pendaftar_id: true,
+            },
+            orderBy: { updated_at: "desc" },
+          });
+
+          if (doc && doc.file_data) {
+            console.log(`[File Serve] Found in Dokumen DB (BYTEA): ${filename}`);
+            const buffer = Buffer.from(doc.file_data);
+            let mimeType = doc.file_type || "application/octet-stream";
+            if (mimeType === "application/octet-stream") {
+              const hex = buffer.slice(0, 4).toString("hex").toUpperCase();
+              if (hex.startsWith("FFD8FF")) mimeType = "image/jpeg";
+              else if (hex === "89504E47") mimeType = "image/png";
+              else if (hex === "25504446") mimeType = "application/pdf";
+              else if (hex === "52494646") mimeType = "image/webp";
+            }
+            fileData = { buffer, mimeType };
+
+            // Cache back to disk
+            try {
+              await saveFileLocal(
+                buffer,
+                category || "dokumen-pendaftaran",
+                doc.pendaftar_id || "cache",
+                filename
+              );
+            } catch (cacheErr) {
+              console.warn("[File Serve] Disk cache write failed (non-critical):", cacheErr);
+            }
           }
         }
 
-        // B. Check Pembayaran Table (for payment proof)
-        if (!fileData) {
+        // C. Khusus Bukti Pembayaran (Hanya jika diminta bukti bayar / transfer)
+        if (!fileData && isPembayaran) {
           const payment = await prisma.pembayaran.findFirst({
             where: {
               OR: [
@@ -184,7 +295,13 @@ export async function GET(
                 { bukti_transfer_path: relativePath },
                 { bukti_transfer_path: normalizedForwardPath },
                 ...(ownerId && ownerId.includes("-")
-                  ? [{ pendaftar_id: ownerId }, { id: ownerId }]
+                  ? [
+                      { pendaftar_id: ownerId, bukti_transfer_filename: filename },
+                      { pendaftar_id: ownerId, bukti_transfer_path: { contains: filename } },
+                      ...(category.includes("bukti") || category.includes("bayar")
+                        ? [{ pendaftar_id: ownerId }, { id: ownerId }]
+                        : []),
+                    ]
                   : []),
               ],
             },
