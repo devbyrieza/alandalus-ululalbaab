@@ -43,7 +43,7 @@ export function SuratPengumumanDialog({
 
   // field editable
   const [tanggal, setTanggal] = useState(() => new Date().toISOString().slice(0, 10));
-  const [kelas, setKelas] = useState("kelas VII MTs Putra");
+  const [kelas, setKelas] = useState("VII MTs Putra");
   const [nomorSurat, setNomorSurat] = useState("");
 
   // upload manual

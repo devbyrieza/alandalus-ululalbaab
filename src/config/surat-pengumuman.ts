@@ -9,7 +9,7 @@ export const SURAT_PENGUMUMAN_CONFIG = {
   hal: "Informasi Hasil Seleksi Penerimaan Santri Baru",
   tujuan: ["Kepada Yth.", "Orangtua/Wali Ananda Calon Santri", "di", "Tempat"],
   ketuaPanitia: "Tri Sunyoto, M.Pd.",
-  kelasDiterimaDefault: "kelas VII MTs Putra",
+  kelasDiterimaDefault: "VII MTs Putra",
   // Aset tanda tangan (null = kosongkan ruang untuk TTD basah + stempel)
   signatureImage: null as string | null,
   stampImage: null as string | null,

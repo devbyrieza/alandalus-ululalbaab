@@ -250,10 +250,69 @@ function paragraph(
 
 /**
  * Generate PDF Surat Pengumuman Hasil (server-side).
- * Layout mengacu surat resmi 012-/PSB-PUAS: kop full image, No/Hal, tujuan,
- * badan surat, blok identitas, DITERIMA, NB ketentuan uang pangkal, TTD.
+ * Jalur utama: overlay teks variabel di atas background template resmi
+ * (public/images/template-surat-pengumuman.jpg — halaman surat asli dengan
+ * zona variabel dikosongkan), sehingga hasil identik dengan surat manual.
+ * Jalur cadangan: render programatik bila aset template tidak ditemukan.
  */
 export async function generateSuratPengumumanHasil(
+  data: SuratPengumumanData
+): Promise<{ buffer: Buffer; filename: string }> {
+  const template = await loadImage("/images/template-surat-pengumuman.jpg");
+  if (template) {
+    return generateSuratDariTemplate(data, template);
+  }
+  return generateSuratProgramatik(data);
+}
+
+/**
+ * Posisi zona variabel pada template resmi (pt, page 612 x 935.52).
+ * y diukur pdf.js dari BAWAH halaman (baseline) — dikonversi ke koordinat jsPDF (dari ATAS).
+ */
+const TEMPLATE_PAGE = { w: 612, h: 935.52 };
+const Y = (yBottom: number) => TEMPLATE_PAGE.h - yBottom;
+const ZONA = {
+  nomor: { x: 127.49, y: Y(793.42), bold: true },
+  nama: { x: 251.14, y: Y(521.42), bold: true },
+  noPendaftaran: { x: 251.14, y: Y(504.62), bold: true },
+  kelas: { x: 241.06, y: Y(474.12), bold: false },
+  tanggal: { x: 345, y: Y(348.82), bold: false },
+};
+
+async function generateSuratDariTemplate(
+  data: SuratPengumumanData,
+  template: string
+): Promise<{ buffer: Buffer; filename: string }> {
+  const doc = new jsPDF({
+    unit: "pt",
+    format: [TEMPLATE_PAGE.w, TEMPLATE_PAGE.h],
+  });
+  doc.addImage(template, "JPEG", 0, 0, TEMPLATE_PAGE.w, TEMPLATE_PAGE.h);
+
+  const tulis = (
+    text: string,
+    zona: { x: number; y: number; bold: boolean }
+  ) => {
+    doc.setFont("times", zona.bold ? "bold" : "normal");
+    doc.setFontSize(12);
+    doc.text(text, zona.x, zona.y);
+  };
+
+  tulis(data.nomorSurat, ZONA.nomor);
+  tulis(data.namaLengkap.toUpperCase(), ZONA.nama);
+  tulis(data.nomorPendaftaran, ZONA.noPendaftaran);
+  tulis(`kelas ${data.kelasDiterima}`, ZONA.kelas);
+  tulis(`Sukabumi, ${tanggalIndo(data.tanggalTerbit)}`, ZONA.tanggal);
+
+  const filename = `Surat Pengumuman Hasil PSB 2027-2028 ${data.namaLengkap}.pdf`;
+  return { buffer: Buffer.from(doc.output("arraybuffer")), filename };
+}
+
+/**
+ * Jalur cadangan programatik (bila aset template hilang): layout mengacu surat
+ * resmi 012-/PSB-PUAS dengan kop digambar via jsPDF.
+ */
+async function generateSuratProgramatik(
   data: SuratPengumumanData
 ): Promise<{ buffer: Buffer; filename: string }> {
   const doc = new jsPDF({ unit: "mm", format: "a4" });
