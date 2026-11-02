@@ -86,7 +86,17 @@ export async function GET(request: NextRequest) {
         ? "diterima"
         : pendaftar.status_pendaftaran === "rejected"
           ? "ditolak"
-          : "cadangan";
+          : pendaftar.status_pendaftaran === "cadangan"
+            ? "cadangan"
+            : ["lulus", "diterima", "accepted"].includes(
+                  (pengumuman?.status_kelulusan || "").toLowerCase()
+                )
+              ? "diterima"
+              : ["tidak lulus", "tidak_lulus", "ditolak", "rejected"].includes(
+                    (pengumuman?.status_kelulusan || "").toLowerCase()
+                  )
+                ? "ditolak"
+                : "cadangan";
 
       const responseData = {
         data: {
@@ -110,13 +120,15 @@ export async function GET(request: NextRequest) {
       const responseData = {
         data: {
           id: pengumuman.id,
-          status_kelulusan:
-            pengumuman.status_kelulusan === "Lulus"
-              ? "diterima"
-              : pengumuman.status_kelulusan === "Tidak Lulus" ||
-                  pengumuman.status_kelulusan === "Ditolak"
-                ? "ditolak"
-                : "cadangan",
+          status_kelulusan: ["lulus", "diterima", "accepted"].includes(
+            (pengumuman.status_kelulusan || "").toLowerCase()
+          )
+            ? "diterima"
+            : ["tidak lulus", "tidak_lulus", "ditolak", "rejected"].includes(
+                  (pengumuman.status_kelulusan || "").toLowerCase()
+                )
+              ? "ditolak"
+              : "cadangan",
           catatan: pengumuman.catatan,
           tanggal_pengumuman:
             pengumuman.published_at?.toISOString() || pengumuman.created_at.toISOString(),

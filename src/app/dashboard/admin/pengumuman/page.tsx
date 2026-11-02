@@ -1,17 +1,17 @@
 "use client";
 
-import { useState, useEffect, useMemo, Suspense } from "react";
-import { useSearchParams } from "next/navigation";
 import {
   AlertCircle,
-  Send,
   CheckCircle2,
-  XCircle,
-  Search,
+  Clock,
   Filter,
   Loader2,
-  Clock,
+  Search,
+  Send,
+  XCircle,
 } from "lucide-react";
+import { useSearchParams } from "next/navigation";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import { toast } from "react-hot-toast";
 import Swal from "sweetalert2";
 
@@ -39,7 +39,7 @@ function PengumumanContent() {
     if (!str) return "";
     return str.replace(
       /\w\S*/g,
-      (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(),
+      (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
     );
   };
 
@@ -60,11 +60,10 @@ function PengumumanContent() {
         // Calculate basic stats from this batch
         const ready = data.data.filter(
           (c: any) =>
-            ["selection", "scheduled", "testing", "tested"].includes(c.status_pendaftaran) || c.exam_status === "tested",
+            ["selection", "scheduled", "testing", "tested"].includes(c.status_pendaftaran) ||
+            c.exam_status === "tested"
         ).length;
-        const accepted = data.data.filter(
-          (c: any) => c.status_pendaftaran === "accepted",
-        ).length;
+        const accepted = data.data.filter((c: any) => c.status_pendaftaran === "accepted").length;
         setStats({ total: data.data.length, ready, accepted });
       }
     } catch (error) {
@@ -95,7 +94,7 @@ function PengumumanContent() {
     }
   };
 
-    const handlePublishSingle = async (
+  const handlePublishSingle = async (
     id: string,
     nama: string,
     new_status: "accepted" | "cadangan" | "rejected"
@@ -107,11 +106,7 @@ function PengumumanContent() {
           ? "menjadikan CADANGAN"
           : "menetapkan DITOLAK";
     const btnColor =
-      new_status === "accepted"
-        ? "#059669"
-        : new_status === "cadangan"
-          ? "#d97706"
-          : "#dc2626";
+      new_status === "accepted" ? "#059669" : new_status === "cadangan" ? "#d97706" : "#dc2626";
 
     const result = await Swal.fire({
       title: `${actionText} Santri?`,
@@ -152,11 +147,17 @@ function PengumumanContent() {
     }
   };
 
-const handlePublish = async (new_status: "accepted" | "cadangan" | "rejected") => {
+  const handlePublish = async (new_status: "accepted" | "cadangan" | "rejected") => {
     if (selectedIds.length === 0) return;
 
-    const actionText = new_status === "accepted" ? "menetapkan DITERIMA" : new_status === "cadangan" ? "menjadikan CADANGAN" : "menetapkan DITOLAK";
-    const btnColor = new_status === "accepted" ? "#059669" : new_status === "cadangan" ? "#d97706" : "#dc2626";
+    const actionText =
+      new_status === "accepted"
+        ? "menetapkan DITERIMA"
+        : new_status === "cadangan"
+          ? "menjadikan CADANGAN"
+          : "menetapkan DITOLAK";
+    const btnColor =
+      new_status === "accepted" ? "#059669" : new_status === "cadangan" ? "#d97706" : "#dc2626";
 
     const result = await Swal.fire({
       title: "Publikasi Pengumuman?",
@@ -167,7 +168,8 @@ const handlePublish = async (new_status: "accepted" | "cadangan" | "rejected") =
       cancelButtonColor: "#57534e", // Stone 600
       confirmButtonText: "Ya, Publikasikan!",
       cancelButtonText: "Batal",
-      reverseButtons: true });
+      reverseButtons: true,
+    });
 
     if (!result.isConfirmed) return;
 
@@ -180,13 +182,13 @@ const handlePublish = async (new_status: "accepted" | "cadangan" | "rejected") =
           pendaftar_ids: selectedIds,
           new_status: new_status,
           // Removed hardcoded announcement_message to use buildMessageHasilTes on backend
-        }) });
+        }),
+      });
 
       const result = await res.json();
       if (res.ok) {
         toast.success(
-          result.message ||
-            `Berhasil! ${result.queued} pengumuman sedang mengantri untuk dikirim.`,
+          result.message || `Berhasil! ${result.queued} pengumuman sedang mengantri untuk dikirim.`
         );
         fetchCandidates();
         setSelectedIds([]);
@@ -205,56 +207,77 @@ const handlePublish = async (new_status: "accepted" | "cadangan" | "rejected") =
     if (c.status_pendaftaran === "tested") {
       if (c.pengumuman) {
         const sL = c.pengumuman.status_kelulusan;
-        const cls = sL === "Diterima" ? "bg-green-100 text-green-700" : sL === "Cadangan" ? "bg-amber-100 text-amber-700" : "bg-red-100 text-red-700";
+        const cls =
+          sL === "Diterima"
+            ? "bg-green-100 text-green-700"
+            : sL === "Cadangan"
+              ? "bg-amber-100 text-amber-700"
+              : "bg-red-100 text-red-700";
         return (
-          <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full ${cls} ${textSize} font-black uppercase whitespace-nowrap shrink-0`}>
+          <span
+            className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full ${cls} ${textSize} font-black uppercase whitespace-nowrap shrink-0`}
+          >
             DRAFT: {sL}
           </span>
         );
       }
       return (
-        <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-primary-100 text-primary-700 ${textSize} font-black uppercase whitespace-nowrap shrink-0`}>
+        <span
+          className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-primary-100 text-primary-700 ${textSize} font-black uppercase whitespace-nowrap shrink-0`}
+        >
           Menunggu Rapat
         </span>
       );
     }
     if (["selection", "testing"].includes(c.status_pendaftaran)) {
       return (
-        <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-blue-100 text-blue-700 ${textSize} font-black uppercase whitespace-nowrap shrink-0`}>
+        <span
+          className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-blue-100 text-blue-700 ${textSize} font-black uppercase whitespace-nowrap shrink-0`}
+        >
           Proses Seleksi
         </span>
       );
     }
     if (c.status_pendaftaran === "scheduled") {
       return (
-        <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-indigo-100 text-indigo-700 ${textSize} font-black uppercase whitespace-nowrap shrink-0`}>
+        <span
+          className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-indigo-100 text-indigo-700 ${textSize} font-black uppercase whitespace-nowrap shrink-0`}
+        >
           Terjadwal Ujian
         </span>
       );
     }
     if (c.status_pendaftaran === "accepted") {
       return (
-        <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-green-100 text-green-700 ${textSize} font-black uppercase whitespace-nowrap shrink-0`}>
-          <CheckCircle2 className="w-3 h-3" /> Lulus
+        <span
+          className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-green-100 text-green-700 ${textSize} font-black uppercase whitespace-nowrap shrink-0`}
+        >
+          <CheckCircle2 className="w-3 h-3" /> Diterima
         </span>
       );
     }
     if (c.status_pendaftaran === "cadangan" || c.status_pendaftaran === "announced") {
       return (
-        <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-amber-100 text-amber-700 ${textSize} font-black uppercase whitespace-nowrap shrink-0`}>
+        <span
+          className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-amber-100 text-amber-700 ${textSize} font-black uppercase whitespace-nowrap shrink-0`}
+        >
           Cadangan
         </span>
       );
     }
     if (c.status_pendaftaran === "rejected") {
       return (
-        <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-red-100 text-red-700 ${textSize} font-black uppercase whitespace-nowrap shrink-0`}>
+        <span
+          className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-red-100 text-red-700 ${textSize} font-black uppercase whitespace-nowrap shrink-0`}
+        >
           Ditolak
         </span>
       );
     }
     return (
-      <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-stone-100 text-stone-600 ${textSize} font-black uppercase whitespace-nowrap shrink-0`}>
+      <span
+        className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-stone-100 text-stone-600 ${textSize} font-black uppercase whitespace-nowrap shrink-0`}
+      >
         {c.status_pendaftaran}
       </span>
     );
@@ -269,16 +292,12 @@ const handlePublish = async (new_status: "accepted" | "cadangan" | "rejected") =
           <h3 className="text-2xl font-bold text-stone-800">{stats.total}</h3>
         </div>
         <div className="bg-primary-50 p-6 rounded-xl shadow-xl border border-primary-100">
-          <p className="text-primary-600 text-sm font-medium">
-            Proses Seleksi (Siap Diluluskan)
-          </p>
+          <p className="text-primary-600 text-sm font-medium">Proses Seleksi (Siap Diluluskan)</p>
           <h3 className="text-2xl font-bold text-primary-700">{stats.ready}</h3>
         </div>
         <div className="bg-green-50 p-6 rounded-xl shadow-xl border border-green-100">
-          <p className="text-green-600 text-sm font-medium">Sudah Lulus</p>
-          <h3 className="text-2xl font-bold text-green-700">
-            {stats.accepted}
-          </h3>
+          <p className="text-green-600 text-sm font-medium">Sudah Diterima</p>
+          <h3 className="text-2xl font-bold text-green-700">{stats.accepted}</h3>
         </div>
       </div>
 
@@ -295,7 +314,7 @@ const handlePublish = async (new_status: "accepted" | "cadangan" | "rejected") =
               <option value="sedang_seleksi">Semua Proses Seleksi (Siap Diluluskan)</option>
               <option value="tested">Sudah Selesai Ujian (Tested)</option>
               <option value="scheduled">Terjadwal Ujian</option>
-              <option value="accepted">Sudah Lulus / Diterima</option>
+              <option value="accepted">Diterima</option>
               <option value="cadangan">Cadangan</option>
               <option value="rejected">Ditolak</option>
               <option value="all">Semua Status</option>
@@ -339,16 +358,11 @@ const handlePublish = async (new_status: "accepted" | "cadangan" | "rejected") =
           ) : (
             sortedCandidates.map((c, rankIdx) => {
               const nu = c.nilai_ujian;
-              const getGradeBadge = (
-                score: number | null | undefined,
-                type: string,
-              ) => {
+              const getGradeBadge = (score: number | null | undefined, type: string) => {
                 if (score == null) return null;
                 let grade = "C";
-                if (type === "quran")
-                  grade = score >= 80 ? "A" : score >= 65 ? "B" : "C";
-                else if (type === "akademik")
-                  grade = score >= 75 ? "A" : score >= 60 ? "B" : "C";
+                if (type === "quran") grade = score >= 80 ? "A" : score >= 65 ? "B" : "C";
+                else if (type === "akademik") grade = score >= 75 ? "A" : score >= 60 ? "B" : "C";
                 else if (type === "kepribadian")
                   grade = score >= 70 ? "A" : score >= 50 ? "B" : "C";
                 else grade = score >= 80 ? "A" : score >= 60 ? "B" : "C";
@@ -414,23 +428,13 @@ const handlePublish = async (new_status: "accepted" | "cadangan" | "rejected") =
                           Total Nilai
                         </span>
                         <span className="text-sm font-black text-stone-700">
-                          {nu?.nilai_total != null
-                            ? Number(nu.nilai_total).toFixed(2)
-                            : "-"}
+                          {nu?.nilai_total != null ? Number(nu.nilai_total).toFixed(2) : "-"}
                           <span className="ml-1 text-stone-400 font-bold">
-                            (
-                            {nu?.nilai_total >= 80
-                              ? "A"
-                              : nu?.nilai_total >= 65
-                                ? "B"
-                                : "C"}
-                            )
+                            ({nu?.nilai_total >= 80 ? "A" : nu?.nilai_total >= 65 ? "B" : "C"})
                           </span>
                         </span>
                       </div>
-                      <div>
-                        {renderStatusBadge(c, true)}
-                      </div>
+                      <div>{renderStatusBadge(c, true)}</div>
                     </div>
                   </div>
                 </div>
@@ -449,10 +453,7 @@ const handlePublish = async (new_status: "accepted" | "cadangan" | "rejected") =
                     type="checkbox"
                     className="w-4 h-4 rounded border-stone-300 text-green-600 focus:ring-green-500"
                     onChange={handleSelectAll}
-                    checked={
-                      candidates.length > 0 &&
-                      selectedIds.length === candidates.length
-                    }
+                    checked={candidates.length > 0 && selectedIds.length === candidates.length}
                   />
                 </th>
                 <th className="px-6 py-4 text-left text-xs font-bold text-stone-500 uppercase">
@@ -475,24 +476,17 @@ const handlePublish = async (new_status: "accepted" | "cadangan" | "rejected") =
             <tbody className="divide-y divide-stone-100">
               {candidates.length === 0 ? (
                 <tr>
-                  <td
-                    colSpan={6}
-                    className="px-6 py-8 text-center text-stone-500"
-                  >
+                  <td colSpan={6} className="px-6 py-8 text-center text-stone-500">
                     Tidak ada data kandidat sesuai filter
                   </td>
                 </tr>
               ) : (
                 sortedCandidates.map((c, rankIdx) => {
                   const nu = c.nilai_ujian;
-                  const getGradeBadge = (
-                    score: number | null | undefined,
-                    type: string,
-                  ) => {
+                  const getGradeBadge = (score: number | null | undefined, type: string) => {
                     if (score == null) return null;
                     let grade = "C";
-                    if (type === "quran")
-                      grade = score >= 80 ? "A" : score >= 65 ? "B" : "C";
+                    if (type === "quran") grade = score >= 80 ? "A" : score >= 65 ? "B" : "C";
                     else if (type === "akademik")
                       grade = score >= 75 ? "A" : score >= 60 ? "B" : "C";
                     else if (type === "kepribadian")
@@ -517,8 +511,7 @@ const handlePublish = async (new_status: "accepted" | "cadangan" | "rejected") =
 
                   const ws = nu?.nilai_wawancara_santri || 0;
                   const wo = nu?.nilai_wawancara_ortu || 0;
-                  const avgWawancara =
-                    ws > 0 && wo > 0 ? (ws + wo) / 2 : ws || wo;
+                  const avgWawancara = ws > 0 && wo > 0 ? (ws + wo) / 2 : ws || wo;
 
                   return (
                     <tr key={c.id} className="hover:bg-stone-50/50">
@@ -534,9 +527,7 @@ const handlePublish = async (new_status: "accepted" | "cadangan" | "rejected") =
                         <div className="font-bold text-stone-800">
                           {toTitleCase(c.nama_lengkap)}
                         </div>
-                        <div className="text-xs text-stone-500 mb-2">
-                          {c.nomor_pendaftaran}
-                        </div>
+                        <div className="text-xs text-stone-500 mb-2">{c.nomor_pendaftaran}</div>
                         <div className="flex gap-1">
                           {getGradeBadge(nu?.score_quran, "quran")}
                           {getGradeBadge(nu?.score_akademik, "akademik")}
@@ -553,25 +544,16 @@ const handlePublish = async (new_status: "accepted" | "cadangan" | "rejected") =
                       <td className="px-6 py-4">
                         <div className="flex flex-col">
                           <div className="font-black text-stone-800 text-lg leading-none">
-                            {nu?.nilai_total != null
-                              ? Number(nu.nilai_total).toFixed(2)
-                              : "-"}
+                            {nu?.nilai_total != null ? Number(nu.nilai_total).toFixed(2) : "-"}
                           </div>
                           {nu?.nilai_total != null && (
                             <span className="text-[10px] font-bold text-stone-400 mt-1 italic">
-                              Grade:{" "}
-                              {nu.nilai_total >= 80
-                                ? "A"
-                                : nu.nilai_total >= 65
-                                  ? "B"
-                                  : "C"}
+                              Grade: {nu.nilai_total >= 80 ? "A" : nu.nilai_total >= 65 ? "B" : "C"}
                             </span>
                           )}
                         </div>
                       </td>
-                      <td className="px-6 py-4 text-center">
-                        {renderStatusBadge(c, false)}
-                      </td>
+                      <td className="px-6 py-4 text-center">{renderStatusBadge(c, false)}</td>
                       <td className="px-6 py-4 text-center" onClick={(e) => e.stopPropagation()}>
                         <div className="flex items-center justify-center gap-1.5">
                           <button
@@ -589,10 +571,15 @@ const handlePublish = async (new_status: "accepted" | "cadangan" | "rejected") =
                           </button>
                           <button
                             onClick={() => handlePublishSingle(c.id, c.nama_lengkap, "cadangan")}
-                            disabled={isPublishing || c.status_pendaftaran === "cadangan" || c.status_pendaftaran === "announced"}
+                            disabled={
+                              isPublishing ||
+                              c.status_pendaftaran === "cadangan" ||
+                              c.status_pendaftaran === "announced"
+                            }
                             title="Jadikan Cadangan"
                             className={`px-2.5 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1 transition-all ${
-                              c.status_pendaftaran === "cadangan" || c.status_pendaftaran === "announced"
+                              c.status_pendaftaran === "cadangan" ||
+                              c.status_pendaftaran === "announced"
                                 ? "bg-amber-100 text-amber-700 opacity-60 cursor-default"
                                 : "bg-amber-500 hover:bg-amber-600 text-white shadow-xs hover:scale-105 active:scale-95"
                             }`}
@@ -626,7 +613,6 @@ const handlePublish = async (new_status: "accepted" | "cadangan" | "rejected") =
     </div>
   );
 }
-
 
 export default function PengumumanPage() {
   return (
