@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { logAdminAction } from "@/lib/audit";
+import { delCache } from "@/lib/redis";
 import { prisma } from "@/lib/prisma";
 import { saveFileLocal } from "@/lib/storage/local";
 
@@ -113,6 +114,8 @@ export async function POST(request: Request) {
       });
       return p;
     });
+
+    await delCache(`pengumuman_${pendaftarId}`);
 
     logAdminAction({
       action: "UPLOAD_SURAT_PENGUMUMAN_MANUAL",

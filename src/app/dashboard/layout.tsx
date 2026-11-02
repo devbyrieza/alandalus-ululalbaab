@@ -5,6 +5,7 @@
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 import IdleTimeoutTracker from "@/components/auth/IdleTimeoutTracker";
+import ToastProvider from "@/components/common/ToastProvider";
 import { AlertTriangle, BookOpen, Target, CheckCircle2, XCircle } from "lucide-react";
 
 
@@ -16,6 +17,9 @@ export default function DashboardLayout({
     <>
       {/* Idle Timeout Tracker - Auto logout setelah 24 jam */}
       <IdleTimeoutTracker />
+
+      {/* Notifikasi toast global (react-hot-toast) untuk semua halaman dashboard */}
+      <ToastProvider />
 
       {/* Dashboard Content */}
       {children}

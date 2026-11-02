@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { prisma } from "@/lib/prisma";
 import { enqueueWhatsapp, buildMessageHasilTes } from "@/lib/whatsapp-queue";
+import { delCache } from "@/lib/redis";
 
 async function checkSuperAdmin() {
   const cookieStore = await cookies();
@@ -85,6 +86,9 @@ export async function POST(request: Request) {
         published_by: admin.id,
         is_published: true,
         published_at: new Date() } });
+
+    // Invalidasi cache pengumuman pendaftar terkait
+    await delCache(`pengumuman_${pendaftar_id}`);
 
     // 3. Update Pendaftar Status based on Status Kelulusan
     let newStatus = "announced";

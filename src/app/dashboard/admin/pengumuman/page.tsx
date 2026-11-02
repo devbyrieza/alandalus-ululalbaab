@@ -102,10 +102,10 @@ function PengumumanContent() {
   ) => {
     const actionText =
       new_status === "accepted"
-        ? "MELULUSKAN"
+        ? "menetapkan DITERIMA"
         : new_status === "cadangan"
           ? "menjadikan CADANGAN"
-          : "MENOLAK";
+          : "menetapkan DITOLAK";
     const btnColor =
       new_status === "accepted"
         ? "#059669"
@@ -155,7 +155,7 @@ function PengumumanContent() {
 const handlePublish = async (new_status: "accepted" | "cadangan" | "rejected") => {
     if (selectedIds.length === 0) return;
 
-    const actionText = new_status === "accepted" ? "MELULUSKAN" : new_status === "cadangan" ? "menjadikan CADANGAN" : "MENOLAK";
+    const actionText = new_status === "accepted" ? "menetapkan DITERIMA" : new_status === "cadangan" ? "menjadikan CADANGAN" : "menetapkan DITOLAK";
     const btnColor = new_status === "accepted" ? "#059669" : new_status === "cadangan" ? "#d97706" : "#dc2626";
 
     const result = await Swal.fire({
@@ -309,7 +309,7 @@ const handlePublish = async (new_status: "accepted" | "cadangan" | "rejected") =
             disabled={selectedIds.length === 0 || isPublishing}
             className="flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 disabled:bg-stone-300 text-white rounded-xl font-bold transition-all shadow-sm"
           >
-            {isPublishing ? "Proses..." : `Luluskan (${selectedIds.length})`}
+            {isPublishing ? "Proses..." : `Diterima (${selectedIds.length})`}
           </button>
           <button
             onClick={() => handlePublish("cadangan")}
@@ -577,7 +577,7 @@ const handlePublish = async (new_status: "accepted" | "cadangan" | "rejected") =
                           <button
                             onClick={() => handlePublishSingle(c.id, c.nama_lengkap, "accepted")}
                             disabled={isPublishing || c.status_pendaftaran === "accepted"}
-                            title="Luluskan (Diterima)"
+                            title="Tetapkan Diterima"
                             className={`px-2.5 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1 transition-all ${
                               c.status_pendaftaran === "accepted"
                                 ? "bg-green-100 text-green-700 opacity-60 cursor-default"
@@ -585,7 +585,7 @@ const handlePublish = async (new_status: "accepted" | "cadangan" | "rejected") =
                             }`}
                           >
                             <CheckCircle2 className="w-3.5 h-3.5" />
-                            <span>Lulus</span>
+                            <span>Diterima</span>
                           </button>
                           <button
                             onClick={() => handlePublishSingle(c.id, c.nama_lengkap, "cadangan")}

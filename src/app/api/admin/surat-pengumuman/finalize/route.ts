@@ -2,6 +2,7 @@ import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { SURAT_PENGUMUMAN_CONFIG } from "@/config/surat-pengumuman";
 import { logAdminAction } from "@/lib/audit";
+import { delCache } from "@/lib/redis";
 import { prisma } from "@/lib/prisma";
 import { signFilePath } from "@/lib/storage/file-signing";
 import { saveFileLocal } from "@/lib/storage/local";
@@ -158,6 +159,8 @@ export async function POST(request: Request) {
 
       return p;
     });
+
+    await delCache(`pengumuman_${pendaftarId}`);
 
     logAdminAction({
       action: "TERBIT_SURAT_PENGUMUMAN",
