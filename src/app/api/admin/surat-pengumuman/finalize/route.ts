@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import { SURAT_PENGUMUMAN_CONFIG } from "@/config/surat-pengumuman";
 import { logAdminAction } from "@/lib/audit";
 import { prisma } from "@/lib/prisma";
-import { delCache } from "@/lib/redis";
+import { delCache, invalidateAdminPendaftarCache } from "@/lib/redis";
 import { signFilePath } from "@/lib/storage/file-signing";
 import { saveFileLocal } from "@/lib/storage/local";
 import {
@@ -161,6 +161,7 @@ export async function POST(request: Request) {
     });
 
     await delCache(`pengumuman_${pendaftarId}`);
+    await invalidateAdminPendaftarCache();
 
     logAdminAction({
       action: "TERBIT_SURAT_PENGUMUMAN",

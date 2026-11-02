@@ -1,7 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { logAdminAction } from "@/lib/audit";
 import { prisma } from "@/lib/prisma";
-import { delCache } from "@/lib/redis";
+import { delCache, invalidateAdminPendaftarCache } from "@/lib/redis";
 import { getServerSession } from "@/lib/session";
 import { buildMessageHasilTes, enqueueWhatsapp } from "@/lib/whatsapp-queue";
 
@@ -99,6 +99,7 @@ export async function POST(request: NextRequest) {
     for (const user of updatedUsers) {
       await delCache(`pengumuman_${user.id}`);
     }
+    await invalidateAdminPendaftarCache();
 
     // Logging audit action
     logAdminAction({

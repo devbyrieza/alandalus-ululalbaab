@@ -2,8 +2,9 @@ import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { logAdminAction } from "@/lib/audit";
 import { prisma } from "@/lib/prisma";
-import { delCache } from "@/lib/redis";
+import { delCache, invalidateAdminPendaftarCache } from "@/lib/redis";
 import { saveFileLocal } from "@/lib/storage/local";
+import { getNextNomorSurat } from "@/lib/surat/surat-pengumuman";
 
 export const runtime = "nodejs";
 
@@ -33,16 +34,44 @@ export async function POST(request: Request) {
   try {
     const form = await request.formData();
     const pendaftarId = form.get("pendaftar_id") as string | null;
-    const nomorSurat = ((form.get("nomor_surat") as string) || "").trim();
-    const kelasDiterima = (form.get("kelas_diterima") as string) || null;
+    let nomorSurat = ((form.get("nomor_surat") as string) || "").trim();
+    let kelasDiterima = (form.get("kelas_diterima") as string) || null;
     const kirimWa = form.get("kirim_wa") !== "false";
     const file = form.get("file") as File | null;
 
-    if (!pendaftarId || !nomorSurat || !file) {
+    if (!pendaftarId || !file) {
       return NextResponse.json(
-        { error: "pendaftar_id, nomor_surat, dan file wajib diisi." },
+        { error: "pendaftar_id dan file surat keputusan wajib diisi." },
         { status: 400 }
       );
+    }
+
+    const pendaftar = await prisma.pendaftar.findFirst({
+      where: { id: pendaftarId, deleted_at: null },
+      select: {
+        id: true,
+        tahun_ajaran_id: true,
+        nama_lengkap: true,
+        no_hp: true,
+        jenjang: true,
+      },
+    });
+    if (!pendaftar) {
+      return NextResponse.json({ error: "Pendaftar tidak ditemukan." }, { status: 404 });
+    }
+
+    // Auto fallback jika nomor surat tidak diisi manual
+    if (!nomorSurat) {
+      const nextNomor = await getNextNomorSurat(new Date());
+      nomorSurat = nextNomor.nomor;
+    }
+
+    // Auto fallback kelas diterima sesuai jenjang
+    if (!kelasDiterima) {
+      const normJ = (pendaftar.jenjang || "").toUpperCase();
+      if (normJ.includes("IL")) kelasDiterima = "IL Putra";
+      else if (normJ.includes("SMA") || normJ.includes("MA")) kelasDiterima = "X SMA Putra";
+      else kelasDiterima = "VII MTs Putra";
     }
 
     const okTypes = ["application/pdf", "image/jpeg", "image/png"];
@@ -59,20 +88,6 @@ export async function POST(request: Request) {
         { error: `Nomor surat ${nomorSurat} sudah dipakai pendaftar lain.` },
         { status: 409 }
       );
-    }
-
-    const pendaftar = await prisma.pendaftar.findFirst({
-      where: { id: pendaftarId, deleted_at: null },
-      select: {
-        id: true,
-        tahun_ajaran_id: true,
-        nama_lengkap: true,
-        no_hp: true,
-        jenjang: true,
-      },
-    });
-    if (!pendaftar) {
-      return NextResponse.json({ error: "Pendaftar tidak ditemukan." }, { status: 404 });
     }
 
     const bytes = Buffer.from(await file.arrayBuffer());
@@ -116,6 +131,7 @@ export async function POST(request: Request) {
     });
 
     await delCache(`pengumuman_${pendaftarId}`);
+    await invalidateAdminPendaftarCache();
 
     logAdminAction({
       action: "UPLOAD_SURAT_PENGUMUMAN_MANUAL",

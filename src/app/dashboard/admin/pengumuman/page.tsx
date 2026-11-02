@@ -26,6 +26,7 @@ function PengumumanContent() {
     id: string;
     nama_lengkap: string;
     nomor_pendaftaran: string;
+    jenjang?: string;
   } | null>(null);
 
   const sortedCandidates = useMemo(() => {
@@ -58,8 +59,11 @@ function PengumumanContent() {
       if (filter.jenjang) params.append("jenjang", filter.jenjang);
       if (filter.status) params.append("status", filter.status);
       params.append("limit", "100"); // Fetch ample amount
+      params.append("_t", String(Date.now()));
 
-      const res = await fetch(`/api/admin/pendaftar/list?${params.toString()}`);
+      const res = await fetch(`/api/admin/pendaftar/list?${params.toString()}`, {
+        cache: "no-store",
+      });
       const data = await res.json();
 
       if (res.ok) {
@@ -143,6 +147,26 @@ function PengumumanContent() {
       const data = await res.json();
       if (res.ok) {
         toast.success(data.message || `Status ${nama} berhasil diperbarui.`);
+        setCandidates((prev) =>
+          prev.map((c) =>
+            c.id === id
+              ? {
+                  ...c,
+                  status_pendaftaran: new_status,
+                  pengumuman: {
+                    ...(c.pengumuman || {}),
+                    status_kelulusan:
+                      new_status === "accepted"
+                        ? "Diterima"
+                        : new_status === "cadangan"
+                          ? "Cadangan"
+                          : "Ditolak",
+                    is_published: true,
+                  },
+                }
+              : c
+          )
+        );
         fetchCandidates();
       } else {
         toast.error(data.error || "Gagal memperbarui status");
@@ -196,6 +220,27 @@ function PengumumanContent() {
       if (res.ok) {
         toast.success(
           result.message || `Berhasil! ${result.queued} pengumuman sedang mengantri untuk dikirim.`
+        );
+        const affectedIds = new Set(selectedIds);
+        setCandidates((prev) =>
+          prev.map((c) =>
+            affectedIds.has(c.id)
+              ? {
+                  ...c,
+                  status_pendaftaran: new_status,
+                  pengumuman: {
+                    ...(c.pengumuman || {}),
+                    status_kelulusan:
+                      new_status === "accepted"
+                        ? "Diterima"
+                        : new_status === "cadangan"
+                          ? "Cadangan"
+                          : "Ditolak",
+                    is_published: true,
+                  },
+                }
+              : c
+          )
         );
         fetchCandidates();
         setSelectedIds([]);
@@ -570,6 +615,7 @@ function PengumumanContent() {
                                   id: c.id,
                                   nama_lengkap: c.nama_lengkap,
                                   nomor_pendaftaran: c.nomor_pendaftaran,
+                                  jenjang: c.jenjang,
                                 });
                               }}
                               title="Upload / Ganti Surat Pengumuman Resmi"
@@ -589,6 +635,7 @@ function PengumumanContent() {
                                   id: c.id,
                                   nama_lengkap: c.nama_lengkap,
                                   nomor_pendaftaran: c.nomor_pendaftaran,
+                                  jenjang: c.jenjang,
                                 });
                               }}
                               title="Upload Surat Resmi & Tetapkan Diterima"
@@ -646,8 +693,27 @@ function PengumumanContent() {
           pendaftar={suratTarget}
           initialTab="upload"
           onClose={() => setSuratTarget(null)}
-          onDone={() => {
+          onDone={(resData) => {
+            const targetId = resData?.pendaftarId || suratTarget.id;
             setSuratTarget(null);
+            setCandidates((prev) =>
+              prev.map((c) =>
+                c.id === targetId
+                  ? {
+                      ...c,
+                      status_pendaftaran: "accepted",
+                      pengumuman: {
+                        ...(c.pengumuman || {}),
+                        status_kelulusan: "Diterima",
+                        is_published: true,
+                        nomor_surat: resData?.nomorSurat || c.pengumuman?.nomor_surat,
+                        kelas_diterima: resData?.kelasDiterima || c.pengumuman?.kelas_diterima,
+                        surat_pengumuman_path: resData?.suratPath || c.pengumuman?.surat_pengumuman_path || "uploaded",
+                      },
+                    }
+                  : c
+              )
+            );
             fetchCandidates();
           }}
         />

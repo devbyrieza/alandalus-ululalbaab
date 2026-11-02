@@ -8,6 +8,7 @@ interface PendaftarRingkas {
   id: string;
   nama_lengkap: string;
   nomor_pendaftaran: string;
+  jenjang?: string;
 }
 
 interface PreviewData {
@@ -34,7 +35,12 @@ export function SuratPengumumanDialog({
   pendaftar: PendaftarRingkas;
   initialTab?: "generate" | "upload";
   onClose: () => void;
-  onDone?: () => void;
+  onDone?: (data?: {
+    pendaftarId: string;
+    nomorSurat: string;
+    kelasDiterima: string;
+    suratPath?: string;
+  }) => void;
 }) {
   const [tab, setTab] = useState<"generate" | "upload">(initialTab);
   const [preview, setPreview] = useState<PreviewData | null>(null);
@@ -42,10 +48,19 @@ export function SuratPengumumanDialog({
   const [finalizing, setFinalizing] = useState(false);
   const [kirimWa, setKirimWa] = useState(true);
   const [showEdit, setShowEdit] = useState(false);
+  const [showAdvanced, setShowAdvanced] = useState(false);
+
+  // Auto-detect default class from student's jenjang
+  const defaultKelas = (() => {
+    const j = (pendaftar.jenjang || "").toUpperCase();
+    if (j.includes("IL")) return "IL Putra";
+    if (j.includes("SMA") || j.includes("MA")) return "X SMA Putra";
+    return "VII MTs Putra";
+  })();
 
   // field editable
   const [tanggal, setTanggal] = useState(() => new Date().toISOString().slice(0, 10));
-  const [kelas, setKelas] = useState("VII MTs Putra");
+  const [kelas, setKelas] = useState(defaultKelas);
   const [nomorSurat, setNomorSurat] = useState("");
 
   // upload manual
@@ -141,7 +156,11 @@ export function SuratPengumumanDialog({
         `Surat ${nomorSurat} final${json.data?.wa_sent ? " & terkirim ke WhatsApp" : " (pengiriman WA gagal — kirim manual bila perlu)"}.`,
         "success"
       );
-      onDone?.();
+      onDone?.({
+        pendaftarId: pendaftar.id,
+        nomorSurat: nomorSurat.trim(),
+        kelasDiterima: kelas,
+      });
       onClose();
     } catch (e: any) {
       Swal.fire("Gagal", e.message, "error");
@@ -159,17 +178,13 @@ export function SuratPengumumanDialog({
       );
       return;
     }
-    if (!nomorManual.trim()) {
-      Swal.fire("Nomor Surat Wajib", "Nomor surat resmi wajib diisi.", "warning");
-      return;
-    }
 
     setUploading(true);
     try {
       const fd = new FormData();
       fd.append("pendaftar_id", pendaftar.id);
-      fd.append("nomor_surat", nomorManual.trim());
-      fd.append("kelas_diterima", kelas);
+      if (nomorManual.trim()) fd.append("nomor_surat", nomorManual.trim());
+      if (kelas.trim()) fd.append("kelas_diterima", kelas.trim());
       fd.append("kirim_wa", String(kirimWa));
       fd.append("file", file);
       const res = await fetch("/api/admin/surat-pengumuman/upload", {
@@ -180,10 +195,15 @@ export function SuratPengumumanDialog({
       if (!res.ok) throw new Error(json.error || "Gagal upload");
       await Swal.fire(
         "Alhamdulillah, Tersimpan!",
-        `Surat resmi (${nomorManual.trim()}) berhasil dipublikasikan untuk ${pendaftar.nama_lengkap}${json.data?.wa_sent ? " dan telah dikirimkan ke WhatsApp" : ""}.`,
+        `Surat resmi berhasil dipublikasikan untuk ${pendaftar.nama_lengkap}${json.data?.wa_sent ? " dan telah dikirimkan ke WhatsApp" : ""}.`,
         "success"
       );
-      onDone?.();
+      onDone?.({
+        pendaftarId: pendaftar.id,
+        nomorSurat: nomorManual.trim(),
+        kelasDiterima: kelas,
+        suratPath: json.data?.surat_path,
+      });
       onClose();
     } catch (e: any) {
       Swal.fire("Gagal", e.message, "error");
@@ -273,45 +293,18 @@ export function SuratPengumumanDialog({
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <label className="text-xs font-bold text-stone-700 block">
-                  Nomor Surat Resmi
-                  <input
-                    value={nomorManual}
-                    onChange={(e) => setNomorManual(e.target.value)}
-                    placeholder="Contoh: 012-AC/PSB-PUAS/X/2026"
-                    className="mt-1 w-full border border-stone-200 rounded-xl px-3.5 py-2.5 text-sm font-medium focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all"
-                  />
-                  <span className="text-[11px] text-stone-400 font-normal mt-1 block">
-                    Disarankan otomatis sesuai nomor urut terakhir di sistem.
-                  </span>
-                </label>
-
-                <label className="text-xs font-bold text-stone-700 block">
-                  Kelas Diterima
-                  <input
-                    value={kelas}
-                    onChange={(e) => setKelas(e.target.value)}
-                    placeholder="Contoh: VII MTs Putra"
-                    className="mt-1 w-full border border-stone-200 rounded-xl px-3.5 py-2.5 text-sm font-medium focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all"
-                  />
-                  <span className="text-[11px] text-stone-400 font-normal mt-1 block">
-                    Default: VII MTs Putra
-                  </span>
-                </label>
-              </div>
-
+              {/* Upload Dropzone Utama */}
               <label className="text-xs font-bold text-stone-700 block">
                 File Surat Pengumuman Resmi (PDF / JPG / PNG){" "}
                 <span className="text-red-500">*</span>
-                <div className="mt-1 border-2 border-dashed border-stone-300 hover:border-primary-500 rounded-2xl p-6 text-center transition-all bg-stone-50/50 hover:bg-primary-50/20 cursor-pointer relative">
+                <div className="mt-1.5 border-2 border-dashed border-stone-300 hover:border-primary-500 rounded-2xl p-7 text-center transition-all bg-stone-50/50 hover:bg-primary-50/20 cursor-pointer relative">
                   <input
                     type="file"
                     accept="application/pdf,image/jpeg,image/png"
                     onChange={(e) => setFile(e.target.files?.[0] || null)}
                     className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                   />
-                  <Upload className="w-8 h-8 mx-auto text-stone-400 mb-2" />
+                  <Upload className="w-10 h-10 mx-auto text-primary-600 mb-2" />
                   {file ? (
                     <div>
                       <p className="text-sm font-bold text-emerald-700">{file.name}</p>
@@ -331,6 +324,53 @@ export function SuratPengumumanDialog({
                   )}
                 </div>
               </label>
+
+              {/* Opsi Metadata Tambahan (Collapsible / Otomatis) */}
+              <div className="border border-stone-200/80 rounded-2xl p-3 bg-stone-50/50">
+                <button
+                  type="button"
+                  onClick={() => setShowAdvanced(!showAdvanced)}
+                  className="w-full flex items-center justify-between text-xs font-bold text-stone-600 hover:text-stone-900 transition-colors py-1 px-1"
+                >
+                  <span className="flex items-center gap-1.5">
+                    <span>{showAdvanced ? "▾" : "▸"}</span>
+                    <span>Metadata Surat & Kelas (Otomatis Terisi oleh Sistem)</span>
+                  </span>
+                  <span className="text-[11px] font-normal text-stone-400">
+                    {showAdvanced ? "Tutup" : "Lihat / Sesuaikan"}
+                  </span>
+                </button>
+
+                {showAdvanced && (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3 pt-3 border-t border-stone-200/70">
+                    <label className="text-xs font-bold text-stone-700 block">
+                      Nomor Surat Resmi
+                      <input
+                        value={nomorManual}
+                        onChange={(e) => setNomorManual(e.target.value)}
+                        placeholder="Contoh: 012-AD/PSB-PUAS/XI/2026"
+                        className="mt-1 w-full border border-stone-200 rounded-xl px-3.5 py-2 text-sm font-medium focus:ring-2 focus:ring-primary-500 bg-white"
+                      />
+                      <span className="text-[11px] text-stone-400 font-normal mt-1 block">
+                        Otomatis terisi dari urutan sistem terakhir.
+                      </span>
+                    </label>
+
+                    <label className="text-xs font-bold text-stone-700 block">
+                      Kelas Diterima
+                      <input
+                        value={kelas}
+                        onChange={(e) => setKelas(e.target.value)}
+                        placeholder="Contoh: VII MTs Putra"
+                        className="mt-1 w-full border border-stone-200 rounded-xl px-3.5 py-2 text-sm font-medium focus:ring-2 focus:ring-primary-500 bg-white"
+                      />
+                      <span className="text-[11px] text-stone-400 font-normal mt-1 block">
+                        Otomatis terdeteksi dari jenjang santri.
+                      </span>
+                    </label>
+                  </div>
+                )}
+              </div>
 
               <div className="p-4 bg-stone-50 rounded-2xl border border-stone-200/70 flex items-center justify-between">
                 <label className="flex items-center gap-3 text-sm font-semibold text-stone-700 cursor-pointer">
