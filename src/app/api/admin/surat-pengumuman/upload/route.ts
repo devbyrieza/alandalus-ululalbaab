@@ -50,6 +50,7 @@ export async function POST(request: Request) {
       where: { id: pendaftarId, deleted_at: null },
       select: {
         id: true,
+        nomor_pendaftaran: true,
         tahun_ajaran_id: true,
         nama_lengkap: true,
         no_hp: true,

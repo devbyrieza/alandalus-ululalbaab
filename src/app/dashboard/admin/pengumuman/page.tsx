@@ -16,12 +16,14 @@ import { Suspense, useEffect, useMemo, useState } from "react";
 import { toast } from "react-hot-toast";
 import Swal from "sweetalert2";
 import { SuratPengumumanDialog } from "@/components/admin/SuratPengumumanDialog";
+import { BulkPengumumanDialog } from "@/components/admin/BulkPengumumanDialog";
 
 function PengumumanContent() {
   const [loading, setLoading] = useState(false);
   const [candidates, setCandidates] = useState<any[]>([]);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [stats, setStats] = useState({ total: 0, ready: 0, accepted: 0 });
+  const [showBulkAcceptedDialog, setShowBulkAcceptedDialog] = useState(false);
   const [suratTarget, setSuratTarget] = useState<{
     id: string;
     nama_lengkap: string;
@@ -181,14 +183,17 @@ function PengumumanContent() {
   const handlePublish = async (new_status: "accepted" | "cadangan" | "rejected") => {
     if (selectedIds.length === 0) return;
 
+    // Untuk status DITERIMA massal, buka Bulk Dialog (Auto-Generate / Multi-Upload Surat)
+    if (new_status === "accepted") {
+      setShowBulkAcceptedDialog(true);
+      return;
+    }
+
     const actionText =
-      new_status === "accepted"
-        ? "menetapkan DITERIMA"
-        : new_status === "cadangan"
-          ? "menjadikan CADANGAN"
-          : "menetapkan DITOLAK";
-    const btnColor =
-      new_status === "accepted" ? "#059669" : new_status === "cadangan" ? "#d97706" : "#dc2626";
+      new_status === "cadangan"
+        ? "menjadikan CADANGAN"
+        : "menetapkan DITOLAK";
+    const btnColor = new_status === "cadangan" ? "#d97706" : "#dc2626";
 
     const result = await Swal.fire({
       title: "Publikasi Pengumuman?",
@@ -231,11 +236,9 @@ function PengumumanContent() {
                   pengumuman: {
                     ...(c.pengumuman || {}),
                     status_kelulusan:
-                      new_status === "accepted"
-                        ? "Diterima"
-                        : new_status === "cadangan"
-                          ? "Cadangan"
-                          : "Ditolak",
+                      new_status === "cadangan"
+                        ? "Cadangan"
+                        : "Ditolak",
                     is_published: true,
                   },
                 }
@@ -709,6 +712,43 @@ function PengumumanContent() {
                         nomor_surat: resData?.nomorSurat || c.pengumuman?.nomor_surat,
                         kelas_diterima: resData?.kelasDiterima || c.pengumuman?.kelas_diterima,
                         surat_pengumuman_path: resData?.suratPath || c.pengumuman?.surat_pengumuman_path || "uploaded",
+                      },
+                    }
+                  : c
+              )
+            );
+            fetchCandidates();
+          }}
+        />
+      )}
+
+      {/* Modal Pengumuman Massal (Auto-Generate / Multi-Upload) */}
+      {showBulkAcceptedDialog && (
+        <BulkPengumumanDialog
+          candidates={candidates
+            .filter((c) => selectedIds.includes(c.id))
+            .map((c) => ({
+              id: c.id,
+              nama_lengkap: c.nama_lengkap,
+              nomor_pendaftaran: c.nomor_pendaftaran,
+              jenjang: c.jenjang,
+              kelas_diterima: c.pengumuman?.kelas_diterima,
+            }))}
+          onClose={() => setShowBulkAcceptedDialog(false)}
+          onSuccess={(updatedIds) => {
+            setShowBulkAcceptedDialog(false);
+            setSelectedIds([]);
+            const affectedSet = new Set(updatedIds);
+            setCandidates((prev) =>
+              prev.map((c) =>
+                affectedSet.has(c.id)
+                  ? {
+                      ...c,
+                      status_pendaftaran: "accepted",
+                      pengumuman: {
+                        ...(c.pengumuman || {}),
+                        status_kelulusan: "Diterima",
+                        is_published: true,
                       },
                     }
                   : c
