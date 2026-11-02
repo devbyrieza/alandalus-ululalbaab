@@ -70,7 +70,7 @@ export async function POST(request: Request) {
       update: {
         status_kelulusan,
         catatan,
-        // @ts-expect-error: Prisma types lag
+        // @ts-ignore: Prisma types lag
         surat_keputusan_url,
         published_by: admin.id,
         updated_at: new Date(),
@@ -82,7 +82,7 @@ export async function POST(request: Request) {
         tahun_ajaran_id: pendaftar.tahun_ajaran_id,
         status_kelulusan,
         catatan,
-        // @ts-expect-error: Prisma types lag
+        // @ts-ignore: Prisma types lag
         surat_keputusan_url,
         published_by: admin.id,
         is_published: true,
@@ -124,7 +124,7 @@ export async function POST(request: Request) {
         // Mark as sent/queued
         await prisma.pengumuman.update({
           where: { id: pengumuman.id },
-          // @ts-expect-error: Prisma types lag
+          // @ts-ignore: Prisma types lag
           data: { wa_blast_sent: true, wa_blast_sent_at: new Date() },
         });
       } catch (e) {

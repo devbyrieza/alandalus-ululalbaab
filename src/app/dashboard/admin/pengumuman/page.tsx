@@ -8,18 +8,25 @@ import {
   Loader2,
   Search,
   Send,
+  Upload,
   XCircle,
 } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useMemo, useState } from "react";
 import { toast } from "react-hot-toast";
 import Swal from "sweetalert2";
+import { SuratPengumumanDialog } from "@/components/admin/SuratPengumumanDialog";
 
 function PengumumanContent() {
   const [loading, setLoading] = useState(false);
   const [candidates, setCandidates] = useState<any[]>([]);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [stats, setStats] = useState({ total: 0, ready: 0, accepted: 0 });
+  const [suratTarget, setSuratTarget] = useState<{
+    id: string;
+    nama_lengkap: string;
+    nomor_pendaftaran: string;
+  } | null>(null);
 
   const sortedCandidates = useMemo(() => {
     return [...candidates].sort((a, b) => {
@@ -556,19 +563,41 @@ function PengumumanContent() {
                       <td className="px-6 py-4 text-center">{renderStatusBadge(c, false)}</td>
                       <td className="px-6 py-4 text-center" onClick={(e) => e.stopPropagation()}>
                         <div className="flex items-center justify-center gap-1.5">
-                          <button
-                            onClick={() => handlePublishSingle(c.id, c.nama_lengkap, "accepted")}
-                            disabled={isPublishing || c.status_pendaftaran === "accepted"}
-                            title="Tetapkan Diterima"
-                            className={`px-2.5 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1 transition-all ${
-                              c.status_pendaftaran === "accepted"
-                                ? "bg-green-100 text-green-700 opacity-60 cursor-default"
-                                : "bg-green-600 hover:bg-green-700 text-white shadow-xs hover:scale-105 active:scale-95"
-                            }`}
-                          >
-                            <CheckCircle2 className="w-3.5 h-3.5" />
-                            <span>Diterima</span>
-                          </button>
+                          {c.status_pendaftaran === "accepted" ? (
+                            <button
+                              onClick={() => {
+                                setSuratTarget({
+                                  id: c.id,
+                                  nama_lengkap: c.nama_lengkap,
+                                  nomor_pendaftaran: c.nomor_pendaftaran,
+                                });
+                              }}
+                              title="Upload / Ganti Surat Pengumuman Resmi"
+                              className="px-2.5 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1 transition-all bg-emerald-600 hover:bg-emerald-700 text-white shadow-xs hover:scale-105 active:scale-95"
+                            >
+                              <Upload className="w-3.5 h-3.5" />
+                              <span>
+                                {c.pengumuman?.surat_pengumuman_path
+                                  ? "Ganti Surat"
+                                  : "Upload Surat"}
+                              </span>
+                            </button>
+                          ) : (
+                            <button
+                              onClick={() => {
+                                setSuratTarget({
+                                  id: c.id,
+                                  nama_lengkap: c.nama_lengkap,
+                                  nomor_pendaftaran: c.nomor_pendaftaran,
+                                });
+                              }}
+                              title="Upload Surat Resmi & Tetapkan Diterima"
+                              className="px-2.5 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1 transition-all bg-green-600 hover:bg-green-700 text-white shadow-xs hover:scale-105 active:scale-95"
+                            >
+                              <CheckCircle2 className="w-3.5 h-3.5" />
+                              <span>Diterima</span>
+                            </button>
+                          )}
                           <button
                             onClick={() => handlePublishSingle(c.id, c.nama_lengkap, "cadangan")}
                             disabled={
@@ -610,6 +639,19 @@ function PengumumanContent() {
           </table>
         </div>
       </div>
+
+      {/* Modal Upload Surat Pengumuman Resmi (Plan Kedua) */}
+      {suratTarget && (
+        <SuratPengumumanDialog
+          pendaftar={suratTarget}
+          initialTab="upload"
+          onClose={() => setSuratTarget(null)}
+          onDone={() => {
+            setSuratTarget(null);
+            fetchCandidates();
+          }}
+        />
+      )}
     </div>
   );
 }

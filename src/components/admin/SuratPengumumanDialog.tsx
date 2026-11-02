@@ -1,7 +1,7 @@
 "use client";
 
-import { CheckCircle2, ExternalLink, FileText, Loader2, RefreshCw, Upload, X } from "lucide-react";
-import { useState } from "react";
+import { CheckCircle2, FileText, Loader2, RefreshCw, Upload, X } from "lucide-react";
+import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 
 interface PendaftarRingkas {
@@ -20,21 +20,23 @@ interface PreviewData {
 
 /**
  * Dialog "Terbitkan Surat Pengumuman Hasil":
- * 1. Preview PDF auto-generate (nomor surat otomatis, belum terkunci)
- * 2. Admin boleh koreksi tanggal / kelas / nomor surat, lalu regenerate
- * 3. Finalisasi = lock nomor + simpan PDF + status Diterima + kirim WA
- * Tab kedua: upload surat manual (fallback).
+ * Tab Utama (Default): Upload Surat Manual (Plan Kedua)
+ * - Admin mengunggah file PDF surat resmi yang sudah dibuat panitia.
+ * - File ini yang menjadi dokumen resmi yang diunduh pendaftar di portal santri.
+ * Tab Alternatif: Generate Otomatis dari sistem.
  */
 export function SuratPengumumanDialog({
   pendaftar,
+  initialTab = "upload",
   onClose,
   onDone,
 }: {
   pendaftar: PendaftarRingkas;
+  initialTab?: "generate" | "upload";
   onClose: () => void;
   onDone?: () => void;
 }) {
-  const [tab, setTab] = useState<"generate" | "upload">("generate");
+  const [tab, setTab] = useState<"generate" | "upload">(initialTab);
   const [preview, setPreview] = useState<PreviewData | null>(null);
   const [loadingPreview, setLoadingPreview] = useState(false);
   const [finalizing, setFinalizing] = useState(false);
@@ -51,6 +53,35 @@ export function SuratPengumumanDialog({
   const [nomorManual, setNomorManual] = useState("");
   const [uploading, setUploading] = useState(false);
 
+  // Body Scroll Lock (Mandatory UX Rule)
+  useEffect(() => {
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prevOverflow || "unset";
+    };
+  }, []);
+
+  // Auto-fetch suggested nomor surat berikutnya agar admin tidak perlu mengetik manual
+  useEffect(() => {
+    if (!nomorManual && pendaftar?.id) {
+      fetch("/api/admin/surat-pengumuman/preview", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ pendaftar_id: pendaftar.id }),
+      })
+        .then((res) => res.json())
+        .then((json) => {
+          if (json.nomor_surat) {
+            setNomorManual(json.nomor_surat);
+            setNomorSurat(json.nomor_surat);
+          }
+          if (json.kelas_diterima) setKelas(json.kelas_diterima);
+        })
+        .catch(() => {});
+    }
+  }, [pendaftar?.id, nomorManual]);
+
   async function loadPreview() {
     setLoadingPreview(true);
     try {
@@ -59,7 +90,7 @@ export function SuratPengumumanDialog({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           pendaftar_id: pendaftar.id,
-          tanggal_terbit: new Date(tanggal + "T00:00:00+07:00").toISOString(),
+          tanggal_terbit: new Date(`${tanggal}T00:00:00+07:00`).toISOString(),
           kelas_diterima: kelas,
         }),
       });
@@ -98,7 +129,7 @@ export function SuratPengumumanDialog({
         body: JSON.stringify({
           pendaftar_id: pendaftar.id,
           nomor_surat: nomorSurat,
-          tanggal_terbit: new Date(tanggal + "T00:00:00+07:00").toISOString(),
+          tanggal_terbit: new Date(`${tanggal}T00:00:00+07:00`).toISOString(),
           kelas_diterima: kelas,
           kirim_wa: kirimWa,
         }),
@@ -120,15 +151,25 @@ export function SuratPengumumanDialog({
   }
 
   async function uploadManual() {
-    if (!file || !nomorManual.trim()) {
-      Swal.fire("Lengkapi dulu", "File surat dan nomor surat wajib diisi.", "info");
+    if (!file) {
+      Swal.fire(
+        "Pilih File Surat",
+        "Silakan pilih file PDF surat pengumuman resmi yang akan diunggah.",
+        "warning"
+      );
       return;
     }
+    if (!nomorManual.trim()) {
+      Swal.fire("Nomor Surat Wajib", "Nomor surat resmi wajib diisi.", "warning");
+      return;
+    }
+
     setUploading(true);
     try {
       const fd = new FormData();
       fd.append("pendaftar_id", pendaftar.id);
       fd.append("nomor_surat", nomorManual.trim());
+      fd.append("kelas_diterima", kelas);
       fd.append("kirim_wa", String(kirimWa));
       fd.append("file", file);
       const res = await fetch("/api/admin/surat-pengumuman/upload", {
@@ -138,8 +179,8 @@ export function SuratPengumumanDialog({
       const json = await res.json();
       if (!res.ok) throw new Error(json.error || "Gagal upload");
       await Swal.fire(
-        "Tersimpan",
-        `Surat manual terpasang untuk ${pendaftar.nama_lengkap}${json.data?.wa_sent ? " & terkirim ke WhatsApp" : ""}.`,
+        "Alhamdulillah, Tersimpan!",
+        `Surat resmi (${nomorManual.trim()}) berhasil dipublikasikan untuk ${pendaftar.nama_lengkap}${json.data?.wa_sent ? " dan telah dikirimkan ke WhatsApp" : ""}.`,
         "success"
       );
       onDone?.();
@@ -159,53 +200,179 @@ export function SuratPengumumanDialog({
       data-modal="true"
       aria-modal="true"
       role="dialog"
-      className="fixed inset-0 z-50 flex items-start md:items-center pt-8 md:pt-0 pb-16 md:pb-0 justify-center bg-black/50 p-4 overflow-y-auto overscroll-contain custom-scrollbar backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-start md:items-center pt-8 md:pt-0 pb-16 md:pb-0 justify-center bg-black/60 p-4 overflow-y-auto overscroll-contain custom-scrollbar backdrop-blur-sm"
     >
-      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-4xl border-2 border-stone-100 animate-in fade-in zoom-in duration-200">
+      <div className="bg-white rounded-3xl shadow-2xl w-full max-w-4xl border border-stone-100 animate-in fade-in zoom-in-95 duration-200 overflow-hidden">
         {/* Header */}
-        <div className="flex justify-between items-center p-5 border-b border-stone-100">
+        <div className="flex justify-between items-center p-6 border-b border-stone-100 bg-stone-50/50">
           <div>
-            <h3 className="text-lg font-bold text-stone-900">Surat Pengumuman Hasil</h3>
-            <p className="text-sm text-stone-500 mt-0.5">
-              {pendaftar.nama_lengkap} · {pendaftar.nomor_pendaftaran}
+            <div className="flex items-center gap-2">
+              <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-primary-100 text-primary-800">
+                PSB 2027/2028
+              </span>
+              <h3 className="text-xl font-black text-stone-900 tracking-tight font-display">
+                Surat Pengumuman Hasil
+              </h3>
+            </div>
+            <p className="text-sm font-semibold text-stone-600 mt-1">
+              {pendaftar.nama_lengkap} <span className="text-stone-400">•</span>{" "}
+              {pendaftar.nomor_pendaftaran}
             </p>
           </div>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-stone-100 rounded-full transition-colors text-stone-400 hover:text-stone-600"
+            className="p-2 hover:bg-stone-200/60 rounded-full transition-colors text-stone-400 hover:text-stone-700"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-1 px-5 pt-3 border-b border-stone-100">
-          <button
-            onClick={() => setTab("generate")}
-            className={`px-4 py-2 text-sm font-bold rounded-t-xl transition-colors ${
-              tab === "generate"
-                ? "bg-primary-50 text-primary-800 border-b-2 border-primary-700"
-                : "text-stone-500 hover:text-stone-700"
-            }`}
-          >
-            <FileText className="w-4 h-4 inline mr-1.5" />
-            Generate Otomatis
-          </button>
+        <div className="flex gap-1 px-6 pt-3 border-b border-stone-100 bg-stone-50/20">
           <button
             onClick={() => setTab("upload")}
-            className={`px-4 py-2 text-sm font-bold rounded-t-xl transition-colors ${
+            className={`px-5 py-2.5 text-sm font-bold rounded-t-xl transition-all ${
               tab === "upload"
-                ? "bg-primary-50 text-primary-800 border-b-2 border-primary-700"
-                : "text-stone-500 hover:text-stone-700"
+                ? "bg-white text-primary-700 border-t-2 border-primary-600 shadow-sm"
+                : "text-stone-500 hover:text-stone-800"
             }`}
           >
-            <Upload className="w-4 h-4 inline mr-1.5" />
-            Upload Manual
+            <Upload className="w-4 h-4 inline mr-2 text-primary-600" />
+            Upload Surat Manual (Rekomendasi)
+          </button>
+          <button
+            onClick={() => setTab("generate")}
+            className={`px-5 py-2.5 text-sm font-bold rounded-t-xl transition-all ${
+              tab === "generate"
+                ? "bg-white text-primary-700 border-t-2 border-primary-600 shadow-sm"
+                : "text-stone-500 hover:text-stone-800"
+            }`}
+          >
+            <FileText className="w-4 h-4 inline mr-2" />
+            Generate Otomatis Sistem
           </button>
         </div>
 
-        <div className="p-5">
-          {tab === "generate" ? (
+        <div className="p-6">
+          {tab === "upload" ? (
+            /* TAB UPLOAD MANUAL */
+            <div className="space-y-5">
+              <div className="p-4 bg-emerald-50 border border-emerald-200/80 rounded-2xl text-emerald-950 text-sm leading-relaxed flex items-start gap-3">
+                <div className="p-2 bg-emerald-100 rounded-xl shrink-0 mt-0.5">
+                  <Upload className="w-5 h-5 text-emerald-700" />
+                </div>
+                <div>
+                  <p className="font-bold text-emerald-900 mb-0.5">
+                    Unggah Surat Keputusan Resmi (Format PDF)
+                  </p>
+                  <p className="text-xs text-emerald-800">
+                    Unggah file PDF surat pengumuman hasil seleksi yang sudah dibuat rapi oleh
+                    Panitia (lengkap dengan kop surat, tanda tangan Mudir, dan stempel). File asli
+                    ini yang akan langsung diunduh santri/wali di portal pendaftar.
+                  </p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <label className="text-xs font-bold text-stone-700 block">
+                  Nomor Surat Resmi
+                  <input
+                    value={nomorManual}
+                    onChange={(e) => setNomorManual(e.target.value)}
+                    placeholder="Contoh: 012-AC/PSB-PUAS/X/2026"
+                    className="mt-1 w-full border border-stone-200 rounded-xl px-3.5 py-2.5 text-sm font-medium focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all"
+                  />
+                  <span className="text-[11px] text-stone-400 font-normal mt-1 block">
+                    Disarankan otomatis sesuai nomor urut terakhir di sistem.
+                  </span>
+                </label>
+
+                <label className="text-xs font-bold text-stone-700 block">
+                  Kelas Diterima
+                  <input
+                    value={kelas}
+                    onChange={(e) => setKelas(e.target.value)}
+                    placeholder="Contoh: VII MTs Putra"
+                    className="mt-1 w-full border border-stone-200 rounded-xl px-3.5 py-2.5 text-sm font-medium focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all"
+                  />
+                  <span className="text-[11px] text-stone-400 font-normal mt-1 block">
+                    Default: VII MTs Putra
+                  </span>
+                </label>
+              </div>
+
+              <label className="text-xs font-bold text-stone-700 block">
+                File Surat Pengumuman Resmi (PDF / JPG / PNG){" "}
+                <span className="text-red-500">*</span>
+                <div className="mt-1 border-2 border-dashed border-stone-300 hover:border-primary-500 rounded-2xl p-6 text-center transition-all bg-stone-50/50 hover:bg-primary-50/20 cursor-pointer relative">
+                  <input
+                    type="file"
+                    accept="application/pdf,image/jpeg,image/png"
+                    onChange={(e) => setFile(e.target.files?.[0] || null)}
+                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                  />
+                  <Upload className="w-8 h-8 mx-auto text-stone-400 mb-2" />
+                  {file ? (
+                    <div>
+                      <p className="text-sm font-bold text-emerald-700">{file.name}</p>
+                      <p className="text-xs text-stone-400 mt-0.5">
+                        Ukuran: {(file.size / 1024).toFixed(1)} KB — Klik untuk mengganti file
+                      </p>
+                    </div>
+                  ) : (
+                    <div>
+                      <p className="text-sm font-bold text-stone-700">
+                        Klik atau seret file PDF surat resmi ke sini
+                      </p>
+                      <p className="text-xs text-stone-400 mt-0.5">
+                        Format yang didukung: .pdf, .jpg, .png (Maksimal 10MB)
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </label>
+
+              <div className="p-4 bg-stone-50 rounded-2xl border border-stone-200/70 flex items-center justify-between">
+                <label className="flex items-center gap-3 text-sm font-semibold text-stone-700 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={kirimWa}
+                    onChange={(e) => setKirimWa(e.target.checked)}
+                    className="w-4 h-4 rounded text-primary-600 accent-primary-600 focus:ring-primary-500 cursor-pointer"
+                  />
+                  <span>Kirim surat pengumuman langsung ke WhatsApp pendaftar via Wablas</span>
+                </label>
+              </div>
+
+              <div className="flex justify-end gap-3 pt-2">
+                <button
+                  type="button"
+                  onClick={onClose}
+                  className="px-5 py-2.5 text-stone-600 hover:bg-stone-100 rounded-xl text-sm font-bold transition-all"
+                >
+                  Batal
+                </button>
+                <button
+                  onClick={uploadManual}
+                  disabled={uploading || !file}
+                  className="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 disabled:bg-stone-300 text-white rounded-xl text-sm font-black uppercase tracking-wider inline-flex items-center gap-2 shadow-sm transition-all active:scale-95 disabled:cursor-not-allowed"
+                >
+                  {uploading ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      <span>Mengunggah...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Upload className="w-4 h-4" />
+                      <span>Upload &amp; Tetapkan Diterima</span>
+                    </>
+                  )}
+                </button>
+              </div>
+            </div>
+          ) : (
+            /* TAB GENERATE OTOMATIS */
             <div className="space-y-4">
               {!preview ? (
                 <div className="text-center py-10">
@@ -224,77 +391,69 @@ export function SuratPengumumanDialog({
                     ) : (
                       <FileText className="w-4 h-4" />
                     )}
-                    Buat Preview Surat
+                    Generate Draft Surat
                   </button>
                 </div>
               ) : (
                 <div className="space-y-4">
-                  {/* Ringkasan field */}
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm">
-                    <div className="bg-stone-50 rounded-xl p-3">
-                      <div className="text-[10px] font-black uppercase text-stone-400 tracking-wider mb-1">
-                        Nomor Surat
-                      </div>
-                      <div className="font-bold text-stone-800">{nomorSurat}</div>
+                  {/* Info Nomor */}
+                  <div className="flex items-center justify-between p-3 bg-stone-50 rounded-xl text-xs">
+                    <div>
+                      <span className="font-bold text-stone-600">Nomor draft: </span>
+                      <span className="font-mono font-bold text-primary-800">
+                        {preview.nomor_surat}
+                      </span>
+                      <span className="text-stone-400 ml-2">
+                        (belum terkunci — akan dikunci saat finalisasi)
+                      </span>
                     </div>
-                    <div className="bg-stone-50 rounded-xl p-3">
-                      <div className="text-[10px] font-black uppercase text-stone-400 tracking-wider mb-1">
-                        Tanggal Terbit
-                      </div>
-                      <div className="font-bold text-stone-800">{tanggal}</div>
-                    </div>
-                    <div className="bg-stone-50 rounded-xl p-3">
-                      <div className="text-[10px] font-black uppercase text-stone-400 tracking-wider mb-1">
-                        Kelas Diterima
-                      </div>
-                      <div className="font-bold text-stone-800">{kelas}</div>
+                    <div className="text-stone-500">
+                      Kelas:{" "}
+                      <span className="font-bold text-stone-700">{preview.kelas_diterima}</span>
                     </div>
                   </div>
 
                   {/* Preview PDF */}
-                  <iframe
-                    src={pdfUrl || undefined}
-                    title="Preview Surat"
-                    className="w-full h-[55vh] border border-stone-200 rounded-xl"
-                  />
+                  {pdfUrl && (
+                    <div className="border border-stone-200 rounded-xl overflow-hidden h-[450px]">
+                      <iframe
+                        src={`${pdfUrl}#toolbar=0`}
+                        title="Preview Surat"
+                        className="w-full h-full"
+                      />
+                    </div>
+                  )}
 
-                  {/* Editor (muncul saat koreksi) */}
+                  {/* Form Koreksi jika perlu */}
                   {showEdit && (
-                    <div className="bg-gold-50 border border-gold-200 rounded-xl p-4 space-y-3">
-                      <div className="text-sm font-black uppercase tracking-wider text-gold-800">
-                        Koreksi Sebelum Finalisasi
-                      </div>
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                        <label className="text-xs font-bold text-stone-600">
-                          Tanggal Terbit
+                    <div className="p-4 bg-amber-50 rounded-xl space-y-3 border border-amber-100">
+                      <p className="text-xs font-bold text-amber-800">
+                        Koreksi Data Sebelum Finalisasi:
+                      </p>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                        <label className="block">
+                          Tanggal Terbit:
                           <input
                             type="date"
                             value={tanggal}
                             onChange={(e) => setTanggal(e.target.value)}
-                            className="mt-1 w-full border border-stone-200 rounded-lg px-3 py-2 text-sm font-normal"
+                            className="mt-1 w-full border border-stone-200 rounded px-2 py-1 bg-white"
                           />
                         </label>
-                        <label className="text-xs font-bold text-stone-600">
-                          Kelas Diterima
+                        <label className="block">
+                          Kelas Diterima:
                           <input
+                            type="text"
                             value={kelas}
                             onChange={(e) => setKelas(e.target.value)}
-                            className="mt-1 w-full border border-stone-200 rounded-lg px-3 py-2 text-sm font-normal"
-                          />
-                        </label>
-                        <label className="text-xs font-bold text-stone-600">
-                          Nomor Surat
-                          <input
-                            value={nomorSurat}
-                            onChange={(e) => setNomorSurat(e.target.value)}
-                            className="mt-1 w-full border border-stone-200 rounded-lg px-3 py-2 text-sm font-normal"
+                            className="mt-1 w-full border border-stone-200 rounded px-2 py-1 bg-white"
                           />
                         </label>
                       </div>
                       <button
                         onClick={loadPreview}
                         disabled={loadingPreview}
-                        className="px-4 py-2 bg-gold-600 hover:bg-gold-700 text-white rounded-xl text-xs font-black uppercase tracking-wider inline-flex items-center gap-2 disabled:opacity-50"
+                        className="px-3 py-1.5 bg-amber-600 text-white rounded text-xs font-bold inline-flex items-center gap-1.5"
                       >
                         {loadingPreview ? (
                           <Loader2 className="w-3.5 h-3.5 animate-spin" />
@@ -340,59 +499,8 @@ export function SuratPengumumanDialog({
                       </button>
                     </div>
                   </div>
-                  <p className="text-[11px] text-stone-400">
-                    Nama &amp; nomor pendaftaran diambil dari data sistem (tidak dapat diubah di
-                    surat). Setelah final, surat tampil di dashboard pendaftar.
-                  </p>
                 </div>
               )}
-            </div>
-          ) : (
-            /* TAB UPLOAD MANUAL */
-            <div className="space-y-4">
-              <div className="text-sm text-stone-500">
-                Untuk surat yang dibuat manual di luar sistem. Pastikan nomor surat belum dipakai
-                pendaftar lain.
-              </div>
-              <label className="text-xs font-bold text-stone-600 block">
-                Nomor Surat (lengkap, contoh: 012-AA/PSB-PUAS/X/2026)
-                <input
-                  value={nomorManual}
-                  onChange={(e) => setNomorManual(e.target.value)}
-                  placeholder="012-AA/PSB-PUAS/X/2026"
-                  className="mt-1 w-full border border-stone-200 rounded-lg px-3 py-2 text-sm font-normal"
-                />
-              </label>
-              <label className="text-xs font-bold text-stone-600 block">
-                File Surat (PDF / JPG / PNG)
-                <input
-                  type="file"
-                  accept="application/pdf,image/jpeg,image/png"
-                  onChange={(e) => setFile(e.target.files?.[0] || null)}
-                  className="mt-1 w-full border border-stone-200 rounded-lg px-3 py-2 text-sm font-normal"
-                />
-              </label>
-              <label className="flex items-center gap-2 text-sm text-stone-600 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={kirimWa}
-                  onChange={(e) => setKirimWa(e.target.checked)}
-                  className="w-4 h-4 accent-primary-700"
-                />
-                Kirim surat ke WhatsApp pendaftar
-              </label>
-              <button
-                onClick={uploadManual}
-                disabled={uploading}
-                className="px-5 py-2.5 bg-primary-700 hover:bg-primary-800 text-white rounded-xl text-sm font-black uppercase tracking-wider inline-flex items-center gap-2 disabled:opacity-50"
-              >
-                {uploading ? (
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                ) : (
-                  <Upload className="w-4 h-4" />
-                )}
-                Upload &amp; Publikasikan
-              </button>
             </div>
           )}
         </div>

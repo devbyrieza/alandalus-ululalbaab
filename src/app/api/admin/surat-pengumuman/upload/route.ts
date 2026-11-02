@@ -1,8 +1,8 @@
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { logAdminAction } from "@/lib/audit";
-import { delCache } from "@/lib/redis";
 import { prisma } from "@/lib/prisma";
+import { delCache } from "@/lib/redis";
 import { saveFileLocal } from "@/lib/storage/local";
 
 export const runtime = "nodejs";
@@ -87,7 +87,7 @@ export async function POST(request: Request) {
       const p = await tx.pengumuman.upsert({
         where: { pendaftar_id: pendaftarId },
         update: {
-          status_kelulusan: "Lulus",
+          status_kelulusan: "Diterima",
           nomor_surat: nomorSurat,
           kelas_diterima: kelasDiterima,
           surat_pengumuman_path: suratPath,
@@ -99,7 +99,7 @@ export async function POST(request: Request) {
         create: {
           pendaftar_id: pendaftarId,
           tahun_ajaran_id: pendaftar.tahun_ajaran_id,
-          status_kelulusan: "Lulus",
+          status_kelulusan: "Diterima",
           nomor_surat: nomorSurat,
           kelas_diterima: kelasDiterima,
           surat_pengumuman_path: suratPath,

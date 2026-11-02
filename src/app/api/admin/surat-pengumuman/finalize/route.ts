@@ -2,8 +2,8 @@ import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { SURAT_PENGUMUMAN_CONFIG } from "@/config/surat-pengumuman";
 import { logAdminAction } from "@/lib/audit";
-import { delCache } from "@/lib/redis";
 import { prisma } from "@/lib/prisma";
+import { delCache } from "@/lib/redis";
 import { signFilePath } from "@/lib/storage/file-signing";
 import { saveFileLocal } from "@/lib/storage/local";
 import {
@@ -123,7 +123,7 @@ export async function POST(request: Request) {
       const p = await tx.pengumuman.upsert({
         where: { pendaftar_id: pendaftarId },
         update: {
-          status_kelulusan: "Lulus",
+          status_kelulusan: "Diterima",
           nomor_surat: nomorSurat,
           kelas_diterima: kelasDiterima,
           tanggal_terbit: tanggalTerbit,
@@ -141,7 +141,7 @@ export async function POST(request: Request) {
               select: { tahun_ajaran_id: true },
             })
           ).tahun_ajaran_id,
-          status_kelulusan: "Lulus",
+          status_kelulusan: "Diterima",
           nomor_surat: nomorSurat,
           kelas_diterima: kelasDiterima,
           tanggal_terbit: tanggalTerbit,

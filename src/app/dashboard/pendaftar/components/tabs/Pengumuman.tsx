@@ -240,7 +240,7 @@ export default function PengumumanTab() {
               </div>
               <p className="text-primary-50/90 mb-10 max-w-xl text-lg leading-relaxed">
                 Berdasarkan hasil seleksi, Anda dinyatakan <strong>DITERIMA</strong> sebagai santri
-                baru PP Al Andalus Al-Andalus Putri.
+                baru Pesantren Ulul Albaab.
               </p>
 
               {pengumuman?.surat_pengumuman_path ? (
@@ -251,21 +251,13 @@ export default function PengumumanTab() {
                   className="inline-flex items-center justify-center gap-3 px-5 md:px-8 py-3.5 bg-gold-400 text-primary-950 rounded-full font-black hover:bg-gold-300 transition-all shadow-lg shadow-gold-400/20 active:scale-95 border border-gold-500"
                 >
                   <Download className="w-5 h-5" />
-                  Unduh Surat Pengumuman Hasil
+                  Unduh Surat Pengumuman Hasil (Resmi)
                 </a>
               ) : (
-                <button
-                  onClick={handleDownloadSurat}
-                  disabled={isGenerating}
-                  className="inline-flex items-center justify-center gap-3 px-5 md:px-8 py-3.5 bg-gold-400 text-primary-950 rounded-full font-black hover:bg-gold-300 transition-all shadow-lg shadow-gold-400/20 active:scale-95 disabled:opacity-50 border border-gold-500"
-                >
-                  {isGenerating ? (
-                    <Loader2 className="w-5 h-5 animate-spin" />
-                  ) : (
-                    <Download className="w-5 h-5" />
-                  )}
-                  Download Surat Kelulusan
-                </button>
+                <div className="inline-flex items-center gap-2.5 px-6 py-3.5 bg-white/15 backdrop-blur-md text-white rounded-2xl font-bold border border-white/20 text-sm shadow-sm">
+                  <Clock className="w-4 h-4 text-gold-300 animate-pulse shrink-0" />
+                  <span>Surat Pengumuman Resmi sedang disiapkan oleh Panitia PSB.</span>
+                </div>
               )}
             </div>
           </div>
