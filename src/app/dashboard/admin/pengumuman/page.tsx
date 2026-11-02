@@ -2,6 +2,7 @@
 
 import {
   AlertCircle,
+  Calendar,
   CheckCircle2,
   Clock,
   Filter,
@@ -23,6 +24,9 @@ function PengumumanContent() {
   const [candidates, setCandidates] = useState<any[]>([]);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [stats, setStats] = useState({ total: 0, ready: 0, accepted: 0 });
+  const [tahunAjaranList, setTahunAjaranList] = useState<
+    Array<{ id: string; nama: string; is_active: boolean }>
+  >([]);
   const [showBulkAcceptedDialog, setShowBulkAcceptedDialog] = useState(false);
   const [suratTarget, setSuratTarget] = useState<{
     id: string;
@@ -41,9 +45,36 @@ function PengumumanContent() {
   const [filter, setFilter] = useState({
     jenjang: "",
     status: "tested", // Default to those who have completed ALL 6 exams
+    tahun_ajaran: "",
   });
 
   const [isPublishing, setIsPublishing] = useState(false);
+
+  // Load Tahun Ajaran list on mount and default to active TA
+  useEffect(() => {
+    const fetchTahunAjaran = async () => {
+      try {
+        const res = await fetch("/api/admin/tahun-ajaran");
+        if (res.ok) {
+          const json = await res.json();
+          const list = json.data || [];
+          setTahunAjaranList(list);
+          const activeTA = list.find((ta: any) => ta.is_active);
+          const latestTA = list[0];
+          const defaultTA = activeTA || latestTA;
+          if (defaultTA) {
+            setFilter((prev) => ({
+              ...prev,
+              tahun_ajaran: prev.tahun_ajaran || defaultTA.id,
+            }));
+          }
+        }
+      } catch (e) {
+        console.error("Gagal memuat tahun ajaran:", e);
+      }
+    };
+    fetchTahunAjaran();
+  }, []);
 
   const toTitleCase = (str: string) => {
     if (!str) return "";
@@ -60,6 +91,7 @@ function PengumumanContent() {
       const params = new URLSearchParams();
       if (filter.jenjang) params.append("jenjang", filter.jenjang);
       if (filter.status) params.append("status", filter.status);
+      if (filter.tahun_ajaran) params.append("tahun_ajaran", filter.tahun_ajaran);
       params.append("limit", "100"); // Fetch ample amount
       params.append("_t", String(Date.now()));
 
@@ -358,11 +390,29 @@ function PengumumanContent() {
 
       {/* Filters & Actions */}
       <div className="bg-white p-4 rounded-xl shadow-xl border border-stone-100 flex flex-col md:flex-row justify-between items-center gap-4">
-        <div className="flex items-center gap-4 w-full md:w-auto">
+        <div className="flex flex-wrap items-center gap-3 w-full md:w-auto">
+          {/* Filter Tahun Ajaran */}
+          <div className="flex items-center gap-2 px-3 py-2 bg-stone-50 rounded-xl border border-stone-200">
+            <Calendar className="w-4 h-4 text-stone-500" />
+            <select
+              className="bg-transparent text-sm font-semibold text-stone-800 focus:outline-none cursor-pointer"
+              value={filter.tahun_ajaran}
+              onChange={(e) => setFilter({ ...filter, tahun_ajaran: e.target.value })}
+            >
+              <option value="all">Semua Tahun Ajaran</option>
+              {tahunAjaranList.map((ta) => (
+                <option key={ta.id} value={ta.id}>
+                  {ta.nama} {ta.is_active ? "(Aktif)" : ""}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Filter Status */}
           <div className="flex items-center gap-2 px-3 py-2 bg-stone-50 rounded-xl border border-stone-200">
             <Filter className="w-4 h-4 text-stone-500" />
             <select
-              className="bg-transparent text-sm focus:outline-none"
+              className="bg-transparent text-sm font-medium text-stone-700 focus:outline-none cursor-pointer"
               value={filter.status}
               onChange={(e) => setFilter({ ...filter, status: e.target.value })}
             >

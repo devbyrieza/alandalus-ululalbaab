@@ -167,8 +167,10 @@ export default function ExaminerDashboard() {
       const json = await res.json();
       const list: { id: string; nama: string; is_active: boolean }[] = json.data || [];
       setTaList(list);
-      // Default: tahun ajaran TERBARU (API urut tahun_mulai desc)
-      setSelectedTa(list.length > 0 ? list[0].id : "all");
+      // Default: tahun ajaran AKTIF / TERBARU
+      const activeTA = list.find((ta) => ta.is_active);
+      const defaultTA = activeTA || (list.length > 0 ? list[0] : null);
+      setSelectedTa(defaultTA ? defaultTA.id : "all");
     } catch (e) {
       console.error("Error fetching tahun ajaran:", e);
       setSelectedTa("all");

@@ -46,7 +46,7 @@ export function resolveTahunAjaran(p: {
 export async function resolveTahunAjaranId(
   input?: string | null,
 ): Promise<string | null> {
-  if (!input) {
+  if (!input || input === "" || input === "active") {
     const active = await prisma.tahunAjaran.findFirst({
       where: { is_active: true },
       select: { id: true },
@@ -72,9 +72,12 @@ export async function getAdminWhereClause(tahunAjaranId?: string): Promise<any> 
 
   if (tahunAjaranId === "all" || tahunAjaranId === "ALL") {
     // Show all
-  } else if (tahunAjaranId && tahunAjaranId.includes("-")) {
-    // Likely a UUID
-    where.tahun_ajaran_id = tahunAjaranId;
+    return where;
+  }
+
+  const taId = await resolveTahunAjaranId(tahunAjaranId);
+  if (taId) {
+    where.tahun_ajaran_id = taId;
   }
 
   return where;
