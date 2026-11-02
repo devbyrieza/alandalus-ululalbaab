@@ -7,6 +7,7 @@ import { signFilePath } from "@/lib/storage/file-signing";
 import { saveFileLocal } from "@/lib/storage/local";
 import {
   generateSuratPengumumanHasil,
+  getKodeTerpakai,
   nilaiKode,
   parseKodeSurat,
 } from "@/lib/surat/surat-pengumuman";
@@ -90,16 +91,10 @@ export async function POST(request: Request) {
       );
     }
 
-    // Validasi kode: harus urut setelah kode terakhir yang terpakai (anti lompat/dua kali)
-    const existing = await prisma.pengumuman.findMany({
-      where: { nomor_surat: { not: null } },
-      select: { nomor_surat: true },
-    });
-    const nilaiTerpakai = existing
-      .map((r) => parseKodeSurat(r.nomor_surat!))
-      .filter((k): k is string => !!k)
-      .filter((k) => k !== kode)
-      .map(nilaiKode);
+    // Validasi kode: harus urut setelah kode terakhir yang terpakai (anti lompat/dua kali).
+    // Termasuk baseline surat manual (AA & AB Ibrahim/Jooara) dari app_settings.
+    const existing = await getKodeTerpakai();
+    const nilaiTerpakai = existing.filter((k) => k !== kode).map(nilaiKode);
     const maxTerpakai = nilaiTerpakai.length ? Math.max(...nilaiTerpakai) : -1;
     if (nilaiKode(kode) <= maxTerpakai) {
       return NextResponse.json(

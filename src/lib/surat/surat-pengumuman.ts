@@ -50,7 +50,7 @@ export function parseKodeSurat(nomor: string): string | null {
   return m ? m[1] : null;
 }
 
-/** Ambil semua kode surat yang sudah terpakai dari DB (urut nilai). */
+/** Ambil semua kode surat yang sudah terpakai: dari pengumuman + baseline manual di app_settings. */
 export async function getKodeTerpakai(): Promise<string[]> {
   const rows = await prisma.pengumuman.findMany({
     where: { nomor_surat: { not: null } },
@@ -59,6 +59,15 @@ export async function getKodeTerpakai(): Promise<string[]> {
   const kodes: string[] = [];
   for (const r of rows) {
     const kode = parseKodeSurat(r.nomor_surat!);
+    if (kode) kodes.push(kode);
+  }
+  // Surat yang terbit MANUAL sebelum fitur ini (mis. AA & AB Ibrahim/Jooara)
+  // dicatat sebagai baseline di app_settings: key "surat_nomor_terakhir".
+  const setting = await prisma.appSetting.findUnique({
+    where: { key: "surat_nomor_terakhir" },
+  });
+  if (setting) {
+    const kode = parseKodeSurat(setting.value);
     if (kode) kodes.push(kode);
   }
   return kodes;
