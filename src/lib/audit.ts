@@ -25,7 +25,9 @@ type AuditAction =
   | "ADMIN_UPLOAD_PAYMENT_FOR_PENDAFTAR"
   | "UPDATE_NILAI_MANUAL"
   | "UBAH_JENJANG_PENDAFTAR"
-  | "UPDATE_WELCOME_DAY";
+  | "UPDATE_WELCOME_DAY"
+  | "TERBIT_SURAT_PENGUMUMAN"
+  | "UPLOAD_SURAT_PENGUMUMAN_MANUAL";
 
 interface AuditLogParams {
   action: AuditAction;
@@ -42,7 +44,8 @@ export function logAdminAction({
   adminName,
   targetId,
   targetName,
-  details }: AuditLogParams) {
+  details,
+}: AuditLogParams) {
   const timestamp = new Date().toISOString();
 
   const logEntry = {
@@ -51,7 +54,8 @@ export function logAdminAction({
     action,
     admin: { id: adminId, name: adminName },
     target: { id: targetId, name: targetName },
-    details };
+    details,
+  };
 
   // Structured logging to console
   console.log(`[AUDIT-LOG] ${JSON.stringify(logEntry)}`);

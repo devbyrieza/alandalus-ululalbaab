@@ -421,6 +421,9 @@ model Pengumuman {
   updated_at            DateTime    @default(now()) @db.Timestamptz(6)
   google_form_link      String?
   surat_keputusan_url   String?
+  nomor_surat           String?     @unique
+  kelas_diterima        String?
+  tanggal_terbit        DateTime?   @db.Timestamptz(6)
   wa_blast_sent         Boolean     @default(false)
   wa_blast_sent_at      DateTime?   @db.Timestamptz(6)
   pendaftar             Pendaftar   @relation(fields: [pendaftar_id], references: [id], onDelete: Cascade)

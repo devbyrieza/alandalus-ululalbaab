@@ -1,6 +1,7 @@
-import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
+import { type NextRequest, NextResponse } from "next/server";
 import path from "path";
+import { verifyFilePath } from "@/lib/storage/file-signing";
 import { getFileLocal, saveFileLocal } from "@/lib/storage/local";
 
 /**
@@ -11,7 +12,7 @@ import { getFileLocal, saveFileLocal } from "@/lib/storage/local";
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function GET(
   request: NextRequest,
-  { params }: { params: Promise<{ path: string[] }> },
+  { params }: { params: Promise<{ path: string[] }> }
 ) {
   try {
     const pathSegments = (await params).path;
@@ -23,93 +24,94 @@ export async function GET(
     // Standardize path and extract identifiers
     const filename = pathSegments[pathSegments.length - 1];
     const category = pathSegments[0] || "files";
-    const ownerId = pathSegments.length >= 3 ? pathSegments[1] : (pathSegments.length === 2 ? pathSegments[0] : "");
+    const ownerId =
+      pathSegments.length >= 3 ? pathSegments[1] : pathSegments.length === 2 ? pathSegments[0] : "";
     const relativePath = path.join(...pathSegments);
     const normalizedForwardPath = pathSegments.join("/");
 
-    // 1. Auth Check
-    const cookieStore = await cookies();
-    const sessionCookie =
-      cookieStore.get("al_session") || cookieStore.get("app_session");
+    // 1a. Bypass via signed token (server-to-server, mis. Wablas kirim dokumen surat pengumuman)
+    const token = request.nextUrl.searchParams.get("k");
+    if (token && verifyFilePath(normalizedForwardPath, token)) {
+      // lanjut ke penyajian file tanpa sesi
+    } else {
+      // 1. Auth Check
+      const cookieStore = await cookies();
+      const sessionCookie = cookieStore.get("al_session") || cookieStore.get("app_session");
 
-    if (!sessionCookie) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
+      if (!sessionCookie) {
+        return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      }
 
-    let session;
-    try {
-      session = JSON.parse(sessionCookie.value);
-    } catch {
-      return NextResponse.json({ error: "Invalid session" }, { status: 401 });
-    }
-
-    // 2. Authorization
-    const adminRoles = [
-      "admin",
-      "admin_super",
-      "admin_berkas",
-      "admin_keuangan",
-      "head_of_it",
-      "superadmin",
-      "penguji",
-      "penguji_quran",
-      "penguji_santri",
-      "penguji_ortu",
-      "penguji_arab",
-      "penguji_hafalan",
-      "penguji_calsan",
-      "pewawancara_cawalsan",
-      "pewawancara_calsan",
-    ];
-    const userRoles = [
-      session.role,
-      ...(session.secondary_roles || []),
-      ...(session.roles || []),
-    ].filter(Boolean).map((r: string) => r.toLowerCase());
-
-    const isAdmin = userRoles.some((r: string) =>
-      adminRoles.some((ar) => r.includes(ar)),
-    );
-    let isOwner = session.role === "pendaftar" && (session.id === ownerId || session.pendaftar_id === ownerId);
-
-    // Fallback ownership check for pendaftar
-    if (!isAdmin && !isOwner && session.role === "pendaftar") {
+      let session;
       try {
-        const { prisma } = await import("@/lib/prisma");
-        const doc = await prisma.dokumen.findFirst({
-          where: {
-            pendaftar_id: session.id,
-            OR: [
-              { file_path: { contains: filename } },
-              { file_name: filename },
-            ],
-          },
-        });
+        session = JSON.parse(sessionCookie.value);
+      } catch {
+        return NextResponse.json({ error: "Invalid session" }, { status: 401 });
+      }
 
-        if (doc) {
-          isOwner = true;
-        } else {
-          const payment = await prisma.pembayaran.findFirst({
+      // 2. Authorization
+      const adminRoles = [
+        "admin",
+        "admin_super",
+        "admin_berkas",
+        "admin_keuangan",
+        "head_of_it",
+        "superadmin",
+        "penguji",
+        "penguji_quran",
+        "penguji_santri",
+        "penguji_ortu",
+        "penguji_arab",
+        "penguji_hafalan",
+        "penguji_calsan",
+        "pewawancara_cawalsan",
+        "pewawancara_calsan",
+      ];
+      const userRoles = [session.role, ...(session.secondary_roles || []), ...(session.roles || [])]
+        .filter(Boolean)
+        .map((r: string) => r.toLowerCase());
+
+      const isAdmin = userRoles.some((r: string) => adminRoles.some((ar) => r.includes(ar)));
+      let isOwner =
+        session.role === "pendaftar" &&
+        (session.id === ownerId || session.pendaftar_id === ownerId);
+
+      // Fallback ownership check for pendaftar
+      if (!isAdmin && !isOwner && session.role === "pendaftar") {
+        try {
+          const { prisma } = await import("@/lib/prisma");
+          const doc = await prisma.dokumen.findFirst({
             where: {
               pendaftar_id: session.id,
-              OR: [
-                { bukti_transfer_path: { contains: filename } },
-                { bukti_transfer_filename: filename },
-              ],
+              OR: [{ file_path: { contains: filename } }, { file_name: filename }],
             },
           });
-          if (payment) {
-            isOwner = true;
-          }
-        }
-      } catch (authErr) {
-        console.error("[File Serve] Ownership check error:", authErr);
-      }
-    }
 
-    if (!isAdmin && !isOwner) {
-      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
-    }
+          if (doc) {
+            isOwner = true;
+          } else {
+            const payment = await prisma.pembayaran.findFirst({
+              where: {
+                pendaftar_id: session.id,
+                OR: [
+                  { bukti_transfer_path: { contains: filename } },
+                  { bukti_transfer_filename: filename },
+                ],
+              },
+            });
+            if (payment) {
+              isOwner = true;
+            }
+          }
+        } catch (authErr) {
+          console.error("[File Serve] Ownership check error:", authErr);
+        }
+      }
+
+      if (!isAdmin && !isOwner) {
+        return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+      }
+    } // tutup else auth (bypass token)
 
     // 3. Get File from Local Disk
     let fileData = getFileLocal(relativePath);
@@ -161,7 +163,12 @@ export async function GET(
 
           // Cache back to disk
           try {
-            await saveFileLocal(buffer, "dokumen-pendaftaran", doc.pendaftar_id || "cache", filename);
+            await saveFileLocal(
+              buffer,
+              "dokumen-pendaftaran",
+              doc.pendaftar_id || "cache",
+              filename
+            );
           } catch (cacheErr) {
             console.warn("[File Serve] Disk cache write failed (non-critical):", cacheErr);
           }
@@ -176,7 +183,9 @@ export async function GET(
                 { bukti_transfer_filename: filename },
                 { bukti_transfer_path: relativePath },
                 { bukti_transfer_path: normalizedForwardPath },
-                ...(ownerId && ownerId.includes("-") ? [{ pendaftar_id: ownerId }, { id: ownerId }] : []),
+                ...(ownerId && ownerId.includes("-")
+                  ? [{ pendaftar_id: ownerId }, { id: ownerId }]
+                  : []),
               ],
             },
             select: {
@@ -206,7 +215,12 @@ export async function GET(
 
               // Cache back to disk
               try {
-                await saveFileLocal(buffer, "bukti-pembayaran", payment.pendaftar_id || "cache", filename);
+                await saveFileLocal(
+                  buffer,
+                  "bukti-pembayaran",
+                  payment.pendaftar_id || "cache",
+                  filename
+                );
               } catch (cacheErr) {
                 console.warn("[File Serve] Payment proof cache write failed:", cacheErr);
               }
@@ -236,7 +250,7 @@ export async function GET(
             "File tidak ditemukan di server. Kemungkinan file belum diunggah atau volume storage sedang memuat ulang.",
           path: relativePath,
         },
-        { status: 404 },
+        { status: 404 }
       );
     }
 
@@ -251,9 +265,6 @@ export async function GET(
     });
   } catch (error) {
     console.error("File serve error:", error);
-    return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 },
-    );
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }

@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
+import { getStatusIndex } from "@/lib/access-control";
 import { prisma } from "@/lib/prisma";
 import { getCache, setCache } from "@/lib/redis";
-import { getStatusIndex } from "@/lib/access-control";
 
 export async function GET(request: NextRequest) {
   try {
@@ -20,7 +20,8 @@ export async function GET(request: NextRequest) {
     // Fetch pendaftar status to ensure consistency
     const pendaftar = await prisma.pendaftar.findUnique({
       where: { id: pendaftarId },
-      select: { status_pendaftaran: true, updated_at: true, tahun_ajaran_id: true } });
+      select: { status_pendaftaran: true, updated_at: true, tahun_ajaran_id: true },
+    });
 
     if (!pendaftar) {
       return NextResponse.json({ error: "Not Found" }, { status: 404 });
@@ -29,15 +30,16 @@ export async function GET(request: NextRequest) {
     // === BYPASS BERKAS CHECK (DYNAMIC VIA STATE MACHINE) ===
     const currentIndex = getStatusIndex(pendaftar.status_pendaftaran);
     const docsVerifiedIndex = getStatusIndex("docs_verified");
-    
+
     if (currentIndex < docsVerifiedIndex) {
       return NextResponse.json({
         data: {
           id: "dokumen_belum_lengkap",
           status_kelulusan: "dokumen_belum_lengkap",
-          catatan: "Mohon lengkapi dan tunggu verifikasi seluruh dokumen pendaftaran (berkas) Anda oleh Panitia sebelum hasil kelulusan dapat diterbitkan.",
-          tanggal_pengumuman: new Date().toISOString()
-        }
+          catatan:
+            "Mohon lengkapi dan tunggu verifikasi seluruh dokumen pendaftaran (berkas) Anda oleh Panitia sebelum hasil kelulusan dapat diterbitkan.",
+          tanggal_pengumuman: new Date().toISOString(),
+        },
       });
     }
     // ===========================
@@ -53,14 +55,34 @@ export async function GET(request: NextRequest) {
 
     // Attempt to fetch from Pengumuman table
     const pengumuman = await prisma.pengumuman.findUnique({
-      where: { pendaftar_id: pendaftarId } });
+      where: { pendaftar_id: pendaftarId },
+      select: {
+        id: true,
+        status_kelulusan: true,
+        catatan: true,
+        published_at: true,
+        created_at: true,
+        nomor_surat: true,
+        surat_pengumuman_path: true,
+        is_published: true,
+      },
+    });
 
     // --- SELF-HEALING & SYNC LOGIC ---
-    const announcedStatuses = ["accepted", "rejected", "cadangan", "announced", "enrolled", "enrolled_full"];
-    
+    const announcedStatuses = [
+      "accepted",
+      "rejected",
+      "cadangan",
+      "announced",
+      "enrolled",
+      "enrolled_full",
+    ];
+
     // If Pendaftar status is already in a final state, PRIORITIZE it over Pengumuman table
     if (announcedStatuses.includes(pendaftar.status_pendaftaran)) {
-      const statusMapped = ["accepted", "enrolled", "enrolled_full"].includes(pendaftar.status_pendaftaran)
+      const statusMapped = ["accepted", "enrolled", "enrolled_full"].includes(
+        pendaftar.status_pendaftaran
+      )
         ? "diterima"
         : pendaftar.status_pendaftaran === "rejected"
           ? "ditolak"
@@ -70,9 +92,15 @@ export async function GET(request: NextRequest) {
         data: {
           id: pengumuman?.id || pendaftarId,
           status_kelulusan: statusMapped,
-          catatan: pengumuman?.catatan || "Hasil seleksi telah diumumkan. Silakan cek detail di atas.",
-          tanggal_pengumuman: pengumuman?.published_at?.toISOString() || pendaftar.updated_at.toISOString() } };
-      
+          catatan:
+            pengumuman?.catatan || "Hasil seleksi telah diumumkan. Silakan cek detail di atas.",
+          tanggal_pengumuman:
+            pengumuman?.published_at?.toISOString() || pendaftar.updated_at.toISOString(),
+          nomor_surat: pengumuman?.nomor_surat || null,
+          surat_pengumuman_path: pengumuman?.surat_pengumuman_path || null,
+        },
+      };
+
       await setCache(cacheKey, responseData, 300); // Cache 5 menit
       return NextResponse.json(responseData);
     }
@@ -85,11 +113,17 @@ export async function GET(request: NextRequest) {
           status_kelulusan:
             pengumuman.status_kelulusan === "Lulus"
               ? "diterima"
-              : (pengumuman.status_kelulusan === "Tidak Lulus" || pengumuman.status_kelulusan === "Ditolak")
+              : pengumuman.status_kelulusan === "Tidak Lulus" ||
+                  pengumuman.status_kelulusan === "Ditolak"
                 ? "ditolak"
                 : "cadangan",
           catatan: pengumuman.catatan,
-          tanggal_pengumuman: pengumuman.published_at?.toISOString() || pengumuman.created_at.toISOString() } };
+          tanggal_pengumuman:
+            pengumuman.published_at?.toISOString() || pengumuman.created_at.toISOString(),
+          nomor_surat: pengumuman.nomor_surat,
+          surat_pengumuman_path: pengumuman.surat_pengumuman_path,
+        },
+      };
 
       await setCache(cacheKey, responseData, 300); // Cache 5 menit
       return NextResponse.json(responseData);
@@ -99,9 +133,6 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ data: null });
   } catch (error) {
     console.error("GET /api/pendaftar/pengumuman error:", error);
-    return NextResponse.json(
-      { error: "Internal Server Error" },
-      { status: 500 },
-    );
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }

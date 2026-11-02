@@ -9,6 +9,7 @@ import { UserRole } from "@/lib/access-control";
 import { exportToExcelProfessional, exportToPDF } from "@/lib/utils/export";
 import Swal from "sweetalert2";
 import { ActionDropdown } from "@/components/ui/ActionDropdown";
+import { SuratPengumumanDialog } from "@/components/admin/SuratPengumumanDialog";
 
 // Filter labels for dashboard categories
 const FILTER_LABELS: Record<string, string> = {
@@ -197,6 +198,7 @@ function AdminPendaftarContent() {
 
   // Announcement State
   const [isAnnouncementModalOpen, setIsAnnouncementModalOpen] = useState(false);
+  const [suratDialogPendaftar, setSuratDialogPendaftar] = useState<{ id: string; nama_lengkap: string; nomor_pendaftaran: string } | null>(null);
   const [selectedPendaftar, setSelectedPendaftar] = useState<Pendaftar | null>(
     null,
   );
@@ -1922,6 +1924,12 @@ function AdminPendaftarContent() {
                                 hidden: !isAdminSuper || (item.status_pendaftaran !== "announced" && item.status_pendaftaran !== "cadangan")
                               },
                               {
+                                label: "Terbitkan Surat Pengumuman",
+                                icon: <FileText className="w-4 h-4" />,
+                                onClick: () => setSuratDialogPendaftar({ id: item.id, nama_lengkap: item.nama_lengkap, nomor_pendaftaran: item.nomor_pendaftaran }),
+                                hidden: !isAdminSuper
+                              },
+                              {
                                 label: "Mengundurkan Diri",
                                 icon: <LogOut className="w-4 h-4" />,
                                 onClick: () => handleSingleMengundurkanDiri(item.id),
@@ -2099,6 +2107,12 @@ function AdminPendaftarContent() {
                                 hidden: !isAdminSuper || (item.status_pendaftaran !== "announced" && item.status_pendaftaran !== "cadangan")
                               },
                               {
+                                label: "Terbitkan Surat Pengumuman",
+                                icon: <FileText className="w-4 h-4" />,
+                                onClick: () => setSuratDialogPendaftar({ id: item.id, nama_lengkap: item.nama_lengkap, nomor_pendaftaran: item.nomor_pendaftaran }),
+                                hidden: !isAdminSuper
+                              },
+                              {
                                 label: "Mengundurkan Diri",
                                 icon: <LogOut className="w-4 h-4" />,
                                 onClick: () => handleSingleMengundurkanDiri(item.id),
@@ -2198,6 +2212,13 @@ function AdminPendaftarContent() {
           </>
         )}
       </div>
+      {suratDialogPendaftar && (
+        <SuratPengumumanDialog
+          pendaftar={suratDialogPendaftar}
+          onClose={() => setSuratDialogPendaftar(null)}
+          onDone={() => fetchPendaftar()}
+        />
+      )}
       {/* Announcement Modal */}
       {isAnnouncementModalOpen && selectedPendaftar && (
         <div onWheel={(e) => e.stopPropagation()} data-modal="true" aria-modal="true" role="dialog" className="fixed inset-0 z-50 flex items-start md:items-center pt-10 md:pt-0 pb-20 md:pb-0 justify-center bg-black/50 p-4 overflow-y-auto overscroll-contain custom-scrollbar backdrop-blur-sm">
