@@ -451,7 +451,15 @@ export async function PATCH(request: NextRequest) {
       where: { id: jadwal_id },
       include: {
         pendaftar: { select: { id: true, nama_lengkap: true } },
-        exam_session: { select: { location: true, start_time: true } },
+        exam_session: {
+          select: {
+            id: true,
+            location: true,
+            start_time: true,
+            end_time: true,
+            date: true,
+          },
+        },
       },
     });
 
@@ -465,60 +473,99 @@ export async function PATCH(request: NextRequest) {
     // Prepare update data
     const updateData: any = {};
 
-    let targetStartTime = currentJadwal.exam_session?.start_time || currentJadwal.waktu_mulai_santri;
-    
-    if (new_session_id && new_session_id !== currentJadwal.exam_session_id) {
+    let targetStartTime: Date | null = currentJadwal.exam_session?.start_time || null;
+    let targetEndTime: Date | null = currentJadwal.exam_session?.end_time || null;
+
+    if (!targetStartTime && currentJadwal.tanggal_ujian && currentJadwal.waktu_mulai_santri) {
+      const fullStart = buildFullDateTime(currentJadwal.tanggal_ujian, currentJadwal.waktu_mulai_santri);
+      if (fullStart) targetStartTime = new Date(fullStart);
+      const fullEnd = currentJadwal.waktu_selesai_santri
+        ? buildFullDateTime(currentJadwal.tanggal_ujian, currentJadwal.waktu_selesai_santri)
+        : null;
+      if (fullEnd) targetEndTime = new Date(fullEnd);
+    }
+
+    if (new_session_id) {
       const newSession = await prisma.examSession.findUnique({
-        where: { id: new_session_id }
+        where: { id: new_session_id },
       });
       if (newSession) {
         targetStartTime = newSession.start_time;
-        updateData.exam_session_id = newSession.id;
-        updateData.tanggal_ujian = (newSession as any).date || new Date(newSession.start_time);
-        updateData.waktu_mulai_santri = newSession.start_time;
-        updateData.waktu_selesai_santri = newSession.end_time;
-        updateData.waktu_mulai_ortu = newSession.start_time;
-        updateData.waktu_selesai_ortu = newSession.end_time;
-        if (newSession.location) {
-          updateData.tempat_santri = newSession.location;
-          updateData.tempat_ortu = newSession.location;
+        targetEndTime = newSession.end_time;
+        if (new_session_id !== currentJadwal.exam_session_id) {
+          updateData.exam_session_id = newSession.id;
+          updateData.tanggal_ujian = (newSession as any).date || new Date(newSession.start_time);
+          updateData.waktu_mulai_santri = newSession.start_time;
+          updateData.waktu_selesai_santri = newSession.end_time;
+          updateData.waktu_mulai_ortu = newSession.start_time;
+          updateData.waktu_selesai_ortu = newSession.end_time;
+          if (newSession.location) {
+            updateData.tempat_santri = newSession.location;
+            updateData.tempat_ortu = newSession.location;
+          }
         }
       }
     }
 
-    // Conflict Guard: Check conflicting schedules on same start_time
-    const scheduleStartTime = targetStartTime;
+    // Conflict Guard: Check conflicting schedules on same date & overlapping time
     const newExaminerIds = [
       penguji_quran_id,
       penguji_santri_id,
       penguji_ortu_id,
+      penguji_hafalan_id,
       penguji_arab_id,
     ].filter(Boolean);
 
-    if (newExaminerIds.length > 0 && scheduleStartTime && !allow_conflict) {
-      const conflictingSchedules = await prisma.jadwalUjian.findMany({
+    if (newExaminerIds.length > 0 && targetStartTime && !allow_conflict) {
+      const targetStartMs = new Date(targetStartTime).getTime();
+      const targetEndMs = targetEndTime
+        ? new Date(targetEndTime).getTime()
+        : targetStartMs + 30 * 60 * 1000;
+
+      const candidateSchedules = await prisma.jadwalUjian.findMany({
         where: {
           id: { not: jadwal_id },
           pendaftar_id: { not: currentJadwal.pendaftar_id },
           pendaftar: { deleted_at: null },
           OR: [
-            { exam_session: { start_time: scheduleStartTime } },
-            { waktu_mulai_santri: scheduleStartTime },
-          ],
-          AND: [
-            {
-              OR: [
-                { penguji_quran_id: { in: newExaminerIds } },
-                { penguji_santri_id: { in: newExaminerIds } },
-                { penguji_ortu_id: { in: newExaminerIds } },
-                { penguji_arab_id: { in: newExaminerIds } },
-              ],
-            },
+            { penguji_quran_id: { in: newExaminerIds } },
+            { penguji_santri_id: { in: newExaminerIds } },
+            { penguji_ortu_id: { in: newExaminerIds } },
+            { penguji_hafalan_id: { in: newExaminerIds } },
+            { penguji_arab_id: { in: newExaminerIds } },
           ],
         },
         include: {
           pendaftar: { select: { nama_lengkap: true, nomor_pendaftaran: true } },
+          exam_session: { select: { start_time: true, end_time: true } },
         },
+      });
+
+      const conflictingSchedules = candidateSchedules.filter((cs) => {
+        let csStartMs: number | null = null;
+        let csEndMs: number | null = null;
+
+        if (cs.exam_session?.start_time) {
+          csStartMs = new Date(cs.exam_session.start_time).getTime();
+          csEndMs = cs.exam_session.end_time
+            ? new Date(cs.exam_session.end_time).getTime()
+            : csStartMs + 30 * 60 * 1000;
+        } else if (cs.tanggal_ujian && cs.waktu_mulai_santri) {
+          const fullStart = buildFullDateTime(cs.tanggal_ujian, cs.waktu_mulai_santri);
+          if (fullStart) {
+            csStartMs = new Date(fullStart).getTime();
+            const fullEnd = cs.waktu_selesai_santri
+              ? buildFullDateTime(cs.tanggal_ujian, cs.waktu_selesai_santri)
+              : null;
+            csEndMs = fullEnd ? new Date(fullEnd).getTime() : csStartMs + 30 * 60 * 1000;
+          }
+        }
+
+        if (!csStartMs || !csEndMs || isNaN(csStartMs) || isNaN(csEndMs)) return false;
+
+        // Overlapping interval check on exact full date-time:
+        // [targetStartMs, targetEndMs) overlaps with [csStartMs, csEndMs)
+        return targetStartMs < csEndMs && targetEndMs > csStartMs;
       });
 
       if (conflictingSchedules.length > 0) {
@@ -528,7 +575,7 @@ export async function PATCH(request: NextRequest) {
         return NextResponse.json(
           {
             conflict: true,
-            message: `Terdeteksi bentrokan jadwal: Penguji yang Anda pilih sudah memiliki jadwal ujian lain dengan ${details.join(", ")} pada jam yang sama.`,
+            message: `Terdeteksi bentrokan jadwal: Penguji yang Anda pilih sudah memiliki jadwal ujian lain dengan ${details.join(", ")} pada tanggal dan jam yang sama.`,
             conflictingWith: details,
           },
           { status: 409 }
