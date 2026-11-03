@@ -9,8 +9,33 @@ import {
 
 export const dynamic = "force-dynamic";
 
+const STAFF_ADMIN_ROLES = [
+    "admin",
+    "admin_super",
+    "admin_keuangan",
+    "admin_berkas",
+    "head_of_it",
+    "superadmin",
+];
+
+function isStaffAdmin(session: any): boolean {
+    if (!session) return false;
+    const roles = [session.role, ...(session.secondary_roles || []), ...(session.roles || [])]
+        .filter(Boolean)
+        .map((r: string) => String(r).toLowerCase());
+    return roles.some((r) => STAFF_ADMIN_ROLES.some((ar) => r.includes(ar)));
+}
+
+function isSuperAdmin(session: any): boolean {
+    if (!session) return false;
+    const roles = [session.role, ...(session.secondary_roles || []), ...(session.roles || [])]
+        .filter(Boolean)
+        .map((r: string) => String(r).toLowerCase());
+    return roles.some((r) => r.includes("admin_super") || r.includes("superadmin") || r.includes("head_of_it"));
+}
+
 /**
- * Konfigurasi penerima digest jadwal seleksi harian (07.00 WIB).
+ * Konfigurasi penerima digest jadwal seleksi harian (06.45 WIB).
  * GET  → status untuk banner dashboard: { setting, adminSuperPhone, configured }
  * POST → admin super menetapkan nomor penerima { phone }
  * DELETE → admin super menghapus nomor penerima (kembali ke fallback)
@@ -18,7 +43,7 @@ export const dynamic = "force-dynamic";
 export async function GET() {
     try {
         const session = await getServerSession();
-        if (!session || !["admin", "admin_super", "head_of_it"].includes(session.role)) {
+        if (!session || !isStaffAdmin(session)) {
             return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
         }
 
@@ -40,10 +65,13 @@ export async function GET() {
             adminSuperPhone = null;
         }
 
+        const isConfigured = Boolean(setting && setting.trim() && setting.trim() !== "-") ||
+            Boolean(adminSuperPhone && adminSuperPhone.trim() && adminSuperPhone.trim() !== "-");
+
         return NextResponse.json({
             setting,
             adminSuperPhone,
-            configured: Boolean(setting) || Boolean(adminSuperPhone),
+            configured: isConfigured,
         });
     } catch (error: any) {
         console.error("❌ digest-recipient GET error:", error);
@@ -54,7 +82,7 @@ export async function GET() {
 export async function POST(request: Request) {
     try {
         const session = await getServerSession();
-        if (!session || session.role !== "admin_super") {
+        if (!session || !isSuperAdmin(session)) {
             return NextResponse.json({ error: "Hanya Admin Super yang dapat mengatur nomor penerima." }, { status: 403 });
         }
 
@@ -69,7 +97,7 @@ export async function POST(request: Request) {
     } catch (error: any) {
         console.error("❌ digest-recipient POST error:", error);
         return NextResponse.json(
-            { error: "Gagal menyimpan. Pastikan tabel app_settings sudah dibuat di database (lihat prisma/migrations/create_app_settings.sql)." },
+            { error: "Gagal menyimpan. Pastikan tabel app_settings sudah dibuat di database." },
             { status: 500 }
         );
     }
@@ -78,7 +106,7 @@ export async function POST(request: Request) {
 export async function DELETE() {
     try {
         const session = await getServerSession();
-        if (!session || session.role !== "admin_super") {
+        if (!session || !isSuperAdmin(session)) {
             return NextResponse.json({ error: "Hanya Admin Super yang dapat mengubah konfigurasi." }, { status: 403 });
         }
 
