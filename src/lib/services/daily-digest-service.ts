@@ -3,13 +3,12 @@ import { sendMessage } from "@/lib/wablas";
 import { BRANDING } from "@/config/branding";
 
 /**
- * DIGEST JADWAL SELEKSI HARIAN — dikirim otomatis setiap pagi 07.00 WIB.
+ * DIGEST JADWAL SELEKSI HARIAN — dikirim otomatis setiap pagi 06.45 WIB.
  *
  * Isi: seluruh jadwal seleksi yang jatuh PADA HARI INI saja (WIB).
  * Tujuan: nomor yang ditetapkan admin super (AppSetting: daily_jadwal_recipient).
  * Fallback: jika belum ditetapkan → nomor WhatsApp profil admin super.
- * Jika keduanya kosong → TIDAK mengirim apa pun; UI dashboard admin super
- * menampilkan highlight (banner) yang meminta admin super mengatur nomor penerima.
+ * Jika keduanya kosong → TIDAK mengirim apa pun.
  *
  * Pesan tersebut ditujukan kepada "pemegang nomor" yang WAJIB meneruskan
  * daftar jadwal ini ke grup WhatsApp penguji & pewawancara.
@@ -25,6 +24,7 @@ export interface DigestJadwalItem {
     jenis: string;
     namaSantri: string;
     jenjang: string;
+    labelPenguji?: string;
     namaPenguji: string;
     lokasi: string;
 }
@@ -108,13 +108,75 @@ export async function setDigestRecipientSetting(phone: string | null): Promise<v
     });
 }
 
-function formatJenisUjian(sessionTitle: string): string {
-    const t = (sessionTitle || "").toLowerCase();
-    if (t.includes("quran") || t.includes("qur'an")) return "Tes Al-Qur'an";
-    if (t.includes("ortu") || t.includes("cawalsan") || t.includes("orang tua") || t.includes("orangtua") || t.includes("wali")) return "Wawancara Calon Orang Tua/Wali";
-    if (t.includes("calsan") || t.includes("santri")) return "Wawancara Calon Santri";
-    if (t.includes("arab") || t.includes("lisan")) return "Tes Lisan Bahasa Arab";
-    return sessionTitle || "Tes Seleksi";
+function resolveJenisDanPenguji(j: any): {
+    jenis: string;
+    labelPenguji: string;
+    namaPenguji: string;
+} {
+    const title = (j.exam_session?.title || "").toLowerCase();
+
+    // 1. Wawancara Calon Orang Tua / Wali
+    if (
+        title.includes("ortu") ||
+        title.includes("cawalsan") ||
+        title.includes("orang tua") ||
+        title.includes("orangtua") ||
+        title.includes("wali")
+    ) {
+        return {
+            jenis: "Wawancara Calon Orang Tua/Wali",
+            labelPenguji: "Pewawancara",
+            namaPenguji: j.penguji_ortu?.full_name || j.penguji_santri?.full_name || j.penguji_quran?.full_name || "-",
+        };
+    }
+
+    // 2. Wawancara Calon Santri
+    if (title.includes("calsan") || title.includes("santri")) {
+        return {
+            jenis: "Wawancara Calon Santri",
+            labelPenguji: "Pewawancara",
+            namaPenguji: j.penguji_santri?.full_name || j.penguji_quran?.full_name || j.penguji_ortu?.full_name || "-",
+        };
+    }
+
+    // 3. Tes Al-Qur'an / Hafalan
+    if (title.includes("quran") || title.includes("qur'an") || title.includes("hafalan")) {
+        return {
+            jenis: "Tes Al-Qur'an",
+            labelPenguji: "Penguji",
+            namaPenguji: j.penguji_quran?.full_name || j.penguji_hafalan?.full_name || "-",
+        };
+    }
+
+    // 4. Tes Lisan Bahasa Arab
+    if (title.includes("arab") || title.includes("lisan")) {
+        return {
+            jenis: "Tes Lisan Bahasa Arab",
+            labelPenguji: "Penguji",
+            namaPenguji: j.penguji_arab?.full_name || "-",
+        };
+    }
+
+    // 5. Jika judul sesi umum / gabungan:
+    const listPenguji: string[] = [];
+    if (j.penguji_quran?.full_name) listPenguji.push(`Al-Qur'an: ${j.penguji_quran.full_name}`);
+    if (j.penguji_santri?.full_name) listPenguji.push(`W. Santri: ${j.penguji_santri.full_name}`);
+    if (j.penguji_ortu?.full_name) listPenguji.push(`W. Ortu: ${j.penguji_ortu.full_name}`);
+    if (j.penguji_arab?.full_name) listPenguji.push(`B. Arab: ${j.penguji_arab.full_name}`);
+
+    if (listPenguji.length > 0) {
+        return {
+            jenis: j.exam_session?.title || "Tes Seleksi",
+            labelPenguji: "Penguji/Pewawancara",
+            namaPenguji: listPenguji.join(" | "),
+        };
+    }
+
+    return {
+        jenis: j.exam_session?.title || "Tes Seleksi",
+        labelPenguji: "Penguji",
+        namaPenguji: "-",
+    };
 }
 
 export function buildMessageDailyJadwalDigest(params: {
@@ -126,7 +188,7 @@ export function buildMessageDailyJadwalDigest(params: {
             (it, i) =>
                 `${i + 1}. ⏰ *${it.jam}* — *${it.jenis}*\n` +
                 `   👤 ${it.namaSantri} (${it.jenjang})\n` +
-                `   🧑‍🏫 Penguji: ${it.namaPenguji}\n` +
+                `   🧑‍🏫 ${it.labelPenguji || "Penguji"}: ${it.namaPenguji}\n` +
                 `   📍 ${it.lokasi}`
         )
         .join("\n\n");
@@ -173,7 +235,7 @@ async function getDailySentMarker(): Promise<string | null> {
 
 /**
  * Dipanggil worker internal (tiap 60 detik). Mengirim sekali per hari,
- * mulai pukul 07.00 WIB.
+ * mulai pukul 06.45 WIB.
  */
 export async function maybeSendDailyScheduleDigest(now: Date = new Date()): Promise<DailyDigestResult> {
     const wib = getWIBParts(now);
@@ -181,7 +243,7 @@ export async function maybeSendDailyScheduleDigest(now: Date = new Date()): Prom
     const alreadySent = (await getDailySentMarker()) === wib.dateKey;
 
     if (notYetTime || alreadySent) {
-        return { triggered: false, sent: false, recipient: null, recipientSource: "none", jadwalCount: 0, reason: notYetTime ? "belum_07:00" : "sudah_terkirim_hari_ini" };
+        return { triggered: false, sent: false, recipient: null, recipientSource: "none", jadwalCount: 0, reason: notYetTime ? "belum_06:45" : "sudah_terkirim_hari_ini" };
     }
 
     // Rentang hari ini 00:00–23:59 WIB (UTC)
@@ -201,6 +263,7 @@ export async function maybeSendDailyScheduleDigest(now: Date = new Date()): Prom
             penguji_quran: { select: { full_name: true } },
             penguji_santri: { select: { full_name: true } },
             penguji_ortu: { select: { full_name: true } },
+            penguji_hafalan: { select: { full_name: true } },
             penguji_arab: { select: { full_name: true } },
         },
         orderBy: { exam_session: { start_time: "asc" } },
@@ -213,27 +276,23 @@ export async function maybeSendDailyScheduleDigest(now: Date = new Date()): Prom
 
     const { phone, source } = await resolveDigestRecipient();
     if (!phone) {
-        // Jangan tandai terkirim — akan dicoba lagi tick berikutnya &
-        // UI admin super menampilkan highlight untuk mengatur nomor penerima.
-        return { triggered: true, sent: false, recipient: null, recipientSource: "none", jadwalCount: jadwalToday.length, reason: "penerima_belum_diatas" };
+        // Jangan tandai terkirim — akan dicoba lagi tick berikutnya
+        return { triggered: true, sent: false, recipient: null, recipientSource: "none", jadwalCount: jadwalToday.length, reason: "penerima_belum_diatur" };
     }
 
     const items: DigestJadwalItem[] = jadwalToday.map((j: any) => {
         const start = j.exam_session ? new Date(j.exam_session.start_time) : new Date(j.waktu_mulai_santri);
         const jam = start.toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit", timeZone: "Asia/Jakarta" }).replace(":", ".") + " WIB";
-        const penguji =
-            j.penguji_quran?.full_name ||
-            j.penguji_santri?.full_name ||
-            j.penguji_ortu?.full_name ||
-            j.penguji_arab?.full_name ||
-            "-";
+        const { jenis, labelPenguji, namaPenguji } = resolveJenisDanPenguji(j);
+        const lokasi = j.exam_session?.location || j.google_meet_link || j.lokasi || "-";
         return {
             jam,
-            jenis: formatJenisUjian(j.exam_session?.title || ""),
+            jenis,
             namaSantri: j.pendaftar?.nama_lengkap || "-",
             jenjang: (j.pendaftar?.jenjang || "-").toUpperCase(),
-            namaPenguji: penguji,
-            lokasi: j.exam_session?.location || j.lokasi || "-",
+            labelPenguji,
+            namaPenguji,
+            lokasi,
         };
     });
 
