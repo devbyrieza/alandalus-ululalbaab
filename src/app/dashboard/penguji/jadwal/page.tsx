@@ -224,16 +224,29 @@ export default function JadwalPengujiPage() {
   >(null);
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
 
-  const getDurationFromTitle = (title: string) => {
+  const getDurationFromTitle = (title: string, customDuration?: number) => {
+    if (customDuration && customDuration > 0) return customDuration;
     const t = (title || "").toLowerCase();
+    // Khusus Wawancara Calon Orang Tua / Wali: Default 60 Menit
+    if (
+      t.includes("orang tua") ||
+      t.includes("ortu") ||
+      t.includes("wali") ||
+      t.includes("cawalsan")
+    ) {
+      return 60;
+    }
+    // Tes Al-Qur'an, Wawancara Calon Santri, Tes Lisan Bahasa Arab, Hafalan: Default 30 Menit
     if (t.includes("quran") || t.includes("qur'an")) return 30;
-    if (t.includes("calon santri") || t.includes("calsan")) return 30;
-    return 60;
+    if (t.includes("santri") || t.includes("calsan")) return 30;
+    if (t.includes("hafalan")) return 30;
+    if (t.includes("arab") || t.includes("lisan")) return 30;
+    return 30;
   };
 
-  const calculateEndTime = (startTime: string, title: string) => {
+  const calculateEndTime = (startTime: string, title: string, customDuration?: number) => {
     if (!startTime) return "";
-    const duration = getDurationFromTitle(title);
+    const duration = getDurationFromTitle(title, customDuration);
     const [h, m] = startTime.split(":").map(Number);
     const date = new Date();
     date.setHours(h, m + duration, 0, 0);
@@ -257,7 +270,8 @@ export default function JadwalPengujiPage() {
     end_time: "09:00",
     quota: 1,
     location: "", // Default empty, falls back to "Online" on submit if empty
-    notes: "" });
+    notes: "",
+    duration: 30 });
   const [submittingSlot, setSubmittingSlot] = useState(false);
 
   const [rescheduleModalOpen, setRescheduleModalOpen] = useState(false);
@@ -341,7 +355,8 @@ export default function JadwalPengujiPage() {
     endDate: "",
     selectedDays: [] as number[], // 0=Sun, 1=Mon, etc.
     daySlots: {} as Record<number, { start: string; end: string }[]>,
-    notes: "" });
+    notes: "",
+    duration: 30 });
 
   // Grouping Logic
   const displaySlots = useMemo(() => {
@@ -461,11 +476,13 @@ export default function JadwalPengujiPage() {
   useEffect(() => {
     const autoTitle = ROLE_TO_SESSION_TITLE[activeRole];
     if (autoTitle) {
+      const defDur = getDurationFromTitle(autoTitle);
       setSlotForm((prev) => ({
         ...prev,
         title: autoTitle,
-        end_time: calculateEndTime(prev.start_time, autoTitle) }));
-      setBulkForm((prev) => ({ ...prev, title: autoTitle }));
+        duration: defDur,
+        end_time: calculateEndTime(prev.start_time, autoTitle, defDur) }));
+      setBulkForm((prev) => ({ ...prev, title: autoTitle, duration: defDur }));
     }
   }, [activeRole]);
 
@@ -640,7 +657,7 @@ export default function JadwalPengujiPage() {
           ...currentSlots,
           {
             start: newStart,
-            end: calculateEndTime(newStart, bulkForm.title) },
+            end: calculateEndTime(newStart, bulkForm.title, bulkForm.duration || getDurationFromTitle(bulkForm.title)) },
         ] } });
   };
 
@@ -2189,7 +2206,7 @@ export default function JadwalPengujiPage() {
                       setSlotForm({
                         ...slotForm,
                         start_time: newStart,
-                        end_time: calculateEndTime(newStart, slotForm.title) });
+                        end_time: calculateEndTime(newStart, slotForm.title, slotForm.duration) });
                     }}
                   />
                 </div>
@@ -2209,8 +2226,46 @@ export default function JadwalPengujiPage() {
                 </div>
               </div>
               <p className="text-[10px] text-ink-300 italic -mt-4">
-                <Clock className="w-3 h-3 inline-block mr-1 text-ink-300" /> Durasi sesi: {getDurationFromTitle(slotForm.title)} menit.
+                <Clock className="w-3 h-3 inline-block mr-1 text-ink-300" /> Durasi sesi: {slotForm.duration || getDurationFromTitle(slotForm.title)} menit.
               </p>
+
+              {/* Pilihan Cepat Durasi Sesi */}
+              <div>
+                <div className="flex items-center justify-between mb-1.5">
+                  <label className="block text-xs font-black text-ink-400 uppercase tracking-widest">
+                    Pilih Durasi Sesi
+                  </label>
+                  <span className="text-[10px] font-bold text-ink-400">
+                    Default: {getDurationFromTitle(slotForm.title)} menit
+                  </span>
+                </div>
+                <div className="grid grid-cols-5 gap-1.5">
+                  {[15, 20, 30, 45, 60].map((dur) => {
+                    const isSelected =
+                      (slotForm.duration || getDurationFromTitle(slotForm.title)) === dur;
+                    return (
+                      <button
+                        key={dur}
+                        type="button"
+                        onClick={() => {
+                          setSlotForm((prev) => ({
+                            ...prev,
+                            duration: dur,
+                            end_time: calculateEndTime(prev.start_time, prev.title, dur),
+                          }));
+                        }}
+                        className={`py-2 rounded-2xl text-xs font-black transition-all border ${
+                          isSelected
+                            ? "bg-primary-600 text-white border-primary-600 shadow-md shadow-primary-500/20"
+                            : "bg-stone-50 hover:bg-stone-100 text-stone-600 border-stone-200"
+                        }`}
+                      >
+                        {dur} mnt
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
 
               {/* Alerts */}
               <div className="space-y-3">
@@ -2726,6 +2781,54 @@ export default function JadwalPengujiPage() {
                   )}
                 </div>
 
+                {/* Pilihan Cepat Durasi Sesi Bulk */}
+                <div className="mb-4">
+                  <div className="flex items-center justify-between mb-1.5">
+                    <label className="block text-xs font-black text-ink-400 uppercase tracking-widest">
+                      Durasi Tiap Sesi (Slot)
+                    </label>
+                    <span className="text-[10px] font-bold text-ink-400">
+                      Default: {getDurationFromTitle(bulkForm.title)} menit
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-5 gap-1.5">
+                    {[15, 20, 30, 45, 60].map((dur) => {
+                      const isSelected =
+                        (bulkForm.duration || getDurationFromTitle(bulkForm.title)) === dur;
+                      return (
+                        <button
+                          key={dur}
+                          type="button"
+                          onClick={() => {
+                            setBulkForm((prev) => {
+                              const newDaySlots = { ...prev.daySlots };
+                              Object.keys(newDaySlots).forEach((day) => {
+                                const dayId = Number(day);
+                                newDaySlots[dayId] = (newDaySlots[dayId] || []).map((s) => ({
+                                  start: s.start,
+                                  end: calculateEndTime(s.start, prev.title, dur),
+                                }));
+                              });
+                              return {
+                                ...prev,
+                                duration: dur,
+                                daySlots: newDaySlots,
+                              };
+                            });
+                          }}
+                          className={`py-2 rounded-2xl text-xs font-black transition-all border ${
+                            isSelected
+                              ? "bg-primary-600 text-white border-primary-600 shadow-md shadow-primary-500/20"
+                              : "bg-stone-50 hover:bg-stone-100 text-stone-600 border-stone-200"
+                          }`}
+                        >
+                          {dur} mnt
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
                 <div className="space-y-4">
                   {(bulkForm.daySlots[activeDay] || []).map((slot, index) => (
                     <div
@@ -2736,7 +2839,7 @@ export default function JadwalPengujiPage() {
                         <CustomTimePicker value={slot.start} onChange={(val) => {
                           const newSlots = [...(bulkForm.daySlots[activeDay] || [])];
                           newSlots[index].start = val;
-                          newSlots[index].end = calculateEndTime(val, bulkForm.title);
+                          newSlots[index].end = calculateEndTime(val, bulkForm.title, bulkForm.duration || getDurationFromTitle(bulkForm.title));
                           setBulkForm({ ...bulkForm, daySlots: { ...bulkForm.daySlots, [activeDay]: newSlots } });
                         }} />
                         <CustomTimePicker value={slot.end} onChange={(val) => {

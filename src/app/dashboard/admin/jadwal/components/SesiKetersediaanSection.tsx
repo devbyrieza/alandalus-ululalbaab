@@ -86,6 +86,7 @@ export default function SesiKetersediaanSection({
     location: "Online",
     notes: "",
     creator_id: "",
+    duration: 30,
   });
 
   // Edit Slot Form
@@ -137,6 +138,7 @@ export default function SesiKetersediaanSection({
     location: "Online",
     notes: "",
     creator_id: "",
+    duration: 30,
   });
 
   // Body scroll lock effect for modals
@@ -154,19 +156,29 @@ export default function SesiKetersediaanSection({
   }, [isSlotModalOpen, isBulkModalOpen, isEditModalOpen, isBulkEditModalOpen]);
 
   // Duration Helper
-  const getDurationFromTitle = (title: string) => {
+  const getDurationFromTitle = (title: string, customDuration?: number) => {
+    if (customDuration && customDuration > 0) return customDuration;
     const t = (title || "").toLowerCase();
+    // Khusus Wawancara Calon Orang Tua / Wali: Default 60 Menit
+    if (
+      t.includes("orang tua") ||
+      t.includes("ortu") ||
+      t.includes("wali") ||
+      t.includes("cawalsan")
+    ) {
+      return 60;
+    }
+    // Tes Al-Qur'an, Wawancara Calon Santri, Tes Lisan Bahasa Arab, Hafalan: Default 30 Menit
     if (t.includes("quran") || t.includes("qur'an")) return 30;
     if (t.includes("santri") || t.includes("calsan")) return 30;
-    if (t.includes("orang tua") || t.includes("ortu") || t.includes("wali")) return 30;
     if (t.includes("hafalan")) return 30;
-    if (t.includes("arab")) return 30;
-    return 60;
+    if (t.includes("arab") || t.includes("lisan")) return 30;
+    return 30;
   };
 
-  const calculateEndTime = (startTime: string, title: string) => {
+  const calculateEndTime = (startTime: string, title: string, customDuration?: number) => {
     if (!startTime) return "";
-    const duration = getDurationFromTitle(title);
+    const duration = getDurationFromTitle(title, customDuration);
     const [h, m] = startTime.split(":").map(Number);
     const date = new Date();
     date.setHours(h, m + duration, 0, 0);
@@ -1031,7 +1043,20 @@ export default function SesiKetersediaanSection({
                 </label>
                 <select
                   value={slotForm.title}
-                  onChange={(e) => setSlotForm({ ...slotForm, title: e.target.value })}
+                  onChange={(e) => {
+                    const newTitle = e.target.value;
+                    const newDur = getDurationFromTitle(newTitle);
+                    const updatedSlots = slotForm.slots.map((s) => ({
+                      start: s.start,
+                      end: calculateEndTime(s.start, newTitle, newDur),
+                    }));
+                    setSlotForm({
+                      ...slotForm,
+                      title: newTitle,
+                      duration: newDur,
+                      slots: updatedSlots,
+                    });
+                  }}
                   className="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs font-bold text-stone-900 outline-none focus:ring-2 focus:ring-primary-500/20"
                 >
                   <option value="Seleksi Al Qur'an">Seleksi Al Qur&apos;an</option>
@@ -1045,6 +1070,48 @@ export default function SesiKetersediaanSection({
                   <option value="Tes Lisan Bahasa Arab">Tes Lisan Bahasa Arab</option>
                   <option value="Sesi Ujian Terpadu">Sesi Ujian Terpadu (Semua Materi)</option>
                 </select>
+              </div>
+
+              {/* Pilihan Durasi Sesi */}
+              <div>
+                <div className="flex items-center justify-between mb-1.5">
+                  <label className="block text-xs font-black text-stone-700">
+                    Durasi Tiap Sesi
+                  </label>
+                  <span className="text-[10px] font-bold text-stone-500">
+                    Default: {getDurationFromTitle(slotForm.title)} menit
+                  </span>
+                </div>
+                <div className="grid grid-cols-5 gap-1.5">
+                  {[15, 20, 30, 45, 60].map((dur) => {
+                    const isSelected =
+                      (slotForm.duration || getDurationFromTitle(slotForm.title)) === dur;
+                    return (
+                      <button
+                        key={dur}
+                        type="button"
+                        onClick={() => {
+                          const updatedSlots = slotForm.slots.map((s) => ({
+                            start: s.start,
+                            end: calculateEndTime(s.start, slotForm.title, dur),
+                          }));
+                          setSlotForm({
+                            ...slotForm,
+                            duration: dur,
+                            slots: updatedSlots,
+                          });
+                        }}
+                        className={`py-1.5 px-2 rounded-xl text-xs font-black transition-all border ${
+                          isSelected
+                            ? "bg-primary-600 text-white border-primary-600 shadow-sm shadow-primary-500/20"
+                            : "bg-stone-50 hover:bg-stone-100 text-stone-600 border-stone-200"
+                        }`}
+                      >
+                        {dur} mnt
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
 
               {/* Tanggal */}
@@ -1080,7 +1147,7 @@ export default function SesiKetersediaanSection({
                           value={s.start}
                           onChange={(e) => {
                             const newStart = e.target.value;
-                            const newEnd = calculateEndTime(newStart, slotForm.title);
+                            const newEnd = calculateEndTime(newStart, slotForm.title, slotForm.duration);
                             const newSlots = [...slotForm.slots];
                             newSlots[idx] = { start: newStart, end: newEnd };
                             setSlotForm({ ...slotForm, slots: newSlots });
@@ -1120,7 +1187,7 @@ export default function SesiKetersediaanSection({
                     onClick={() => {
                       const lastSlot = slotForm.slots[slotForm.slots.length - 1];
                       const nextStart = lastSlot ? lastSlot.end : "08:00";
-                      const nextEnd = calculateEndTime(nextStart, slotForm.title);
+                      const nextEnd = calculateEndTime(nextStart, slotForm.title, slotForm.duration);
                       setSlotForm({
                         ...slotForm,
                         slots: [...slotForm.slots, { start: nextStart, end: nextEnd }]
@@ -1241,7 +1308,23 @@ export default function SesiKetersediaanSection({
                 </label>
                 <select
                   value={bulkForm.title}
-                  onChange={(e) => setBulkForm({ ...bulkForm, title: e.target.value })}
+                  onChange={(e) => {
+                    const newTitle = e.target.value;
+                    const newDur = getDurationFromTitle(newTitle);
+                    const newDaySlots: Record<number, { start: string; end: string }[]> = {};
+                    Object.entries(bulkForm.daySlots).forEach(([day, slots]) => {
+                      newDaySlots[Number(day)] = slots.map((s) => ({
+                        start: s.start,
+                        end: calculateEndTime(s.start, newTitle, newDur),
+                      }));
+                    });
+                    setBulkForm({
+                      ...bulkForm,
+                      title: newTitle,
+                      duration: newDur,
+                      daySlots: newDaySlots,
+                    });
+                  }}
                   className="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs font-bold text-stone-900 outline-none focus:ring-2 focus:ring-primary-500/20"
                 >
                   <option value="Seleksi Al Qur'an">Seleksi Al Qur&apos;an</option>
@@ -1255,6 +1338,51 @@ export default function SesiKetersediaanSection({
                   <option value="Tes Lisan Bahasa Arab">Tes Lisan Bahasa Arab</option>
                   <option value="Sesi Ujian Terpadu">Sesi Ujian Terpadu</option>
                 </select>
+              </div>
+
+              {/* Pilihan Durasi Sesi Bulk */}
+              <div>
+                <div className="flex items-center justify-between mb-1.5">
+                  <label className="block text-xs font-black text-stone-700">
+                    Durasi Tiap Sesi (Slot)
+                  </label>
+                  <span className="text-[10px] font-bold text-stone-500">
+                    Default: {getDurationFromTitle(bulkForm.title)} menit
+                  </span>
+                </div>
+                <div className="grid grid-cols-5 gap-1.5">
+                  {[15, 20, 30, 45, 60].map((dur) => {
+                    const isSelected =
+                      (bulkForm.duration || getDurationFromTitle(bulkForm.title)) === dur;
+                    return (
+                      <button
+                        key={dur}
+                        type="button"
+                        onClick={() => {
+                          const newDaySlots: Record<number, { start: string; end: string }[]> = {};
+                          Object.entries(bulkForm.daySlots).forEach(([day, slots]) => {
+                            newDaySlots[Number(day)] = slots.map((s) => ({
+                              start: s.start,
+                              end: calculateEndTime(s.start, bulkForm.title, dur),
+                            }));
+                          });
+                          setBulkForm({
+                            ...bulkForm,
+                            duration: dur,
+                            daySlots: newDaySlots,
+                          });
+                        }}
+                        className={`py-1.5 px-2 rounded-xl text-xs font-black transition-all border ${
+                          isSelected
+                            ? "bg-primary-600 text-white border-primary-600 shadow-sm shadow-primary-500/20"
+                            : "bg-stone-50 hover:bg-stone-100 text-stone-600 border-stone-200"
+                        }`}
+                      >
+                        {dur} mnt
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
 
               {/* Rentang Tanggal */}
@@ -1362,7 +1490,7 @@ export default function SesiKetersediaanSection({
                           value={slot.start}
                           onChange={(e) => {
                             const newStart = e.target.value;
-                            const newEnd = calculateEndTime(newStart, bulkForm.title);
+                            const newEnd = calculateEndTime(newStart, bulkForm.title, bulkForm.duration);
                             const current = [...(bulkForm.daySlots[activeDay] || [])];
                             current[idx] = { start: newStart, end: newEnd };
                             setBulkForm({
@@ -1410,7 +1538,7 @@ export default function SesiKetersediaanSection({
                         const current = bulkForm.daySlots[activeDay] || [];
                         const lastSlot = current[current.length - 1];
                         const nextStart = lastSlot ? lastSlot.end : "08:00";
-                        const nextEnd = calculateEndTime(nextStart, bulkForm.title);
+                        const nextEnd = calculateEndTime(nextStart, bulkForm.title, bulkForm.duration);
                         setBulkForm({
                           ...bulkForm,
                           daySlots: {
