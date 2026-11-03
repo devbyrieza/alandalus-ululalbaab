@@ -26,7 +26,7 @@ export interface DigestJadwalItem {
     jenjang: string;
     labelPenguji?: string;
     namaPenguji: string;
-    lokasi: string;
+    lokasi?: string;
 }
 
 export interface DailyDigestResult {
@@ -108,6 +108,51 @@ export async function setDigestRecipientSetting(phone: string | null): Promise<v
     });
 }
 
+function toKeycapEmoji(num: number): string {
+    const map: Record<string, string> = {
+        "0": "0️⃣",
+        "1": "1️⃣",
+        "2": "2️⃣",
+        "3": "3️⃣",
+        "4": "4️⃣",
+        "5": "5️⃣",
+        "6": "6️⃣",
+        "7": "7️⃣",
+        "8": "8️⃣",
+        "9": "9️⃣",
+    };
+    return String(num).split("").map((d) => map[d] || d).join("");
+}
+
+function formatNamaPenguji(name?: string | null, jenisKelamin?: string | null): string {
+    if (!name || name === "-") return "-";
+    const trimmed = name.trim();
+    const lower = trimmed.toLowerCase();
+    if (
+        lower.startsWith("ust.") ||
+        lower.startsWith("ust ") ||
+        lower.startsWith("ustadz ") ||
+        lower.startsWith("ustzh.") ||
+        lower.startsWith("ustazah ") ||
+        lower.startsWith("ustadzah ")
+    ) {
+        return trimmed;
+    }
+    const isFemale =
+        jenisKelamin?.toLowerCase().startsWith("p") ||
+        jenisKelamin?.toLowerCase().startsWith("w") ||
+        jenisKelamin?.toLowerCase().includes("fem") ||
+        lower.includes("iffah") ||
+        lower.includes("nabilah") ||
+        lower.includes("halimah") ||
+        lower.includes("nurul") ||
+        lower.includes("aisyah") ||
+        lower.includes("fatimah") ||
+        lower.includes("zahra");
+
+    return isFemale ? `Ustzh. ${trimmed}` : `Ust. ${trimmed}`;
+}
+
 function resolveJenisDanPenguji(j: any): {
     jenis: string;
     labelPenguji: string;
@@ -115,7 +160,7 @@ function resolveJenisDanPenguji(j: any): {
 } {
     const title = (j.exam_session?.title || "").toLowerCase();
 
-    // 1. Wawancara Calon Orang Tua / Wali
+    // 1. Wawancara Calon Orangtua/Wali
     if (
         title.includes("ortu") ||
         title.includes("cawalsan") ||
@@ -123,46 +168,50 @@ function resolveJenisDanPenguji(j: any): {
         title.includes("orangtua") ||
         title.includes("wali")
     ) {
+        const p = j.penguji_ortu || j.penguji_santri || j.penguji_quran;
         return {
-            jenis: "Wawancara Calon Orang Tua/Wali",
+            jenis: "Wawancara Calon Orangtua/Wali",
             labelPenguji: "Pewawancara",
-            namaPenguji: j.penguji_ortu?.full_name || j.penguji_santri?.full_name || j.penguji_quran?.full_name || "-",
+            namaPenguji: formatNamaPenguji(p?.full_name, p?.jenis_kelamin),
         };
     }
 
     // 2. Wawancara Calon Santri
     if (title.includes("calsan") || title.includes("santri")) {
+        const p = j.penguji_santri || j.penguji_quran || j.penguji_ortu;
         return {
             jenis: "Wawancara Calon Santri",
             labelPenguji: "Pewawancara",
-            namaPenguji: j.penguji_santri?.full_name || j.penguji_quran?.full_name || j.penguji_ortu?.full_name || "-",
+            namaPenguji: formatNamaPenguji(p?.full_name, p?.jenis_kelamin),
         };
     }
 
     // 3. Tes Al-Qur'an / Hafalan
     if (title.includes("quran") || title.includes("qur'an") || title.includes("hafalan")) {
+        const p = j.penguji_quran || j.penguji_hafalan;
         return {
             jenis: "Tes Al-Qur'an",
             labelPenguji: "Penguji",
-            namaPenguji: j.penguji_quran?.full_name || j.penguji_hafalan?.full_name || "-",
+            namaPenguji: formatNamaPenguji(p?.full_name, p?.jenis_kelamin),
         };
     }
 
     // 4. Tes Lisan Bahasa Arab
     if (title.includes("arab") || title.includes("lisan")) {
+        const p = j.penguji_arab;
         return {
             jenis: "Tes Lisan Bahasa Arab",
             labelPenguji: "Penguji",
-            namaPenguji: j.penguji_arab?.full_name || "-",
+            namaPenguji: formatNamaPenguji(p?.full_name, p?.jenis_kelamin),
         };
     }
 
     // 5. Jika judul sesi umum / gabungan:
     const listPenguji: string[] = [];
-    if (j.penguji_quran?.full_name) listPenguji.push(`Al-Qur'an: ${j.penguji_quran.full_name}`);
-    if (j.penguji_santri?.full_name) listPenguji.push(`W. Santri: ${j.penguji_santri.full_name}`);
-    if (j.penguji_ortu?.full_name) listPenguji.push(`W. Ortu: ${j.penguji_ortu.full_name}`);
-    if (j.penguji_arab?.full_name) listPenguji.push(`B. Arab: ${j.penguji_arab.full_name}`);
+    if (j.penguji_quran?.full_name) listPenguji.push(`Al-Qur'an: ${formatNamaPenguji(j.penguji_quran.full_name, j.penguji_quran.jenis_kelamin)}`);
+    if (j.penguji_santri?.full_name) listPenguji.push(`W. Santri: ${formatNamaPenguji(j.penguji_santri.full_name, j.penguji_santri.jenis_kelamin)}`);
+    if (j.penguji_ortu?.full_name) listPenguji.push(`W. Ortu: ${formatNamaPenguji(j.penguji_ortu.full_name, j.penguji_ortu.jenis_kelamin)}`);
+    if (j.penguji_arab?.full_name) listPenguji.push(`B. Arab: ${formatNamaPenguji(j.penguji_arab.full_name, j.penguji_arab.jenis_kelamin)}`);
 
     if (listPenguji.length > 0) {
         return {
@@ -183,32 +232,32 @@ export function buildMessageDailyJadwalDigest(params: {
     dateLabel: string;
     items: DigestJadwalItem[];
 }): string {
+    const institutionHeader = (BRANDING.schoolName || "PESANTREN").toUpperCase();
+
+    let footerSchoolName = BRANDING.schoolName || "Pesantren";
+    if (!footerSchoolName.toLowerCase().includes("al-andalus")) {
+        footerSchoolName = `${footerSchoolName} Managed by Al-Andalus IIBS`;
+    }
+
     const lines = params.items
         .map(
             (it, i) =>
-                `${i + 1}. ⏰ *${it.jam}* — *${it.jenis}*\n` +
-                `   👤 ${it.namaSantri} (${it.jenjang})\n` +
-                `   🧑‍🏫 ${it.labelPenguji || "Penguji"}: ${it.namaPenguji}\n` +
-                `   📍 ${it.lokasi}`
+                `${toKeycapEmoji(i + 1)} ⏰ *${it.jam}* — *${it.jenis}*\n` +
+                `👤 Peserta: ${it.namaSantri} (${it.jenjang})\n` +
+                `📖 ${it.labelPenguji || "Penguji"}: ${it.namaPenguji}`
         )
         .join("\n\n");
 
-    return `*📋 JADWAL SELEKSI HARI INI — ${params.dateLabel}*
-
-Assalamu'alaikum warahmatullahi wabarakatuh,
-
-Berikut daftar lengkap jadwal seleksi *hari ini* (${params.items.length} jadwal):
-
-${lines}
-
-⚠️ *MOHON DITERUSKAN* daftar ini ke *grup WhatsApp penguji & pewawancara* agar seluruh penguji mengetahui jadwal menguji hari ini.
-
-🔗 Link Google Meet masing-masing penguji telah dikirim via pesan pribadi (pengingat H-1 & H-0).
-
-Terima kasih. Jazakumullahu khairan.
-
----
-_Sistem SPMB ${BRANDING.schoolName}_`;
+    return (
+        `*📋 JADWAL SELEKSI HARI INI*\n` +
+        `*${params.dateLabel}*\n\n` +
+        `Assalamu'alaikum warahmatullahi wabarakatuh,\n\n` +
+        `Berikut jadwal seleksi *hari ini* (${params.items.length} jadwal):\n\n` +
+        `*🏫 ${institutionHeader}*\n\n` +
+        `${lines}\n\n` +
+        `Syukron. Jazakumullahu khairan.\n\n` +
+        `_Sistem SPMB ${footerSchoolName}_`
+    );
 }
 
 async function markDailySent(dateKey: string) {
@@ -260,11 +309,11 @@ export async function maybeSendDailyScheduleDigest(now: Date = new Date()): Prom
         include: {
             exam_session: true,
             pendaftar: { select: { nama_lengkap: true, jenjang: true } },
-            penguji_quran: { select: { full_name: true } },
-            penguji_santri: { select: { full_name: true } },
-            penguji_ortu: { select: { full_name: true } },
-            penguji_hafalan: { select: { full_name: true } },
-            penguji_arab: { select: { full_name: true } },
+            penguji_quran: { select: { full_name: true, jenis_kelamin: true } },
+            penguji_santri: { select: { full_name: true, jenis_kelamin: true } },
+            penguji_ortu: { select: { full_name: true, jenis_kelamin: true } },
+            penguji_hafalan: { select: { full_name: true, jenis_kelamin: true } },
+            penguji_arab: { select: { full_name: true, jenis_kelamin: true } },
         },
         orderBy: { exam_session: { start_time: "asc" } },
     });
