@@ -42,9 +42,11 @@ export async function POST(request: NextRequest) {
       select: {
         id: true,
         nama_lengkap: true,
+        nomor_pendaftaran: true,
         no_hp: true,
         jenjang: true,
         tahun_ajaran_id: true,
+        tahun_ajaran: { select: { nama: true } },
       },
     });
 
@@ -133,7 +135,14 @@ export async function POST(request: NextRequest) {
         continue;
       }
 
-      const message = announcement_message || buildMessageHasilTes(user.nama_lengkap);
+      const message =
+        announcement_message ||
+        buildMessageHasilTes({
+          namaPeserta: user.nama_lengkap,
+          nomorPendaftaran: (user as any).nomor_pendaftaran,
+          jenjang: user.jenjang,
+          tahunAjaran: (user as any).tahun_ajaran?.nama,
+        });
 
       const resultEnq = await enqueueWhatsapp({
         pendaftarId: user.id,

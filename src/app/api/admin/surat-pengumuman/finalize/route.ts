@@ -217,33 +217,13 @@ export async function POST(request: Request) {
         const suratDownloadUrl = `${appUrl}/api/files/${encodeURI(suratPath)}?k=${token}`;
         const targetKelas = kelasDiterima || pendaftar.jenjang || "VII MTs Putra";
 
-        const messageContent = `📋 *PENGUMUMAN HASIL KELULUSAN SELEKSI PSB*
-*PESANTREN ULUL ALBAAB SUKABUMI*
-Tahun Ajaran 2027/2028
-
-Assalamu'alaikum Warahmatullahi Wabarakatuh,
-
-Yth. Bapak/Ibu Orang Tua / Wali dari:
-👤 *${pendaftar.nama_lengkap}*
-No. Pendaftaran: *${pendaftar.nomor_pendaftaran}*
-
-Alhamdulillah, ananda dinyatakan *DITERIMA* sebagai Santri Baru di Pesantren Ulul Albaab Sukabumi:
-🎓 *Jenjang / Kelas:* ${targetKelas}
-📜 *No. Surat Keputusan:* ${nomorSurat}
-
-📄 *Unduh Surat Keputusan Resmi (PDF):*
-${suratDownloadUrl}
-
-📝 *Tahap Selanjutnya (Daftar Ulang):*
-Silakan masuk ke portal pendaftar untuk melihat rincian pengumuman dan panduan daftar ulang:
-🔗 ${appUrl}/login
-
-Semoga Allah ﷻ memberkahi ananda dan menjadikannya santri yang sholeh, berilmu, dan berakhlak mulia. Aamiin.
-
-Jazakumullahu khairan katsiran.
-Wassalamu'alaikum Warahmatullahi Wabarakatuh.
----
-*Panitia PSB Pesantren Ulul Albaab Sukabumi*`;
+        const { buildMessageHasilTes } = await import("@/lib/whatsapp-queue");
+        const messageContent = buildMessageHasilTes({
+          namaPeserta: pendaftar.nama_lengkap,
+          nomorPendaftaran: pendaftar.nomor_pendaftaran,
+          jenjang: pendaftar.jenjang,
+          tahunAjaran: (pendaftar as any).tahun_ajaran?.nama,
+        });
 
         const { enqueueWhatsapp } = await import("@/lib/whatsapp-queue");
         const enqResult = await enqueueWhatsapp({
