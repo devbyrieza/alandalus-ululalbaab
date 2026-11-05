@@ -663,11 +663,13 @@ export default function JadwalUjianPage() {
         text: `Tes "${actualTestType}" untuk ${candidate.nama_lengkap} (${
           formLocationType === "online" ? "Online via Google Meet" : "Offline Tatap Muka di Pesantren"
         }) pada ${start.toLocaleDateString("id-ID", {
+        timeZone: "Asia/Jakarta",
           weekday: "long",
           day: "numeric",
           month: "long",
           year: "numeric",
         })} jam ${start.toLocaleTimeString("id-ID", {
+        timeZone: "Asia/Jakarta",
           hour: "2-digit",
           minute: "2-digit",
         })} WIB telah berhasil dijadwalkan & notifikasi WhatsApp dikirim.`,

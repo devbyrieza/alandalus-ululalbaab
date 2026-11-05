@@ -1707,6 +1707,7 @@ export default function BroadcastPage() {
                   <div className="flex items-center justify-end gap-1 text-[10px] text-stone-400 mt-1">
                     <span>
                       {new Date().toLocaleTimeString([], {
+        timeZone: "Asia/Jakarta",
                         hour: "2-digit",
                         minute: "2-digit",
                       })}

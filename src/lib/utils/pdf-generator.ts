@@ -273,7 +273,8 @@ const drawFormalSignature = async (doc: jsPDF, y: number) => {
   doc.setFont("helvetica", "normal");
   doc.setFontSize(10.5);
   doc.text(
-    `${authority.city}, ${new Date().toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" })}`,
+    `${authority.city}, ${new Date().toLocaleDateString("id-ID", {
+        timeZone: "Asia/Jakarta", day: "numeric", month: "long", year: "numeric" })}`,
     xBase,
     actualY,
   );

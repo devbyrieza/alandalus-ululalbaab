@@ -287,14 +287,16 @@ export default function UndanganSeleksiTab() {
     const map = new Map<string, { dateKey: string; label: string; count: number }>();
     activeCategoryFreeSlots.forEach((slot) => {
       const d = new Date(slot.start_time);
-      const dateKey = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+      const dateKey = d.toLocaleDateString("en-CA", { timeZone: "Asia/Jakarta" });
       const existing = map.get(dateKey);
       if (existing) {
         existing.count += 1;
       } else {
-        const dayName = d.toLocaleDateString("id-ID", { weekday: "short" }).replace("Min", "Ahad");
-        const dayNum = d.getDate();
-        const monthName = d.toLocaleDateString("id-ID", { month: "short" });
+        const dayName = d.toLocaleDateString("id-ID", {
+        timeZone: "Asia/Jakarta", weekday: "short" }).replace("Min", "Ahad");
+        const dayNum = parseInt(d.toLocaleDateString("id-ID", { day: "numeric", timeZone: "Asia/Jakarta" }));
+        const monthName = d.toLocaleDateString("id-ID", {
+        timeZone: "Asia/Jakarta", month: "short" });
         map.set(dateKey, {
           dateKey,
           label: `${dayName}, ${dayNum} ${monthName}`,
@@ -311,7 +313,7 @@ export default function UndanganSeleksiTab() {
     if (selectedDate === "ALL") return activeCategoryFreeSlots;
     return activeCategoryFreeSlots.filter((slot) => {
       const d = new Date(slot.start_time);
-      const dateKey = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+      const dateKey = d.toLocaleDateString("en-CA", { timeZone: "Asia/Jakarta" });
       return dateKey === selectedDate;
     });
   }, [activeCategoryFreeSlots, selectedDate]);
@@ -393,6 +395,7 @@ export default function UndanganSeleksiTab() {
     const d = typeof dateInput === "string" ? new Date(dateInput) : dateInput;
     return d
       .toLocaleDateString("id-ID", {
+        timeZone: "Asia/Jakarta",
         weekday: "long",
         day: "numeric",
         month: "long",
@@ -404,6 +407,7 @@ export default function UndanganSeleksiTab() {
   const formatTime = (timeString: string) => {
     if (!timeString) return "-";
     return new Date(timeString).toLocaleTimeString("id-ID", {
+        timeZone: "Asia/Jakarta",
       hour: "2-digit",
       minute: "2-digit",
     });

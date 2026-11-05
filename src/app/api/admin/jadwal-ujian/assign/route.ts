@@ -225,6 +225,7 @@ export async function POST(req: NextRequest) {
           phone: pendaftar.no_hp,
           nama: pendaftar.nama_lengkap,
           tanggal: new Date(examSession.start_time).toLocaleDateString("id-ID", {
+        timeZone: "Asia/Jakarta",
             weekday: "long",
             year: "numeric",
             month: "long",

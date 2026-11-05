@@ -25,7 +25,7 @@ export const exportToExcel = async (
       {
         name: sheetName.substring(0, 31),
         title: sheetName,
-        subTitle: `Tanggal Ekspor: ${new Date().toLocaleDateString("id-ID")}`,
+        subTitle: `Tanggal Ekspor: ${new Date().toLocaleDateString("id-ID", { timeZone: "Asia/Jakarta" })}`,
         header,
         data: rows },
     ] });

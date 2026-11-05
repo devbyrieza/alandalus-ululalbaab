@@ -604,6 +604,7 @@ export default function SesiKetersediaanSection({
   const formatSlotDate = (dateStr: string) => {
     const d = new Date(dateStr);
     return d.toLocaleDateString("id-ID", {
+        timeZone: "Asia/Jakarta",
       weekday: "short",
       day: "numeric",
       month: "short",
@@ -614,6 +615,7 @@ export default function SesiKetersediaanSection({
   const formatSlotTime = (dateStr: string) => {
     const d = new Date(dateStr);
     return d.toLocaleTimeString("id-ID", {
+        timeZone: "Asia/Jakarta",
       hour: "2-digit",
       minute: "2-digit",
     });
