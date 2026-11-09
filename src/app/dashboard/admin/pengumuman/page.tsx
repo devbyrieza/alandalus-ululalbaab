@@ -129,15 +129,21 @@ function PengumumanContent() {
       const data = await res.json();
 
       if (res.ok) {
-        setCandidates(data.data || []);
-        // Calculate basic stats from this batch
-        const ready = data.data.filter(
+        const rawList = data.data || [];
+        setCandidates(rawList);
+        // Santri yang SIAP DIRAPATKAN (status tested atau passed, belum terbit SK)
+        const siapRapat = rawList.filter(
           (c: any) =>
-            ["selection", "scheduled", "testing", "tested"].includes(c.status_pendaftaran) ||
-            c.exam_status === "tested"
+            (c.status_pendaftaran === "tested" || c.status_pendaftaran === "passed") &&
+            !c.pengumuman?.is_published
         ).length;
-        const accepted = data.data.filter((c: any) => c.status_pendaftaran === "accepted").length;
-        setStats({ total: data.data.length, ready, accepted });
+        // Santri yang sudah resmi diterima/terbit SK
+        const accepted = rawList.filter(
+          (c: any) =>
+            ["accepted", "enrolled", "enrolled_full"].includes(c.status_pendaftaran) ||
+            (c.pengumuman?.is_published && c.pengumuman?.status_kelulusan === "Diterima")
+        ).length;
+        setStats({ total: rawList.length, ready: siapRapat, accepted });
       }
     } catch (error) {
       console.error(error);
@@ -396,17 +402,46 @@ function PengumumanContent() {
     <div className="space-y-6">
       {/* Header Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-white p-6 rounded-xl shadow-xl border border-stone-100">
-          <p className="text-stone-500 text-sm font-medium">Kandidat Tampil</p>
-          <h3 className="text-2xl font-bold text-stone-800">{stats.total}</h3>
+        <div className="bg-white p-6 rounded-2xl shadow-xl border border-stone-100">
+          <p className="text-stone-500 text-xs font-bold uppercase tracking-wider">Kandidat Tampil</p>
+          <div className="flex items-baseline gap-2 mt-1">
+            <h3 className="text-3xl font-black text-stone-800">{stats.total}</h3>
+            <span className="text-xs text-stone-400 font-medium">Santri</span>
+          </div>
         </div>
-        <div className="bg-primary-50 p-6 rounded-xl shadow-xl border border-primary-100">
-          <p className="text-primary-600 text-sm font-medium">Proses Seleksi (Siap Diluluskan)</p>
-          <h3 className="text-2xl font-bold text-primary-700">{stats.ready}</h3>
+        <div
+          onClick={() => setFilter({ ...filter, status: "tested" })}
+          className="bg-blue-50/80 hover:bg-blue-100/70 cursor-pointer transition-all p-6 rounded-2xl shadow-xl border border-blue-200/80 group"
+        >
+          <div className="flex items-center justify-between">
+            <p className="text-blue-700 text-xs font-black uppercase tracking-wider flex items-center gap-1.5">
+              <span>🎯</span> Siap Dirapatkan (Tes Selesai)
+            </p>
+            <span className="text-[10px] bg-blue-200 text-blue-900 font-bold px-2 py-0.5 rounded-full group-hover:bg-blue-300 transition-colors">
+              Filter Cepat
+            </span>
+          </div>
+          <div className="flex items-baseline gap-2 mt-1">
+            <h3 className="text-3xl font-black text-blue-900">{stats.ready}</h3>
+            <span className="text-xs text-blue-700 font-medium">Santri Siap Pleno</span>
+          </div>
         </div>
-        <div className="bg-green-50 p-6 rounded-xl shadow-xl border border-green-100">
-          <p className="text-green-600 text-sm font-medium">Sudah Diterima</p>
-          <h3 className="text-2xl font-bold text-green-700">{stats.accepted}</h3>
+        <div
+          onClick={() => setFilter({ ...filter, status: "accepted" })}
+          className="bg-emerald-50/80 hover:bg-emerald-100/70 cursor-pointer transition-all p-6 rounded-2xl shadow-xl border border-emerald-200/80 group"
+        >
+          <div className="flex items-center justify-between">
+            <p className="text-emerald-700 text-xs font-black uppercase tracking-wider flex items-center gap-1.5">
+              <span>✅</span> Sudah Diterima (Terbit SK)
+            </p>
+            <span className="text-[10px] bg-emerald-200 text-emerald-900 font-bold px-2 py-0.5 rounded-full group-hover:bg-emerald-300 transition-colors">
+              Filter Cepat
+            </span>
+          </div>
+          <div className="flex items-baseline gap-2 mt-1">
+            <h3 className="text-3xl font-black text-emerald-900">{stats.accepted}</h3>
+            <span className="text-xs text-emerald-700 font-medium">Santri Lulus</span>
+          </div>
         </div>
       </div>
 
@@ -434,17 +469,17 @@ function PengumumanContent() {
           <div className="flex items-center gap-2 px-3 py-2 bg-stone-50 rounded-xl border border-stone-200">
             <Filter className="w-4 h-4 text-stone-500" />
             <select
-              className="bg-transparent text-sm font-medium text-stone-700 focus:outline-none cursor-pointer"
+              className="bg-transparent text-sm font-semibold text-stone-700 focus:outline-none cursor-pointer"
               value={filter.status}
               onChange={(e) => setFilter({ ...filter, status: e.target.value })}
             >
-              <option value="sedang_seleksi">Semua Proses Seleksi (Siap Diluluskan)</option>
-              <option value="tested">Sudah Selesai Ujian (Tested)</option>
-              <option value="scheduled">Terjadwal Ujian</option>
-              <option value="accepted">Diterima</option>
-              <option value="cadangan">Cadangan</option>
-              <option value="rejected">Ditolak</option>
-              <option value="all">Semua Status</option>
+              <option value="tested">🎯 Siap Dirapatkan (Ujian Selesai Lengkap)</option>
+              <option value="sedang_seleksi">⏳ Semua Proses Seleksi (Ujian &amp; Jadwal)</option>
+              <option value="scheduled">📅 Terjadwal Ujian</option>
+              <option value="accepted">✅ Sudah Diterima</option>
+              <option value="cadangan">⚠️ Cadangan</option>
+              <option value="rejected">❌ Ditolak</option>
+              <option value="all">🌐 Semua Status</option>
             </select>
           </div>
 
@@ -574,12 +609,23 @@ function PengumumanContent() {
                       {c.nomor_pendaftaran}
                     </p>
 
-                    <div className="flex gap-1 mb-3 overflow-x-auto pb-1 no-scrollbar">
-                      {getGradeBadge(nu?.score_quran, "quran")}
-                      {getGradeBadge(nu?.score_akademik, "akademik")}
-                      {getGradeBadge(nu?.score_kepribadian, "kepribadian")}
-                      {getGradeBadge(avgWawancara, "wawancara")}
-                      {getGradeBadge(nu?.score_kesiapan, "kesiapan")}
+                    <div className="flex items-center gap-1.5 mb-3 overflow-x-auto pb-1 no-scrollbar flex-wrap">
+                      <div className="flex gap-1">
+                        {getGradeBadge(nu?.score_quran, "quran")}
+                        {getGradeBadge(nu?.score_akademik, "akademik")}
+                        {getGradeBadge(nu?.score_kepribadian, "kepribadian")}
+                        {getGradeBadge(avgWawancara, "wawancara")}
+                        {getGradeBadge(nu?.score_kesiapan, "kesiapan")}
+                      </div>
+                      {c.exam_score_count === 6 ? (
+                        <span className="text-[9px] font-black px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800">
+                          ✓ 6/6 Nilai
+                        </span>
+                      ) : c.exam_score_count > 0 ? (
+                        <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-100 text-amber-800">
+                          {c.exam_score_count}/6
+                        </span>
+                      ) : null}
                     </div>
 
                     <div className="flex items-center justify-between pt-2 border-t border-stone-50">
@@ -687,13 +733,24 @@ function PengumumanContent() {
                         <div className="font-bold text-stone-800">
                           {toTitleCase(c.nama_lengkap)}
                         </div>
-                        <div className="text-xs text-stone-500 mb-2">{c.nomor_pendaftaran}</div>
-                        <div className="flex gap-1">
-                          {getGradeBadge(nu?.score_quran, "quran")}
-                          {getGradeBadge(nu?.score_akademik, "akademik")}
-                          {getGradeBadge(nu?.score_kepribadian, "kepribadian")}
-                          {getGradeBadge(avgWawancara, "wawancara")}
-                          {getGradeBadge(nu?.score_kesiapan, "kesiapan")}
+                        <div className="text-xs text-stone-500 mb-1.5">{c.nomor_pendaftaran}</div>
+                        <div className="flex items-center gap-1.5 flex-wrap">
+                          <div className="flex gap-1">
+                            {getGradeBadge(nu?.score_quran, "quran")}
+                            {getGradeBadge(nu?.score_akademik, "akademik")}
+                            {getGradeBadge(nu?.score_kepribadian, "kepribadian")}
+                            {getGradeBadge(avgWawancara, "wawancara")}
+                            {getGradeBadge(nu?.score_kesiapan, "kesiapan")}
+                          </div>
+                          {c.exam_score_count === 6 ? (
+                            <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200">
+                              ✓ 6/6 Nilai
+                            </span>
+                          ) : c.exam_score_count > 0 ? (
+                            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 border border-amber-200">
+                              {c.exam_score_count}/6 Nilai
+                            </span>
+                          ) : null}
                         </div>
                       </td>
                       <td className="px-6 py-4">
