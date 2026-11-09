@@ -1,6 +1,6 @@
 "use client";
 
-import { CheckCircle2, FileText, Loader2, RefreshCw, Upload, X } from "lucide-react";
+import { CheckCircle2, FileText, GraduationCap, Loader2, RefreshCw, Upload, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 
@@ -50,6 +50,12 @@ export function SuratPengumumanDialog({
   const [showEdit, setShowEdit] = useState(false);
   const [showAdvanced, setShowAdvanced] = useState(false);
 
+  // Deteksi jalur SMA & default kelas
+  const isDaftarSMA =
+    (pendaftar.nomor_pendaftaran || "").toUpperCase().startsWith("SMA") ||
+    (pendaftar.jenjang || "").toUpperCase().includes("SMA") ||
+    (pendaftar.jenjang || "").toUpperCase().includes("MA");
+
   // Auto-detect default class from student's jenjang
   const defaultKelas = (() => {
     const j = (pendaftar.jenjang || "").toUpperCase();
@@ -62,6 +68,8 @@ export function SuratPengumumanDialog({
   const [tanggal, setTanggal] = useState(() => new Date().toISOString().slice(0, 10));
   const [kelas, setKelas] = useState(defaultKelas);
   const [nomorSurat, setNomorSurat] = useState("");
+
+  const isDialihkanKeIL = isDaftarSMA && kelas.toUpperCase().includes("IL");
 
   // upload manual
   const [file, setFile] = useState<File | null>(null);
@@ -293,6 +301,96 @@ export function SuratPengumumanDialog({
                 </div>
               </div>
 
+              {/* Selector Penetapan Kelas Kelulusan */}
+              <div className="p-4 bg-stone-50 border border-stone-200/80 rounded-2xl space-y-3">
+                <div className="flex items-center justify-between flex-wrap gap-2">
+                  <div className="flex items-center gap-2">
+                    <GraduationCap className="w-4 h-4 text-primary-700" />
+                    <span className="text-xs font-bold text-stone-800 uppercase tracking-wide">
+                      Kelas Kelulusan yang Diterima
+                    </span>
+                  </div>
+                  {isDialihkanKeIL && (
+                    <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase bg-amber-100 text-amber-800 border border-amber-300 inline-flex items-center gap-1 shadow-xs">
+                      ⚡ Pengalihan SMA ➔ IL
+                    </span>
+                  )}
+                </div>
+
+                {isDaftarSMA ? (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    <button
+                      type="button"
+                      onClick={() => setKelas("X SMA Putra")}
+                      className={`p-3 rounded-xl border text-left transition-all ${
+                        kelas === "X SMA Putra"
+                          ? "bg-primary-50/80 border-primary-500 ring-2 ring-primary-500/20 shadow-xs"
+                          : "bg-white border-stone-200 hover:border-stone-300"
+                      }`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-black text-stone-900">X SMA Putra</span>
+                        {kelas === "X SMA Putra" && (
+                          <CheckCircle2 className="w-4 h-4 text-primary-600" />
+                        )}
+                      </div>
+                      <p className="text-[11px] text-stone-500 mt-0.5">
+                        Lulus Langsung SMA IT (Bahasa Arab Lulus)
+                      </p>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => setKelas("IL Putra")}
+                      className={`p-3 rounded-xl border text-left transition-all ${
+                        kelas === "IL Putra"
+                          ? "bg-amber-50/80 border-amber-500 ring-2 ring-amber-500/20 shadow-xs"
+                          : "bg-white border-stone-200 hover:border-amber-300"
+                      }`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-black text-stone-900">
+                          IL Putra (I&apos;dad Lughowi)
+                        </span>
+                        {kelas === "IL Putra" && (
+                          <CheckCircle2 className="w-4 h-4 text-amber-600" />
+                        )}
+                      </div>
+                      <p className="text-[11px] text-stone-500 mt-0.5">
+                        Matrikulasi Persiapan Bahasa Arab 1 Tahun
+                      </p>
+                    </button>
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="text"
+                      value={kelas}
+                      onChange={(e) => setKelas(e.target.value)}
+                      placeholder="Contoh: VII MTs Putra"
+                      className="w-full border border-stone-200 rounded-xl px-3.5 py-2 text-sm font-bold text-stone-800 bg-white focus:ring-2 focus:ring-primary-500"
+                    />
+                  </div>
+                )}
+
+                {isDialihkanKeIL && (
+                  <div className="p-3 bg-amber-50/80 border border-amber-200/90 rounded-xl text-xs text-amber-900 leading-relaxed flex items-start gap-2">
+                    <span className="text-base leading-none">💡</span>
+                    <div>
+                      <p className="font-bold">
+                        Otomatis Sinkronisasi Jenjang &amp; Catatan Kelulusan
+                      </p>
+                      <p className="text-[11px] text-amber-800 mt-0.5">
+                        Santri mendaftar di jalur SMA tetapi diterima di{" "}
+                        <b>I&apos;dad Lughowi (IL)</b>. Saat disimpan, sistem akan otomatis mengubah
+                        data jenjang menjadi <code>IL</code> di database dan mencatat status
+                        kelulusan matrikulasi agar kuota santri sinkron.
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </div>
+
               {/* Upload Dropzone Utama */}
               <label className="text-xs font-bold text-stone-700 block">
                 File Surat Pengumuman Resmi (PDF / JPG / PNG){" "}
@@ -415,12 +513,52 @@ export function SuratPengumumanDialog({
             /* TAB GENERATE OTOMATIS */
             <div className="space-y-4">
               {!preview ? (
-                <div className="text-center py-10">
-                  <FileText className="w-12 h-12 mx-auto text-stone-300 mb-3" />
-                  <p className="text-sm text-stone-500 mb-4 max-w-md mx-auto">
+                <div className="text-center py-6 space-y-4">
+                  <FileText className="w-12 h-12 mx-auto text-stone-300" />
+                  <p className="text-sm text-stone-500 max-w-md mx-auto">
                     Sistem akan membuat surat otomatis dari data pendaftar dengan nomor urut
                     berikutnya (AA → AZ → BA ...). Nomor baru terkunci saat finalisasi.
                   </p>
+
+                  {isDaftarSMA && (
+                    <div className="max-w-md mx-auto p-3.5 bg-stone-50 border border-stone-200 rounded-2xl text-left space-y-2">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold text-stone-700">
+                          Tentukan Kelas Kelulusan:
+                        </span>
+                        {isDialihkanKeIL && (
+                          <span className="px-2 py-0.5 rounded-full text-[10px] font-black uppercase bg-amber-100 text-amber-800 border border-amber-300">
+                            ⚡ Pengalihan IL
+                          </span>
+                        )}
+                      </div>
+                      <div className="grid grid-cols-2 gap-2">
+                        <button
+                          type="button"
+                          onClick={() => setKelas("X SMA Putra")}
+                          className={`p-2 rounded-xl border text-xs font-bold text-center transition-all ${
+                            kelas === "X SMA Putra"
+                              ? "bg-primary-600 text-white border-primary-600 shadow-xs"
+                              : "bg-white text-stone-700 border-stone-200 hover:border-stone-300"
+                          }`}
+                        >
+                          X SMA Putra
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setKelas("IL Putra")}
+                          className={`p-2 rounded-xl border text-xs font-bold text-center transition-all ${
+                            kelas === "IL Putra"
+                              ? "bg-amber-600 text-white border-amber-600 shadow-xs"
+                              : "bg-white text-stone-700 border-stone-200 hover:border-amber-300"
+                          }`}
+                        >
+                          IL Putra
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
                   <button
                     onClick={loadPreview}
                     disabled={loadingPreview}

@@ -298,10 +298,7 @@ async function generateSuratDariTemplate(
   });
   doc.addImage(template, "JPEG", 0, 0, TEMPLATE_PAGE.w, TEMPLATE_PAGE.h);
 
-  const tulis = (
-    text: string,
-    zona: { x: number; y: number; bold: boolean }
-  ) => {
+  const tulis = (text: string, zona: { x: number; y: number; bold: boolean }) => {
     doc.setFont("times", zona.bold ? "bold" : "normal");
     doc.setFontSize(12);
     doc.text(text, zona.x, zona.y);
@@ -466,4 +463,61 @@ async function generateSuratProgramatik(
 
   const filename = `Surat Pengumuman Hasil PSB 2027-2028 ${data.namaLengkap}.pdf`;
   return { buffer: Buffer.from(doc.output("arraybuffer")), filename };
+}
+
+/**
+ * Helper transaksi untuk menyinkronkan data pendaftar & nilai ujian saat kelulusan ditetapkan:
+ * - Menangani kasus khusus calon santri yang mendaftar jalur SMA (SMA27...) tetapi dinyatakan lulus di I'dad Lughowi (IL).
+ * - Menjaga konsistensi pendaftar.jenjang = 'IL', catatan_pindahan, dan catatan_kelulusan pada nilai_ujian.
+ */
+export async function syncPendaftarKelulusanTransaction(
+  tx: any,
+  pendaftarId: string,
+  kelasDiterima: string
+) {
+  const p = await tx.pendaftar.findUnique({
+    where: { id: pendaftarId },
+    select: { id: true, jenjang: true, nomor_pendaftaran: true, catatan_pindahan: true },
+  });
+  if (!p) return;
+
+  const isDiterimaIL = (kelasDiterima || "").toUpperCase().includes("IL");
+  const isDaftarSMA =
+    (p.jenjang || "").toUpperCase().includes("SMA") ||
+    (p.jenjang || "").toUpperCase().includes("MA") ||
+    p.nomor_pendaftaran.toUpperCase().startsWith("SMA");
+
+  const updateData: any = { status_pendaftaran: "accepted" };
+
+  if (isDiterimaIL && isDaftarSMA) {
+    updateData.jenjang = "IL";
+    if (!p.catatan_pindahan) {
+      updateData.catatan_pindahan =
+        "Diterima di I'dad Lughowi (Pengalihan dari pendaftaran awal SMA/MA)";
+    }
+  }
+
+  await tx.pendaftar.update({
+    where: { id: pendaftarId },
+    data: updateData,
+  });
+
+  if (isDiterimaIL && isDaftarSMA) {
+    const nu = await tx.nilaiUjian.findFirst({
+      where: { pendaftar_id: pendaftarId },
+      select: { id: true },
+    });
+    const catatanIL =
+      "DITERIMA DI I'DAD LUGHOWI (IL) - Rekomendasi matrikulasi persiapan Bahasa Arab intensif 1 tahun sebelum menuju jenjang Aliyah.";
+    if (nu) {
+      await tx.nilaiUjian.update({
+        where: { id: nu.id },
+        data: {
+          catatan_kelulusan: catatanIL,
+          catatan_umum: "Diterima di Program I'dad Lughowi (IL).",
+          status_kelulusan: "Diterima",
+        },
+      });
+    }
+  }
 }

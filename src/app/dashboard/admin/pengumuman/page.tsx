@@ -17,8 +17,8 @@ import { useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useMemo, useState } from "react";
 import { toast } from "react-hot-toast";
 import Swal from "sweetalert2";
-import { SuratPengumumanDialog } from "@/components/admin/SuratPengumumanDialog";
 import { BulkPengumumanDialog } from "@/components/admin/BulkPengumumanDialog";
+import { SuratPengumumanDialog } from "@/components/admin/SuratPengumumanDialog";
 
 function PengumumanContent() {
   const [loading, setLoading] = useState(false);
@@ -249,10 +249,7 @@ function PengumumanContent() {
       return;
     }
 
-    const actionText =
-      new_status === "cadangan"
-        ? "menjadikan CADANGAN"
-        : "menetapkan DITOLAK";
+    const actionText = new_status === "cadangan" ? "menjadikan CADANGAN" : "menetapkan DITOLAK";
     const btnColor = new_status === "cadangan" ? "#d97706" : "#dc2626";
 
     const result = await Swal.fire({
@@ -295,10 +292,7 @@ function PengumumanContent() {
                   status_pendaftaran: new_status,
                   pengumuman: {
                     ...(c.pengumuman || {}),
-                    status_kelulusan:
-                      new_status === "cadangan"
-                        ? "Cadangan"
-                        : "Ditolak",
+                    status_kelulusan: new_status === "cadangan" ? "Cadangan" : "Ditolak",
                     is_published: true,
                   },
                 }
@@ -561,9 +555,20 @@ function PengumumanContent() {
                       <h4 className="font-black text-stone-900 leading-tight uppercase text-sm truncate">
                         {toTitleCase(c.nama_lengkap)}
                       </h4>
-                      <span className="px-2 py-0.5 bg-stone-100 text-stone-600 rounded text-[9px] font-black uppercase shrink-0 whitespace-nowrap inline-block shrink-0">
-                        {c.jenjang}
-                      </span>
+                      {c.nomor_pendaftaran?.startsWith("SMA") &&
+                      (c.jenjang?.toUpperCase().includes("IL") ||
+                        c.pengumuman?.kelas_diterima?.toUpperCase().includes("IL")) ? (
+                        <span
+                          className="px-2 py-0.5 bg-amber-100 text-amber-800 border border-amber-300 rounded text-[9px] font-black uppercase shrink-0 whitespace-nowrap inline-flex items-center gap-1 shadow-xs"
+                          title="Pendaftaran awal SMA dialihkan ke I'dad Lughowi"
+                        >
+                          SMA ➔ IL
+                        </span>
+                      ) : (
+                        <span className="px-2 py-0.5 bg-stone-100 text-stone-600 rounded text-[9px] font-black uppercase shrink-0 whitespace-nowrap inline-block shrink-0">
+                          {c.jenjang}
+                        </span>
+                      )}
                     </div>
                     <p className="text-[10px] font-mono font-bold text-stone-400 tracking-tighter mb-2">
                       {c.nomor_pendaftaran}
@@ -692,9 +697,25 @@ function PengumumanContent() {
                         </div>
                       </td>
                       <td className="px-6 py-4">
-                        <span className="px-2 py-1 bg-stone-100 text-stone-600 rounded text-xs font-bold whitespace-nowrap inline-block shrink-0">
-                          {c.jenjang}
-                        </span>
+                        {c.nomor_pendaftaran?.startsWith("SMA") &&
+                        (c.jenjang?.toUpperCase().includes("IL") ||
+                          c.pengumuman?.kelas_diterima?.toUpperCase().includes("IL")) ? (
+                          <div className="flex flex-col gap-0.5 items-start">
+                            <span
+                              className="px-2.5 py-1 bg-amber-100 text-amber-900 border border-amber-300 rounded-md text-xs font-black inline-flex items-center gap-1 shadow-xs"
+                              title="Pendaftaran awal SMA dialihkan ke I'dad Lughowi"
+                            >
+                              SMA ➔ IL
+                            </span>
+                            <span className="text-[10px] text-amber-700 font-semibold">
+                              Pengalihan IL
+                            </span>
+                          </div>
+                        ) : (
+                          <span className="px-2 py-1 bg-stone-100 text-stone-600 rounded text-xs font-bold whitespace-nowrap inline-block shrink-0">
+                            {c.jenjang}
+                          </span>
+                        )}
                       </td>
                       <td className="px-6 py-4">
                         <div className="flex flex-col">
@@ -811,7 +832,8 @@ function PengumumanContent() {
                         is_published: true,
                         nomor_surat: resData?.nomorSurat || c.pengumuman?.nomor_surat,
                         kelas_diterima: resData?.kelasDiterima || c.pengumuman?.kelas_diterima,
-                        surat_pengumuman_path: resData?.suratPath || c.pengumuman?.surat_pengumuman_path || "uploaded",
+                        surat_pengumuman_path:
+                          resData?.suratPath || c.pengumuman?.surat_pengumuman_path || "uploaded",
                       },
                     }
                   : c

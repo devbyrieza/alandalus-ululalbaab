@@ -1,15 +1,47 @@
 "use client";
 
-import { useState, useEffect, Suspense, useRef } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
-
-import { Users, Search, Filter, Eye, ChevronLeft, ChevronRight, Loader2, RefreshCw, FileText, Calendar, Phone, Mail, Hash, CheckSquare, Square, Download, Edit, ArrowLeft, FileSpreadsheet, X, Save, FileCheck, RotateCcw, UploadCloud, CreditCard, Trash2, LogOut, Plus, Shuffle, AlertTriangle, Crown, Star } from "lucide-react";
+import {
+  AlertTriangle,
+  ArrowLeft,
+  Calendar,
+  CheckSquare,
+  ChevronLeft,
+  ChevronRight,
+  CreditCard,
+  Crown,
+  Download,
+  Edit,
+  Eye,
+  FileCheck,
+  FileSpreadsheet,
+  FileText,
+  Filter,
+  Hash,
+  Loader2,
+  LogOut,
+  Mail,
+  Phone,
+  Plus,
+  RefreshCw,
+  RotateCcw,
+  Save,
+  Search,
+  Shuffle,
+  Square,
+  Star,
+  Trash2,
+  UploadCloud,
+  Users,
+  X,
+} from "lucide-react";
 import Link from "next/link";
-import { UserRole } from "@/lib/access-control";
-import { exportToExcelProfessional, exportToPDF } from "@/lib/utils/export";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense, useEffect, useRef, useState } from "react";
 import Swal from "sweetalert2";
-import { ActionDropdown } from "@/components/ui/ActionDropdown";
 import { SuratPengumumanDialog } from "@/components/admin/SuratPengumumanDialog";
+import { ActionDropdown } from "@/components/ui/ActionDropdown";
+import type { UserRole } from "@/lib/access-control";
+import { exportToExcelProfessional, exportToPDF } from "@/lib/utils/export";
 
 // Filter labels for dashboard categories
 const FILTER_LABELS: Record<string, string> = {
@@ -31,7 +63,8 @@ const FILTER_LABELS: Record<string, string> = {
   belum_daftar_ulang: "Belum Daftar Ulang",
   sudah_daftar_ulang: "Daftar Ulang",
   daftar_ulang_sedang: "Proses Daftar Ulang (Cicil)",
-  daftar_ulang_selesai: "Lunas Daftar Ulang" };
+  daftar_ulang_selesai: "Lunas Daftar Ulang",
+};
 
 interface Pendaftar {
   id: string;
@@ -55,6 +88,7 @@ interface Pendaftar {
   };
   pembayaran?: Array<{ id: string; status_pembayaran: string }>;
   tipe_pendaftaran?: string;
+  catatan_pindahan?: string | null;
   data_lengkap?: any;
 }
 
@@ -107,13 +141,9 @@ function AdminPendaftarContent() {
   // Role helpers
   // const userRole = session?.user?.role; -- Handled by state above
   const canViewKeuangan =
-    userRole === "admin_super" ||
-    userRole === "admin_keuangan" ||
-    userRole === "admin";
+    userRole === "admin_super" || userRole === "admin_keuangan" || userRole === "admin";
   const canViewBerkas =
-    userRole === "admin_super" ||
-    userRole === "admin_berkas" ||
-    userRole === "admin";
+    userRole === "admin_super" || userRole === "admin_berkas" || userRole === "admin";
   const canViewSeleksi =
     userRole === "admin_super" ||
     userRole === "penguji" ||
@@ -150,7 +180,7 @@ function AdminPendaftarContent() {
   */
 
   const [jenjangFilter, setJenjangFilter] = useState("");
-    const [tahunAjaranFilter, setTahunAjaranFilter] = useState("");
+  const [tahunAjaranFilter, setTahunAjaranFilter] = useState("");
   const [tipePendaftaranFilter, setTipePendaftaranFilter] = useState("");
   const [tahunAjaranList, setTahunAjaranList] = useState<TahunAjaran[]>([]);
   // Location filters
@@ -198,31 +228,29 @@ function AdminPendaftarContent() {
 
   // Announcement State
   const [isAnnouncementModalOpen, setIsAnnouncementModalOpen] = useState(false);
-  const [suratDialogPendaftar, setSuratDialogPendaftar] = useState<{ id: string; nama_lengkap: string; nomor_pendaftaran: string } | null>(null);
-  const [selectedPendaftar, setSelectedPendaftar] = useState<Pendaftar | null>(
-    null,
-  );
+  const [suratDialogPendaftar, setSuratDialogPendaftar] = useState<{
+    id: string;
+    nama_lengkap: string;
+    nomor_pendaftaran: string;
+  } | null>(null);
+  const [selectedPendaftar, setSelectedPendaftar] = useState<Pendaftar | null>(null);
   const [announcementForm, setAnnouncementForm] = useState({
     status_kelulusan: "Diterima",
     catatan: "",
-    surat_keputusan_url: "" });
-  const [isSubmittingAnnouncement, setIsSubmittingAnnouncement] =
-    useState(false);
+    surat_keputusan_url: "",
+  });
+  const [isSubmittingAnnouncement, setIsSubmittingAnnouncement] = useState(false);
 
   // Soft Delete State
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [deletingPendaftar, setDeletingPendaftar] = useState<Pendaftar | null>(
-    null,
-  );
+  const [deletingPendaftar, setDeletingPendaftar] = useState<Pendaftar | null>(null);
   const [deleteConfirmName, setDeleteConfirmName] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
   const [trashCount, setTrashCount] = useState(0);
   const [mengundurkanDiriCount, setMengundurkanDiriCount] = useState(0);
   const [uploadingDoc, setUploadingDoc] = useState<string | null>(null);
   const [uploadingPay, setUploadingPay] = useState<string | null>(null);
-  const [selectedPendaftarId, setSelectedPendaftarId] = useState<string | null>(
-    null,
-  );
+  const [selectedPendaftarId, setSelectedPendaftarId] = useState<string | null>(null);
   const [selectedDocType, setSelectedDocType] = useState<string | null>(null);
   const [selectedPayId, setSelectedPayId] = useState<string | null>(null);
   const docInputRef = useRef<HTMLInputElement>(null);
@@ -254,7 +282,7 @@ function AdminPendaftarContent() {
       };
       fetchTrashCount();
     }
-    
+
     // Fetch Mengundurkan Diri count for all admins
     if (userRole && ["admin_super", "admin", "penguji"].includes(userRole)) {
       const fetchMengundurkanDiriCount = async () => {
@@ -281,13 +309,12 @@ function AdminPendaftarContent() {
   const handleSoftDelete = async () => {
     if (!deletingPendaftar) return;
     if (
-      deleteConfirmName.trim().toLowerCase() !==
-      deletingPendaftar.nama_lengkap.trim().toLowerCase()
+      deleteConfirmName.trim().toLowerCase() !== deletingPendaftar.nama_lengkap.trim().toLowerCase()
     ) {
       Swal.fire(
         "Gagal!",
         "Nama tidak cocok. Silakan ketik nama lengkap pendaftar dengan benar.",
-        "error",
+        "error"
       );
       return;
     }
@@ -295,7 +322,8 @@ function AdminPendaftarContent() {
     try {
       setIsDeleting(true);
       const res = await fetch(`/api/admin/pendaftar/${deletingPendaftar.id}`, {
-        method: "DELETE" });
+        method: "DELETE",
+      });
 
       const result = await res.json();
 
@@ -303,11 +331,7 @@ function AdminPendaftarContent() {
         throw new Error(result.error || "Gagal menghapus data");
       }
 
-      Swal.fire(
-        "Selesai!",
-        result.message || "Data berhasil dihapus",
-        "success",
-      );
+      Swal.fire("Selesai!", result.message || "Data berhasil dihapus", "success");
       setIsDeleteModalOpen(false);
       setDeletingPendaftar(null);
       setDeleteConfirmName("");
@@ -332,7 +356,9 @@ function AdminPendaftarContent() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           pendaftar_id: selectedPendaftar.id,
-          ...announcementForm }) });
+          ...announcementForm,
+        }),
+      });
 
       if (!response.ok) {
         const err = await response.json();
@@ -350,9 +376,7 @@ function AdminPendaftarContent() {
     }
   };
 
-  const handleQuickDocUpload = async (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ) => {
+  const handleQuickDocUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file || !selectedDocType || !selectedPendaftarId) return;
 
@@ -365,7 +389,8 @@ function AdminPendaftarContent() {
 
       const response = await fetch("/api/admin/verifikasi/dokumen/upload", {
         method: "POST",
-        body: formData });
+        body: formData,
+      });
 
       const data = await response.json();
       if (data.success) {
@@ -376,7 +401,8 @@ function AdminPendaftarContent() {
           toast: true,
           position: "top-end",
           timer: 3000,
-          showConfirmButton: false });
+          showConfirmButton: false,
+        });
         fetchPendaftar();
       } else {
         Swal.fire("Gagal", data.error, "error");
@@ -392,9 +418,7 @@ function AdminPendaftarContent() {
     }
   };
 
-  const handleQuickPayUpload = async (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ) => {
+  const handleQuickPayUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file || !selectedPayId) return;
 
@@ -406,7 +430,8 @@ function AdminPendaftarContent() {
 
       const response = await fetch("/api/admin/verifikasi/pembayaran/upload", {
         method: "POST",
-        body: formData });
+        body: formData,
+      });
 
       const data = await response.json();
       if (data.success) {
@@ -417,7 +442,8 @@ function AdminPendaftarContent() {
           toast: true,
           position: "top-end",
           timer: 3000,
-          showConfirmButton: false });
+          showConfirmButton: false,
+        });
         fetchPendaftar();
       } else {
         Swal.fire("Gagal", data.error, "error");
@@ -436,7 +462,8 @@ function AdminPendaftarContent() {
     page: 1,
     limit: 20,
     total: 0,
-    totalPages: 0 });
+    totalPages: 0,
+  });
 
   const fetchPendaftar = async () => {
     try {
@@ -447,13 +474,13 @@ function AdminPendaftarContent() {
       }
       const params = new URLSearchParams({
         page: pagination.page.toString(),
-        limit: pagination.limit.toString() });
+        limit: pagination.limit.toString(),
+      });
 
       if (search) params.append("search", search);
       if (statusFilter) params.append("status", statusFilter);
       if (jenjangFilter) params.append("jenjang", jenjangFilter);
-            if (tipePendaftaranFilter)
-        params.append("tipe_pendaftaran", tipePendaftaranFilter);
+      if (tipePendaftaranFilter) params.append("tipe_pendaftaran", tipePendaftaranFilter);
       if (tahunAjaranFilter) params.append("tahun_ajaran", tahunAjaranFilter);
       if (provinsiFilter) params.append("provinsi", provinsiFilter);
       if (kabupatenFilter) params.append("kabupaten", kabupatenFilter);
@@ -481,7 +508,7 @@ function AdminPendaftarContent() {
     search,
     statusFilter,
     jenjangFilter,
-        tipePendaftaranFilter,
+    tipePendaftaranFilter,
     tahunAjaranFilter,
     provinsiFilter,
     kabupatenFilter,
@@ -570,7 +597,7 @@ function AdminPendaftarContent() {
       try {
         setKabupatenLoading(true);
         const response = await fetch(
-          `/api/admin/locations/kabupaten?provinsi=${encodeURIComponent(provinsiFilter)}`,
+          `/api/admin/locations/kabupaten?provinsi=${encodeURIComponent(provinsiFilter)}`
         );
         if (response.ok) {
           const result = await response.json();
@@ -600,10 +627,9 @@ function AdminPendaftarContent() {
         setKecamatanLoading(true);
         const params = new URLSearchParams({
           provinsi: provinsiFilter,
-          kabupaten: kabupatenFilter });
-        const response = await fetch(
-          `/api/admin/locations/kecamatan?${params}`,
-        );
+          kabupaten: kabupatenFilter,
+        });
+        const response = await fetch(`/api/admin/locations/kecamatan?${params}`);
         if (response.ok) {
           const result = await response.json();
           setKecamatanList(result.data || []);
@@ -631,10 +657,9 @@ function AdminPendaftarContent() {
         const params = new URLSearchParams({
           provinsi: provinsiFilter,
           kabupaten: kabupatenFilter,
-          kecamatan: kecamatanFilter });
-        const response = await fetch(
-          `/api/admin/locations/kelurahan?${params}`,
-        );
+          kecamatan: kecamatanFilter,
+        });
+        const response = await fetch(`/api/admin/locations/kelurahan?${params}`);
         if (response.ok) {
           const result = await response.json();
           setKelurahanList(result.data || []);
@@ -668,9 +693,7 @@ function AdminPendaftarContent() {
   };
 
   const handleSelectOne = (id: string) => {
-    setSelectedIds((prev) =>
-      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id],
-    );
+    setSelectedIds((prev) => (prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]));
   };
 
   const handlePromoteCadangan = async (ids?: string[]) => {
@@ -689,7 +712,8 @@ function AdminPendaftarContent() {
       cancelButtonColor: "#94a3b8",
       confirmButtonText: "Ya, Promosikan!",
       cancelButtonText: "Batal",
-      reverseButtons: true });
+      reverseButtons: true,
+    });
 
     if (!result.isConfirmed) return;
 
@@ -698,7 +722,8 @@ function AdminPendaftarContent() {
       const response = await fetch("/api/admin/pendaftar/promote-cadangan", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(isPromoteAll ? {} : { ids }) });
+        body: JSON.stringify(isPromoteAll ? {} : { ids }),
+      });
 
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || "Gagal");
@@ -707,7 +732,8 @@ function AdminPendaftarContent() {
         title: "Berhasil!",
         text: data.message || `${data.updated_count} Pendaftar berhasil dipindahkan ke Diterima.`,
         icon: "success",
-        confirmButtonColor: "#059669" });
+        confirmButtonColor: "#059669",
+      });
       setSelectedIds([]);
       fetchPendaftar();
     } catch (error: any) {
@@ -718,7 +744,7 @@ function AdminPendaftarContent() {
     }
   };
 
-      const handleBulkUpdate = async () => {
+  const handleBulkUpdate = async () => {
     if (!bulkStatus || selectedIds.length === 0) {
       Swal.fire("Perhatian", "Pilih status dan minimal 1 pendaftar", "warning");
       return;
@@ -756,17 +782,17 @@ function AdminPendaftarContent() {
         cancelButtonText: "Batal",
         reverseButtons: true,
         preConfirm: () => {
-          const selectEl = document.getElementById('swal-reason-select') as HTMLSelectElement;
-          const inputEl = document.getElementById('swal-custom-reason') as HTMLInputElement;
-          if (selectEl.value === 'Lainnya') {
+          const selectEl = document.getElementById("swal-reason-select") as HTMLSelectElement;
+          const inputEl = document.getElementById("swal-custom-reason") as HTMLInputElement;
+          if (selectEl.value === "Lainnya") {
             if (!inputEl.value.trim()) {
-              Swal.showValidationMessage('Alasan lainnya wajib diisi');
+              Swal.showValidationMessage("Alasan lainnya wajib diisi");
               return false;
             }
             return inputEl.value.trim();
           }
           return selectEl.value;
-        }
+        },
       });
 
       if (finalAlasan === undefined) return;
@@ -781,17 +807,19 @@ function AdminPendaftarContent() {
         cancelButtonColor: "#57534e",
         confirmButtonText: "Ya, Update Semua",
         cancelButtonText: "Batal",
-        reverseButtons: true });
+        reverseButtons: true,
+      });
 
       if (!result.isConfirmed) return;
     }
 
     try {
       setBulkUpdating(true);
-      
+
       const payload: any = {
         ids: selectedIds,
-        status_pendaftaran: bulkStatus };
+        status_pendaftaran: bulkStatus,
+      };
       if (alasan) {
         payload.alasan = alasan;
       }
@@ -799,7 +827,8 @@ function AdminPendaftarContent() {
       const response = await fetch("/api/admin/pendaftar/bulk-update", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload) });
+        body: JSON.stringify(payload),
+      });
 
       if (!response.ok) throw new Error("Failed to update");
 
@@ -815,7 +844,6 @@ function AdminPendaftarContent() {
     }
   };
 
-  
   const handleSingleMengundurkanDiri = async (id: string) => {
     const { value: finalAlasan } = await Swal.fire({
       title: "Alasan Mengundurkan Diri",
@@ -845,17 +873,17 @@ function AdminPendaftarContent() {
       confirmButtonColor: "#dc2626",
       cancelButtonColor: "#6b7280",
       preConfirm: () => {
-        const selectEl = document.getElementById('swal-reason-select') as HTMLSelectElement;
-        const inputEl = document.getElementById('swal-custom-reason') as HTMLInputElement;
-        if (selectEl.value === 'Lainnya') {
+        const selectEl = document.getElementById("swal-reason-select") as HTMLSelectElement;
+        const inputEl = document.getElementById("swal-custom-reason") as HTMLInputElement;
+        if (selectEl.value === "Lainnya") {
           if (!inputEl.value.trim()) {
-            Swal.showValidationMessage('Alasan lainnya wajib diisi');
+            Swal.showValidationMessage("Alasan lainnya wajib diisi");
             return false;
           }
           return inputEl.value.trim();
         }
         return selectEl.value;
-      }
+      },
     });
 
     if (finalAlasan === undefined) return;
@@ -864,7 +892,8 @@ function AdminPendaftarContent() {
       Swal.fire({
         title: "Menyimpan...",
         allowOutsideClick: false,
-        didOpen: () => Swal.showLoading() });
+        didOpen: () => Swal.showLoading(),
+      });
 
       const response = await fetch("/api/admin/pendaftar/bulk-update", {
         method: "POST",
@@ -872,7 +901,9 @@ function AdminPendaftarContent() {
         body: JSON.stringify({
           ids: [id],
           status_pendaftaran: "mengundurkan_diri",
-          alasan: finalAlasan }) });
+          alasan: finalAlasan,
+        }),
+      });
 
       if (!response.ok) throw new Error("Failed to update");
 
@@ -890,7 +921,7 @@ function AdminPendaftarContent() {
       const res = await fetch("/api/admin/laporan/keringanan");
       const json = await res.json();
       if (!res.ok || !json.success) throw new Error(json.error || "Gagal mengambil data");
-      
+
       const data = json.data;
       if (!data || data.length === 0) {
         Swal.fire("Info", "Tidak ada data keringanan/beasiswa untuk diexport.", "info");
@@ -904,13 +935,14 @@ function AdminPendaftarContent() {
           title: "LAPORAN KERINGANAN & BEASISWA PENDAFTAR",
           subTitle: `Tanggal Export: ${new Date().toLocaleDateString("id-ID")}`,
           header,
-          data: data.map((d: any) => Object.values(d))
-        }
+          data: data.map((d: any) => Object.values(d)),
+        },
       ];
 
       await exportToExcelProfessional({
         fileName: `Laporan_Keringanan_${new Date().toISOString().slice(0, 10)}`,
-        sheets });
+        sheets,
+      });
     } catch (e: any) {
       Swal.fire("Gagal", e.message, "error");
     } finally {
@@ -925,7 +957,7 @@ function AdminPendaftarContent() {
       if (search) params.append("search", search);
       if (statusFilter) params.append("status", statusFilter);
       if (jenjangFilter) params.append("jenjang", jenjangFilter);
-            if (tahunAjaranFilter) params.append("tahun_ajaran", tahunAjaranFilter);
+      if (tahunAjaranFilter) params.append("tahun_ajaran", tahunAjaranFilter);
       if (provinsiFilter) params.append("provinsi", provinsiFilter);
       if (kabupatenFilter) params.append("kabupaten", kabupatenFilter);
       if (kecamatanFilter) params.append("kecamatan", kecamatanFilter);
@@ -955,7 +987,8 @@ function AdminPendaftarContent() {
             title: "DATA PENDAFTAR SANTRI BARU (TOTAL)",
             subTitle: `Tanggal Ekspor: ${new Date().toLocaleDateString("id-ID")}`,
             header,
-            data: data.map((item) => Object.values(item)) },
+            data: data.map((item) => Object.values(item)),
+          },
         ];
 
         Object.keys(jenjangGroups)
@@ -966,12 +999,14 @@ function AdminPendaftarContent() {
               title: `DATA PENDAFTAR - ${j}`,
               subTitle: `Jenjang: ${j} | Tanggal Ekspor: ${new Date().toLocaleDateString("id-ID")}`,
               header,
-              data: jenjangGroups[j].map((item) => Object.values(item)) });
+              data: jenjangGroups[j].map((item) => Object.values(item)),
+            });
           });
 
         await exportToExcelProfessional({
           fileName: filename,
-          sheets });
+          sheets,
+        });
       } else {
         // Transform for PDF - Premium 8-column layout
         const headers = [
@@ -982,46 +1017,66 @@ function AdminPendaftarContent() {
           "Asal Sekolah",
           "No. HP",
           "Email",
-          "Status"
+          "Status",
         ];
-        
+
         const translateStatus = (status: string, dataLengkap?: any) => {
           if (!status) return "-";
           const s = status.toLowerCase().trim();
           const statusMap: Record<string, string> = {
-        draft: "Draft (Belum Selesai)",
-        awaiting_payment: "Belum Bayar",
-        payment_verification: "Verifikasi Bayar",
-        paid: "Terdaftar",
-        verified: "Terdaftar",
-        data_completed: "Data Lengkap",
-        docs_uploaded: "Data Lengkap",
-        docs_verified: "Berkas Lengkap",
-        scheduled: "Proses Seleksi",
-        testing: "Proses Seleksi",
-        tested: "Proses Seleksi",
-        exam_completed: "Proses Seleksi",
-        announced: "Cadangan",
-        cadangan: "Cadangan",
-        accepted: "Diterima",
-        rejected: "Ditolak",
-        mengundurkan_diri: "Mengundurkan Diri",
-        enrolled: "Proses Daftar Ulang",
-        enrolled_full: "Lunas Daftar Ulang",
-        pindah_keluar: "Pindah Keluar",
-        selection: "Proses Seleksi"
-      };
+            draft: "Draft (Belum Selesai)",
+            awaiting_payment: "Belum Bayar",
+            payment_verification: "Verifikasi Bayar",
+            paid: "Terdaftar",
+            verified: "Terdaftar",
+            data_completed: "Data Lengkap",
+            docs_uploaded: "Data Lengkap",
+            docs_verified: "Berkas Lengkap",
+            scheduled: "Proses Seleksi",
+            testing: "Proses Seleksi",
+            tested: "Proses Seleksi",
+            exam_completed: "Proses Seleksi",
+            announced: "Cadangan",
+            cadangan: "Cadangan",
+            accepted: "Diterima",
+            rejected: "Ditolak",
+            mengundurkan_diri: "Mengundurkan Diri",
+            enrolled: "Proses Daftar Ulang",
+            enrolled_full: "Lunas Daftar Ulang",
+            pindah_keluar: "Pindah Keluar",
+            selection: "Proses Seleksi",
+          };
           if (statusMap[s]) return statusMap[s];
           if (s.includes("draft") || s === "draf") return "Draft";
-          if (s.includes("bayar") || s.includes("waiting_payment") || s.includes("payment_verification")) return "Verifikasi Bayar";
-          if (s.includes("data_completed") || s.includes("data") || s.includes("sudah_isi_data") || s.includes("docs_uploaded")) return "Data Lengkap";
+          if (
+            s.includes("bayar") ||
+            s.includes("waiting_payment") ||
+            s.includes("payment_verification")
+          )
+            return "Verifikasi Bayar";
+          if (
+            s.includes("data_completed") ||
+            s.includes("data") ||
+            s.includes("sudah_isi_data") ||
+            s.includes("docs_uploaded")
+          )
+            return "Data Lengkap";
           if (s.includes("docs_verified") || s.includes("berkas")) return "Berkas Lengkap";
-          if (s.includes("selection") || s.includes("scheduled") || s.includes("tes") || s.includes("testing") || s.includes("tested") || s.includes("exam")) return "Proses Seleksi";
+          if (
+            s.includes("selection") ||
+            s.includes("scheduled") ||
+            s.includes("tes") ||
+            s.includes("testing") ||
+            s.includes("tested") ||
+            s.includes("exam")
+          )
+            return "Proses Seleksi";
           if (s.includes("accepted") || s.includes("diterima")) return "Diterima";
           if (s.includes("announced") || s.includes("cadangan")) return "Cadangan";
           if (s.includes("rejected") || s.includes("ditolak")) return "Ditolak";
           if (s.includes("enrolled_full") || s.includes("selesai")) return "Lunas Daftar Ulang";
-          if (s.includes("enrolled") || s.includes("daftar ulang") || s.includes("ulang")) return "Proses Daftar Ulang";
+          if (s.includes("enrolled") || s.includes("daftar ulang") || s.includes("ulang"))
+            return "Proses Daftar Ulang";
           if (s.includes("pindah") || s.includes("keluar")) return "Pindah Keluar";
           return status;
         };
@@ -1029,21 +1084,23 @@ function AdminPendaftarContent() {
         const rows = data.map((item: any) => [
           item["Nomor Pendaftaran"] || item["No. Daftar"] || item["No. Pendaftaran"] || "-",
           item["Nama Lengkap"] || "-",
-          (item["Jenis Kelamin"] || "-") === "Laki-laki" || (item["Jenis Kelamin"] || "-") === "L" ? "L" : ((item["Jenis Kelamin"] || "-") === "Perempuan" || (item["Jenis Kelamin"] || "-") === "P" ? "P" : "-"),
+          (item["Jenis Kelamin"] || "-") === "Laki-laki" || (item["Jenis Kelamin"] || "-") === "L"
+            ? "L"
+            : (item["Jenis Kelamin"] || "-") === "Perempuan" ||
+                (item["Jenis Kelamin"] || "-") === "P"
+              ? "P"
+              : "-",
           item["Jenjang"] || "-",
           item["Asal Sekolah"] || "-",
           String(item["No HP"] || item["No. HP"] || item["Telepon"] || "-").replace(/^'/, ""),
           item["Email"] || "-",
-          translateStatus(item["Status"] || item["Status Pendaftaran"] || item.status_pendaftaran || "-", item.data_lengkap)
+          translateStatus(
+            item["Status"] || item["Status Pendaftaran"] || item.status_pendaftaran || "-",
+            item.data_lengkap
+          ),
         ]);
-        
-        exportToPDF(
-          "Data Pendaftar Santri Baru",
-          headers,
-          rows,
-          filename,
-          "landscape",
-        );
+
+        exportToPDF("Data Pendaftar Santri Baru", headers, rows, filename, "landscape");
       }
     } catch (error) {
       console.error("Error exporting:", error);
@@ -1061,7 +1118,7 @@ function AdminPendaftarContent() {
     if (!str) return "";
     return str.replace(
       /\w\S*/g,
-      (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(),
+      (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
     );
   };
 
@@ -1071,64 +1128,84 @@ function AdminPendaftarContent() {
       draft: { label: "Draft", color: "bg-stone-100 text-stone-700 border border-stone-200" },
       awaiting_payment: {
         label: "Draft",
-        color: "bg-stone-100 text-stone-700 border border-stone-200" },
+        color: "bg-stone-100 text-stone-700 border border-stone-200",
+      },
       payment_verification: {
         label: "Verifikasi Bayar",
-        color: "bg-primary-50 text-primary-700 border border-primary-100" },
+        color: "bg-primary-50 text-primary-700 border border-primary-100",
+      },
       paid: {
         label: "Terdaftar",
-        color: "bg-primary-100 text-primary-800 border border-primary-200" },
+        color: "bg-primary-100 text-primary-800 border border-primary-200",
+      },
       verified: {
         label: "Terdaftar",
-        color: "bg-primary-100 text-primary-800 border border-primary-200" },
+        color: "bg-primary-100 text-primary-800 border border-primary-200",
+      },
       data_completed: {
         label: "Data Lengkap",
-        color: "bg-gold-50 text-gold-800 border border-gold-100" },
+        color: "bg-gold-50 text-gold-800 border border-gold-100",
+      },
       docs_uploaded: {
         label: "Data Lengkap",
-        color: "bg-gold-50 text-gold-800 border border-gold-100" },
+        color: "bg-gold-50 text-gold-800 border border-gold-100",
+      },
       docs_verified: {
         label: "Berkas Lengkap",
-        color: "bg-emerald-50 text-emerald-800 border border-emerald-100" },
+        color: "bg-emerald-50 text-emerald-800 border border-emerald-100",
+      },
       selection: {
         label: "Proses Seleksi",
-        color: "bg-purple-50 text-purple-800 border border-purple-100" },
+        color: "bg-purple-50 text-purple-800 border border-purple-100",
+      },
       scheduled: {
         label: "Proses Seleksi",
-        color: "bg-purple-50 text-purple-800 border border-purple-100" },
+        color: "bg-purple-50 text-purple-800 border border-purple-100",
+      },
       testing: {
         label: "Proses Seleksi",
-        color: "bg-purple-50 text-purple-800 border border-purple-100" },
+        color: "bg-purple-50 text-purple-800 border border-purple-100",
+      },
       tested: {
         label: "Proses Seleksi",
-        color: "bg-purple-100 text-purple-800 border border-purple-200 shadow-sm" },
+        color: "bg-purple-100 text-purple-800 border border-purple-200 shadow-sm",
+      },
       exam_completed: {
         label: "Proses Seleksi",
-        color: "bg-purple-100 text-purple-800 border border-purple-200 shadow-sm" },
+        color: "bg-purple-100 text-purple-800 border border-purple-200 shadow-sm",
+      },
       announced: {
         label: "Cadangan",
-        color: "bg-gold-100 text-gold-800 border border-gold-200" },
+        color: "bg-gold-100 text-gold-800 border border-gold-200",
+      },
       cadangan: {
         label: "Cadangan",
-        color: "bg-gold-100 text-gold-800 border border-gold-200" },
+        color: "bg-gold-100 text-gold-800 border border-gold-200",
+      },
       accepted: { label: "Diterima", color: "bg-emerald-600 text-white" },
       rejected: { label: "Ditolak", color: "bg-rose-600 text-white" },
       enrolled: {
         label: "Proses Daftar Ulang",
-        color: "bg-emerald-100 text-emerald-800" },
+        color: "bg-emerald-100 text-emerald-800",
+      },
       enrolled_full: {
         label: "Lunas Daftar Ulang",
-        color: "bg-primary-100 text-primary-800 border border-primary-200" },
+        color: "bg-primary-100 text-primary-800 border border-primary-200",
+      },
       pindah_keluar: {
         label: "Pindah Keluar",
-        color: "bg-slate-100 text-slate-600 border border-slate-200" },
+        color: "bg-slate-100 text-slate-600 border border-slate-200",
+      },
       mengundurkan_diri: {
         label: "Mengundurkan Diri",
-        color: "bg-stone-100 text-stone-500 border border-stone-200 line-through" } };
+        color: "bg-stone-100 text-stone-500 border border-stone-200 line-through",
+      },
+    };
 
     const statusInfo = statusMap[s] || {
       label: status,
-      color: "bg-stone-100 text-stone-700" };
+      color: "bg-stone-100 text-stone-700",
+    };
 
     return (
       <span
@@ -1144,7 +1221,8 @@ function AdminPendaftarContent() {
     return new Date(dateString).toLocaleDateString("id-ID", {
       day: "numeric",
       month: "short",
-      year: "numeric" });
+      year: "numeric",
+    });
   };
 
   // Get active filter label
@@ -1154,7 +1232,13 @@ function AdminPendaftarContent() {
     <div className="space-y-6">
       {/* Refreshing Overlay */}
       {refreshing && (
-        <div onWheel={(e) => e.stopPropagation()} data-modal="true" aria-modal="true" role="dialog" className="fixed inset-0 bg-white/40 backdrop-blur-[1px] z-[100] flex items-start md:items-center pt-10 md:pt-0 pb-20 md:pb-0 justify-center pointer-events-none overflow-y-auto overflow-x-hidden p-4 overscroll-contain custom-scrollbar">
+        <div
+          onWheel={(e) => e.stopPropagation()}
+          data-modal="true"
+          aria-modal="true"
+          role="dialog"
+          className="fixed inset-0 bg-white/40 backdrop-blur-[1px] z-[100] flex items-start md:items-center pt-10 md:pt-0 pb-20 md:pb-0 justify-center pointer-events-none overflow-y-auto overflow-x-hidden p-4 overscroll-contain custom-scrollbar"
+        >
           <div className="bg-white/80 px-6 py-3 rounded-2xl shadow-2xl border border-stone-100 flex items-center gap-3 animate-in fade-in zoom-in duration-300">
             <Loader2 className="w-5 h-5 animate-spin text-primary-600" />
             <span className="text-sm font-bold text-stone-700 tracking-tight">
@@ -1206,37 +1290,36 @@ function AdminPendaftarContent() {
             </div>
           </div>
           <div className="flex flex-wrap items-center gap-2 xl:justify-end">
-            {userRole &&
-              ["admin_super", "admin", "penguji"].includes(userRole) && (
-                <>
-                  <button
-                    onClick={() => updateFilter("mengundurkan_diri")}
-                    className="flex items-center gap-2 px-3 md:px-4 py-2 bg-slate-500 hover:bg-slate-600 text-white rounded-2xl transition-colors text-sm"
-                    title="Lihat pendaftar yang mengundurkan diri"
-                  >
-                    <LogOut className="w-4 h-4" />
-                    <span className="hidden sm:inline">Mengundurkan Diri</span>
-                    {mengundurkanDiriCount > 0 && (
-                      <span className="bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-full min-w-[20px] text-center">
-                        {mengundurkanDiriCount}
-                      </span>
-                    )}
-                  </button>
-                  <Link
-                    href="/dashboard/admin/pendaftar/trash"
-                    className="flex items-center gap-2 px-3 md:px-4 py-2 bg-stone-600 hover:bg-stone-700 text-white rounded-2xl transition-colors text-sm"
-                    title="Lihat data terhapus"
-                  >
-                    <Trash2 className="w-4 h-4" />
-                    <span className="hidden sm:inline">Sampah</span>
-                    {trashCount > 0 && (
-                      <span className="bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-full min-w-[20px] text-center">
-                        {trashCount}
-                      </span>
-                    )}
-                  </Link>
-                </>
-              )}
+            {userRole && ["admin_super", "admin", "penguji"].includes(userRole) && (
+              <>
+                <button
+                  onClick={() => updateFilter("mengundurkan_diri")}
+                  className="flex items-center gap-2 px-3 md:px-4 py-2 bg-slate-500 hover:bg-slate-600 text-white rounded-2xl transition-colors text-sm"
+                  title="Lihat pendaftar yang mengundurkan diri"
+                >
+                  <LogOut className="w-4 h-4" />
+                  <span className="hidden sm:inline">Mengundurkan Diri</span>
+                  {mengundurkanDiriCount > 0 && (
+                    <span className="bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-full min-w-[20px] text-center">
+                      {mengundurkanDiriCount}
+                    </span>
+                  )}
+                </button>
+                <Link
+                  href="/dashboard/admin/pendaftar/trash"
+                  className="flex items-center gap-2 px-3 md:px-4 py-2 bg-stone-600 hover:bg-stone-700 text-white rounded-2xl transition-colors text-sm"
+                  title="Lihat data terhapus"
+                >
+                  <Trash2 className="w-4 h-4" />
+                  <span className="hidden sm:inline">Sampah</span>
+                  {trashCount > 0 && (
+                    <span className="bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-full min-w-[20px] text-center">
+                      {trashCount}
+                    </span>
+                  )}
+                </Link>
+              </>
+            )}
             <button
               onClick={() => handleExport("excel")}
               disabled={exporting}
@@ -1269,28 +1352,26 @@ function AdminPendaftarContent() {
               className="flex items-center gap-2 px-3 md:px-4 py-2.5 bg-white hover:bg-stone-50 border border-stone-200 text-stone-700 rounded-3xl font-bold transition-all shadow-2xl hover:shadow-xl text-sm disabled:opacity-50"
               title="Muat Ulang"
             >
-              <RefreshCw
-                className={`w-4 h-4 ${refreshing ? "animate-spin" : ""}`}
-              />
+              <RefreshCw className={`w-4 h-4 ${refreshing ? "animate-spin" : ""}`} />
             </button>
             {userRole && ["admin_super", "admin"].includes(userRole) && (
               <>
-              <Link
-                href="/dashboard/admin/pendaftar/tambah?type=BARU"
-                className="flex items-center gap-2 px-3 md:px-4 py-2.5 bg-violet-700 hover:bg-violet-800 text-white rounded-3xl font-bold shadow-2xl shadow-violet-700/20 transition-all text-sm ml-1"
-                title="Daftarkan Santri Reguler"
-              >
-                <Plus className="w-4 h-4" />
-                <span className="hidden sm:inline">Daftar Reguler</span>
-              </Link>
-              <Link
-                href="/dashboard/admin/pendaftar/tambah?type=PINDAHAN"
-                className="flex items-center gap-2 px-3 md:px-4 py-2.5 bg-purple-600 hover:bg-purple-700 text-white rounded-3xl font-bold shadow-2xl shadow-purple-600/20 transition-all text-sm"
-                title="Daftarkan Santri Pindahan"
-              >
-                <Shuffle className="w-4 h-4" />
-                <span className="hidden sm:inline">Daftar Pindahan</span>
-              </Link>
+                <Link
+                  href="/dashboard/admin/pendaftar/tambah?type=BARU"
+                  className="flex items-center gap-2 px-3 md:px-4 py-2.5 bg-violet-700 hover:bg-violet-800 text-white rounded-3xl font-bold shadow-2xl shadow-violet-700/20 transition-all text-sm ml-1"
+                  title="Daftarkan Santri Reguler"
+                >
+                  <Plus className="w-4 h-4" />
+                  <span className="hidden sm:inline">Daftar Reguler</span>
+                </Link>
+                <Link
+                  href="/dashboard/admin/pendaftar/tambah?type=PINDAHAN"
+                  className="flex items-center gap-2 px-3 md:px-4 py-2.5 bg-purple-600 hover:bg-purple-700 text-white rounded-3xl font-bold shadow-2xl shadow-purple-600/20 transition-all text-sm"
+                  title="Daftarkan Santri Pindahan"
+                >
+                  <Shuffle className="w-4 h-4" />
+                  <span className="hidden sm:inline">Daftar Pindahan</span>
+                </Link>
               </>
             )}
           </div>
@@ -1340,9 +1421,7 @@ function AdminPendaftarContent() {
               {canViewKeuangan && (
                 <optgroup label="--- Pembayaran ---">
                   <option value="belum_bayar">Belum Bayar (Draft)</option>
-                  <option value="menunggu_verifikasi_pembayaran">
-                    Menunggu Verifikasi Bayar
-                  </option>
+                  <option value="menunggu_verifikasi_pembayaran">Menunggu Verifikasi Bayar</option>
                   <option value="sudah_bayar">Terdaftar (Sudah Bayar)</option>
                   <option value="pembayaran_ditolak">Pembayaran Ditolak</option>
                 </optgroup>
@@ -1351,26 +1430,15 @@ function AdminPendaftarContent() {
               {canViewBerkas && (
                 <>
                   <optgroup label="--- Data Lengkap ---">
-                    <option value="belum_isi_data">
-                      Belum Isi Data Lengkap
-                    </option>
-                    <option value="sudah_isi_data">
-                      Sudah Isi Data Lengkap
-                    </option>
+                    <option value="belum_isi_data">Belum Isi Data Lengkap</option>
+                    <option value="sudah_isi_data">Sudah Isi Data Lengkap</option>
                   </optgroup>
                   <optgroup label="--- Dokumen ---">
-                    <option value="belum_upload_dokumen">
-                      Belum Upload Dokumen
-                    </option>
-                    <option
-                      value="menunggu_verifikasi_dokumen"
-                      className="font-bold bg-yellow-50"
-                    >
+                    <option value="belum_upload_dokumen">Belum Upload Dokumen</option>
+                    <option value="menunggu_verifikasi_dokumen" className="font-bold bg-yellow-50">
                       Menunggu Verifikasi Dokumen (Data Lengkap)
                     </option>
-                    <option value="dokumen_terverifikasi">
-                      Berkas Lengkap (Siap Ujian)
-                    </option>
+                    <option value="dokumen_terverifikasi">Berkas Lengkap (Siap Ujian)</option>
                     <option value="dokumen_ditolak">Dokumen Ditolak</option>
                   </optgroup>
                 </>
@@ -1381,7 +1449,10 @@ function AdminPendaftarContent() {
                   <optgroup label="--- Ujian & Wawancara ---">
                     <option
                       value="terjadwal_ujian"
-                      className={isPenguji ? "font-bold bg-purple-50" : ""} > Terjadwal Ujian{isPenguji ? "(PRIORITAS)" : ""}
+                      className={isPenguji ? "font-bold bg-purple-50" : ""}
+                    >
+                      {" "}
+                      Terjadwal Ujian{isPenguji ? "(PRIORITAS)" : ""}
                     </option>
                     <option value="sedang_seleksi">Sedang Seleksi</option>
                     <option value="belum_ujian">Belum Ujian</option>
@@ -1390,9 +1461,7 @@ function AdminPendaftarContent() {
                   </optgroup>
                   <optgroup label="--- Penerimaan ---">
                     <option value="diterima">Diterima</option>
-                    <option value="belum_daftar_ulang">
-                      Belum Daftar Ulang
-                    </option>
+                    <option value="belum_daftar_ulang">Belum Daftar Ulang</option>
                     <option value="sudah_daftar_ulang">Semua Daftar Ulang</option>
                     <option value="daftar_ulang_sedang">Proses Daftar Ulang (Cicil)</option>
                     <option value="daftar_ulang_selesai">Lunas Daftar Ulang</option>
@@ -1404,9 +1473,7 @@ function AdminPendaftarContent() {
                 <option value="draft">Draft</option>
                 {canViewKeuangan && (
                   <>
-                    <option value="payment_verification">
-                      Verifikasi Pembayaran
-                    </option>
+                    <option value="payment_verification">Verifikasi Pembayaran</option>
                     <option value="paid">Terdaftar (paid)</option>
                   </>
                 )}
@@ -1500,9 +1567,8 @@ function AdminPendaftarContent() {
                   setSearchInput("");
                   setStatusFilter("");
                   setJenjangFilter("");
-                                    const defaultTA =
-                    tahunAjaranList.find((ta) => ta.is_active) ||
-                    tahunAjaranList[0];
+                  const defaultTA =
+                    tahunAjaranList.find((ta) => ta.is_active) || tahunAjaranList[0];
                   setTahunAjaranFilter(defaultTA ? defaultTA.id : "");
                   setTipePendaftaranFilter("");
                   // Clear location filters
@@ -1703,7 +1769,8 @@ function AdminPendaftarContent() {
                       cancelButtonColor: "#94a3b8",
                       confirmButtonText: "Ya, Buang ke Sampah",
                       cancelButtonText: "Batal",
-                      reverseButtons: true });
+                      reverseButtons: true,
+                    });
                     if (!result.isConfirmed) return;
 
                     try {
@@ -1711,13 +1778,14 @@ function AdminPendaftarContent() {
                       const response = await fetch("/api/admin/pendaftar/bulk-delete", {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ ids: selectedIds }) });
+                        body: JSON.stringify({ ids: selectedIds }),
+                      });
                       const data = await response.json();
                       if (!response.ok) throw new Error(data.error || "Gagal");
-                      
+
                       Swal.fire("Berhasil", data.message, "success");
                       setSelectedIds([]);
-                      setTrashCount(prev => prev + selectedIds.length);
+                      setTrashCount((prev) => prev + selectedIds.length);
                       fetchPendaftar();
                     } catch (error: any) {
                       Swal.fire("Error", error.message, "error");
@@ -1735,12 +1803,22 @@ function AdminPendaftarContent() {
 
               {pendaftar
                 .filter((p) => selectedIds.includes(p.id))
-                .some((p) => p.status_pendaftaran === "announced" || p.status_pendaftaran === "cadangan") && (
+                .some(
+                  (p) => p.status_pendaftaran === "announced" || p.status_pendaftaran === "cadangan"
+                ) && (
                 <button
-                  onClick={() => handlePromoteCadangan(selectedIds.filter(id => {
-                    const p = pendaftar.find(item => item.id === id);
-                    return p && (p.status_pendaftaran === "announced" || p.status_pendaftaran === "cadangan");
-                  }))}
+                  onClick={() =>
+                    handlePromoteCadangan(
+                      selectedIds.filter((id) => {
+                        const p = pendaftar.find((item) => item.id === id);
+                        return (
+                          p &&
+                          (p.status_pendaftaran === "announced" ||
+                            p.status_pendaftaran === "cadangan")
+                        );
+                      })
+                    )
+                  }
                   disabled={isPromotingCadangan}
                   className="flex items-center justify-center gap-2 px-5 md:px-8 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-3xl font-black transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-2xl active:scale-95 text-sm"
                 >
@@ -1783,7 +1861,8 @@ function AdminPendaftarContent() {
               Tidak Ada Data Ditemukan
             </h3>
             <p className="text-stone-500 text-sm max-w-sm mx-auto">
-              Tidak ada data pendaftar yang cocok dengan filter atau kata kunci pencarian Anda saat ini.
+              Tidak ada data pendaftar yang cocok dengan filter atau kata kunci pencarian Anda saat
+              ini.
             </p>
           </div>
         ) : (
@@ -1814,26 +1893,34 @@ function AdminPendaftarContent() {
                         >
                           {item.nomor_pendaftaran}
                         </Link>
-                        <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 bg-purple-100 text-purple-700 rounded-full whitespace-nowrap inline-block shrink-0">
-                          {item.jenjang}
-                        </span>
+                        {item.nomor_pendaftaran?.startsWith("SMA") &&
+                        (item.jenjang === "IL" || item.catatan_pindahan?.includes("Pengalihan")) ? (
+                          <span
+                            className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 bg-amber-100 text-amber-800 border border-amber-300 rounded-full whitespace-nowrap inline-flex items-center gap-1 shrink-0"
+                            title="Pendaftaran awal SMA dialihkan ke I'dad Lughowi"
+                          >
+                            SMA ➔ IL
+                          </span>
+                        ) : (
+                          <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 bg-purple-100 text-purple-700 rounded-full whitespace-nowrap inline-block shrink-0">
+                            {item.jenjang}
+                          </span>
+                        )}
                       </div>
                       <Link
                         href={`/dashboard/admin/pendaftar/${item.id}`}
                         className="font-black text-primary-950 hover:text-primary-700 leading-tight text-sm flex items-center gap-1.5 flex-wrap group transition-colors"
                       >
-                        <span className="group-hover:underline underline-offset-2">{toTitleCase(item.nama_lengkap)}</span>
+                        <span className="group-hover:underline underline-offset-2">
+                          {toTitleCase(item.nama_lengkap)}
+                        </span>
                         {item.tipe_pendaftaran === "PINDAHAN" && (
                           <span className="px-1.5 py-0.5 bg-violet-100 text-violet-700 rounded-md text-[9px] font-black uppercase tracking-wider whitespace-nowrap inline-block shrink-0">
                             PINDAHAN
                           </span>
                         )}
                       </Link>
-                      {item.no_hp && (
-                        <p className="text-xs text-stone-500 mt-0.5">
-                          {item.no_hp}
-                        </p>
-                      )}
+                      {item.no_hp && <p className="text-xs text-stone-500 mt-0.5">{item.no_hp}</p>}
                       <div className="flex flex-wrap items-center gap-2 mt-2">
                         {formatStatus(item.status_pendaftaran, item.data_lengkap)}
                         <span className="text-[10px] text-stone-500">
@@ -1848,10 +1935,7 @@ function AdminPendaftarContent() {
                               onClick={() => {
                                 setSelectedPendaftarId(item.id);
                                 setSelectedDocType("kartu_keluarga");
-                                setTimeout(
-                                  () => docInputRef.current?.click(),
-                                  100,
-                                );
+                                setTimeout(() => docInputRef.current?.click(), 100);
                               }}
                               className="px-2 py-1 bg-primary-50 text-primary-700 rounded-2xl text-[9px] font-black uppercase flex items-center gap-1 border border-primary-100"
                             >
@@ -1861,10 +1945,7 @@ function AdminPendaftarContent() {
                               onClick={() => {
                                 setSelectedPendaftarId(item.id);
                                 setSelectedDocType("akta_kelahiran");
-                                setTimeout(
-                                  () => docInputRef.current?.click(),
-                                  100,
-                                );
+                                setTimeout(() => docInputRef.current?.click(), 100);
                               }}
                               className="px-2 py-1 bg-primary-50 text-primary-700 rounded-2xl text-[9px] font-black uppercase flex items-center gap-1 border border-primary-100"
                             >
@@ -1879,10 +1960,7 @@ function AdminPendaftarContent() {
                             <button
                               onClick={() => {
                                 setSelectedPayId(item.pembayaran![0].id);
-                                setTimeout(
-                                  () => payInputRef.current?.click(),
-                                  100,
-                                );
+                                setTimeout(() => payInputRef.current?.click(), 100);
                               }}
                               className="px-2 py-1 bg-gold-50 text-gold-700 rounded-2xl text-[9px] font-black uppercase flex items-center gap-1 border border-gold-100"
                             >
@@ -1898,54 +1976,62 @@ function AdminPendaftarContent() {
                           <Eye className="w-3.5 h-3.5" /> Buka Detail
                         </Link>
 
-                        <ActionDropdown 
+                        <ActionDropdown
                           items={[
-                              {
-                                label: "Buka Detail",
-                                icon: <Eye className="w-4 h-4" />,
-                                onClick: () => router.push(`/dashboard/admin/pendaftar/${item.id}`) },
-                              {
-                                label: "Verifikasi Dokumen",
-                                icon: <FileCheck className="w-4 h-4" />,
-                                onClick: () => router.push(`/dashboard/admin/verifikasi-dokumen`),
-                                hidden: !isBerkas
-                              },
-                              {
-                                label: "Verifikasi Pembayaran",
-                                icon: <CreditCard className="w-4 h-4" />,
-                                onClick: () => router.push(`/dashboard/admin/verifikasi-pembayaran`),
-                                hidden: !isKeuangan
-                              },
-                              {
-                                label: "Diterima (Promosikan)",
-                                icon: <CheckSquare className="w-4 h-4" />,
-                                onClick: () => handlePromoteCadangan([item.id]),
-                                variant: "success",
-                                hidden: !isAdminSuper || (item.status_pendaftaran !== "announced" && item.status_pendaftaran !== "cadangan")
-                              },
-                              {
-                                label: "Terbitkan Surat Pengumuman",
-                                icon: <FileText className="w-4 h-4" />,
-                                onClick: () => setSuratDialogPendaftar({ id: item.id, nama_lengkap: item.nama_lengkap, nomor_pendaftaran: item.nomor_pendaftaran }),
-                                hidden: !isAdminSuper
-                              },
-                              {
-                                label: "Mengundurkan Diri",
-                                icon: <LogOut className="w-4 h-4" />,
-                                onClick: () => handleSingleMengundurkanDiri(item.id),
-                                variant: "warning",
-                                hidden: !isAdminSuper
-                              },
-                              {
-                                label: "Hapus ke Sampah",
-                                icon: <Trash2 className="w-4 h-4" />,
-                                onClick: () => handleOpenDelete(item),
-                                variant: "danger",
-                                hidden: !isAdminSuper
-                              }
-                            ]} 
-                          />
-
+                            {
+                              label: "Buka Detail",
+                              icon: <Eye className="w-4 h-4" />,
+                              onClick: () => router.push(`/dashboard/admin/pendaftar/${item.id}`),
+                            },
+                            {
+                              label: "Verifikasi Dokumen",
+                              icon: <FileCheck className="w-4 h-4" />,
+                              onClick: () => router.push(`/dashboard/admin/verifikasi-dokumen`),
+                              hidden: !isBerkas,
+                            },
+                            {
+                              label: "Verifikasi Pembayaran",
+                              icon: <CreditCard className="w-4 h-4" />,
+                              onClick: () => router.push(`/dashboard/admin/verifikasi-pembayaran`),
+                              hidden: !isKeuangan,
+                            },
+                            {
+                              label: "Diterima (Promosikan)",
+                              icon: <CheckSquare className="w-4 h-4" />,
+                              onClick: () => handlePromoteCadangan([item.id]),
+                              variant: "success",
+                              hidden:
+                                !isAdminSuper ||
+                                (item.status_pendaftaran !== "announced" &&
+                                  item.status_pendaftaran !== "cadangan"),
+                            },
+                            {
+                              label: "Terbitkan Surat Pengumuman",
+                              icon: <FileText className="w-4 h-4" />,
+                              onClick: () =>
+                                setSuratDialogPendaftar({
+                                  id: item.id,
+                                  nama_lengkap: item.nama_lengkap,
+                                  nomor_pendaftaran: item.nomor_pendaftaran,
+                                }),
+                              hidden: !isAdminSuper,
+                            },
+                            {
+                              label: "Mengundurkan Diri",
+                              icon: <LogOut className="w-4 h-4" />,
+                              onClick: () => handleSingleMengundurkanDiri(item.id),
+                              variant: "warning",
+                              hidden: !isAdminSuper,
+                            },
+                            {
+                              label: "Hapus ke Sampah",
+                              icon: <Trash2 className="w-4 h-4" />,
+                              onClick: () => handleOpenDelete(item),
+                              variant: "danger",
+                              hidden: !isAdminSuper,
+                            },
+                          ]}
+                        />
                       </div>
                     </div>
                   </div>
@@ -1999,7 +2085,7 @@ function AdminPendaftarContent() {
                   {pendaftar.map((item) => (
                     <tr
                       key={item.id}
-                      className={`group hover:bg-primary-50 transition-colors ${ selectedIds.includes(item.id) ? "bg-purple-50" : "" }`}
+                      className={`group hover:bg-primary-50 transition-colors ${selectedIds.includes(item.id) ? "bg-purple-50" : ""}`}
                     >
                       <td className="px-4 py-3 text-center">
                         <button
@@ -2027,7 +2113,9 @@ function AdminPendaftarContent() {
                             href={`/dashboard/admin/pendaftar/${item.id}`}
                             className="font-bold text-stone-900 hover:text-primary-700 flex items-center gap-1.5 flex-wrap group transition-colors"
                           >
-                            <span className="group-hover:underline underline-offset-2">{toTitleCase(item.nama_lengkap)}</span>
+                            <span className="group-hover:underline underline-offset-2">
+                              {toTitleCase(item.nama_lengkap)}
+                            </span>
                             {item.tipe_pendaftaran === "PINDAHAN" && (
                               <span className="px-1.5 py-0.5 bg-violet-100 text-violet-700 rounded-md text-[9px] font-black uppercase tracking-wider whitespace-nowrap inline-block shrink-0">
                                 PINDAHAN
@@ -2037,9 +2125,7 @@ function AdminPendaftarContent() {
                         </div>
                       </td>
                       <td className="px-4 py-3">
-                        <span className="font-mono text-sm text-stone-700">
-                          {item.nik}
-                        </span>
+                        <span className="font-mono text-sm text-stone-700">{item.nik}</span>
                       </td>
                       {(isAdminSuper || isBerkas) && (
                         <td className="px-4 py-3">
@@ -2053,23 +2139,36 @@ function AdminPendaftarContent() {
                             {item.email && (
                               <div className="flex items-center gap-1 text-stone-600">
                                 <Mail className="w-3 h-3" />
-                                <span className="text-xs break-all">
-                                  {item.email}
-                                </span>
+                                <span className="text-xs break-all">{item.email}</span>
                               </div>
                             )}
                           </div>
                         </td>
                       )}
                       <td className="px-4 py-3">
-                        <span className="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-bold whitespace-nowrap inline-block shrink-0">
-                          {item.jenjang}
-                        </span>
+                        {item.nomor_pendaftaran?.startsWith("SMA") &&
+                        (item.jenjang === "IL" || item.catatan_pindahan?.includes("Pengalihan")) ? (
+                          <div className="flex flex-col gap-0.5 items-start">
+                            <span
+                              className="px-2.5 py-1 bg-amber-100 text-amber-900 border border-amber-300 rounded-full text-xs font-black inline-flex items-center gap-1 shadow-xs"
+                              title="Pendaftaran awal SMA dialihkan ke I'dad Lughowi"
+                            >
+                              SMA ➔ IL
+                            </span>
+                            <span className="text-[10px] text-amber-700 font-semibold">
+                              Pengalihan IL
+                            </span>
+                          </div>
+                        ) : (
+                          <span className="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-bold whitespace-nowrap inline-block shrink-0">
+                            {item.jenjang}
+                          </span>
+                        )}
                       </td>
                       <td className="px-4 py-3">
                         {formatStatus(item.status_pendaftaran, item.data_lengkap)}
                       </td>
-                      
+
                       <td className="px-4 py-3 whitespace-nowrap sticky right-0 bg-white/95 backdrop-blur z-10 shadow-[-10px_0_15px_-3px_rgba(0,0,0,0.05)] group-hover:bg-primary-50 transition-colors">
                         <div className="flex items-center justify-end gap-2">
                           <Link
@@ -2081,54 +2180,63 @@ function AdminPendaftarContent() {
                             <span>Detail</span>
                           </Link>
 
-                          <ActionDropdown 
+                          <ActionDropdown
                             items={[
                               {
                                 label: "Buka Detail",
                                 icon: <Eye className="w-4 h-4" />,
-                                onClick: () => router.push(`/dashboard/admin/pendaftar/${item.id}`) },
+                                onClick: () => router.push(`/dashboard/admin/pendaftar/${item.id}`),
+                              },
                               {
                                 label: "Verifikasi Dokumen",
                                 icon: <FileCheck className="w-4 h-4" />,
                                 onClick: () => router.push(`/dashboard/admin/verifikasi-dokumen`),
-                                hidden: !isBerkas
+                                hidden: !isBerkas,
                               },
                               {
                                 label: "Verifikasi Pembayaran",
                                 icon: <CreditCard className="w-4 h-4" />,
-                                onClick: () => router.push(`/dashboard/admin/verifikasi-pembayaran`),
-                                hidden: !isKeuangan
+                                onClick: () =>
+                                  router.push(`/dashboard/admin/verifikasi-pembayaran`),
+                                hidden: !isKeuangan,
                               },
                               {
                                 label: "Diterima (Promosikan)",
                                 icon: <CheckSquare className="w-4 h-4" />,
                                 onClick: () => handlePromoteCadangan([item.id]),
                                 variant: "success",
-                                hidden: !isAdminSuper || (item.status_pendaftaran !== "announced" && item.status_pendaftaran !== "cadangan")
+                                hidden:
+                                  !isAdminSuper ||
+                                  (item.status_pendaftaran !== "announced" &&
+                                    item.status_pendaftaran !== "cadangan"),
                               },
                               {
                                 label: "Terbitkan Surat Pengumuman",
                                 icon: <FileText className="w-4 h-4" />,
-                                onClick: () => setSuratDialogPendaftar({ id: item.id, nama_lengkap: item.nama_lengkap, nomor_pendaftaran: item.nomor_pendaftaran }),
-                                hidden: !isAdminSuper
+                                onClick: () =>
+                                  setSuratDialogPendaftar({
+                                    id: item.id,
+                                    nama_lengkap: item.nama_lengkap,
+                                    nomor_pendaftaran: item.nomor_pendaftaran,
+                                  }),
+                                hidden: !isAdminSuper,
                               },
                               {
                                 label: "Mengundurkan Diri",
                                 icon: <LogOut className="w-4 h-4" />,
                                 onClick: () => handleSingleMengundurkanDiri(item.id),
                                 variant: "warning",
-                                hidden: !isAdminSuper
+                                hidden: !isAdminSuper,
                               },
                               {
                                 label: "Hapus ke Sampah",
                                 icon: <Trash2 className="w-4 h-4" />,
                                 onClick: () => handleOpenDelete(item),
                                 variant: "danger",
-                                hidden: !isAdminSuper
-                              }
-                            ]} 
+                                hidden: !isAdminSuper,
+                              },
+                            ]}
                           />
-
                         </div>
                       </td>
                     </tr>
@@ -2147,15 +2255,9 @@ function AdminPendaftarContent() {
                   </span>{" "}
                   -{" "}
                   <span className="font-bold text-stone-900">
-                    {Math.min(
-                      pagination.page * pagination.limit,
-                      pagination.total,
-                    )}
+                    {Math.min(pagination.page * pagination.limit, pagination.total)}
                   </span>{" "}
-                  dari{" "}
-                  <span className="font-bold text-stone-900">
-                    {pagination.total}
-                  </span>{" "}
+                  dari <span className="font-bold text-stone-900">{pagination.total}</span>{" "}
                   pendaftar
                 </div>
 
@@ -2169,10 +2271,7 @@ function AdminPendaftarContent() {
                   </button>
 
                   <div className="flex items-center gap-1 md:gap-2 overflow-x-auto max-w-[200px] md:max-w-none px-1 hide-scrollbar">
-                    {Array.from(
-                      { length: pagination.totalPages },
-                      (_, i) => i + 1,
-                    )
+                    {Array.from({ length: pagination.totalPages }, (_, i) => i + 1)
                       .filter((page) => {
                         // Show first, last, current, and adjacent pages
                         return (
@@ -2182,16 +2281,13 @@ function AdminPendaftarContent() {
                         );
                       })
                       .map((page, idx, arr) => (
-                        <div
-                          key={page}
-                          className="flex items-center gap-2 shrink-0"
-                        >
+                        <div key={page} className="flex items-center gap-2 shrink-0">
                           {idx > 0 && arr[idx - 1] !== page - 1 && (
                             <span className="text-stone-500">...</span>
                           )}
                           <button
                             onClick={() => handlePageChange(page)}
-                            className={`w-8 h-8 md:w-10 md:h-10 rounded-2xl font-medium transition-colors text-sm md:text-base ${ page === pagination.page ? "bg-primary-700 text-white" : "bg-white border-2 border-stone-200 hover:bg-primary-50 hover:border-primary-300" }`}
+                            className={`w-8 h-8 md:w-10 md:h-10 rounded-2xl font-medium transition-colors text-sm md:text-base ${page === pagination.page ? "bg-primary-700 text-white" : "bg-white border-2 border-stone-200 hover:bg-primary-50 hover:border-primary-300"}`}
                           >
                             {page}
                           </button>
@@ -2221,13 +2317,17 @@ function AdminPendaftarContent() {
       )}
       {/* Announcement Modal */}
       {isAnnouncementModalOpen && selectedPendaftar && (
-        <div onWheel={(e) => e.stopPropagation()} data-modal="true" aria-modal="true" role="dialog" className="fixed inset-0 z-50 flex items-start md:items-center pt-10 md:pt-0 pb-20 md:pb-0 justify-center bg-black/50 p-4 overflow-y-auto overscroll-contain custom-scrollbar backdrop-blur-sm">
+        <div
+          onWheel={(e) => e.stopPropagation()}
+          data-modal="true"
+          aria-modal="true"
+          role="dialog"
+          className="fixed inset-0 z-50 flex items-start md:items-center pt-10 md:pt-0 pb-20 md:pb-0 justify-center bg-black/50 p-4 overflow-y-auto overscroll-contain custom-scrollbar backdrop-blur-sm"
+        >
           <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg border-2 border-stone-100 animate-in fade-in zoom-in duration-200">
             <div className="flex justify-between items-center p-6 border-b border-stone-100">
               <div>
-                <h3 className="text-xl font-bold text-stone-900">
-                  Input Hasil Seleksi
-                </h3>
+                <h3 className="text-xl font-bold text-stone-900">Input Hasil Seleksi</h3>
                 <p className="text-sm text-stone-500 mt-1">
                   {toTitleCase(selectedPendaftar.nama_lengkap)}
                 </p>
@@ -2254,9 +2354,10 @@ function AdminPendaftarContent() {
                       onClick={() =>
                         setAnnouncementForm({
                           ...announcementForm,
-                          status_kelulusan: status })
+                          status_kelulusan: status,
+                        })
                       }
-                      className={`py-3 px-4 rounded-3xl border-2 font-bold transition-all ${ announcementForm.status_kelulusan === status ? status === "Diterima" ? "border-green-500 bg-green-50 text-green-700" : status === "Cadangan" ? "border-yellow-500 bg-yellow-50 text-yellow-700" : "border-red-500 bg-red-50 text-red-700" : "border-stone-200 bg-white text-stone-500 hover:border-stone-300" }`}
+                      className={`py-3 px-4 rounded-3xl border-2 font-bold transition-all ${announcementForm.status_kelulusan === status ? (status === "Diterima" ? "border-green-500 bg-green-50 text-green-700" : status === "Cadangan" ? "border-yellow-500 bg-yellow-50 text-yellow-700" : "border-red-500 bg-red-50 text-red-700") : "border-stone-200 bg-white text-stone-500 hover:border-stone-300"}`}
                     >
                       {status}
                     </button>
@@ -2275,7 +2376,8 @@ function AdminPendaftarContent() {
                   onChange={(e) =>
                     setAnnouncementForm({
                       ...announcementForm,
-                      catatan: e.target.value })
+                      catatan: e.target.value,
+                    })
                   }
                   placeholder="Tambahkan catatan khusus jika ada..."
                   className="w-full px-4 py-3 border-2 border-stone-200 rounded-3xl focus:border-primary-500 focus:outline-none transition-colors"
@@ -2295,15 +2397,16 @@ function AdminPendaftarContent() {
                     onChange={(e) =>
                       setAnnouncementForm({
                         ...announcementForm,
-                        surat_keputusan_url: e.target.value })
+                        surat_keputusan_url: e.target.value,
+                      })
                     }
                     placeholder="https://docs.google.com/..."
                     className="w-full pl-12 pr-4 py-3 border-2 border-stone-200 rounded-3xl focus:border-primary-500 focus:outline-none transition-colors"
                   />
                 </div>
                 <p className="text-xs text-stone-500 mt-2">
-                  Masukkan link file Surat Keputusan (SK) atau Surat Pengumuman
-                  yang bisa diunduh oleh pendaftar.
+                  Masukkan link file Surat Keputusan (SK) atau Surat Pengumuman yang bisa diunduh
+                  oleh pendaftar.
                 </p>
               </div>
 
@@ -2342,7 +2445,13 @@ function AdminPendaftarContent() {
 
       {/* Delete Confirmation Modal */}
       {isDeleteModalOpen && deletingPendaftar && (
-        <div onWheel={(e) => e.stopPropagation()} data-modal="true" aria-modal="true" role="dialog" className="fixed inset-0 z-50 flex items-start md:items-center pt-10 md:pt-0 pb-20 md:pb-0 justify-center bg-black/50 p-4 overflow-y-auto overflow-x-hidden overscroll-contain custom-scrollbar backdrop-blur-sm">
+        <div
+          onWheel={(e) => e.stopPropagation()}
+          data-modal="true"
+          aria-modal="true"
+          role="dialog"
+          className="fixed inset-0 z-50 flex items-start md:items-center pt-10 md:pt-0 pb-20 md:pb-0 justify-center bg-black/50 p-4 overflow-y-auto overflow-x-hidden overscroll-contain custom-scrollbar backdrop-blur-sm"
+        >
           <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md border-2 border-red-100 animate-in fade-in zoom-in duration-200">
             <div className="flex justify-between items-center p-6 border-b border-red-100">
               <div className="flex items-center gap-3">
@@ -2350,12 +2459,8 @@ function AdminPendaftarContent() {
                   <Trash2 className="w-6 h-6 text-red-600" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold text-stone-900">
-                    Hapus Data Pendaftar
-                  </h3>
-                  <p className="text-sm text-stone-500">
-                    Data akan dipindahkan ke Sampah
-                  </p>
+                  <h3 className="text-lg font-bold text-stone-900">Hapus Data Pendaftar</h3>
+                  <p className="text-sm text-stone-500">Data akan dipindahkan ke Sampah</p>
                 </div>
               </div>
               <button
@@ -2369,10 +2474,10 @@ function AdminPendaftarContent() {
             <div className="p-6 space-y-4">
               <div className="bg-secondary-50 border-2 border-secondary-200 rounded-3xl p-4">
                 <p className="text-sm text-secondary-800 font-medium">
-                  <AlertTriangle className="w-4 h-4 inline-block mr-1 text-amber-500" /> Anda akan menghapus data{" "}
-                  <strong>{toTitleCase(deletingPendaftar.nama_lengkap)}</strong>{" "}
-                  ({deletingPendaftar.nomor_pendaftaran}). Data akan dipindahkan
-                  ke Sampah dan bisa di-restore kapan saja.
+                  <AlertTriangle className="w-4 h-4 inline-block mr-1 text-amber-500" /> Anda akan
+                  menghapus data <strong>{toTitleCase(deletingPendaftar.nama_lengkap)}</strong> (
+                  {deletingPendaftar.nomor_pendaftaran}). Data akan dipindahkan ke Sampah dan bisa
+                  di-restore kapan saja.
                 </p>
               </div>
 
@@ -2449,6 +2554,3 @@ export default function AdminPendaftarPage() {
     </Suspense>
   );
 }
-
-
-

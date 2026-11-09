@@ -3,17 +3,18 @@ import { NextResponse } from "next/server";
 import { logAdminAction } from "@/lib/audit";
 import { prisma } from "@/lib/prisma";
 import { delCache, invalidateAdminPendaftarCache } from "@/lib/redis";
-import { saveFileLocal } from "@/lib/storage/local";
 import { signFilePath } from "@/lib/storage/file-signing";
+import { saveFileLocal } from "@/lib/storage/local";
 import {
+  buildNomorSurat,
   generateSuratPengumumanHasil,
   getNextNomorSurat,
-  buildNomorSurat,
   nextKodeSurat,
   parseKodeSurat,
+  syncPendaftarKelulusanTransaction,
 } from "@/lib/surat/surat-pengumuman";
-import { enqueueWhatsapp } from "@/lib/whatsapp-queue";
 import { sendDocumentMessage } from "@/lib/wablas";
+import { enqueueWhatsapp } from "@/lib/whatsapp-queue";
 
 export const runtime = "nodejs";
 
@@ -38,7 +39,11 @@ export async function POST(request: Request) {
 
   try {
     const body = await request.json();
-    const { items, tanggalTerbit: rawTanggal, kirimWa = true } = body as {
+    const {
+      items,
+      tanggalTerbit: rawTanggal,
+      kirimWa = true,
+    } = body as {
       items: { pendaftarId: string; kelasDiterima?: string }[];
       tanggalTerbit?: string;
       kirimWa?: boolean;
@@ -52,7 +57,7 @@ export async function POST(request: Request) {
     const appUrl = process.env.NEXT_PUBLIC_APP_URL || "https://spmb.pesantren-ululalbaab.com";
 
     // Dapatkan nomor surat awal yang tersedia
-    let currentNext = await getNextNomorSurat(tanggal);
+    const currentNext = await getNextNomorSurat(tanggal);
     let currentKode: string | null = currentNext.kode;
 
     const results: any[] = [];
@@ -68,7 +73,11 @@ export async function POST(request: Request) {
       });
 
       if (!pendaftar) {
-        results.push({ pendaftarId: item.pendaftarId, success: false, error: "Pendaftar tidak ditemukan" });
+        results.push({
+          pendaftarId: item.pendaftarId,
+          success: false,
+          error: "Pendaftar tidak ditemukan",
+        });
         continue;
       }
 
@@ -79,7 +88,8 @@ export async function POST(request: Request) {
         item.kelasDiterima ||
         (pendaftar.jenjang?.toUpperCase().includes("IL")
           ? "IL Putra"
-          : pendaftar.jenjang?.toUpperCase().includes("SMA") || pendaftar.jenjang?.toUpperCase().includes("MA")
+          : pendaftar.jenjang?.toUpperCase().includes("SMA") ||
+              pendaftar.jenjang?.toUpperCase().includes("MA")
             ? "X SMA Putra"
             : "VII MTs Putra");
 
@@ -124,10 +134,8 @@ export async function POST(request: Request) {
           },
         });
 
-        await tx.pendaftar.update({
-          where: { id: pendaftar.id },
-          data: { status_pendaftaran: "accepted" },
-        });
+        // Sinkronisasi status pendaftar & pengalihan kelas (mis. SMA -> IL)
+        await syncPendaftarKelulusanTransaction(tx, pendaftar.id, targetKelas);
 
         // Simpan binary PDF ke tabel Dokumen untuk persistensi permanen (BYTEA)
         const existingDoc = await tx.dokumen.findFirst({
@@ -176,12 +184,12 @@ export async function POST(request: Request) {
           const suratDownloadUrl = `${appUrl}/api/files/${encodeURI(suratPath)}?k=${token}`;
 
           const { buildMessageHasilTes } = await import("@/lib/whatsapp-queue");
-        const messageContent = buildMessageHasilTes({
-          namaPeserta: pendaftar.nama_lengkap,
-          nomorPendaftaran: pendaftar.nomor_pendaftaran,
-          jenjang: pendaftar.jenjang,
-          tahunAjaran: (pendaftar as any).tahun_ajaran?.nama,
-        });
+          const messageContent = buildMessageHasilTes({
+            namaPeserta: pendaftar.nama_lengkap,
+            nomorPendaftaran: pendaftar.nomor_pendaftaran,
+            jenjang: pendaftar.jenjang,
+            tahunAjaran: (pendaftar as any).tahun_ajaran?.nama,
+          });
 
           const enqResult = await enqueueWhatsapp({
             pendaftarId: pendaftar.id,
@@ -239,6 +247,9 @@ export async function POST(request: Request) {
     });
   } catch (error: any) {
     console.error("POST /api/admin/surat-pengumuman/bulk-generate error:", error);
-    return NextResponse.json({ error: error.message || "Gagal generate surat massal" }, { status: 500 });
+    return NextResponse.json(
+      { error: error.message || "Gagal generate surat massal" },
+      { status: 500 }
+    );
   }
 }

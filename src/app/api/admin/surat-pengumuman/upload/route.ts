@@ -4,7 +4,7 @@ import { logAdminAction } from "@/lib/audit";
 import { prisma } from "@/lib/prisma";
 import { delCache, invalidateAdminPendaftarCache } from "@/lib/redis";
 import { saveFileLocal } from "@/lib/storage/local";
-import { getNextNomorSurat } from "@/lib/surat/surat-pengumuman";
+import { getNextNomorSurat, syncPendaftarKelulusanTransaction } from "@/lib/surat/surat-pengumuman";
 
 export const runtime = "nodejs";
 
@@ -124,10 +124,8 @@ export async function POST(request: Request) {
           published_by: admin.id,
         },
       });
-      await tx.pendaftar.update({
-        where: { id: pendaftarId },
-        data: { status_pendaftaran: "accepted" },
-      });
+      // Sinkronisasi status pendaftar & pengalihan kelas (mis. SMA -> IL)
+      await syncPendaftarKelulusanTransaction(tx, pendaftarId, kelasDiterima);
 
       // Persistensi permanen binary PDF ke tabel Dokumen (BYTEA)
       const existingDoc = await tx.dokumen.findFirst({

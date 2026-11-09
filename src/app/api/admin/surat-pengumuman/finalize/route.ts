@@ -11,6 +11,7 @@ import {
   getKodeTerpakai,
   nilaiKode,
   parseKodeSurat,
+  syncPendaftarKelulusanTransaction,
 } from "@/lib/surat/surat-pengumuman";
 import { notifySelectionResult, sendDocumentMessage } from "@/lib/wablas";
 
@@ -152,10 +153,8 @@ export async function POST(request: Request) {
         },
       });
 
-      await tx.pendaftar.update({
-        where: { id: pendaftarId },
-        data: { status_pendaftaran: "accepted" },
-      });
+      // Sinkronisasi status pendaftar & pengalihan kelas (mis. SMA -> IL)
+      await syncPendaftarKelulusanTransaction(tx, pendaftarId, kelasDiterima);
 
       // Persistensi permanen binary PDF ke tabel Dokumen (BYTEA)
       const existingDoc = await tx.dokumen.findFirst({

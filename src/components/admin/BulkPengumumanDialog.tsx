@@ -38,9 +38,7 @@ export function BulkPengumumanDialog({
   const [kirimWa, setKirimWa] = useState(true);
 
   // Tab 1: Generate state
-  const [tanggalTerbit, setTanggalTerbit] = useState(() =>
-    new Date().toISOString().slice(0, 10)
-  );
+  const [tanggalTerbit, setTanggalTerbit] = useState(() => new Date().toISOString().slice(0, 10));
   const [candidateClasses, setCandidateClasses] = useState<Record<string, string>>(() => {
     const map: Record<string, string> = {};
     candidates.forEach((c) => {
@@ -324,8 +322,9 @@ export function BulkPengumumanDialog({
                   <p className="font-semibold text-sm">Pembuatan Otomatis Sekali Klik</p>
                   <p className="mt-0.5 text-emerald-700">
                     Sistem akan otomatis memberikan nomor surat resmi berikutnya secara berurutan,
-                    meng-generate dokumen PDF resmi lengkap dengan kop & tanda tangan, memasangnya di
-                    dashboard santri, serta mengirimkan pesan WhatsApp ke masing-masing nomor wali.
+                    meng-generate dokumen PDF resmi lengkap dengan kop & tanda tangan, memasangnya
+                    di dashboard santri, serta mengirimkan pesan WhatsApp ke masing-masing nomor
+                    wali.
                   </p>
                 </div>
               </div>
@@ -362,31 +361,75 @@ export function BulkPengumumanDialog({
                   Daftar Santri Terpilih ({candidates.length} Santri)
                 </label>
                 <div className="border border-stone-200 rounded-xl overflow-hidden divide-y divide-stone-100 max-h-64 overflow-y-auto custom-scrollbar">
-                  {candidates.map((c, idx) => (
-                    <div
-                      key={c.id}
-                      className="flex items-center justify-between px-4 py-2.5 hover:bg-stone-50 text-xs"
-                    >
-                      <div className="flex items-center gap-3">
-                        <span className="font-mono text-stone-400 w-5">{idx + 1}.</span>
-                        <div>
-                          <p className="font-bold text-stone-900">{c.nama_lengkap}</p>
-                          <p className="text-stone-500 font-mono">{c.nomor_pendaftaran}</p>
+                  {candidates.map((c, idx) => {
+                    const isSmaCandidate =
+                      c.nomor_pendaftaran.startsWith("SMA") ||
+                      (c.jenjang || "").toUpperCase().includes("SMA") ||
+                      (c.jenjang || "").toUpperCase().includes("MA");
+                    const isIL = (candidateClasses[c.id] || "").toUpperCase().includes("IL");
+
+                    return (
+                      <div
+                        key={c.id}
+                        className="flex items-center justify-between px-4 py-2.5 hover:bg-stone-50 text-xs gap-2"
+                      >
+                        <div className="flex items-center gap-3 min-w-0">
+                          <span className="font-mono text-stone-400 w-5 shrink-0">{idx + 1}.</span>
+                          <div className="truncate">
+                            <p className="font-bold text-stone-900 truncate">{c.nama_lengkap}</p>
+                            <p className="text-stone-500 font-mono text-[11px]">
+                              {c.nomor_pendaftaran}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-1.5 shrink-0">
+                          {isSmaCandidate ? (
+                            <>
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  setCandidateClasses((prev) => ({
+                                    ...prev,
+                                    [c.id]: "X SMA Putra",
+                                  }))
+                                }
+                                className={`px-2 py-1 rounded-md text-[10px] font-black transition-all ${
+                                  !isIL
+                                    ? "bg-primary-600 text-white shadow-xs"
+                                    : "bg-stone-100 text-stone-600 hover:bg-stone-200"
+                                }`}
+                              >
+                                SMA
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  setCandidateClasses((prev) => ({ ...prev, [c.id]: "IL Putra" }))
+                                }
+                                className={`px-2 py-1 rounded-md text-[10px] font-black transition-all ${
+                                  isIL
+                                    ? "bg-amber-600 text-white shadow-xs"
+                                    : "bg-stone-100 text-stone-600 hover:bg-stone-200"
+                                }`}
+                              >
+                                IL (Alih)
+                              </button>
+                            </>
+                          ) : (
+                            <span className="text-stone-400 text-[11px]">Kelas:</span>
+                          )}
+                          <input
+                            type="text"
+                            value={candidateClasses[c.id] || "VII MTs Putra"}
+                            onChange={(e) =>
+                              setCandidateClasses((prev) => ({ ...prev, [c.id]: e.target.value }))
+                            }
+                            className="rounded-lg border border-stone-200 px-2 py-1 text-xs font-semibold text-stone-800 focus:border-emerald-500 focus:outline-none w-28 text-center"
+                          />
                         </div>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-stone-400">Kelas:</span>
-                        <input
-                          type="text"
-                          value={candidateClasses[c.id] || "VII MTs Putra"}
-                          onChange={(e) =>
-                            setCandidateClasses((prev) => ({ ...prev, [c.id]: e.target.value }))
-                          }
-                          className="rounded-lg border border-stone-200 px-2 py-1 text-xs font-medium text-stone-800 focus:border-emerald-500 focus:outline-none w-36 text-center"
-                        />
-                      </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
             </div>
