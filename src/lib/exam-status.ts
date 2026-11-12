@@ -6,10 +6,11 @@ import { prisma } from "./prisma";
 export async function markExamComponentAsComplete({
   jadwalId,
   userId,
-  componentType }: {
+  componentType,
+}: {
   jadwalId: string;
   userId: string;
-  componentType?: "santri" | "quran" | "ortu" | "hafalan" | "arab";
+  componentType?: "santri" | "quran" | "ortu" | "hafalan" | "arab" | "lisan_arab";
 }) {
   // 1. Get Jadwal
   const jadwal = await prisma.jadwalUjian.findUnique({
@@ -21,7 +22,11 @@ export async function markExamComponentAsComplete({
           id: true,
           nama_lengkap: true,
           no_hp: true,
-          orang_tua: { select: { no_hp_ayah: true, no_hp_ibu: true } } } } } });
+          orang_tua: { select: { no_hp_ayah: true, no_hp_ibu: true } },
+        },
+      },
+    },
+  });
 
   if (!jadwal) throw new Error("Jadwal not found");
 
@@ -55,13 +60,16 @@ export async function markExamComponentAsComplete({
     } else if (componentType === "hafalan") {
       updates.status_hafalan = "completed";
       updatedField = "Tes Hafalan Al-Qur'an";
-    } else if (componentType === "arab") {
+    } else if (componentType === "arab" || componentType === "lisan_arab") {
       updates.status_arab = "completed";
       updatedField = "Tes Lisan Bahasa Arab";
     }
   } else {
     // Fallback to manual check
-    if (jadwal.penguji_ortu_id === userId || (isSessionOrtu && jadwal.penguji_santri_id === userId)) {
+    if (
+      jadwal.penguji_ortu_id === userId ||
+      (isSessionOrtu && jadwal.penguji_santri_id === userId)
+    ) {
       updates.status_ortu = "completed";
       if (!jadwal.penguji_ortu_id && jadwal.penguji_santri_id === userId) {
         updates.penguji_ortu_id = userId;
@@ -83,9 +91,12 @@ export async function markExamComponentAsComplete({
       updatedField = "Tes Lisan Bahasa Arab";
     } else {
       // Check session creator fallback
-      const sess = jadwal.exam_session || await prisma.examSession.findFirst({
-        where: { id: jadwal.exam_session_id ?? undefined },
-        select: { created_by: true, title: true } });
+      const sess =
+        jadwal.exam_session ||
+        (await prisma.examSession.findFirst({
+          where: { id: jadwal.exam_session_id ?? undefined },
+          select: { created_by: true, title: true },
+        }));
       if (sess && sess.created_by === userId) {
         const title = (sess.title || "").toLowerCase();
         if (title.includes("qur") || title.includes("quran")) {
@@ -127,7 +138,8 @@ export async function markExamComponentAsComplete({
   // 3. Update Status
   const updatedJadwal = await prisma.jadwalUjian.update({
     where: { id: jadwalId },
-    data: updates });
+    data: updates,
+  });
 
   // 4. Check if ALL DONE
   const isSantriDone =
@@ -139,14 +151,16 @@ export async function markExamComponentAsComplete({
   const isOrtuDone =
     !updatedJadwal.penguji_ortu_id || updatedJadwal.status_ortu === "completed";
   const isHafalanDone =
-    !updatedJadwal.penguji_hafalan_id || updatedJadwal.status_hafalan === "completed";
+    !updatedJadwal.penguji_hafalan_id ||
+    updatedJadwal.status_hafalan === "completed";
   const isArabDone =
     !updatedJadwal.penguji_arab_id || updatedJadwal.status_arab === "completed";
 
-  const isAllDone = isSantriDone && isQuranDone && isOrtuDone && isHafalanDone && isArabDone;
+  const isAllDone =
+    isSantriDone && isQuranDone && isOrtuDone && isHafalanDone && isArabDone;
 
   if (isAllDone) {
-    // Recalculate scores — this will set status_pendaftaran to 'tested' only if ALL 6 score components are present
+    // Recalculate scores – this will set status_pendaftaran to 'tested' only if ALL 6 score components are present
     // And it will trigger the notification only when it first reaches 'tested' state.
     const { recalculateNilaiUjian } = await import("./scoring");
     await recalculateNilaiUjian(jadwal.pendaftar_id);
@@ -155,5 +169,6 @@ export async function markExamComponentAsComplete({
   return {
     success: true,
     updatedField,
-    isAllDone };
+    isAllDone,
+  };
 }
