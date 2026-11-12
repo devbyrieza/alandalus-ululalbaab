@@ -39,7 +39,9 @@ export type NotifType =
     | "daftar_ulang_verified"
     | "broadcast"
     | "broadcast_penguji"
-    | "pembatalan_jadwal";
+    | "pembatalan_jadwal"
+    | "penugasan_penguji"
+    | "pengalihan_jadwal_penguji";
 
 export interface EnqueueParams {
     pendaftarId?: string | null;
@@ -1508,6 +1510,117 @@ Mengingatkan jadwal Wawancara Calon Orang Tua/Wali Santri:
 🔗 *Input Nilai:* ${inputNilai}
 
 Mohon kehadirannya tepat waktu. Jazakumullahu khairan.
+
+---
+${SYSTEM_FOOTER_ULULALBAAB}`;
+}
+
+/**
+ * B. UNTUK PENGUJI & PEWAWANCARA — 4. Notifikasi Penugasan / Pengalihan Jadwal ke Penguji Baru
+ */
+export function buildMessagePenugasanPenguji(params: {
+    namaPenguji: string;
+    gender?: string | null;
+    jenisUjian: string;
+    namaSantri: string;
+    jenjang?: string | null;
+    hariTanggal: string;
+    waktu: string;
+    googleMeetLink?: string | null;
+    lokasi?: string | null;
+    linkInputNilai: string;
+    namaPengujiLama?: string | null;
+    genderPengujiLama?: string | null;
+    isRescheduled?: boolean;
+}): string {
+    const jenjang = formatJenjangUlulAlbaab(params.jenjang);
+    const title = getExaminerSalutationUlulAlbaab(params.gender, params.namaPenguji);
+    const isWawancara = (params.jenisUjian || "").toLowerCase().includes("wawancara");
+    const actionVerbUpper = isWawancara ? "MEWAWANCARA" : "MENGUJI";
+    const jenisUpper = (params.jenisUjian || "SELEKSI").toUpperCase();
+
+    const cleanMeet = params.googleMeetLink && params.googleMeetLink !== "-" ? params.googleMeetLink.trim() : "";
+    const cleanLokasi = params.lokasi && params.lokasi !== "-" ? params.lokasi.trim() : "";
+    const mediaLine = cleanMeet
+        ? `📍 *Link Google Meet:* ${cleanMeet}`
+        : `📍 *Lokasi / Media:* ${cleanLokasi || "-"}`;
+
+    const inputNilai = params.linkInputNilai && params.linkInputNilai !== "-" ? params.linkInputNilai.trim() : "-";
+
+    let header = `*🔔 PENUGASAN JADWAL ${actionVerbUpper} — ${jenisUpper}*`;
+    let intro = `Anda telah ditugaskan oleh Panitia SPMB untuk jadwal *${params.jenisUjian}*:`;
+
+    if (params.namaPengujiLama) {
+        const oldTitle = getExaminerSalutationUlulAlbaab(params.genderPengujiLama, params.namaPengujiLama);
+        header = `*🔔 PENGALIHAN JADWAL ${actionVerbUpper} — ${jenisUpper}*`;
+        intro = `Anda ditugaskan untuk *mengambil alih / menggantikan* ${oldTitle} *${params.namaPengujiLama}* pada jadwal *${params.jenisUjian}*${params.isRescheduled ? " (jadwal baru)" : ""}:`;
+    } else if (params.isRescheduled) {
+        header = `*🔔 PERUBAHAN JADWAL ${actionVerbUpper} — ${jenisUpper}*`;
+        intro = `Jadwal *${params.jenisUjian}* yang ditugaskan kepada Anda telah *diperbarui* oleh Panitia SPMB:`;
+    }
+
+    return `${header}
+
+Assalamu'alaikum warahmatullahi wabarakatuh, ${title} *${params.namaPenguji}*,
+
+${intro}
+
+👤 *Nama Santri:* ${params.namaSantri}
+🎓 *Jenjang:* ${jenjang}
+📅 *Hari/Tanggal:* ${params.hariTanggal}
+⏰ *Waktu:* ${params.waktu}
+${mediaLine}
+🔗 *Input Nilai:* ${inputNilai}
+
+Mohon persiapkan diri dan hadir tepat waktu sesuai jadwal tersebut. Jazakumullahu khairan.
+
+---
+${SYSTEM_FOOTER_ULULALBAAB}`;
+}
+
+/**
+ * B. UNTUK PENGUJI & PEWAWANCARA — 5. Pemberitahuan Pengalihan / Pembatalan Tugas ke Penguji Sebelumnya
+ */
+export function buildMessagePengalihanJadwalPengujiLama(params: {
+    namaPengujiLama: string;
+    genderPengujiLama?: string | null;
+    jenisUjian: string;
+    namaSantri: string;
+    jenjang?: string | null;
+    hariTanggal: string;
+    waktu: string;
+    namaPengujiBaru?: string | null;
+    genderPengujiBaru?: string | null;
+}): string {
+    const jenjang = formatJenjangUlulAlbaab(params.jenjang);
+    const oldTitle = getExaminerSalutationUlulAlbaab(params.genderPengujiLama, params.namaPengujiLama);
+    const isWawancara = (params.jenisUjian || "").toLowerCase().includes("wawancara");
+    const actionVerbUpper = isWawancara ? "MEWAWANCARA" : "MENGUJI";
+    const actionVerbLower = isWawancara ? "mewawancara" : "menguji";
+
+    let header = `*ℹ️ PEMBATALAN PENUGASAN JADWAL ${actionVerbUpper}*`;
+    let intro = `Menginformasikan bahwa penugasan Anda untuk jadwal *${params.jenisUjian}* berikut ini telah *dilepas / dibatalkan* oleh Panitia SPMB:`;
+
+    if (params.namaPengujiBaru) {
+        const newTitle = getExaminerSalutationUlulAlbaab(params.genderPengujiBaru, params.namaPengujiBaru);
+        header = `*🔄 PENGALIHAN JADWAL ${actionVerbUpper}*`;
+        intro = `Menginformasikan bahwa jadwal *${params.jenisUjian}* Anda berikut ini telah *diambil alih / dialihkan* kepada ${newTitle} *${params.namaPengujiBaru}*:`;
+    }
+
+    return `${header}
+
+Assalamu'alaikum warahmatullahi wabarakatuh, ${oldTitle} *${params.namaPengujiLama}*,
+
+${intro}
+
+👤 *Nama Santri:* ${params.namaSantri}
+🎓 *Jenjang:* ${jenjang}
+📅 *Hari/Tanggal:* ${params.hariTanggal}
+⏰ *Waktu:* ${params.waktu}
+
+Dengan demikian, ${oldTitle} tidak perlu lagi ${actionVerbLower} santri tersebut pada jadwal di atas.
+
+Jazakumullahu khairan atas kesiapan dan bantuannya.
 
 ---
 ${SYSTEM_FOOTER_ULULALBAAB}`;

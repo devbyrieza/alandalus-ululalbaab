@@ -51,13 +51,39 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Jadwal not found" }, { status: 404 });
     }
 
-    // 2. Permission Check: Only assigned examiners or session creators
+    // 2. Permission Check: Only assigned examiners or unreassigned session creators
     const isAssigned =
       jadwal.penguji_santri_id === userId ||
       jadwal.penguji_quran_id === userId ||
-      jadwal.penguji_ortu_id === userId;
+      jadwal.penguji_ortu_id === userId ||
+      jadwal.penguji_hafalan_id === userId ||
+      jadwal.penguji_arab_id === userId;
 
-    const isCreator = jadwal.exam_session?.created_by === userId;
+    const sessTitle = (jadwal.exam_session?.title || "").toLowerCase();
+    const isOrtuSess =
+      sessTitle.includes("cawalsan") ||
+      sessTitle.includes("ortu") ||
+      sessTitle.includes("orang") ||
+      sessTitle.includes("wali");
+    const hasExplicitExaminerForSession =
+      sessTitle.includes("qur") || sessTitle.includes("hafalan") || sessTitle.includes("bacaan")
+        ? Boolean(jadwal.penguji_quran_id || jadwal.penguji_hafalan_id)
+        : sessTitle.includes("arab") || sessTitle.includes("lisan")
+          ? Boolean(jadwal.penguji_arab_id)
+          : isOrtuSess
+            ? Boolean(jadwal.penguji_ortu_id || jadwal.penguji_santri_id)
+            : sessTitle.includes("calsan") || sessTitle.includes("santri") || sessTitle.includes("wawancara")
+              ? Boolean(jadwal.penguji_santri_id)
+              : Boolean(
+                  jadwal.penguji_quran_id ||
+                    jadwal.penguji_santri_id ||
+                    jadwal.penguji_ortu_id ||
+                    jadwal.penguji_hafalan_id ||
+                    jadwal.penguji_arab_id,
+                );
+
+    const isCreator =
+      jadwal.exam_session?.created_by === userId && !hasExplicitExaminerForSession;
 
     if (!isAssigned && !isCreator) {
       return NextResponse.json(

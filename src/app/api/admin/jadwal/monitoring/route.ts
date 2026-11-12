@@ -2,6 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { prisma } from "@/lib/prisma";
 import { logAdminAction } from "@/lib/audit";
+import {
+  enqueueWhatsapp,
+  buildMessagePenugasanPenguji,
+  buildMessagePengalihanJadwalPengujiLama,
+} from "@/lib/whatsapp-queue";
+import { generateExaminerInputLink } from "@/lib/utils/magic-link";
+import { BRANDING } from "@/config/branding";
 
 async function getAdminSession() {
   const cookieStore = await cookies();
@@ -73,6 +80,44 @@ function buildFullDateTime(datePart?: Date | string | null, timePart?: Date | st
     if (!isNaN(t.getTime()) && t.getFullYear() > 2000) return t.toISOString();
   }
   return null;
+}
+
+function formatHariTanggalWIB(date: Date): string {
+  const hari = date
+    .toLocaleDateString("id-ID", { weekday: "long", timeZone: "Asia/Jakarta" })
+    .replace(/Minggu/gi, "Ahad");
+  const tgl = date.toLocaleDateString("id-ID", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    timeZone: "Asia/Jakarta",
+  });
+  return `${hari}, ${tgl}`;
+}
+
+function formatWaktuRangeWIB(startDate?: Date | null, endDate?: Date | null): string {
+  if (!startDate || isNaN(startDate.getTime())) return "-";
+  const startJam = startDate
+    .toLocaleTimeString("id-ID", {
+      hour: "2-digit",
+      minute: "2-digit",
+      timeZone: "Asia/Jakarta",
+      hour12: false,
+    })
+    .replace(":", ".");
+
+  if (endDate && !isNaN(endDate.getTime()) && endDate.getTime() !== startDate.getTime()) {
+    const endJam = endDate
+      .toLocaleTimeString("id-ID", {
+        hour: "2-digit",
+        minute: "2-digit",
+        timeZone: "Asia/Jakarta",
+        hour12: false,
+      })
+      .replace(":", ".");
+    return `${startJam} - ${endJam} WIB`;
+  }
+  return `${startJam} WIB`;
 }
 
 export async function GET(request: NextRequest) {
@@ -450,14 +495,29 @@ export async function PATCH(request: NextRequest) {
     const currentJadwal = await prisma.jadwalUjian.findUnique({
       where: { id: jadwal_id },
       include: {
-        pendaftar: { select: { id: true, nama_lengkap: true } },
+        pendaftar: {
+          select: {
+            id: true,
+            nama_lengkap: true,
+            nomor_pendaftaran: true,
+            jenjang: true,
+          },
+        },
         exam_session: {
           select: {
             id: true,
+            title: true,
             location: true,
             start_time: true,
             end_time: true,
-
+            created_by: true,
+            creator: {
+              select: {
+                id: true,
+                full_name: true,
+                role: true,
+              },
+            },
           },
         },
       },
@@ -469,6 +529,61 @@ export async function PATCH(request: NextRequest) {
         { status: 404 },
       );
     }
+
+    // Resolve previous examiners BEFORE update (direct column first, fallback to exam_session.creator matching GET logic)
+    const oldCreator = currentJadwal.exam_session?.creator;
+    const oldSessionTitle = (currentJadwal.exam_session?.title || "").toLowerCase();
+    const oldCreatorIsExaminer = Boolean(
+      oldCreator &&
+        (oldCreator.role === "penguji" ||
+          oldCreator.role?.includes("quran") ||
+          oldCreator.role?.includes("santri") ||
+          oldCreator.role?.includes("ortu") ||
+          oldCreator.role?.includes("hafalan") ||
+          oldCreator.role?.includes("arab") ||
+          oldCreator.role?.includes("calsan") ||
+          oldCreator.role?.includes("cawalsan")),
+    );
+
+    let fallbackOldQuranId: string | null = null;
+    let fallbackOldSantriId: string | null = null;
+    let fallbackOldOrtuId: string | null = null;
+    let fallbackOldArabId: string | null = null;
+
+    if (oldCreatorIsExaminer && oldCreator) {
+      if (oldSessionTitle.includes("qur") || oldCreator.role?.includes("quran")) {
+        fallbackOldQuranId = oldCreator.id;
+      } else if (
+        oldSessionTitle.includes("ortu") ||
+        oldSessionTitle.includes("cawalsan") ||
+        oldSessionTitle.includes("orang") ||
+        oldSessionTitle.includes("wali") ||
+        oldCreator.role?.includes("ortu") ||
+        oldCreator.role?.includes("cawalsan")
+      ) {
+        fallbackOldOrtuId = oldCreator.id;
+      } else if (
+        oldSessionTitle.includes("santri") ||
+        oldSessionTitle.includes("calsan") ||
+        oldCreator.role?.includes("santri") ||
+        oldCreator.role?.includes("calsan")
+      ) {
+        fallbackOldSantriId = oldCreator.id;
+      } else if (
+        oldSessionTitle.includes("arab") ||
+        oldSessionTitle.includes("lisan") ||
+        oldCreator.role?.includes("arab")
+      ) {
+        fallbackOldArabId = oldCreator.id;
+      }
+    }
+
+    const oldExaminers = {
+      quran: currentJadwal.penguji_quran_id || fallbackOldQuranId || currentJadwal.penguji_hafalan_id || null,
+      santri: currentJadwal.penguji_santri_id || fallbackOldSantriId || null,
+      ortu: currentJadwal.penguji_ortu_id || fallbackOldOrtuId || null,
+      arab: currentJadwal.penguji_arab_id || fallbackOldArabId || null,
+    };
 
     // Prepare update data
     const updateData: any = {};
@@ -485,6 +600,12 @@ export async function PATCH(request: NextRequest) {
       if (fullEnd) targetEndTime = new Date(fullEnd);
     }
 
+    const oldStartTime: Date | null = targetStartTime ? new Date(targetStartTime) : (currentJadwal.tanggal_ujian ? new Date(currentJadwal.tanggal_ujian) : null);
+    const oldEndTime: Date | null = targetEndTime ? new Date(targetEndTime) : null;
+
+    let effectiveSession = currentJadwal.exam_session;
+    let sessionChanged = false;
+
     if (new_session_id) {
       const newSession = await prisma.examSession.findUnique({
         where: { id: new_session_id },
@@ -493,6 +614,12 @@ export async function PATCH(request: NextRequest) {
         targetStartTime = newSession.start_time;
         targetEndTime = newSession.end_time;
         if (new_session_id !== currentJadwal.exam_session_id) {
+          sessionChanged = true;
+          effectiveSession = {
+            ...newSession,
+            created_by: newSession.created_by,
+            creator: null,
+          } as any;
           updateData.exam_session_id = newSession.id;
           updateData.tanggal_ujian = (newSession as any).date || new Date(newSession.start_time);
           updateData.waktu_mulai_santri = newSession.start_time;
@@ -584,12 +711,18 @@ export async function PATCH(request: NextRequest) {
     }
 
     // Determine if online
-    const loc = (currentJadwal.exam_session?.location || currentJadwal.tempat_santri || "").toLowerCase();
+    const effectiveLocationStr =
+      updateData.tempat_santri ||
+      effectiveSession?.location ||
+      currentJadwal.tempat_santri ||
+      "";
+    const loc = effectiveLocationStr.toLowerCase();
     const isOnline =
       currentJadwal.metode_ujian === "online" ||
       loc.includes("online") ||
       loc.includes("meet") ||
-      loc.includes("http");
+      loc.includes("http") ||
+      loc.includes("zoom");
 
     
 
@@ -678,10 +811,275 @@ export async function PATCH(request: NextRequest) {
       },
     });
 
+    // Dispatch immediate WhatsApp notifications for changed / reassigned / rescheduled examiners
+    const notifSummary: {
+      sent: Array<{ name: string; role: string; kind: "new_examiner" | "previous_examiner" }>;
+      skipped: Array<{ name: string; role: string; reason: string }>;
+      failed: Array<{ name: string; role: string; reason: string }>;
+    } = { sent: [], skipped: [], failed: [] };
+
+    try {
+      const newExaminers = {
+        quran: penguji_quran_id !== undefined ? (updated.penguji_quran_id || null) : oldExaminers.quran,
+        santri: penguji_santri_id !== undefined ? (updated.penguji_santri_id || null) : oldExaminers.santri,
+        ortu: penguji_ortu_id !== undefined ? (updated.penguji_ortu_id || null) : oldExaminers.ortu,
+        arab: penguji_arab_id !== undefined ? (updated.penguji_arab_id || null) : oldExaminers.arab,
+      };
+
+      const effectiveStatuses = {
+        quran: (updated.status_quran || "scheduled").toLowerCase(),
+        santri: (updated.status_santri || "scheduled").toLowerCase(),
+        ortu: (updated.status_ortu || "scheduled").toLowerCase(),
+        arab: (updated.status_arab || "scheduled").toLowerCase(),
+      };
+
+      const roleConfigs: Array<{ key: "quran" | "santri" | "ortu" | "arab"; label: string }> = [
+        { key: "quran", label: "Tes Al-Qur'an" },
+        { key: "santri", label: "Wawancara Calon Santri" },
+        { key: "ortu", label: "Wawancara Calon Orang Tua/Wali Santri" },
+        { key: "arab", label: "Tes Lisan Bahasa Arab" },
+      ];
+
+      const tasksToNew: Array<{ roleKey: string; roleLabel: string; newId: string; oldId: string | null; isRescheduled: boolean }> = [];
+      const tasksToOld: Array<{ roleKey: string; roleLabel: string; oldId: string; newId: string | null }> = [];
+      const profileIdsNeeded = new Set<string>();
+
+      for (const rc of roleConfigs) {
+        const oldId = oldExaminers[rc.key];
+        const newId = newExaminers[rc.key];
+        const status = effectiveStatuses[rc.key];
+
+        if (status === "completed" || status === "absent") {
+          continue;
+        }
+
+        const examinerChanged = oldId !== newId;
+        if (examinerChanged) {
+          if (newId) {
+            tasksToNew.push({
+              roleKey: rc.key,
+              roleLabel: rc.label,
+              newId,
+              oldId,
+              isRescheduled: sessionChanged,
+            });
+            profileIdsNeeded.add(newId);
+          }
+          if (oldId) {
+            tasksToOld.push({
+              roleKey: rc.key,
+              roleLabel: rc.label,
+              oldId,
+              newId,
+            });
+            profileIdsNeeded.add(oldId);
+          }
+        } else if (sessionChanged && newId) {
+          tasksToNew.push({
+            roleKey: rc.key,
+            roleLabel: rc.label,
+            newId,
+            oldId: null,
+            isRescheduled: true,
+          });
+          profileIdsNeeded.add(newId);
+        }
+      }
+
+      if (profileIdsNeeded.size > 0 && currentJadwal.pendaftar) {
+        const profiles = await prisma.profile.findMany({
+          where: { id: { in: Array.from(profileIdsNeeded) } },
+          select: {
+            id: true,
+            full_name: true,
+            phone: true,
+            jenis_kelamin: true,
+            google_meet_link: true,
+          },
+        });
+        const profileMap = new Map(profiles.map((p) => [p.id, p]));
+
+        const host = request.headers.get("x-forwarded-host") || request.headers.get("host") || "";
+        const proto = request.headers.get("x-forwarded-proto") || "https";
+        const isLocalHost =
+          !host ||
+          host.startsWith("localhost") ||
+          host.startsWith("127.0.0.1") ||
+          host.startsWith("0.0.0.0");
+        const envAppUrl =
+          process.env.NEXT_PUBLIC_APP_URL ||
+          process.env.NEXT_PUBLIC_WEBSITE_URL ||
+          BRANDING.websiteUrl ||
+          "https://spmb.pesantren-ululalbaab.com";
+        const rawBaseUrl = !isLocalHost ? `${proto}://${host}` : envAppUrl;
+        const appBaseUrl = rawBaseUrl.startsWith("http")
+          ? rawBaseUrl.replace(/\/$/, "")
+          : "https://spmb.pesantren-ululalbaab.com";
+
+        const newStart = targetStartTime
+          ? new Date(targetStartTime)
+          : updated.tanggal_ujian
+            ? new Date(updated.tanggal_ujian)
+            : new Date();
+        const newEnd = targetEndTime ? new Date(targetEndTime) : null;
+        const newHariTanggal = formatHariTanggalWIB(newStart);
+        const newWaktu = formatWaktuRangeWIB(newStart, newEnd);
+
+        const prevStart = oldStartTime || newStart;
+        const prevEnd = oldEndTime;
+        const prevHariTanggal = formatHariTanggalWIB(prevStart);
+        const prevWaktu = formatWaktuRangeWIB(prevStart, prevEnd);
+
+        const effectiveLocLabel = effectiveLocationStr || (isOnline ? "Online" : "Pesantren");
+
+        // 1. Send notifications to new / reassigned / rescheduled examiners
+        for (const t of tasksToNew) {
+          const newProfile = profileMap.get(t.newId);
+          const oldProfile = t.oldId ? profileMap.get(t.oldId) : null;
+          if (!newProfile) continue;
+
+          if (!newProfile.phone || newProfile.phone.trim() === "" || newProfile.phone.trim() === "-") {
+            console.warn(`⚠️ [Monitoring WA] Nomor WA kosong untuk penguji baru: ${newProfile.full_name} (${t.roleLabel})`);
+            notifSummary.skipped.push({
+              name: newProfile.full_name,
+              role: t.roleLabel,
+              reason: "Nomor WhatsApp tidak tersedia",
+            });
+            continue;
+          }
+
+          try {
+            const inputLink = generateExaminerInputLink(
+              newProfile.id,
+              currentJadwal.pendaftar.nomor_pendaftaran || "",
+              appBaseUrl,
+            );
+            const meetLink = isOnline
+              ? (newProfile.google_meet_link && newProfile.google_meet_link !== "-"
+                  ? newProfile.google_meet_link
+                  : effectiveLocLabel.startsWith("http")
+                    ? effectiveLocLabel
+                    : null)
+              : null;
+
+            const msg = buildMessagePenugasanPenguji({
+              namaPenguji: newProfile.full_name,
+              gender: newProfile.jenis_kelamin,
+              jenisUjian: t.roleLabel,
+              namaSantri: currentJadwal.pendaftar.nama_lengkap,
+              jenjang: currentJadwal.pendaftar.jenjang,
+              hariTanggal: newHariTanggal,
+              waktu: newWaktu,
+              googleMeetLink: meetLink,
+              lokasi: effectiveLocLabel,
+              linkInputNilai: inputLink,
+              namaPengujiLama: oldProfile?.full_name || null,
+              genderPengujiLama: oldProfile?.jenis_kelamin || null,
+              isRescheduled: t.isRescheduled,
+            });
+
+            const waRes = await enqueueWhatsapp({
+              pendaftarId: currentJadwal.pendaftar_id,
+              phone: newProfile.phone,
+              jenisNotif: `penugasan_penguji_${t.roleKey}`,
+              messageContent: msg,
+              force: true,
+              sendNow: true,
+            });
+
+            if (waRes.queued) {
+              notifSummary.sent.push({
+                name: newProfile.full_name,
+                role: t.roleLabel,
+                kind: "new_examiner",
+              });
+            } else {
+              notifSummary.failed.push({
+                name: newProfile.full_name,
+                role: t.roleLabel,
+                reason: waRes.reason || "Gagal mengirim WA",
+              });
+            }
+          } catch (err: any) {
+            console.error(`❌ [Monitoring WA] Error notifying new examiner ${newProfile.full_name}:`, err);
+            notifSummary.failed.push({
+              name: newProfile.full_name,
+              role: t.roleLabel,
+              reason: err?.message || "Gagal mengirim WA",
+            });
+          }
+        }
+
+        // 2. Send handover / cancellation notices to previous examiners
+        for (const t of tasksToOld) {
+          const oldProfile = profileMap.get(t.oldId);
+          const newProfile = t.newId ? profileMap.get(t.newId) : null;
+          if (!oldProfile) continue;
+
+          if (!oldProfile.phone || oldProfile.phone.trim() === "" || oldProfile.phone.trim() === "-") {
+            console.warn(`⚠️ [Monitoring WA] Nomor WA kosong untuk penguji lama: ${oldProfile.full_name} (${t.roleLabel})`);
+            notifSummary.skipped.push({
+              name: oldProfile.full_name,
+              role: t.roleLabel,
+              reason: "Nomor WhatsApp tidak tersedia",
+            });
+            continue;
+          }
+
+          try {
+            const msg = buildMessagePengalihanJadwalPengujiLama({
+              namaPengujiLama: oldProfile.full_name,
+              genderPengujiLama: oldProfile.jenis_kelamin,
+              jenisUjian: t.roleLabel,
+              namaSantri: currentJadwal.pendaftar.nama_lengkap,
+              jenjang: currentJadwal.pendaftar.jenjang,
+              hariTanggal: prevHariTanggal,
+              waktu: prevWaktu,
+              namaPengujiBaru: newProfile?.full_name || null,
+              genderPengujiBaru: newProfile?.jenis_kelamin || null,
+            });
+
+            const waRes = await enqueueWhatsapp({
+              pendaftarId: currentJadwal.pendaftar_id,
+              phone: oldProfile.phone,
+              jenisNotif: `pengalihan_jadwal_penguji_${t.roleKey}`,
+              messageContent: msg,
+              force: true,
+              sendNow: true,
+            });
+
+            if (waRes.queued) {
+              notifSummary.sent.push({
+                name: oldProfile.full_name,
+                role: t.roleLabel,
+                kind: "previous_examiner",
+              });
+            } else {
+              notifSummary.failed.push({
+                name: oldProfile.full_name,
+                role: t.roleLabel,
+                reason: waRes.reason || "Gagal mengirim WA",
+              });
+            }
+          } catch (err: any) {
+            console.error(`❌ [Monitoring WA] Error notifying previous examiner ${oldProfile.full_name}:`, err);
+            notifSummary.failed.push({
+              name: oldProfile.full_name,
+              role: t.roleLabel,
+              reason: err?.message || "Gagal mengirim WA",
+            });
+          }
+        }
+      }
+    } catch (waOuterErr: any) {
+      console.error("❌ [Monitoring WA] Unexpected notification error:", waOuterErr);
+    }
+
     return NextResponse.json({
       success: true,
       message: "Penguji berhasil diperbarui",
       data: updated,
+      notifications: notifSummary,
     });
   } catch (error: any) {
     console.error("PATCH Monitoring API Error:", error);

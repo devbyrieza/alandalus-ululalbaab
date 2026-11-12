@@ -81,115 +81,132 @@ export async function GET() {
       orderBy: { tanggal_ujian: "asc" } });
 
     // Transform data to be friendly
-    const formattedJadwal = jadwal.map((item: any) => {
-      let jenis_tugas = [];
-      if (isAdmin) {
-        // Admin can see all assignment types
-        jenis_tugas.push(
-          "Seleksi Al Qur'an",
-          "Tes Al-Qur'an (Bacaan & Hafalan)",
-          "Seleksi Wawancara Calon Santri",
-          "Seleksi Wawancara Calon Orang Tua/Wali Santri",
-          "Tes Lisan Bahasa Arab",
-        );
-      } else {
-        const sessionTitle = (item.exam_session?.title || "").toLowerCase();
-        const isSessionOrtu =
-          sessionTitle.includes("cawalsan") ||
-          sessionTitle.includes("ortu") ||
-          sessionTitle.includes("orang") ||
-          sessionTitle.includes("wali");
+    const formattedJadwal = jadwal
+      .map((item: any) => {
+        let jenis_tugas = [];
+        if (isAdmin) {
+          // Admin can see all assignment types
+          jenis_tugas.push(
+            "Seleksi Al Qur'an",
+            "Tes Al-Qur'an (Bacaan & Hafalan)",
+            "Seleksi Wawancara Calon Santri",
+            "Seleksi Wawancara Calon Orang Tua/Wali Santri",
+            "Tes Lisan Bahasa Arab",
+          );
+        } else {
+          const sessionTitle = (item.exam_session?.title || "").toLowerCase();
+          const isSessionOrtu =
+            sessionTitle.includes("cawalsan") ||
+            sessionTitle.includes("ortu") ||
+            sessionTitle.includes("orang") ||
+            sessionTitle.includes("wali");
 
-        if (item.penguji_ortu_id === userId) {
-          jenis_tugas.push("Seleksi Wawancara Calon Orang Tua/Wali Santri");
-        } else if (item.penguji_santri_id === userId) {
-          if (isSessionOrtu) {
-            // Auto-heal: assigned to santri_id due to legacy bug, but session is Ortu
+          if (item.penguji_ortu_id === userId) {
             jenis_tugas.push("Seleksi Wawancara Calon Orang Tua/Wali Santri");
-            if (!item.penguji_ortu_id) {
-              prisma.jadwalUjian.update({
-                where: { id: item.id },
-                data: {
-                  penguji_ortu_id: userId,
-                  penguji_santri_id: null,
-                  status_ortu: item.status_santri || item.status_ortu || "scheduled",
-                  status_santri: null,
-                },
-              }).catch((e) => console.error("Auto-heal jadwal error:", e));
+          } else if (item.penguji_santri_id === userId) {
+            if (isSessionOrtu) {
+              // Auto-heal: assigned to santri_id due to legacy bug, but session is Ortu
+              jenis_tugas.push("Seleksi Wawancara Calon Orang Tua/Wali Santri");
+              if (!item.penguji_ortu_id) {
+                prisma.jadwalUjian.update({
+                  where: { id: item.id },
+                  data: {
+                    penguji_ortu_id: userId,
+                    penguji_santri_id: null,
+                    status_ortu: item.status_santri || item.status_ortu || "scheduled",
+                    status_santri: null,
+                  },
+                }).catch((e) => console.error("Auto-heal jadwal error:", e));
+              }
+            } else {
+              jenis_tugas.push("Seleksi Wawancara Calon Santri");
             }
-          } else {
-            jenis_tugas.push("Seleksi Wawancara Calon Santri");
+          }
+
+          if (item.penguji_quran_id === userId || item.penguji_hafalan_id === userId)
+            jenis_tugas.push("Seleksi Al Qur'an", "Tes Al-Qur'an (Bacaan & Hafalan)");
+          if (item.penguji_arab_id === userId)
+            jenis_tugas.push("Tes Lisan Bahasa Arab");
+
+          // Fallback: if matched via exam_session.created_by, derive from session title ONLY when not reassigned to another examiner
+          if (
+            jenis_tugas.length === 0 &&
+            item.exam_session?.created_by === userId
+          ) {
+            const title = sessionTitle;
+            if (title.includes("hafalan") || title.includes("qur") || title.includes("quran") || title.includes("bacaan")) {
+              if (!item.penguji_quran_id && !item.penguji_hafalan_id) {
+                jenis_tugas.push("Seleksi Al Qur'an", "Tes Al-Qur'an (Bacaan & Hafalan)");
+              }
+            } else if (title.includes("arab") || title.includes("lisan")) {
+              if (!item.penguji_arab_id) {
+                jenis_tugas.push("Tes Lisan Bahasa Arab");
+              }
+            } else if (isSessionOrtu) {
+              if (!item.penguji_ortu_id && !item.penguji_santri_id) {
+                jenis_tugas.push("Seleksi Wawancara Calon Orang Tua/Wali Santri");
+              }
+            } else if (title.includes("calsan") || title.includes("santri") || title.includes("wawancara")) {
+              if (!item.penguji_santri_id) {
+                jenis_tugas.push("Seleksi Wawancara Calon Santri");
+              }
+            } else if (
+              !item.penguji_quran_id &&
+              !item.penguji_hafalan_id &&
+              !item.penguji_santri_id &&
+              !item.penguji_ortu_id &&
+              !item.penguji_arab_id
+            ) {
+              jenis_tugas.push(item.exam_session?.title || "Ujian");
+            }
           }
         }
 
-        if (item.penguji_quran_id === userId || item.penguji_hafalan_id === userId)
-          jenis_tugas.push("Seleksi Al Qur'an", "Tes Al-Qur'an (Bacaan & Hafalan)");
-        if (item.penguji_arab_id === userId)
-          jenis_tugas.push("Tes Lisan Bahasa Arab");
-
-        // Fallback: if matched via exam_session.created_by, derive from session title
-        if (
-          jenis_tugas.length === 0 &&
-          item.exam_session?.created_by === userId
-        ) {
-          const title = sessionTitle;
-          if (title.includes("hafalan") || title.includes("qur") || title.includes("quran"))
-            jenis_tugas.push("Seleksi Al Qur'an", "Tes Al-Qur'an (Bacaan & Hafalan)");
-          else if (title.includes("arab") || title.includes("lisan"))
-            jenis_tugas.push("Tes Lisan Bahasa Arab");
-          else if (
-            title.includes("cawalsan") ||
-            title.includes("ortu") ||
-            title.includes("orang") ||
-            title.includes("wali")
-          )
-            jenis_tugas.push("Seleksi Wawancara Calon Orang Tua/Wali Santri");
-          else if (title.includes("calsan") || title.includes("santri"))
-            jenis_tugas.push("Seleksi Wawancara Calon Santri");
-          else jenis_tugas.push(item.exam_session?.title || "Ujian");
+        if (jenis_tugas.length === 0) {
+          return null;
         }
-      }
 
-      const hasScoreQuran = item.nilai_ujian?.some((n: any) => {
-        const q = n.detail_quran as any;
-        return n.nilai_tes_quran != null || !!(q && typeof q === "object" && (q.rekomendasi || q.nama_penguji));
-      });
-      const hasScoreSantri = item.nilai_ujian?.some((n: any) => {
-        const w = n.detail_wawancara as any;
-        return n.nilai_wawancara_santri != null || !!(w && typeof w === "object" && (w.rekomendasi || w.nama_penguji));
-      });
-      const hasScoreOrtu = item.nilai_ujian?.some((n: any) => {
-        const c = n.detail_cawalsan as any;
-        return n.nilai_wawancara_ortu != null || !!(c && typeof c === "object" && (c.rekomendasi || c.nama_penguji));
-      });
+        const hasScoreQuran = item.nilai_ujian?.some((n: any) => {
+          const q = n.detail_quran as any;
+          return n.nilai_tes_quran != null || !!(q && typeof q === "object" && (q.rekomendasi || q.nama_penguji));
+        });
+        const hasScoreSantri = item.nilai_ujian?.some((n: any) => {
+          const w = n.detail_wawancara as any;
+          return n.nilai_wawancara_santri != null || !!(w && typeof w === "object" && (w.rekomendasi || w.nama_penguji));
+        });
+        const hasScoreOrtu = item.nilai_ujian?.some((n: any) => {
+          const c = n.detail_cawalsan as any;
+          return n.nilai_wawancara_ortu != null || !!(c && typeof c === "object" && (c.rekomendasi || c.nama_penguji));
+        });
 
-      return {
-        id: item.id,
-        pendaftar: item.pendaftar,
-        tanggal_ujian: item.tanggal_ujian,
-        waktu_mulai: item.exam_session?.start_time || item.waktu_mulai_santri, // Fallback if no session
-        waktu_selesai: item.exam_session?.end_time || item.waktu_selesai_santri,
-        lokasi: item.exam_session?.location || item.tempat_santri,
-        jenis_tugas: jenis_tugas.join(", "),
-        status: "scheduled",
-        session_title: item.exam_session?.title,
-        // Granular Statuses with automatic grade completion detection
-        status_santri: hasScoreSantri ? "completed" : (item.status_santri || "scheduled"),
-        status_quran: hasScoreQuran ? "completed" : (item.status_quran || "scheduled"),
-        status_ortu: hasScoreOrtu ? "completed" : (item.status_ortu || "scheduled"),
-        // Assignee IDs for frontend logic
-        penguji_santri_id: item.penguji_santri_id,
-        penguji_quran_id: item.penguji_quran_id,
-        penguji_ortu_id: item.penguji_ortu_id,
-          penguji_hafalan_id: item.penguji_hafalan_id,
-          penguji_arab_id: item.penguji_arab_id,
-          status_hafalan: item.status_hafalan || "scheduled",
-          status_arab: item.status_arab || "scheduled",
-          zoom_link_hafalan: item.zoom_link_hafalan,
-          zoom_link_arab: item.zoom_link_arab,
-        // Also pass created_by so frontend can check
-        session_created_by: item.exam_session?.created_by };
-    });
+        return {
+          id: item.id,
+          pendaftar: item.pendaftar,
+          tanggal_ujian: item.tanggal_ujian,
+          waktu_mulai: item.exam_session?.start_time || item.waktu_mulai_santri, // Fallback if no session
+          waktu_selesai: item.exam_session?.end_time || item.waktu_selesai_santri,
+          lokasi: item.exam_session?.location || item.tempat_santri,
+          jenis_tugas: jenis_tugas.join(", "),
+          status: "scheduled",
+          session_title: item.exam_session?.title,
+          // Granular Statuses with automatic grade completion detection
+          status_santri: hasScoreSantri ? "completed" : (item.status_santri || "scheduled"),
+          status_quran: hasScoreQuran ? "completed" : (item.status_quran || "scheduled"),
+          status_ortu: hasScoreOrtu ? "completed" : (item.status_ortu || "scheduled"),
+          // Assignee IDs for frontend logic
+          penguji_santri_id: item.penguji_santri_id,
+          penguji_quran_id: item.penguji_quran_id,
+          penguji_ortu_id: item.penguji_ortu_id,
+            penguji_hafalan_id: item.penguji_hafalan_id,
+            penguji_arab_id: item.penguji_arab_id,
+            status_hafalan: item.status_hafalan || "scheduled",
+            status_arab: item.status_arab || "scheduled",
+            zoom_link_hafalan: item.zoom_link_hafalan,
+            zoom_link_arab: item.zoom_link_arab,
+          // Also pass created_by so frontend can check
+          session_created_by: item.exam_session?.created_by };
+      })
+      .filter(Boolean);
 
     return NextResponse.json({ data: formattedJadwal });
   } catch (error: any) {

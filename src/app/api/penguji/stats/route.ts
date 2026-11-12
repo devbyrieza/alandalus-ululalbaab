@@ -69,21 +69,28 @@ export async function GET() {
         item.exam_session.created_by === userId
       ) {
         const title = (item.exam_session.title || "").toLowerCase();
-        if (title.includes("qur") || title.includes("quran"))
+        if (
+          (title.includes("qur") || title.includes("quran") || title.includes("hafalan") || title.includes("bacaan")) &&
+          !item.penguji_quran_id &&
+          !item.penguji_hafalan_id
+        )
           roles.push("quran");
         const isOrtuMatch =
           title.includes("cawalsan") ||
           title.includes("ortu") ||
           title.includes("orang") ||
           title.includes("wali");
-        if (isOrtuMatch) roles.push("ortu");
+        if (isOrtuMatch && !item.penguji_ortu_id && !item.penguji_santri_id) roles.push("ortu");
         if (
           (title.includes("calsan") ||
           title.includes("santri") ||
-          title.includes("wawancara")) && !isOrtuMatch
+          title.includes("wawancara")) && !isOrtuMatch &&
+          !item.penguji_santri_id
         )
           roles.push("santri");
       }
+
+      if (roles.length === 0) continue;
 
       if (pesertaMap.has(pendaftarId)) {
         const existing = pesertaMap.get(pendaftarId);

@@ -4,7 +4,8 @@ import { prisma } from "@/lib/prisma";
 
 async function getSession() {
   const cookieStore = await cookies();
-  const sessionCookie = cookieStore.get("al_session");
+  const sessionCookie =
+    cookieStore.get("al_session") || cookieStore.get("app_session");
   if (!sessionCookie) return null;
   try {
     return JSON.parse(sessionCookie.value);
@@ -184,14 +185,29 @@ export async function GET() {
           const hasQuranMatch = isSessionQuran;
           const hasOrtuMatch = isSessionOrtu;
           const hasWawancaraMatch = isSessionSantri;
-          const hasLisanArabMatch = isDirectNonIL && (sessionTitle.includes("arab") || sessionTitle.includes("lisan"));
+          const isSessionArab = sessionTitle.includes("arab") || sessionTitle.includes("lisan");
+          const hasLisanArabMatch = isDirectNonIL && isSessionArab;
 
-          if (hasQuranMatch) roles.push("quran");
-          if (hasWawancaraMatch) roles.push("wawancara");
-          if (hasOrtuMatch) roles.push("ortu");
-          if (hasLisanArabMatch) roles.push("lisan_arab");
+          if (hasQuranMatch && !item.penguji_quran_id && !(item as any).penguji_hafalan_id) roles.push("quran");
+          if (hasWawancaraMatch && !item.penguji_santri_id) roles.push("wawancara");
+          if (hasOrtuMatch && !item.penguji_ortu_id && !item.penguji_santri_id) roles.push("ortu");
+          if (hasLisanArabMatch && !(item as any).penguji_arab_id) roles.push("lisan_arab");
 
-          if (roles.length === 0) {
+          const hasNoExplicitExaminer =
+            !item.penguji_quran_id &&
+            !(item as any).penguji_hafalan_id &&
+            !item.penguji_santri_id &&
+            !item.penguji_ortu_id &&
+            !(item as any).penguji_arab_id;
+
+          if (
+            roles.length === 0 &&
+            !hasQuranMatch &&
+            !hasOrtuMatch &&
+            !hasWawancaraMatch &&
+            !isSessionArab &&
+            hasNoExplicitExaminer
+          ) {
             if (userIsCawalsan) roles.push("ortu");
             else if (userIsCalsan) roles.push("wawancara");
             else {
@@ -200,6 +216,8 @@ export async function GET() {
             }
           }
         }
+
+        if (roles.length === 0) continue;
       }
 
       // Find ALL score records for this pendaftar
