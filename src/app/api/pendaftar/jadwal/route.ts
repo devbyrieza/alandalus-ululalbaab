@@ -12,7 +12,8 @@ import { getLeastLoadedExaminerFromPool } from "@/lib/utils/assignment";
 
 function getExamCategory(title: string): string {
   const t = (title || "").toLowerCase();
-  if (t.includes("quran") || t.includes("qur'an") || t.includes("bacaan") || t.includes("hafalan")) return "QURAN";
+  if (t.includes("hafalan")) return "HAFALAN";
+  if (t.includes("quran") || t.includes("qur'an") || t.includes("bacaan")) return "QURAN";
   if (t.includes("arab") || t.includes("lisan")) return "LISAN_ARAB";
   // W_ORTU must be checked BEFORE W_SANTRI because titles often contain "Orangtua/Wali Santri", "Calon Wali Santri", "Cawalsan", etc.
   if (
@@ -118,7 +119,7 @@ export async function POST(request: Request) {
 
   try {
     const body = await request.json();
-    const { exam_session_id } = body;
+    const { exam_session_id, target_category } = body;
 
     if (!exam_session_id) {
       return NextResponse.json(
@@ -160,12 +161,12 @@ export async function POST(request: Request) {
       );
     }
 
-    // 2. Check for categorical duplication (Quran, Santri, Ortu)
+    // 2. Check for categorical duplication (Quran, Hafalan, Arab, Santri, Ortu)
     const existingBookings = await prisma.jadwalUjian.findMany({
       where: { pendaftar_id: session.id },
       include: { exam_session: true } });
 
-    const currentCategory = getExamCategory(examSession.title || "");
+    const currentCategory = target_category || getExamCategory(examSession.title || "");
 
     // Check if any existing booking has the same category
     const duplicateCategory = existingBookings.find((booking) => {
@@ -176,16 +177,16 @@ export async function POST(request: Request) {
     if (duplicateCategory) {
       const categoryLabel =
         currentCategory === "HAFALAN"
-            ? "Tes Hafalan Al-Qur'an"
+          ? "Tes Hafalan Al-Qur'an"
           : currentCategory === "LISAN_ARAB"
-            ? "Tes Lisan Bahasa Arab"
+          ? "Tes Lisan Bahasa Arab"
           : currentCategory === "QURAN"
-          ? "Ujian Al-Quran"
+          ? "Tes Bacaan Al-Qur'an"
           : currentCategory === "W_SANTRI"
-            ? "Seleksi Wawancara Calon Santri"
-            : currentCategory === "W_ORTU"
-              ? "Wawancara Calon Orang Tua/Wali"
-              : "Ujian ini";
+          ? "Seleksi Wawancara Calon Santri"
+          : currentCategory === "W_ORTU"
+          ? "Wawancara Calon Orang Tua/Wali"
+          : "Ujian ini";
 
       return NextResponse.json(
         {
@@ -241,6 +242,7 @@ export async function POST(request: Request) {
             where: {
               OR: [
                 { penguji_quran_id: finalExaminerId },
+                { penguji_hafalan_id: finalExaminerId },
                 { penguji_santri_id: finalExaminerId },
                 { penguji_ortu_id: finalExaminerId },
                 { penguji_arab_id: finalExaminerId },
@@ -258,21 +260,36 @@ export async function POST(request: Request) {
         }
 
         if (currentCategory === "LISAN_ARAB") {
-            pengujiFields = {
-              penguji_arab_id: finalExaminerId,
-              zoom_link_arab: interviewer?.google_meet_link || null };
-          } else if (currentCategory === "QURAN" || currentCategory === "HAFALAN") {
-            pengujiFields = {
-              penguji_quran_id: finalExaminerId,
-              google_meet_link: interviewer?.google_meet_link || null };
-          } else if (currentCategory === "W_SANTRI") {
+          pengujiFields = {
+            penguji_arab_id: finalExaminerId,
+            zoom_link_arab: interviewer?.google_meet_link || null
+          };
+        } else if (currentCategory === "HAFALAN") {
+          pengujiFields = {
+            penguji_hafalan_id: finalExaminerId,
+            penguji_quran_id: finalExaminerId,
+            zoom_link_hafalan: interviewer?.google_meet_link || null,
+            google_meet_link: interviewer?.google_meet_link || null
+          };
+        } else if (currentCategory === "QURAN") {
+          pengujiFields = {
+            penguji_quran_id: finalExaminerId,
+            penguji_hafalan_id: finalExaminerId,
+            zoom_link_quran: interviewer?.google_meet_link || null,
+            google_meet_link: interviewer?.google_meet_link || null
+          };
+        } else if (currentCategory === "W_SANTRI") {
           pengujiFields = {
             penguji_santri_id: finalExaminerId,
-            google_meet_link: interviewer?.google_meet_link || null };
+            zoom_link_santri: interviewer?.google_meet_link || null,
+            google_meet_link: interviewer?.google_meet_link || null
+          };
         } else if (currentCategory === "W_ORTU") {
           pengujiFields = {
             penguji_ortu_id: finalExaminerId,
-            google_meet_link: interviewer?.google_meet_link || null };
+            zoom_link_ortu: interviewer?.google_meet_link || null,
+            google_meet_link: interviewer?.google_meet_link || null
+          };
         }
       }
 
@@ -290,6 +307,7 @@ export async function POST(request: Request) {
           tempat_ortu: examSession.location || "Pesantren",
           status_santri: "scheduled",
           status_quran: "scheduled",
+          status_hafalan: "scheduled",
           status_ortu: "scheduled",
           status_arab: "scheduled",
           status_online_test: "pending",

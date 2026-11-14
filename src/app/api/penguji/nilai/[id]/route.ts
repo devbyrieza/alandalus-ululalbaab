@@ -159,11 +159,15 @@ export async function PATCH(
       isAdmin ||
       isQuran ||
       isQuranFallback ||
+      isHafalan ||
+      isHafalanFallback ||
       hasRole(
         (r) =>
           r.includes("quran") ||
           r === "penguji" ||
-          r === "penguji_quran",
+          r === "penguji_quran" ||
+          r.includes("hafalan") ||
+          r === "penguji_hafalan",
       );
 
     const canEditWawancara =
@@ -197,7 +201,16 @@ export async function PATCH(
       isAdmin ||
       isHafalan ||
       isHafalanFallback ||
-      hasRole((r) => r.includes("hafalan") || r === "penguji_hafalan");
+      isQuran ||
+      isQuranFallback ||
+      hasRole(
+        (r) =>
+          r.includes("hafalan") ||
+          r === "penguji_hafalan" ||
+          r.includes("quran") ||
+          r === "penguji" ||
+          r === "penguji_quran",
+      );
 
     const canEditLisanArab =
       isAdmin ||

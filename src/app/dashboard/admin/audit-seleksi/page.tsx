@@ -32,6 +32,8 @@ type Candidate = {
   nilai_ujian?: {
     nilai_total: number;
     score_quran: number;
+    score_hafalan?: number;
+    score_arab?: number;
     score_akademik: number;
     score_kepribadian: number;
     score_kesiapan: number;
@@ -142,22 +144,41 @@ export default function AuditSeleksiPage() {
 
   const getGrade = (score: number | undefined | null, type: string) => {
     const parsedScore = toNum(score);
-    if (parsedScore == null) return { label: "-", color: "text-ink-300" };
+    if (parsedScore == null) return { label: "-", color: "text-ink-400 bg-stone-100" };
     let grade = "C";
-    let color = "bg-secondary-400";
 
-    if (type === "quran") {
-      grade = parsedScore >= 80 ? "A" : parsedScore >= 65 ? "B" : "C";
+    if (type === "quran" || type === "hafalan") {
+      if (parsedScore >= 80) grade = "A";
+      else if (parsedScore >= 65) grade = "B";
+      else if (parsedScore >= 50) grade = "C";
+      else if (parsedScore >= 35) grade = "D";
+      else grade = "E";
     } else if (type === "akademik") {
-      grade = parsedScore >= 75 ? "A" : parsedScore >= 60 ? "B" : "C";
+      if (parsedScore >= 75) grade = "A";
+      else if (parsedScore >= 60) grade = "B";
+      else if (parsedScore >= 45) grade = "C";
+      else if (parsedScore >= 30) grade = "D";
+      else grade = "E";
     } else if (type === "kepribadian") {
-      grade = parsedScore >= 70 ? "A" : parsedScore >= 50 ? "B" : "C";
+      if (parsedScore >= 80) grade = "A";
+      else if (parsedScore >= 65) grade = "B";
+      else if (parsedScore >= 50) grade = "C";
+      else if (parsedScore >= 35) grade = "D";
+      else grade = "E";
     } else {
-      grade = parsedScore >= 80 ? "A" : parsedScore >= 65 ? "B" : "C";
+      // wawancara, arab, kesiapan
+      if (parsedScore >= 80) grade = "A";
+      else if (parsedScore >= 65) grade = "B";
+      else if (parsedScore >= 50) grade = "C";
+      else if (parsedScore >= 35) grade = "D";
+      else grade = "E";
     }
 
+    let color = "bg-amber-500";
     if (grade === "A") color = "bg-emerald-500";
     else if (grade === "B") color = "bg-sky-500";
+    else if (grade === "D") color = "bg-orange-500";
+    else if (grade === "E") color = "bg-rose-600";
 
     return { label: grade, color };
   };
@@ -177,7 +198,9 @@ export default function AuditSeleksiPage() {
       "No. Daftar",
       "Nama Lengkap",
       "Jenjang",
-      "Quran",
+      "Bacaan Al-Qur'an",
+      "Hafalan Al-Qur'an",
+      "Lisan Bahasa Arab",
       "Akademik",
       "Kepribadian",
       "Wawancara",
@@ -197,6 +220,8 @@ export default function AuditSeleksiPage() {
         c.nama_lengkap.toUpperCase(),
         c.jenjang,
         getGrade(nu?.score_quran, "quran").label,
+        getGrade(nu?.score_hafalan, "hafalan").label,
+        getGrade(nu?.score_arab, "arab").label,
         getGrade(nu?.score_akademik, "akademik").label,
         getGrade(nu?.score_kepribadian, "kepribadian").label,
         getGrade(avgW, "wawancara").label,
@@ -342,10 +367,16 @@ export default function AuditSeleksiPage() {
                   Jenjang
                 </th>
                 <th className="px-3 py-5 text-center text-[10px] font-black text-ink-400 uppercase tracking-widest">
-                  Quran
+                  Bacaan Qur&apos;an
                 </th>
                 <th className="px-3 py-5 text-center text-[10px] font-black text-ink-400 uppercase tracking-widest">
-                  Akademi
+                  Hafalan
+                </th>
+                <th className="px-3 py-5 text-center text-[10px] font-black text-ink-400 uppercase tracking-widest">
+                  B. Arab
+                </th>
+                <th className="px-3 py-5 text-center text-[10px] font-black text-ink-400 uppercase tracking-widest">
+                  Akademik
                 </th>
                 <th className="px-3 py-5 text-center text-[10px] font-black text-ink-400 uppercase tracking-widest">
                   Keprib.
@@ -367,14 +398,14 @@ export default function AuditSeleksiPage() {
             <tbody className="divide-y divide-ink-50">
               {loading ? (
                 <tr>
-                  <td colSpan={10} className="px-6 py-20 text-center">
+                  <td colSpan={12} className="px-6 py-20 text-center">
                     <Loader2 className="w-10 h-10 animate-spin mx-auto text-primary-600 mb-4" />
                     <p className="text-ink-400 font-bold">Mempersiapkan data audit...</p>
                   </td>
                 </tr>
               ) : filteredCandidates.length === 0 ? (
                 <tr>
-                  <td colSpan={10} className="px-6 py-20 text-center">
+                  <td colSpan={12} className="px-6 py-20 text-center">
                     <AlertCircle className="w-12 h-12 mx-auto text-ink-200 mb-4" />
                     <p className="text-ink-400 font-bold uppercase tracking-widest">
                       Tidak ada data yang perlu diaudit
@@ -417,9 +448,11 @@ export default function AuditSeleksiPage() {
                         </span>
                       </td>
                       
-                      {/* Nilai-nilai */}
+                      {/* Nilai-nilai: Quran, Hafalan, Arab, Akademik, Kepribadian, Wawancara, Kesiapan */}
                       {[
                         { val: nu?.score_quran, type: "quran" },
+                        { val: nu?.score_hafalan, type: "hafalan" },
+                        { val: nu?.score_arab, type: "arab" },
                         { val: nu?.score_akademik, type: "akademik" },
                         { val: nu?.score_kepribadian, type: "kepribadian" },
                         { val: avgW, type: "wawancara" },
@@ -429,7 +462,7 @@ export default function AuditSeleksiPage() {
                         return (
                           <td key={i} className="px-3 py-4 text-center">
                             <div className="flex flex-col items-center gap-1">
-                              <span className={`${g.color} text-white text-[10px] font-black w-6 h-6 flex items-center justify-center rounded-2xl    `}>
+                              <span className={`${g.color} text-white text-[10px] font-black w-6 h-6 flex items-center justify-center rounded-2xl`}>
                                 {g.label}
                               </span>
                               <span className="text-[9px] font-bold text-ink-300">

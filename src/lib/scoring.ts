@@ -5,6 +5,8 @@ import {
   evaluateAkademikGrade,
   evaluateKepribadianGrade,
   evaluateQuranGrade,
+  evaluateHafalanGrade,
+  evaluateArabGrade,
   evaluateWawancaraGrade,
   evaluateKesiapanGrade,
   evaluateStatusGrade,
@@ -126,8 +128,18 @@ export async function recalculateNilaiUjian(pendaftarId: string, overrideStatus?
   // Prefer calculated if it's > 0, otherwise fallback to manual
   wo = (calculatedWo > 0) ? calculatedWo : (manualWo ?? (calculatedWo || null));
 
-  // Rata-rata Wawancara (Santri + Orang Tua)
-  const wawancaraTotal = (ws != null && wo != null) ? (ws + wo) / 2 : (ws ?? wo ?? null);
+  // Nilai Lanjutan Khusus SMA / MA Langsung
+  const hafalan = (master.score_hafalan != null ? Number(master.score_hafalan) : (master.nilai_hafalan_total != null ? Number(master.nilai_hafalan_total) : null));
+  const arab = (master.score_arab != null ? Number(master.score_arab) : (master.nilai_arab_total != null ? Number(master.nilai_arab_total) : null));
+
+  // Fetch data pendaftar untuk verifikasi jenjang (SMA/MA vs MTs/IL/SMP)
+  const pendaftar = await prisma.pendaftar.findUnique({
+    where: { id: pendaftarId },
+    include: { orang_tua: true }
+  });
+  const rawJenjang = (pendaftar?.jenjang || "").toUpperCase();
+  // Hanya jalur langsung SMA atau langsung MA (tanpa IL) yang memiliki 8 komponen nilai
+  const isDirectSMAorMA = rawJenjang === "SMA" || rawJenjang === "MA";
 
   // Ambil data skipped_stages jika ada di dalam detail_akademik
   let skippedStages: string[] = [];
@@ -145,106 +157,129 @@ export async function recalculateNilaiUjian(pendaftarId: string, overrideStatus?
   let totalWeighted = 0;
   let totalWeight = 0;
 
-  // Akademik (30%)
-  if (!skippedStages.includes("AKADEMIK")) {
-    totalWeighted += (ak || 0) * 0.3;
-    totalWeight += 0.3;
+  if (isDirectSMAorMA) {
+    // 8 Komponen Nilai untuk Jalur Langsung SMA / MA:
+    // Akademik (20%), Bacaan Al-Qur'an (20%), Hafalan Al-Qur'an (15%), Lisan B. Arab (15%), Wawancara Santri (10%), Wawancara Ortu (10%), Kepribadian (5%), Kesiapan (5%)
+    if (!skippedStages.includes("AKADEMIK")) {
+      totalWeighted += (ak || 0) * 0.20;
+      totalWeight += 0.20;
+    }
+    if (!skippedStages.includes("QURAN")) {
+      totalWeighted += (quran || 0) * 0.20;
+      totalWeight += 0.20;
+    }
+    if (!skippedStages.includes("HAFALAN")) {
+      totalWeighted += (hafalan || 0) * 0.15;
+      totalWeight += 0.15;
+    }
+    if (!skippedStages.includes("ARAB") && !skippedStages.includes("LISAN_ARAB")) {
+      totalWeighted += (arab || 0) * 0.15;
+      totalWeight += 0.15;
+    }
+    if (!skippedStages.includes("WAWANCARA_SANTRI")) {
+      totalWeighted += (ws || 0) * 0.10;
+      totalWeight += 0.10;
+    }
+    if (!skippedStages.includes("WAWANCARA_ORTU")) {
+      totalWeighted += (wo || 0) * 0.10;
+      totalWeight += 0.10;
+    }
+    if (!skippedStages.includes("KEPRIBADIAN")) {
+      totalWeighted += (kp || 0) * 0.05;
+      totalWeight += 0.05;
+    }
+    if (!skippedStages.includes("KESIAPAN")) {
+      totalWeighted += (ks || 0) * 0.05;
+      totalWeight += 0.05;
+    }
+  } else {
+    // 6 Komponen Nilai Standar (SMP IT, MTs, IL):
+    // Akademik (30%), Bacaan Al-Qur'an (30%), Wawancara Santri (10%), Wawancara Ortu (10%), Kepribadian (10%), Kesiapan (10%)
+    if (!skippedStages.includes("AKADEMIK")) {
+      totalWeighted += (ak || 0) * 0.30;
+      totalWeight += 0.30;
+    }
+    if (!skippedStages.includes("QURAN")) {
+      totalWeighted += (quran || 0) * 0.30;
+      totalWeight += 0.30;
+    }
+    if (!skippedStages.includes("WAWANCARA_SANTRI")) {
+      totalWeighted += (ws || 0) * 0.10;
+      totalWeight += 0.10;
+    }
+    if (!skippedStages.includes("WAWANCARA_ORTU")) {
+      totalWeighted += (wo || 0) * 0.10;
+      totalWeight += 0.10;
+    }
+    if (!skippedStages.includes("KEPRIBADIAN")) {
+      totalWeighted += (kp || 0) * 0.10;
+      totalWeight += 0.10;
+    }
+    if (!skippedStages.includes("KESIAPAN")) {
+      totalWeighted += (ks || 0) * 0.10;
+      totalWeight += 0.10;
+    }
   }
-  // Quran (30%)
-  if (!skippedStages.includes("QURAN")) {
-    totalWeighted += (quran || 0) * 0.3;
-    totalWeight += 0.3;
-  }
-  // Wawancara Santri (10%)
-  if (!skippedStages.includes("WAWANCARA_SANTRI")) {
-    totalWeighted += (ws || 0) * 0.1;
-    totalWeight += 0.1;
-  }
-  // Wawancara Ortu (10%)
-  if (!skippedStages.includes("WAWANCARA_ORTU")) {
-    totalWeighted += (wo || 0) * 0.1;
-    totalWeight += 0.1;
-  }
-  // Kepribadian (10%)
-  if (!skippedStages.includes("KEPRIBADIAN")) {
-    totalWeighted += (kp || 0) * 0.1;
-    totalWeight += 0.1;
-  }
-  // Kesiapan (10%)
-  if (!skippedStages.includes("KESIAPAN")) {
-    totalWeighted += (ks || 0) * 0.1;
-    totalWeight += 0.1;
-  }
-
 
   const totalScore = totalWeight > 0 ? (totalWeighted / totalWeight) : 0;
 
   // 5. Tentukan Status Kelulusan (Matriks A/B/C)
-  // Suatu tes dianggap "selesai" jika nilainya ada ATAU jika tes tersebut di-skip
   const isAkGraded = ak != null || skippedStages.includes("AKADEMIK");
   const isQuranGraded = quran != null || skippedStages.includes("QURAN");
   const isKpGraded = kp != null || skippedStages.includes("KEPRIBADIAN");
   const isKsGraded = ks != null || skippedStages.includes("KESIAPAN");
   const isWsGraded = ws != null || skippedStages.includes("WAWANCARA_SANTRI");
   const isWoGraded = wo != null || skippedStages.includes("WAWANCARA_ORTU");
+  const isHafalanGraded = hafalan != null || skippedStages.includes("HAFALAN");
+  const isArabGraded = arab != null || skippedStages.includes("ARAB") || skippedStages.includes("LISAN_ARAB");
 
-  const allGraded = isAkGraded && isQuranGraded && isKpGraded && isKsGraded && isWsGraded && isWoGraded;
+  const allGraded = isDirectSMAorMA
+    ? (isAkGraded && isQuranGraded && isKpGraded && isKsGraded && isWsGraded && isWoGraded && isHafalanGraded && isArabGraded)
+    : (isAkGraded && isQuranGraded && isKpGraded && isKsGraded && isWsGraded && isWoGraded);
+
   let status: string = "BELUM LENGKAP";
 
   if (allGraded || overrideStatus) {
-    const grades = {
+    const grades: any = {
       quran: skippedStages.includes("QURAN") ? "A" as const : (master.detail_quran?.rekomendasi ? evaluateStatusGrade(master.detail_quran.rekomendasi) : evaluateQuranGrade(quran || 0)),
       akademik: skippedStages.includes("AKADEMIK") ? "A" as const : evaluateAkademikGrade(ak || 0),
       kepribadian: skippedStages.includes("KEPRIBADIAN") ? "A" as const : evaluateKepribadianGrade(kp || 0),
       kesiapan: skippedStages.includes("KESIAPAN") ? "A" as const : evaluateKesiapanGrade(ks || 0),
       wawancaraSantri: skippedStages.includes("WAWANCARA_SANTRI") ? "A" as const : evaluateWawancaraGrade(ws || 0),
-      wawancaraOrangTua: skippedStages.includes("WAWANCARA_ORTU") ? "A" as const : evaluateWawancaraGrade(wo || 0) };
+      wawancaraOrangTua: skippedStages.includes("WAWANCARA_ORTU") ? "A" as const : evaluateWawancaraGrade(wo || 0),
+    };
+
+    if (isDirectSMAorMA) {
+      grades.hafalan = skippedStages.includes("HAFALAN") ? "A" as const : evaluateHafalanGrade(hafalan || 0);
+      grades.arab = (skippedStages.includes("ARAB") || skippedStages.includes("LISAN_ARAB")) ? "A" as const : evaluateArabGrade(arab || 0);
+    }
 
     status = overrideStatus || determineFinalDecision(grades);
 
     // 6. Sinkronisasi ke Tabel Pendaftar & Pengumuman
-    const pendaftar = await prisma.pendaftar.findUnique({
-      where: { id: pendaftarId },
-      include: { orang_tua: true } });
-
     if (pendaftar && !["enrolled", "re_registered", "accepted"].includes(pendaftar.status_pendaftaran)) {
-      // ── PERUBAHAN ARSITEKTUR: Tidak langsung umumkan & kirim WA ──
-      // Setelah semua nilai terisi, status hanya menjadi "tested" (Selesai Ujian / Menunggu Rapat Kelulusan).
-      // Pengumuman WAJIB dipublikasikan secara MANUAL oleh Admin Super via /dashboard/admin/pengumuman
-      // SETELAH Rapat Kelulusan bersama Mudir. Tidak ada WhatsApp yang dikirim otomatis.
       const displayLabel = status === "DITERIMA" ? "Diterima" : (status === "DITOLAK" ? "Ditolak" : "Cadangan");
 
-      // Set status ke "tested" (Menunggu Rapat Kelulusan)
       await prisma.pendaftar.updateMany({
         where: { id: pendaftarId, status_pendaftaran: { notIn: ["enrolled", "re_registered", "accepted", "tested"] } },
         data: { status_pendaftaran: "tested" }
       });
 
-      // Simpan rekomendasi ke tabel pengumuman sebagai DRAFT (is_published: false)
-      // Ini hanya sebagai bahan referensi Admin Super saat Rapat Kelulusan dengan Mudir.
-      // Pendaftar TIDAK dapat melihat ini sampai Admin Super klik "Umumkan Kelulusan".
       await prisma.pengumuman.upsert({
         where: { pendaftar_id: pendaftarId },
         update: { status_kelulusan: displayLabel, is_published: false },
-        create: { pendaftar_id: pendaftarId, status_kelulusan: displayLabel, is_published: false, tahun_ajaran_id: pendaftar.tahun_ajaran_id } });
+        create: { pendaftar_id: pendaftarId, status_kelulusan: displayLabel, is_published: false, tahun_ajaran_id: pendaftar.tahun_ajaran_id }
+      });
 
-      // 7. TIDAK ADA pengiriman WhatsApp otomatis di sini.
-      // WhatsApp pengumuman HANYA dikirim saat Admin Super menekan tombol "Umumkan Kelulusan"
-      // di /dashboard/admin/pengumuman, yang akan memanggil /api/admin/pengumuman/publish.
       console.log(`[Scoring] Semua ujian selesai. Status ${pendaftar.nama_lengkap} → tested. Rekomendasi: ${displayLabel}. Menunggu Rapat Kelulusan & publish manual Admin.`);
     }
   } else {
-    // If not all graded, but some are, update status to 'tested' (Sedang Seleksi)
-    // to ensure they appear in the right lists
-    const someGraded = ak != null || quran != null || kp != null || ks != null || ws != null || wo != null;
-    if (someGraded) {
-      const pendaftar = await prisma.pendaftar.findUnique({ where: { id: pendaftarId } });
-      if (pendaftar && ["docs_verified", "scheduled"].includes(pendaftar.status_pendaftaran)) {
-        await prisma.pendaftar.update({
-          where: { id: pendaftarId },
-          data: { status_pendaftaran: "tested" }
-        });
-      }
+    const someGraded = ak != null || quran != null || kp != null || ks != null || ws != null || wo != null || hafalan != null || arab != null;
+    if (someGraded && pendaftar && ["docs_verified", "scheduled"].includes(pendaftar.status_pendaftaran)) {
+      await prisma.pendaftar.update({
+        where: { id: pendaftarId },
+        data: { status_pendaftaran: "tested" }
+      });
     }
   }
 
@@ -259,13 +294,19 @@ export async function recalculateNilaiUjian(pendaftarId: string, overrideStatus?
       nilai_tes_quran: quran, // Override Decimal field
       score_kepribadian: kp,
       score_kesiapan: ks,
-      score_wawancara: ws, // Simpan Wawancara Santri (sebelumnya menyimpan wawancaraTotal yang merusak data manual Calsan)
+      score_wawancara: ws,
       nilai_wawancara_santri: ws,
       nilai_wawancara_ortu: wo,
+      score_hafalan: hafalan,
+      nilai_hafalan_total: hafalan,
+      score_arab: arab,
+      nilai_arab_total: arab,
       total_score: totalScore,
       nilai_total: totalScore,
       status_kelulusan: status,
-      updated_at: new Date() } });
+      updated_at: new Date()
+    }
+  });
 
   // 9. Bersihkan duplikat jika ada (Hanya sisakan satu record utama)
   if (allNilai.length > 1) {

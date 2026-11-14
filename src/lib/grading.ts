@@ -206,11 +206,27 @@ export function scoreToGrade(score: number): string {
 }
 
 export function evaluateQuranGrade(score: number): "A" | "B" | "C" | "D" | "E" {
-  // Standar KKM Baru Resmi Ujian Al-Qur'an: Minimal 75
+  // Standar KKM Baru Resmi Ujian Bacaan Al-Qur'an: Minimal 75
   if (score >= 85) return "A"; // Lulus predikat Baik Sekali
   if (score >= 75) return "B"; // Lulus predikat Baik (Memenuhi KKM)
   if (score >= 60) return "C"; // Lulus Bersyarat (Di bawah KKM, wajib matrikulasi)
   if (score >= 40) return "D"; // Tidak Lulus
+  return "E";
+}
+
+export function evaluateHafalanGrade(score: number): "A" | "B" | "C" | "D" | "E" {
+  if (score >= 85) return "A";
+  if (score >= 75) return "B";
+  if (score >= 60) return "C";
+  if (score >= 40) return "D";
+  return "E";
+}
+
+export function evaluateArabGrade(score: number): "A" | "B" | "C" | "D" | "E" {
+  if (score >= 85) return "A";
+  if (score >= 75) return "B";
+  if (score >= 60) return "C";
+  if (score >= 40) return "D";
   return "E";
 }
 
@@ -286,16 +302,19 @@ export function determineFinalDecision(grades: {
   kesiapan: "A" | "B" | "C" | "D" | "E";
   wawancaraSantri: "A" | "B" | "C" | "D" | "E";
   wawancaraOrangTua: "A" | "B" | "C" | "D" | "E";
+  hafalan?: "A" | "B" | "C" | "D" | "E";
+  arab?: "A" | "B" | "C" | "D" | "E";
 }): "DITERIMA" | "CADANGAN" | "DITOLAK" {
-  const vals = Object.values(grades);
+  const vals = Object.values(grades).filter(Boolean) as ("A" | "B" | "C" | "D" | "E")[];
 
   // 1. CRITICAL REJECTION (DITOLAK)
   if (vals.includes("E")) return "DITOLAK";
 
-  // Critical Components (Quran or Wawancara Calon Santri) getting D is an automatic rejection
+  // Critical Components (Quran, Wawancara Santri, Hafalan SMA) getting D is an automatic rejection
   if (
     grades.quran === "D" ||
-    grades.wawancaraSantri === "D"
+    grades.wawancaraSantri === "D" ||
+    grades.hafalan === "D"
   ) {
     return "DITOLAK";
   }
@@ -306,11 +325,13 @@ export function determineFinalDecision(grades: {
     grades.kepribadian,
     grades.kesiapan,
     grades.wawancaraOrangTua,
+    grades.arab,
   ].filter((v) => v === "D").length;
   if (secondaryDs > 1) return "DITOLAK";
 
   // 2. AUTOMATIC RESERVE (CADANGAN)
   if (grades.quran === "B" || grades.quran === "C") return "CADANGAN";
+  if (grades.hafalan === "B" || grades.hafalan === "C") return "CADANGAN";
   if (secondaryDs === 1) return "CADANGAN";
 
   if (grades.wawancaraSantri === "B") {

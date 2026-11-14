@@ -17,8 +17,9 @@ import {
   buildMessageJadwalLangsungTersedia } from "@/lib/whatsapp-queue";
 
 function getExamCategory(title: string): string {
-  const t = title.toLowerCase();
-  if (t.includes("quran") || t.includes("qur'an") || t.includes("bacaan") || t.includes("hafalan")) return "QURAN";
+  const t = (title || "").toLowerCase();
+  if (t.includes("hafalan")) return "HAFALAN";
+  if (t.includes("quran") || t.includes("qur'an") || t.includes("bacaan")) return "QURAN";
   if (t.includes("arab") || t.includes("lisan")) return "LISAN_ARAB";
   // W_ORTU must be checked BEFORE W_SANTRI because titles often contain "Orangtua/Wali Santri"
   if (
@@ -395,6 +396,7 @@ export async function GET(request: Request) {
       select: {
         id: true,
         penguji_quran_id: true,
+        penguji_hafalan_id: true,
         penguji_santri_id: true,
         penguji_ortu_id: true,
         penguji_arab_id: true,
@@ -425,9 +427,10 @@ export async function GET(request: Request) {
         // Exclude the session itself if it is the one booked
         if (b.exam_session?.id === session.id) return false;
 
-        // Hanya cek bentrok jika pembuat sesi secara spesifik bertugas sebagai penguji di booking lain
+        // Cek bentrok penguji (termasuk role ganda Al-Qur'an & Hafalan)
         const isThisExaminer =
           b.penguji_quran_id === session.created_by ||
+          b.penguji_hafalan_id === session.created_by ||
           b.penguji_santri_id === session.created_by ||
           b.penguji_ortu_id === session.created_by ||
           b.penguji_arab_id === session.created_by;
@@ -443,28 +446,72 @@ export async function GET(request: Request) {
       });
     };
 
-    // Filter slots for SMA vs Non-SMA
+    // Filter jenjang & penentuan alur seleksi
     const cleanJenjang = (pendaftar.jenjang || "").toUpperCase();
-    const isSMA =
-      cleanJenjang.includes("SMA") ||
-      cleanJenjang.includes("MA") ||
-      cleanJenjang.includes("IL");
+    // Hanya langsung SMA (Ulul Albaab) atau langsung MA (Al-Imam) tanpa IL yang memiliki 8 komponen
+    const isDirectSMAorMA = cleanJenjang === "SMA" || cleanJenjang === "MA";
 
-    let filteredSessions = availableSessions;
-    if (!isSMA) {
-      filteredSessions = filteredSessions.filter(
-        (s) => getExamCategory(s.title || "") !== "LISAN_ARAB",
-      );
-    }
+    // ── EVALUASI KELENGKAPAN 6 KOMPONEN NORMAL (TAHAP 1) ──
+    const isGrupACompleted = Boolean(hasAkademik && hasKepribadian && hasKesiapan);
 
-    const openSlots = filteredSessions.map((s) => {
+    const hasScoreQuran = (userNilai as any)?.score_quran != null || (userNilai as any)?.nilai_tes_quran != null;
+    const hasQuranCompleted = bookedJadwal.some((j) => {
+      const cat = getExamCategory(j.exam_session?.title || "");
+      if (cat !== "QURAN") return false;
+      const s = j.nilai_ujian?.some((n: any) => n.score_quran != null || n.nilai_tes_quran != null || (n.detail_quran && (n.detail_quran.rekomendasi || n.detail_quran.nama_penguji)));
+      return s || j.status_quran === "completed";
+    }) || hasScoreQuran;
+
+    const hasScoreSantri = (userNilai as any)?.score_wawancara != null || (userNilai as any)?.nilai_wawancara_santri != null;
+    const hasSantriCompleted = bookedJadwal.some((j) => {
+      const cat = getExamCategory(j.exam_session?.title || "");
+      if (cat !== "W_SANTRI") return false;
+      const s = j.nilai_ujian?.some((n: any) => n.score_wawancara != null || n.nilai_wawancara_santri != null || (n.detail_wawancara && (n.detail_wawancara.rekomendasi || n.detail_wawancara.nama_pewawancara)));
+      return s || j.status_santri === "completed";
+    }) || hasScoreSantri;
+
+    const hasScoreOrtu = (userNilai as any)?.nilai_wawancara_ortu != null;
+    const hasOrtuCompleted = bookedJadwal.some((j) => {
+      const cat = getExamCategory(j.exam_session?.title || "");
+      if (cat !== "W_ORTU") return false;
+      const s = j.nilai_ujian?.some((n: any) => n.nilai_wawancara_ortu != null || (n.detail_cawalsan && (n.detail_cawalsan.rekomendasi || n.detail_cawalsan.nama_pewawancara)));
+      return s || j.status_ortu === "completed";
+    }) || hasScoreOrtu;
+
+    const isTahap1Completed = isGrupACompleted && hasQuranCompleted && hasSantriCompleted && hasOrtuCompleted;
+    const stage2Unlocked = isDirectSMAorMA && isTahap1Completed;
+
+    // Filter sesi yang boleh dipilih berdasarkan tahap seleksi
+    const openSlots: any[] = [];
+
+    availableSessions.forEach((s) => {
       const busy = isExaminerBusy(s);
       const isFull = s._count.bookings >= s.quota || busy;
-      return {
+      const cat = getExamCategory(s.title || "");
+
+      // Jika pendaftar BUKAN SMA/MA langsung, jangan pernah tampilkan sesi HAFALAN atau LISAN_ARAB
+      if (!isDirectSMAorMA && (cat === "HAFALAN" || cat === "LISAN_ARAB")) {
+        return;
+      }
+
+      // Jika pendaftar SMA/MA langsung tapi belum menyelesaikan 6 seleksi normal, kunci akses ke HAFALAN & LISAN_ARAB
+      if (isDirectSMAorMA && !stage2Unlocked && (cat === "HAFALAN" || cat === "LISAN_ARAB")) {
+        return;
+      }
+
+      // Format judul
+      let displayTitle = sanitizeTitle(s.title || "Seleksi Santri Baru");
+      if (cat === "QURAN") {
+        displayTitle = "Tes Bacaan Al-Qur'an";
+      } else if (cat === "HAFALAN") {
+        displayTitle = "Tes Hafalan Al-Qur'an";
+      }
+
+      openSlots.push({
         id: s.id,
-        title: sanitizeTitle(s.title || "Seleksi Santri Baru"),
-        raw_title: s.title, // Keep for reference if needed
-        category: getExamCategory(s.title || ""),
+        title: displayTitle,
+        raw_title: s.title,
+        category: cat,
         start_time: s.start_time,
         end_time: s.end_time,
         quota: s.quota,
@@ -472,47 +519,49 @@ export async function GET(request: Request) {
         location: s.location,
         notes: s.notes,
         isFull,
-      };
+      });
+
+      // ── DUAL ROLE PENGUJI QURAN & HAFALAN (SHARED EXCLUSIVE SLOT) ──
+      // Siapapun penguji Al-Qur'an, dia otomatis juga bertindak sebagai penguji Hafalan.
+      // Sesi ketersediaan yang sama dapat dipilih untuk Tes Hafalan oleh calon santri SMA/MA (jika tahap 2 sudah terbuka).
+      const isQuranSession = cat === "QURAN" || (s.creator?.role && ["penguji", "penguji_quran", "penguji_hafalan"].includes(s.creator.role));
+      if (isQuranSession && cat !== "HAFALAN" && stage2Unlocked) {
+        openSlots.push({
+          id: s.id,
+          title: "Tes Hafalan Al-Qur'an",
+          raw_title: s.title,
+          category: "HAFALAN",
+          start_time: s.start_time,
+          end_time: s.end_time,
+          quota: s.quota,
+          booked: busy ? s.quota : s._count.bookings,
+          location: s.location,
+          notes: s.notes,
+          isFull,
+        });
+      }
     });
 
-    // Calculate overall progress
-    // Grup B: only count as completed when status is "completed", not just "scheduled"
-    const totalTests = isSMA ? 7 : 6; // 3 Grup A + (3 or 4) Grup B
+    // Perhitungan Progress
+    const totalTests = isDirectSMAorMA ? 8 : 6;
     const grupBCompleted = bookedJadwal.filter((j) => {
-      const title = j.exam_session?.title || "";
-      const hasScoreQuran = j.nilai_ujian?.some((n: any) => {
-        const q = n.detail_quran as any;
-        return n.nilai_tes_quran != null || !!(q && typeof q === "object" && (q.rekomendasi || q.nama_penguji));
-      });
-      const hasScoreSantri = j.nilai_ujian?.some((n: any) => {
-        const w = n.detail_wawancara as any;
-        return n.nilai_wawancara_santri != null || !!(w && typeof w === "object" && (w.rekomendasi || w.nama_penguji));
-      });
-      const hasScoreOrtu = j.nilai_ujian?.some((n: any) => {
-        const c = n.detail_cawalsan as any;
-        return n.nilai_wawancara_ortu != null || !!(c && typeof c === "object" && (c.rekomendasi || c.nama_penguji));
-      });
-      const hasScoreArab = j.nilai_ujian?.some((n: any) => {
-        const a = (n as any).detail_arab as any;
-        return (n as any).score_arab != null || !!(a && typeof a === "object" && (a.rekomendasi || a.nama_penguji));
-      });
-
-      if (title.includes("Qur'an") || title.includes("Quran")) {
-        return hasScoreQuran || j.status_quran === "completed";
-      } else if (
-        title.includes("Orang Tua") ||
-        title.includes("Ortu") ||
-        title.includes("orang") ||
-        title.includes("wali")
-      ) {
-        return hasScoreOrtu || j.status_ortu === "completed";
-      } else if (title.includes("Arab") || title.includes("Lisan")) {
-        return hasScoreArab || (j as any).status_arab === "completed";
-      } else {
-        // Seleksi Wawancara Calon Santri / Wawancara Calon Santri
-        return hasScoreSantri || j.status_santri === "completed";
+      const cat = getExamCategory(j.exam_session?.title || "");
+      if (cat === "QURAN") {
+        return hasQuranCompleted;
+      } else if (cat === "W_ORTU") {
+        return hasOrtuCompleted;
+      } else if (cat === "W_SANTRI") {
+        return hasSantriCompleted;
+      } else if (cat === "HAFALAN") {
+        const hasHafalan = j.nilai_ujian?.some((n: any) => (n as any).score_hafalan != null || (n as any).nilai_hafalan_total != null || ((n as any).detail_hafalan && (n as any).detail_hafalan.rekomendasi));
+        return hasHafalan || (j as any).status_hafalan === "completed";
+      } else if (cat === "LISAN_ARAB") {
+        const hasArab = j.nilai_ujian?.some((n: any) => (n as any).score_arab != null || (n as any).nilai_arab_total != null || ((n as any).detail_arab && (n as any).detail_arab.rekomendasi));
+        return hasArab || (j as any).status_arab === "completed";
       }
+      return false;
     }).length;
+
     const completedTests =
       [hasAkademik, hasKepribadian, hasKesiapan].filter(Boolean).length +
       grupBCompleted;
@@ -520,7 +569,10 @@ export async function GET(request: Request) {
 
     return NextResponse.json({
       data: {
-        isSMA,
+        isSMA: isDirectSMAorMA,
+        isDirectSMAorMA,
+        stage2Unlocked,
+        isTahap1Completed,
         jenjang: pendaftar.jenjang,
         grupA,
         grupB: {

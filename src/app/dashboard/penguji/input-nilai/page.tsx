@@ -318,19 +318,19 @@ const isJenjangLangsungNonIL = (jenjang?: string | null): boolean => {
 };
 
 const ROLE_TO_FORM_TYPES: Record<string, string[]> = {
-  penguji: ['quran'],
-  penguji_quran: ['quran'],
+  penguji: ['quran', 'hafalan'],
+  penguji_quran: ['quran', 'hafalan'],
   pewawancara: ['wawancara', 'ortu'],
   pewawancara_calsan: ['wawancara'],
   pewawancara_cawalsan: ['ortu'],
   penguji_calsan: ['wawancara'],
   penguji_cawalsan: ['ortu'],
-  penguji_hafalan: ['quran'],
+  penguji_hafalan: ['quran', 'hafalan'],
   penguji_bahasa_arab: ['lisan_arab'],
   penguji_arab: ['lisan_arab'],
-  admin: ['quran', 'wawancara', 'ortu', 'lisan_arab'],
-  admin_super: ['quran', 'wawancara', 'ortu', 'lisan_arab'],
-  head_of_it: ['quran', 'wawancara', 'ortu', 'lisan_arab']
+  admin: ['quran', 'wawancara', 'ortu', 'hafalan', 'lisan_arab'],
+  admin_super: ['quran', 'wawancara', 'ortu', 'hafalan', 'lisan_arab'],
+  head_of_it: ['quran', 'wawancara', 'ortu', 'hafalan', 'lisan_arab']
 };
 
 export default function InputNilaiPage() {
@@ -403,11 +403,11 @@ function InputNilaiContent() {
   const allRoles = [...new Set([activeRole, ...userRoles])].filter(Boolean);
   const isAdmin = allRoles.some(r => ["admin", "admin_super", "head_of_it"].includes(r));
   const rawFormTypes = isAdmin
-    ? ['quran', 'wawancara', 'ortu', 'lisan_arab']
+    ? ['quran', 'wawancara', 'ortu', 'hafalan', 'lisan_arab']
     : [...new Set(allRoles.flatMap(r => ROLE_TO_FORM_TYPES[r] || []))];
   const visibleFormTypes = rawFormTypes.length > 0
     ? rawFormTypes
-    : ['quran', 'wawancara', 'ortu', 'lisan_arab'];
+    : ['quran', 'wawancara', 'ortu', 'hafalan', 'lisan_arab'];
 
   const toTitleCase = (str: string) => {
     if (!str || typeof str !== 'string') return "";

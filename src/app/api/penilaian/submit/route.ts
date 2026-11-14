@@ -40,22 +40,31 @@ export async function POST(req: Request) {
 
     // RBAC Validation
     if (!isSuper) {
-      if (type === "quran") {
-        if (userRole !== "penguji" && userRole !== "penguji_calsan") {
+      if (type === "quran" || type === "hafalan") {
+        const allowed = ["penguji", "penguji_calsan", "penguji_quran", "penguji_hafalan"];
+        if (!allowed.includes(userRole)) {
           return NextResponse.json(
-            { error: "Forbidden: Role restricted to Penguji" },
+            { error: "Forbidden: Role restricted to Penguji Al-Qur'an / Hafalan" },
+            { status: 403 },
+          );
+        }
+      } else if (type === "arab" || type === "lisan_arab") {
+        const allowed = ["penguji", "penguji_bahasa_arab", "penguji_arab"];
+        if (!allowed.includes(userRole)) {
+          return NextResponse.json(
+            { error: "Forbidden: Role restricted to Penguji Bahasa Arab" },
             { status: 403 },
           );
         }
       } else if (type === "wawancara_santri") {
-        if (userRole !== "pewawancara_calsan") {
+        if (userRole !== "pewawancara_calsan" && userRole !== "pewawancara" && userRole !== "penguji_calsan") {
           return NextResponse.json(
             { error: "Forbidden: Role restricted to PeWawancara Calon Santri" },
             { status: 403 },
           );
         }
       } else if (type === "wawancara_ortu") {
-        if (userRole !== "pewawancara_cawalsan") {
+        if (userRole !== "pewawancara_cawalsan" && userRole !== "pewawancara" && userRole !== "penguji_cawalsan") {
           return NextResponse.json(
             { error: "Forbidden: Role restricted to Pewawancara Orang Tua" },
             { status: 403 },
@@ -127,20 +136,34 @@ export async function POST(req: Request) {
       updateData.score_quran = numericScore;
       updateData.nilai_tes_quran = numericScore; // Legacy field sync
       updateData.catatan_quran = details?.catatan;
+      updateData.detail_quran = details;
       updateData.input_by_quran = examiner_id;
       updateData.input_at_quran = new Date();
+    } else if (type === "hafalan") {
+      updateData.score_hafalan = numericScore;
+      updateData.nilai_hafalan_total = numericScore;
+      updateData.catatan_hafalan = details?.catatan;
+      updateData.detail_hafalan = details;
+      updateData.input_by_hafalan = examiner_id;
+      updateData.input_at_hafalan = new Date();
+    } else if (type === "arab" || type === "lisan_arab") {
+      updateData.score_arab = numericScore;
+      updateData.nilai_arab_total = numericScore;
+      updateData.catatan_arab = details?.catatan;
+      updateData.detail_arab = details;
+      updateData.input_by_arab = examiner_id;
+      updateData.input_at_arab = new Date();
     } else if (type === "wawancara_santri") {
-      // Wawancara logic might combine Santri & Ortu?
-      // Or simply store them. Let's store individually.
       updateData.nilai_wawancara_santri = numericScore;
+      updateData.score_wawancara = numericScore;
       updateData.catatan_santri = details?.catatan;
+      updateData.detail_wawancara = details;
       updateData.input_by_santri = examiner_id;
       updateData.input_at_santri = new Date();
-      // Logic: Update comprehensive 'score_wawancara'?
-      // Maybe avg(santri + ortu)? Let's fetch existing to combine.
     } else if (type === "wawancara_ortu") {
       updateData.nilai_wawancara_ortu = numericScore;
       updateData.catatan_ortu = details?.catatan;
+      updateData.detail_cawalsan = details;
       updateData.input_by_ortu = examiner_id;
       updateData.input_at_ortu = new Date();
     } else {

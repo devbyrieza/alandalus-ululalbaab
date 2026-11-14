@@ -108,6 +108,9 @@ interface ProgressData {
 
 interface UndanganData {
   isSMA?: boolean;
+  isDirectSMAorMA?: boolean;
+  stage2Unlocked?: boolean;
+  isTahap1Completed?: boolean;
   jenjang?: string;
   grupA: GrupAData;
   grupB: {
@@ -135,10 +138,10 @@ const CATEGORY_DEFS: CategoryConfig[] = [
   {
     key: "QURAN",
     step: 1,
-    label: "Seleksi Al-Qur'an",
-    shortLabel: "Al-Qur'an",
+    label: "Tes Bacaan Al-Qur'an",
+    shortLabel: "Bacaan Qur'an",
     icon: BookOpenCheck,
-    description: "Tilawah, Tahsin & Hafalan Al-Qur'an",
+    description: "Tilawah, Makhorijul Huruf & Tahsin Bacaan Al-Qur'an (Semua Jenjang)",
   },
   {
     key: "W_SANTRI",
@@ -157,12 +160,20 @@ const CATEGORY_DEFS: CategoryConfig[] = [
     description: "Komitmen & Keselarasan Visi Orang Tua / Wali",
   },
   {
-    key: "LISAN_ARAB",
+    key: "HAFALAN",
     step: 4,
+    label: "Tes Hafalan Al-Qur'an",
+    shortLabel: "Hafalan Qur'an",
+    icon: BookOpen,
+    description: "Uji Kelancaran & Kuantitas Hafalan Al-Qur'an (Khusus SMA/MA Langsung)",
+  },
+  {
+    key: "LISAN_ARAB",
+    step: 5,
     label: "Tes Lisan Bahasa Arab",
     shortLabel: "Bahasa Arab",
     icon: Brain,
-    description: "Kemampuan Dasar Bahasa Arab (Khusus SMA/MA)",
+    description: "Kemampuan Dasar Bahasa Arab (Khusus SMA/MA Langsung)",
   },
 ];
 
@@ -232,21 +243,22 @@ export default function UndanganSeleksiTab() {
     }
   };
 
-  const isSMA = Boolean(
-    data?.isSMA ||
-    data?.progress?.total === 7 ||
-    data?.jenjang?.toUpperCase().includes("SMA") ||
-    data?.jenjang?.toUpperCase().includes("MA") ||
-    data?.jenjang?.toUpperCase().includes("IL") ||
-    data?.grupB?.availableSlots?.some((s) => s.category === "LISAN_ARAB") ||
-    data?.grupB?.booked?.some((b) => b.category === "LISAN_ARAB")
+  const cleanJenjang = (data?.jenjang || "").toUpperCase();
+  const isDirectSMAorMA = Boolean(
+    data?.isDirectSMAorMA ?? (cleanJenjang === "SMA" || cleanJenjang === "MA")
   );
+  const stage2Unlocked = Boolean((data as any)?.stage2Unlocked);
+  const isTahap1Completed = Boolean((data as any)?.isTahap1Completed);
 
   const availableCategories = useMemo(() => {
-    return isSMA
-      ? CATEGORY_DEFS
-      : CATEGORY_DEFS.filter((c) => c.key !== "LISAN_ARAB");
-  }, [isSMA]);
+    if (!isDirectSMAorMA) {
+      return CATEGORY_DEFS.filter((c) => ["QURAN", "W_SANTRI", "W_ORTU"].includes(c.key));
+    }
+    if (!stage2Unlocked) {
+      return CATEGORY_DEFS.filter((c) => ["QURAN", "W_SANTRI", "W_ORTU"].includes(c.key));
+    }
+    return CATEGORY_DEFS;
+  }, [isDirectSMAorMA, stage2Unlocked]);
 
   // Auto-select first unbooked category when data arrives
   useEffect(() => {
@@ -362,7 +374,10 @@ export default function UndanganSeleksiTab() {
       const response = await fetch("/api/pendaftar/jadwal", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ exam_session_id: sessionId }),
+        body: JSON.stringify({ 
+          exam_session_id: sessionId,
+          target_category: activeCategory,
+        }),
       });
 
       const resData = await response.json();
@@ -683,6 +698,39 @@ export default function UndanganSeleksiTab() {
                   </div>
                 );
               })}
+            </div>
+          </div>
+        )}
+
+        {/* ========== JALUR LANGSUNG SMA / MA NOTICE BANNER ========== */}
+        {isDirectSMAorMA && !stage2Unlocked && (
+          <div className="bg-gradient-to-r from-amber-50 to-primary-50 border-2 border-amber-200 rounded-3xl p-5 shadow-sm flex items-start gap-4">
+            <div className="p-2.5 bg-amber-500 text-white rounded-2xl shrink-0 mt-0.5 shadow-md">
+              <Sparkles className="w-5 h-5" />
+            </div>
+            <div>
+              <h4 className="font-black text-amber-950 text-sm md:text-base">
+                Tahapan Seleksi Lanjutan Jalur SMA Langsung
+              </h4>
+              <p className="text-xs md:text-sm text-amber-800 mt-1 leading-relaxed">
+                Sebagai calon santri jalur SMA Langsung, Anda memiliki 2 seleksi lanjutan: <strong>Tes Hafalan Al-Qur&apos;an</strong> dan <strong>Tes Lisan Bahasa Arab</strong>. Pilihan jadwal kedua tes tersebut akan <strong>terbuka secara otomatis</strong> setelah Anda menyelesaikan seluruh 6 rangkaian seleksi awal di atas.
+              </p>
+            </div>
+          </div>
+        )}
+
+        {isDirectSMAorMA && stage2Unlocked && (
+          <div className="bg-gradient-to-r from-emerald-50 to-teal-50 border-2 border-emerald-300 rounded-3xl p-5 shadow-sm flex items-start gap-4">
+            <div className="p-2.5 bg-emerald-600 text-white rounded-2xl shrink-0 mt-0.5 shadow-md">
+              <CheckCircle className="w-5 h-5" />
+            </div>
+            <div>
+              <h4 className="font-black text-emerald-950 text-sm md:text-base">
+                Tahap 2 Terbuka: Seleksi Lanjutan SMA
+              </h4>
+              <p className="text-xs md:text-sm text-emerald-800 mt-1 leading-relaxed">
+                Barakallahu fiikum! Seluruh 6 seleksi awal telah selesai. Silakan pilih jadwal untuk <strong>Tes Hafalan Al-Qur&apos;an</strong> dan <strong>Tes Lisan Bahasa Arab</strong> pada tab kategori di bawah.
+              </p>
             </div>
           </div>
         )}
