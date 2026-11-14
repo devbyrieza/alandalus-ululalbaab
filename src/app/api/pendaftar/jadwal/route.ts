@@ -205,6 +205,36 @@ export async function POST(request: Request) {
       );
     }
 
+    // Guard: Tes Hafalan dan Bahasa Arab HANYA boleh dipilih oleh pendaftar jenjang SMA/MA langsung (bukan MTs/SMP/IL)
+    const jenjangStr = pendaftar.jenjang || "";
+    const cleanJenjang = jenjangStr.trim().toUpperCase();
+    const isDirectSMAorMA = !(
+      cleanJenjang === "IL" ||
+      cleanJenjang.includes("IL ") ||
+      cleanJenjang.includes(" IL") ||
+      cleanJenjang.includes("(IL)") ||
+      cleanJenjang.includes("I'DAD") ||
+      cleanJenjang.includes("IDAD") ||
+      cleanJenjang.includes("IDADIYAH") ||
+      cleanJenjang.includes("SMP") ||
+      cleanJenjang.includes("MTS") ||
+      cleanJenjang.includes("TSANAWIYAH")
+    ) && (
+      cleanJenjang.includes("SMA") ||
+      cleanJenjang.includes("MA") ||
+      cleanJenjang.includes("ALIYAH") ||
+      cleanJenjang.includes("SLTA")
+    );
+
+    if (currentCategory === "LISAN_ARAB" || currentCategory === "HAFALAN") {
+      if (!isDirectSMAorMA) {
+        return NextResponse.json(
+          { error: "Tes Hafalan Al-Qur'an dan Tes Lisan Bahasa Arab khusus diperuntukkan bagi pendaftar jenjang SMA/MA langsung." },
+          { status: 400 }
+        );
+      }
+    }
+
     // RUN LOAD BALANCING (outside transaction to avoid connection pool deadlock)
     const balancedAssignment = await getLeastLoadedExaminerFromPool(
       examSession.start_time,

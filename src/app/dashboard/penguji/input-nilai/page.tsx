@@ -404,7 +404,9 @@ function InputNilaiContent() {
   const isAdmin = allRoles.some(r => ["admin", "admin_super", "head_of_it"].includes(r));
   const rawFormTypes = isAdmin
     ? ['quran', 'wawancara', 'ortu', 'hafalan', 'lisan_arab']
-    : [...new Set(allRoles.flatMap(r => ROLE_TO_FORM_TYPES[r] || []))];
+    : (activeRole && ROLE_TO_FORM_TYPES[activeRole])
+      ? ROLE_TO_FORM_TYPES[activeRole]
+      : [...new Set(allRoles.flatMap(r => ROLE_TO_FORM_TYPES[r] || []))];
   const visibleFormTypes = rawFormTypes.length > 0
     ? rawFormTypes
     : ['quran', 'wawancara', 'ortu', 'hafalan', 'lisan_arab'];
@@ -433,17 +435,21 @@ function InputNilaiContent() {
         setActiveName(name);
         const roles = [role, ...(data.availableRoles || []), ...(data.session?.secondary_roles || [])].filter(Boolean);
         setUserRoles([...new Set(roles)]);
+        fetchPeserta(true, role);
       })
-      .catch((err) => console.error("Error fetching session:", err));
-
-    fetchPeserta();
+      .catch((err) => {
+        console.error("Error fetching session:", err);
+        fetchPeserta();
+      });
   }, []);
 
-  const fetchPeserta = async (showLoading = true) => {
+  const fetchPeserta = async (showLoading = true, roleOverride?: string) => {
     try {
       if (showLoading) setLoading(true);
+      const targetRole = roleOverride !== undefined ? roleOverride : activeRole;
+      const roleParam = targetRole ? `&role=${encodeURIComponent(targetRole)}` : "";
       // Use no-store and timestamp to prevent caching issues after saving
-      const response = await fetch(`/api/penguji/peserta?t=${Date.now()}`, {
+      const response = await fetch(`/api/penguji/peserta?t=${Date.now()}${roleParam}`, {
         cache: 'no-store'
       });
       if (response.ok) {
@@ -782,7 +788,13 @@ function InputNilaiContent() {
         {p.roles.includes("quran") && (visibleFormTypes.includes("quran") || allowAllCandidateRoles) && renderQuranForm(p)}
         {p.roles.includes("wawancara") && (visibleFormTypes.includes("wawancara") || allowAllCandidateRoles) && renderSantriForm(p)}
         {p.roles.includes("ortu") && (visibleFormTypes.includes("ortu") || allowAllCandidateRoles) && renderOrangTuaForm(p)}
+        {isJenjangLangsungNonIL(p.jenjang) && p.roles.includes("hafalan") && (visibleFormTypes.includes("hafalan") || allowAllCandidateRoles) && renderHafalanForm(p)}
         {isJenjangLangsungNonIL(p.jenjang) && p.roles.includes("lisan_arab") && (visibleFormTypes.includes("lisan_arab") || allowAllCandidateRoles) && renderArabForm(p)}
+        {!isJenjangLangsungNonIL(p.jenjang) && (p.roles.includes("lisan_arab") || p.roles.includes("hafalan")) && (
+          <div className="p-4 bg-amber-50 border border-amber-200 rounded-2xl text-amber-900 text-xs font-bold">
+            Santri ini terdaftar pada jenjang {p.jenjang}. Jenjang ini tidak memerlukan Tes Lisan Bahasa Arab / Hafalan Tambahan (khusus SMA/MA langsung).
+          </div>
+        )}
       </div>
     </div>
   );
