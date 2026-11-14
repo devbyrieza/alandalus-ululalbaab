@@ -147,11 +147,11 @@ export default function AuditSeleksiPage() {
     if (parsedScore == null) return { label: "-", color: "text-ink-400 bg-stone-100" };
     let grade = "C";
 
-    if (type === "quran" || type === "hafalan") {
-      if (parsedScore >= 80) grade = "A";
-      else if (parsedScore >= 65) grade = "B";
-      else if (parsedScore >= 50) grade = "C";
-      else if (parsedScore >= 35) grade = "D";
+    if (type === "quran" || type === "hafalan" || type === "arab") {
+      if (parsedScore >= 85) grade = "A";
+      else if (parsedScore >= 75) grade = "B";
+      else if (parsedScore >= 70) grade = "C";
+      else if (parsedScore >= 40) grade = "D";
       else grade = "E";
     } else if (type === "akademik") {
       if (parsedScore >= 75) grade = "A";

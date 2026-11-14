@@ -254,7 +254,7 @@ export async function recalculateNilaiUjian(pendaftarId: string, overrideStatus?
       grades.arab = (skippedStages.includes("ARAB") || skippedStages.includes("LISAN_ARAB")) ? "A" as const : evaluateArabGrade(arab || 0);
     }
 
-    status = overrideStatus || determineFinalDecision(grades);
+    status = overrideStatus || determineFinalDecision(grades, isDirectSMAorMA);
 
     // 6. Sinkronisasi ke Tabel Pendaftar & Pengumuman
     if (pendaftar && !["enrolled", "re_registered", "accepted"].includes(pendaftar.status_pendaftaran)) {

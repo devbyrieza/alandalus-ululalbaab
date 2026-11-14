@@ -170,10 +170,28 @@ export function calculateFinalScore(
 export function determineStatus(
   finalScore: number,
   quranScore: number,
+  hafalanScore?: number,
+  arabScore?: number,
+  isDirectSMAorMA?: boolean
 ): "LULUS" | "CADANGAN" | "DITOLAK" {
-  // Standar KKM Baru Al-Qur'an: Minimal 75 untuk Lulus Murni
-  if (quranScore < 60) return "DITOLAK";
-  if (quranScore < 75) return "CADANGAN"; // Lulus bersyarat / wajib matrikulasi
+  // Hard Gate Al-Qur'an: Minimal 70 untuk tetap memiliki peluang lulus (baik murni maupun bersyarat)
+  if (quranScore < 70) return "DITOLAK";
+
+  // Khusus Jalur Langsung SMA/MA: Tiga Pilar Wajib
+  if (isDirectSMAorMA) {
+    if ((hafalanScore != null && hafalanScore < 70) || (arabScore != null && arabScore < 70)) {
+      return "DITOLAK";
+    }
+  }
+
+  // Ambang Kelulusan Murni Al-Qur'an: Minimal 75. Jika 70-74 masuk Cadangan (Lulus Bersyarat)
+  if (quranScore < 75) return "CADANGAN";
+
+  if (isDirectSMAorMA) {
+    if ((hafalanScore != null && hafalanScore < 75) || (arabScore != null && arabScore < 75)) {
+      return "CADANGAN";
+    }
+  }
 
   if (finalScore >= 70) return "LULUS";
   if (finalScore >= 55) return "CADANGAN";
@@ -200,24 +218,29 @@ export function gradeToScore(grade: string): number {
 export function scoreToGrade(score: number): string {
   if (score >= 85) return "A";
   if (score >= 75) return "B";
-  if (score >= 60) return "C";
+  if (score >= 70) return "C";
   if (score >= 40) return "D";
   return "E";
 }
 
 export function evaluateQuranGrade(score: number): "A" | "B" | "C" | "D" | "E" {
-  // Standar KKM Baru Resmi Ujian Bacaan Al-Qur'an: Minimal 75
-  if (score >= 85) return "A"; // Lulus predikat Baik Sekali
-  if (score >= 75) return "B"; // Lulus predikat Baik (Memenuhi KKM)
-  if (score >= 60) return "C"; // Lulus Bersyarat (Di bawah KKM, wajib matrikulasi)
-  if (score >= 40) return "D"; // Tidak Lulus
+  // Standar KKM Resmi Ujian Bacaan Al-Qur'an:
+  // >= 85: A (Sangat Baik / Lulus Murni)
+  // 75 - 84: B (Baik / Lulus Murni - Memenuhi KKM 75)
+  // 70 - 74: C (Cukup / Lulus Bersyarat - Wajib Matrikulasi Tahsin)
+  // 40 - 69: D (Kurang / Tidak Lulus - Hard Gate Fail)
+  // < 40: E (Sangat Kurang / Tidak Lulus)
+  if (score >= 85) return "A";
+  if (score >= 75) return "B";
+  if (score >= 70) return "C";
+  if (score >= 40) return "D";
   return "E";
 }
 
 export function evaluateHafalanGrade(score: number): "A" | "B" | "C" | "D" | "E" {
   if (score >= 85) return "A";
   if (score >= 75) return "B";
-  if (score >= 60) return "C";
+  if (score >= 70) return "C";
   if (score >= 40) return "D";
   return "E";
 }
@@ -225,7 +248,7 @@ export function evaluateHafalanGrade(score: number): "A" | "B" | "C" | "D" | "E"
 export function evaluateArabGrade(score: number): "A" | "B" | "C" | "D" | "E" {
   if (score >= 85) return "A";
   if (score >= 75) return "B";
-  if (score >= 60) return "C";
+  if (score >= 70) return "C";
   if (score >= 40) return "D";
   return "E";
 }
@@ -295,53 +318,65 @@ export function evaluateStatusGrade(
   return "C";
 }
 
-export function determineFinalDecision(grades: {
-  quran: "A" | "B" | "C" | "D" | "E";
-  akademik: "A" | "B" | "C" | "D" | "E";
-  kepribadian: "A" | "B" | "C" | "D" | "E";
-  kesiapan: "A" | "B" | "C" | "D" | "E";
-  wawancaraSantri: "A" | "B" | "C" | "D" | "E";
-  wawancaraOrangTua: "A" | "B" | "C" | "D" | "E";
-  hafalan?: "A" | "B" | "C" | "D" | "E";
-  arab?: "A" | "B" | "C" | "D" | "E";
-}): "DITERIMA" | "CADANGAN" | "DITOLAK" {
+export function determineFinalDecision(
+  grades: {
+    quran: "A" | "B" | "C" | "D" | "E";
+    akademik: "A" | "B" | "C" | "D" | "E";
+    kepribadian: "A" | "B" | "C" | "D" | "E";
+    kesiapan: "A" | "B" | "C" | "D" | "E";
+    wawancaraSantri: "A" | "B" | "C" | "D" | "E";
+    wawancaraOrangTua: "A" | "B" | "C" | "D" | "E";
+    hafalan?: "A" | "B" | "C" | "D" | "E";
+    arab?: "A" | "B" | "C" | "D" | "E";
+  },
+  isDirectSMAorMA?: boolean
+): "DITERIMA" | "CADANGAN" | "DITOLAK" {
   const vals = Object.values(grades).filter(Boolean) as ("A" | "B" | "C" | "D" | "E")[];
 
-  // 1. CRITICAL REJECTION (DITOLAK)
+  // 1. HARD GATE: CRITICAL REJECTION (DITOLAK MUTLAK)
+  // 1a. Ada komponen bernilai E
   if (vals.includes("E")) return "DITOLAK";
 
-  // Critical Components (Quran, Wawancara Santri, Hafalan SMA) getting D is an automatic rejection
-  if (
-    grades.quran === "D" ||
-    grades.wawancaraSantri === "D" ||
-    grades.hafalan === "D"
-  ) {
-    return "DITOLAK";
+  // 1b. PILAR MUTLAK SEMUA JENJANG: Bacaan Al-Qur'an bernilai D (< 70) otomatis DITOLAK
+  // Nilai CBT Akademik/Wawancara setinggi apapun TIDAK BISA menyelamatkan kelulusan jika Al-Qur'an < 70
+  if (grades.quran === "D") return "DITOLAK";
+
+  // 1c. Wawancara Calon Santri bernilai D otomatis DITOLAK
+  if (grades.wawancaraSantri === "D") return "DITOLAK";
+
+  // 1d. KHUSUS JALUR LANGSUNG SMA / MA: TIGA PILAR KUNCI
+  // Jika Hafalan Al-Qur'an atau Lisan Bahasa Arab bernilai D (< 70), otomatis DITOLAK
+  if (isDirectSMAorMA) {
+    if (grades.hafalan === "D") return "DITOLAK";
+    if (grades.arab === "D") return "DITOLAK";
   }
 
-  // If there are multiple Ds in secondary components, it's a rejection
+  // 1e. Jika ada lebih dari satu komponen sekunder bernilai D
   const secondaryDs = [
     grades.akademik,
     grades.kepribadian,
     grades.kesiapan,
     grades.wawancaraOrangTua,
-    grades.arab,
   ].filter((v) => v === "D").length;
   if (secondaryDs > 1) return "DITOLAK";
 
-  // 2. AUTOMATIC RESERVE (CADANGAN)
-  if (grades.quran === "B" || grades.quran === "C") return "CADANGAN";
-  if (grades.hafalan === "B" || grades.hafalan === "C") return "CADANGAN";
-  if (secondaryDs === 1) return "CADANGAN";
+  // 2. PILAR CADANGAN / LULUS BERSYARAT (CADANGAN)
+  // 2a. Bacaan Al-Qur'an bernilai C (skor 70-74): Lulus Bersyarat / Wajib Matrikulasi Tahsin
+  if (grades.quran === "C") return "CADANGAN";
 
-  if (grades.wawancaraSantri === "B") {
-    const countA = vals.filter((v) => v === "A").length;
-    if (countA < 4) return "CADANGAN";
+  // 2b. Khusus SMA/MA: Jika Hafalan atau B. Arab bernilai C (skor 70-74), masuk CADANGAN (opsi turun IL / matrikulasi)
+  if (isDirectSMAorMA) {
+    if (grades.hafalan === "C" || grades.arab === "C") return "CADANGAN";
   }
 
-  // 3. DITERIMA (LULUS)
+  // 2c. Ada 1 komponen sekunder bernilai D
+  if (secondaryDs === 1) return "CADANGAN";
+
+  // 2d. Jika komponen sekunder ada lebih dari 1 yang bernilai C
   const countC = vals.filter((v) => v === "C").length;
   if (countC > 1) return "CADANGAN";
 
+  // 3. DITERIMA (LULUS MURNI)
+  // Al-Qur'an memenuhi KKM >= 75 (Grade A atau B), Tiga Pilar SMA/MA >= 75, dan komponen lain aman
   return "DITERIMA";
 }
