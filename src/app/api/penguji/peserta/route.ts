@@ -34,20 +34,35 @@ export async function GET(request: Request) {
   );
 
   try {
-    // Fetch user profile to see roles (we keep this for role injection if needed, but disable admin bypass)
     const userProfile = await prisma.profile.findUnique({
       where: { id: userId },
-      select: { role: true, secondary_roles: true } });
+      select: { role: true, secondary_roles: true },
+    });
     const allRoles = userProfile
       ? [userProfile.role, ...(userProfile.secondary_roles || [])].map((r: string) => (r || "").toLowerCase())
       : [];
-    const isAdmin = ["admin", "admin_super", "head_of_it"].includes(activeRole);
+    const isAdmin =
+      ["admin", "admin_super", "head_of_it"].includes(activeRole) ||
+      allRoles.some((r: string) => ["admin", "admin_super", "head_of_it"].includes(r));
+
+    const filter = (searchParams.get("filter") || "").toLowerCase().trim();
+    const search = (searchParams.get("search") || "").trim();
 
     let whereClause: any = {
       pendaftar: { deleted_at: null },
     };
 
-    if (isAdmin) {
+    if (search) {
+      whereClause.pendaftar.OR = [
+        { nama_lengkap: { contains: search, mode: "insensitive" } },
+        { nomor_pendaftaran: { contains: search, mode: "insensitive" } },
+      ];
+    }
+
+    if (isAdmin && filter !== "mine") {
+      // Admin Super / Admin: Tampilkan semua peserta ujian (tanpa dibatasi hanya ID penguji tertentu)
+      // agar tidak ada kandidat yang hilang dari pantauan admin
+    } else if (isAdmin && filter === "mine") {
       whereClause.OR = [
         { penguji_santri_id: userId },
         { penguji_quran_id: userId },
@@ -494,6 +509,78 @@ export async function GET(request: Request) {
           input_at_hafalan: scoreData.input_at_hafalan,
           input_at_arab: scoreData.input_at_arab,
           created_at: item.pendaftar.created_at });
+      }
+    }
+
+    // For Admin or when searching, ensure candidates who have testing status
+    // but might not have a jadwalUjian record yet are also included
+    if ((isAdmin && filter !== "mine") || search) {
+      try {
+        const additionalPendaftar = await prisma.pendaftar.findMany({
+          where: {
+            deleted_at: null,
+            id: { notIn: Array.from(pesertaMap.keys()) },
+            ...(search
+              ? {
+                  OR: [
+                    { nama_lengkap: { contains: search, mode: "insensitive" } },
+                    { nomor_pendaftaran: { contains: search, mode: "insensitive" } },
+                  ],
+                }
+              : {
+                  status_pendaftaran: { in: ["docs_verified", "scheduled", "tested", "announced", "accepted"] },
+                }),
+          },
+          include: {
+            nilai_ujian: true,
+          },
+          take: 150,
+        });
+
+        for (const p of additionalPendaftar) {
+          if (pesertaMap.has(p.id)) continue;
+          const score = p.nilai_ujian?.[0] || {};
+          const roles = ["wawancara", "quran", "ortu"];
+          const cleanJenjang = (p.jenjang || "").trim().toUpperCase();
+          if (cleanJenjang.includes("SMA") || cleanJenjang.includes("MA")) {
+            roles.push("lisan_arab", "hafalan");
+          }
+
+          pesertaMap.set(p.id, {
+            id: p.id,
+            nama_lengkap: p.nama_lengkap,
+            nomor_pendaftaran: p.nomor_pendaftaran,
+            jenjang: p.jenjang,
+            jadwal_id: "direct-assign",
+            roles: roles,
+            nilai_id: score.id || null,
+            nilai_wawancara_santri: score.nilai_wawancara_santri ?? null,
+            score_wawancara: score.score_wawancara ?? null,
+            nilai_tes_quran: score.nilai_tes_quran ?? null,
+            score_quran: score.score_quran ?? null,
+            nilai_tes_hafalan: score.nilai_hafalan_total ?? null,
+            score_hafalan: score.score_hafalan ?? null,
+            nilai_tes_lisan_arab: score.nilai_arab_total ?? null,
+            score_arab: score.score_arab ?? null,
+            nilai_wawancara_ortu: score.nilai_wawancara_ortu ?? null,
+            catatan_santri: score.catatan_santri ?? null,
+            catatan_quran: score.catatan_quran ?? null,
+            catatan_ortu: score.catatan_ortu ?? null,
+            detail_quran: score.detail_quran ?? null,
+            detail_wawancara: score.detail_wawancara ?? null,
+            detail_cawalsan: score.detail_cawalsan ?? null,
+            detail_lisan_arab: score.detail_arab || null,
+            catatan_lisan_arab: score.catatan_arab || null,
+            input_at_quran: score.input_at_quran ?? null,
+            input_at_santri: score.input_at_santri ?? null,
+            input_at_ortu: score.input_at_ortu ?? null,
+            input_at_hafalan: score.input_at_hafalan ?? null,
+            input_at_arab: score.input_at_arab ?? null,
+            created_at: p.created_at,
+          });
+        }
+      } catch (addErr) {
+        console.warn("[Penguji Peserta] Additional pendaftar query warning:", addErr);
       }
     }
 
