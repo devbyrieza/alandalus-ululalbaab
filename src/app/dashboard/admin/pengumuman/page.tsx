@@ -792,12 +792,16 @@ function PengumumanContent() {
                           {c.status_pendaftaran === "accepted" ? (
                             <button
                               onClick={() => {
-                                setSuratTarget({
-                                  id: c.id,
-                                  nama_lengkap: c.nama_lengkap,
-                                  nomor_pendaftaran: c.nomor_pendaftaran,
-                                  jenjang: c.jenjang,
-                                });
+                                if (selectedIds.length > 0 && selectedIds.includes(c.id)) {
+                                  setShowBulkAcceptedDialog(true);
+                                } else {
+                                  setSuratTarget({
+                                    id: c.id,
+                                    nama_lengkap: c.nama_lengkap,
+                                    nomor_pendaftaran: c.nomor_pendaftaran,
+                                    jenjang: c.jenjang,
+                                  });
+                                }
                               }}
                               title="Upload / Ganti Surat Pengumuman Resmi"
                               className="px-2.5 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1 transition-all bg-emerald-600 hover:bg-emerald-700 text-white shadow-xs hover:scale-105 active:scale-95"
@@ -812,12 +816,14 @@ function PengumumanContent() {
                           ) : (
                             <button
                               onClick={() => {
-                                setSuratTarget({
-                                  id: c.id,
-                                  nama_lengkap: c.nama_lengkap,
-                                  nomor_pendaftaran: c.nomor_pendaftaran,
-                                  jenjang: c.jenjang,
-                                });
+                                if (selectedIds.length > 0) {
+                                  if (!selectedIds.includes(c.id)) {
+                                    setSelectedIds((prev) => [...prev, c.id]);
+                                  }
+                                } else {
+                                  setSelectedIds([c.id]);
+                                }
+                                setShowBulkAcceptedDialog(true);
                               }}
                               title="Upload Surat Resmi & Tetapkan Diterima"
                               className="px-2.5 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1 transition-all bg-green-600 hover:bg-green-700 text-white shadow-xs hover:scale-105 active:scale-95"
