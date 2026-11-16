@@ -747,6 +747,7 @@ export async function sendDocumentMessage(params: {
       headers: {
         Authorization: authToken,
         "Content-Type": "application/x-www-form-urlencoded" },
+      signal: AbortSignal.timeout(10000),
       body: formData.toString() });
 
     const rawText = await response.text();

@@ -231,7 +231,7 @@ export async function POST(request: Request) {
           jenisNotif: "hasil_seleksi",
           messageContent,
           force: true,
-          sendNow: true,
+          sendNow: false,
         });
 
         waSent = !!enqResult.queued;
