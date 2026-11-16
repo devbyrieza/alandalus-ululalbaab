@@ -5,11 +5,20 @@ import {
   Calendar,
   CheckCircle2,
   Clock,
+  ExternalLink,
+  FileText,
   Filter,
+  Gavel,
+  HelpCircle,
+  Info,
   Loader2,
+  RotateCcw,
   Search,
   Send,
+  Sparkles,
   Upload,
+  UploadCloud,
+  Users,
   X,
   XCircle,
 } from "lucide-react";
@@ -17,14 +26,17 @@ import { useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useMemo, useState } from "react";
 import { toast } from "react-hot-toast";
 import Swal from "sweetalert2";
-import { BulkPengumumanDialog } from "@/components/admin/BulkPengumumanDialog";
 import { SuratPengumumanDialog } from "@/components/admin/SuratPengumumanDialog";
+import { BulkPengumumanDialog } from "@/components/admin/BulkPengumumanDialog";
+
+const KKM_STANDAR = 80;
+
+type MainTab = "siap_pleno" | "sudah_diumumkan" | "proses_seleksi";
 
 function PengumumanContent() {
   const [loading, setLoading] = useState(false);
   const [candidates, setCandidates] = useState<any[]>([]);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
-  const [stats, setStats] = useState({ total: 0, ready: 0, accepted: 0 });
   const [tahunAjaranList, setTahunAjaranList] = useState<
     Array<{ id: string; nama: string; is_active: boolean }>
   >([]);
@@ -33,49 +45,29 @@ function PengumumanContent() {
     id: string;
     nama_lengkap: string;
     nomor_pendaftaran: string;
-    jenjang?: string;
   } | null>(null);
+
+  // Tab & Sub-Filter States
+  const [activeTab, setActiveTab] = useState<MainTab>("siap_pleno");
+  const [plenoFilter, setPlenoFilter] = useState<"all" | "rekomendasi_diterima" | "perlu_dirapatkan">("all");
+  const [announcedFilter, setAnnouncedFilter] = useState<"all" | "accepted" | "cadangan" | "rejected">("all");
 
   const [searchQuery, setSearchQuery] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
 
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedSearch(searchQuery);
-    }, 400);
-    return () => clearTimeout(handler);
-  }, [searchQuery]);
-
-  const sortedCandidates = useMemo(() => {
-    return [...candidates].sort((a, b) => {
-      const nA = a.nilai_ujian?.nilai_total ?? -1;
-      const nB = b.nilai_ujian?.nilai_total ?? -1;
-      return nB - nA;
-    });
-  }, [candidates]);
-
-  const filteredCandidates = useMemo(() => {
-    let list = sortedCandidates;
-    if (searchQuery.trim()) {
-      const q = searchQuery.toLowerCase().trim();
-      list = list.filter(
-        (c) =>
-          c.nama_lengkap?.toLowerCase().includes(q) ||
-          c.nomor_pendaftaran?.toLowerCase().includes(q) ||
-          c.nik?.includes(q) ||
-          c.asal_sekolah?.toLowerCase().includes(q)
-      );
-    }
-    return list;
-  }, [sortedCandidates, searchQuery]);
-
   const [filter, setFilter] = useState({
     jenjang: "",
-    status: "tested", // Default to those who have completed ALL 6 exams
     tahun_ajaran: "",
   });
 
   const [isPublishing, setIsPublishing] = useState(false);
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearch(searchQuery);
+    }, 300);
+    return () => clearTimeout(handler);
+  }, [searchQuery]);
 
   // Load Tahun Ajaran list on mount and default to active TA
   useEffect(() => {
@@ -114,36 +106,17 @@ function PengumumanContent() {
   const fetchCandidates = async () => {
     try {
       setLoading(true);
-      // Construct query
       const params = new URLSearchParams();
       if (filter.jenjang) params.append("jenjang", filter.jenjang);
-      if (filter.status) params.append("status", filter.status);
       if (filter.tahun_ajaran) params.append("tahun_ajaran", filter.tahun_ajaran);
-      if (debouncedSearch.trim()) params.append("search", debouncedSearch.trim());
-      params.append("limit", "100"); // Fetch ample amount
-      params.append("_t", String(Date.now()));
+      params.append("status", "all"); // Fetch all candidates for the TA to separate into tabs
+      params.append("limit", "500");
 
-      const res = await fetch(`/api/admin/pendaftar/list?${params.toString()}`, {
-        cache: "no-store",
-      });
+      const res = await fetch(`/api/admin/pendaftar/list?${params.toString()}`);
       const data = await res.json();
 
       if (res.ok) {
-        const rawList = data.data || [];
-        setCandidates(rawList);
-        // Santri yang SIAP DIRAPATKAN (status tested atau passed, belum terbit SK)
-        const siapRapat = rawList.filter(
-          (c: any) =>
-            (c.status_pendaftaran === "tested" || c.status_pendaftaran === "passed") &&
-            !c.pengumuman?.is_published
-        ).length;
-        // Santri yang sudah resmi diterima/terbit SK
-        const accepted = rawList.filter(
-          (c: any) =>
-            ["accepted", "enrolled", "enrolled_full"].includes(c.status_pendaftaran) ||
-            (c.pengumuman?.is_published && c.pengumuman?.status_kelulusan === "Diterima")
-        ).length;
-        setStats({ total: rawList.length, ready: siapRapat, accepted });
+        setCandidates(data.data || []);
       }
     } catch (error) {
       console.error(error);
@@ -155,7 +128,133 @@ function PengumumanContent() {
 
   useEffect(() => {
     fetchCandidates();
-  }, [filter, debouncedSearch]);
+    setSelectedIds([]);
+  }, [filter.tahun_ajaran, filter.jenjang]);
+
+  // Candidate Classification
+  const isAnnounced = (c: any) => {
+    return (
+      ["accepted", "enrolled", "enrolled_full", "cadangan", "rejected"].includes(c.status_pendaftaran) ||
+      Boolean(c.pengumuman?.is_published)
+    );
+  };
+
+  const isReadyForPleno = (c: any) => {
+    if (isAnnounced(c)) return false;
+    return (
+      c.status_pendaftaran === "tested" ||
+      c.status_pendaftaran === "passed" ||
+      c.exam_score_count === 6 ||
+      c.exam_status === "tested"
+    );
+  };
+
+  const isProsesSeleksi = (c: any) => {
+    return !isAnnounced(c) && !isReadyForPleno(c);
+  };
+
+  const isMemenuhiKKM = (c: any) => {
+    const total = Number(c.nilai_ujian?.nilai_total ?? 0);
+    return total >= KKM_STANDAR;
+  };
+
+  // Sort candidates by total score descending
+  const sortedCandidates = useMemo(() => {
+    return [...candidates].sort((a, b) => {
+      const nA = a.nilai_ujian?.nilai_total ?? -1;
+      const nB = b.nilai_ujian?.nilai_total ?? -1;
+      return nB - nA;
+    });
+  }, [candidates]);
+
+  // Statistics for Tabs
+  const statsReady = useMemo(() => sortedCandidates.filter(isReadyForPleno), [sortedCandidates]);
+  const statsAnnounced = useMemo(() => sortedCandidates.filter(isAnnounced), [sortedCandidates]);
+  const statsProses = useMemo(() => sortedCandidates.filter(isProsesSeleksi), [sortedCandidates]);
+
+  const countLolosKKM = useMemo(() => statsReady.filter(isMemenuhiKKM).length, [statsReady]);
+  const countPerluRapat = useMemo(() => statsReady.filter((c) => !isMemenuhiKKM(c)).length, [statsReady]);
+
+  const countAccepted = useMemo(
+    () =>
+      statsAnnounced.filter(
+        (c) =>
+          ["accepted", "enrolled", "enrolled_full"].includes(c.status_pendaftaran) ||
+          c.pengumuman?.status_kelulusan === "Diterima"
+      ).length,
+    [statsAnnounced]
+  );
+  const countCadangan = useMemo(
+    () =>
+      statsAnnounced.filter(
+        (c) =>
+          c.status_pendaftaran === "cadangan" ||
+          c.pengumuman?.status_kelulusan === "Cadangan"
+      ).length,
+    [statsAnnounced]
+  );
+  const countRejected = useMemo(
+    () =>
+      statsAnnounced.filter(
+        (c) =>
+          c.status_pendaftaran === "rejected" ||
+          c.pengumuman?.status_kelulusan === "Ditolak"
+      ).length,
+    [statsAnnounced]
+  );
+
+  // Active Tab Candidates
+  const tabCandidates = useMemo(() => {
+    if (activeTab === "siap_pleno") {
+      let list = statsReady;
+      if (plenoFilter === "rekomendasi_diterima") {
+        list = list.filter(isMemenuhiKKM);
+      } else if (plenoFilter === "perlu_dirapatkan") {
+        list = list.filter((c) => !isMemenuhiKKM(c));
+      }
+      return list;
+    } else if (activeTab === "sudah_diumumkan") {
+      let list = statsAnnounced;
+      if (announcedFilter === "accepted") {
+        list = list.filter(
+          (c) =>
+            ["accepted", "enrolled", "enrolled_full"].includes(c.status_pendaftaran) ||
+            c.pengumuman?.status_kelulusan === "Diterima"
+        );
+      } else if (announcedFilter === "cadangan") {
+        list = list.filter(
+          (c) =>
+            c.status_pendaftaran === "cadangan" ||
+            c.pengumuman?.status_kelulusan === "Cadangan"
+        );
+      } else if (announcedFilter === "rejected") {
+        list = list.filter(
+          (c) =>
+            c.status_pendaftaran === "rejected" ||
+            c.pengumuman?.status_kelulusan === "Ditolak"
+        );
+      }
+      return list;
+    } else {
+      return statsProses;
+    }
+  }, [statsReady, statsAnnounced, statsProses, activeTab, plenoFilter, announcedFilter]);
+
+  // Search filter
+  const filteredCandidates = useMemo(() => {
+    let list = tabCandidates;
+    if (debouncedSearch.trim()) {
+      const q = debouncedSearch.toLowerCase().trim();
+      list = list.filter(
+        (c) =>
+          c.nama_lengkap?.toLowerCase().includes(q) ||
+          c.nomor_pendaftaran?.toLowerCase().includes(q) ||
+          c.nik?.includes(q) ||
+          c.asal_sekolah?.toLowerCase().includes(q)
+      );
+    }
+    return list;
+  }, [tabCandidates, debouncedSearch]);
 
   const handleSelectAll = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
@@ -173,24 +272,77 @@ function PengumumanContent() {
     }
   };
 
+  const handleSelectAllLolosKKM = () => {
+    const ids = statsReady.filter(isMemenuhiKKM).map((c) => c.id);
+    setSelectedIds(ids);
+    toast.success(
+      `${ids.length} santri yang lolos standar KKM (≥ 80) berhasil dipilih. Silakan klik tombol 'Diterima (${ids.length})' untuk proses SK.`,
+      { duration: 4000 }
+    );
+  };
+
+  const handleRapatkanDulu = async (id: string, nama: string) => {
+    const result = await Swal.fire({
+      title: "Agendakan ke Rapat Pleno?",
+      html: `<p>Tandai santri an. <b>${nama}</b> untuk dirapatkan dan dibahas khusus bersama tim pleno?</p><p class="mt-2 text-xs text-stone-500">Status akan dicatat sebagai 'Menunggu Rapat' di draft pengumuman.</p>`,
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#2563eb",
+      cancelButtonColor: "#6b7280",
+      confirmButtonText: "Ya, Agendakan!",
+      cancelButtonText: "Batal",
+      reverseButtons: true,
+    });
+
+    if (!result.isConfirmed) return;
+
+    try {
+      setIsPublishing(true);
+      const res = await fetch("/api/admin/pengumuman/publish", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          pendaftar_ids: [id],
+          new_status: "tested",
+        }),
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        toast.success(`Santri ${nama} berhasil diagendakan untuk rapat pleno.`);
+        fetchCandidates();
+      } else {
+        toast.error(data.error || "Gagal mengagendakan rapat");
+      }
+    } catch {
+      toast.error("Terjadi kesalahan sistem");
+    } finally {
+      setIsPublishing(false);
+    }
+  };
+
   const handlePublishSingle = async (
     id: string,
     nama: string,
-    new_status: "accepted" | "cadangan" | "rejected"
+    new_status: "accepted" | "cadangan" | "rejected" | "tested"
   ) => {
     const actionText =
-      new_status === "accepted"
-        ? "menetapkan DITERIMA"
-        : new_status === "cadangan"
-          ? "menjadikan CADANGAN"
+      new_status === "cadangan"
+        ? "menjadikan CADANGAN"
+        : new_status === "tested"
+          ? "MEMBATALKAN KELULUSAN & KEMBALIKAN KE SIAP PLENO"
           : "menetapkan DITOLAK";
     const btnColor =
-      new_status === "accepted" ? "#059669" : new_status === "cadangan" ? "#d97706" : "#dc2626";
+      new_status === "cadangan"
+        ? "#d97706"
+        : new_status === "tested"
+          ? "#4b5563"
+          : "#dc2626";
 
     const result = await Swal.fire({
       title: `${actionText} Santri?`,
-      html: `<p>Yakin ingin <b>${actionText}</b> santri an. <b>${nama}</b>?</p><p class="mt-2 text-xs text-stone-500">Status akan langsung ditetapkan, surat pengumuman terbit, dan notifikasi WhatsApp diantrekan.</p>`,
-      icon: "question",
+      html: `<p>Yakin ingin <b>${actionText}</b> santri an. <b>${nama}</b>?</p><p class="mt-2 text-xs text-stone-500">Status akan langsung diperbarui di database.</p>`,
+      icon: "warning",
       showCancelButton: true,
       confirmButtonColor: btnColor,
       cancelButtonColor: "#57534e",
@@ -215,57 +367,46 @@ function PengumumanContent() {
       const data = await res.json();
       if (res.ok) {
         toast.success(data.message || `Status ${nama} berhasil diperbarui.`);
-        setCandidates((prev) =>
-          prev.map((c) =>
-            c.id === id
-              ? {
-                  ...c,
-                  status_pendaftaran: new_status,
-                  pengumuman: {
-                    ...(c.pengumuman || {}),
-                    status_kelulusan:
-                      new_status === "accepted"
-                        ? "Diterima"
-                        : new_status === "cadangan"
-                          ? "Cadangan"
-                          : "Ditolak",
-                    is_published: true,
-                  },
-                }
-              : c
-          )
-        );
         fetchCandidates();
       } else {
         toast.error(data.error || "Gagal memperbarui status");
       }
-    } catch (error) {
+    } catch {
       toast.error("Terjadi kesalahan sistem");
     } finally {
       setIsPublishing(false);
     }
   };
 
-  const handlePublish = async (new_status: "accepted" | "cadangan" | "rejected") => {
+  const handlePublish = async (new_status: "accepted" | "cadangan" | "rejected" | "tested") => {
     if (selectedIds.length === 0) return;
 
-    // Untuk status DITERIMA massal, buka Bulk Dialog (Auto-Generate / Multi-Upload Surat)
     if (new_status === "accepted") {
       setShowBulkAcceptedDialog(true);
       return;
     }
 
-    const actionText = new_status === "cadangan" ? "menjadikan CADANGAN" : "menetapkan DITOLAK";
-    const btnColor = new_status === "cadangan" ? "#d97706" : "#dc2626";
+    const actionText =
+      new_status === "cadangan"
+        ? "menjadikan CADANGAN"
+        : new_status === "tested"
+          ? "MEMBATALKAN KELULUSAN (kembalikan ke siap pleno) untuk"
+          : "menetapkan DITOLAK";
+    const btnColor =
+      new_status === "cadangan"
+        ? "#d97706"
+        : new_status === "tested"
+          ? "#6b7280"
+          : "#dc2626";
 
     const result = await Swal.fire({
-      title: "Publikasi Pengumuman?",
-      text: `Apakah Anda yakin ingin ${actionText} ${selectedIds.length} santri ini? Pengumuman resmi akan diterbitkan dan pesan masuk antrean WhatsApp otomatis.`,
+      title: "Publikasi Penetapan?",
+      text: `Apakah Anda yakin ingin ${actionText} ${selectedIds.length} santri ini? Status akan diperbarui resmi.`,
       icon: "question",
       showCancelButton: true,
       confirmButtonColor: btnColor,
-      cancelButtonColor: "#57534e", // Stone 600
-      confirmButtonText: "Ya, Publikasikan!",
+      cancelButtonColor: "#57534e",
+      confirmButtonText: "Ya, Eksekusi!",
       cancelButtonText: "Batal",
       reverseButtons: true,
     });
@@ -280,173 +421,222 @@ function PengumumanContent() {
         body: JSON.stringify({
           pendaftar_ids: selectedIds,
           new_status: new_status,
-          // Removed hardcoded announcement_message to use buildMessageHasilTes on backend
         }),
       });
 
       const result = await res.json();
       if (res.ok) {
-        toast.success(
-          result.message || `Berhasil! ${result.queued} pengumuman sedang mengantri untuk dikirim.`
-        );
-        const affectedIds = new Set(selectedIds);
-        setCandidates((prev) =>
-          prev.map((c) =>
-            affectedIds.has(c.id)
-              ? {
-                  ...c,
-                  status_pendaftaran: new_status,
-                  pengumuman: {
-                    ...(c.pengumuman || {}),
-                    status_kelulusan: new_status === "cadangan" ? "Cadangan" : "Ditolak",
-                    is_published: true,
-                  },
-                }
-              : c
-          )
-        );
+        toast.success(result.message || `Berhasil memperbarui ${selectedIds.length} santri.`);
         fetchCandidates();
         setSelectedIds([]);
       } else {
-        toast.error(result.error || "Gagal mempublish pengumuman");
+        toast.error(result.error || "Gagal memproses pengumuman");
       }
-    } catch (error) {
+    } catch {
       toast.error("Terjadi kesalahan sistem");
     } finally {
       setIsPublishing(false);
     }
   };
 
-  const renderStatusBadge = (c: any, isMobile = false) => {
-    const textSize = isMobile ? "text-[10px]" : "text-xs";
-    if (c.status_pendaftaran === "tested") {
-      if (c.pengumuman) {
-        const sL = c.pengumuman.status_kelulusan;
-        const cls =
-          sL === "Diterima"
-            ? "bg-green-100 text-green-700"
-            : sL === "Cadangan"
-              ? "bg-amber-100 text-amber-700"
-              : "bg-red-100 text-red-700";
-        return (
-          <span
-            className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full ${cls} ${textSize} font-black uppercase whitespace-nowrap shrink-0`}
-          >
-            DRAFT: {sL}
-          </span>
-        );
-      }
-      return (
-        <span
-          className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-primary-100 text-primary-700 ${textSize} font-black uppercase whitespace-nowrap shrink-0`}
-        >
-          Menunggu Rapat
-        </span>
-      );
-    }
-    if (["selection", "testing"].includes(c.status_pendaftaran)) {
-      return (
-        <span
-          className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-blue-100 text-blue-700 ${textSize} font-black uppercase whitespace-nowrap shrink-0`}
-        >
-          Proses Seleksi
-        </span>
-      );
-    }
-    if (c.status_pendaftaran === "scheduled") {
-      return (
-        <span
-          className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-indigo-100 text-indigo-700 ${textSize} font-black uppercase whitespace-nowrap shrink-0`}
-        >
-          Terjadwal Ujian
-        </span>
-      );
-    }
-    if (c.status_pendaftaran === "accepted") {
-      return (
-        <span
-          className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-green-100 text-green-700 ${textSize} font-black uppercase whitespace-nowrap shrink-0`}
-        >
-          <CheckCircle2 className="w-3 h-3" /> Diterima
-        </span>
-      );
-    }
-    if (c.status_pendaftaran === "cadangan" || c.status_pendaftaran === "announced") {
-      return (
-        <span
-          className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-amber-100 text-amber-700 ${textSize} font-black uppercase whitespace-nowrap shrink-0`}
-        >
-          Cadangan
-        </span>
-      );
-    }
-    if (c.status_pendaftaran === "rejected") {
-      return (
-        <span
-          className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-red-100 text-red-700 ${textSize} font-black uppercase whitespace-nowrap shrink-0`}
-        >
-          Ditolak
-        </span>
-      );
-    }
+  const getGradeBadge = (score: number | null | undefined, type: string) => {
+    if (score == null) return null;
+    let grade = "C";
+    if (type === "quran") grade = score >= 80 ? "A" : score >= 65 ? "B" : "C";
+    else if (type === "akademik") grade = score >= 75 ? "A" : score >= 60 ? "B" : "C";
+    else if (type === "kepribadian") grade = score >= 70 ? "A" : score >= 50 ? "B" : "C";
+    else grade = score >= 80 ? "A" : score >= 60 ? "B" : "C";
+
+    const color =
+      grade === "A"
+        ? "bg-green-500"
+        : grade === "B"
+          ? "bg-primary-400"
+          : "bg-secondary-400";
     return (
       <span
-        className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-stone-100 text-stone-600 ${textSize} font-black uppercase whitespace-nowrap shrink-0`}
+        key={type}
+        className={`${color} text-white text-[8px] font-black px-1.5 py-0.5 rounded-sm uppercase shrink-0`}
       >
-        {c.status_pendaftaran}
+        {grade}
       </span>
     );
   };
 
   return (
     <div className="space-y-6">
-      {/* Header Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-white p-6 rounded-2xl shadow-xl border border-stone-100">
-          <p className="text-stone-500 text-xs font-bold uppercase tracking-wider">Kandidat Tampil</p>
-          <div className="flex items-baseline gap-2 mt-1">
-            <h3 className="text-3xl font-black text-stone-800">{stats.total}</h3>
-            <span className="text-xs text-stone-400 font-medium">Santri</span>
-          </div>
-        </div>
-        <div
-          onClick={() => setFilter({ ...filter, status: "tested" })}
-          className="bg-blue-50/80 hover:bg-blue-100/70 cursor-pointer transition-all p-6 rounded-2xl shadow-xl border border-blue-200/80 group"
+      {/* 1. TOP-LEVEL WORKSPACE TABS */}
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+        <button
+          onClick={() => {
+            setActiveTab("siap_pleno");
+            setSelectedIds([]);
+          }}
+          className={`flex items-center justify-between sm:justify-start gap-3 px-6 py-4 rounded-2xl font-black text-sm transition-all cursor-pointer ${
+            activeTab === "siap_pleno"
+              ? "bg-blue-600 text-white shadow-xl shadow-blue-600/30 scale-[1.01]"
+              : "bg-white text-stone-700 hover:bg-stone-50 border border-stone-200"
+          }`}
         >
-          <div className="flex items-center justify-between">
-            <p className="text-blue-700 text-xs font-black uppercase tracking-wider flex items-center gap-1.5">
-              <span>🎯</span> Siap Dirapatkan (Tes Selesai)
-            </p>
-            <span className="text-[10px] bg-blue-200 text-blue-900 font-bold px-2 py-0.5 rounded-full group-hover:bg-blue-300 transition-colors">
-              Filter Cepat
-            </span>
+          <div className="flex items-center gap-2.5">
+            <span className="text-xl">🎯</span>
+            <div className="text-left">
+              <div className="leading-tight">Siap Pleno &amp; Rekomendasi</div>
+              <div className={`text-[10px] font-medium ${activeTab === "siap_pleno" ? "text-blue-100" : "text-stone-400"}`}>
+                Belum Ditetapkan / Menunggu Keputusan
+              </div>
+            </div>
           </div>
-          <div className="flex items-baseline gap-2 mt-1">
-            <h3 className="text-3xl font-black text-blue-900">{stats.ready}</h3>
-            <span className="text-xs text-blue-700 font-medium">Santri Siap Pleno</span>
-          </div>
-        </div>
-        <div
-          onClick={() => setFilter({ ...filter, status: "accepted" })}
-          className="bg-emerald-50/80 hover:bg-emerald-100/70 cursor-pointer transition-all p-6 rounded-2xl shadow-xl border border-emerald-200/80 group"
+          <span
+            className={`px-2.5 py-1 rounded-full text-xs font-black ml-2 ${
+              activeTab === "siap_pleno" ? "bg-white/20 text-white" : "bg-blue-100 text-blue-800"
+            }`}
+          >
+            {statsReady.length}
+          </span>
+        </button>
+
+        <button
+          onClick={() => {
+            setActiveTab("sudah_diumumkan");
+            setSelectedIds([]);
+          }}
+          className={`flex items-center justify-between sm:justify-start gap-3 px-6 py-4 rounded-2xl font-black text-sm transition-all cursor-pointer ${
+            activeTab === "sudah_diumumkan"
+              ? "bg-emerald-600 text-white shadow-xl shadow-emerald-600/30 scale-[1.01]"
+              : "bg-white text-stone-700 hover:bg-stone-50 border border-stone-200"
+          }`}
         >
-          <div className="flex items-center justify-between">
-            <p className="text-emerald-700 text-xs font-black uppercase tracking-wider flex items-center gap-1.5">
-              <span>✅</span> Sudah Diterima (Terbit SK)
-            </p>
-            <span className="text-[10px] bg-emerald-200 text-emerald-900 font-bold px-2 py-0.5 rounded-full group-hover:bg-emerald-300 transition-colors">
-              Filter Cepat
-            </span>
+          <div className="flex items-center gap-2.5">
+            <span className="text-xl">✅</span>
+            <div className="text-left">
+              <div className="leading-tight">Sudah Ditetapkan / Diumumkan</div>
+              <div className={`text-[10px] font-medium ${activeTab === "sudah_diumumkan" ? "text-emerald-100" : "text-stone-400"}`}>
+                Arsip Kelulusan &amp; Terbit SK
+              </div>
+            </div>
           </div>
-          <div className="flex items-baseline gap-2 mt-1">
-            <h3 className="text-3xl font-black text-emerald-900">{stats.accepted}</h3>
-            <span className="text-xs text-emerald-700 font-medium">Santri Lulus</span>
+          <span
+            className={`px-2.5 py-1 rounded-full text-xs font-black ml-2 ${
+              activeTab === "sudah_diumumkan" ? "bg-white/20 text-white" : "bg-emerald-100 text-emerald-800"
+            }`}
+          >
+            {statsAnnounced.length}
+          </span>
+        </button>
+
+        <button
+          onClick={() => {
+            setActiveTab("proses_seleksi");
+            setSelectedIds([]);
+          }}
+          className={`flex items-center justify-between sm:justify-start gap-3 px-6 py-4 rounded-2xl font-black text-sm transition-all cursor-pointer ${
+            activeTab === "proses_seleksi"
+              ? "bg-stone-800 text-white shadow-xl shadow-stone-800/30 scale-[1.01]"
+              : "bg-white text-stone-700 hover:bg-stone-50 border border-stone-200"
+          }`}
+        >
+          <div className="flex items-center gap-2.5">
+            <span className="text-xl">⏳</span>
+            <div className="text-left">
+              <div className="leading-tight">Proses Seleksi</div>
+              <div className={`text-[10px] font-medium ${activeTab === "proses_seleksi" ? "text-stone-300" : "text-stone-400"}`}>
+                Ujian Belum Lengkap
+              </div>
+            </div>
           </div>
-        </div>
+          <span
+            className={`px-2.5 py-1 rounded-full text-xs font-black ml-2 ${
+              activeTab === "proses_seleksi" ? "bg-white/20 text-white" : "bg-stone-100 text-stone-700"
+            }`}
+          >
+            {statsProses.length}
+          </span>
+        </button>
       </div>
 
-      {/* Filters & Actions */}
-      <div className="bg-white p-4 rounded-xl shadow-xl border border-stone-100 flex flex-col md:flex-row justify-between items-center gap-4">
+      {/* 2. TAB CONTENT: SMART RECOMMENDATION BANNER FOR TAB 1 (SIAP PLENO) */}
+      {activeTab === "siap_pleno" && (
+        <div className="bg-gradient-to-r from-blue-50 via-indigo-50/40 to-white p-6 rounded-2xl border border-blue-200/80 shadow-md">
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pb-4 border-b border-blue-100">
+            <div className="flex items-center gap-3">
+              <div className="p-3 bg-blue-600 text-white rounded-xl shadow-md">
+                <Sparkles className="w-5 h-5" />
+              </div>
+              <div>
+                <h3 className="text-base font-black text-blue-950 flex items-center gap-2">
+                  <span>Rekomendasi Kelulusan Otomatis (Standar KKM: {KKM_STANDAR}.00)</span>
+                  <span className="bg-blue-100 text-blue-800 text-[10px] px-2 py-0.5 rounded-full font-bold">
+                    Otomasi AI Seleksi
+                  </span>
+                </h3>
+                <p className="text-xs text-blue-800/80 font-medium">
+                  Sistem mengevaluasi nilai akhir peserta secara objektif untuk mempermudah keputusan Admin Super &amp; Tim Pleno.
+                </p>
+              </div>
+            </div>
+
+            {countLolosKKM > 0 && (
+              <button
+                onClick={handleSelectAllLolosKKM}
+                className="flex items-center gap-2 px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-md transition-all shrink-0 cursor-pointer"
+              >
+                <Sparkles className="w-4 h-4" />
+                <span>Pilih Semua yang Lolos KKM ({countLolosKKM})</span>
+              </button>
+            )}
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+            {/* Lolos KKM */}
+            <div
+              onClick={() => setPlenoFilter(plenoFilter === "rekomendasi_diterima" ? "all" : "rekomendasi_diterima")}
+              className={`p-4 rounded-xl border transition-all cursor-pointer ${
+                plenoFilter === "rekomendasi_diterima"
+                  ? "bg-emerald-100/90 border-emerald-300 ring-2 ring-emerald-500"
+                  : "bg-white/80 hover:bg-emerald-50/50 border-emerald-200"
+              }`}
+            >
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-xs font-black text-emerald-800 uppercase flex items-center gap-1.5">
+                  <span>🌟</span> Rekomendasi: Diterima Langsung
+                </span>
+                <span className="text-lg font-black text-emerald-900 bg-emerald-100 px-2.5 py-0.5 rounded-full">
+                  {countLolosKKM} Santri
+                </span>
+              </div>
+              <p className="text-xs text-emerald-700/90 leading-relaxed font-medium">
+                Nilai akhir mencapai standar kelulusan KKM (≥ {KKM_STANDAR}.00 / Grade A). Siap diumumkan diterima langsung atau pilih &apos;Rapatkan Dulu&apos; jika ingin pembahasan khusus.
+              </p>
+            </div>
+
+            {/* Perlu Dirapatkan */}
+            <div
+              onClick={() => setPlenoFilter(plenoFilter === "perlu_dirapatkan" ? "all" : "perlu_dirapatkan")}
+              className={`p-4 rounded-xl border transition-all cursor-pointer ${
+                plenoFilter === "perlu_dirapatkan"
+                  ? "bg-amber-100/90 border-amber-300 ring-2 ring-amber-500"
+                  : "bg-white/80 hover:bg-amber-50/50 border-amber-200"
+              }`}
+            >
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-xs font-black text-amber-800 uppercase flex items-center gap-1.5">
+                  <span>⚖️</span> Perlu Dirapatkan Tim Pleno
+                </span>
+                <span className="text-lg font-black text-amber-900 bg-amber-100 px-2.5 py-0.5 rounded-full">
+                  {countPerluRapat} Santri
+                </span>
+              </div>
+              <p className="text-xs text-amber-700/90 leading-relaxed font-medium">
+                Nilai akhir di bawah standar KKM (&lt; {KKM_STANDAR}.00 / Grade B-C). Arahkan untuk dirapatkan bersama tim apakah santri tetap diterima (dispensasi/kuota), cadangan, atau ditolak.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 3. FILTERS & BATCH ACTIONS BAR */}
+      <div className="bg-white p-4 rounded-2xl shadow-xl border border-stone-100 flex flex-col md:flex-row justify-between items-center gap-4">
         <div className="flex flex-wrap items-center gap-3 w-full md:w-auto">
           {/* Filter Tahun Ajaran */}
           <div className="flex items-center gap-2 px-3 py-2 bg-stone-50 rounded-xl border border-stone-200">
@@ -465,23 +655,76 @@ function PengumumanContent() {
             </select>
           </div>
 
-          {/* Filter Status */}
-          <div className="flex items-center gap-2 px-3 py-2 bg-stone-50 rounded-xl border border-stone-200">
-            <Filter className="w-4 h-4 text-stone-500" />
-            <select
-              className="bg-transparent text-sm font-semibold text-stone-700 focus:outline-none cursor-pointer"
-              value={filter.status}
-              onChange={(e) => setFilter({ ...filter, status: e.target.value })}
-            >
-              <option value="tested">🎯 Siap Dirapatkan (Ujian Selesai Lengkap)</option>
-              <option value="sedang_seleksi">⏳ Semua Proses Seleksi (Ujian &amp; Jadwal)</option>
-              <option value="scheduled">📅 Terjadwal Ujian</option>
-              <option value="accepted">✅ Sudah Diterima</option>
-              <option value="cadangan">⚠️ Cadangan</option>
-              <option value="rejected">❌ Ditolak</option>
-              <option value="all">🌐 Semua Status</option>
-            </select>
-          </div>
+          {/* Sub-Filters per Tab */}
+          {activeTab === "siap_pleno" && (
+            <div className="flex items-center gap-1 bg-stone-100 p-1 rounded-xl">
+              <button
+                onClick={() => setPlenoFilter("all")}
+                className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all ${
+                  plenoFilter === "all" ? "bg-white text-stone-900 shadow-xs" : "text-stone-600 hover:text-stone-900"
+                }`}
+              >
+                Semua ({statsReady.length})
+              </button>
+              <button
+                onClick={() => setPlenoFilter("rekomendasi_diterima")}
+                className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all ${
+                  plenoFilter === "rekomendasi_diterima"
+                    ? "bg-emerald-600 text-white shadow-xs"
+                    : "text-emerald-700 hover:bg-emerald-50"
+                }`}
+              >
+                🌟 Lolos KKM ({countLolosKKM})
+              </button>
+              <button
+                onClick={() => setPlenoFilter("perlu_dirapatkan")}
+                className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all ${
+                  plenoFilter === "perlu_dirapatkan"
+                    ? "bg-amber-600 text-white shadow-xs"
+                    : "text-amber-700 hover:bg-amber-50"
+                }`}
+              >
+                ⚖️ Rapat Tim ({countPerluRapat})
+              </button>
+            </div>
+          )}
+
+          {activeTab === "sudah_diumumkan" && (
+            <div className="flex items-center gap-1 bg-stone-100 p-1 rounded-xl">
+              <button
+                onClick={() => setAnnouncedFilter("all")}
+                className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all ${
+                  announcedFilter === "all" ? "bg-white text-stone-900 shadow-xs" : "text-stone-600 hover:text-stone-900"
+                }`}
+              >
+                Semua ({statsAnnounced.length})
+              </button>
+              <button
+                onClick={() => setAnnouncedFilter("accepted")}
+                className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all ${
+                  announcedFilter === "accepted" ? "bg-emerald-600 text-white shadow-xs" : "text-emerald-700 hover:bg-emerald-50"
+                }`}
+              >
+                Diterima ({countAccepted})
+              </button>
+              <button
+                onClick={() => setAnnouncedFilter("cadangan")}
+                className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all ${
+                  announcedFilter === "cadangan" ? "bg-amber-600 text-white shadow-xs" : "text-amber-700 hover:bg-amber-50"
+                }`}
+              >
+                Cadangan ({countCadangan})
+              </button>
+              <button
+                onClick={() => setAnnouncedFilter("rejected")}
+                className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all ${
+                  announcedFilter === "rejected" ? "bg-red-600 text-white shadow-xs" : "text-red-700 hover:bg-red-50"
+                }`}
+              >
+                Ditolak ({countRejected})
+              </button>
+            </div>
+          )}
 
           {/* Search Box */}
           <div className="flex items-center gap-2 px-3 py-2 bg-stone-50 rounded-xl border border-stone-200 focus-within:border-primary-500 focus-within:bg-white transition-all w-full sm:w-64">
@@ -506,234 +749,140 @@ function PengumumanContent() {
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
-          <button
-            onClick={() => handlePublish("accepted")}
-            disabled={selectedIds.length === 0 || isPublishing}
-            className="flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 disabled:bg-stone-300 text-white rounded-xl font-bold transition-all shadow-sm"
-          >
-            {isPublishing ? "Proses..." : `Diterima (${selectedIds.length})`}
-          </button>
-          <button
-            onClick={() => handlePublish("cadangan")}
-            disabled={selectedIds.length === 0 || isPublishing}
-            className="flex items-center gap-2 px-4 py-2 bg-amber-500 hover:bg-amber-600 disabled:bg-stone-300 text-white rounded-xl font-bold transition-all shadow-sm"
-          >
-            {isPublishing ? "Proses..." : `Cadangkan (${selectedIds.length})`}
-          </button>
-          <button
-            onClick={() => handlePublish("rejected")}
-            disabled={selectedIds.length === 0 || isPublishing}
-            className="flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-700 disabled:bg-stone-300 text-white rounded-xl font-bold transition-all shadow-sm"
-          >
-            {isPublishing ? "Proses..." : `Tolak (${selectedIds.length})`}
-          </button>
+        {/* Batch Action Buttons */}
+        <div className="flex items-center gap-2 flex-wrap">
+          {activeTab === "siap_pleno" && (
+            <>
+              <button
+                onClick={() => handlePublish("accepted")}
+                disabled={selectedIds.length === 0 || isPublishing}
+                className="flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 disabled:bg-stone-300 text-white rounded-xl font-bold transition-all shadow-sm text-xs cursor-pointer"
+              >
+                <CheckCircle2 className="w-4 h-4" />
+                <span>{isPublishing ? "Proses..." : `Diterima (${selectedIds.length})`}</span>
+              </button>
+              <button
+                onClick={() => handlePublish("cadangan")}
+                disabled={selectedIds.length === 0 || isPublishing}
+                className="flex items-center gap-2 px-4 py-2 bg-amber-500 hover:bg-amber-600 disabled:bg-stone-300 text-white rounded-xl font-bold transition-all shadow-sm text-xs cursor-pointer"
+              >
+                <Clock className="w-4 h-4" />
+                <span>{isPublishing ? "Proses..." : `Cadangkan (${selectedIds.length})`}</span>
+              </button>
+              <button
+                onClick={() => handlePublish("rejected")}
+                disabled={selectedIds.length === 0 || isPublishing}
+                className="flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-700 disabled:bg-stone-300 text-white rounded-xl font-bold transition-all shadow-sm text-xs cursor-pointer"
+              >
+                <XCircle className="w-4 h-4" />
+                <span>{isPublishing ? "Proses..." : `Tolak (${selectedIds.length})`}</span>
+              </button>
+            </>
+          )}
+
+          {activeTab === "sudah_diumumkan" && (
+            <>
+              <button
+                onClick={() => handlePublish("tested")}
+                disabled={isPublishing || selectedIds.length === 0}
+                className={`flex items-center justify-center gap-2 px-4 py-2 bg-stone-600 text-white rounded-xl hover:bg-stone-700 transition-all font-bold text-xs ${
+                  selectedIds.length === 0 ? "opacity-50 cursor-not-allowed" : "shadow-sm cursor-pointer"
+                }`}
+                title="Batalkan kelulusan & kembalikan ke Siap Pleno"
+              >
+                <RotateCcw className="w-4 h-4" />
+                <span>Kembalikan ke Siap Pleno ({selectedIds.length})</span>
+              </button>
+            </>
+          )}
         </div>
       </div>
 
-      {/* Table & Mobile View */}
-      <div className="bg-white rounded-xl shadow-lg border border-stone-200 overflow-hidden">
-        {/* Mobile View: Cards */}
-        <div className="md:hidden divide-y divide-stone-100 select-none">
-          {filteredCandidates.length === 0 ? (
-            <div className="px-6 py-12 text-center text-stone-500 italic">
-              Tidak ada data kandidat sesuai pencarian / filter
-            </div>
-          ) : (
-            filteredCandidates.map((c, rankIdx) => {
-              const nu = c.nilai_ujian;
-              const getGradeBadge = (score: number | null | undefined, type: string) => {
-                if (score == null) return null;
-                let grade = "C";
-                if (type === "quran") grade = score >= 80 ? "A" : score >= 65 ? "B" : "C";
-                else if (type === "akademik") grade = score >= 75 ? "A" : score >= 60 ? "B" : "C";
-                else if (type === "kepribadian")
-                  grade = score >= 70 ? "A" : score >= 50 ? "B" : "C";
-                else grade = score >= 80 ? "A" : score >= 60 ? "B" : "C";
-
-                const color =
-                  grade === "A"
-                    ? "bg-green-500"
-                    : grade === "B"
-                      ? "bg-primary-400"
-                      : "bg-secondary-400";
-                return (
-                  <span
-                    key={type}
-                    className={`${color} text-white text-[8px] font-black px-1.5 py-0.5 rounded-sm uppercase shrink-0`}
-                  >
-                    {grade}
-                  </span>
-                );
-              };
-
-              const ws = nu?.nilai_wawancara_santri || 0;
-              const wo = nu?.nilai_wawancara_ortu || 0;
-              const avgWawancara = ws > 0 && wo > 0 ? (ws + wo) / 2 : ws || wo;
-
-              return (
-                <div
-                  key={c.id}
-                  onClick={() => handleSelectOne(c.id)}
-                  className={`p-4 flex items-start gap-4 active:bg-stone-50 transition-colors ${selectedIds.includes(c.id) ? "bg-green-50/50" : ""}`}
-                >
-                  <div className="mt-1" onClick={(e) => e.stopPropagation()}>
+      {/* 4. TABLE & CARDS VIEW */}
+      <div className="bg-white rounded-2xl shadow-xl border border-stone-200 overflow-hidden">
+        {loading ? (
+          <div className="p-12 text-center text-stone-500 flex flex-col items-center justify-center gap-2">
+            <Loader2 className="w-6 h-6 animate-spin text-primary-600" />
+            <p className="text-sm font-semibold">Memuat data kandidat...</p>
+          </div>
+        ) : filteredCandidates.length === 0 ? (
+          <div className="p-12 text-center text-stone-500">
+            <p className="text-base font-bold text-stone-700">Tidak ada data santri</p>
+            <p className="text-xs text-stone-400 mt-1">
+              {activeTab === "siap_pleno"
+                ? "Semua santri yang selesai ujian telah ditetapkan/diumumkan, atau belum ada yang selesai ujian lengkap."
+                : activeTab === "sudah_diumumkan"
+                  ? "Belum ada santri yang ditetapkan/diterbitkan SK pengumuman."
+                  : "Tidak ada data santri dalam proses seleksi."}
+            </p>
+          </div>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead className="bg-stone-50/80 border-b border-stone-200">
+                <tr>
+                  <th className="px-6 py-4 w-12 text-center">
                     <input
                       type="checkbox"
-                      className="w-5 h-5 rounded border-stone-300 text-green-600 focus:ring-green-500"
-                      checked={selectedIds.includes(c.id)}
-                      onChange={() => handleSelectOne(c.id)}
+                      className="w-4 h-4 rounded border-stone-300 text-blue-600 focus:ring-blue-500"
+                      onChange={handleSelectAll}
+                      checked={
+                        filteredCandidates.length > 0 &&
+                        selectedIds.length === filteredCandidates.length
+                      }
                     />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex justify-between items-start mb-1 gap-2 flex-wrap">
-                      <h4 className="font-black text-stone-900 leading-tight uppercase text-sm truncate">
-                        {toTitleCase(c.nama_lengkap)}
-                      </h4>
-                      {c.nomor_pendaftaran?.startsWith("SMA") &&
-                      (c.jenjang?.toUpperCase().includes("IL") ||
-                        c.pengumuman?.kelas_diterima?.toUpperCase().includes("IL")) ? (
-                        <span
-                          className="px-2 py-0.5 bg-amber-100 text-amber-800 border border-amber-300 rounded text-[9px] font-black uppercase shrink-0 whitespace-nowrap inline-flex items-center gap-1 shadow-xs"
-                          title="Pendaftaran awal SMA dialihkan ke I'dad Lughowi"
-                        >
-                          SMA ➔ IL
-                        </span>
-                      ) : (
-                        <span className="px-2 py-0.5 bg-stone-100 text-stone-600 rounded text-[9px] font-black uppercase shrink-0 whitespace-nowrap inline-block shrink-0">
-                          {c.jenjang}
-                        </span>
-                      )}
-                    </div>
-                    <p className="text-[10px] font-mono font-bold text-stone-400 tracking-tighter mb-2">
-                      {c.nomor_pendaftaran}
-                    </p>
-
-                    <div className="flex items-center gap-1.5 mb-3 overflow-x-auto pb-1 no-scrollbar flex-wrap">
-                      <div className="flex gap-1">
-                        {getGradeBadge(nu?.score_quran, "quran")}
-                        {getGradeBadge(nu?.score_akademik, "akademik")}
-                        {getGradeBadge(nu?.score_kepribadian, "kepribadian")}
-                        {getGradeBadge(avgWawancara, "wawancara")}
-                        {getGradeBadge(nu?.score_kesiapan, "kesiapan")}
-                      </div>
-                      {c.exam_score_count === 6 ? (
-                        <span className="text-[9px] font-black px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800">
-                          ✓ 6/6 Nilai
-                        </span>
-                      ) : c.exam_score_count > 0 ? (
-                        <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-100 text-amber-800">
-                          {c.exam_score_count}/6
-                        </span>
-                      ) : null}
-                    </div>
-
-                    <div className="flex items-center justify-between pt-2 border-t border-stone-50">
-                      <div className="flex flex-col">
-                        <span className="text-[9px] font-black text-stone-300 uppercase tracking-widest leading-none mb-1">
-                          Total Nilai
-                        </span>
-                        <span className="text-sm font-black text-stone-700">
-                          {nu?.nilai_total != null ? Number(nu.nilai_total).toFixed(2) : "-"}
-                          <span className="ml-1 text-stone-400 font-bold">
-                            ({nu?.nilai_total >= 80 ? "A" : nu?.nilai_total >= 65 ? "B" : "C"})
-                          </span>
-                        </span>
-                      </div>
-                      <div>{renderStatusBadge(c, true)}</div>
-                    </div>
-                  </div>
-                </div>
-              );
-            })
-          )}
-        </div>
-
-        {/* Desktop View: Table */}
-        <div className="hidden md:block overflow-x-auto">
-          <table className="w-full">
-            <thead className="bg-stone-50 border-b border-stone-200">
-              <tr>
-                <th className="px-6 py-4 w-12">
-                  <input
-                    type="checkbox"
-                    className="w-4 h-4 rounded border-stone-300 text-green-600 focus:ring-green-500"
-                    onChange={handleSelectAll}
-                    checked={candidates.length > 0 && selectedIds.length === candidates.length}
-                  />
-                </th>
-                <th className="px-6 py-4 text-left text-xs font-bold text-stone-500 uppercase">
-                  Nama & Komponen
-                </th>
-                <th className="px-6 py-4 text-left text-xs font-bold text-stone-500 uppercase">
-                  Jenjang
-                </th>
-                <th className="px-6 py-4 text-left text-xs font-bold text-stone-500 uppercase">
-                  Total / Grade
-                </th>
-                <th className="px-6 py-4 text-center text-xs font-bold text-stone-500 uppercase">
-                  Rekomendasi / Status
-                </th>
-                <th className="px-6 py-4 text-center text-xs font-bold text-stone-500 uppercase">
-                  Aksi Penetapan (1-Klik)
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-stone-100">
-              {filteredCandidates.length === 0 ? (
-                <tr>
-                  <td colSpan={6} className="px-6 py-8 text-center text-stone-500">
-                    Tidak ada data kandidat sesuai pencarian / filter
-                  </td>
+                  </th>
+                  <th className="px-6 py-4 text-left text-xs font-black text-stone-600 uppercase tracking-wider">
+                    Nama &amp; Komponen
+                  </th>
+                  <th className="px-6 py-4 text-left text-xs font-black text-stone-600 uppercase tracking-wider">
+                    Jenjang
+                  </th>
+                  <th className="px-6 py-4 text-left text-xs font-black text-stone-600 uppercase tracking-wider">
+                    Total / Grade
+                  </th>
+                  <th className="px-6 py-4 text-center text-xs font-black text-stone-600 uppercase tracking-wider">
+                    {activeTab === "siap_pleno" ? "Rekomendasi Seleksi" : "Status Pengumuman"}
+                  </th>
+                  <th className="px-6 py-4 text-center text-xs font-black text-stone-600 uppercase tracking-wider">
+                    Aksi Penetapan (1-Klik)
+                  </th>
                 </tr>
-              ) : (
-                filteredCandidates.map((c, rankIdx) => {
+              </thead>
+              <tbody className="divide-y divide-stone-100">
+                {filteredCandidates.map((c) => {
                   const nu = c.nilai_ujian;
-                  const getGradeBadge = (score: number | null | undefined, type: string) => {
-                    if (score == null) return null;
-                    let grade = "C";
-                    if (type === "quran") grade = score >= 80 ? "A" : score >= 65 ? "B" : "C";
-                    else if (type === "akademik")
-                      grade = score >= 75 ? "A" : score >= 60 ? "B" : "C";
-                    else if (type === "kepribadian")
-                      grade = score >= 70 ? "A" : score >= 50 ? "B" : "C";
-                    else grade = score >= 80 ? "A" : score >= 60 ? "B" : "C";
-
-                    const color =
-                      grade === "A"
-                        ? "bg-green-500"
-                        : grade === "B"
-                          ? "bg-primary-400"
-                          : "bg-secondary-400";
-                    return (
-                      <span
-                        key={type}
-                        className={`${color} text-white text-[8px] font-black px-1.5 py-0.5 rounded-sm uppercase`}
-                      >
-                        {grade}
-                      </span>
-                    );
-                  };
+                  const total = nu?.nilai_total != null ? Number(nu.nilai_total) : 0;
+                  const grade = total >= 80 ? "A" : total >= 65 ? "B" : "C";
+                  const lolosKKM = total >= KKM_STANDAR;
 
                   const ws = nu?.nilai_wawancara_santri || 0;
                   const wo = nu?.nilai_wawancara_ortu || 0;
                   const avgWawancara = ws > 0 && wo > 0 ? (ws + wo) / 2 : ws || wo;
 
                   return (
-                    <tr key={c.id} className="hover:bg-stone-50/50">
-                      <td className="px-6 py-4">
+                    <tr
+                      key={c.id}
+                      className={`hover:bg-stone-50/60 transition-colors ${
+                        selectedIds.includes(c.id) ? "bg-blue-50/40" : ""
+                      }`}
+                    >
+                      <td className="px-6 py-4 text-center">
                         <input
                           type="checkbox"
-                          className="w-4 h-4 rounded border-stone-300 text-green-600 focus:ring-green-500"
+                          className="w-4 h-4 rounded border-stone-300 text-blue-600 focus:ring-blue-500"
                           checked={selectedIds.includes(c.id)}
                           onChange={() => handleSelectOne(c.id)}
                         />
                       </td>
+
                       <td className="px-6 py-4">
-                        <div className="font-bold text-stone-800">
+                        <div className="font-black text-stone-900 text-sm">
                           {toTitleCase(c.nama_lengkap)}
                         </div>
-                        <div className="text-xs text-stone-500 mb-1.5">{c.nomor_pendaftaran}</div>
+                        <div className="text-xs font-mono font-bold text-stone-400 mb-1.5">
+                          {c.nomor_pendaftaran}
+                        </div>
                         <div className="flex items-center gap-1.5 flex-wrap">
                           <div className="flex gap-1">
                             {getGradeBadge(nu?.score_quran, "quran")}
@@ -744,7 +893,7 @@ function PengumumanContent() {
                           </div>
                           {c.exam_score_count === 6 ? (
                             <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200">
-                              ✓ 6/6 Nilai
+                              ✓ 6/6 Nilai Lengkap
                             </span>
                           ) : c.exam_score_count > 0 ? (
                             <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 border border-amber-200">
@@ -753,161 +902,193 @@ function PengumumanContent() {
                           ) : null}
                         </div>
                       </td>
+
                       <td className="px-6 py-4">
-                        {c.nomor_pendaftaran?.startsWith("SMA") &&
-                        (c.jenjang?.toUpperCase().includes("IL") ||
-                          c.pengumuman?.kelas_diterima?.toUpperCase().includes("IL")) ? (
-                          <div className="flex flex-col gap-0.5 items-start">
-                            <span
-                              className="px-2.5 py-1 bg-amber-100 text-amber-900 border border-amber-300 rounded-md text-xs font-black inline-flex items-center gap-1 shadow-xs"
-                              title="Pendaftaran awal SMA dialihkan ke I'dad Lughowi"
-                            >
-                              SMA ➔ IL
-                            </span>
-                            <span className="text-[10px] text-amber-700 font-semibold">
-                              Pengalihan IL
-                            </span>
-                          </div>
-                        ) : (
-                          <span className="px-2 py-1 bg-stone-100 text-stone-600 rounded text-xs font-bold whitespace-nowrap inline-block shrink-0">
-                            {c.jenjang}
-                          </span>
-                        )}
+                        <span className="px-2.5 py-1 bg-stone-100 text-stone-700 rounded-lg text-xs font-black uppercase whitespace-nowrap inline-block shrink-0">
+                          {c.jenjang}
+                        </span>
                       </td>
+
                       <td className="px-6 py-4">
                         <div className="flex flex-col">
-                          <div className="font-black text-stone-800 text-lg leading-none">
+                          <div className="font-black text-stone-900 text-base leading-none">
                             {nu?.nilai_total != null ? Number(nu.nilai_total).toFixed(2) : "-"}
                           </div>
                           {nu?.nilai_total != null && (
-                            <span className="text-[10px] font-bold text-stone-400 mt-1 italic">
-                              Grade: {nu.nilai_total >= 80 ? "A" : nu.nilai_total >= 65 ? "B" : "C"}
+                            <span className="text-[11px] font-bold text-stone-400 mt-1">
+                              Grade: <span className="text-stone-800 font-black">{grade}</span>
                             </span>
                           )}
                         </div>
                       </td>
-                      <td className="px-6 py-4 text-center">{renderStatusBadge(c, false)}</td>
+
+                      {/* Status / Recommendation Column */}
+                      <td className="px-6 py-4 text-center">
+                        {activeTab === "siap_pleno" ? (
+                          <div className="flex flex-col items-center gap-1">
+                            {c.pengumuman?.status_kelulusan === "Menunggu Rapat" ? (
+                              <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-blue-100 text-blue-800 text-xs font-black uppercase whitespace-nowrap shadow-xs">
+                                <Users className="w-3.5 h-3.5" />
+                                Diagendakan Rapat
+                              </span>
+                            ) : lolosKKM ? (
+                              <>
+                                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-black uppercase whitespace-nowrap shadow-xs border border-emerald-200">
+                                  <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
+                                  Rekomendasi: Diterima
+                                </span>
+                                <span className="text-[10px] text-emerald-700 font-bold">
+                                  Lolos KKM {KKM_STANDAR} (Grade {grade})
+                                </span>
+                              </>
+                            ) : (
+                              <>
+                                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-xs font-black uppercase whitespace-nowrap shadow-xs border border-amber-200">
+                                  <Gavel className="w-3.5 h-3.5 text-amber-700" />
+                                  Perlu Dirapatkan Tim
+                                </span>
+                                <span className="text-[10px] text-amber-700 font-bold">
+                                  Di Bawah KKM (Grade {grade})
+                                </span>
+                              </>
+                            )}
+                          </div>
+                        ) : activeTab === "sudah_diumumkan" ? (
+                          <div className="flex flex-col items-center gap-1">
+                            {["accepted", "enrolled", "enrolled_full"].includes(c.status_pendaftaran) ||
+                            c.pengumuman?.status_kelulusan === "Diterima" ? (
+                              <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-black uppercase whitespace-nowrap shadow-xs">
+                                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                                Diterima (SK Terbit)
+                              </span>
+                            ) : c.status_pendaftaran === "cadangan" || c.pengumuman?.status_kelulusan === "Cadangan" ? (
+                              <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-xs font-black uppercase whitespace-nowrap shadow-xs">
+                                <Clock className="w-3.5 h-3.5 text-amber-600" />
+                                Cadangan
+                              </span>
+                            ) : (
+                              <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-red-100 text-red-800 text-xs font-black uppercase whitespace-nowrap shadow-xs">
+                                <XCircle className="w-3.5 h-3.5 text-red-600" />
+                                Ditolak
+                              </span>
+                            )}
+                          </div>
+                        ) : (
+                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-stone-100 text-stone-600 text-xs font-bold uppercase whitespace-nowrap">
+                            {c.status_pendaftaran}
+                          </span>
+                        )}
+                      </td>
+
+                      {/* Action Buttons Column */}
                       <td className="px-6 py-4 text-center" onClick={(e) => e.stopPropagation()}>
-                        <div className="flex items-center justify-center gap-1.5">
-                          {c.status_pendaftaran === "accepted" ? (
-                            <button
-                              onClick={() => {
-                                if (selectedIds.length > 0 && selectedIds.includes(c.id)) {
+                        <div className="flex items-center justify-center gap-1.5 flex-wrap">
+                          {activeTab === "siap_pleno" ? (
+                            <>
+                              {/* 1. Diterima */}
+                              <button
+                                onClick={() => {
+                                  setSelectedIds([c.id]);
                                   setShowBulkAcceptedDialog(true);
-                                } else {
+                                }}
+                                title="Upload Surat Resmi & Tetapkan Diterima"
+                                className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-xs transition-all flex items-center gap-1 cursor-pointer"
+                              >
+                                <CheckCircle2 className="w-3.5 h-3.5" />
+                                <span>{lolosKKM ? "Diterima" : "Terima (Pleno)"}</span>
+                              </button>
+
+                              {/* 2. Rapatkan Dulu */}
+                              <button
+                                onClick={() => handleRapatkanDulu(c.id, c.nama_lengkap)}
+                                title="Agendakan santri ini untuk dirapatkan bersama tim pleno"
+                                className={`px-2.5 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1 transition-all cursor-pointer ${
+                                  !lolosKKM
+                                    ? "bg-blue-600 hover:bg-blue-700 text-white shadow-xs"
+                                    : "bg-stone-100 hover:bg-stone-200 text-stone-700 border border-stone-200"
+                                }`}
+                              >
+                                <Users className="w-3.5 h-3.5" />
+                                <span>Rapatkan Dulu</span>
+                              </button>
+
+                              {/* 3. Cadangan */}
+                              <button
+                                onClick={() => handlePublishSingle(c.id, c.nama_lengkap, "cadangan")}
+                                title="Jadikan Cadangan"
+                                className="px-2.5 py-1.5 bg-amber-500 hover:bg-amber-600 text-white rounded-xl text-xs font-bold shadow-xs transition-all flex items-center gap-1 cursor-pointer"
+                              >
+                                <Clock className="w-3.5 h-3.5" />
+                                <span>Cadangan</span>
+                              </button>
+
+                              {/* 4. Tolak */}
+                              <button
+                                onClick={() => handlePublishSingle(c.id, c.nama_lengkap, "rejected")}
+                                title="Tolak Pendaftar"
+                                className="px-2.5 py-1.5 bg-red-600 hover:bg-red-700 text-white rounded-xl text-xs font-bold shadow-xs transition-all flex items-center gap-1 cursor-pointer"
+                              >
+                                <XCircle className="w-3.5 h-3.5" />
+                                <span>Tolak</span>
+                              </button>
+                            </>
+                          ) : activeTab === "sudah_diumumkan" ? (
+                            <>
+                              {/* Ganti Surat */}
+                              <button
+                                onClick={() => {
                                   setSuratTarget({
                                     id: c.id,
                                     nama_lengkap: c.nama_lengkap,
                                     nomor_pendaftaran: c.nomor_pendaftaran,
-                                    jenjang: c.jenjang,
                                   });
-                                }
-                              }}
-                              title="Upload / Ganti Surat Pengumuman Resmi"
-                              className="px-2.5 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1 transition-all bg-emerald-600 hover:bg-emerald-700 text-white shadow-xs hover:scale-105 active:scale-95"
-                            >
-                              <Upload className="w-3.5 h-3.5" />
-                              <span>
-                                {c.pengumuman?.surat_pengumuman_path
-                                  ? "Ganti Surat"
-                                  : "Upload Surat"}
-                              </span>
-                            </button>
+                                }}
+                                title="Upload / Ganti Surat Pengumuman Resmi"
+                                className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-xs transition-all flex items-center gap-1 cursor-pointer"
+                              >
+                                <UploadCloud className="w-3.5 h-3.5" />
+                                <span>Ganti Surat</span>
+                              </button>
+
+                              {/* Lihat Surat jika ada */}
+                              {c.pengumuman?.surat_pengumuman_path && (
+                                <a
+                                  href={c.pengumuman.surat_pengumuman_path}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  title="Lihat Surat Pengumuman Resmi"
+                                  className="px-2.5 py-1.5 bg-stone-100 hover:bg-stone-200 text-stone-700 rounded-xl text-xs font-bold border border-stone-200 flex items-center gap-1 cursor-pointer"
+                                >
+                                  <FileText className="w-3.5 h-3.5 text-red-600" />
+                                  <span>Lihat</span>
+                                </a>
+                              )}
+
+                              {/* Kembalikan ke Pleno */}
+                              <button
+                                onClick={() => handlePublishSingle(c.id, c.nama_lengkap, "tested")}
+                                title="Batalkan status pengumuman dan kembalikan santri ke tab Siap Pleno"
+                                className="px-2.5 py-1.5 bg-stone-100 hover:bg-red-50 text-stone-600 hover:text-red-700 rounded-xl text-xs font-bold border border-stone-200 flex items-center gap-1 cursor-pointer transition-colors"
+                              >
+                                <RotateCcw className="w-3.5 h-3.5" />
+                                <span>Kembalikan ke Pleno</span>
+                              </button>
+                            </>
                           ) : (
-                            <button
-                              onClick={() => {
-                                if (selectedIds.length > 0) {
-                                  if (!selectedIds.includes(c.id)) {
-                                    setSelectedIds((prev) => [...prev, c.id]);
-                                  }
-                                } else {
-                                  setSelectedIds([c.id]);
-                                }
-                                setShowBulkAcceptedDialog(true);
-                              }}
-                              title="Upload Surat Resmi & Tetapkan Diterima"
-                              className="px-2.5 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1 transition-all bg-green-600 hover:bg-green-700 text-white shadow-xs hover:scale-105 active:scale-95"
-                            >
-                              <CheckCircle2 className="w-3.5 h-3.5" />
-                              <span>Diterima</span>
-                            </button>
+                            <span className="text-xs text-stone-400 italic">Menunggu Ujian Selesai</span>
                           )}
-                          <button
-                            onClick={() => handlePublishSingle(c.id, c.nama_lengkap, "cadangan")}
-                            disabled={
-                              isPublishing ||
-                              c.status_pendaftaran === "cadangan" ||
-                              c.status_pendaftaran === "announced"
-                            }
-                            title="Jadikan Cadangan"
-                            className={`px-2.5 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1 transition-all ${
-                              c.status_pendaftaran === "cadangan" ||
-                              c.status_pendaftaran === "announced"
-                                ? "bg-amber-100 text-amber-700 opacity-60 cursor-default"
-                                : "bg-amber-500 hover:bg-amber-600 text-white shadow-xs hover:scale-105 active:scale-95"
-                            }`}
-                          >
-                            <Clock className="w-3.5 h-3.5" />
-                            <span>Cadangan</span>
-                          </button>
-                          <button
-                            onClick={() => handlePublishSingle(c.id, c.nama_lengkap, "rejected")}
-                            disabled={isPublishing || c.status_pendaftaran === "rejected"}
-                            title="Tolak"
-                            className={`px-2.5 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1 transition-all ${
-                              c.status_pendaftaran === "rejected"
-                                ? "bg-red-100 text-red-700 opacity-60 cursor-default"
-                                : "bg-red-600 hover:bg-red-700 text-white shadow-xs hover:scale-105 active:scale-95"
-                            }`}
-                          >
-                            <XCircle className="w-3.5 h-3.5" />
-                            <span>Tolak</span>
-                          </button>
                         </div>
                       </td>
                     </tr>
                   );
-                })
-              )}
-            </tbody>
-          </table>
-        </div>
+                })}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
 
-      {/* Modal Upload Surat Pengumuman Resmi (Plan Kedua) */}
-      {suratTarget && (
-        <SuratPengumumanDialog
-          pendaftar={suratTarget}
-          initialTab="upload"
-          onClose={() => setSuratTarget(null)}
-          onDone={(resData) => {
-            const targetId = resData?.pendaftarId || suratTarget.id;
-            setSuratTarget(null);
-            setCandidates((prev) =>
-              prev.map((c) =>
-                c.id === targetId
-                  ? {
-                      ...c,
-                      status_pendaftaran: "accepted",
-                      pengumuman: {
-                        ...(c.pengumuman || {}),
-                        status_kelulusan: "Diterima",
-                        is_published: true,
-                        nomor_surat: resData?.nomorSurat || c.pengumuman?.nomor_surat,
-                        kelas_diterima: resData?.kelasDiterima || c.pengumuman?.kelas_diterima,
-                        surat_pengumuman_path:
-                          resData?.suratPath || c.pengumuman?.surat_pengumuman_path || "uploaded",
-                      },
-                    }
-                  : c
-              )
-            );
-            fetchCandidates();
-          }}
-        />
-      )}
-
-      {/* Modal Pengumuman Massal (Auto-Generate / Multi-Upload) */}
+      {/* Modal Pengumuman Massal */}
       {showBulkAcceptedDialog && (
         <BulkPengumumanDialog
           candidates={candidates
@@ -920,25 +1101,21 @@ function PengumumanContent() {
               kelas_diterima: c.pengumuman?.kelas_diterima,
             }))}
           onClose={() => setShowBulkAcceptedDialog(false)}
-          onSuccess={(updatedIds) => {
+          onSuccess={() => {
             setShowBulkAcceptedDialog(false);
             setSelectedIds([]);
-            const affectedSet = new Set(updatedIds);
-            setCandidates((prev) =>
-              prev.map((c) =>
-                affectedSet.has(c.id)
-                  ? {
-                      ...c,
-                      status_pendaftaran: "accepted",
-                      pengumuman: {
-                        ...(c.pengumuman || {}),
-                        status_kelulusan: "Diterima",
-                        is_published: true,
-                      },
-                    }
-                  : c
-              )
-            );
+            fetchCandidates();
+          }}
+        />
+      )}
+
+      {/* Modal Upload Surat Pengumuman Resmi (Single) */}
+      {suratTarget && (
+        <SuratPengumumanDialog
+          pendaftar={suratTarget}
+          onClose={() => setSuratTarget(null)}
+          onDone={() => {
+            setSuratTarget(null);
             fetchCandidates();
           }}
         />
