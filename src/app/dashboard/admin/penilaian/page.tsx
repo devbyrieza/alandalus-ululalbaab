@@ -22,6 +22,7 @@ import {
   Share2,
   Sparkles,
   Users,
+  X,
   Zap,
 } from "lucide-react";
 import Link from "next/link";
@@ -1734,108 +1735,114 @@ export default function ExaminerDashboard() {
         typeof document !== "undefined" &&
         createPortal(
           <div
-            onWheel={(e) => e.stopPropagation()}
-            data-modal="true"
-            className="fixed inset-0 overflow-y-auto p-6 sm:p-8 overscroll-contain custom-scrollbar"
-            style={{ zIndex: 99999 }}
+            className="fixed inset-0 z-[99999] flex items-center justify-center p-3 sm:p-6 overflow-hidden"
             aria-labelledby="modal-title"
             role="dialog"
             aria-modal="true"
           >
-            <div className="flex items-end justify-center min-h-dvh pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-              <div
-                onWheel={(e) => e.stopPropagation()}
-                data-modal="true"
-                aria-modal="true"
-                role="dialog"
-                className="fixed inset-0 bg-ink-900/60 transition-opacity overflow-y-auto overflow-x-hidden p-6 sm:p-8 overscroll-contain custom-scrollbar backdrop-blur-sm"
-                aria-hidden="true"
-                onClick={() => setAssignStudent(null)}
-              ></div>
-              <span
-                className="hidden sm:inline-block sm:align-middle sm:h-screen"
-                aria-hidden="true"
-              >
-                &#8203;
-              </span>
-              <div className="inline-block align-bottom bg-white rounded-3xl text-left overflow-hidden shadow-2xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full border border-white/20">
-                <div className="bg-white px-6 pt-8 pb-6 sm:p-5 md:p-8">
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="p-3 bg-primary-50 text-primary-600 rounded-2xl">
-                      <Users className="w-5 h-5 font-black" />
-                    </div>
-                    <h3 className="text-xl leading-6 font-black text-ink-900" id="modal-title">
+            {/* Backdrop */}
+            <div
+              className="fixed inset-0 bg-ink-900/60 backdrop-blur-xs transition-opacity"
+              aria-hidden="true"
+              onClick={() => setAssignStudent(null)}
+            />
+
+            {/* Modal Dialog Card */}
+            <div className="relative w-full max-w-lg max-h-[90vh] bg-white rounded-2xl shadow-2xl border border-ink-100 flex flex-col overflow-hidden z-10 animate-in fade-in zoom-in-95 duration-150">
+              {/* Header (Sticky at top) */}
+              <div className="px-6 py-4 sm:py-5 border-b border-ink-100 flex items-center justify-between bg-white shrink-0">
+                <div className="flex items-center gap-3">
+                  <div className="p-2.5 bg-primary-50 text-primary-600 rounded-xl">
+                    <Users className="w-5 h-5 font-black" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-black text-ink-900" id="modal-title">
                       Plotting Penguji / Pewawancara
                     </h3>
-                  </div>
-
-                  <div className="bg-ink-50 rounded-2xl p-6 sm:p-8 mb-6 border border-ink-100">
-                    <p className="text-[10px] font-black text-ink-400 uppercase tracking-widest mb-1">
-                      Peserta
+                    <p className="text-xs text-ink-500 font-medium">
+                      Atur penugasan penguji untuk peserta ujian
                     </p>
-                    <p className="text-lg font-black text-ink-900">
-                      {(assignStudent.nama_lengkap || "").replace(
-                        /\w\S*/g,
-                        (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
-                      )}
-                    </p>
-                    <p className="text-xs font-bold text-ink-500 font-mono mt-0.5">
-                      {assignStudent.nomor_pendaftaran || "-"} • {assignStudent.jenjang || "-"}
-                    </p>
-                  </div>
-
-                  <div className="space-y-4">
-                    <div>
-                      <label className="block text-xs font-black text-ink-400 uppercase tracking-wider mb-2">
-                        Jenis Seleksi
-                      </label>
-                      <select
-                        value={assignType}
-                        onChange={(e) =>
-                          handleAssignTypeChange(e.target.value as any, assignStudent)
-                        }
-                        className="w-full bg-ink-50 border border-ink-100 rounded-3xl px-4 py-3 text-sm font-bold text-ink-900 focus:ring-2 focus:ring-primary-600/10 outline-none"
-                      >
-                        <option value="quran">Tes Al-Qur&apos;an</option>
-                        <option value="wawancara_santri">Wawancara Calon Santri</option>
-                        <option value="wawancara_ortu">Wawancara Orang Tua/Wali</option>
-                      </select>
-                    </div>
-
-                    <div>
-                      <label className="block text-xs font-black text-ink-400 uppercase tracking-wider mb-2">
-                        Pilih Penguji / Pewawancara
-                      </label>
-                      <select
-                        value={assignExaminerId}
-                        onChange={(e) => setAssignExaminerId(e.target.value)}
-                        className="w-full bg-ink-50 border border-ink-100 rounded-3xl px-4 py-3 text-sm font-bold text-ink-900 focus:ring-2 focus:ring-primary-600/10 outline-none"
-                      >
-                        <option value="">-- Pilih Staff/Penguji (Kosongkan untuk Hapus) --</option>
-                        {usersList.map((u) => (
-                          <option key={u.id} value={u.id}>
-                            {u.full_name} ({u.role.replace("_", " ").toUpperCase()})
-                          </option>
-                        ))}
-                      </select>
-                    </div>
                   </div>
                 </div>
-                <div className="bg-ink-50 px-6 py-6 sm:px-5 md:px-8 sm:flex sm:flex-row-reverse gap-3 border-t border-ink-100">
-                  <Button
-                    onClick={handleSaveAssignment}
-                    className="w-full sm:w-auto bg-primary-600 hover:bg-primary-700 text-white rounded-2xl px-5 md:px-8 py-3 font-black shadow-md"
-                  >
-                    Simpan Penugasan
-                  </Button>
-                  <button
-                    type="button"
-                    onClick={() => setAssignStudent(null)}
-                    className="mt-3 sm:mt-0 w-full sm:w-auto bg-white border border-ink-200 text-ink-600 hover:bg-ink-100 rounded-2xl px-5 md:px-8 py-3 font-black shadow-2xl transition-all"
-                  >
-                    Batal
-                  </button>
+                <button
+                  type="button"
+                  onClick={() => setAssignStudent(null)}
+                  className="p-2 text-ink-400 hover:text-ink-600 hover:bg-ink-100 rounded-xl transition"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              {/* Scrollable Body */}
+              <div className="p-5 sm:p-6 overflow-y-auto space-y-4 flex-1 custom-scrollbar">
+                <div className="bg-ink-50 rounded-xl p-4 border border-ink-100">
+                  <p className="text-[10px] font-black text-ink-400 uppercase tracking-widest mb-1">
+                    Peserta
+                  </p>
+                  <p className="text-base font-black text-ink-900">
+                    {(assignStudent.nama_lengkap || "").replace(
+                      /\w\S*/g,
+                      (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
+                    )}
+                  </p>
+                  <p className="text-xs font-bold text-ink-500 font-mono mt-0.5">
+                    {assignStudent.nomor_pendaftaran || "-"} • {assignStudent.jenjang || "-"}
+                  </p>
                 </div>
+
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-xs font-black text-ink-400 uppercase tracking-wider mb-2">
+                      Jenis Seleksi
+                    </label>
+                    <select
+                      value={assignType}
+                      onChange={(e) =>
+                        handleAssignTypeChange(e.target.value as any, assignStudent)
+                      }
+                      className="w-full bg-ink-50 border border-ink-100 rounded-xl px-4 py-3 text-sm font-bold text-ink-900 focus:ring-2 focus:ring-primary-600/10 outline-none"
+                    >
+                      <option value="quran">Tes Al-Qur&apos;an</option>
+                      <option value="wawancara_santri">Wawancara Calon Santri</option>
+                      <option value="wawancara_ortu">Wawancara Orang Tua/Wali</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-black text-ink-400 uppercase tracking-wider mb-2">
+                      Pilih Penguji / Pewawancara
+                    </label>
+                    <select
+                      value={assignExaminerId}
+                      onChange={(e) => setAssignExaminerId(e.target.value)}
+                      className="w-full bg-ink-50 border border-ink-100 rounded-xl px-4 py-3 text-sm font-bold text-ink-900 focus:ring-2 focus:ring-primary-600/10 outline-none"
+                    >
+                      <option value="">-- Pilih Staff/Penguji (Kosongkan untuk Hapus) --</option>
+                      {usersList.map((u) => (
+                        <option key={u.id} value={u.id}>
+                          {u.full_name} ({u.role.replace("_", " ").toUpperCase()})
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              {/* Footer (Sticky at bottom) */}
+              <div className="bg-ink-50 px-6 py-4 border-t border-ink-100 flex items-center justify-end gap-3 shrink-0">
+                <button
+                  type="button"
+                  onClick={() => setAssignStudent(null)}
+                  className="w-full sm:w-auto bg-white border border-ink-200 text-ink-600 hover:bg-ink-100 rounded-xl px-5 py-2.5 text-sm font-bold shadow-sm transition"
+                >
+                  Batal
+                </button>
+                <Button
+                  onClick={handleSaveAssignment}
+                  className="w-full sm:w-auto bg-primary-600 hover:bg-primary-700 text-white rounded-xl px-6 py-2.5 text-sm font-bold shadow-lg shadow-primary-600/20"
+                >
+                  Simpan Penugasan
+                </Button>
               </div>
             </div>
           </div>,
@@ -1847,37 +1854,28 @@ export default function ExaminerDashboard() {
         typeof document !== "undefined" &&
         createPortal(
           <div
-            onWheel={(e) => e.stopPropagation()}
-            data-modal="true"
-            className="fixed inset-0 overflow-y-auto p-6 sm:p-8 overscroll-contain custom-scrollbar"
-            style={{ zIndex: 99999 }}
+            className="fixed inset-0 z-[99999] flex items-center justify-center p-3 sm:p-6 overflow-hidden"
             aria-labelledby="modal-title"
             role="dialog"
             aria-modal="true"
           >
-            <div className="flex items-end justify-center min-h-dvh pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-              <div
-                onWheel={(e) => e.stopPropagation()}
-                data-modal="true"
-                aria-modal="true"
-                role="dialog"
-                className="fixed inset-0 bg-ink-900/60 transition-opacity overflow-y-auto overflow-x-hidden p-6 sm:p-8 overscroll-contain custom-scrollbar backdrop-blur-sm"
-                aria-hidden="true"
-                onClick={() => setSelectedStudent(null)}
-              ></div>
-              <span
-                className="hidden sm:inline-block sm:align-middle sm:h-screen"
-                aria-hidden="true"
-              >
-                &#8203;
-              </span>
-              <div className="inline-block align-bottom bg-white rounded-3xl text-left overflow-hidden shadow-2xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full border border-white/20">
-                <div className="bg-white px-6 pt-8 pb-6 sm:p-5 md:p-8">
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="p-3 bg-primary-50 text-primary-600 rounded-2xl">
-                      <Zap className="w-5 h-5 font-black" />
-                    </div>
-                    <h3 className="text-xl leading-6 font-black text-ink-900" id="modal-title">
+            {/* Backdrop */}
+            <div
+              className="fixed inset-0 bg-ink-900/60 backdrop-blur-xs transition-opacity"
+              aria-hidden="true"
+              onClick={() => setSelectedStudent(null)}
+            />
+
+            {/* Modal Dialog Card (Never cut off, scrollable body, sticky header & footer) */}
+            <div className="relative w-full max-w-lg max-h-[92vh] bg-white rounded-2xl shadow-2xl border border-ink-100 flex flex-col overflow-hidden z-10 animate-in fade-in zoom-in-95 duration-150">
+              {/* Header (Sticky / Fixed at top) */}
+              <div className="px-6 py-4 sm:py-5 border-b border-ink-100 flex items-center justify-between bg-white shrink-0">
+                <div className="flex items-center gap-3">
+                  <div className="p-2.5 bg-primary-50 text-primary-600 rounded-xl">
+                    <Zap className="w-5 h-5 font-black" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-black text-ink-900" id="modal-title">
                       Input Nilai{" "}
                       {inputType === "quran"
                         ? "Al-Qur'an"
@@ -1885,191 +1883,211 @@ export default function ExaminerDashboard() {
                           ? "Wawancara Calon Santri"
                           : "Wawancara Ortu/Wali"}
                     </h3>
-                  </div>
-
-                  <div className="bg-ink-50 rounded-2xl p-6 sm:p-8 mb-6 border border-ink-100">
-                    <p className="text-[10px] font-black text-ink-400 uppercase tracking-widest mb-1">
-                      Peserta Tes
-                    </p>
-                    <p className="text-lg font-black text-ink-900">
+                    <p className="text-xs text-ink-500 font-medium">
                       {(selectedStudent.nama_lengkap || "").replace(
                         /\w\S*/g,
                         (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
-                      )}
-                    </p>
-                    <p className="text-xs font-bold text-ink-500 font-mono mt-0.5">
-                      {selectedStudent.nomor_pendaftaran || "-"} • {selectedStudent.jenjang || "-"}
+                      )}{" "}
+                      • {selectedStudent.nomor_pendaftaran || "-"}
                     </p>
                   </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setSelectedStudent(null)}
+                  className="p-2 text-ink-400 hover:text-ink-600 hover:bg-ink-100 rounded-xl transition"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
 
-                  {isAdminSuper && (
-                    <div className="mb-5 bg-primary-50/50 p-4 rounded-xl border border-primary-100">
-                      <div className="flex items-center justify-between mb-1.5">
-                        <label className="block text-xs font-black text-primary-900 uppercase tracking-wider">
-                          Penguji / Pewawancara
-                        </label>
-                        <span className="text-[10px] font-bold text-primary-600 bg-primary-100/60 px-2 py-0.5 rounded-full">
-                          Default: Akun Anda
-                        </span>
-                      </div>
-                      <select
-                        value={selectedExaminerId || currentUserId}
-                        onChange={(e) => setSelectedExaminerId(e.target.value)}
-                        className="w-full bg-white border border-primary-200 rounded-xl px-4 py-2.5 text-sm font-bold text-ink-900 focus:ring-2 focus:ring-primary-600/20 outline-none shadow-sm"
-                      >
-                        {currentUserId && (
-                          <option value={currentUserId}>
-                            -- Saya Sendiri ({currentUserName || "Admin Super"}) --
+              {/* Scrollable Body (Accommodates all fields comfortably) */}
+              <div className="p-5 sm:p-6 overflow-y-auto space-y-4 flex-1 custom-scrollbar">
+                {/* Info Peserta */}
+                <div className="bg-ink-50 rounded-xl p-4 border border-ink-100">
+                  <p className="text-[10px] font-black text-ink-400 uppercase tracking-widest mb-1">
+                    Peserta Tes
+                  </p>
+                  <p className="text-base font-black text-ink-900">
+                    {(selectedStudent.nama_lengkap || "").replace(
+                      /\w\S*/g,
+                      (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
+                    )}
+                  </p>
+                  <p className="text-xs font-bold text-ink-500 font-mono mt-0.5">
+                    {selectedStudent.nomor_pendaftaran || "-"} • {selectedStudent.jenjang || "-"}
+                  </p>
+                </div>
+
+                {/* Penguji Selection */}
+                {isAdminSuper && (
+                  <div className="bg-primary-50/50 p-4 rounded-xl border border-primary-100">
+                    <div className="flex items-center justify-between mb-1.5">
+                      <label className="block text-xs font-black text-primary-900 uppercase tracking-wider">
+                        Penguji / Pewawancara
+                      </label>
+                      <span className="text-[10px] font-bold text-primary-600 bg-primary-100/60 px-2 py-0.5 rounded-full">
+                        Default: Akun Anda
+                      </span>
+                    </div>
+                    <select
+                      value={selectedExaminerId || currentUserId}
+                      onChange={(e) => setSelectedExaminerId(e.target.value)}
+                      className="w-full bg-white border border-primary-200 rounded-xl px-4 py-2.5 text-sm font-bold text-ink-900 focus:ring-2 focus:ring-primary-600/20 outline-none shadow-sm"
+                    >
+                      {currentUserId && (
+                        <option value={currentUserId}>
+                          -- Saya Sendiri ({currentUserName || "Admin Super"}) --
+                        </option>
+                      )}
+                      {usersList
+                        .filter((u) => u.id !== currentUserId)
+                        .map((u) => (
+                          <option key={u.id} value={u.id}>
+                            {u.full_name} ({u.role.replace("_", " ").toUpperCase()})
                           </option>
-                        )}
-                        {usersList
-                          .filter((u) => u.id !== currentUserId)
-                          .map((u) => (
-                            <option key={u.id} value={u.id}>
-                              {u.full_name} ({u.role.replace("_", " ").toUpperCase()})
-                            </option>
-                          ))}
-                      </select>
-                      <p className="text-[11px] text-ink-500 mt-1.5 font-medium">
-                        Nilai akan tercatat resmi atas nama penguji yang dipilih di atas.
-                      </p>
+                        ))}
+                    </select>
+                    <p className="text-[11px] text-ink-500 mt-1.5 font-medium">
+                      Nilai akan tercatat resmi atas nama penguji yang dipilih di atas.
+                    </p>
+                  </div>
+                )}
+
+                {/* Form Fields */}
+                <div className="space-y-4">
+                  {inputType === "quran" && (
+                    <div className="flex flex-col sm:flex-row gap-4">
+                      <div className="flex-1">
+                        <label className="block text-xs font-black text-ink-400 uppercase tracking-wider mb-2">
+                          Nilai Tajwid (0-100)
+                        </label>
+                        <input
+                          type="number"
+                          value={quranForm.tajwid}
+                          onChange={(e) =>
+                            setQuranForm({
+                              ...quranForm,
+                              tajwid: e.target.value,
+                            })
+                          }
+                          placeholder="0-100"
+                          className="w-full bg-ink-50 border border-ink-100 rounded-xl px-4 py-3 text-sm font-bold text-ink-900 focus:ring-2 focus:ring-primary-600/10 outline-none"
+                        />
+                      </div>
+                      <div className="flex-1">
+                        <label className="block text-xs font-black text-ink-400 uppercase tracking-wider mb-2">
+                          Nilai Kelancaran (0-100)
+                        </label>
+                        <input
+                          type="number"
+                          value={quranForm.kelancaran}
+                          onChange={(e) =>
+                            setQuranForm({
+                              ...quranForm,
+                              kelancaran: e.target.value,
+                            })
+                          }
+                          placeholder="0-100"
+                          className="w-full bg-ink-50 border border-ink-100 rounded-xl px-4 py-3 text-sm font-bold text-ink-900 focus:ring-2 focus:ring-primary-600/10 outline-none"
+                        />
+                      </div>
                     </div>
                   )}
 
-                  <div className="space-y-4">
-                    {inputType === "quran" && (
-                      <div className="flex flex-col sm:flex-row gap-4">
-                        <div className="flex-1">
-                          <label className="block text-xs font-black text-ink-400 uppercase tracking-wider mb-2">
-                            Nilai Tajwid (0-100)
+                  {inputType === "wawancara_santri" && (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      {[
+                        { k: "motivasi", l: "Motivasi (1-5)" },
+                        { k: "lingkungan", l: "Lingkungan (1-5)" },
+                        { k: "permainan", l: "Permainan (1-5)" },
+                        { k: "teman", l: "Teman (1-5)" },
+                        { k: "rokok", l: "Rokok (1-5)" },
+                        { k: "pornografi", l: "Pornografi (1-5)" },
+                        { k: "hobi", l: "Hobi Positif (1-5)" },
+                      ].map((f) => (
+                        <div key={f.k}>
+                          <label className="block text-[10px] font-black text-ink-400 uppercase tracking-wider mb-2">
+                            {f.l}
                           </label>
-                          <input
-                            type="number"
-                            value={quranForm.tajwid}
-                            onChange={(e) =>
-                              setQuranForm({
-                                ...quranForm,
-                                tajwid: e.target.value,
-                              })
-                            }
-                            placeholder="0-100"
-                            className="w-full bg-ink-50 border border-ink-100 rounded-3xl px-4 py-3 text-sm font-bold text-ink-900 focus:ring-2 focus:ring-primary-600/10 outline-none"
-                          />
+                          <select
+                            value={(wsForm as any)[f.k]}
+                            onChange={(e) => setWsForm({ ...wsForm, [f.k]: e.target.value })}
+                            className="w-full bg-ink-50 border border-ink-100 rounded-xl px-3 py-2 text-sm font-bold text-ink-900 focus:ring-2 focus:ring-primary-600/10 outline-none"
+                          >
+                            <option value="">Pilih...</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                          </select>
                         </div>
-                        <div className="flex-1">
-                          <label className="block text-xs font-black text-ink-400 uppercase tracking-wider mb-2">
-                            Nilai Kelancaran (0-100)
-                          </label>
-                          <input
-                            type="number"
-                            value={quranForm.kelancaran}
-                            onChange={(e) =>
-                              setQuranForm({
-                                ...quranForm,
-                                kelancaran: e.target.value,
-                              })
-                            }
-                            placeholder="0-100"
-                            className="w-full bg-ink-50 border border-ink-100 rounded-3xl px-4 py-3 text-sm font-bold text-ink-900 focus:ring-2 focus:ring-primary-600/10 outline-none"
-                          />
-                        </div>
-                      </div>
-                    )}
-
-                    {inputType === "wawancara_santri" && (
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        {[
-                          { k: "motivasi", l: "Motivasi (1-5)" },
-                          { k: "lingkungan", l: "Lingkungan (1-5)" },
-                          { k: "permainan", l: "Permainan (1-5)" },
-                          { k: "teman", l: "Teman (1-5)" },
-                          { k: "rokok", l: "Rokok (1-5)" },
-                          { k: "pornografi", l: "Pornografi (1-5)" },
-                          { k: "hobi", l: "Hobi Positif (1-5)" },
-                        ].map((f) => (
-                          <div key={f.k}>
-                            <label className="block text-[10px] font-black text-ink-400 uppercase tracking-wider mb-2">
-                              {f.l}
-                            </label>
-                            <select
-                              value={(wsForm as any)[f.k]}
-                              onChange={(e) => setWsForm({ ...wsForm, [f.k]: e.target.value })}
-                              className="w-full bg-ink-50 border border-ink-100 rounded-3xl px-3 py-2 text-sm font-bold text-ink-900 focus:ring-2 focus:ring-primary-600/10 outline-none"
-                            >
-                              <option value="">Pilih...</option>
-                              <option value="1">1</option>
-                              <option value="2">2</option>
-                              <option value="3">3</option>
-                              <option value="4">4</option>
-                              <option value="5">5</option>
-                            </select>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-
-                    {inputType === "wawancara_ortu" && (
-                      <div className="space-y-4 max-h-64 overflow-y-auto pr-2 custom-scrollbar overscroll-contain">
-                        <p className="text-[10px] font-black text-ink-500 uppercase">
-                          Pilih A/B/C untuk 10 Pertanyaan Standar Wawancara Wali
-                        </p>
-                        {Array.from({ length: 10 }).map((_, idx) => (
-                          <div key={idx} className="flex flex-col gap-1">
-                            <label className="block text-[10px] font-black text-ink-400 uppercase tracking-wider">
-                              Pertanyaan {idx + 1}
-                            </label>
-                            <select
-                              value={(woForm as any)[`q${idx + 1}`]}
-                              onChange={(e) =>
-                                setWoForm({
-                                  ...woForm,
-                                  [`q${idx + 1}`]: e.target.value,
-                                })
-                              }
-                              className="w-full bg-ink-50 border border-ink-100 rounded-3xl px-3 py-2 text-sm font-bold text-ink-900 focus:ring-2 focus:ring-primary-600/10 outline-none"
-                            >
-                              <option value="">Pilih...</option>
-                              <option value="A">A (Sangat Baik / Menerima)</option>
-                              <option value="B">B (Baik / Kondisional)</option>
-                              <option value="C">C (Kurang / Tidak Ideal)</option>
-                            </select>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-
-                    
-
-                    <div>
-                      <label className="block text-xs font-black text-ink-400 uppercase tracking-wider mb-2">
-                        Catatan Khusus
-                      </label>
-                      <textarea
-                        value={catatan}
-                        onChange={(e) => setCatatan(e.target.value)}
-                        rows={3}
-                        placeholder="Tambahkan catatan jika diperlukan..."
-                        className="w-full bg-ink-50 border border-ink-100 rounded-3xl px-4 py-3 text-sm font-bold text-ink-900 focus:ring-2 focus:ring-primary-600/10 outline-none"
-                      ></textarea>
+                      ))}
                     </div>
+                  )}
+
+                  {inputType === "wawancara_ortu" && (
+                    <div className="space-y-4">
+                      <p className="text-[10px] font-black text-ink-500 uppercase">
+                        Pilih A/B/C untuk 10 Pertanyaan Standar Wawancara Wali
+                      </p>
+                      {Array.from({ length: 10 }).map((_, idx) => (
+                        <div key={idx} className="flex flex-col gap-1">
+                          <label className="block text-[10px] font-black text-ink-400 uppercase tracking-wider">
+                            Pertanyaan {idx + 1}
+                          </label>
+                          <select
+                            value={(woForm as any)[`q${idx + 1}`]}
+                            onChange={(e) =>
+                              setWoForm({
+                                ...woForm,
+                                [`q${idx + 1}`]: e.target.value,
+                              })
+                            }
+                            className="w-full bg-ink-50 border border-ink-100 rounded-xl px-3 py-2 text-sm font-bold text-ink-900 focus:ring-2 focus:ring-primary-600/10 outline-none"
+                          >
+                            <option value="">Pilih...</option>
+                            <option value="A">A (Sangat Baik / Menerima)</option>
+                            <option value="B">B (Baik / Kondisional)</option>
+                            <option value="C">C (Kurang / Tidak Ideal)</option>
+                          </select>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  <div>
+                    <label className="block text-xs font-black text-ink-400 uppercase tracking-wider mb-2">
+                      Catatan Khusus
+                    </label>
+                    <textarea
+                      value={catatan}
+                      onChange={(e) => setCatatan(e.target.value)}
+                      rows={3}
+                      placeholder="Tambahkan catatan jika diperlukan..."
+                      className="w-full bg-ink-50 border border-ink-100 rounded-xl px-4 py-3 text-sm font-bold text-ink-900 focus:ring-2 focus:ring-primary-600/10 outline-none"
+                    ></textarea>
                   </div>
                 </div>
-                <div className="bg-ink-50 px-6 py-6 sm:px-5 md:px-8 sm:flex sm:flex-row-reverse gap-3 border-t border-ink-100">
-                  <Button
-                    onClick={handleSubmitScore}
-                    disabled={isSubmitting}
-                    className="w-full sm:w-auto bg-primary-600 hover:bg-primary-700 text-white rounded-2xl px-5 md:px-8 py-3 font-black shadow-md disabled:opacity-50"
-                  >
-                    {isSubmitting ? "Menyimpan..." : "Simpan Nilai"}
-                  </Button>
-                  <button
-                    type="button"
-                    onClick={() => setSelectedStudent(null)}
-                    className="mt-3 sm:mt-0 w-full sm:w-auto bg-white border border-ink-200 text-ink-600 hover:bg-ink-100 rounded-2xl px-5 md:px-8 py-3 font-black shadow-2xl transition-all"
-                  >
-                    Batal
-                  </button>
-                </div>
+              </div>
+
+              {/* Footer (Sticky / Fixed at bottom - ALWAYS VISIBLE!) */}
+              <div className="bg-ink-50 px-6 py-4 border-t border-ink-100 flex items-center justify-end gap-3 shrink-0">
+                <button
+                  type="button"
+                  onClick={() => setSelectedStudent(null)}
+                  className="w-full sm:w-auto bg-white border border-ink-200 text-ink-600 hover:bg-ink-100 rounded-xl px-5 py-2.5 text-sm font-bold shadow-sm transition"
+                >
+                  Batal
+                </button>
+                <Button
+                  onClick={handleSubmitScore}
+                  disabled={isSubmitting}
+                  className="w-full sm:w-auto bg-primary-600 hover:bg-primary-700 text-white rounded-xl px-6 py-2.5 text-sm font-bold shadow-lg shadow-primary-600/20 disabled:opacity-50"
+                >
+                  {isSubmitting ? "Menyimpan..." : "Simpan Nilai"}
+                </Button>
               </div>
             </div>
           </div>,
