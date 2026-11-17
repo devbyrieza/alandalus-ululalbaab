@@ -235,6 +235,13 @@ export async function PATCH(
 
     // 1. Quran Update
     if (canEditQuran && body.detail_quran !== undefined) {
+      if (body.catatan_quran !== undefined && (!body.catatan_quran || !body.catatan_quran.trim())) {
+        return NextResponse.json(
+          { error: "Catatan/komentar penguji Al-Qur'an wajib diisi untuk keperluan rapat pleno." },
+          { status: 400 },
+        );
+      }
+
       if (existing?.input_at_quran && !isAdmin) {
         const diff =
           now.getTime() - new Date(existing.input_at_quran).getTime();
@@ -274,6 +281,13 @@ export async function PATCH(
 
     // 2. Santri (Wawancara) Update
     if (canEditWawancara && body.detail_wawancara !== undefined) {
+      if (body.catatan_santri !== undefined && (!body.catatan_santri || !body.catatan_santri.trim())) {
+        return NextResponse.json(
+          { error: "Catatan/komentar pewawancara calon santri wajib diisi untuk keperluan rapat pleno." },
+          { status: 400 },
+        );
+      }
+
       if (existing?.input_at_santri && !isAdmin) {
         const diff =
           now.getTime() - new Date(existing.input_at_santri).getTime();
@@ -307,6 +321,13 @@ export async function PATCH(
 
     // 3. Ortu (Cawalsan) Update
     if (canEditOrtu && body.detail_cawalsan !== undefined) {
+      if (body.catatan_ortu !== undefined && (!body.catatan_ortu || !body.catatan_ortu.trim())) {
+        return NextResponse.json(
+          { error: "Catatan/komentar pewawancara calon wali santri wajib diisi untuk keperluan rapat pleno." },
+          { status: 400 },
+        );
+      }
+
       if (existing?.input_at_ortu && !isAdmin) {
         const diff =
           now.getTime() - new Date(existing.input_at_ortu).getTime();
@@ -338,6 +359,13 @@ export async function PATCH(
 
     // 4. Hafalan Update
     if (canEditHafalan && body.detail_hafalan !== undefined) {
+      if (body.catatan_hafalan !== undefined && (!body.catatan_hafalan || !body.catatan_hafalan.trim())) {
+        return NextResponse.json(
+          { error: "Catatan/komentar penguji tes hafalan wajib diisi untuk keperluan rapat pleno." },
+          { status: 400 },
+        );
+      }
+
       if (existing?.input_at_hafalan && !isAdmin) {
         const diff =
           now.getTime() - new Date(existing.input_at_hafalan).getTime();
@@ -387,6 +415,13 @@ export async function PATCH(
         : body.catatan_arab;
 
     if (canEditLisanArab && arabDetail !== undefined) {
+      if (arabCatatan !== undefined && (!arabCatatan || !arabCatatan.trim())) {
+        return NextResponse.json(
+          { error: "Catatan/komentar penguji tes bahasa Arab wajib diisi untuk keperluan rapat pleno." },
+          { status: 400 },
+        );
+      }
+
       if (existing?.input_at_arab && !isAdmin) {
         const diff =
           now.getTime() - new Date(existing.input_at_arab).getTime();

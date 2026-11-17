@@ -166,11 +166,11 @@ export const exportToExcelProfessional = async ({
           colIndex === 1 || // No
           colIndex === 2 || // No. Pendaftaran
           (val && typeof val === "string" && (
-            val.trim().startsWith("MTA") || 
-            val.trim().startsWith("ILA") || 
-            val.trim().startsWith("SMA") || 
             val.trim().startsWith("MTI") || 
-            val.trim().startsWith("ILI") ||
+            val.trim().startsWith("ILI") || 
+            val.trim().startsWith("MAI") || 
+            val.trim().startsWith("MTA") || 
+            val.trim().startsWith("ILA") ||
             val.trim().toLowerCase() === "laki-laki" || 
             val.trim().toLowerCase() === "perempuan" ||
             val.trim().toLowerCase() === "l" || 
@@ -198,10 +198,11 @@ export const exportToExcelProfessional = async ({
       });
     }
 
-    // Auto-width columns
+    // Auto-width columns with intelligent wrapping and padding
     sheetInfo.header.forEach((h, i) => {
       const colIndex = i + 1;
-      let maxLen = h.length;
+      const headerStr = (h || "").toString();
+      let maxLen = headerStr.length;
       worksheet.eachRow((row, rowIndex) => {
         if (rowIndex >= currentRow) {
           const val = row.getCell(colIndex).value;
@@ -212,7 +213,39 @@ export const exportToExcelProfessional = async ({
         }
       });
       const column = worksheet.getColumn(colIndex);
-      column.width = Math.max(maxLen + 4, 12);
+      // Bold headers need ~35% extra optical space in Excel
+      const minHeaderWidth = Math.ceil(headerStr.length * 1.35) + 4;
+      let calculatedWidth = Math.max(maxLen + 5, minHeaderWidth, 14);
+
+      const lower = headerStr.toLowerCase();
+      if (lower.includes("total") || lower.includes("skor") || lower.includes("score")) {
+        calculatedWidth = Math.max(calculatedWidth, 16);
+      } else if (lower.includes("catatan") || lower.includes("komentar")) {
+        calculatedWidth = Math.min(Math.max(calculatedWidth, 34), 60);
+      } else if (lower.includes("nama") || lower.includes("penguji") || lower.includes("pewawancara")) {
+        calculatedWidth = Math.max(calculatedWidth, 24);
+      } else if (lower.includes("rekomendasi") || lower.includes("keputusan")) {
+        calculatedWidth = Math.max(calculatedWidth, 36);
+      } else if (lower.includes("daftar") || lower.includes("pendaftaran")) {
+        calculatedWidth = Math.max(calculatedWidth, 18);
+      }
+
+      column.width = calculatedWidth;
+
+      // Wrap text for notes & recommendations so content doesn't clip
+      if (
+        lower.includes("catatan") ||
+        lower.includes("komentar") ||
+        lower.includes("rekomendasi") ||
+        lower.includes("keputusan")
+      ) {
+        worksheet.eachRow((row, rowIndex) => {
+          if (rowIndex >= currentRow) {
+            const cell = row.getCell(colIndex);
+            cell.alignment = { vertical: "middle", horizontal: "left", wrapText: true };
+          }
+        });
+      }
     });
   }
 
@@ -232,6 +265,12 @@ export const exportToExcelProfessional = async ({
   setTimeout(() => window.URL.revokeObjectURL(url), 3000);
 };
 
+export interface PDFDetailTable {
+  title: string;
+  columns: string[];
+  data: any[][];
+}
+
 /**
  * Export data to PDF file
  * @param title Title of the document
@@ -239,6 +278,7 @@ export const exportToExcelProfessional = async ({
  * @param data Array of arrays containing row data
  * @param fileName Name of the file (without extension)
  * @param orientation 'portrait' or 'landscape'
+ * @param detailTable Optional second table (e.g. Catatan Penguji Rapat Pleno)
  */
 export const exportToPDF = (
   title: string,
@@ -246,6 +286,7 @@ export const exportToPDF = (
   data: any[][],
   fileName: string,
   orientation: "portrait" | "landscape" = "landscape",
+  detailTable?: PDFDetailTable,
 ) => {
   const doc = new jsPDF({
     orientation: orientation,
@@ -263,10 +304,77 @@ export const exportToPDF = (
     head: [columns],
     body: data,
     startY: 35,
-    styles: { fontSize: 8 },
-    headStyles: { fillColor: [22, 163, 74] }, // Green-600 to match branding
-    alternateRowStyles: { fillColor: [240, 253, 244] }, // Light green
+    margin: { top: 35, bottom: 20 },
+    styles: { 
+      fontSize: 8,
+      cellPadding: 3,
+      valign: 'middle',
+      font: 'helvetica'
+    },
+    headStyles: { 
+      fillColor: [12, 94, 43], // Darker professional green
+      textColor: [255, 255, 255],
+      fontStyle: 'bold',
+      halign: 'center'
+    },
+    alternateRowStyles: { 
+      fillColor: [245, 250, 245] 
+    },
+    columnStyles: {
+      0: { halign: 'center' } // Align 'No' to center
+    },
+    didDrawPage: (data) => {
+      // Footer
+      const str = "Halaman " + (doc.internal as any).getNumberOfPages();
+      doc.setFontSize(8);
+      const pageSize = doc.internal.pageSize;
+      const pageHeight = pageSize.height ? pageSize.height : pageSize.getHeight();
+      doc.text(str, data.settings.margin.left, pageHeight - 10);
+    }
   });
+
+  // Optional Section 2: Detail Table (e.g. Catatan Penguji Rapat Pleno)
+  if (detailTable && detailTable.data.length > 0) {
+    doc.addPage("a4", orientation);
+    doc.setFontSize(16);
+    doc.text(detailTable.title, 14, 22);
+    doc.setFontSize(10);
+    doc.text(`Dicetak pada: ${new Date().toLocaleString("id-ID")}`, 14, 29);
+
+    autoTable(doc, {
+      head: [detailTable.columns],
+      body: detailTable.data,
+      startY: 34,
+      margin: { top: 34, bottom: 20 },
+      styles: { 
+        fontSize: 7.5,
+        cellPadding: 2.5,
+        valign: 'top',
+        font: 'helvetica'
+      },
+      headStyles: { 
+        fillColor: [12, 94, 43],
+        textColor: [255, 255, 255],
+        fontStyle: 'bold',
+        halign: 'center'
+      },
+      alternateRowStyles: { 
+        fillColor: [245, 250, 245] 
+      },
+      columnStyles: {
+        0: { halign: 'center', cellWidth: 10 },
+        1: { halign: 'center', cellWidth: 24 },
+        2: { cellWidth: 32 },
+      },
+      didDrawPage: (data) => {
+        const str = "Halaman " + (doc.internal as any).getNumberOfPages();
+        doc.setFontSize(8);
+        const pageSize = doc.internal.pageSize;
+        const pageHeight = pageSize.height ? pageSize.height : pageSize.getHeight();
+        doc.text(str, data.settings.margin.left, pageHeight - 10);
+      }
+    });
+  }
 
   doc.save(`${fileName}.pdf`);
 };
