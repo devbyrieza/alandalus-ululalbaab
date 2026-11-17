@@ -30,6 +30,7 @@ import Link from "next/link";
 import { exportToExcelProfessional, exportToPDF } from "@/lib/utils/export";
 import Swal from "sweetalert2";
 import AdminBeasiswaBlock from "../components/AdminBeasiswaBlock";
+import { getAvailableJenjang, normalizeJenjang, isJenjangTanpaIL } from "@/lib/utils/jenjang";
 
 interface PendaftarDetail {
   id: string;
@@ -268,15 +269,11 @@ export default function PendaftarDetailPage() {
             "<b>Peringatan:</b> Mengubah jenjang akan secara otomatis memberikan nomor pendaftaran baru yang sesuai dengan jenjang tujuan.<br/><br/>" +
             "Nomor pendaftaran lama (<b>" + pendaftar.nomor_pendaftaran + "</b>) akan menjadi kosong dan bisa digunakan oleh pendaftar lain.</div>",
       input: "select",
-      inputOptions: {
-        "MTs": "MTs",
-        "IL": "IL",
-        "MA": "MA",
-        "SD": "SD",
-        "SMP": "SMP",
-        "SMA": "SMA"
-      },
-      inputValue: pendaftar.jenjang,
+      inputOptions: getAvailableJenjang().reduce((acc, curr) => {
+        acc[curr] = curr;
+        return acc;
+      }, {} as Record<string, string>),
+      inputValue: normalizeJenjang(pendaftar.jenjang),
       inputPlaceholder: "Pilih Jenjang Baru",
       showCancelButton: true,
       confirmButtonText: "Simpan Perubahan",
@@ -1108,7 +1105,7 @@ export default function PendaftarDetailPage() {
                   {pendaftar.nomor_pendaftaran}
                 </span>
                 <span className="px-2.5 py-1 bg-gold-400 text-primary-900 rounded-2xl text-xs font-black uppercase">
-                  {pendaftar.jenjang}
+                  {normalizeJenjang(pendaftar.jenjang)}
                 </span>
                 <span className="text-primary-100 font-bold">
                   {["L", "Laki-laki"].includes(pendaftar.jenis_kelamin)
@@ -1552,7 +1549,7 @@ export default function PendaftarDetailPage() {
                 </div>
 
                 
-                {(pendaftar?.jenjang?.toLowerCase() || "").includes("ma") && (
+                {isJenjangTanpaIL(pendaftar?.jenjang) && (
                   <div className="bg-teal-50/50 p-4 rounded-3xl border border-teal-100 flex flex-col justify-between">
                     <div>
                       <span className="block text-xs text-teal-600 font-bold uppercase tracking-wide mb-1">
@@ -1595,7 +1592,7 @@ export default function PendaftarDetailPage() {
                 )}
 
 
-                {(pendaftar?.jenjang?.toLowerCase() || "").includes("ma") && (
+                {isJenjangTanpaIL(pendaftar?.jenjang) && (
                   <div className="bg-sky-50/50 p-4 rounded-3xl border border-sky-100 flex flex-col justify-between">
                     <div>
                       <span className="block text-xs text-sky-600 font-bold uppercase tracking-wide mb-1">

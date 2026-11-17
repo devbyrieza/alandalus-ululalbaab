@@ -42,6 +42,7 @@ import { SuratPengumumanDialog } from "@/components/admin/SuratPengumumanDialog"
 import { ActionDropdown } from "@/components/ui/ActionDropdown";
 import type { UserRole } from "@/lib/access-control";
 import { exportToExcelProfessional, exportToPDF } from "@/lib/utils/export";
+import { normalizeJenjang } from "@/lib/utils/jenjang";
 
 // Filter labels for dashboard categories
 const FILTER_LABELS: Record<string, string> = {
@@ -1903,7 +1904,7 @@ function AdminPendaftarContent() {
                           </span>
                         ) : (
                           <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 bg-purple-100 text-purple-700 rounded-full whitespace-nowrap inline-block shrink-0">
-                            {item.jenjang}
+                            {normalizeJenjang(item.jenjang)}
                           </span>
                         )}
                       </div>
@@ -2161,7 +2162,7 @@ function AdminPendaftarContent() {
                           </div>
                         ) : (
                           <span className="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-bold whitespace-nowrap inline-block shrink-0">
-                            {item.jenjang}
+                            {normalizeJenjang(item.jenjang)}
                           </span>
                         )}
                       </td>

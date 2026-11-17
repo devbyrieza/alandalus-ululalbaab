@@ -4,6 +4,7 @@ import { getServerSession } from "@/lib/session";
 import { logAdminAction } from "@/lib/audit";
 import { invalidateAdminPendaftarCache } from "@/lib/redis";
 import { recalculateNilaiUjian } from "@/lib/scoring";
+import { getInstitutionType, normalizeJenjang } from "@/lib/utils/jenjang";
 
 const parseSafeInt = (val: any) => {
   if (val === undefined || val === null || val === "") return null;
@@ -202,6 +203,16 @@ export async function GET(
               ibu.status_hidup ||
               "Masih Hidup" }
         : null };
+
+    if (mergedPendaftar) {
+      const inst = getInstitutionType();
+      mergedPendaftar.jenjang = normalizeJenjang(mergedPendaftar.jenjang);
+      if (inst === "ULUL_ALBAAB" && (mergedPendaftar.nomor_pendaftaran?.startsWith("MAI") || mergedPendaftar.nomor_pendaftaran?.startsWith("MAA"))) {
+        mergedPendaftar.nomor_pendaftaran = "SMA" + mergedPendaftar.nomor_pendaftaran.slice(3);
+      } else if (inst === "AL_IMAM" && mergedPendaftar.nomor_pendaftaran?.startsWith("SMA")) {
+        mergedPendaftar.nomor_pendaftaran = "MAI" + mergedPendaftar.nomor_pendaftaran.slice(3);
+      }
+    }
 
     return NextResponse.json({ data: mergedPendaftar });
   } catch (error) {
@@ -504,7 +515,8 @@ export async function PATCH(
         return NextResponse.json({ error: "Pendaftar not found" }, { status: 404 });
       }
 
-      if (pendaftar.jenjang === body.jenjang) {
+      const targetJenjang = normalizeJenjang(body.jenjang);
+      if (pendaftar.jenjang === targetJenjang) {
         return NextResponse.json({ error: "Jenjang sudah sesuai" }, { status: 400 });
       }
 
@@ -513,7 +525,7 @@ export async function PATCH(
       let newNomorPendaftaran = pendaftar.nomor_pendaftaran;
       try {
         newNomorPendaftaran = await generateNomorPendaftaran(
-          body.jenjang,
+          targetJenjang,
           pendaftar.jenis_kelamin,
           pendaftar.tahun_ajaran_id
         );
@@ -523,12 +535,13 @@ export async function PATCH(
 
       const dataLengkap = (pendaftar.data_lengkap as Record<string, any>) || {};
       if (!dataLengkap.santri) dataLengkap.santri = {};
-      dataLengkap.santri.jenjang = body.jenjang;
+      dataLengkap.santri.jenjang = targetJenjang;
+      dataLengkap.legacy_nomor_pendaftaran = pendaftar.nomor_pendaftaran;
 
       await prisma.pendaftar.update({
         where: { id: params.id },
         data: {
-          jenjang: body.jenjang,
+          jenjang: targetJenjang,
           nomor_pendaftaran: newNomorPendaftaran,
           data_lengkap: dataLengkap,
           updated_at: new Date()
