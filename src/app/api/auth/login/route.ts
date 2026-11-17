@@ -1,19 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { comparePassword } from "@/lib/utils/password";
+import { BRANDING } from "@/config/branding";
+import { comparePassword, hashPassword } from "@/lib/utils/password";
+import crypto from "crypto";
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     const { login_type } = body;
-    
-    const host = request.headers.get("host") || "";
-    let baseDomain = "";
-    if (host.includes("pesantren-alandalus-putra.com")) baseDomain = "pesantren-alandalus-putra.com";
-    else if (host.includes("pesantren-alandalus-putri.com")) baseDomain = "pesantren-alandalus-putri.com";
-    else if (host.includes("alandalus-ululalbaab.com")) baseDomain = "alandalus-ululalbaab.com";
-    else if (host.includes("pesantren-ululalbaab.com")) baseDomain = "pesantren-ululalbaab.com";
-    else if (host.includes("pesantren-alimam.com")) baseDomain = "pesantren-alimam.com";
 
     // ═══════════════════════════════════════════
     // LOGIN PENDAFTAR (NIK + Nomor Pendaftaran)
@@ -35,19 +29,31 @@ export async function POST(request: NextRequest) {
         );
       }
 
+      const isPutraInstitution = 
+        BRANDING?.gender?.toLowerCase() === "putra" ||
+        (BRANDING?.subtitle || "").toLowerCase().includes("putra") ||
+        (BRANDING?.schoolName || "").toLowerCase().includes("putra") ||
+        (BRANDING?.schoolShortName || "").toLowerCase().includes("ulul albaab");
+
       const inputNomor = (nomor_pendaftaran || "").trim().toUpperCase();
-      const putraMappedNomor = inputNomor
-        .replace(/^MTI/, "MTA")
-        .replace(/^ILI/, "ILA")
-        .replace(/^MAI/, "SMA")
-        .replace(/^MAA/, "SMA")
-        .replace(/^SMI/, "SMA");
+      const mappedNomor = isPutraInstitution
+        ? inputNomor
+            .replace(/^MTI/, "MTA")
+            .replace(/^ILI/, "ILA")
+            .replace(/^MAI/, "SMA")
+            .replace(/^MAA/, "SMA")
+            .replace(/^SMI/, "SMA")
+        : inputNomor
+            .replace(/^MTA/, "MTI")
+            .replace(/^ILA/, "ILI")
+            .replace(/^MAA/, "MAI")
+            .replace(/^SMA/, "MAI");
 
       const pendaftar = await prisma.pendaftar.findFirst({
         where: {
           nik,
           OR: [
-            { nomor_pendaftaran: { in: [inputNomor, putraMappedNomor] } },
+            { nomor_pendaftaran: { in: [inputNomor, mappedNomor] } },
             { data_lengkap: { path: ["legacy_nomor_pendaftaran"], equals: inputNomor } }
           ]
         }
@@ -87,9 +93,9 @@ export async function POST(request: NextRequest) {
         {
           path: "/",
           httpOnly: true,
-          secure: process.env.NODE_ENV === "production" && !request.headers.get("host")?.includes("localhost") && !request.headers.get("host")?.includes("127.0.0.1") && !request.headers.get("host")?.startsWith("192.168."),
+          secure: process.env.NODE_ENV === "production",
           sameSite: "lax",
-          
+      
           maxAge: 60 * 60 * 24 * 90,
           expires: new Date(Date.now() + 60 * 60 * 24 * 90 * 1000), // 90 Days Persistent Session
         },
@@ -99,7 +105,7 @@ export async function POST(request: NextRequest) {
     }
 
     // ═══════════════════════════════════════════
-    // LOGIN ADMIN/PENGUJI (Email + Password)
+    // LOGIN ADMIN/PENGUJI (Username / Email / No. WA + Password)
     // ═══════════════════════════════════════════
     else if (login_type === "admin") {
       const { email: rawEmail, password } = body;
@@ -114,12 +120,17 @@ export async function POST(request: NextRequest) {
 
       const cleanPhone = identifier.replace(/\D/g, "");
       let phoneVariations = [identifier];
-      if (cleanPhone.startsWith("62")) {
-        phoneVariations.push("0" + cleanPhone.substring(2));
-      } else if (cleanPhone.startsWith("0")) {
-        phoneVariations.push("62" + cleanPhone.substring(1));
-        phoneVariations.push("+62" + cleanPhone.substring(1));
+      if (cleanPhone) {
+        phoneVariations.push(cleanPhone);
+        if (cleanPhone.startsWith("62")) {
+          phoneVariations.push("0" + cleanPhone.substring(2));
+          phoneVariations.push("+62" + cleanPhone.substring(2));
+        } else if (cleanPhone.startsWith("0")) {
+          phoneVariations.push("62" + cleanPhone.substring(1));
+          phoneVariations.push("+62" + cleanPhone.substring(1));
+        }
       }
+      phoneVariations = [...new Set(phoneVariations)];
 
       // 1. Prioritize searching for a staff profile (role != "pendaftar")
       let profile = await prisma.profile.findFirst({
@@ -157,14 +168,59 @@ export async function POST(request: NextRequest) {
         });
       }
 
+      // 4. Specific handling & self-healing for Maulidin Bachtiar (Admin Keuangan & Pewawancara Cawalsan)
+      const isMaulidin =
+        cleanPhone === "0895332071063" ||
+        identifier.toLowerCase().includes("maulidin") ||
+        (profile && profile.full_name?.toLowerCase().includes("maulidin"));
+
+      if (isMaulidin) {
+        if (profile) {
+          const currentRoles = [profile.role, ...(profile.secondary_roles || [])];
+          const hasKeuangan = currentRoles.includes("admin_keuangan");
+          const hasWawancara = currentRoles.includes("pewawancara_cawalsan");
+
+          if (!hasKeuangan || !hasWawancara || profile.role === "pendaftar") {
+            profile = await prisma.profile.update({
+              where: { id: profile.id },
+              data: {
+                role: "admin_keuangan",
+                secondary_roles: ["pewawancara_cawalsan"],
+                full_name: profile.full_name || "Maulidin Bachtiar",
+                username: profile.username || "maulidin.bachtiar",
+                phone: "0895332071063",
+                plain_password: profile.plain_password || "Paas2026!",
+              },
+            });
+          }
+        } else {
+          const defaultHash = await hashPassword("Paas2026!");
+          profile = await prisma.profile.create({
+            data: {
+              id: crypto.randomUUID(),
+              full_name: "Maulidin Bachtiar",
+              username: "maulidin.bachtiar",
+              phone: "0895332071063",
+              email: "maulidin.bachtiar@pesantren-alimam.com",
+              role: "admin_keuangan",
+              secondary_roles: ["pewawancara_cawalsan"],
+              jenis_kelamin: "L",
+              password_hash: defaultHash,
+              plain_password: "Paas2026!",
+              must_change_password: false,
+            },
+          });
+        }
+      }
+
       if (!profile || !profile.password_hash) {
         return NextResponse.json(
-          { error: "Email/Username atau Password salah" },
+          { error: "Username / Email / No. WA atau Password salah" },
           { status: 401 },
         );
       }
 
-            const allowedRoles = [
+      const allowedRoles = [
         "admin",
         "penguji",
         "admin_super",
@@ -205,8 +261,9 @@ export async function POST(request: NextRequest) {
         }
       }
 
+      // Verify Password (bcrypt or default password fallback)
       let isValid = await comparePassword(password, profile.password_hash);
-      if (!isValid && (password === "PUAS2026!" || password === "Puas2026!" || password === "2026#@")) {
+      if (!isValid && (password === "Paas2026!" || password === "PAAS2026!" || password === "2026#@")) {
         isValid = true;
       }
       if (!isValid && profile.plain_password && profile.plain_password === password) {
@@ -221,7 +278,9 @@ export async function POST(request: NextRequest) {
       }
 
       // Check for multi-role: if secondary_roles exist, require role selection
-      const secondaryRoles: string[] = (profile.secondary_roles || []).filter((r: string) => r && r.toLowerCase() !== profile.role.toLowerCase() && r.toLowerCase() !== "pendaftar");
+      const secondaryRoles: string[] = (profile.secondary_roles || []).filter(
+        (r: string) => r && r.toLowerCase() !== profile.role.toLowerCase() && r.toLowerCase() !== "pendaftar"
+      );
       if (secondaryRoles.length > 0) {
         // Return role selection prompt — no cookie yet
         return NextResponse.json({
@@ -229,17 +288,18 @@ export async function POST(request: NextRequest) {
           requires_role_selection: true,
           profile_id: profile.id,
           full_name: profile.full_name,
-          available_roles: [...new Set([profile.role, ...secondaryRoles])] });
+          available_roles: [...new Set([profile.role, ...secondaryRoles])],
+        });
       }
 
       const isDefaultPassword =
         profile.must_change_password === true ||
         password === "2026#@" ||
-        password === "Puas2026!" ||
-        password === "PUAS2026!" ||
+        password === "Paas2026!" ||
+        password === "PAAS2026!" ||
         profile.plain_password === "2026#@" ||
-        profile.plain_password === "Puas2026!" ||
-        profile.plain_password === "PUAS2026!";
+        profile.plain_password === "Paas2026!" ||
+        profile.plain_password === "PAAS2026!";
 
       // Single role — login normally
       const responseJson = NextResponse.json({
@@ -253,7 +313,9 @@ export async function POST(request: NextRequest) {
           phone: profile.phone,
           username: profile.username,
           role: profile.role,
-          is_default_password: isDefaultPassword } });
+          is_default_password: isDefaultPassword,
+        },
+      });
 
       responseJson.cookies.set(
         "al_session",
@@ -263,13 +325,13 @@ export async function POST(request: NextRequest) {
           full_name: profile.full_name,
           email: profile.email,
           username: profile.username,
-          is_default_password: isDefaultPassword }),
+          is_default_password: isDefaultPassword,
+        }),
         {
           path: "/",
           httpOnly: true,
-          secure: process.env.NODE_ENV === "production" && !request.headers.get("host")?.includes("localhost") && !request.headers.get("host")?.includes("127.0.0.1") && !request.headers.get("host")?.startsWith("192.168."),
+          secure: process.env.NODE_ENV === "production",
           sameSite: "lax",
-          
           maxAge: 60 * 60 * 24 * 90,
           expires: new Date(Date.now() + 60 * 60 * 24 * 90 * 1000), // 90 Days Persistent Session
         },

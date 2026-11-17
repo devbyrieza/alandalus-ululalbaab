@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { BRANDING } from "@/config/branding";
 
 // ===================================
 // NOMOR PENDAFTARAN GENERATION
@@ -9,9 +10,9 @@ import { prisma } from "@/lib/prisma";
  * Format: [PREFIX][YY][NNNNN]
  *
  * Prefixes:
- * - MTI = MTs Putri (Perempuan)
- * - ILI = I'dad Lughowi Putri
- * *
+ * - MTA = MTs Putra (Laki-laki)
+ * - ILA = I'dad Lughowi Putra
+ *
  * Example: MTI2600001, MTA2600045, ILI2600123
  *
  * @param jenjang - MTs, IL, or SMA
@@ -105,10 +106,35 @@ export async function generateNomorPendaftaran(
  */
 export function generatePrefix(jenjang: string, jenis_kelamin?: string): string {
   const normJenjang = (jenjang || "").toUpperCase().replace(/[\s\-_]/g, "");
-  // Ulul Albaab adalah pesantren khusus Putra: MTA (MTs), ILA (IL), SMA (SMA)
-  if (normJenjang.includes("IL") || normJenjang.includes("IDAD") || normJenjang.includes("LUGHAW")) return "ILA";
-  if (normJenjang.includes("SMA") || normJenjang.includes("MA")) return "SMA";
-  return "MTA";
+
+  const isPutriInstitution =
+    BRANDING?.gender?.toLowerCase() === "putri" ||
+    (BRANDING?.subtitle || "").toLowerCase().includes("putri") ||
+    (BRANDING?.schoolName || "").toLowerCase().includes("putri");
+
+  const isPutraInstitution =
+    BRANDING?.gender?.toLowerCase() === "putra" ||
+    (BRANDING?.subtitle || "").toLowerCase().includes("putra") ||
+    (BRANDING?.schoolName || "").toLowerCase().includes("putra") ||
+    (BRANDING?.schoolShortName || "").toLowerCase().includes("ulul albaab");
+
+  if (isPutriInstitution) {
+    if (normJenjang.includes("IL") || normJenjang.includes("IDAD") || normJenjang.includes("LUGHAW")) return "ILI";
+    if (normJenjang.includes("MA") || normJenjang.includes("SMA")) return "MAI";
+    return "MTI";
+  }
+
+  if (isPutraInstitution) {
+    if (normJenjang.includes("IL") || normJenjang.includes("IDAD") || normJenjang.includes("LUGHAW")) return "ILA";
+    if (normJenjang.includes("SMA") || normJenjang.includes("MA")) return "SMA";
+    return "MTA";
+  }
+
+  // Fallback untuk institusi campuran (contoh: template-demo) berdasarkan jenis_kelamin
+  const isPutri = (jenis_kelamin || "").toUpperCase() === "P" || (jenis_kelamin || "").toUpperCase() === "PUTRI";
+  if (normJenjang.includes("IL") || normJenjang.includes("IDAD") || normJenjang.includes("LUGHAW")) return isPutri ? "ILI" : "ILA";
+  if (normJenjang.includes("SMA") || normJenjang.includes("MA")) return isPutri ? "SMI" : "SMA";
+  return isPutri ? "SPI" : "SPA";
 }
 
 // ===================================
@@ -159,11 +185,9 @@ export function parseNomorPendaftaran(nomorPendaftaran: string): {
   let jenjang = "";
   let jenis_kelamin = "";
 
-  if (prefix.startsWith("SP")) {
-    jenjang = "MTs";
-  } else if (prefix.startsWith("SM")) {
+  if (prefix === "SMA" || prefix === "SMI") {
     jenjang = "SMA";
-  } else if (prefix.startsWith("MT")) {
+  } else if (prefix.startsWith("SP") || prefix.startsWith("MT")) {
     jenjang = "MTs";
   } else if (prefix.startsWith("IL")) {
     jenjang = "IL";
@@ -171,9 +195,9 @@ export function parseNomorPendaftaran(nomorPendaftaran: string): {
     jenjang = "MA";
   }
 
-  if (prefix.endsWith("A")) {
+  if (prefix.endsWith("A") || prefix === "SMA") {
     jenis_kelamin = "L"; // Putra
-  } else if (prefix.endsWith("I")) {
+  } else if (prefix.endsWith("I") || prefix === "SMI") {
     jenis_kelamin = "P"; // Putri
   }
 
@@ -303,8 +327,8 @@ export function getPrefixLabel(prefix: string): string {
     ILI: "I'dad Lughowi Putri (Perempuan)",
     MTA: "MTs Putra (Laki-laki)",
     MTI: "MTs Putri (Perempuan)",
-    MAA: "SMA Putra (Laki-laki)",
-    MAI: "SMA Putri (Perempuan)",
+    MAA: "MA Putra (Laki-laki)",
+    MAI: "MA Putri (Perempuan)",
   };
 
   return labels[prefix] || prefix;
