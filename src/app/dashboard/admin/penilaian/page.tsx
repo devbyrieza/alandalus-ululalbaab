@@ -14,7 +14,6 @@ import {
   FileText,
   Filter,
   LayoutDashboard,
-  Link as LinkIcon,
   MessageSquare,
   RefreshCcw,
   Search,
@@ -178,10 +177,8 @@ export default function ExaminerDashboard() {
       const json = await res.json();
       const list: { id: string; nama: string; is_active: boolean }[] = json.data || [];
       setTaList(list);
-      // Default: tahun ajaran AKTIF / TERBARU
-      const activeTA = list.find((ta) => ta.is_active);
-      const defaultTA = activeTA || (list.length > 0 ? list[0] : null);
-      setSelectedTa(defaultTA ? defaultTA.id : "all");
+      // Default: tahun ajaran TERBARU (API urut tahun_mulai desc)
+      setSelectedTa(list.length > 0 ? list[0].id : "all");
     } catch (e) {
       console.error("Error fetching tahun ajaran:", e);
       setSelectedTa("all");
@@ -198,7 +195,7 @@ export default function ExaminerDashboard() {
       setStudents(json.data || []);
 
       // Also fetch stats from cron result (using same secret)
-      const statsRes = await fetch("/api/cron/whatsapp?secret=ppdb-ululalbaab-cron-2026");
+      const statsRes = await fetch("/api/cron/whatsapp?secret=ppdb-alimam-cron-2026");
       const statsJson = await statsRes.json();
       if (statsJson.stats?.queue) {
         setQueueStats({
@@ -334,7 +331,7 @@ export default function ExaminerDashboard() {
 
       for (let i = 0; i < maxToProcess; i++) {
         try {
-          const res = await fetch("/api/cron/whatsapp?secret=ppdb-ululalbaab-cron-2026");
+          const res = await fetch("/api/cron/whatsapp?secret=ppdb-alimam-cron-2026");
           if (!res.ok) break;
 
           const data = await res.json();
@@ -577,7 +574,6 @@ export default function ExaminerDashboard() {
       const formatStudentForExport = (s: Student) => {
         const ws = s?.nilai_ujian?.nilai_wawancara_santri || 0;
         const wo = s?.nilai_ujian?.nilai_wawancara_ortu || 0;
-        const avgWawancara = ws > 0 && wo > 0 ? (ws + wo) / 2 : ws || wo || 0;
 
         let examStatus = s?.nilai_ujian?.status_kelulusan;
         const pendaftaranStatus = (s?.status_pendaftaran || "").toUpperCase();
@@ -606,7 +602,8 @@ export default function ExaminerDashboard() {
           getGrade(s?.nilai_ujian?.score_arab, "akademik"),
           getGrade(s?.nilai_ujian?.score_akademik, "akademik"),
           getGrade(s?.nilai_ujian?.score_kepribadian, "kepribadian"),
-          getGrade(avgWawancara, "wawancara"),
+          getGrade(ws, "wawancara"),
+          getGrade(wo, "wawancara"),
           getGrade(s?.nilai_ujian?.score_kesiapan, "kesiapan"),
           totalScore,
           examStatus || "BELUM LENGKAP",
@@ -622,7 +619,8 @@ export default function ExaminerDashboard() {
         "Lisan B. Arab",
         "Akademik",
         "Kepribadian",
-        "Wawancara",
+        "W. Santri",
+        "W. Ortu",
         "Kesiapan",
         "Total Skor",
         "Keputusan",
@@ -684,6 +682,100 @@ export default function ExaminerDashboard() {
     }
   };
 
+  const handleExportPDF = () => {
+    if (!students?.length) {
+      return Swal.fire("Info", "Tidak ada data santri untuk diekspor", "info");
+    }
+
+    try {
+      const getGrade = (score: number | undefined | null, type: string) => {
+        if (score == null) return "-";
+        if (type === "akademik") {
+          if (score >= 75) return "A";
+          if (score >= 60) return "B";
+          if (score >= 45) return "C";
+          if (score >= 30) return "D";
+          return "E";
+        }
+        if (type === "quran") {
+          if (score >= 85) return "A";
+          if (score >= 75) return "B";
+          if (score >= 70) return "C";
+          if (score >= 40) return "D";
+          return "E";
+        }
+        if (type === "kepribadian") {
+          if (score >= 80) return "A";
+          if (score >= 65) return "B";
+          if (score >= 50) return "C";
+          if (score >= 35) return "D";
+          return "E";
+        }
+        if (score >= 80) return "A";
+        if (score >= 65) return "B";
+        if (score >= 50) return "C";
+        if (score >= 35) return "D";
+        return "E";
+      };
+
+      const columns = [
+        "No",
+        "NP",
+        "Nama Santri",
+        "Jenjang",
+        "Qur'an",
+        "Hafalan",
+        "B. Arab",
+        "Akademik",
+        "Kepribadian",
+        "W. Santri",
+        "W. Ortu",
+        "Kesiapan",
+        "Total",
+        "Keputusan",
+      ];
+
+      const data = students.map((s, idx) => {
+        const ws = s?.nilai_ujian?.nilai_wawancara_santri || 0;
+        const wo = s?.nilai_ujian?.nilai_wawancara_ortu || 0;
+        let examStatus = s?.nilai_ujian?.status_kelulusan;
+        const pendaftaranStatus = (s?.status_pendaftaran || "").toUpperCase();
+        if (["ACCEPTED", "ENROLLED", "ENROLLED_FULL", "DITERIMA"].includes(pendaftaranStatus)) {
+          examStatus = "DITERIMA";
+        }
+        const totalScore = s?.nilai_ujian?.nilai_total != null ? Number(s.nilai_ujian.nilai_total).toFixed(1) : "-";
+
+        return [
+          String(idx + 1),
+          s?.nomor_pendaftaran || "-",
+          (s?.nama_lengkap || "").substring(0, 18),
+          s?.jenjang || "-",
+          getGrade(s?.nilai_ujian?.score_quran, "quran"),
+          getGrade(s?.nilai_ujian?.score_hafalan, "quran"),
+          getGrade(s?.nilai_ujian?.score_arab, "akademik"),
+          getGrade(s?.nilai_ujian?.score_akademik, "akademik"),
+          getGrade(s?.nilai_ujian?.score_kepribadian, "kepribadian"),
+          getGrade(ws, "wawancara"),
+          getGrade(wo, "wawancara"),
+          getGrade(s?.nilai_ujian?.score_kesiapan, "kesiapan"),
+          totalScore,
+          examStatus || "BELUM LENGKAP",
+        ];
+      });
+
+      exportToPDF(
+        "REKAPITULASI PENILAIAN HASIL SELEKSI PPDB",
+        columns,
+        data,
+        `Rekap_Nilai_PPDB_${new Date().toISOString().split("T")[0]}`,
+        "landscape"
+      );
+    } catch (e: any) {
+      console.error("Export PDF error:", e);
+      Swal.fire("Gagal Ekspor", "Terjadi kesalahan saat mengekspor ke PDF", "error");
+    }
+  };
+
   return (
     <div className="space-y-6 max-w-[1200px] mx-auto pb-10">
       {/* Header Section */}
@@ -703,14 +795,22 @@ export default function ExaminerDashboard() {
         <div className="flex bg-ink-50 p-1 rounded-2xl border border-ink-100 w-fit">
           <button
             onClick={() => setActiveTab("data")}
-            className={`flex items-center gap-2 px-6 py-2.5 rounded-3xl text-sm font-bold transition-all ${activeTab === "data" ? "bg-white text-primary-700 shadow-clay-sm" : "text-ink-500 hover:text-ink-800"}`}
+            className={`flex items-center gap-2 px-6 py-2.5 rounded-3xl text-sm font-bold transition-all ${
+              activeTab === "data"
+                ? "bg-white text-primary-700 shadow-clay-sm"
+                : "text-ink-500 hover:text-ink-800"
+            }`}
           >
             <Users className="w-4 h-4" />
             Data Penilaian
           </button>
           <button
             onClick={() => setActiveTab("system")}
-            className={`flex items-center gap-2 px-6 py-2.5 rounded-3xl text-sm font-bold transition-all ${activeTab === "system" ? "bg-white text-primary-700 shadow-clay-sm" : "text-ink-500 hover:text-ink-800"}`}
+            className={`flex items-center gap-2 px-6 py-2.5 rounded-3xl text-sm font-bold transition-all ${
+              activeTab === "system"
+                ? "bg-white text-primary-700 shadow-clay-sm"
+                : "text-ink-500 hover:text-ink-800"
+            }`}
           >
             <Zap
               className={`w-4 h-4 ${queueStats?.pending ? "text-secondary-500 animate-pulse" : ""}`}
@@ -724,18 +824,18 @@ export default function ExaminerDashboard() {
           </button>
         </div>
       </div>
-      {/* BARU: Banner Akses Khusus & Share WA Bank Soal Panitia (Ulul Albaab Maroon & Krem Emas) */}
+      {/* BARU: Banner Akses Khusus & Share WA Bank Soal Panitia (Al-Imam Maroon & Krem Emas) */}
       <div
-        style={{ background: "linear-gradient(135deg, #550000 0%, #360000 100%)" }}
-        className="text-white p-5 sm:p-6 rounded-3xl shadow-2xl border border-[#6b0000]/60 flex flex-col md:flex-row items-start md:items-center justify-between gap-4"
+        style={{ background: "linear-gradient(135deg, #9D174D 0%, #500724 100%)" }}
+        className="text-white p-5 sm:p-6 rounded-3xl shadow-2xl border border-[#831843]/60 flex flex-col md:flex-row items-start md:items-center justify-between gap-4"
       >
         <div className="flex items-center gap-3.5">
-          <div className="p-3.5 bg-white/10 rounded-2xl border border-white/20 flex-shrink-0 backdrop-blur-md">
+          <div className="p-3.5 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 flex-shrink-0">
             <FileText className="w-6 h-6 text-[#ddc192]" />
           </div>
           <div>
             <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 bg-[#ddc192]/20 text-[#ddc192] text-[10px] font-bold rounded-full border border-[#ddc192]/40 mb-1">
-              <Sparkles className="w-3 h-3 text-[#ddc192]" /> AKSES & DISKUSI PANITIA PPDB 2027/2028
+              <Sparkles className="w-3 h-3 text-[#ddc192]" /> AKSES & DISKUSI PANITIA SPMB 2027/2028
             </div>
             <h3 className="font-extrabold text-base text-white">
               Bank Soal & Form Penilaian Panitia
@@ -750,14 +850,14 @@ export default function ExaminerDashboard() {
         <div className="flex items-center gap-2.5 w-full md:w-auto flex-shrink-0">
           <Link
             href="/dashboard/admin/bank-soal"
-            className="flex-1 md:flex-none px-4 py-2.5 bg-[#ddc192] text-[#550000] hover:bg-[#c5a775] rounded-2xl font-black text-xs flex items-center justify-center gap-2 shadow-sm transition-all border border-[#ddc192]"
+            className="flex-1 md:flex-none px-4 py-2.5 bg-[#ddc192] text-[#9D174D] hover:bg-[#c5a775] rounded-2xl font-black text-xs flex items-center justify-center gap-2 shadow-sm transition-all border border-[#ddc192]"
           >
-            <Eye className="w-4 h-4 text-[#550000]" /> Lihat Bank Soal
+            <Eye className="w-4 h-4 text-[#9D174D]" /> Lihat Bank Soal
           </Link>
           <button
             onClick={() => {
               const message = encodeURIComponent(
-                `*Assalamu’alaikum Warahmatullahi Wabarakatuh*\n\nYth. Ustadz / Ustadzah Panitia SPMB Pesantren Al-Andalus Ulul Albaab,\n\nBerikut link akses khusus Bank Soal Seleksi & Form Penilaian Penguji untuk peninjauan & evaluasi TA 2027/2028:\n\n https://spmb.pesantren-ululalbaab.com/panitia/bank-soal\n\n_Mohon bantuan ustadz/ustadzah untuk meninjau relevansi soal dan rubrik wawancara._\n\nSyukron, Jazakumullahu Khairan.`
+                `*Assalamu’alaikum Warahmatullahi Wabarakatuh*\n\nYth. Ustadz / Ustadzah Panitia SPMB Pesantren Al-Andalus Al-Imam,\n\nBerikut link akses khusus Bank Soal Seleksi & Form Penilaian Penguji untuk peninjauan & evaluasi TA 2027/2028:\n\n https://spmb.pesantren-alimam.com/panitia/bank-soal\n\n_Mohon bantuan ustadz/ustadzah untuk meninjau relevansi soal dan rubrik wawancara._\n\nSyukron, Jazakumullahu Khairan. `
               );
               window.open(`https://wa.me/?text=${message}`, "_blank");
             }}
@@ -800,11 +900,11 @@ export default function ExaminerDashboard() {
           {/* Header Stats (Rekap Kelulusan) */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
             <div className="bg-green-50 p-6 rounded-3xl shadow-2xl border border-green-100 relative overflow-hidden">
-              <p className="text-[#550000] text-sm font-bold tracking-wider uppercase mb-1">
+              <p className="text-[#9D174D] text-sm font-bold tracking-wider uppercase mb-1">
                 Total Diterima
               </p>
               <div className="flex items-end gap-2">
-                <h3 className="text-2xl md:text-4xl font-black text-[#550000]">
+                <h3 className="text-2xl md:text-4xl font-black text-[#9D174D]">
                   {
                     students.filter(
                       (c) =>
@@ -812,7 +912,7 @@ export default function ExaminerDashboard() {
                     ).length
                   }
                 </h3>
-                <span className="text-[#550000]/70 font-medium mb-1 pl-1">Santri</span>
+                <span className="text-[#9D174D]/70 font-medium mb-1 pl-1">Santri</span>
               </div>
               <div className="absolute -right-4 -bottom-4 bg-green-200/50 w-24 h-24 rounded-full blur-xl"></div>
             </div>
@@ -894,6 +994,14 @@ export default function ExaminerDashboard() {
                       <Download className="w-4 h-4" /> Export Excel
                     </>
                   )}
+                </Button>
+
+                <Button
+                  onClick={handleExportPDF}
+                  disabled={isExporting}
+                  className="btn-secondary flex items-center gap-2 bg-rose-50 text-rose-800 border-rose-200 hover:bg-rose-100 rounded-3xl font-bold py-2 whitespace-nowrap shrink-0 disabled:opacity-50"
+                >
+                  <FileText className="w-4 h-4" /> Export PDF
                 </Button>
 
                 <Button
@@ -1036,8 +1144,8 @@ export default function ExaminerDashboard() {
                             }
 
                             const colors: any = {
-                              LULUS: "bg-green-100 text-[#550000] border-green-200",
-                              DITERIMA: "bg-green-100 text-[#550000] border-green-200",
+                              LULUS: "bg-green-100 text-[#9D174D] border-green-200",
+                              DITERIMA: "bg-green-100 text-[#9D174D] border-green-200",
                               CADANGAN: "bg-secondary-100 text-secondary-700 border-secondary-200",
                               DITOLAK: "bg-red-100 text-red-700 border-red-200",
                               "BELUM LENGKAP": "bg-orange-100 text-orange-700 border-orange-200",
@@ -1086,7 +1194,7 @@ export default function ExaminerDashboard() {
                                   : "bg-secondary-400";
                             return (
                               <span
-                                className={`${color} text-white text-[10px] font-black px-2 py-1 rounded    `}
+                                className={`${color} text-white text-[10px] font-black px-2 py-1 rounded      `}
                               >
                                 {grade}
                               </span>
@@ -1123,7 +1231,7 @@ export default function ExaminerDashboard() {
                                   : "bg-secondary-400";
                             return (
                               <span
-                                className={`${color} text-white text-[10px] font-black px-2 py-1 rounded    `}
+                                className={`${color} text-white text-[10px] font-black px-2 py-1 rounded      `}
                               >
                                 {grade}
                               </span>
@@ -1160,7 +1268,7 @@ export default function ExaminerDashboard() {
                                   : "bg-secondary-400";
                             return (
                               <span
-                                className={`${color} text-white text-[10px] font-black px-2 py-1 rounded    `}
+                                className={`${color} text-white text-[10px] font-black px-2 py-1 rounded      `}
                               >
                                 {grade}
                               </span>
@@ -1219,7 +1327,7 @@ export default function ExaminerDashboard() {
                                   : "bg-secondary-400";
                             return (
                               <span
-                                className={`${color} text-white text-[10px] font-black px-2 py-1 rounded    `}
+                                className={`${color} text-white text-[10px] font-black px-2 py-1 rounded      `}
                               >
                                 {grade} {isWsSkipped ? "(S:SKIP)" : isWoSkipped ? "(O:SKIP)" : ""}
                               </span>
@@ -1256,7 +1364,7 @@ export default function ExaminerDashboard() {
                                   : "bg-secondary-400";
                             return (
                               <span
-                                className={`${color} text-white text-[10px] font-black px-2 py-1 rounded    `}
+                                className={`${color} text-white text-[10px] font-black px-2 py-1 rounded      `}
                               >
                                 {grade}
                               </span>
@@ -1285,7 +1393,7 @@ export default function ExaminerDashboard() {
                                 </button>
                                 <button
                                   onClick={() => handleOpenAssignDialog(s)}
-                                  className="flex items-center gap-1.5 bg-[#550000] text-white px-3 py-1.5 rounded-3xl text-[10px] font-black hover:bg-[#550000] transition-all shadow-2xl group-hover:scale-105"
+                                  className="flex items-center gap-1.5 bg-[#9D174D] text-white px-3 py-1.5 rounded-3xl text-[10px] font-black hover:bg-[#9D174D] transition-all shadow-2xl group-hover:scale-105"
                                 >
                                   <Users className="w-3 h-3" /> PLOT
                                 </button>
@@ -1372,8 +1480,8 @@ export default function ExaminerDashboard() {
                     {(() => {
                       const examStatus = s.nilai_ujian?.status_kelulusan;
                       const colors: any = {
-                        LULUS: "bg-green-100 text-[#550000] border-green-200",
-                        DITERIMA: "bg-green-100 text-[#550000] border-green-200",
+                        LULUS: "bg-green-100 text-[#9D174D] border-green-200",
+                        DITERIMA: "bg-green-100 text-[#9D174D] border-green-200",
                         CADANGAN: "bg-secondary-100 text-secondary-700 border-secondary-200",
                         DITOLAK: "bg-red-100 text-red-700 border-red-200",
                         "BELUM LENGKAP": "bg-orange-100 text-orange-700 border-orange-200",
@@ -1464,7 +1572,7 @@ export default function ExaminerDashboard() {
                           </button>
                           <button
                             onClick={() => handleOpenAssignDialog(s)}
-                            className="flex items-center justify-center gap-2 bg-[#550000] text-white py-3 rounded-2xl text-[11px] font-black shadow-2xl active:scale-95 transition-all"
+                            className="flex items-center justify-center gap-2 bg-[#9D174D] text-white py-3 rounded-2xl text-[11px] font-black shadow-2xl active:scale-95 transition-all"
                           >
                             <Users className="w-3.5 h-3.5" /> PLOT
                           </button>
@@ -1539,7 +1647,7 @@ export default function ExaminerDashboard() {
               </div>
             </div>
             <div className="bg-white rounded-3xl p-6 shadow-clay-md border border-white/40 flex items-center gap-4">
-              <div className="p-6 sm:p-8 bg-green-50 text-[#550000] rounded-2xl">
+              <div className="p-6 sm:p-8 bg-green-50 text-[#9D174D] rounded-2xl">
                 <CheckCircle2 className="w-8 h-8" />
               </div>
               <div>
@@ -1593,11 +1701,11 @@ export default function ExaminerDashboard() {
           {/* Header Stats (Rekap Kelulusan) */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
             <div className="bg-green-50 p-6 rounded-3xl shadow-2xl border border-green-100 relative overflow-hidden">
-              <p className="text-[#550000] text-sm font-bold tracking-wider uppercase mb-1">
+              <p className="text-[#9D174D] text-sm font-bold tracking-wider uppercase mb-1">
                 Total Diterima
               </p>
               <div className="flex items-end gap-2">
-                <h3 className="text-2xl md:text-4xl font-black text-[#550000]">
+                <h3 className="text-2xl md:text-4xl font-black text-[#9D174D]">
                   {
                     students.filter(
                       (c) =>
@@ -1605,7 +1713,7 @@ export default function ExaminerDashboard() {
                     ).length
                   }
                 </h3>
-                <span className="text-[#550000]/70 font-medium mb-1 pl-1">Santri</span>
+                <span className="text-[#9D174D]/70 font-medium mb-1 pl-1">Santri</span>
               </div>
               <div className="absolute -right-4 -bottom-4 bg-green-200/50 w-24 h-24 rounded-full blur-xl"></div>
             </div>
@@ -1709,15 +1817,15 @@ export default function ExaminerDashboard() {
                 </div>
 
                 <div className="p-6 bg-emerald-50/30 rounded-3xl border border-emerald-100/50 hover:bg-emerald-50 transition-colors">
-                  <h4 className="font-black text-[#550000] mb-2">Kirim Paksa Antrean (Flush)</h4>
-                  <p className="text-xs text-[#550000]/70 mb-6 font-medium leading-relaxed">
+                  <h4 className="font-black text-[#9D174D] mb-2">Kirim Paksa Antrean (Flush)</h4>
+                  <p className="text-xs text-[#9D174D]/70 mb-6 font-medium leading-relaxed">
                     Jalankan pemicu manual untuk mengirim pesan yang sedang tertahan di antrean ke
                     server provider WhatsApp (Wablas).
                   </p>
                   <Button
                     onClick={handleFlushQueue}
                     disabled={isProcessingQueue || !queueStats?.pending}
-                    className="w-full bg-[#550000] hover:bg-[#550000] text-white rounded-2xl py-6 font-black text-base shadow-md disabled:bg-slate-200 disabled:text-slate-400 disabled:shadow-none"
+                    className="w-full bg-[#9D174D] hover:bg-[#9D174D] text-white rounded-2xl py-6 font-black text-base shadow-md disabled:bg-slate-200 disabled:text-slate-400 disabled:shadow-none"
                   >
                     {isProcessingQueue
                       ? `Mengirim (${flushProgress}%)...`

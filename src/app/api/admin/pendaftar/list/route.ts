@@ -28,17 +28,16 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
-    // Auto-sync prefix: Pastikan seluruh pendaftar di Ulul Albaab (Putra) menggunakan prefix MTA, ILA, SMA
+    // Auto-sync prefix: Pastikan seluruh pendaftar di Al-Imam (Putri) menggunakan prefix MTI, ILI, MAI
     try {
       const mismatched = await prisma.pendaftar.findMany({
         where: {
           OR: [
-            { nomor_pendaftaran: { startsWith: "MTI" } },
-            { nomor_pendaftaran: { startsWith: "ILI" } },
-            { nomor_pendaftaran: { startsWith: "MAI" } },
+            { nomor_pendaftaran: { startsWith: "MTA" } },
+            { nomor_pendaftaran: { startsWith: "ILA" } },
             { nomor_pendaftaran: { startsWith: "MAA" } },
-            { nomor_pendaftaran: { startsWith: "SMI" } },
-            { jenis_kelamin: "P" },
+            { nomor_pendaftaran: { startsWith: "SMA" } },
+            { jenis_kelamin: "L" },
           ],
         },
         select: {
@@ -56,14 +55,14 @@ export async function GET(request: NextRequest) {
         const reservedNomor = new Set<string>();
 
         for (const item of mismatched) {
-          let targetPrefix = "MTA";
+          let targetPrefix = "MTI";
           const normJ = (item.jenjang || "").toUpperCase();
-          if (normJ.includes("IL")) targetPrefix = "ILA";
-          else if (normJ.includes("SMA") || normJ.includes("MA")) targetPrefix = "SMA";
-          else targetPrefix = "MTA";
+          if (normJ.includes("IL")) targetPrefix = "ILI";
+          else if (normJ.includes("MA") || normJ.includes("SMA")) targetPrefix = "MAI";
+          else targetPrefix = "MTI";
 
           let newNomor = item.nomor_pendaftaran;
-          if (item.nomor_pendaftaran && /^(MTI|ILI|MAI|MAA|SMI|SPI)/.test(item.nomor_pendaftaran)) {
+          if (item.nomor_pendaftaran && /^(MTA|ILA|MAA|SMA|SPA)/.test(item.nomor_pendaftaran)) {
             const tahun = item.nomor_pendaftaran.slice(3, 5);
             const candidate = `${targetPrefix}${item.nomor_pendaftaran.slice(3)}`;
 
@@ -101,8 +100,8 @@ export async function GET(request: NextRequest) {
             dl.legacy_nomor_pendaftaran = item.nomor_pendaftaran;
             updateData.data_lengkap = dl;
           }
-          if (item.jenis_kelamin !== "L") {
-            updateData.jenis_kelamin = "L";
+          if (item.jenis_kelamin !== "P") {
+            updateData.jenis_kelamin = "P";
           }
 
           if (Object.keys(updateData).length > 0) {
@@ -114,7 +113,7 @@ export async function GET(request: NextRequest) {
         }
       }
     } catch (e: any) {
-      console.warn("[AUTO-SYNC-PREFIX-ULUL] Warning:", e?.message);
+      console.warn("[AUTO-SYNC-PREFIX-ALIMAM] Warning:", e?.message);
     }
 
     // Get query params
@@ -134,8 +133,8 @@ export async function GET(request: NextRequest) {
 
     const skip = (page - 1) * limit;
 
-    // Build filter - default to active tahun ajaran if none specified
-    const baseWhere = (await getAdminWhereClause(tahunAjaran || undefined)) as any;
+    // Build filter
+    const baseWhere = (await getAdminWhereClause(tahunAjaran || "all")) as any;
     const where: Prisma.PendaftarWhereInput = {
       ...baseWhere,
     };
@@ -307,12 +306,21 @@ export async function GET(request: NextRequest) {
           },
         },
         pengumuman: {
+          select: { status_kelulusan: true, is_published: true, surat_pengumuman_path: true },
+        },
+        jadwal_ujian: {
           select: {
-            status_kelulusan: true,
-            is_published: true,
-            surat_pengumuman_path: true,
-            nomor_surat: true,
+            id: true,
+            tanggal_ujian: true,
+            metode_ujian: true,
+            status_quran: true,
+            status_santri: true,
+            status_ortu: true,
+            penguji_quran_id: true,
+            penguji_santri_id: true,
+            penguji_ortu_id: true,
           },
+          take: 1,
         },
         whatsapp_logs: {
           orderBy: { created_at: "desc" },
@@ -359,13 +367,37 @@ export async function GET(request: NextRequest) {
 
       let examScoreCount = 0;
       if (mergedNilai) {
+        if (mergedNilai.score_quran != null) examScoreCount++;
         if (mergedNilai.score_akademik != null) examScoreCount++;
         if (mergedNilai.score_kepribadian != null) examScoreCount++;
+        if (mergedNilai.nilai_wawancara_santri != null || mergedNilai.score_wawancara != null) examScoreCount++;
+        if (mergedNilai.nilai_wawancara_ortu != null) examScoreCount++;
         if (mergedNilai.score_kesiapan != null) examScoreCount++;
-        if (mergedNilai.score_quran != null) examScoreCount++;
-        if (mergedNilai.score_wawancara != null) examScoreCount++;
-        if (mergedNilai.nilai_wawancara_santri != null || mergedNilai.nilai_wawancara_ortu != null)
-          examScoreCount++;
+        if (mergedNilai.score_hafalan != null) examScoreCount++;
+        if (mergedNilai.score_arab != null) examScoreCount++;
+      }
+
+      const jadwalList = item.jadwal_ujian || [];
+      const j = jadwalList[0];
+      const hasValidJadwal =
+        Boolean(j && j.tanggal_ujian) ||
+        ["scheduled", "selection", "testing", "tested", "passed"].includes(item.status_pendaftaran);
+
+      // Kategori belum lengkap jika examScoreCount < 6
+      // Aturan: Jika ada seleksi yang belum dinilai dan ada yang belum pilih jadwal, masukkan ke belum_pilih_jadwal
+      let kategoriBelumLengkap: "belum_pilih_jadwal" | "menunggu_penilaian" | null = null;
+      if (examScoreCount < 6) {
+        if (
+          !hasValidJadwal ||
+          item.status_pendaftaran === "submitted" ||
+          item.status_pendaftaran === "docs_verified" ||
+          item.status_pendaftaran === "registered" ||
+          item.status_pendaftaran === "data_completed"
+        ) {
+          kategoriBelumLengkap = "belum_pilih_jadwal";
+        } else {
+          kategoriBelumLengkap = "menunggu_penilaian";
+        }
       }
 
       let examStatus = "unregistered";
@@ -377,7 +409,7 @@ export async function GET(request: NextRequest) {
         sp === "tested" ||
         sp === "passed"
       ) {
-        if (examScoreCount === 6 || sp === "passed") {
+        if (examScoreCount >= 6 || sp === "passed") {
           examStatus = "tested";
         } else if (examScoreCount > 0) {
           examStatus = "testing";
@@ -391,6 +423,9 @@ export async function GET(request: NextRequest) {
         nilai_ujian: mergedNilai,
         exam_score_count: examScoreCount,
         exam_status: examStatus,
+        has_jadwal: hasValidJadwal,
+        kategori_belum_lengkap: kategoriBelumLengkap,
+        jadwal_ujian: j || null,
         whatsapp_status: item.whatsapp_logs?.[0] || null,
         dokumen: item.dokumen.map((doc) => ({
           jenis_dokumen: doc.jenis_dokumen,
