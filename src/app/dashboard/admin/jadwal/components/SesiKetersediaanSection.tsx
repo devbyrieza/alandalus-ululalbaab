@@ -42,6 +42,7 @@ interface ExamSession {
   _count?: {
     bookings: number;
   };
+  is_busy_elsewhere?: boolean;
 }
 
 interface Examiner {
@@ -827,7 +828,9 @@ export default function SesiKetersediaanSection({
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {paginatedSlots.map((slot) => {
-            const isBooked = (slot._count?.bookings || 0) >= slot.quota;
+            const isDirectBooked = (slot._count?.bookings || 0) >= slot.quota;
+            const isBusyElsewhere = Boolean(slot.is_busy_elsewhere);
+            const isBooked = isDirectBooked || isBusyElsewhere;
             const isSelected = selectedSlotIds.has(slot.id);
 
             return (
@@ -847,9 +850,13 @@ export default function SesiKetersediaanSection({
                 {/* Select checkbox overlay */}
                 {isSelectMode && (
                   <div className="absolute top-4 right-4 z-10">
-                    {isBooked ? (
+                    {isDirectBooked ? (
                       <span className="text-[10px] bg-stone-100 text-stone-400 px-2 py-1 rounded-md font-bold">
                         Terisi
+                      </span>
+                    ) : isBusyElsewhere ? (
+                      <span className="text-[10px] bg-purple-100 text-purple-700 px-2 py-1 rounded-md font-bold">
+                        Terkunci
                       </span>
                     ) : isSelected ? (
                       <CheckSquare className="w-5 h-5 text-primary-600" />
@@ -864,12 +871,18 @@ export default function SesiKetersediaanSection({
                   <div className="pr-8">
                     <span
                       className={`inline-block px-2.5 py-0.5 rounded-full text-[10px] font-black tracking-wide mb-1.5 ${
-                        isBooked
+                        isDirectBooked
                           ? "bg-amber-100 text-amber-800"
+                          : isBusyElsewhere
+                          ? "bg-purple-100 text-purple-800"
                           : "bg-emerald-100 text-emerald-800"
                       }`}
                     >
-                      {isBooked ? "Sudah Diplot / Terisi" : "Tersedia (Siap Diplot)"}
+                      {isDirectBooked
+                        ? "Sudah Diplot / Terisi"
+                        : isBusyElsewhere
+                        ? "Terkunci (Penguji Terisi di Sesi Lain)"
+                        : "Tersedia (Siap Diplot)"}
                     </span>
                     <h4 className="font-black text-stone-900 text-sm leading-snug">
                       {slot.title || "Sesi Ujian"}
@@ -917,7 +930,9 @@ export default function SesiKetersediaanSection({
                   {!isSelectMode && (
                     <div className="flex items-center justify-between pt-2 border-t border-stone-100">
                       <span className="text-[11px] font-bold text-stone-400">
-                        Kuota: {slot._count?.bookings || 0} / {slot.quota} Santri
+                        {isBusyElsewhere
+                          ? "Terkunci (Bentrok Role Ganda)"
+                          : `Kuota: ${slot._count?.bookings || 0} / ${slot.quota} Santri`}
                       </span>
                       <div className="flex items-center gap-1.5">
                         <button
@@ -1045,20 +1060,7 @@ export default function SesiKetersediaanSection({
                 </label>
                 <select
                   value={slotForm.title}
-                  onChange={(e) => {
-                    const newTitle = e.target.value;
-                    const newDur = getDurationFromTitle(newTitle);
-                    const updatedSlots = slotForm.slots.map((s) => ({
-                      start: s.start,
-                      end: calculateEndTime(s.start, newTitle, newDur),
-                    }));
-                    setSlotForm({
-                      ...slotForm,
-                      title: newTitle,
-                      duration: newDur,
-                      slots: updatedSlots,
-                    });
-                  }}
+                  onChange={(e) => setSlotForm({ ...slotForm, title: e.target.value })}
                   className="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs font-bold text-stone-900 outline-none focus:ring-2 focus:ring-primary-500/20"
                 >
                   <option value="Seleksi Al Qur'an">Seleksi Al Qur&apos;an</option>
@@ -1072,48 +1074,6 @@ export default function SesiKetersediaanSection({
                   <option value="Tes Lisan Bahasa Arab">Tes Lisan Bahasa Arab</option>
                   <option value="Sesi Ujian Terpadu">Sesi Ujian Terpadu (Semua Materi)</option>
                 </select>
-              </div>
-
-              {/* Pilihan Durasi Sesi */}
-              <div>
-                <div className="flex items-center justify-between mb-1.5">
-                  <label className="block text-xs font-black text-stone-700">
-                    Durasi Tiap Sesi
-                  </label>
-                  <span className="text-[10px] font-bold text-stone-500">
-                    Default: {getDurationFromTitle(slotForm.title)} menit
-                  </span>
-                </div>
-                <div className="grid grid-cols-5 gap-1.5">
-                  {[15, 20, 30, 45, 60].map((dur) => {
-                    const isSelected =
-                      (slotForm.duration || getDurationFromTitle(slotForm.title)) === dur;
-                    return (
-                      <button
-                        key={dur}
-                        type="button"
-                        onClick={() => {
-                          const updatedSlots = slotForm.slots.map((s) => ({
-                            start: s.start,
-                            end: calculateEndTime(s.start, slotForm.title, dur),
-                          }));
-                          setSlotForm({
-                            ...slotForm,
-                            duration: dur,
-                            slots: updatedSlots,
-                          });
-                        }}
-                        className={`py-1.5 px-2 rounded-xl text-xs font-black transition-all border ${
-                          isSelected
-                            ? "bg-primary-600 text-white border-primary-600 shadow-sm shadow-primary-500/20"
-                            : "bg-stone-50 hover:bg-stone-100 text-stone-600 border-stone-200"
-                        }`}
-                      >
-                        {dur} mnt
-                      </button>
-                    );
-                  })}
-                </div>
               </div>
 
               {/* Tanggal */}
@@ -1310,23 +1270,7 @@ export default function SesiKetersediaanSection({
                 </label>
                 <select
                   value={bulkForm.title}
-                  onChange={(e) => {
-                    const newTitle = e.target.value;
-                    const newDur = getDurationFromTitle(newTitle);
-                    const newDaySlots: Record<number, { start: string; end: string }[]> = {};
-                    Object.entries(bulkForm.daySlots).forEach(([day, slots]) => {
-                      newDaySlots[Number(day)] = slots.map((s) => ({
-                        start: s.start,
-                        end: calculateEndTime(s.start, newTitle, newDur),
-                      }));
-                    });
-                    setBulkForm({
-                      ...bulkForm,
-                      title: newTitle,
-                      duration: newDur,
-                      daySlots: newDaySlots,
-                    });
-                  }}
+                  onChange={(e) => setBulkForm({ ...bulkForm, title: e.target.value })}
                   className="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs font-bold text-stone-900 outline-none focus:ring-2 focus:ring-primary-500/20"
                 >
                   <option value="Seleksi Al Qur'an">Seleksi Al Qur&apos;an</option>
@@ -1340,51 +1284,6 @@ export default function SesiKetersediaanSection({
                   <option value="Tes Lisan Bahasa Arab">Tes Lisan Bahasa Arab</option>
                   <option value="Sesi Ujian Terpadu">Sesi Ujian Terpadu</option>
                 </select>
-              </div>
-
-              {/* Pilihan Durasi Sesi Bulk */}
-              <div>
-                <div className="flex items-center justify-between mb-1.5">
-                  <label className="block text-xs font-black text-stone-700">
-                    Durasi Tiap Sesi (Slot)
-                  </label>
-                  <span className="text-[10px] font-bold text-stone-500">
-                    Default: {getDurationFromTitle(bulkForm.title)} menit
-                  </span>
-                </div>
-                <div className="grid grid-cols-5 gap-1.5">
-                  {[15, 20, 30, 45, 60].map((dur) => {
-                    const isSelected =
-                      (bulkForm.duration || getDurationFromTitle(bulkForm.title)) === dur;
-                    return (
-                      <button
-                        key={dur}
-                        type="button"
-                        onClick={() => {
-                          const newDaySlots: Record<number, { start: string; end: string }[]> = {};
-                          Object.entries(bulkForm.daySlots).forEach(([day, slots]) => {
-                            newDaySlots[Number(day)] = slots.map((s) => ({
-                              start: s.start,
-                              end: calculateEndTime(s.start, bulkForm.title, dur),
-                            }));
-                          });
-                          setBulkForm({
-                            ...bulkForm,
-                            duration: dur,
-                            daySlots: newDaySlots,
-                          });
-                        }}
-                        className={`py-1.5 px-2 rounded-xl text-xs font-black transition-all border ${
-                          isSelected
-                            ? "bg-primary-600 text-white border-primary-600 shadow-sm shadow-primary-500/20"
-                            : "bg-stone-50 hover:bg-stone-100 text-stone-600 border-stone-200"
-                        }`}
-                      >
-                        {dur} mnt
-                      </button>
-                    );
-                  })}
-                </div>
               </div>
 
               {/* Rentang Tanggal */}

@@ -40,6 +40,7 @@ async function getSession() {
   if (!sessionCookie) return null;
   try {
     return JSON.parse(sessionCookie.value);
+
   } catch {
     return null;
   }
@@ -192,6 +193,39 @@ export async function POST(request: Request) {
         {
           error: `Anda sudah memiliki jadwal untuk ${categoryLabel}.` },
         { status: 400 },
+      );
+    }
+
+    // 2b. Guard: Mencegah pendaftar memilih dua ujian berbeda pada rentang waktu yang sama (bentrok waktu santri)
+    const sStart = new Date(examSession.start_time).getTime();
+    const sEnd = new Date(examSession.end_time).getTime();
+    const overlappingCandidateBooking = existingBookings.find((b) => {
+      if (!b.exam_session) return false;
+      const bStart = new Date(b.exam_session.start_time).getTime();
+      const bEnd = new Date(b.exam_session.end_time).getTime();
+      return sStart < bEnd && sEnd > bStart;
+    });
+
+    if (overlappingCandidateBooking) {
+      const bookedCat = getExamCategory(overlappingCandidateBooking.exam_session?.title || "");
+      const bookedLabel =
+        bookedCat === "HAFALAN"
+          ? "Tes Hafalan Al-Qur'an"
+          : bookedCat === "LISAN_ARAB"
+          ? "Tes Lisan Bahasa Arab"
+          : bookedCat === "QURAN"
+          ? "Tes Bacaan Al-Qur'an"
+          : bookedCat === "W_SANTRI"
+          ? "Seleksi Wawancara Calon Santri"
+          : bookedCat === "W_ORTU"
+          ? "Wawancara Calon Orang Tua/Wali"
+          : overlappingCandidateBooking.exam_session?.title || "Ujian lain";
+
+      return NextResponse.json(
+        {
+          error: `Jadwal bentrok: Anda sudah memiliki jadwal untuk ${bookedLabel} pada rentang waktu yang sama. Silakan pilih jam atau hari lain agar jadwal tidak tumpang tindih.`
+        },
+        { status: 400 }
       );
     }
 
@@ -381,7 +415,7 @@ export async function POST(request: Request) {
           hour: "2-digit",
           minute: "2-digit",
           timeZone: "Asia/Jakarta" }) + " WIB";
-      const lokasi = examSession.location || "Pesantren Al Andalus Ulul Albaab";
+      const lokasi = examSession.location || "Pesantren Al Imam Al Islami";
       const jenisUjian = sanitizeTitle(
         examSession.title || "Seleksi Santri Baru",
       );
@@ -400,7 +434,7 @@ export async function POST(request: Request) {
         jenisNotif: "konfirmasi_jadwal_pendaftar",
         messageContent: konfirmasiMsg }).catch((err: any) => console.error("Failed to enqueue jadwal confirmation to pendaftar:", err));
 
-      // 2. Notify Interviewer — SEGERA setelah booking
+      // 2. Notify Interviewer — SEGERA setelah booking (Level Diamond Instant Dispatch)
       const finalId =
         pengujiFields.penguji_quran_id ||
         pengujiFields.penguji_santri_id ||
@@ -413,7 +447,7 @@ export async function POST(request: Request) {
           select: { id: true, full_name: true, phone: true, jenis_kelamin: true, google_meet_link: true } });
 
         if (interviewer && interviewer.phone) {
-          const appUrl = process.env.NEXT_PUBLIC_APP_URL || "https://spmb.pesantren-ululalbaab.com";
+          const appUrl = process.env.NEXT_PUBLIC_APP_URL || "https://spmb.pesantren-alimam.com";
           const { generateExaminerInputLink } = await import("@/lib/utils/magic-link");
           const shortUrlKonfirmasi = generateExaminerInputLink(
             interviewer.id,
@@ -441,14 +475,14 @@ export async function POST(request: Request) {
             phone: interviewer.phone,
             jenisNotif: "konfirmasi_jadwal_interviewer",
             messageContent: intMessage,
-            scheduledAt: scheduledAtInt }).catch((err: any) => console.error("Failed to enqueue jadwal confirmation to interviewer:", err));
+            scheduledAt: scheduledAtInt }).catch((err: any) => console.error("Failed to enqueue interviewer notification:", err));
         }
       }
 
 
     }
 
-    return NextResponse.json({ success: true, data: jadwal });
+    return NextResponse.json({ success: true, data: result.jadwal });
   } catch (error: any) {
     console.error("POST pendaftar/jadwal error:", error);
     return NextResponse.json(
@@ -457,3 +491,4 @@ export async function POST(request: Request) {
     );
   }
 }
+

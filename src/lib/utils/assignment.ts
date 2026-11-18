@@ -104,6 +104,7 @@ export async function getLeastLoadedExaminerFromPool(
     },
     select: {
       penguji_quran_id: true,
+      penguji_hafalan_id: true,
       penguji_santri_id: true,
       penguji_ortu_id: true,
       penguji_arab_id: true,
@@ -113,6 +114,7 @@ export async function getLeastLoadedExaminerFromPool(
   const busyExaminerIds = new Set<string>();
   busyExaminers.forEach((b) => {
     if (b.penguji_quran_id) busyExaminerIds.add(b.penguji_quran_id);
+    if (b.penguji_hafalan_id) busyExaminerIds.add(b.penguji_hafalan_id);
     if (b.penguji_santri_id) busyExaminerIds.add(b.penguji_santri_id);
     if (b.penguji_ortu_id) busyExaminerIds.add(b.penguji_ortu_id);
     if (b.penguji_arab_id) busyExaminerIds.add(b.penguji_arab_id);
