@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { getServerSession } from "@/lib/session";
 import { createHmac } from "crypto";
 import { enqueueWhatsapp } from "@/lib/whatsapp-queue";
+import { isPutriInstitution } from "@/lib/utils/jenjang";
 
 export async function POST(req: Request) {
   try {
@@ -41,7 +42,7 @@ export async function POST(req: Request) {
     let successCount = 0;
     let failCount = 0;
 
-    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://spmb.pesantren-ululalbaab.com";
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://pesantren-alimam.com";
 
     for (const pendaftar of pendaftarList) {
       // Determine the phone number to use
@@ -63,6 +64,9 @@ export async function POST(req: Request) {
       const directDashboardLink = `${baseUrl}/dashboard/pendaftar/seragam`;
 
       let message;
+      const isPutri = isPutriInstitution();
+      const seragamLabel = isPutri ? "ukuran seragam gamis dan perlengkapan santriwati" : "ukuran seragam baju dan celana santri";
+      const santriLabel = isPutri ? "santriwati" : "santri";
 
       if (isSpecial) {
         message = `*PENDATAAN AWAL UKURAN SERAGAM*
@@ -70,9 +74,9 @@ export async function POST(req: Request) {
 Assalamualaikum Warahmatullahi Wabarakatuh,
 Abu/Ummu dari Ananda *${pendaftar.nama_lengkap}* (${pendaftar.nomor_pendaftaran}).
 
-Sebagai persiapan awal, kami memohon kesediaan Abu/Ummu untuk mengisikan data ukuran seragam santri meskipun saat ini Ananda belum melakukan pembayaran Daftar Ulang.
+Sebagai persiapan awal, kami memohon kesediaan Abu/Ummu untuk mengisikan data ukuran seragam ${santriLabel} meskipun saat ini Ananda belum melakukan pembayaran Daftar Ulang.
 
-Mohon untuk mengisi ukuran seragam baju dan celana/rok melalui link dashboard akun Anda berikut:
+Mohon untuk mengisi ${seragamLabel} melalui link dashboard akun Anda berikut:
 
 🔗 *Link Pengisian (Login Otomatis):*
 ${magicLink}
@@ -82,7 +86,7 @@ ${directDashboardLink}
 (Gunakan Nomor Pendaftaran: ${pendaftar.nomor_pendaftaran} & NIK Ananda)
 
 Jazakumullahu khairan.
-Panitia PPDB.`;
+Panitia SPMB.`;
       } else {
         message = `*PENGINGAT PENGISIAN UKURAN SERAGAM*
 
@@ -90,7 +94,7 @@ Assalamualaikum Warahmatullahi Wabarakatuh,
 Abu/Ummu dari Ananda *${pendaftar.nama_lengkap}* (${pendaftar.nomor_pendaftaran}).
 
 Kami menginformasikan bahwa Ananda belum mengisi ukuran seragam.
-Mengingat Ananda telah melakukan pembayaran Daftar Ulang, mohon untuk segera mengisi ukuran seragam baju dan celana/rok melalui link dashboard akun Anda berikut:
+Mengingat Ananda telah melakukan pembayaran Daftar Ulang, mohon untuk segera mengisi ${seragamLabel} melalui link dashboard akun Anda berikut:
 
 🔗 *Link Pengisian (Login Otomatis):*
 ${magicLink}
@@ -102,7 +106,7 @@ ${directDashboardLink}
 Pastikan untuk mengisinya secepatnya karena seragam akan segera diproses konveksi.
 
 Jazakumullahu khairan.
-Panitia PPDB.`;
+Panitia SPMB.`;
       }
 
       try {
@@ -139,4 +143,3 @@ Panitia PPDB.`;
     );
   }
 }
-
