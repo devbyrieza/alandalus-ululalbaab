@@ -21,6 +21,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import DailyDigestBanner from "@/components/admin/DailyDigestBanner";
+import SpmbRecipientBanner from "@/components/admin/SpmbRecipientBanner";
 import { BRANDING } from "@/config/branding";
 import type { UserRole } from "@/lib/access-control";
 import { exportToExcelProfessional, exportToPDF } from "@/lib/utils/export";
@@ -532,6 +533,7 @@ export default function AdminDashboardPage() {
         </button>
       </div>
 
+      <SpmbRecipientBanner role={role ?? undefined} />
       <DailyDigestBanner role={role ?? undefined} />
 
       <div className="bg-linear-to-br from-blue-800 via-blue-700 to-blue-950 rounded-[2.5rem] lg:rounded-[3rem] p-6 sm:p-5 md:p-8 lg:p-6 text-white relative overflow-hidden shadow-[0_32px_64px_-16px_rgba(30,58,138,0.4)] border border-white/10">
