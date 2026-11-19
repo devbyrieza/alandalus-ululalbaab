@@ -87,25 +87,9 @@ export default function DailyDigestBanner({ role }: { role?: string }) {
 
     const activeNumber = state.setting || state.adminSuperPhone;
 
-    // Sudah dikonfigurasi → ringkas + tombol edit untuk Admin Super
+    // Sudah dikonfigurasi → HILANG TOTAL dari dashboard agar tampilan bersih (sesuai UX rule)
     if (state.configured && !editing) {
-        return (
-            <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-slate-500 bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 shadow-xs">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                <span>
-                    Digest jadwal harian (06.45 WIB) dikirim ke{" "}
-                    <strong className="text-slate-800">{activeNumber}</strong>
-                    {state.setting ? " (diatur admin super)" : " (nomor WA admin super)"}
-                </span>
-                <button
-                    className="inline-flex items-center gap-1 text-primary-600 font-bold hover:underline cursor-pointer"
-                    onClick={startEdit}
-                >
-                    <Pencil className="w-3 h-3" />
-                    Edit nomor
-                </button>
-            </div>
-        );
+        return null;
     }
 
     // Form edit nomor oleh Admin Super
