@@ -185,7 +185,7 @@ export default function JadwalUjianPage() {
   const [formPengujiHafalanId, setFormPengujiHafalanId] = useState<string>("");
 
   const [formStartTime, setFormStartTime] = useState<string>("");
-  const [formDuration, setFormDuration] = useState<number>(60);
+  const [formDuration, setFormDuration] = useState<number>(30);
   const [formEndTime, setFormEndTime] = useState<string>("");
 
   // HANYA DUA PILIHAN: ONLINE (GOOGLE MEET) ATAU OFFLINE (PESANTREN)
@@ -232,6 +232,17 @@ export default function JadwalUjianPage() {
       document.body.style.overflow = "";
     };
   }, [scheduleModalOpen, showBroadcastModal, sendingProgress.active]);
+
+  // Auto set default duration based on test type:
+  // Hanya Wawancara Calon Orang Tua/Wali yang durasi defaultnya 60 menit.
+  // Semua materi seleksi lainnya (Tes Al-Qur'an, Wawancara Santri, Tes Lisan Bahasa Arab, Tes Hafalan) defaultnya 30 menit.
+  useEffect(() => {
+    const isWawancaraOrtu =
+      formTestType.toLowerCase().includes("orang tua") ||
+      formTestType.toLowerCase().includes("ortu") ||
+      formTestType.toLowerCase().includes("wali");
+    setFormDuration(isWawancaraOrtu ? 60 : 30);
+  }, [formTestType]);
 
   // Auto calculate end time when start time or duration changes
   useEffect(() => {
@@ -473,7 +484,7 @@ export default function JadwalUjianPage() {
     setFormPengujiArabId("");
     setFormPengujiHafalanId("");
     setFormStartTime("");
-    setFormDuration(60);
+    setFormDuration(30);
     setFormEndTime("");
     setFormLocationType("online");
     setFormOnlineUrl("");
