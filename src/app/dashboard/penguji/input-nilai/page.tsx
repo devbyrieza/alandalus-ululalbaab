@@ -1039,14 +1039,52 @@ function InputNilaiContent() {
             </div>
 
             <div>
-              <label className="block text-[10px] sm:text-xs font-black text-ink-700 uppercase tracking-widest mb-3 sm:mb-4">Rekomendasi Penguji *</label>
-              <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-3">
-                {["Diterima", "Cadangan", "Ditolak"].map((opt) => (
-                  <label key={opt} className={`px-4 sm:px-5 py-3.5 sm:py-4 rounded-3xl cursor-pointer border-2 transition-all text-xs sm:text-sm font-black text-center ${hafalanForm.rekomendasi === opt ? (opt === "Diterima" ? "border-teal-500 bg-teal-50 text-teal-700 shadow-2xl     " : opt === "Cadangan" ? "border-gold-500 bg-gold-50 text-gold-800 shadow-2xl     " : "border-red-500 bg-red-50 text-red-700 shadow-2xl     ") : "border-teal-50 bg-white hover:border-teal-200"}`}>
-                    <input type="radio" name={`rekom-hafalan-${p.id}`} value={opt} checked={hafalanForm.rekomendasi === opt} onChange={() => setHafalanForm({ ...hafalanForm, rekomendasi: opt })} className="hidden" />
-                    {opt}
-                  </label>
-                ))}
+              <label className="block text-[10px] sm:text-xs font-black text-ink-700 uppercase tracking-widest mb-3 sm:mb-4">
+                Rekomendasi Penguji * <span className="text-red-600 font-bold">(Wajib Dipilih)</span>
+              </label>
+              <div className={`grid gap-2 sm:gap-3 ${isJenjangLangsungNonIL(p.jenjang) ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4" : "grid-cols-1 sm:grid-cols-3"}`}>
+                {(isJenjangLangsungNonIL(p.jenjang)
+                  ? [
+                      { key: "Diterima", label: `Diterima (Langsung ${(p.jenjang?.toUpperCase() || "").includes("MA") ? "MA" : "SMA"})`, desc: "Lulus langsung ke jenjang", color: "teal" },
+                      { key: "Rekomendasi ke IL", label: "Rekomendasi ke IL", desc: "Matrikulasi I'dad Lughawi", color: "blue" },
+                      { key: "Cadangan", label: "Cadangan", desc: "Masuk kuota cadangan", color: "amber" },
+                      { key: "Ditolak", label: "Ditolak", desc: "Tidak memenuhi syarat", color: "red" }
+                    ]
+                  : [
+                      { key: "Diterima", label: "Diterima", desc: "Memenuhi kriteria", color: "teal" },
+                      { key: "Cadangan", label: "Cadangan", desc: "Masuk kuota cadangan", color: "amber" },
+                      { key: "Ditolak", label: "Ditolak", desc: "Tidak memenuhi kriteria", color: "red" }
+                    ]
+                ).map((opt) => {
+                  const isSelected = hafalanForm.rekomendasi === opt.key;
+                  return (
+                    <label
+                      key={opt.key}
+                      className={`p-3.5 rounded-2xl cursor-pointer border-2 transition-all flex flex-col items-center justify-center text-center ${
+                        isSelected
+                          ? opt.color === "teal"
+                            ? "border-teal-500 bg-teal-50 text-teal-900 shadow-md ring-2 ring-teal-500/20"
+                            : opt.color === "blue"
+                            ? "border-blue-500 bg-blue-50 text-blue-900 shadow-md ring-2 ring-blue-500/20"
+                            : opt.color === "amber"
+                            ? "border-amber-500 bg-amber-50 text-amber-900 shadow-md ring-2 ring-amber-500/20"
+                            : "border-red-500 bg-red-50 text-red-900 shadow-md ring-2 ring-red-500/20"
+                          : "border-slate-100 bg-white hover:border-slate-300 text-slate-700"
+                      }`}
+                    >
+                      <input
+                        type="radio"
+                        name={`rekom-hafalan-${p.id}`}
+                        value={opt.key}
+                        checked={isSelected}
+                        onChange={() => setHafalanForm({ ...hafalanForm, rekomendasi: opt.key })}
+                        className="hidden"
+                      />
+                      <span className="text-xs sm:text-sm font-black">{opt.label}</span>
+                      <span className="text-[10px] font-medium opacity-75 mt-0.5">{opt.desc}</span>
+                    </label>
+                  );
+                })}
               </div>
             </div>
 
@@ -1554,20 +1592,42 @@ function InputNilaiContent() {
                   <label className="block text-[10px] sm:text-xs font-black text-ink-700 uppercase tracking-widest mb-3 sm:mb-4">
                     Rekomendasi Penguji Hafalan <span className="text-red-600 font-bold">* (Wajib Dipilih)</span>
                   </label>
-                  <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-3">
-                    {["Diterima", "Cadangan", "Ditolak"].map((opt) => (
-                      <label key={opt} className={`px-4 sm:px-5 py-3.5 sm:py-4 rounded-3xl cursor-pointer border-2 transition-all text-xs sm:text-sm font-black text-center ${quranForm.rekomendasi_hafalan === opt ? (opt === "Diterima" ? "border-teal-500 bg-teal-50 text-teal-700 shadow-2xl" : opt === "Cadangan" ? "border-gold-500 bg-gold-50 text-gold-800 shadow-2xl" : "border-red-500 bg-red-50 text-red-700 shadow-2xl") : "border-teal-50 bg-white hover:border-teal-200"}`}>
-                        <input
-                          type="radio"
-                          name={`rekom-hafalan-quran-${p.id}`}
-                          value={opt}
-                          checked={quranForm.rekomendasi_hafalan === opt}
-                          onChange={() => setQuranForm({ ...quranForm, rekomendasi_hafalan: opt })}
-                          className="hidden"
-                        />
-                        {opt}
-                      </label>
-                    ))}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
+                    {[
+                      { key: "Diterima", label: `Diterima (Langsung ${(p.jenjang?.toUpperCase() || "").includes("MA") ? "MA" : "SMA"})`, desc: "Lulus langsung ke SMA", color: "teal" },
+                      { key: "Rekomendasi ke IL", label: "Rekomendasi ke IL", desc: "Matrikulasi I'dad Lughawi", color: "blue" },
+                      { key: "Cadangan", label: "Cadangan", desc: "Masuk kuota cadangan", color: "amber" },
+                      { key: "Ditolak", label: "Ditolak", desc: "Tidak memenuhi syarat", color: "red" }
+                    ].map((opt) => {
+                      const isSelected = quranForm.rekomendasi_hafalan === opt.key;
+                      return (
+                        <label
+                          key={opt.key}
+                          className={`p-3.5 rounded-2xl cursor-pointer border-2 transition-all flex flex-col items-center justify-center text-center ${
+                            isSelected
+                              ? opt.color === "teal"
+                                ? "border-teal-500 bg-teal-50 text-teal-900 shadow-md ring-2 ring-teal-500/20"
+                                : opt.color === "blue"
+                                ? "border-blue-500 bg-blue-50 text-blue-900 shadow-md ring-2 ring-blue-500/20"
+                                : opt.color === "amber"
+                                ? "border-amber-500 bg-amber-50 text-amber-900 shadow-md ring-2 ring-amber-500/20"
+                                : "border-red-500 bg-red-50 text-red-900 shadow-md ring-2 ring-red-500/20"
+                              : "border-slate-100 bg-white hover:border-slate-300 text-slate-700"
+                          }`}
+                        >
+                          <input
+                            type="radio"
+                            name={`rekom-hafalan-quran-${p.id}`}
+                            value={opt.key}
+                            checked={isSelected}
+                            onChange={() => setQuranForm({ ...quranForm, rekomendasi_hafalan: opt.key })}
+                            className="hidden"
+                          />
+                          <span className="text-xs sm:text-sm font-black">{opt.label}</span>
+                          <span className="text-[10px] font-medium opacity-75 mt-0.5">{opt.desc}</span>
+                        </label>
+                      );
+                    })}
                   </div>
                 </div>
 
@@ -1773,10 +1833,32 @@ function InputNilaiContent() {
               </div>
 
               <div>
-                <label className="block text-[10px] sm:text-xs font-black text-ink-800 uppercase tracking-widest mb-2 sm:mb-3">
-                  Catatan / Komentar Pewawancara <span className="text-red-600 font-bold">* (Wajib Diisi untuk Rapat)</span>
-                </label>
-                <textarea value={calsanForm.catatan || ""} onChange={(e) => setSantriForm({ ...calsanForm, catatan: e.target.value })} rows={4} required className="w-full px-4 sm:px-5 py-3.5 sm:py-4 bg-ink-50/50 border-2 border-ink-100 rounded-3xl sm:rounded-2xl focus:border-primary-500 outline-none font-medium text-primary-950 transition-all resize-none placeholder:text-ink-400" placeholder="Tuliskan catatan/komentar hasil wawancara calon santri (misal: motivasi, karakter, kemandirian, pergaulan, kesiapan tinggal di asrama)..." />
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 mb-2 sm:mb-3">
+                  <label className="block text-[10px] sm:text-xs font-black text-ink-800 uppercase tracking-widest">
+                    Catatan / Komentar Pewawancara <span className="text-red-600 font-bold">* (Wajib Diisi untuk Rapat)</span>
+                  </label>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const tag = "[WALSAN AKTIF - Ada Kakak/Adik sudah di Pesantren]";
+                      const cur = calsanForm.catatan || "";
+                      if (!cur.includes(tag)) {
+                        setSantriForm({ ...calsanForm, catatan: cur ? `${tag} ${cur}` : `${tag} ` });
+                      }
+                    }}
+                    className="self-start sm:self-auto text-[10px] font-black text-primary-900 bg-primary-100 hover:bg-primary-200 border border-primary-300 px-2.5 py-1 rounded-xl transition-all flex items-center gap-1 shadow-xs cursor-pointer"
+                  >
+                    <span>👨‍👩‍👧‍👦</span> + Tag Walsan (Ada Kakak/Adik di Pesantren)
+                  </button>
+                </div>
+                <textarea
+                  value={calsanForm.catatan || ""}
+                  onChange={(e) => setSantriForm({ ...calsanForm, catatan: e.target.value })}
+                  rows={4}
+                  required
+                  className="w-full px-4 sm:px-5 py-3.5 sm:py-4 bg-ink-50/50 border-2 border-ink-100 rounded-3xl sm:rounded-2xl focus:border-primary-500 outline-none font-medium text-primary-950 transition-all resize-none placeholder:text-ink-400"
+                  placeholder="Tuliskan catatan/komentar hasil wawancara calon santri (misal: motivasi, karakter, kemandirian, pergaulan, kesiapan tinggal di asrama, info jika kakak/adik santri)..."
+                />
               </div>
             </div>
 
@@ -1965,10 +2047,32 @@ function InputNilaiContent() {
               </div>
 
               <div>
-                <label className="block text-[10px] sm:text-xs font-black text-ink-800 uppercase tracking-widest mb-2 sm:mb-3">
-                  Catatan / Komentar Pewawancara <span className="text-red-600 font-bold">* (Wajib Diisi untuk Rapat)</span>
-                </label>
-                <textarea value={cawalsanForm.catatan || ""} onChange={(e) => setOrangTuaForm({ ...cawalsanForm, catatan: e.target.value })} rows={3} required className="w-full px-4 sm:px-5 py-3.5 sm:py-4 bg-ink-50/30 border-2 border-ink-100 rounded-3xl sm:rounded-2xl focus:border-secondary-500 outline-none font-medium text-primary-950 transition-all resize-none placeholder:text-ink-400" placeholder="Tuliskan catatan/komentar hasil wawancara orang tua/wali santri (misal: komitmen kepesantrenan, kesiapan pembiayaan, dukungan orang tua)..." />
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 mb-2 sm:mb-3">
+                  <label className="block text-[10px] sm:text-xs font-black text-ink-800 uppercase tracking-widest">
+                    Catatan / Komentar Pewawancara <span className="text-red-600 font-bold">* (Wajib Diisi untuk Rapat)</span>
+                  </label>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const tag = "[WALSAN AKTIF - Kakak/Adik sudah di Pesantren]";
+                      const cur = cawalsanForm.catatan || "";
+                      if (!cur.includes(tag)) {
+                        setOrangTuaForm({ ...cawalsanForm, catatan: cur ? `${tag} ${cur}` : `${tag} ` });
+                      }
+                    }}
+                    className="self-start sm:self-auto text-[10px] font-black text-amber-900 bg-amber-100 hover:bg-amber-200 border border-amber-300 px-2.5 py-1 rounded-xl transition-all flex items-center gap-1 shadow-xs cursor-pointer"
+                  >
+                    <span>👨‍👩‍👧‍👦</span> + Tag Walsan Aktif (Kakak/Adik di Pesantren)
+                  </button>
+                </div>
+                <textarea
+                  value={cawalsanForm.catatan || ""}
+                  onChange={(e) => setOrangTuaForm({ ...cawalsanForm, catatan: e.target.value })}
+                  rows={3}
+                  required
+                  className="w-full px-4 sm:px-5 py-3.5 sm:py-4 bg-ink-50/30 border-2 border-ink-100 rounded-3xl sm:rounded-2xl focus:border-secondary-500 outline-none font-medium text-primary-950 transition-all resize-none placeholder:text-ink-400"
+                  placeholder="Tuliskan catatan/komentar hasil wawancara orang tua/wali santri (PENTING: Tuliskan jika sudah jadi WALSAN / ada kakak-adik di pesantren, komitmen kepesantrenan, kesiapan pembiayaan, dukungan orang tua)..."
+                />
               </div>
             </div>
 

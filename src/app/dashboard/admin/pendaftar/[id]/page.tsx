@@ -1572,7 +1572,7 @@ export default function PendaftarDetailPage() {
                             <span className="text-sm text-teal-400 font-medium">/ 100</span>
                           </div>
                           {(pendaftar.nilai_ujian as any)?.detail_hafalan?.rekomendasi && (
-                            <span className={`text-[10px] font-black uppercase tracking-widest px-2 py-0.5 rounded inline-block max-w-full break-words whitespace-normal ${(pendaftar.nilai_ujian as any).detail_hafalan.rekomendasi === "Diterima" ? "bg-teal-100 text-teal-700" : "bg-red-100 text-red-700"}`}>
+                            <span className={`text-[10px] font-black uppercase tracking-widest px-2 py-0.5 rounded inline-block max-w-full break-words whitespace-normal ${(pendaftar.nilai_ujian as any).detail_hafalan.rekomendasi?.includes("Diterima") ? "bg-teal-100 text-teal-800 border border-teal-200" : (pendaftar.nilai_ujian as any).detail_hafalan.rekomendasi?.includes("IL") ? "bg-blue-100 text-blue-800 border border-blue-200" : (pendaftar.nilai_ujian as any).detail_hafalan.rekomendasi === "Cadangan" ? "bg-amber-100 text-amber-800 border border-amber-200" : "bg-red-100 text-red-800 border border-red-200"}`}>
                               {(pendaftar.nilai_ujian as any).detail_hafalan.rekomendasi}
                             </span>
                           )}
@@ -3505,9 +3505,11 @@ export default function PendaftarDetailPage() {
                         className="w-full bg-surface-50 border border-surface-200 rounded-3xl px-4 py-3 font-medium focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all mt-1"
                       >
                         <option value="">(Kosong)</option>
-                        <option value="Diterima">Diterima</option>
-                        <option value="Diterima dengan catatan">Dgn catatan</option>
-                        <option value="Ditolak">Ditolak</option>
+                            <option value="Diterima">Diterima (Langsung SMA/MA)</option>
+                            <option value="Rekomendasi ke IL">Rekomendasi ke IL</option>
+                            <option value="Diterima dengan catatan">Dgn catatan</option>
+                            <option value="Cadangan">Cadangan</option>
+                            <option value="Ditolak">Ditolak</option>
                       </select>
                     </div>
                   </div>
@@ -3581,8 +3583,10 @@ export default function PendaftarDetailPage() {
                             className="w-full bg-surface-50 border border-surface-200 rounded-3xl px-4 py-3 font-medium focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all mt-1"
                           >
                             <option value="">(Kosong)</option>
-                            <option value="Diterima">Diterima</option>
+                            <option value="Diterima">Diterima (Langsung SMA/MA)</option>
+                            <option value="Rekomendasi ke IL">Rekomendasi ke IL</option>
                             <option value="Diterima dengan catatan">Dgn catatan</option>
+                            <option value="Cadangan">Cadangan</option>
                             <option value="Ditolak">Ditolak</option>
                           </select>
                         </div>
@@ -3617,8 +3621,10 @@ export default function PendaftarDetailPage() {
                             className="w-full bg-surface-50 border border-surface-200 rounded-3xl px-4 py-3 font-medium focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all mt-1"
                           >
                             <option value="">(Kosong)</option>
-                            <option value="Diterima">Diterima</option>
+                            <option value="Diterima">Diterima (Langsung SMA/MA)</option>
+                            <option value="Rekomendasi ke IL">Rekomendasi ke IL</option>
                             <option value="Diterima dengan catatan">Dgn catatan</option>
+                            <option value="Cadangan">Cadangan</option>
                             <option value="Ditolak">Ditolak</option>
                           </select>
                         </div>
