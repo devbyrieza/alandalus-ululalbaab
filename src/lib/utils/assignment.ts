@@ -1,92 +1,122 @@
 import { prisma } from "../prisma";
 
+function getExamCategory(title: string): string {
+  const t = (title || "").toLowerCase();
+  if (t.includes("hafalan")) return "HAFALAN";
+  if (t.includes("quran") || t.includes("qur'an") || t.includes("bacaan")) return "QURAN";
+  if (t.includes("arab") || t.includes("lisan")) return "LISAN_ARAB";
+  // W_ORTU must be checked BEFORE W_SANTRI because titles often contain "Orangtua/Wali Santri"
+  if (
+    t.includes("cawalsan") ||
+    t.includes("ortu") ||
+    t.includes("orang tua") ||
+    t.includes("orangtua") ||
+    t.includes("wali")
+  ) {
+    return "W_ORTU";
+  }
+  if (t.includes("calsan") || t.includes("santri")) return "W_SANTRI";
+  return "OTHER";
+}
+
+function matchesCategory(
+  category: string,
+  title: string,
+  creatorRole?: string | null,
+  creatorSecondaryRoles?: string[] | null,
+): boolean {
+  const titleCat = getExamCategory(title);
+  if (titleCat === category) return true;
+
+  const roles = [creatorRole, ...(creatorSecondaryRoles || [])].filter(Boolean) as string[];
+
+  if (category === "QURAN") {
+    return (
+      roles.some((r) => ["penguji", "penguji_quran", "penguji_hafalan"].includes(r)) ||
+      /qur|bacaan|tahfidz/i.test(title)
+    );
+  }
+  if (category === "HAFALAN") {
+    return (
+      roles.some((r) => ["penguji_hafalan", "penguji", "penguji_quran"].includes(r)) ||
+      /hafalan/i.test(title)
+    );
+  }
+  if (category === "W_SANTRI") {
+    return (
+      roles.some((r) => ["pewawancara_calsan", "penguji_calsan", "pewawancara", "penguji_santri"].includes(r)) ||
+      (/santri|calsan/i.test(title) && !/ortu|orang tua|orangtua|wali|cawalsan/i.test(title))
+    );
+  }
+  if (category === "W_ORTU") {
+    return (
+      roles.some((r) => ["pewawancara_cawalsan", "penguji_cawalsan", "pewawancara_ortu"].includes(r)) ||
+      /ortu|orang tua|orangtua|wali|cawalsan/i.test(title)
+    );
+  }
+  if (category === "LISAN_ARAB") {
+    return (
+      roles.some((r) => ["penguji_bahasa_arab", "penguji_arab"].includes(r)) ||
+      /arab|lisan/i.test(title)
+    );
+  }
+  return false;
+}
+
 /**
  * Mencari penguji dengan beban kerja paling ringan dari sekumpulan sesi yang tersedia di waktu yang sama.
+ * Logika Pemerataan Beban (Fair Load Balancing):
+ * 1. Jika di waktu/jam yang sama terdapat > 1 penguji tersedia untuk jenis ujian/wawancara ini:
+ * 2. Hitung jumlah jadwal yang telah diperoleh oleh masing-masing penguji:
+ *    - Prioritas 1: Jumlah jadwal penguji di kategori tes/wawancara ini (categoryCount ASC).
+ *    - Prioritas 2: Total jadwal menguji/mewawancara secara keseluruhan (totalCount ASC).
+ * 3. Otomatis arahkan dan berikan pendaftar ke penguji yang lebih sedikit mendapat jadwal.
  *
  * @param startTime Waktu mulai ujian
- * @param category Kategori ujian (QURAN, W_SANTRI, W_ORTU)
+ * @param category Kategori ujian (QURAN, HAFALAN, W_SANTRI, W_ORTU, LISAN_ARAB)
  * @param tahunAjaranId ID Tahun Ajaran aktif
- * @returns Object berisi examiner_id dan session_id pemenang, atau null jika tidak ada pilihan
+ * @param pendaftarGender Jenis kelamin pendaftar (L / P)
+ * @returns Object berisi examiner_id, session_id pemenang, serta rincian load
  */
 export async function getLeastLoadedExaminerFromPool(
   startTime: Date,
   category: string,
-  tahunAjaranId: string,
+  tahunAjaranId?: string | null,
   pendaftarGender?: string | null,
 ) {
-  // 1. Tentukan kondisi filter pencarian berdasarkan kategori
-  let titleWhere: any = {};
-  if (category === "QURAN") {
-    titleWhere = {
-      OR: [
-        { title: { contains: "qur", mode: "insensitive" } },
-        { title: { contains: "bacaan", mode: "insensitive" } },
-        { title: { contains: "hafalan", mode: "insensitive" } },
-      ],
-    };
-  } else if (category === "W_ORTU") {
-    titleWhere = {
-      OR: [
-        { title: { contains: "ortu", mode: "insensitive" } },
-        { title: { contains: "orang tua", mode: "insensitive" } },
-        { title: { contains: "orangtua", mode: "insensitive" } },
-        { title: { contains: "wali", mode: "insensitive" } },
-        { title: { contains: "cawalsan", mode: "insensitive" } },
-      ],
-    };
-  } else if (category === "W_SANTRI") {
-    titleWhere = {
-      AND: [
-        {
-          OR: [
-            { title: { contains: "santri", mode: "insensitive" } },
-            { title: { contains: "calsan", mode: "insensitive" } },
-          ],
-        },
-        {
-          NOT: {
-            OR: [
-              { title: { contains: "ortu", mode: "insensitive" } },
-              { title: { contains: "orang tua", mode: "insensitive" } },
-              { title: { contains: "orangtua", mode: "insensitive" } },
-              { title: { contains: "wali", mode: "insensitive" } },
-              { title: { contains: "cawalsan", mode: "insensitive" } },
-            ],
-          },
-        },
-      ],
-    };
-  } else if (category === "LISAN_ARAB") {
-    titleWhere = {
-      OR: [
-        { title: { contains: "arab", mode: "insensitive" } },
-        { title: { contains: "lisan", mode: "insensitive" } },
-      ],
-    };
-  } else if (category === "HAFALAN") {
-    titleWhere = {
-      title: { contains: "hafalan", mode: "insensitive" },
-    };
-  }
+  const targetDate = new Date(startTime);
+  if (isNaN(targetDate.getTime())) return null;
 
-  // 2. Cari semua sesi yang memiliki waktu mulai yang sama dan kategori yang sama
+  // 1. Toleransi pencarian waktu +/- 45 detik untuk menangani perbedaan milidetik
+  const minTime = new Date(targetDate.getTime() - 45000);
+  const maxTime = new Date(targetDate.getTime() + 45000);
+
+  // 2. Ambil semua sesi aktif di rentang waktu ini
   const sessions = await prisma.examSession.findMany({
     where: {
-      start_time: startTime,
-      ...titleWhere,
-      is_active: true },
+      start_time: {
+        gte: minTime,
+        lte: maxTime,
+      },
+      is_active: true,
+    },
     select: {
       id: true,
+      title: true,
       created_by: true,
       booked_count: true,
       quota: true,
       start_time: true,
       end_time: true,
+      location: true,
+      notes: true,
       creator: {
         select: {
+          id: true,
           role: true,
           secondary_roles: true,
           jenis_kelamin: true,
+          full_name: true,
         },
       },
     },
@@ -94,12 +124,30 @@ export async function getLeastLoadedExaminerFromPool(
 
   if (sessions.length === 0) return null;
 
-  // 2.5 Cek penguji yang sedang sibuk/terjadwal di jam yang sama pada kategori apapun
-  const busyExaminers = await prisma.jadwalUjian.findMany({
+  // 3. Filter sesi yang cocok dengan kategori yang diminta
+  const categorySessions = sessions.filter((s) =>
+    matchesCategory(
+      category,
+      s.title || "",
+      s.creator?.role,
+      s.creator?.secondary_roles as string[] | undefined,
+    ),
+  );
+
+  if (categorySessions.length === 0) return null;
+
+  // 4. Deteksi penguji yang sedang sibuk / terjadwal di jam yang sama pada kategori apapun
+  const sStart = minTime;
+  const sEnd = new Date(targetDate.getTime() + 30 * 60 * 1000);
+
+  const busyBookings = await prisma.jadwalUjian.findMany({
     where: {
       exam_session: {
-        start_time: { lte: startTime },
-        end_time: { gt: startTime },
+        start_time: { lt: sEnd },
+        end_time: { gt: sStart },
+      },
+      pendaftar: {
+        deleted_at: null,
       },
     },
     select: {
@@ -112,7 +160,7 @@ export async function getLeastLoadedExaminerFromPool(
   });
 
   const busyExaminerIds = new Set<string>();
-  busyExaminers.forEach((b) => {
+  busyBookings.forEach((b) => {
     if (b.penguji_quran_id) busyExaminerIds.add(b.penguji_quran_id);
     if (b.penguji_hafalan_id) busyExaminerIds.add(b.penguji_hafalan_id);
     if (b.penguji_santri_id) busyExaminerIds.add(b.penguji_santri_id);
@@ -120,69 +168,206 @@ export async function getLeastLoadedExaminerFromPool(
     if (b.penguji_arab_id) busyExaminerIds.add(b.penguji_arab_id);
   });
 
-  // 3. Filter sesi yang masih memiliki kuota, memiliki pencipta (penguji), bebas bentrokan jadwal, dan mencocokkan jenis kelamin (jika disediakan)
+  // 5. Gender Matching
   const jk = pendaftarGender?.toUpperCase() || "";
   const isPendaftarPutra = jk === "L" || jk === "LAKI-LAKI" || jk.includes("PUTRA");
 
-  const availableSessions = sessions.filter((s) => {
+  // 6. Filter sesi yang masih memiliki kuota, penguji bebas bentrok, dan gender sesuai
+  const availableSessions = categorySessions.filter((s) => {
     if (s.booked_count >= s.quota || !s.created_by) return false;
-    
-    // Admin creator menandakan sesi umum/pool, bukan penguji 1-on-1
-    const isCreatorAdmin = s.creator?.role === "admin" || s.creator?.role === "admin_super";
-    // Exclude if examiner is already occupied at this time (kecuali sesi yang dibuat admin)
+
+    const isCreatorAdmin =
+      s.creator?.role === "admin" || s.creator?.role === "admin_super";
+
+    // Jika bukan sesi admin, pastikan penguji tidak sedang ada jadwal di jam yang sama
     if (!isCreatorAdmin && busyExaminerIds.has(s.created_by)) return false;
-    
-    // Jika gender pendaftar disediakan, filter berdasarkan gender penguji
-    if (pendaftarGender) {
-      const creatorJk = s.creator?.jenis_kelamin?.toUpperCase() || "";
-      if (!creatorJk) return true;
-      
-      const isCreatorPutra = creatorJk === "L" || creatorJk === "LAKI-LAKI" || creatorJk.includes("PUTRA");
-      return isCreatorPutra === isPendaftarPutra;
+
+    // Filter gender penguji jika tersedia
+    if (pendaftarGender && s.creator?.jenis_kelamin) {
+      const creatorJk = s.creator.jenis_kelamin.toUpperCase();
+      const isCreatorPutra =
+        creatorJk === "L" || creatorJk === "LAKI-LAKI" || creatorJk.includes("PUTRA");
+      if (isCreatorPutra !== isPendaftarPutra) return false;
     }
+
     return true;
   });
+
   if (availableSessions.length === 0) return null;
 
-  // 4. Ambil semua ID penguji unik dari pool sesi tersebut
-  const examinerIds = Array.from(
-    new Set(availableSessions.map((s) => s.created_by!)),
-  );
+  // 7. Resolusi Tahun Ajaran aktif jika tidak disediakan
+  let activeTaId = tahunAjaranId;
+  if (!activeTaId) {
+    const activeTA = await prisma.tahunAjaran.findFirst({
+      where: { is_active: true },
+      select: { id: true },
+    });
+    activeTaId = activeTA?.id || null;
+  }
 
-  // 5. Hitung total beban kerja (jumlah jadwal) untuk masing-masing penguji di pool
-  const examinersWithLoad = await Promise.all(
-    examinerIds.map(async (id) => {
-      const count = await prisma.jadwalUjian.count({
+  // 8. Hitung beban kerja setiap kandidat penguji
+  type Candidate = {
+    examinerId: string;
+    sessionId: string;
+    categoryCount: number;
+    totalCount: number;
+  };
+
+  const candidates: Candidate[] = [];
+
+  let catField: string | null = null;
+  if (category === "QURAN") catField = "penguji_quran_id";
+  else if (category === "HAFALAN") catField = "penguji_hafalan_id";
+  else if (category === "W_SANTRI") catField = "penguji_santri_id";
+  else if (category === "W_ORTU") catField = "penguji_ortu_id";
+  else if (category === "LISAN_ARAB") catField = "penguji_arab_id";
+
+  const countWhereBase: any = {
+    pendaftar: {
+      deleted_at: null,
+      NOT: {
+        nama_lengkap: { contains: "tes", mode: "insensitive" },
+      },
+    },
+  };
+  if (activeTaId) {
+    countWhereBase.tahun_ajaran_id = activeTaId;
+  }
+
+  for (const s of availableSessions) {
+    const isCreatorAdmin =
+      s.creator?.role === "admin" || s.creator?.role === "admin_super";
+
+    if (!isCreatorAdmin && s.created_by) {
+      // Sesi milik penguji/pewawancara spesifik
+      const [categoryCount, totalCount] = await Promise.all([
+        catField
+          ? prisma.jadwalUjian.count({
+              where: {
+                ...countWhereBase,
+                [catField]: s.created_by,
+              },
+            })
+          : 0,
+        prisma.jadwalUjian.count({
+          where: {
+            ...countWhereBase,
+            OR: [
+              { penguji_quran_id: s.created_by },
+              { penguji_hafalan_id: s.created_by },
+              { penguji_santri_id: s.created_by },
+              { penguji_ortu_id: s.created_by },
+              { penguji_arab_id: s.created_by },
+            ],
+          },
+        }),
+      ]);
+
+      candidates.push({
+        examinerId: s.created_by,
+        sessionId: s.id,
+        categoryCount,
+        totalCount,
+      });
+    } else {
+      // Sesi umum / dibuat admin: cari penguji berkualifikasi dari Profile
+      let targetRoles: string[] = [];
+      if (category === "QURAN") targetRoles = ["penguji", "penguji_quran", "penguji_hafalan"];
+      else if (category === "HAFALAN") targetRoles = ["penguji_hafalan", "penguji", "penguji_quran"];
+      else if (category === "W_SANTRI") targetRoles = ["pewawancara_calsan", "penguji_calsan", "pewawancara", "penguji_santri"];
+      else if (category === "W_ORTU") targetRoles = ["pewawancara_cawalsan", "penguji_cawalsan", "pewawancara_ortu"];
+      else if (category === "LISAN_ARAB") targetRoles = ["penguji_bahasa_arab", "penguji_arab"];
+
+      const eligibleProfiles = await prisma.profile.findMany({
         where: {
-          tahun_ajaran_id: tahunAjaranId,
-          pendaftar: {
-            deleted_at: null,
-            NOT: {
-              nama_lengkap: {
-                contains: "tes",
-                mode: "insensitive" } } },
           OR: [
-            { penguji_quran_id: id },
-            { penguji_santri_id: id },
-            { penguji_ortu_id: id },
-            { penguji_arab_id: id },
-          ] } });
-      return { id, count };
-    }),
-  );
+            { role: { in: targetRoles } },
+            ...targetRoles.map((r) => ({ secondary_roles: { has: r } })),
+          ],
+        },
+        select: {
+          id: true,
+          role: true,
+          secondary_roles: true,
+          jenis_kelamin: true,
+        },
+      });
 
-  // 6. Urutkan berdasarkan beban kerja terendah (Pemerataan)
-  examinersWithLoad.sort((a, b) => a.count - b.count);
-  const winnerId = examinersWithLoad[0].id;
+      const freeProfiles = eligibleProfiles.filter((p) => {
+        if (busyExaminerIds.has(p.id)) return false;
+        if (pendaftarGender && p.jenis_kelamin) {
+          const pJk = p.jenis_kelamin.toUpperCase();
+          const isProfPutra = pJk === "L" || pJk === "LAKI-LAKI" || pJk.includes("PUTRA");
+          if (isProfPutra !== isPendaftarPutra) return false;
+        }
+        return true;
+      });
 
-  // 7. Cari session_id yang dimiliki oleh pemenang tersebut
-  const winningSession = availableSessions.find(
-    (s) => s.created_by === winnerId,
-  );
+      if (freeProfiles.length > 0) {
+        for (const p of freeProfiles) {
+          const [categoryCount, totalCount] = await Promise.all([
+            catField
+              ? prisma.jadwalUjian.count({
+                  where: {
+                    ...countWhereBase,
+                    [catField]: p.id,
+                  },
+                })
+              : 0,
+            prisma.jadwalUjian.count({
+              where: {
+                ...countWhereBase,
+                OR: [
+                  { penguji_quran_id: p.id },
+                  { penguji_hafalan_id: p.id },
+                  { penguji_santri_id: p.id },
+                  { penguji_ortu_id: p.id },
+                  { penguji_arab_id: p.id },
+                ],
+              },
+            }),
+          ]);
 
-  if (!winningSession) return null;
+          candidates.push({
+            examinerId: p.id,
+            sessionId: s.id,
+            categoryCount,
+            totalCount,
+          });
+        }
+      } else {
+        candidates.push({
+          examinerId: s.created_by,
+          sessionId: s.id,
+          categoryCount: 0,
+          totalCount: 0,
+        });
+      }
+    }
+  }
+
+  if (candidates.length === 0) return null;
+
+  // 9. PEMERATAAN BEBAN KERJA (FAIR LOAD BALANCING):
+  // Prioritas 1: Penguji yang lebih sedikit mendapat jadwal di kategori tes ini
+  // Prioritas 2: Penguji yang lebih sedikit total jadwalnya secara keseluruhan
+  // Prioritas 3: Deterministik berdasarkan ID penguji
+  candidates.sort((a, b) => {
+    if (a.categoryCount !== b.categoryCount) {
+      return a.categoryCount - b.categoryCount;
+    }
+    if (a.totalCount !== b.totalCount) {
+      return a.totalCount - b.totalCount;
+    }
+    return a.examinerId.localeCompare(b.examinerId);
+  });
+
+  const winner = candidates[0];
 
   return {
-    examiner_id: winnerId,
-    session_id: winningSession.id };
+    examiner_id: winner.examinerId,
+    session_id: winner.sessionId,
+    category_count: winner.categoryCount,
+    total_count: winner.totalCount,
+  };
 }

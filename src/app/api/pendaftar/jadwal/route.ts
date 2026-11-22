@@ -132,7 +132,8 @@ export async function POST(request: Request) {
     // 1. Validate Session First
     const examSession = await prisma.examSession.findUnique({
       where: { id: exam_session_id },
-      include: { _count: { select: { bookings: true } } } });
+      include: { _count: { select: { bookings: true } } },
+    });
 
     if (!examSession)
       return NextResponse.json(
@@ -141,9 +142,6 @@ export async function POST(request: Request) {
       );
     if (!examSession.is_active)
       return NextResponse.json({ error: "Sesi tidak aktif" }, { status: 400 });
-    if (examSession._count.bookings >= examSession.quota) {
-      return NextResponse.json({ error: "Kuota penuh" }, { status: 400 });
-    }
 
     // JADWAL H+1 s/d H+14 (Maksimal 2 Pekan):
     // 1. Paling awal: Mulai besok (H+1). Jadwal hari ini tidak dapat dipilih.
@@ -277,21 +275,31 @@ export async function POST(request: Request) {
       pendaftar.jenis_kelamin,
     );
 
+    const finalSessionId = balancedAssignment?.session_id || exam_session_id;
+    const finalExaminerId =
+      balancedAssignment?.examiner_id || examSession.created_by;
+
+    // Quota check: hanya tolak jika sesi pemenang / pool tidak tersedia dan sesi yang diklik sudah penuh
+    if (!balancedAssignment && examSession._count.bookings >= examSession.quota) {
+      return NextResponse.json(
+        { error: "Kuota untuk sesi ujian ini sudah penuh. Silakan pilih waktu atau hari lainnya." },
+        { status: 400 },
+      );
+    }
+
     // Transaction to book (Write operations only)
     const result = await prisma.$transaction(async (tx) => {
-      // Increment count first to lock
+      // Atomically lock and increment the WINNING session (pemerataan beban)
       const updatedSession = await tx.examSession.update({
-        where: { id: exam_session_id },
-        data: { booked_count: { increment: 1 } } });
+        where: { id: finalSessionId },
+        data: { booked_count: { increment: 1 } },
+      });
 
       if (updatedSession.booked_count > updatedSession.quota) {
-        throw new Error("Kuota penuh (race condition)");
+        throw new Error("Kuota penuh (race condition). Silakan pilih jadwal lain.");
       }
 
       let pengujiFields: Record<string, string | null> = {};
-      const finalExaminerId =
-        balancedAssignment?.examiner_id || examSession.created_by;
-      const finalSessionId = balancedAssignment?.session_id || exam_session_id;
 
       if (finalExaminerId) {
         const interviewer = await tx.profile.findUnique({
@@ -312,8 +320,8 @@ export async function POST(request: Request) {
                 { penguji_arab_id: finalExaminerId },
               ],
               exam_session: {
-                start_time: { lt: examSession.end_time },
-                end_time: { gt: examSession.start_time },
+                start_time: { lt: updatedSession.end_time },
+                end_time: { gt: updatedSession.start_time },
               },
             },
           });
@@ -361,14 +369,14 @@ export async function POST(request: Request) {
         data: {
           tahun_ajaran_id: pendaftar.tahun_ajaran_id,
           pendaftar_id: session.id,
-          exam_session_id: finalSessionId || exam_session_id,
-          tanggal_ujian: examSession.start_time, // Date part
-          waktu_mulai_santri: examSession.start_time, // Temporarily copy session time to specific fields for compat
-          waktu_selesai_santri: examSession.end_time,
-          tempat_santri: examSession.location || "Pesantren",
-          waktu_mulai_ortu: examSession.start_time,
-          waktu_selesai_ortu: examSession.end_time,
-          tempat_ortu: examSession.location || "Pesantren",
+          exam_session_id: finalSessionId,
+          tanggal_ujian: updatedSession.start_time,
+          waktu_mulai_santri: updatedSession.start_time,
+          waktu_selesai_santri: updatedSession.end_time,
+          tempat_santri: updatedSession.location || "Pesantren",
+          waktu_mulai_ortu: updatedSession.start_time,
+          waktu_selesai_ortu: updatedSession.end_time,
+          tempat_ortu: updatedSession.location || "Pesantren",
           status_santri: "scheduled",
           status_quran: "scheduled",
           status_hafalan: "scheduled",
@@ -392,10 +400,10 @@ export async function POST(request: Request) {
       const { recalculateNilaiUjian } = await import("@/lib/scoring");
       await recalculateNilaiUjian(session.id);
 
-      return { jadwal, pengujiFields };
+      return { jadwal, pengujiFields, winningSession: updatedSession };
     });
 
-    const { jadwal, pengujiFields } = result;
+    const { jadwal, pengujiFields, winningSession } = result;
 
     // Send WhatsApp via Queue (Layer 2: Non-blocking, through queue)
     const pendaftarInfo = await prisma.pendaftar.findUnique({
@@ -403,7 +411,7 @@ export async function POST(request: Request) {
       select: { nama_lengkap: true, no_hp: true, nomor_pendaftaran: true } });
 
     if (pendaftarInfo && pendaftarInfo.no_hp) {
-      const startTime = new Date(examSession.start_time);
+      const startTime = new Date(winningSession.start_time);
       const dateStr = startTime.toLocaleDateString("id-ID", {
         weekday: "long",
         day: "numeric",
@@ -415,9 +423,9 @@ export async function POST(request: Request) {
           hour: "2-digit",
           minute: "2-digit",
           timeZone: "Asia/Jakarta" }) + " WIB";
-      const lokasi = examSession.location || "Pesantren Al Imam Al Islami";
+      const lokasi = winningSession.location || examSession.location || "Pesantren";
       const jenisUjian = sanitizeTitle(
-        examSession.title || "Seleksi Santri Baru",
+        winningSession.title || examSession.title || "Seleksi Santri Baru",
       );
 
       // 1. Notify Pendaftar — SEGERA setelah booking jadwal
@@ -426,7 +434,7 @@ export async function POST(request: Request) {
         jenisUjian,
         dateStr,
         timeStr,
-        examSession.location || lokasi,
+        lokasi,
       );
       enqueueWhatsapp({
         pendaftarId: session.id,
@@ -437,17 +445,18 @@ export async function POST(request: Request) {
       // 2. Notify Interviewer — SEGERA setelah booking (Level Diamond Instant Dispatch)
       const finalId =
         pengujiFields.penguji_quran_id ||
+        pengujiFields.penguji_hafalan_id ||
         pengujiFields.penguji_santri_id ||
         pengujiFields.penguji_ortu_id ||
         pengujiFields.penguji_arab_id ||
-        examSession.created_by;
+        finalExaminerId;
       if (finalId) {
         const interviewer = await prisma.profile.findUnique({
           where: { id: finalId },
           select: { id: true, full_name: true, phone: true, jenis_kelamin: true, google_meet_link: true } });
 
         if (interviewer && interviewer.phone) {
-          const appUrl = process.env.NEXT_PUBLIC_APP_URL || "https://spmb.pesantren-alimam.com";
+          const appUrl = process.env.NEXT_PUBLIC_APP_URL || "";
           const { generateExaminerInputLink } = await import("@/lib/utils/magic-link");
           const shortUrlKonfirmasi = generateExaminerInputLink(
             interviewer.id,
