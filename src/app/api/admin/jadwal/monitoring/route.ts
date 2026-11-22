@@ -483,6 +483,9 @@ export async function PATCH(request: NextRequest) {
       status_arab,
       allow_conflict,
       new_session_id,
+      tanggal_ujian,
+      waktu_mulai,
+      waktu_selesai,
     } = body;
 
     if (!jadwal_id) {
@@ -501,6 +504,7 @@ export async function PATCH(request: NextRequest) {
             nama_lengkap: true,
             nomor_pendaftaran: true,
             jenjang: true,
+            no_hp: true,
           },
         },
         exam_session: {
@@ -606,7 +610,138 @@ export async function PATCH(request: NextRequest) {
     let effectiveSession = currentJadwal.exam_session;
     let sessionChanged = false;
 
-    if (new_session_id) {
+    let customDateTimeSpecified = false;
+    let customStart: Date | null = null;
+    let customEnd: Date | null = null;
+    let customDate: Date | null = null;
+
+    if (tanggal_ujian && waktu_mulai) {
+      const cleanDate = typeof tanggal_ujian === "string" ? tanggal_ujian.split("T")[0] : "";
+      const cleanStart = typeof waktu_mulai === "string" ? (waktu_mulai.includes("T") ? waktu_mulai.split("T")[1].substring(0, 5) : waktu_mulai.substring(0, 5)) : "";
+      const cleanEnd = typeof waktu_selesai === "string" ? (waktu_selesai.includes("T") ? waktu_selesai.split("T")[1].substring(0, 5) : waktu_selesai.substring(0, 5)) : "";
+
+      if (cleanDate && cleanStart) {
+        customStart = new Date(`${cleanDate}T${cleanStart}:00+07:00`);
+        if (isNaN(customStart.getTime())) {
+          customStart = new Date(`${cleanDate} ${cleanStart}`);
+        }
+
+        if (cleanEnd) {
+          customEnd = new Date(`${cleanDate}T${cleanEnd}:00+07:00`);
+          if (isNaN(customEnd.getTime())) {
+            customEnd = new Date(`${cleanDate} ${cleanEnd}`);
+          }
+        } else {
+          customEnd = new Date(customStart.getTime() + 30 * 60 * 1000);
+        }
+
+        customDate = new Date(`${cleanDate}T00:00:00.000Z`);
+        customDateTimeSpecified = true;
+      }
+    }
+
+    if (customDateTimeSpecified && customStart && customEnd && customDate) {
+      const oldStartMs = oldStartTime ? oldStartTime.getTime() : 0;
+      if (Math.abs(oldStartMs - customStart.getTime()) > 60000 || !currentJadwal.tanggal_ujian) {
+        sessionChanged = true;
+      }
+      targetStartTime = customStart;
+      targetEndTime = customEnd;
+
+      if (new_session_id) {
+        const pickedSession = await prisma.examSession.findUnique({
+          where: { id: new_session_id },
+        });
+        if (pickedSession) {
+          if (Math.abs(new Date(pickedSession.start_time).getTime() - customStart.getTime()) < 60000) {
+            updateData.exam_session_id = pickedSession.id;
+            if (pickedSession.location) {
+              updateData.tempat_santri = pickedSession.location;
+              updateData.tempat_ortu = pickedSession.location;
+            }
+          }
+        }
+      }
+
+      if (!updateData.exam_session_id) {
+        if (currentJadwal.exam_session_id) {
+          const otherBookings = await prisma.jadwalUjian.count({
+            where: {
+              exam_session_id: currentJadwal.exam_session_id,
+              id: { not: jadwal_id },
+            },
+          });
+
+          if (otherBookings === 0) {
+            await prisma.examSession.update({
+              where: { id: currentJadwal.exam_session_id },
+              data: {
+                start_time: customStart,
+                end_time: customEnd,
+              },
+            });
+            updateData.exam_session_id = currentJadwal.exam_session_id;
+          } else {
+            await prisma.examSession.update({
+              where: { id: currentJadwal.exam_session_id },
+              data: { booked_count: { decrement: 1 } },
+            });
+
+            const matchingSession = await prisma.examSession.findFirst({
+              where: {
+                start_time: customStart,
+                end_time: customEnd,
+                is_active: true,
+              },
+            });
+
+            if (matchingSession) {
+              updateData.exam_session_id = matchingSession.id;
+              await prisma.examSession.update({
+                where: { id: matchingSession.id },
+                data: { booked_count: { increment: 1 } },
+              });
+              if (matchingSession.location) {
+                updateData.tempat_santri = matchingSession.location;
+                updateData.tempat_ortu = matchingSession.location;
+              }
+            } else {
+              const newSess = await prisma.examSession.create({
+                data: {
+                  title: currentJadwal.exam_session?.title || "Sesi Ujian Seleksi",
+                  start_time: customStart,
+                  end_time: customEnd,
+                  quota: 1,
+                  booked_count: 1,
+                  location: currentJadwal.exam_session?.location || currentJadwal.tempat_santri || "Online",
+                  created_by: session.id || currentJadwal.exam_session?.created_by,
+                },
+              });
+              updateData.exam_session_id = newSess.id;
+            }
+          }
+        } else {
+          const newSess = await prisma.examSession.create({
+            data: {
+              title: "Sesi Ujian Seleksi",
+              start_time: customStart,
+              end_time: customEnd,
+              quota: 1,
+              booked_count: 1,
+              location: currentJadwal.tempat_santri || "Online",
+              created_by: session.id,
+            },
+          });
+          updateData.exam_session_id = newSess.id;
+        }
+      }
+
+      updateData.tanggal_ujian = customDate;
+      updateData.waktu_mulai_santri = customStart;
+      updateData.waktu_selesai_santri = customEnd;
+      updateData.waktu_mulai_ortu = customStart;
+      updateData.waktu_selesai_ortu = customEnd;
+    } else if (new_session_id) {
       const newSession = await prisma.examSession.findUnique({
         where: { id: new_session_id },
       });
@@ -1068,6 +1203,22 @@ export async function PATCH(request: NextRequest) {
               role: t.roleLabel,
               reason: err?.message || "Gagal mengirim WA",
             });
+          }
+        }
+        // 3. Send update notice to santri / wali santri if date or time changed
+        if (sessionChanged && currentJadwal.pendaftar?.no_hp) {
+          try {
+            const msgSantri = `*PEMBERITAHUAN PERUBAHAN JADWAL SELEKSI*\nAssalamu'alaikum Warahmatullahi Wabarakatuh,\n\nJadwal seleksi untuk Ananda *${currentJadwal.pendaftar.nama_lengkap}* (${currentJadwal.pendaftar.nomor_pendaftaran}) telah disesuaikan oleh Panitia SPMB:\n\n📅 *Hari / Tanggal*: ${newHariTanggal}\n⏰ *Waktu*: ${newWaktu}\n📍 *Lokasi*: ${effectiveLocLabel}\n\nSilakan cek dashboard pendaftar Anda untuk informasi lebih lengkap. Jazakumullahu khairan.`;
+            await enqueueWhatsapp({
+              pendaftarId: currentJadwal.pendaftar_id,
+              phone: currentJadwal.pendaftar.no_hp,
+              jenisNotif: "reschedule_santri",
+              messageContent: msgSantri,
+              force: true,
+              sendNow: true,
+            });
+          } catch (errSantri) {
+            console.warn("⚠️ [Monitoring WA] Gagal kirim notif reschedule ke santri:", errSantri);
           }
         }
       }

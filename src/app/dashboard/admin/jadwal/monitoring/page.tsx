@@ -135,6 +135,16 @@ function getExamCategory(title: string): string {
     return "OTHER";
 }
 
+function addMinutesToTime(timeStr: string, minutesToAdd: number): string {
+    if (!timeStr || !timeStr.includes(":")) return "";
+    const [h, m] = timeStr.split(":").map(Number);
+    if (isNaN(h) || isNaN(m)) return "";
+    const totalMinutes = (h * 60 + m + minutesToAdd) % (24 * 60);
+    const newH = Math.floor(totalMinutes / 60);
+    const newM = totalMinutes % 60;
+    return `${String(newH).padStart(2, "0")}:${String(newM).padStart(2, "0")}`;
+}
+
 export default function MonitoringJadwalPage() {
     const [schedules, setSchedules] = useState<Schedule[]>([]);
     const [examiners, setExaminers] = useState<any[]>([]);
@@ -163,6 +173,9 @@ export default function MonitoringJadwalPage() {
     const [statusSantri, setStatusSantri] = useState<string>("scheduled");
     const [statusOrtu, setStatusOrtu] = useState<string>("scheduled");
     const [selectedArabId, setSelectedArabId] = useState<string>("");
+    const [editTanggal, setEditTanggal] = useState<string>("");
+    const [editJamMulai, setEditJamMulai] = useState<string>("");
+    const [editJamSelesai, setEditJamSelesai] = useState<string>("");
     const [showAllStaff, setShowAllStaff] = useState(false);
     const [savingAssignment, setSavingAssignment] = useState(false);
 
@@ -206,6 +219,10 @@ export default function MonitoringJadwalPage() {
             const selectedSess = activeSessions.find(s => s.id === selectedSessionId);
             if (selectedSess) targetTimeMs = new Date(selectedSess.start_time).getTime();
         }
+        if (!targetTimeMs && editTanggal && editJamMulai) {
+            const dt = new Date(`${editTanggal}T${editJamMulai}:00`);
+            if (!isNaN(dt.getTime())) targetTimeMs = dt.getTime();
+        }
         if (!targetTimeMs && targetSchedule?.sesi?.start) {
             targetTimeMs = new Date(targetSchedule.sesi.start).getTime();
         }
@@ -215,7 +232,7 @@ export default function MonitoringJadwalPage() {
         schedules.forEach(s => {
             if (s.id === targetSchedule?.id || s.pendaftar?.nomor === targetSchedule?.pendaftar?.nomor) return;
             const sTime = new Date(s.sesi.start).getTime();
-            if (sTime === targetTimeMs) {
+            if (Math.abs(sTime - targetTimeMs!) < 60000) {
                 const info = `${s.pendaftar.nama} (${s.pendaftar.nomor})`;
                 if (s.ustadz_id?.quran) map.set(s.ustadz_id.quran, info);
                 if (s.ustadz_id?.santri) map.set(s.ustadz_id.santri, info);
@@ -224,7 +241,7 @@ export default function MonitoringJadwalPage() {
             }
         });
         return map;
-    }, [targetSchedule, schedules, selectedSessionId, activeSessions]);
+    }, [targetSchedule, schedules, selectedSessionId, activeSessions, editTanggal, editJamMulai]);
     const [saveSuccessMsg, setSaveSuccessMsg] = useState<string | null>(null);
 
     // Body scroll lock for modals (Mandatory UX Rule)
@@ -338,7 +355,77 @@ export default function MonitoringJadwalPage() {
         setStatusQuran(schedule.status?.quran || "scheduled");
         setStatusSantri(schedule.status?.santri || "scheduled");
         setStatusOrtu(schedule.status?.ortu || "scheduled");
+
+        // Parse initial date & time from session start/end or tanggal_ujian
+        const startDateStr = schedule.sesi?.start || schedule.tanggal_ujian;
+        const endDateStr = schedule.sesi?.end;
+        if (startDateStr) {
+            const d = new Date(startDateStr);
+            if (!isNaN(d.getTime())) {
+                const year = d.getFullYear();
+                const month = String(d.getMonth() + 1).padStart(2, "0");
+                const day = String(d.getDate()).padStart(2, "0");
+                const startH = String(d.getHours()).padStart(2, "0");
+                const startM = String(d.getMinutes()).padStart(2, "0");
+                setEditTanggal(`${year}-${month}-${day}`);
+                setEditJamMulai(`${startH}:${startM}`);
+
+                if (endDateStr) {
+                    const dEnd = new Date(endDateStr);
+                    if (!isNaN(dEnd.getTime())) {
+                        const endH = String(dEnd.getHours()).padStart(2, "0");
+                        const endM = String(dEnd.getMinutes()).padStart(2, "0");
+                        setEditJamSelesai(`${endH}:${endM}`);
+                    } else {
+                        setEditJamSelesai(addMinutesToTime(`${startH}:${startM}`, 30));
+                    }
+                } else {
+                    setEditJamSelesai(addMinutesToTime(`${startH}:${startM}`, 30));
+                }
+            } else {
+                setEditTanggal("");
+                setEditJamMulai("");
+                setEditJamSelesai("");
+            }
+        } else {
+            setEditTanggal("");
+            setEditJamMulai("");
+            setEditJamSelesai("");
+        }
+
         setAssignModalOpen(true);
+    };
+
+    const handleSessionChange = (sessionId: string) => {
+        setSelectedSessionId(sessionId);
+        if (sessionId) {
+            const found = activeSessions.find(s => s.id === sessionId);
+            if (found && found.start_time) {
+                const d = new Date(found.start_time);
+                if (!isNaN(d.getTime())) {
+                    const year = d.getFullYear();
+                    const month = String(d.getMonth() + 1).padStart(2, "0");
+                    const day = String(d.getDate()).padStart(2, "0");
+                    const startH = String(d.getHours()).padStart(2, "0");
+                    const startM = String(d.getMinutes()).padStart(2, "0");
+                    setEditTanggal(`${year}-${month}-${day}`);
+                    setEditJamMulai(`${startH}:${startM}`);
+
+                    if (found.end_time) {
+                        const dEnd = new Date(found.end_time);
+                        if (!isNaN(dEnd.getTime())) {
+                            const endH = String(dEnd.getHours()).padStart(2, "0");
+                            const endM = String(dEnd.getMinutes()).padStart(2, "0");
+                            setEditJamSelesai(`${endH}:${endM}`);
+                        } else {
+                            setEditJamSelesai(addMinutesToTime(`${startH}:${startM}`, 30));
+                        }
+                    } else {
+                        setEditJamSelesai(addMinutesToTime(`${startH}:${startM}`, 30));
+                    }
+                }
+            }
+        }
     };
 
     const handleSaveAssignment = async (allowConflict: boolean = false) => {
@@ -401,6 +488,9 @@ export default function MonitoringJadwalPage() {
                     status_santri: statusSantri,
                     status_ortu: statusOrtu,
                     new_session_id: selectedSessionId || undefined,
+                    tanggal_ujian: editTanggal || undefined,
+                    waktu_mulai: editJamMulai || undefined,
+                    waktu_selesai: editJamSelesai || undefined,
                     allow_conflict: allowConflict,
                 }),
             });
@@ -1482,28 +1572,119 @@ export default function MonitoringJadwalPage() {
                                     </motion.div>
                                 )}
 
-                                {/* Pengubah Hari/Jam Sesi (Opsional) */}
-                                  <div className="p-4 rounded-2xl bg-amber-50/50 border border-amber-100">
-                                      <label className="text-xs font-black text-amber-800 uppercase tracking-wider mb-2 block flex items-center gap-2">
-                                          <Calendar className="w-3.5 h-3.5" />
-                                          Pindah Sesi / Ubah Hari Ujian
-                                      </label>
-                                      <select
-                                          value={selectedSessionId}
-                                          onChange={(e) => setSelectedSessionId(e.target.value)}
-                                          className="w-full bg-white border border-amber-200 rounded-xl px-3 py-2 text-sm font-bold text-slate-700 outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all cursor-pointer"
-                                      >
-                                          <option value="">Pilih sesi ujian baru...</option>
-                                          {activeSessions.map((ses) => (
-                                              <option key={ses.id} value={ses.id}>
-                                                  {ses.title} - {new Date(ses.start_time).toLocaleDateString("id-ID", { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })} ({new Date(ses.start_time).toLocaleTimeString("id-ID", { hour: '2-digit', minute: '2-digit', hour12: false })} WIB)
-                                              </option>
-                                          ))}
-                                      </select>
-                                      <p className="text-[10px] text-amber-600/70 font-medium mt-1.5 flex items-center gap-1 leading-tight">
-                                          *Ubah hanya jika santri minta ganti hari/jam ujian (Reschedule).
-                                      </p>
-                                  </div>
+                                {/* Pengubah Hari & Jam Ujian / Reschedule */}
+                                <div className="p-4 rounded-2xl bg-gradient-to-br from-amber-50/80 to-orange-50/40 border border-amber-200/80 space-y-3">
+                                    <div className="flex items-center justify-between">
+                                        <label className="text-xs font-black text-amber-900 uppercase tracking-wider flex items-center gap-1.5">
+                                            <Calendar className="w-3.5 h-3.5 text-amber-600" />
+                                            Atur Tanggal &amp; Jam Ujian
+                                        </label>
+                                        <span className="text-[10px] font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-full border border-amber-200/60">
+                                            Reschedule / Jadwal Ujian
+                                        </span>
+                                    </div>
+
+                                    {/* Pilih dari Sesi Terdaftar (Opsional) */}
+                                    <div>
+                                        <label className="text-[11px] font-bold text-slate-600 mb-1 block">
+                                            Pilih Dari Sesi Terdaftar (Opsional):
+                                        </label>
+                                        <select
+                                            value={selectedSessionId}
+                                            onChange={(e) => handleSessionChange(e.target.value)}
+                                            className="w-full bg-white border border-amber-200 rounded-xl px-3 py-2 text-xs font-bold text-slate-700 outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all cursor-pointer"
+                                        >
+                                            <option value="">-- Atur Tanggal &amp; Jam Manual di Bawah --</option>
+                                            {activeSessions.map((ses) => (
+                                                <option key={ses.id} value={ses.id}>
+                                                    {ses.title} - {new Date(ses.start_time).toLocaleDateString("id-ID", { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })} ({new Date(ses.start_time).toLocaleTimeString("id-ID", { hour: '2-digit', minute: '2-digit', hour12: false })} WIB)
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+
+                                    {/* Input Tanggal & Jam */}
+                                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1">
+                                        <div>
+                                            <label className="text-[11px] font-bold text-slate-700 mb-1 flex items-center gap-1">
+                                                <Calendar className="w-3 h-3 text-amber-600" />
+                                                Tanggal Ujian *
+                                            </label>
+                                            <input
+                                                type="date"
+                                                value={editTanggal}
+                                                onChange={(e) => {
+                                                    setEditTanggal(e.target.value);
+                                                    setSelectedSessionId("");
+                                                }}
+                                                className="w-full bg-white border border-slate-200 rounded-xl px-2.5 py-1.5 text-xs font-bold text-slate-800 outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all"
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="text-[11px] font-bold text-slate-700 mb-1 flex items-center gap-1">
+                                                <Clock className="w-3 h-3 text-amber-600" />
+                                                Jam Mulai *
+                                            </label>
+                                            <input
+                                                type="time"
+                                                value={editJamMulai}
+                                                onChange={(e) => {
+                                                    const newStart = e.target.value;
+                                                    setEditJamMulai(newStart);
+                                                    setSelectedSessionId("");
+                                                    if (newStart && (!editJamSelesai || editJamSelesai <= newStart)) {
+                                                        setEditJamSelesai(addMinutesToTime(newStart, 30));
+                                                    }
+                                                }}
+                                                className="w-full bg-white border border-slate-200 rounded-xl px-2.5 py-1.5 text-xs font-bold text-slate-800 outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all"
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="text-[11px] font-bold text-slate-700 mb-1 flex items-center gap-1">
+                                                <Clock className="w-3 h-3 text-amber-600" />
+                                                Jam Selesai *
+                                            </label>
+                                            <input
+                                                type="time"
+                                                value={editJamSelesai}
+                                                onChange={(e) => {
+                                                    setEditJamSelesai(e.target.value);
+                                                    setSelectedSessionId("");
+                                                }}
+                                                className="w-full bg-white border border-slate-200 rounded-xl px-2.5 py-1.5 text-xs font-bold text-slate-800 outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all"
+                                            />
+                                        </div>
+                                    </div>
+
+                                    {/* Pilihan Cepat Durasi */}
+                                    <div className="flex items-center gap-1.5 pt-0.5">
+                                        <span className="text-[10px] font-bold text-slate-500">Pilihan Cepat Durasi:</span>
+                                        {[30, 45, 60, 90, 120].map((dur) => (
+                                            <button
+                                                key={dur}
+                                                type="button"
+                                                onClick={() => {
+                                                    if (editJamMulai) {
+                                                        setEditJamSelesai(addMinutesToTime(editJamMulai, dur));
+                                                    }
+                                                }}
+                                                className="px-2 py-0.5 text-[10px] font-bold bg-white hover:bg-amber-100 text-amber-900 border border-amber-200 rounded-lg transition-colors shadow-xs"
+                                            >
+                                                {dur}m
+                                            </button>
+                                        ))}
+                                    </div>
+
+                                    {/* Live Preview Badge */}
+                                    {editTanggal && editJamMulai && (
+                                        <div className="text-[11px] font-bold text-amber-900 bg-amber-100/70 rounded-xl p-2.5 flex items-center gap-2 border border-amber-200/60">
+                                            <Calendar className="w-3.5 h-3.5 text-amber-700 shrink-0" />
+                                            <span>
+                                                Jadwal Baru: <u>{new Date(`${editTanggal}T${editJamMulai}:00`).toLocaleDateString("id-ID", { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}</u> pk. <u>{editJamMulai} - {editJamSelesai || addMinutesToTime(editJamMulai, 30)} WIB</u>
+                                            </span>
+                                        </div>
+                                    )}
+                                </div>
 
                                   {/* Penguji Selection Dropdowns */}
                                 <div className="space-y-4">
