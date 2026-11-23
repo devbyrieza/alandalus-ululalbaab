@@ -168,12 +168,14 @@ export default function DashboardLayout({
       tabName: "ukuran-seragam" as TabName, // Menggunakan rules akses ukuran-seragam
       icon: Shirt,
       active: pathname === "/dashboard/pendaftar/seragam" },
+    /* Menu ZAD di-hide sementara sesuai instruksi
     {
       name: "Keuangan (ZAD)",
       href: "http://localhost:3001/wali-santri",
-      tabName: "kartu-jajan" as TabName, // still using the same access control rule internally
+      tabName: "kartu-jajan" as TabName,
       icon: HandCoins,
       active: pathname === "/dashboard/pendaftar/keuangan" },
+    */
     {
       name: "Profil Akun",
       href: "/dashboard/pendaftar/profil",
