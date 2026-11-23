@@ -221,7 +221,7 @@ export async function middleware(request: NextRequest) {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production" && !host.includes("localhost") && !host.includes("127.0.0.1") && !host.startsWith("192.168."),
       sameSite: "lax",
-      
+      domain: baseDomain ? `.${baseDomain}` : undefined,
       maxAge,
       expires,
     });
