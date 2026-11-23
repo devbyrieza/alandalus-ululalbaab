@@ -141,7 +141,7 @@ const CATEGORY_DEFS: CategoryConfig[] = [
     label: "Tes Bacaan Al-Qur'an",
     shortLabel: "Bacaan Qur'an",
     icon: BookOpenCheck,
-    description: "Tilawah, Makhorijul Huruf & Tahsin Bacaan Al-Qur'an (Semua Jenjang)",
+    description: "Makhorijul Huruf, Tajwid & Kelancaran Bacaan Al-Qur'an (Semua Jenjang)",
   },
   {
     key: "W_SANTRI",
