@@ -18,6 +18,7 @@ export default async function AdminDashboardLayout({
   let unverifiedPaymentsCount = 0;
   let unverifiedDocsCount = 0;
   let pendingDataRequestsCount = 0;
+  let pendingRescheduleCount = 0;
 
   if (sessionCookie) {
     try {
@@ -37,7 +38,7 @@ export default async function AdminDashboardLayout({
         // Fetch real-time count badges for the admin sidebar (filtered for active Tahun Ajaran 2027/2028)
         const baseWhere = await getAdminWhereClause();
 
-        const [pendingPayments, pendingDocs, pendingRequests] = await Promise.all([
+        const [pendingPayments, pendingDocs, pendingRequests, pendingReschedules] = await Promise.all([
           prisma.pembayaran.findMany({
             where: {
               status_pembayaran: { notIn: ["verified", "rejected"] },
@@ -99,9 +100,20 @@ export default async function AdminDashboardLayout({
           return resolveTahunAjaran(d.pendaftar) === "2027/2028";
         }).length;
 
-        pendingDataRequestsCount = pendingRequests.filter((r) => {
+                pendingDataRequestsCount = pendingRequests.filter((r) => {
           if (!r.pendaftar) return false;
           return resolveTahunAjaran(r.pendaftar) === "2027/2028";
+        }).length;
+
+        pendingRescheduleCount = pendingReschedules.filter((j) => {
+          try {
+            if (!j.catatan || !j.pendaftar) return false;
+            if (resolveTahunAjaran(j.pendaftar) !== "2027/2028") return false;
+            const parsed = JSON.parse(j.catatan);
+            return parsed.type === "RESCHEDULE_REQUEST" && parsed.status === "pending";
+          } catch {
+            return false;
+          }
         }).length;
 
       }
@@ -119,6 +131,7 @@ export default async function AdminDashboardLayout({
       unverifiedPaymentsCount={unverifiedPaymentsCount}
       unverifiedDocsCount={unverifiedDocsCount}
       pendingDataRequestsCount={pendingDataRequestsCount}
+      pendingRescheduleCount={pendingRescheduleCount}
     >
       {children}
     </AdminSidebar>

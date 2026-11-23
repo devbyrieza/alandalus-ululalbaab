@@ -23,7 +23,7 @@ export async function GET() {
 
     const baseWhere = await getAdminWhereClause();
 
-    const [pendingPayments, pendingDocs, pendingRequests] = await Promise.all([
+    const [pendingPayments, pendingDocs, pendingRequests, pendingReschedules] = await Promise.all([
       prisma.pembayaran.findMany({
         where: {
           status_pembayaran: { notIn: ["verified", "rejected"] },
@@ -73,6 +73,23 @@ export async function GET() {
           },
         },
       }),
+      prisma.jadwalUjian.findMany({
+        where: {
+          catatan: { contains: "RESCHEDULE_REQUEST" },
+          pendaftar: baseWhere,
+        },
+        select: {
+          id: true,
+          catatan: true,
+          pendaftar: {
+            select: {
+              nomor_pendaftaran: true,
+              created_at: true,
+              tahun_ajaran: { select: { nama: true } },
+            },
+          },
+        },
+      }),
     ]);
 
     const unverifiedPaymentsCount = pendingPayments.filter((p) => {
@@ -90,10 +107,22 @@ export async function GET() {
       return resolveTahunAjaran(r.pendaftar) === "2027/2028";
     }).length;
 
+    const pendingRescheduleCount = pendingReschedules.filter((j) => {
+      try {
+        if (!j.catatan || !j.pendaftar) return false;
+        if (resolveTahunAjaran(j.pendaftar) !== "2027/2028") return false;
+        const parsed = JSON.parse(j.catatan);
+        return parsed.type === "RESCHEDULE_REQUEST" && parsed.status === "pending";
+      } catch {
+        return false;
+      }
+    }).length;
+
     return NextResponse.json({
       unverifiedPaymentsCount,
       unverifiedDocsCount,
       pendingDataRequestsCount,
+      pendingRescheduleCount,
     });
   } catch (error) {
     console.error("Error fetching sidebar counts:", error);

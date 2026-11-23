@@ -26,6 +26,7 @@ export default function RescheduleRequestsPage() {
 
   useEffect(() => {
     fetchRequests();
+        window.dispatchEvent(new CustomEvent("sidebar-counts-refresh"));
   }, []);
 
   const handleAction = async (jadwalId: string, action: "approve" | "reject") => {
