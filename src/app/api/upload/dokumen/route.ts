@@ -38,7 +38,7 @@ const DOKUMEN_CONFIG: Record<
     ],
     required: true },
   rapor_sem1: {
-    label: "Scan Rapor Semester Ganjil Terakhir",
+    label: "Scan Rapor Semester Ganjil Terakhir (atau Kelas 5 / Kelas 8)",
     maxSize: 10 * 1024 * 1024,
     allowedTypes: [
       "image/jpeg",
@@ -50,7 +50,7 @@ const DOKUMEN_CONFIG: Record<
     ],
     required: true },
   rapor_sem2: {
-    label: "Scan Rapor Semester Genap Terakhir",
+    label: "Scan Rapor Semester Genap Terakhir (atau Kelas 5 / Kelas 8)",
     maxSize: 10 * 1024 * 1024,
     allowedTypes: [
       "image/jpeg",

@@ -1046,14 +1046,13 @@ export default function UploadBerkasTab() {
               <strong>jelas dan terbaca</strong>
             </li>
             <li>
-              Format yang diterima: <strong>JPG, PNG, atau PDF</strong>
+              Format yang diterima: <strong>JPG, PNG, atau PDF</strong> (Maks. 5MB)
             </li>
             <li>
-              Ukuran maksimal file: <strong>5MB (Foto & Dokumen)</strong>
+              <strong>Bagi Calon Santri yang belum terima Rapor Semester Akhir (Kelas 6 SD / 9 MTs):</strong> Silakan gunakan <strong>Rapor 2 semester sebelumnya yang sudah terbit</strong> (misal: Rapor Kelas 5 Semester 1 & 2 untuk MTs, atau Rapor Kelas 8 Semester 1 & 2 untuk SMA).
             </li>
             <li>
-              Anda dapat mengupload ulang jika terjadi kesalahan sebelum
-              diverifikasi
+              Anda dapat mengupload ulang jika terjadi kesalahan sebelum dokumen diverifikasi oleh admin.
             </li>
           </ul>
         </div>

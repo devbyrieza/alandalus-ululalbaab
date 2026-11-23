@@ -34,7 +34,11 @@ export async function POST(request: NextRequest) {
       const isPutri = isPutriInstitution();
       const inputNomor = (nomor_pendaftaran || "").trim().toUpperCase();
 
-      const candidateNumbers = new Set<string>([inputNomor]);
+      const candidateNumbers = new Set<string>([
+        inputNomor,
+        inputNomor.replace(/26(\d{5})$/, "27$1"),
+        inputNomor.replace(/27(\d{5})$/, "26$1"),
+      ]);
 
       if (inst === "ANDALUS_PUSAT") {
         if (isPutri) {

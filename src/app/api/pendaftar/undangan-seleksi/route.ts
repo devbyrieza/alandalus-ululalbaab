@@ -147,12 +147,8 @@ export async function GET(request: Request) {
       );
     }
 
-    // --- ACCESS GUARD: Only allow if docs are verified ---
+    // --- ACCESS GUARD: Only allow if docs are verified by admin ---
     const ALLOWED_STATUSES = [
-      "data_completed",
-      "docs_uploaded",
-      "docs_incomplete",
-      "docs_rejected",
       "docs_verified",
       "selection",
       "testing",
