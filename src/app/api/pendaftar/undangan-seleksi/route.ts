@@ -138,7 +138,15 @@ export async function GET(request: Request) {
         jenjang: true,
         notif_belum_jadwal_terkirim: true,
         notif_jadwal_tersedia_terkirim: true,
-        notif_hasil_tes_terkirim: true } });
+        notif_hasil_tes_terkirim: true,
+        orang_tua: {
+          select: {
+            no_hp_ayah: true,
+            no_hp_ibu: true,
+          },
+        },
+      },
+    });
 
     if (!pendaftar) {
       return NextResponse.json(
@@ -243,9 +251,25 @@ export async function GET(request: Request) {
             start_time: true,
             end_time: true,
             location: true,
-            notes: true } },
-        nilai_ujian: true },
-      orderBy: { created_at: "desc" } });
+            notes: true,
+            creator: {
+              select: {
+                id: true,
+                full_name: true,
+                google_meet_link: true,
+              },
+            },
+          },
+        },
+        penguji_santri: { select: { id: true, full_name: true, google_meet_link: true } },
+        penguji_ortu: { select: { id: true, full_name: true, google_meet_link: true } },
+        penguji_quran: { select: { id: true, full_name: true, google_meet_link: true } },
+        penguji_arab: { select: { id: true, full_name: true, google_meet_link: true } },
+        penguji_hafalan: { select: { id: true, full_name: true, google_meet_link: true } },
+        nilai_ujian: true,
+      },
+      orderBy: { created_at: "desc" },
+    });
 
     // 5. Determine condition
     const hasGrupBSessions = availableSessions.length > 0;
@@ -289,6 +313,7 @@ export async function GET(request: Request) {
     // Transform booked jadwal
     const booked: any[] = bookedJadwal.map((j) => {
       const rawTitle = j.exam_session?.title || "Seleksi Santri Baru";
+      const cat = getExamCategory(rawTitle);
       const hasScoreQuran = j.nilai_ujian?.some((n: any) => {
         const q = n.detail_quran as any;
         return n.nilai_tes_quran != null || !!(q && typeof q === "object" && (q.rekomendasi || q.nama_penguji));
@@ -302,16 +327,29 @@ export async function GET(request: Request) {
         return n.nilai_wawancara_ortu != null || !!(c && typeof c === "object" && (c.rekomendasi || c.nama_penguji));
       });
 
+      const meetLink =
+        (cat === "QURAN" && (j.penguji_quran?.google_meet_link || (j as any).zoom_link_quran)) ||
+        (cat === "W_ORTU" && (j.penguji_ortu?.google_meet_link || (j as any).zoom_link_ortu)) ||
+        (cat === "W_SANTRI" && (j.penguji_santri?.google_meet_link || (j as any).zoom_link_santri)) ||
+        (cat === "LISAN_ARAB" && (j.penguji_arab?.google_meet_link || (j as any).zoom_link_arab)) ||
+        (cat === "HAFALAN" && (j.penguji_hafalan?.google_meet_link || (j as any).zoom_link_hafalan)) ||
+        j.google_meet_link ||
+        j.online_test_link ||
+        (j.exam_session?.location?.startsWith("http") ? j.exam_session.location : null) ||
+        j.exam_session?.creator?.google_meet_link ||
+        null;
+
       return {
         id: j.id,
         jenis_ujian: sanitizeTitle(rawTitle),
-        category: getExamCategory(rawTitle),
+        category: cat,
         tanggal_ujian: j.tanggal_ujian,
         waktu_mulai: j.exam_session?.start_time || j.waktu_mulai_santri,
         waktu_selesai: j.exam_session?.end_time || j.waktu_selesai_santri,
         lokasi: j.exam_session?.location || j.tempat_santri,
         keterangan: j.catatan || j.exam_session?.notes,
         online_test_link: j.online_test_link,
+        meet_link: meetLink,
         status_santri: hasScoreSantri ? "completed" : j.status_santri,
         status_quran: hasScoreQuran ? "completed" : j.status_quran,
         status_ortu: hasScoreOrtu ? "completed" : j.status_ortu };
@@ -607,6 +645,13 @@ export async function GET(request: Request) {
         stage2Unlocked,
         isTahap1Completed,
         jenjang: pendaftar.jenjang,
+        pendaftar_info: {
+          id: pendaftar.id,
+          nama_lengkap: pendaftar.nama_lengkap,
+          no_hp: pendaftar.no_hp,
+          no_hp_ayah: pendaftar.orang_tua?.no_hp_ayah || null,
+          no_hp_ibu: pendaftar.orang_tua?.no_hp_ibu || null,
+        },
         grupA,
         grupB: {
           hasSchedules: hasGrupBSessions,

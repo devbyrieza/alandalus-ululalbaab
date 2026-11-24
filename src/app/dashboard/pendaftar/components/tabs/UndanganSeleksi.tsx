@@ -21,6 +21,10 @@ import {
   ArrowRight,
   Filter,
   CalendarClock,
+  Video,
+  Copy,
+  Share2,
+  Phone,
 } from "lucide-react";
 import Swal from "sweetalert2";
 import { expandExamTitle } from "@/lib/utils";
@@ -94,6 +98,7 @@ interface BookedData {
   lokasi: string;
   keterangan: string;
   online_test_link?: string;
+  meet_link?: string;
   status_santri?: string;
   status_quran?: string;
   status_ortu?: string;
@@ -112,6 +117,13 @@ interface UndanganData {
   stage2Unlocked?: boolean;
   isTahap1Completed?: boolean;
   jenjang?: string;
+  pendaftar_info?: {
+    id?: string;
+    nama_lengkap?: string;
+    no_hp?: string;
+    no_hp_ayah?: string;
+    no_hp_ibu?: string;
+  };
   grupA: GrupAData;
   grupB: {
     hasSchedules: boolean;
@@ -119,7 +131,7 @@ interface UndanganData {
     booked: BookedData[];
   };
   progress: ProgressData;
-  condition: "jadwal_tersedia" | "jadwal_belum";
+  condition: "jadwal_tersedia" | "jadwal_belum" | "seleksi_selesai";
   locked?: boolean;
   message?: string;
   current_status?: string;
@@ -165,7 +177,7 @@ const CATEGORY_DEFS: CategoryConfig[] = [
     label: "Tes Hafalan Al-Qur'an",
     shortLabel: "Hafalan Qur'an",
     icon: BookOpen,
-    description: "Uji Kelancaran & Kuantitas Hafalan Al-Qur'an (Khusus SMA/MA Langsung)",
+    description: "Uji Kelancaran & Kuantitas Hafalan Al-Qur'an (Khusus MA/SMA Langsung)",
   },
   {
     key: "LISAN_ARAB",
@@ -173,7 +185,7 @@ const CATEGORY_DEFS: CategoryConfig[] = [
     label: "Tes Lisan Bahasa Arab",
     shortLabel: "Bahasa Arab",
     icon: Brain,
-    description: "Kemampuan Dasar Bahasa Arab (Khusus SMA/MA Langsung)",
+    description: "Kemampuan Dasar Bahasa Arab (Khusus MA/SMA Langsung)",
   },
 ];
 
@@ -341,8 +353,6 @@ export default function UndanganSeleksiTab() {
     return availableCategories.filter((c) => bookedSet.has(c.key)).length;
   }, [data, availableCategories]);
 
-  const allCategoriesBooked = availableCategories.length > 0 && bookedCount >= availableCategories.length;
-
   const nextUnbookedCategory = useMemo(() => {
     if (!data?.grupB?.booked) return null;
     const bookedSet = new Set(data.grupB.booked.map((b) => b.category));
@@ -359,7 +369,7 @@ export default function UndanganSeleksiTab() {
       text: "Apakah Anda yakin ingin memilih jadwal ini? Jadwal tidak dapat diubah setelah dipilih.",
       icon: "question",
       showCancelButton: true,
-      confirmButtonColor: "#0284c7",
+      confirmButtonColor: "#E11D74",
       cancelButtonColor: "#ef4444",
       confirmButtonText: "Ya, Pilih Jadwal",
       cancelButtonText: "Batal",
@@ -387,7 +397,7 @@ export default function UndanganSeleksiTab() {
           icon: "success",
           title: "Berhasil!",
           text: "Jadwal seleksi Anda telah tersimpan. Notifikasi WhatsApp akan dikirimkan.",
-          confirmButtonColor: "#0284c7",
+          confirmButtonColor: "#E11D74",
         });
         fetchData();
       } else {
@@ -402,6 +412,115 @@ export default function UndanganSeleksiTab() {
       });
     } finally {
       setBookingId(null);
+    }
+  };
+
+  const handleCopyLink = async (link: string) => {
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(link);
+      } else {
+        const textArea = document.createElement("textarea");
+        textArea.value = link;
+        textArea.style.position = "fixed";
+        textArea.style.left = "-999999px";
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        document.execCommand("copy");
+        textArea.remove();
+      }
+      Swal.fire({
+        icon: "success",
+        title: "Tautan Disalin!",
+        text: "Link Google Meet berhasil disalin ke clipboard.",
+        timer: 2000,
+        showConfirmButton: false,
+        toast: true,
+        position: "top-end",
+      });
+    } catch {
+      Swal.fire({
+        icon: "info",
+        title: "Tautan Ujian",
+        html: `<p class="text-xs text-slate-600 mb-2">Silakan salin tautan berikut secara manual:</p><input class="swal2-input text-xs" value="${link}" readonly onclick="this.select()" />`,
+      });
+    }
+  };
+
+  const handleOpenForwardModal = async (item: BookedData, resolvedMeetLink: string | null) => {
+    const defaultPhone = data?.pendaftar_info?.no_hp || "";
+    const examTitle = expandExamTitle(item.jenis_ujian);
+
+    const { value: targetPhone } = await Swal.fire({
+      title: "Kirim Jadwal ke WhatsApp",
+      html: `
+        <div class="text-left text-xs text-slate-600 space-y-2.5">
+          <p>Kirimkan rincian jadwal dan link Google Meet untuk <strong>${examTitle}</strong> ke nomor WhatsApp yang sedang aktif/digunakan saat ini:</p>
+          <div class="p-2.5 bg-emerald-50 rounded-xl border border-emerald-200 text-emerald-800 text-[11px]">
+            📱 <strong>Nomor Terdaftar Akun:</strong> ${defaultPhone || "-"}
+          </div>
+        </div>
+      `,
+      input: "text",
+      inputLabel: "Nomor WhatsApp Penerima",
+      inputValue: defaultPhone,
+      inputPlaceholder: "Contoh: 081234567890",
+      showCancelButton: true,
+      confirmButtonText: "Kirim Sekarang 📲",
+      cancelButtonText: "Batal",
+      confirmButtonColor: "#059669",
+      inputValidator: (value) => {
+        if (!value || !value.trim()) {
+          return "Nomor WhatsApp wajib diisi!";
+        }
+        const clean = value.replace(/[\s\-\(\)\+]/g, "");
+        if (!/^(08|628|\+628)\d{7,13}$/.test(clean)) {
+          return "Format nomor tidak valid. Gunakan awalan 08 atau 628 (contoh: 081234567890).";
+        }
+        return null;
+      },
+    });
+
+    if (targetPhone) {
+      try {
+        Swal.fire({
+          title: "Mengirimkan Pesan...",
+          text: `Sedang mengirimkan link ke WhatsApp ${targetPhone}`,
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading();
+          },
+        });
+
+        const res = await fetch("/api/pendaftar/undangan-seleksi/resend-wa", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            jadwal_id: item.id,
+            target_phone: targetPhone,
+          }),
+        });
+
+        const result = await res.json();
+        if (!res.ok) {
+          throw new Error(result.error || "Gagal mengirimkan WhatsApp");
+        }
+
+        Swal.fire({
+          icon: "success",
+          title: "Pesan Terkirim!",
+          text: result.message || `Tautan jadwal telah dikirim ke WhatsApp ${targetPhone}.`,
+          confirmButtonColor: "#059669",
+        });
+      } catch (err: any) {
+        Swal.fire({
+          icon: "error",
+          title: "Gagal Mengirim",
+          text: err.message || "Terjadi kesalahan saat memproses pengiriman WhatsApp.",
+          confirmButtonColor: "#dc2626",
+        });
+      }
     }
   };
 
@@ -451,7 +570,6 @@ export default function UndanganSeleksiTab() {
   }
 
   const grupAItems = Object.entries(data.grupA || {}) as [string, GrupAItem][];
-  const grupACompleted = grupAItems.filter(([, v]) => v.completed).length;
 
   if (data.locked && !isTestingAccount) {
     return (
@@ -486,7 +604,7 @@ export default function UndanganSeleksiTab() {
         <div className="absolute top-0 right-0 w-96 h-96 bg-primary-500/10 rounded-full blur-3xl pointer-events-none" />
         <div className="relative z-10">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-black bg-white/10 text-white/90 backdrop-blur-md mb-3 border border-white/15">
-            <Sparkles className="w-3.5 h-3.5 text-secondary-400" />
+            <Sparkles className="w-3.5 h-3.5 text-amber-300" />
             Tahun Ajaran 2027/2028
           </div>
           <h1 className="text-2xl md:text-3xl font-black mb-2 text-white">
@@ -499,7 +617,7 @@ export default function UndanganSeleksiTab() {
           <div className="mt-6 flex flex-wrap items-center gap-4 text-xs font-bold">
             <div className="bg-white/10 backdrop-blur-md px-4 py-2 rounded-xl border border-white/15 flex items-center gap-2">
               <span className="text-white/70">Total Progres:</span>
-              <span className="text-secondary-400 font-black text-sm">
+              <span className="text-amber-300 font-black text-sm">
                 {data.progress?.percentage || 0}%
               </span>
             </div>
@@ -605,7 +723,7 @@ export default function UndanganSeleksiTab() {
               Seleksi Terjadwal (Wawancara & Ujian Lisan)
             </h2>
             <p className="text-xs text-stone-500 font-medium">
-              Pilih waktu tatap muka online (Google Meet) bersama ustadz/ustadzah penguji
+              Pilih waktu tatap muka online (Google Meet) bersama ustadzah penguji
             </p>
           </div>
         </div>
@@ -613,7 +731,7 @@ export default function UndanganSeleksiTab() {
         {/* RIWAYAT / JADWAL TERKONFIRMASI */}
         {data.grupB.booked.length > 0 && (
           <div className="space-y-3">
-            <div className="bg-emerald-50 border border-emerald-200 p-4 rounded-2xl flex items-center justify-between gap-3">
+            <div className="bg-emerald-50 border border-emerald-200 p-4 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-xs">
               <div className="flex items-center gap-3">
                 <CheckCircle className="w-5 h-5 text-emerald-600 shrink-0" />
                 <div>
@@ -621,10 +739,16 @@ export default function UndanganSeleksiTab() {
                     Jadwal Terkonfirmasi ({data.grupB.booked.length} Sesi Terjadwal)
                   </h3>
                   <p className="text-xs text-emerald-700 font-medium">
-                    Sesi seleksi yang telah Anda pilih dapat dilihat rinciannya di bawah ini
+                    Sesi seleksi yang telah Anda pilih dapat langsung diikuti melalui tombol di kartu bawah.
                   </p>
                 </div>
               </div>
+              {data.pendaftar_info?.no_hp && (
+                <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-emerald-300 text-[11px] font-bold text-emerald-800 shadow-xs shrink-0">
+                  <Phone className="w-3.5 h-3.5 text-emerald-600" />
+                  <span>Notifikasi WA Terkirim: <strong>{data.pendaftar_info.no_hp}</strong></span>
+                </div>
+              )}
             </div>
 
             <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
@@ -633,66 +757,113 @@ export default function UndanganSeleksiTab() {
                   ? new Date(item.waktu_selesai) <= new Date()
                   : false;
                 const Icon = GRUP_B_ICONS[item.category] || Calendar;
+                const linkTes =
+                  item.meet_link ||
+                  item.online_test_link ||
+                  (item.lokasi && (item.lokasi.includes("meet.google") || item.lokasi.includes("zoom") || item.lokasi.startsWith("http")) ? item.lokasi : null);
 
                 return (
                   <div
                     key={item.id}
-                    className={`rounded-2xl shadow-md p-5 border-2 relative overflow-hidden transition-all ${
+                    className={`rounded-2xl shadow-md p-5 border-2 relative overflow-hidden transition-all flex flex-col justify-between ${
                       isSelesai
                         ? "bg-stone-50 border-stone-200"
                         : "bg-white border-emerald-200 hover:border-emerald-300"
                     }`}
                   >
-                    <div className="flex items-center justify-between mb-3">
-                      <div className="flex items-center gap-2">
-                        <div className={`p-2 rounded-xl ${
-                          isSelesai ? "bg-stone-200 text-stone-600" : "bg-emerald-100 text-emerald-800"
-                        }`}>
-                          <Icon className="w-4 h-4" />
+                    <div>
+                      <div className="flex items-center justify-between mb-3">
+                        <div className="flex items-center gap-2">
+                          <div className={`p-2 rounded-xl ${
+                            isSelesai ? "bg-stone-200 text-stone-600" : "bg-emerald-100 text-emerald-800"
+                          }`}>
+                            <Icon className="w-4 h-4" />
+                          </div>
+                          <h4 className="font-black text-ink-900 text-sm truncate max-w-[180px]">
+                            {expandExamTitle(item.jenis_ujian)}
+                          </h4>
                         </div>
-                        <h4 className="font-black text-ink-900 text-sm truncate max-w-[180px]">
-                          {expandExamTitle(item.jenis_ujian)}
-                        </h4>
+                        {isSelesai ? (
+                          <span className="text-[10px] font-bold text-stone-600 bg-stone-200 px-2 py-0.5 rounded-md">
+                            Selesai
+                          </span>
+                        ) : (
+                          <span className="text-[10px] font-black text-emerald-800 bg-emerald-100 px-2.5 py-0.5 rounded-full border border-emerald-300">
+                            Terjadwal
+                          </span>
+                        )}
                       </div>
-                      {isSelesai ? (
-                        <span className="text-[10px] font-bold text-stone-600 bg-stone-200 px-2 py-0.5 rounded-md">
-                          Selesai
-                        </span>
-                      ) : (
-                        <span className="text-[10px] font-black text-emerald-800 bg-emerald-100 px-2.5 py-0.5 rounded-full border border-emerald-300">
-                          Terjadwal
-                        </span>
-                      )}
-                    </div>
 
-                    <div className="space-y-2 text-xs text-stone-600 mb-3 font-medium">
-                      <div className="flex items-center gap-2">
-                        <Calendar className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                        <span>{formatDate(item.waktu_mulai || item.tanggal_ujian)}</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Clock className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                        <span className="font-bold text-ink-900">
-                          {formatTime(item.waktu_mulai)} WIB
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <MapPin className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                        <span className="truncate">{item.lokasi || "Online / Google Meet"}</span>
+                      <div className="space-y-2 text-xs text-stone-600 mb-3 font-medium">
+                        <div className="flex items-center gap-2">
+                          <Calendar className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                          <span>{formatDate(item.waktu_mulai || item.tanggal_ujian)}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Clock className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                          <span className="font-bold text-ink-900">
+                            {formatTime(item.waktu_mulai)} WIB
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <MapPin className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                          <span className="truncate">{item.lokasi || "Online / Google Meet"}</span>
+                        </div>
                       </div>
                     </div>
 
-                    {item.lokasi && (item.lokasi.includes("meet.google") || item.lokasi.includes("zoom") || item.lokasi.startsWith("http")) && (
-                      <div className="pt-2 border-t border-stone-100 mt-2">
-                        <a
-                          href={item.lokasi}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="w-full py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm transition-all"
-                        >
-                          <LinkIcon className="w-3.5 h-3.5" />
-                          Buka Google Meet Ujian
-                        </a>
+                    {!isSelesai && (
+                      <div className="pt-3 border-t border-stone-100 mt-2 space-y-2">
+                        {linkTes ? (
+                          <>
+                            <div className="flex items-center gap-2">
+                              <a
+                                href={linkTes}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex-1 py-2.5 px-3 bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white rounded-xl text-xs font-black flex items-center justify-center gap-1.5 shadow-md hover:shadow-lg transition-all"
+                              >
+                                <Video className="w-4 h-4" />
+                                <span>Masuk Google Meet</span>
+                              </a>
+                              <button
+                                type="button"
+                                title="Salin Link Google Meet"
+                                onClick={() => handleCopyLink(linkTes)}
+                                className="py-2.5 px-3 bg-stone-100 hover:bg-stone-200 active:scale-95 text-stone-700 rounded-xl text-xs font-bold flex items-center justify-center gap-1 border border-stone-200 transition-all shrink-0"
+                              >
+                                <Copy className="w-3.5 h-3.5" />
+                                <span className="hidden sm:inline">Salin</span>
+                              </button>
+                            </div>
+
+                            <button
+                              type="button"
+                              onClick={() => handleOpenForwardModal(item, linkTes)}
+                              className="w-full py-2 px-2.5 bg-emerald-50 hover:bg-emerald-100 active:scale-95 text-emerald-800 rounded-xl text-[11px] font-bold flex items-center justify-center gap-1.5 border border-emerald-200/80 transition-all"
+                            >
+                              <Share2 className="w-3.5 h-3.5 text-emerald-600" />
+                              <span>Kirim Link ke WhatsApp Lain</span>
+                            </button>
+                          </>
+                        ) : (
+                          <div className="bg-amber-50/90 border border-amber-200/90 rounded-xl p-2.5 text-[11px] text-amber-900 space-y-2">
+                            <div className="flex items-start gap-1.5 font-medium leading-relaxed">
+                              <Info className="w-3.5 h-3.5 text-amber-600 shrink-0 mt-0.5" />
+                              <span>
+                                Tautan Google Meet sedang disiapkan panitia & akan aktif sebelum sesi dimulai.
+                              </span>
+                            </div>
+                            <button
+                              type="button"
+                              onClick={() => handleOpenForwardModal(item, null)}
+                              className="w-full py-1.5 px-2 bg-white hover:bg-amber-100 text-amber-900 rounded-lg text-[10px] font-black uppercase tracking-wider flex items-center justify-center gap-1 border border-amber-300 transition-all shadow-xs"
+                            >
+                              <Phone className="w-3 h-3 text-amber-700" />
+                              <span>Kirim Salinan Jadwal ke WA Saya</span>
+                            </button>
+                          </div>
+                        )}
                       </div>
                     )}
                   </div>
@@ -702,7 +873,7 @@ export default function UndanganSeleksiTab() {
           </div>
         )}
 
-        {/* ========== JALUR LANGSUNG SMA / MA NOTICE BANNER ========== */}
+        {/* ========== JALUR LANGSUNG MA / SMA NOTICE BANNER ========== */}
         {isDirectSMAorMA && !stage2Unlocked && (
           <div className="bg-gradient-to-r from-amber-50 to-primary-50 border-2 border-amber-200 rounded-3xl p-5 shadow-sm flex items-start gap-4">
             <div className="p-2.5 bg-amber-500 text-white rounded-2xl shrink-0 mt-0.5 shadow-md">
@@ -710,10 +881,10 @@ export default function UndanganSeleksiTab() {
             </div>
             <div>
               <h4 className="font-black text-amber-950 text-sm md:text-base">
-                Tahapan Seleksi Lanjutan Jalur SMA Langsung
+                Tahapan Seleksi Lanjutan Jalur MA Langsung
               </h4>
               <p className="text-xs md:text-sm text-amber-800 mt-1 leading-relaxed">
-                Sebagai calon santri jalur SMA Langsung, Anda memiliki 2 seleksi lanjutan: <strong>Tes Hafalan Al-Qur&apos;an</strong> dan <strong>Tes Lisan Bahasa Arab</strong>. Pilihan jadwal kedua tes tersebut akan <strong>terbuka secara otomatis</strong> setelah Anda menyelesaikan seluruh 6 rangkaian seleksi awal di atas.
+                Sebagai calon santri jalur MA Langsung, Anda memiliki 2 seleksi lanjutan: <strong>Tes Hafalan Al-Qur&apos;an</strong> dan <strong>Tes Lisan Bahasa Arab</strong>. Pilihan jadwal kedua tes tersebut akan <strong>terbuka secara otomatis</strong> setelah Anda menyelesaikan seluruh 6 rangkaian seleksi awal di atas.
               </p>
             </div>
           </div>
@@ -726,7 +897,7 @@ export default function UndanganSeleksiTab() {
             </div>
             <div>
               <h4 className="font-black text-emerald-950 text-sm md:text-base">
-                Tahap 2 Terbuka: Seleksi Lanjutan SMA
+                Tahap 2 Terbuka: Seleksi Lanjutan MA
               </h4>
               <p className="text-xs md:text-sm text-emerald-800 mt-1 leading-relaxed">
                 Barakallahu fiikum! Seluruh 6 seleksi awal telah selesai. Silakan pilih jadwal untuk <strong>Tes Hafalan Al-Qur&apos;an</strong> dan <strong>Tes Lisan Bahasa Arab</strong> pada tab kategori di bawah.
@@ -743,7 +914,7 @@ export default function UndanganSeleksiTab() {
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 relative z-10">
                 <div>
                   <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-white/10 text-white/90 backdrop-blur-md mb-2 border border-white/15">
-                    <Sparkles className="w-3.5 h-3.5 text-secondary-400" />
+                    <Sparkles className="w-3.5 h-3.5 text-amber-300" />
                     Pilih Jadwal Sesuai Kategori
                   </div>
                   <h3 className="text-xl font-black text-white">
@@ -757,13 +928,13 @@ export default function UndanganSeleksiTab() {
                 <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/15 min-w-[220px]">
                   <div className="flex items-center justify-between text-xs font-bold text-white mb-2">
                     <span>Progres Pemilihan:</span>
-                    <span className="text-secondary-400 font-black">
+                    <span className="text-amber-300 font-black">
                       {bookedCount} / {availableCategories.length} Selesai
                     </span>
                   </div>
                   <div className="w-full bg-black/25 h-2.5 rounded-full overflow-hidden p-0.5">
                     <div
-                      className="bg-gradient-to-r from-secondary-400 to-emerald-400 h-full rounded-full transition-all duration-500"
+                      className="bg-gradient-to-r from-amber-300 to-amber-500 h-full rounded-full transition-all duration-500"
                       style={{
                         width: `${Math.round(
                           (bookedCount / availableCategories.length) * 100,
@@ -1052,7 +1223,7 @@ export default function UndanganSeleksiTab() {
                         <button
                           onClick={() => handleBooking(slot.id)}
                           disabled={slot.isFull || bookingId !== null}
-                          className="w-full py-2.5 bg-secondary-400 hover:bg-secondary-300 text-primary-950 font-black rounded-xl disabled:bg-stone-200 disabled:text-stone-400 disabled:cursor-not-allowed transition-all shadow-sm flex justify-center items-center gap-2 text-sm border border-secondary-500 hover:scale-[1.02] active:scale-[0.98]"
+                          className="w-full py-2.5 bg-gold-400 hover:bg-gold-300 text-primary-950 font-black rounded-xl disabled:bg-stone-200 disabled:text-stone-400 disabled:cursor-not-allowed transition-all shadow-sm flex justify-center items-center gap-2 text-sm border border-gold-500 hover:scale-[1.02] active:scale-[0.98]"
                         >
                           {bookingId === slot.id && (
                             <Loader2 className="animate-spin w-4 h-4" />
