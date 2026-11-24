@@ -49,6 +49,9 @@ export default function TrashPage() {
   );
   const [isRestoring, setIsRestoring] = useState(false);
 
+  // Selection state for bulk permanent delete
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+
   const fetchTrash = async () => {
     try {
       setLoading(true);
@@ -113,6 +116,148 @@ export default function TrashPage() {
     }
   };
 
+  const handleToggleSelect = (id: string) => {
+    setSelectedIds((prev) =>
+      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id],
+    );
+  };
+
+  const handleToggleSelectAll = () => {
+    const pageIds = data.map((d) => d.id);
+    const isAllSelected =
+      pageIds.length > 0 && pageIds.every((id) => selectedIds.includes(id));
+    if (isAllSelected) {
+      setSelectedIds((prev) => prev.filter((id) => !pageIds.includes(id)));
+    } else {
+      setSelectedIds((prev) => Array.from(new Set([...prev, ...pageIds])));
+    }
+  };
+
+  const executePermanentDelete = async (payload: {
+    ids?: string[];
+    all?: boolean;
+  }) => {
+    try {
+      Swal.fire({
+        title: "Menghapus Data...",
+        text: "Sedang memproses penghapusan permanen dari database",
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        },
+      });
+
+      const res = await fetch("/api/admin/pendaftar/trash", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const resData = await res.json();
+      if (!res.ok) {
+        throw new Error(resData.error || "Gagal menghapus data secara permanen");
+      }
+
+      setSelectedIds([]);
+      Swal.fire({
+        icon: "success",
+        title: "Berhasil Dihapus Permanen",
+        text: resData.message || "Data berhasil dihapus permanen dari sistem.",
+        confirmButtonColor: "#dc2626",
+      });
+      fetchTrash();
+    } catch (err: any) {
+      console.error("Error permanent delete:", err);
+      Swal.fire({
+        icon: "error",
+        title: "Gagal Menghapus",
+        text: err.message || "Terjadi kesalahan saat menghapus data",
+        confirmButtonColor: "#dc2626",
+      });
+    }
+  };
+
+  const handlePermanentDelete = async (item: DeletedPendaftar) => {
+    const result = await Swal.fire({
+      title: "Hapus Permanen?",
+      html: `
+        <div class="text-left text-xs text-stone-600 space-y-2.5">
+          <p>Apakah Anda yakin ingin menghapus data calon santri berikut secara <strong>PERMANEN</strong>?</p>
+          <div class="p-3 bg-red-50 rounded-xl border border-red-200 text-red-950 font-medium space-y-1">
+            <div><strong>Nama:</strong> ${toTitleCase(item.nama_lengkap)}</div>
+            <div><strong>No. Pendaftaran:</strong> <span class="font-mono text-red-700 font-bold">${item.nomor_pendaftaran}</span></div>
+            <div><strong>Jenjang:</strong> ${item.jenjang}</div>
+          </div>
+          <div class="p-2.5 bg-amber-50 rounded-xl border border-amber-300 text-amber-900 text-[11px] leading-relaxed">
+            ⚠️ <strong>PERINGATAN:</strong> Tindakan ini <u>TIDAK DAPAT DIBATALKAN</u>. Seluruh berkas dokumen, nilai ujian, riwayat pembayaran, dan data pendaftar akan dimusnahkan secara permanen dari server.
+          </div>
+        </div>
+      `,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Ya, Hapus Permanen",
+      cancelButtonText: "Batal",
+      confirmButtonColor: "#dc2626",
+      cancelButtonColor: "#6b7280",
+    });
+
+    if (result.isConfirmed) {
+      await executePermanentDelete({ ids: [item.id] });
+    }
+  };
+
+  const handleBulkPermanentDelete = async () => {
+    if (selectedIds.length === 0) return;
+
+    const result = await Swal.fire({
+      title: `Hapus Permanen ${selectedIds.length} Data?`,
+      html: `
+        <div class="text-left text-xs text-stone-600 space-y-2.5">
+          <p>Sebanyak <strong>${selectedIds.length} data pendaftar</strong> yang dipilih akan dihapus secara <strong>PERMANEN</strong> dari database.</p>
+          <div class="p-2.5 bg-amber-50 rounded-xl border border-amber-300 text-amber-900 text-[11px] leading-relaxed">
+            ⚠️ <strong>PERINGATAN:</strong> Tindakan ini <u>TIDAK DAPAT DIBATALKAN</u>. Semua data yang terpilih tidak akan dapat dipulihkan kembali.
+          </div>
+        </div>
+      `,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: `Ya, Hapus ${selectedIds.length} Data Permanen`,
+      cancelButtonText: "Batal",
+      confirmButtonColor: "#dc2626",
+      cancelButtonColor: "#6b7280",
+    });
+
+    if (result.isConfirmed) {
+      await executePermanentDelete({ ids: selectedIds });
+    }
+  };
+
+  const handleEmptyTrash = async () => {
+    if (pagination.total === 0) return;
+
+    const result = await Swal.fire({
+      title: "Kosongkan Semua Sampah?",
+      html: `
+        <div class="text-left text-xs text-stone-600 space-y-2.5">
+          <p>Apakah Anda yakin ingin mengosongkan seluruh isi folder sampah (<strong>${pagination.total} data</strong>)?</p>
+          <div class="p-2.5 bg-red-100 rounded-xl border border-red-300 text-red-950 text-[11px] font-semibold leading-relaxed">
+            🚨 <strong>PERINGATAN FATAL:</strong> SELURUH data pendaftar di folder sampah akan DIHAPUS PERMANEN secara total dari database dan TIDAK DAPAT dipulihkan lagi!
+          </div>
+        </div>
+      `,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Ya, Kosongkan Semua Sampah",
+      cancelButtonText: "Batal",
+      confirmButtonColor: "#dc2626",
+      cancelButtonColor: "#6b7280",
+    });
+
+    if (result.isConfirmed) {
+      await executePermanentDelete({ all: true });
+    }
+  };
+
   const toTitleCase = (str: string) => {
     if (!str) return "";
     return str.replace(
@@ -147,10 +292,10 @@ export default function TrashPage() {
       </Link>
 
       {/* Header */}
-      <div className="bg-white rounded-3xl shadow-2xl p-4 md:p-6 border-2 border-red-100">
+      <div className="bg-white rounded-3xl shadow-2xl p-6 sm:p-8 md:p-6 border-2 border-red-100">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="flex items-center gap-3 md:gap-4">
-            <div className="p-2.5 md:p-3 bg-gradient-to-br from-red-500 to-rose-600 rounded-3xl flex-shrink-0">
+            <div className="p-4.5 md:p-3 bg-gradient-to-br from-red-500 to-rose-600 rounded-3xl flex-shrink-0">
               <Trash2 className="w-6 h-6 md:w-8 md:h-8 text-white" />
             </div>
             <div>
@@ -162,8 +307,8 @@ export default function TrashPage() {
               </p>
             </div>
           </div>
-
-          <div className="flex flex-col sm:flex-row gap-3">
+          
+          <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center">
             <div className="flex gap-2">
               <input
                 type="text"
@@ -175,7 +320,7 @@ export default function TrashPage() {
               />
               <button
                 onClick={handleSearch}
-                className="bg-stone-100 p-2 rounded-3xl border-2 border-stone-200 hover:border-red-500 hover:text-red-600 transition-colors whitespace-nowrap inline-block shrink-0"
+                className="bg-stone-100 p-4 rounded-3xl border-2 border-stone-200 hover:border-red-500 hover:text-red-600 transition-colors whitespace-nowrap inline-block shrink-0"
               >
                 <Search className="w-5 h-5" />
               </button>
@@ -196,9 +341,45 @@ export default function TrashPage() {
               <option value="MTs">MTs</option>
               <option value="IL">IL</option>
             </select>
+            <button
+              onClick={handleEmptyTrash}
+              disabled={pagination.total === 0 || loading}
+              className="inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-red-600 hover:bg-red-700 active:scale-95 text-white rounded-3xl text-sm font-bold transition-all shadow-md hover:shadow-lg disabled:opacity-40 disabled:cursor-not-allowed shrink-0"
+              title="Hapus permanen semua data di folder sampah"
+            >
+              <Trash2 className="w-4 h-4" />
+              <span>Kosongkan Sampah</span>
+            </button>
           </div>
         </div>
       </div>
+
+      {/* Bulk Action Bar */}
+      {selectedIds.length > 0 && (
+        <div className="bg-stone-900 text-white px-5 py-3.5 rounded-2xl shadow-xl flex flex-col sm:flex-row items-center justify-between gap-3 border border-stone-800 animate-in fade-in slide-in-from-top-2">
+          <div className="flex items-center gap-2.5">
+            <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse" />
+            <span className="text-sm font-semibold">
+              <strong className="text-red-400">{selectedIds.length}</strong> data dipilih
+            </span>
+          </div>
+          <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
+            <button
+              onClick={() => setSelectedIds([])}
+              className="px-3 py-1.5 text-xs text-stone-300 hover:text-white transition-colors"
+            >
+              Batal Pilih
+            </button>
+            <button
+              onClick={handleBulkPermanentDelete}
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-red-600 hover:bg-red-700 active:scale-95 text-white rounded-xl text-xs font-bold transition-all shadow-md hover:shadow-lg"
+            >
+              <Trash2 className="w-3.5 h-3.5" />
+              <span>Hapus Permanen Terpilih ({selectedIds.length})</span>
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Table */}
       <div className="bg-white rounded-3xl shadow-2xl border-2 border-red-100 overflow-hidden">
@@ -223,6 +404,18 @@ export default function TrashPage() {
               <table className="w-full">
                 <thead className="bg-gradient-to-r from-red-50 to-rose-50 border-b-2 border-red-200">
                   <tr>
+                    <th className="px-3 py-3 w-10 text-center">
+                      <input
+                        type="checkbox"
+                        checked={
+                          data.length > 0 &&
+                          data.every((d) => selectedIds.includes(d.id))
+                        }
+                        onChange={handleToggleSelectAll}
+                        className="w-4 h-4 text-red-600 rounded border-stone-300 focus:ring-red-500 cursor-pointer"
+                        title="Pilih semua data pada halaman ini"
+                      />
+                    </th>
                     <th className="px-4 py-3 text-left text-xs font-bold text-red-900 uppercase tracking-wider">
                       No. Pendaftaran
                     </th>
@@ -247,8 +440,18 @@ export default function TrashPage() {
                   {data.map((item) => (
                     <tr
                       key={item.id}
-                      className="hover:bg-red-50/50 transition-colors"
+                      className={`hover:bg-red-50/50 transition-colors ${
+                        selectedIds.includes(item.id) ? "bg-red-50/70" : ""
+                      }`}
                     >
+                      <td className="px-3 py-3 text-center">
+                        <input
+                          type="checkbox"
+                          checked={selectedIds.includes(item.id)}
+                          onChange={() => handleToggleSelect(item.id)}
+                          className="w-4 h-4 text-red-600 rounded border-stone-300 focus:ring-red-500 cursor-pointer"
+                        />
+                      </td>
                       <td className="px-4 py-3 whitespace-nowrap">
                         <div className="flex items-center gap-2">
                           <Hash className="w-4 h-4 text-red-400" />
@@ -288,16 +491,27 @@ export default function TrashPage() {
                         </div>
                       </td>
                       <td className="px-4 py-3 whitespace-nowrap">
-                        <button
-                          onClick={() => {
-                            setRestoringItem(item);
-                            setIsRestoreModalOpen(true);
-                          }}
-                          className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-2xl text-sm font-bold transition-all shadow-2xl hover:shadow-xl"
-                        >
-                          <RotateCcw className="w-4 h-4" />
-                          <span>Restore</span>
-                        </button>
+                        <div className="flex items-center gap-2">
+                          <button
+                            onClick={() => {
+                              setRestoringItem(item);
+                              setIsRestoreModalOpen(true);
+                            }}
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#9D174D] hover:bg-[#831340] active:scale-95 text-white rounded-xl text-xs font-bold transition-all shadow-md hover:shadow-lg"
+                            title="Pulihkan data pendaftar ini"
+                          >
+                            <RotateCcw className="w-3.5 h-3.5" />
+                            <span>Restore</span>
+                          </button>
+                          <button
+                            onClick={() => handlePermanentDelete(item)}
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-red-50 hover:bg-red-100 text-red-700 border border-red-300 hover:border-red-400 active:scale-95 rounded-xl text-xs font-bold transition-all shadow-2xs hover:shadow-xs"
+                            title="Hapus data ini secara permanen dari database"
+                          >
+                            <Trash2 className="w-3.5 h-3.5 text-red-600" />
+                            <span>Hapus Permanen</span>
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   ))}
@@ -351,12 +565,12 @@ export default function TrashPage() {
 
       {/* Restore Confirmation Modal */}
       {isRestoreModalOpen && restoringItem && (
-        <div onWheel={(e) => e.stopPropagation()} data-modal="true" aria-modal="true" role="dialog" className="fixed inset-0 z-50 flex items-start md:items-center pt-10 md:pt-0 pb-20 md:pb-0 justify-center bg-black/50 p-4 overflow-y-auto overflow-x-hidden overscroll-contain custom-scrollbar backdrop-blur-sm">
+        <div onWheel={(e) => e.stopPropagation()} data-modal="true" aria-modal="true" role="dialog" className="fixed inset-0 z-50 flex items-start md:items-center pt-10 md:pt-0 pb-20 md:pb-0 justify-center bg-black/50 backdrop-blur-sm p-6 sm:p-8 overflow-y-auto overflow-x-hidden overscroll-contain custom-scrollbar">
           <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md border-2 border-green-100 animate-in fade-in zoom-in duration-200">
             <div className="flex justify-between items-center p-6 border-b border-green-100">
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-green-100 rounded-2xl">
-                  <RotateCcw className="w-6 h-6 text-green-600" />
+                <div className="p-4 bg-green-100 rounded-2xl">
+                  <RotateCcw className="w-6 h-6 text-[#9D174D]" />
                 </div>
                 <div>
                   <h3 className="text-lg font-bold text-stone-900">
@@ -369,16 +583,16 @@ export default function TrashPage() {
               </div>
               <button
                 onClick={() => setIsRestoreModalOpen(false)}
-                className="p-2 hover:bg-stone-100 rounded-full transition-colors text-stone-400 hover:text-stone-600 whitespace-nowrap inline-block shrink-0"
+                className="p-4 hover:bg-stone-100 rounded-full transition-colors text-stone-400 hover:text-stone-600 whitespace-nowrap inline-block shrink-0"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             <div className="p-6 space-y-4">
-              <div className="bg-green-50 border-2 border-green-200 rounded-3xl p-4">
-                <p className="text-sm text-green-800 font-medium">
-                  <CheckCircle2 className="w-4 h-4 inline-block mr-1 text-green-600" /> Data{" "}
+              <div className="bg-green-50 border-2 border-green-200 rounded-3xl p-6 sm:p-8">
+                <p className="text-sm text-[#9D174D] font-medium">
+                  <CheckCircle2 className="w-4 h-4 inline-block mr-1" /> Data{" "}
                   <strong>{toTitleCase(restoringItem.nama_lengkap)}</strong> (
                   {restoringItem.nomor_pendaftaran}) akan dipulihkan dan muncul
                   kembali di daftar pendaftar aktif.
@@ -397,7 +611,7 @@ export default function TrashPage() {
                 <button
                   onClick={handleRestore}
                   disabled={isRestoring}
-                  className="flex items-center gap-2 px-5 py-2.5 bg-green-600 hover:bg-green-700 text-white font-bold rounded-3xl shadow-md shadow-green-200 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex items-center gap-2 px-5 py-2.5 bg-[#9D174D] hover:bg-[#9D174D] text-white font-bold rounded-3xl shadow-md shadow-green-200 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isRestoring ? (
                     <>
