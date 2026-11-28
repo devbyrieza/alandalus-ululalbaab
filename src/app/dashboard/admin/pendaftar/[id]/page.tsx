@@ -257,6 +257,68 @@ export default function PendaftarDetailPage() {
   }, []);
 
   // Helper for role checks
+  // Pewarnaan Nilai berdasarkan Standar KKM (di atas = hijau, pas standar = kuning, di bawah = merah)
+  const getScoreTheme = (rawScore: number | string | null | undefined, kkm = 75) => {
+    if (rawScore == null || rawScore === "") {
+      return {
+        card: "bg-stone-50/70 border-stone-200",
+        label: "text-stone-500",
+        value: "text-stone-400",
+        suffix: "text-stone-400",
+        divider: "border-stone-200/70",
+      };
+    }
+    const n = Number(rawScore);
+    if (Number.isNaN(n)) {
+      return {
+        card: "bg-stone-50/70 border-stone-200",
+        label: "text-stone-500",
+        value: "text-stone-400",
+        suffix: "text-stone-400",
+        divider: "border-stone-200/70",
+      };
+    }
+    if (Math.abs(n - kkm) < 0.01) {
+      return {
+        card: "bg-amber-50/70 border-amber-200",
+        label: "text-amber-700",
+        value: "text-amber-700",
+        suffix: "text-amber-500",
+        divider: "border-amber-200/60",
+      };
+    }
+    if (n > kkm) {
+      return {
+        card: "bg-emerald-50/70 border-emerald-200",
+        label: "text-emerald-700",
+        value: "text-emerald-800",
+        suffix: "text-emerald-500",
+        divider: "border-emerald-200/60",
+      };
+    }
+    return {
+      card: "bg-rose-50/70 border-rose-200",
+      label: "text-rose-700",
+      value: "text-rose-700",
+      suffix: "text-rose-400",
+      divider: "border-rose-200/60",
+    };
+  };
+
+  const getRekomendasiBadgeClass = (rek?: string | null) => {
+    const low = (rek || "").toLowerCase();
+    if (low.includes("diterima") || low.includes("lolos") || low.includes("layak")) {
+      return "bg-emerald-100 text-emerald-800 border border-emerald-200";
+    }
+    if (low.includes("cadangan") || low.includes("il") || low.includes("rapat") || low.includes("pertimbang")) {
+      return "bg-amber-100 text-amber-800 border border-amber-200";
+    }
+    if (low.includes("tolak") || low.includes("tidak")) {
+      return "bg-rose-100 text-rose-800 border border-rose-200";
+    }
+    return "bg-stone-100 text-stone-700 border border-stone-200";
+  };
+
   const isKeuangan = userRole === "admin_keuangan";
 
   
@@ -1456,258 +1518,293 @@ export default function PendaftarDetailPage() {
               {/* Grid 6 Test Results */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {/* 1. Tes Kemampuan Akademik (CBT) */}
-                <div className="bg-primary-50/50 p-4 rounded-2xl border border-primary-100 relative">
-                  <span className="block text-[10px] text-primary-600 font-black uppercase tracking-widest mb-1 leading-none">
-                    CBT: Akademik
-                  </span>
-                  {!pendaftar.nilai_ujian ? (
-                    <span className="text-sm font-bold text-ink-200 italic">
-                      Belum Ujian
-                    </span>
-                  ) : (
-                    <div className="flex items-baseline gap-1">
-                      <span className="text-2xl md:text-4xl font-black text-primary-950">
-                        {pendaftar.nilai_ujian?.score_akademik != null ? Number(pendaftar.nilai_ujian.score_akademik).toFixed(1).replace(".0", "") : "-"}
+                {(() => {
+                  const scoreVal = pendaftar.nilai_ujian?.score_akademik;
+                  const tone = getScoreTheme(scoreVal, 75);
+                  return (
+                    <div className={`${tone.card} p-6 sm:p-8 rounded-2xl border relative`}>
+                      <span className={`block text-[10px] ${tone.label} font-black uppercase tracking-widest mb-1 leading-none`}>
+                        CBT: Akademik
                       </span>
-                      <span className="text-sm text-primary-400 font-medium">/ 100</span>
+                      {!pendaftar.nilai_ujian || scoreVal == null ? (
+                        <span className="text-sm font-bold text-stone-400 italic">
+                          Belum Ujian
+                        </span>
+                      ) : (
+                        <div className="flex items-baseline gap-1">
+                          <span className={`text-2xl md:text-4xl font-black ${tone.value}`}>
+                            {Number(scoreVal).toFixed(1).replace(".0", "")}
+                          </span>
+                          <span className={`text-sm ${tone.suffix} font-medium`}>/ 100</span>
+                        </div>
+                      )}
                     </div>
-                  )}
-                </div>
+                  );
+                })()}
 
                 {/* 2. Tes Identifikasi Kepribadian (CBT) */}
-                <div className="bg-indigo-50/50 p-4 rounded-3xl border border-indigo-100">
-                  <span className="block text-xs text-indigo-600 font-bold uppercase tracking-wide mb-1">
-                    CBT: Kepribadian
-                  </span>
-                  {!pendaftar.nilai_ujian ? (
-                    <span className="text-sm font-bold text-stone-400 italic">
-                      Belum Ujian
-                    </span>
-                  ) : (
-                    <div className="flex items-baseline gap-2">
-                      <span className="text-3xl font-black text-indigo-900">
-                        {pendaftar.nilai_ujian?.score_kepribadian != null ? Number(pendaftar.nilai_ujian.score_kepribadian).toFixed(1).replace(".0", "") : "-"}
+                {(() => {
+                  const scoreVal = pendaftar.nilai_ujian?.score_kepribadian;
+                  const tone = getScoreTheme(scoreVal, 75);
+                  return (
+                    <div className={`${tone.card} p-6 sm:p-8 rounded-3xl border`}>
+                      <span className={`block text-xs ${tone.label} font-bold uppercase tracking-wide mb-1`}>
+                        CBT: Kepribadian
                       </span>
-                      <span className="text-sm text-indigo-400 font-medium">
-                        / 100
-                      </span>
+                      {!pendaftar.nilai_ujian || scoreVal == null ? (
+                        <span className="text-sm font-bold text-stone-400 italic">
+                          Belum Ujian
+                        </span>
+                      ) : (
+                        <div className="flex items-baseline gap-2">
+                          <span className={`text-3xl font-black ${tone.value}`}>
+                            {Number(scoreVal).toFixed(1).replace(".0", "")}
+                          </span>
+                          <span className={`text-sm ${tone.suffix} font-medium`}>
+                            / 100
+                          </span>
+                        </div>
+                      )}
                     </div>
-                  )}
-                </div>
+                  );
+                })()}
 
                 {/* 3. Seleksi Kesiapan (CBT) */}
-                <div className="bg-violet-50/50 p-4 rounded-3xl border border-violet-100">
-                  <span className="block text-xs text-violet-600 font-bold uppercase tracking-wide mb-1">
-                    CBT: Kesiapan
-                  </span>
-                  {!pendaftar.nilai_ujian ? (
-                    <span className="text-sm font-bold text-stone-400 italic">
-                      Belum Ujian
-                    </span>
-                  ) : (
-                    <div className="flex items-baseline gap-2">
-                      <span className="text-3xl font-black text-violet-900">
-                        {pendaftar.nilai_ujian?.score_kesiapan != null ? Number(pendaftar.nilai_ujian.score_kesiapan).toFixed(1).replace(".0", "") : "-"}
+                {(() => {
+                  const scoreVal = pendaftar.nilai_ujian?.score_kesiapan;
+                  const tone = getScoreTheme(scoreVal, 75);
+                  return (
+                    <div className={`${tone.card} p-6 sm:p-8 rounded-3xl border`}>
+                      <span className={`block text-xs ${tone.label} font-bold uppercase tracking-wide mb-1`}>
+                        CBT: Kesiapan
                       </span>
-                      <span className="text-sm text-violet-400 font-medium">
-                        / 100
-                      </span>
+                      {!pendaftar.nilai_ujian || scoreVal == null ? (
+                        <span className="text-sm font-bold text-stone-400 italic">
+                          Belum Ujian
+                        </span>
+                      ) : (
+                        <div className="flex items-baseline gap-2">
+                          <span className={`text-3xl font-black ${tone.value}`}>
+                            {Number(scoreVal).toFixed(1).replace(".0", "")}
+                          </span>
+                          <span className={`text-sm ${tone.suffix} font-medium`}>
+                            / 100
+                          </span>
+                        </div>
+                      )}
                     </div>
-                  )}
-                </div>
+                  );
+                })()}
 
                 {/* 4. Seleksi Al Qur'an (Offline) */}
-                <div className="bg-emerald-50/50 p-4 rounded-3xl border border-emerald-100 flex flex-col justify-between">
-                  <div>
-                    <span className="block text-xs text-emerald-600 font-bold uppercase tracking-wide mb-1">
-                      Tes Al-Qur&apos;an
-                    </span>
-                    {!pendaftar.nilai_ujian ? (
-                      <span className="text-sm font-bold text-stone-400 italic">
-                        Belum Ujian
-                      </span>
-                    ) : (
-                      <div className="flex items-baseline gap-2">
-                        <span className="text-3xl font-black text-emerald-900">
-                          {pendaftar.nilai_ujian?.score_quran != null
-                            ? Number(pendaftar.nilai_ujian.score_quran).toFixed(1).replace(".0", "")
-                            : pendaftar.nilai_ujian?.nilai_tes_quran != null
-                              ? Number(pendaftar.nilai_ujian.nilai_tes_quran).toFixed(1).replace(".0", "")
-                              : "-"}
+                {(() => {
+                  const scoreVal =
+                    pendaftar.nilai_ujian?.score_quran != null
+                      ? pendaftar.nilai_ujian.score_quran
+                      : pendaftar.nilai_ujian?.nilai_tes_quran;
+                  const tone = getScoreTheme(scoreVal, 75);
+                  return (
+                    <div className={`${tone.card} p-6 sm:p-8 rounded-3xl border flex flex-col justify-between`}>
+                      <div>
+                        <span className={`block text-xs ${tone.label} font-bold uppercase tracking-wide mb-1`}>
+                          Tes Al-Qur&apos;an
                         </span>
-                        <span className="text-sm text-emerald-400 font-medium">
-                          / 100
-                        </span>
-                      </div>
-                    )}
-                  </div>
-                  {pendaftar.nilai_ujian?.catatan_quran && (
-                    <div className="mt-2 text-xs text-stone-600 line-clamp-2 italic border-t border-emerald-200/50 pt-2">
-                      &ldquo;{pendaftar.nilai_ujian.catatan_quran}&rdquo;
-                    </div>
-                  )}
-                </div>
-
-                
-                {isJenjangTanpaIL(pendaftar?.jenjang) && (
-                  <div className="bg-teal-50/50 p-4 rounded-3xl border border-teal-100 flex flex-col justify-between">
-                    <div>
-                      <span className="block text-xs text-teal-600 font-bold uppercase tracking-wide mb-1">
-                        Tes Hafalan
-                      </span>
-                      {!pendaftar.nilai_ujian ? (
-                        <span className="text-sm font-bold text-stone-400 italic inline-block mt-2 px-3 py-1 bg-stone-100 rounded whitespace-nowrap inline-block shrink-0">
-                          Belum Ada
-                        </span>
-                      ) : pendaftar.nilai_ujian?.nilai_tes_hafalan || (pendaftar.nilai_ujian as any)?.score_hafalan ? (
-                        <div className="flex flex-col mt-2 space-y-1">
-                          <div className="flex items-baseline gap-2">
-                            <span className="text-3xl font-black text-teal-900">
-                              {pendaftar.nilai_ujian?.score_hafalan != null
-                                ? Number(pendaftar.nilai_ujian.score_hafalan).toFixed(1).replace(".0", "")
-                                : pendaftar.nilai_ujian?.nilai_tes_hafalan != null
-                                  ? Number(pendaftar.nilai_ujian.nilai_tes_hafalan).toFixed(1).replace(".0", "")
-                                  : "-"}
-                            </span>
-                            <span className="text-sm text-teal-400 font-medium">/ 100</span>
-                          </div>
-                          {(pendaftar.nilai_ujian as any)?.detail_hafalan?.rekomendasi && (
-                            <span className={`text-[10px] font-black uppercase tracking-widest px-2 py-0.5 rounded inline-block max-w-full break-words whitespace-normal ${(pendaftar.nilai_ujian as any).detail_hafalan.rekomendasi?.includes("Diterima") ? "bg-teal-100 text-teal-800 border border-teal-200" : (pendaftar.nilai_ujian as any).detail_hafalan.rekomendasi?.includes("IL") ? "bg-blue-100 text-blue-800 border border-blue-200" : (pendaftar.nilai_ujian as any).detail_hafalan.rekomendasi === "Cadangan" ? "bg-amber-100 text-amber-800 border border-amber-200" : "bg-red-100 text-red-800 border border-red-200"}`}>
-                              {(pendaftar.nilai_ujian as any).detail_hafalan.rekomendasi}
-                            </span>
-                          )}
-                        </div>
-                      ) : (
-                        <span className="text-sm font-bold text-stone-400 italic inline-block mt-2 px-3 py-1 bg-stone-100 rounded whitespace-nowrap inline-block shrink-0">
-                          Belum Dinilai
-                        </span>
-                      )}
-                    </div>
-                    {pendaftar.nilai_ujian?.catatan_hafalan && (
-                      <div className="mt-3 text-[10px] text-stone-500 line-clamp-3 italic border-t border-teal-200/50 pt-2 leading-relaxed">
-                        "`${pendaftar.nilai_ujian.catatan_hafalan}`"
-                      </div>
-                    )}
-                  </div>
-                )}
-
-
-                {isJenjangTanpaIL(pendaftar?.jenjang) && (
-                  <div className="bg-sky-50/50 p-4 rounded-3xl border border-sky-100 flex flex-col justify-between">
-                    <div>
-                      <span className="block text-xs text-sky-600 font-bold uppercase tracking-wide mb-1">
-                        Lisan B. Arab
-                      </span>
-                      {!pendaftar.nilai_ujian ? (
-                        <span className="text-sm font-bold text-stone-400 italic inline-block mt-2 px-3 py-1 bg-stone-100 rounded whitespace-nowrap inline-block shrink-0">
-                          Belum Ada
-                        </span>
-                      ) : pendaftar.nilai_ujian?.nilai_tes_lisan_arab || (pendaftar.nilai_ujian as any)?.score_lisan_arab ? (
-                        <div className="flex flex-col mt-2 space-y-1">
-                          <div className="flex items-baseline gap-2">
-                            <span className="text-3xl font-black text-sky-900">
-                              {pendaftar.nilai_ujian?.score_lisan_arab != null
-                                ? Number(pendaftar.nilai_ujian.score_lisan_arab).toFixed(1).replace(".0", "")
-                                : pendaftar.nilai_ujian?.nilai_tes_lisan_arab != null
-                                  ? Number(pendaftar.nilai_ujian.nilai_tes_lisan_arab).toFixed(1).replace(".0", "")
-                                  : "-"}
-                            </span>
-                            <span className="text-sm text-sky-400 font-medium">/ 100</span>
-                          </div>
-                          {(pendaftar.nilai_ujian as any)?.detail_lisan_arab?.rekomendasi && (
-                            <span className={`text-[10px] font-black uppercase tracking-widest px-2 py-0.5 rounded inline-block max-w-full break-words whitespace-normal ${(pendaftar.nilai_ujian as any).detail_lisan_arab.rekomendasi === "Diterima" ? "bg-sky-100 text-sky-700" : "bg-red-100 text-red-700"}`}>
-                              {(pendaftar.nilai_ujian as any).detail_lisan_arab.rekomendasi}
-                            </span>
-                          )}
-                        </div>
-                      ) : (
-                        <span className="text-sm font-bold text-stone-400 italic inline-block mt-2 px-3 py-1 bg-stone-100 rounded whitespace-nowrap inline-block shrink-0">
-                          Belum Dinilai
-                        </span>
-                      )}
-                    </div>
-                    {pendaftar.nilai_ujian?.catatan_lisan_arab && (
-                      <div className="mt-3 text-[10px] text-stone-500 line-clamp-3 italic border-t border-sky-200/50 pt-2 leading-relaxed">
-                        "`${pendaftar.nilai_ujian.catatan_lisan_arab}`"
-                      </div>
-                    )}
-                  </div>
-                )}
-
-
-                  {/* 5. Seleksi Wawancara Calon Santri (Offline) */}
-                <div className="bg-secondary-50/50 p-4 rounded-3xl border border-secondary-100 flex flex-col justify-between">
-                  <div>
-                    <span className="block text-xs text-secondary-600 font-bold uppercase tracking-wide mb-1">
-                      Wawancara: Calon Santri
-                    </span>
-                    {!pendaftar.nilai_ujian ? (
-                      <span className="text-sm font-bold text-stone-400 italic">
-                        Belum Ujian
-                      </span>
-                    ) : (
-                      <div className="flex items-baseline gap-2">
-                        <span className="text-3xl font-black text-secondary-900">
-                          {pendaftar.nilai_ujian?.score_wawancara != null
-                            ? Number(pendaftar.nilai_ujian.score_wawancara).toFixed(1).replace(".0", "")
-                            : pendaftar.nilai_ujian?.nilai_wawancara_santri !=
-                                null
-                              ? Number(pendaftar.nilai_ujian.nilai_wawancara_santri).toFixed(1).replace(".0", "")
-                              : "-"}
-                        </span>
-                        <span className="text-sm text-secondary-400 font-medium">
-                          / 100
-                        </span>
-                      </div>
-                    )}
-                  </div>
-                  {pendaftar.nilai_ujian?.catatan_santri && (
-                    <div className="mt-2 text-xs text-stone-600 line-clamp-2 italic border-t border-secondary-200/50 pt-2">
-                      &ldquo;{pendaftar.nilai_ujian.catatan_santri}&rdquo;
-                    </div>
-                  )}
-                </div>
-
-                {/* 6. Seleksi Wawancara Orang Tua (Offline) */}
-                <div className="bg-rose-50/50 p-4 rounded-3xl border border-rose-100 flex flex-col justify-between">
-                  <div>
-                    <span className="block text-xs text-rose-600 font-bold uppercase tracking-wide mb-1">
-                      Wawancara: Calon Orang Tua/Wali Santri
-                    </span>
-                    {!pendaftar.nilai_ujian ? (
-                      <span className="text-sm font-bold text-stone-400 italic inline-block mt-2 px-3 py-1 bg-stone-100 rounded whitespace-nowrap inline-block shrink-0">
-                        Belum Ada
-                      </span>
-                    ) : pendaftar.nilai_ujian?.nilai_wawancara_ortu ||
-                      (pendaftar.nilai_ujian as any)?.detail_cawalsan ? (
-                      <div className="flex flex-col mt-2 space-y-1">
-                        <div className="flex items-baseline gap-2">
-                          <span className="text-3xl font-black text-rose-900">
-                            {pendaftar.nilai_ujian?.nilai_wawancara_ortu != null &&
-                            Number(pendaftar.nilai_ujian.nilai_wawancara_ortu) > 1
-                              ? Number(pendaftar.nilai_ujian.nilai_wawancara_ortu).toFixed(1).replace(".0", "")
-                              : "-"}
+                        {!pendaftar.nilai_ujian || scoreVal == null ? (
+                          <span className="text-sm font-bold text-stone-400 italic">
+                            Belum Ujian
                           </span>
-                          <span className="text-sm text-rose-400 font-medium">/ 100</span>
+                        ) : (
+                          <div className="flex items-baseline gap-2">
+                            <span className={`text-3xl font-black ${tone.value}`}>
+                              {Number(scoreVal).toFixed(1).replace(".0", "")}
+                            </span>
+                            <span className={`text-sm ${tone.suffix} font-medium`}>
+                              / 100
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                      {pendaftar.nilai_ujian?.catatan_quran && (
+                        <div className={`mt-2 text-xs text-stone-600 line-clamp-2 italic border-t ${tone.divider} pt-2`}>
+                          &ldquo;{pendaftar.nilai_ujian.catatan_quran}&rdquo;
                         </div>
-                        {(pendaftar.nilai_ujian as any)?.detail_cawalsan?.rekomendasi && (
-                          <span className="text-xs font-black text-rose-700 bg-rose-100 border border-rose-200 px-2 py-0.5 rounded uppercase tracking-widest inline-block max-w-full break-words whitespace-normal whitespace-nowrap inline-block shrink-0">
-                            {(pendaftar.nilai_ujian as any).detail_cawalsan.rekomendasi}
+                      )}
+                    </div>
+                  );
+                })()}
+
+                {isJenjangTanpaIL(pendaftar?.jenjang) && (() => {
+                  const scoreVal =
+                    (pendaftar.nilai_ujian as any)?.score_hafalan != null
+                      ? (pendaftar.nilai_ujian as any).score_hafalan
+                      : pendaftar.nilai_ujian?.nilai_tes_hafalan;
+                  const tone = getScoreTheme(scoreVal, 75);
+                  return (
+                    <div className={`${tone.card} p-6 sm:p-8 rounded-3xl border flex flex-col justify-between`}>
+                      <div>
+                        <span className={`block text-xs ${tone.label} font-bold uppercase tracking-wide mb-1`}>
+                          Tes Hafalan
+                        </span>
+                        {!pendaftar.nilai_ujian ? (
+                          <span className="text-sm font-bold text-stone-400 italic inline-block mt-2 px-3 py-1 bg-stone-100 rounded whitespace-nowrap shrink-0">
+                            Belum Ada
+                          </span>
+                        ) : scoreVal != null ? (
+                          <div className="flex flex-col mt-2 space-y-1">
+                            <div className="flex items-baseline gap-2">
+                              <span className={`text-3xl font-black ${tone.value}`}>
+                                {Number(scoreVal).toFixed(1).replace(".0", "")}
+                              </span>
+                              <span className={`text-sm ${tone.suffix} font-medium`}>/ 100</span>
+                            </div>
+                            {(pendaftar.nilai_ujian as any)?.detail_hafalan?.rekomendasi && (
+                              <span className={`text-[10px] font-black uppercase tracking-widest px-2 py-0.5 rounded inline-block max-w-full break-words whitespace-normal ${getRekomendasiBadgeClass((pendaftar.nilai_ujian as any).detail_hafalan.rekomendasi)}`}>
+                                {(pendaftar.nilai_ujian as any).detail_hafalan.rekomendasi}
+                              </span>
+                            )}
+                          </div>
+                        ) : (
+                          <span className="text-sm font-bold text-stone-400 italic inline-block mt-2 px-3 py-1 bg-stone-100 rounded whitespace-nowrap shrink-0">
+                            Belum Dinilai
                           </span>
                         )}
                       </div>
-                    ) : (
-                      <span className="text-sm font-bold text-stone-400 italic inline-block mt-2 px-3 py-1 bg-stone-100 rounded whitespace-nowrap inline-block shrink-0">
-                        Belum Ada
-                      </span>
-                    )}
-                  </div>
-                  {pendaftar.nilai_ujian?.catatan_ortu && (
-                    <div className="mt-2 text-xs text-stone-600 line-clamp-2 italic border-t border-rose-200/50 pt-2">
-                      &ldquo;{pendaftar.nilai_ujian.catatan_ortu}&rdquo;
+                      {pendaftar.nilai_ujian?.catatan_hafalan && (
+                        <div className={`mt-3 text-[10px] text-stone-500 line-clamp-3 italic border-t ${tone.divider} pt-2 leading-relaxed`}>
+                          &ldquo;{pendaftar.nilai_ujian.catatan_hafalan}&rdquo;
+                        </div>
+                      )}
                     </div>
-                  )}
-                </div>
+                  );
+                })()}
+
+                {isJenjangTanpaIL(pendaftar?.jenjang) && (() => {
+                  const scoreVal =
+                    (pendaftar.nilai_ujian as any)?.score_lisan_arab != null
+                      ? (pendaftar.nilai_ujian as any).score_lisan_arab
+                      : (pendaftar.nilai_ujian as any)?.score_arab != null
+                        ? (pendaftar.nilai_ujian as any).score_arab
+                        : pendaftar.nilai_ujian?.nilai_tes_lisan_arab;
+                  const tone = getScoreTheme(scoreVal, 75);
+                  return (
+                    <div className={`${tone.card} p-6 sm:p-8 rounded-3xl border flex flex-col justify-between`}>
+                      <div>
+                        <span className={`block text-xs ${tone.label} font-bold uppercase tracking-wide mb-1`}>
+                          Lisan B. Arab
+                        </span>
+                        {!pendaftar.nilai_ujian ? (
+                          <span className="text-sm font-bold text-stone-400 italic inline-block mt-2 px-3 py-1 bg-stone-100 rounded whitespace-nowrap shrink-0">
+                            Belum Ada
+                          </span>
+                        ) : scoreVal != null ? (
+                          <div className="flex flex-col mt-2 space-y-1">
+                            <div className="flex items-baseline gap-2">
+                              <span className={`text-3xl font-black ${tone.value}`}>
+                                {Number(scoreVal).toFixed(1).replace(".0", "")}
+                              </span>
+                              <span className={`text-sm ${tone.suffix} font-medium`}>/ 100</span>
+                            </div>
+                            {(pendaftar.nilai_ujian as any)?.detail_lisan_arab?.rekomendasi && (
+                              <span className={`text-[10px] font-black uppercase tracking-widest px-2 py-0.5 rounded inline-block max-w-full break-words whitespace-normal ${getRekomendasiBadgeClass((pendaftar.nilai_ujian as any).detail_lisan_arab.rekomendasi)}`}>
+                                {(pendaftar.nilai_ujian as any).detail_lisan_arab.rekomendasi}
+                              </span>
+                            )}
+                          </div>
+                        ) : (
+                          <span className="text-sm font-bold text-stone-400 italic inline-block mt-2 px-3 py-1 bg-stone-100 rounded whitespace-nowrap shrink-0">
+                            Belum Dinilai
+                          </span>
+                        )}
+                      </div>
+                      {pendaftar.nilai_ujian?.catatan_lisan_arab && (
+                        <div className={`mt-3 text-[10px] text-stone-500 line-clamp-3 italic border-t ${tone.divider} pt-2 leading-relaxed`}>
+                          &ldquo;{pendaftar.nilai_ujian.catatan_lisan_arab}&rdquo;
+                        </div>
+                      )}
+                    </div>
+                  );
+                })()}
+
+                {/* 5. Seleksi Wawancara Calon Santri (Offline) */}
+                {(() => {
+                  const scoreVal =
+                    pendaftar.nilai_ujian?.score_wawancara != null
+                      ? pendaftar.nilai_ujian.score_wawancara
+                      : pendaftar.nilai_ujian?.nilai_wawancara_santri;
+                  const tone = getScoreTheme(scoreVal, 75);
+                  return (
+                    <div className={`${tone.card} p-6 sm:p-8 rounded-3xl border flex flex-col justify-between`}>
+                      <div>
+                        <span className={`block text-xs ${tone.label} font-bold uppercase tracking-wide mb-1`}>
+                          Wawancara: Calon Santri
+                        </span>
+                        {!pendaftar.nilai_ujian || scoreVal == null ? (
+                          <span className="text-sm font-bold text-stone-400 italic">
+                            Belum Ujian
+                          </span>
+                        ) : (
+                          <div className="flex items-baseline gap-2">
+                            <span className={`text-3xl font-black ${tone.value}`}>
+                              {Number(scoreVal).toFixed(1).replace(".0", "")}
+                            </span>
+                            <span className={`text-sm ${tone.suffix} font-medium`}>
+                              / 100
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                      {pendaftar.nilai_ujian?.catatan_santri && (
+                        <div className={`mt-2 text-xs text-stone-600 line-clamp-2 italic border-t ${tone.divider} pt-2`}>
+                          &ldquo;{pendaftar.nilai_ujian.catatan_santri}&rdquo;
+                        </div>
+                      )}
+                    </div>
+                  );
+                })()}
+
+                {/* 6. Seleksi Wawancara Orang Tua (Offline) */}
+                {(() => {
+                  const rawOrtu = pendaftar.nilai_ujian?.nilai_wawancara_ortu;
+                  const validOrtu = rawOrtu != null && Number(rawOrtu) > 1 ? rawOrtu : null;
+                  const tone = getScoreTheme(validOrtu, 75);
+                  return (
+                    <div className={`${tone.card} p-6 sm:p-8 rounded-3xl border flex flex-col justify-between`}>
+                      <div>
+                        <span className={`block text-xs ${tone.label} font-bold uppercase tracking-wide mb-1`}>
+                          Wawancara: Calon Orang Tua/Wali Santri
+                        </span>
+                        {!pendaftar.nilai_ujian ? (
+                          <span className="text-sm font-bold text-stone-400 italic inline-block mt-2 px-3 py-1 bg-stone-100 rounded whitespace-nowrap shrink-0">
+                            Belum Ada
+                          </span>
+                        ) : validOrtu != null || (pendaftar.nilai_ujian as any)?.detail_cawalsan ? (
+                          <div className="flex flex-col mt-2 space-y-1">
+                            <div className="flex items-baseline gap-2">
+                              <span className={`text-3xl font-black ${tone.value}`}>
+                                {validOrtu != null ? Number(validOrtu).toFixed(1).replace(".0", "") : "-"}
+                              </span>
+                              <span className={`text-sm ${tone.suffix} font-medium`}>/ 100</span>
+                            </div>
+                            {(pendaftar.nilai_ujian as any)?.detail_cawalsan?.rekomendasi && (
+                              <span className={`text-xs font-black px-2 py-0.5 rounded uppercase tracking-widest inline-block max-w-full break-words whitespace-normal ${getRekomendasiBadgeClass((pendaftar.nilai_ujian as any).detail_cawalsan.rekomendasi)}`}>
+                                {(pendaftar.nilai_ujian as any).detail_cawalsan.rekomendasi}
+                              </span>
+                            )}
+                          </div>
+                        ) : (
+                          <span className="text-sm font-bold text-stone-400 italic inline-block mt-2 px-3 py-1 bg-stone-100 rounded whitespace-nowrap shrink-0">
+                            Belum Ada
+                          </span>
+                        )}
+                      </div>
+                      {pendaftar.nilai_ujian?.catatan_ortu && (
+                        <div className={`mt-2 text-xs text-stone-600 line-clamp-2 italic border-t ${tone.divider} pt-2`}>
+                          &ldquo;{pendaftar.nilai_ujian.catatan_ortu}&rdquo;
+                        </div>
+                      )}
+                    </div>
+                  );
+                })()}
               </div>
 
               {(pendaftar.nilai_ujian?.catatan_umum || pendaftar.nilai_ujian?.catatan) && (

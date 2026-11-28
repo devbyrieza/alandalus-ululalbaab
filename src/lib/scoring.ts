@@ -275,10 +275,10 @@ export async function recalculateNilaiUjian(pendaftarId: string, overrideStatus?
     }
   } else {
     const someGraded = ak != null || quran != null || kp != null || ks != null || ws != null || wo != null || hafalan != null || arab != null;
-    if (someGraded && pendaftar && ["docs_verified", "scheduled"].includes(pendaftar.status_pendaftaran)) {
+    if (someGraded && pendaftar && ["docs_verified", "scheduled", "selection", "tested"].includes(pendaftar.status_pendaftaran)) {
       await prisma.pendaftar.update({
         where: { id: pendaftarId },
-        data: { status_pendaftaran: "tested" }
+        data: { status_pendaftaran: "testing" }
       });
     }
   }
